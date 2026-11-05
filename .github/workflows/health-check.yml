@@ -152,7 +152,7 @@ jobs:
           # `health` past the job timeout that way (bean 1dre, 2026-10-21).
           git fetch -q --depth 1 origin gh-pages
           git ls-tree --name-only FETCH_HEAD | while read -r d; do
-            case "$d" in STAGING|assets|_*|.*) continue ;; esac
+            case "$d" in STAGING|branches|assets|_*|.*) continue ;; esac
             if [ -n "$(git ls-tree --name-only FETCH_HEAD "$d/index.html")" ]; then echo "$d/"; fi
           done > "$RUNNER_TEMP/pages.txt"
           mkdir -p health

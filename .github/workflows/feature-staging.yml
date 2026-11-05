@@ -176,6 +176,13 @@ on:
         default: ''
         type: string
 
+# Where previews are published on gh-pages: `branches/<slug>/` (owner,
+# 2026-11-05; cat-harness-tools `scripts/lib/preview-prefix.ts`). Previews
+# published before that under `STAGING/` are left in place: readers and the
+# cleanup accept both, writers write this one only.
+env:
+  PREVIEW_DIR: branches
+
 permissions:
   contents: write
   pull-requests: write
@@ -246,20 +253,20 @@ jobs:
           # The slug, by the rule of `Determine staging slug` in `stage`.
           SLUG=$(echo "$HEAD_REF" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
           case "$SLUG" in ""|.|..|_retired) echo "deferred=false" >> "$GITHUB_OUTPUT"; exit 0 ;; esac
-          rec=$(gh api "repos/$REPO/contents/STAGING/$SLUG/_build-record.json?ref=gh-pages" -H 'Accept: application/vnd.github.raw' 2>/dev/null || true)
+          rec=$(gh api "repos/$REPO/contents/$PREVIEW_DIR/$SLUG/_build-record.json?ref=gh-pages" -H 'Accept: application/vnd.github.raw' 2>/dev/null || true)
           builder=$(printf '%s' "$rec" | jq -r '.builder // empty' 2>/dev/null || true)
           rtree=$(printf '%s' "$rec" | jq -r '.tree // empty' 2>/dev/null || true)
           tree=$(gh api "repos/$REPO/git/commits/$MERGE_SHA" --jq .tree.sha)
           if [ "$builder" != "agent" ] || [ -z "$rtree" ] || [ "$rtree" != "$tree" ]; then
-            echo "no agent build of tree ${tree:0:12} at STAGING/$SLUG (record: ${builder:-none} ${rtree:0:12}): CI builds the preview"
+            echo "no agent build of tree ${tree:0:12} at $PREVIEW_DIR/$SLUG (record: ${builder:-none} ${rtree:0:12}): CI builds the preview"
             echo "deferred=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
-          echo "an agent build of tree ${tree:0:12} is live at STAGING/$SLUG: deferring the CI build to the verify sweep"
+          echo "an agent build of tree ${tree:0:12} is live at $PREVIEW_DIR/$SLUG: deferring the CI build to the verify sweep"
           gh api "repos/$REPO/statuses/$HEAD_SHA" -f state=pending -f context=preview/agent-build \
             -f description="Agent-built preview is live; CI full rebuild queued (low priority)" \
             -f target_url="https://github.com/$REPO/actions/workflows/preview-verify-sweep.yml" >/dev/null
           owner="${REPO%%/*}"; name="${REPO#*/}"
-          body=$(printf '<!-- preview-build-verify -->\n**Preview built by an agent:** https://%s.github.io/%s/STAGING/%s/ (tree `%s`).\n\nCI will rebuild the same tree in full, off the critical path, and replace the preview if any file differs. The `preview/agent-build` status on this commit says when that is done.\n' "$owner" "$name" "$SLUG" "${tree:0:12}")
+          body=$(printf '<!-- preview-build-verify -->\n**Preview built by an agent:** https://%s.github.io/%s/%s/%s/ (tree `%s`).\n\nCI will rebuild the same tree in full, off the critical path, and replace the preview if any file differs. The `preview/agent-build` status on this commit says when that is done.\n' "$owner" "$name" "$PREVIEW_DIR" "$SLUG" "${tree:0:12}")
           gh api "repos/$REPO/issues/$PR/comments" -f body="$body" >/dev/null || true
           echo "deferred=true" >> "$GITHUB_OUTPUT"
 
@@ -310,14 +317,14 @@ jobs:
           [ "$ACTION" = "synchronize" ] || { echo "$ACTION: the preview always builds"; exit 0; }
           SLUG=$(echo "$HEAD_REF" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
           case "$SLUG" in ""|.|..|_retired) exit 0 ;; esac
-          raw() { gh api "repos/$REPO/contents/STAGING/$SLUG/$1?ref=gh-pages" -H 'Accept: application/vnd.github.raw' 2>/dev/null || true; }
+          raw() { gh api "repos/$REPO/contents/$PREVIEW_DIR/$SLUG/$1?ref=gh-pages" -H 'Accept: application/vnd.github.raw' 2>/dev/null || true; }
           live=$(raw _build-patch.json | jq -r '.patch_id // empty' 2>/dev/null || true)
           builder=$(raw _build-record.json | jq -r '.builder // empty' 2>/dev/null || true)
           if [ "$builder" != "ci" ] || [ "$live" != "$pid" ]; then
-            echo "live preview at STAGING/$SLUG: builder ${builder:-none}, patch id ${live:0:12}: the preview builds"; exit 0
+            echo "live preview at $PREVIEW_DIR/$SLUG: builder ${builder:-none}, patch id ${live:0:12}: the preview builds"; exit 0
           fi
           echo "unchanged=true" >> "$GITHUB_OUTPUT"
-          echo "### Preview not rebuilt: the PR's own change is unchanged (patch id \`${pid:0:12}\`) since the live CI preview at \`STAGING/$SLUG\`; only its base moved." >> "$GITHUB_STEP_SUMMARY"
+          echo "### Preview not rebuilt: the PR's own change is unchanged (patch id \`${pid:0:12}\`) since the live CI preview at \`$PREVIEW_DIR/$SLUG\`; only its base moved." >> "$GITHUB_STEP_SUMMARY"
           gh api "repos/$REPO/statuses/$HEAD_SHA" -f state=success -f context=preview/own-diff-unchanged \
             -f description="PR's own change unchanged since the live preview; not rebuilt (dispatch to rebuild)" >/dev/null || true
 
@@ -935,7 +942,7 @@ jobs:
           # a second `baseurl:` is a duplicate map key, which Jekyll forgives
           # (last wins) but compose-docs' strict YAML parse rejects.
           CFG=cat-harness/docs/_config.yml
-          LINE="baseurl: \"/${REPO}/STAGING/${SLUG}\"  # set by feature-staging.yml"
+          LINE="baseurl: \"/${REPO}/${PREVIEW_DIR}/${SLUG}\"  # set by feature-staging.yml"
           if grep -q '^baseurl:' "$CFG"; then
             awk -v line="$LINE" '/^baseurl:/ { print line; next } { print }' "$CFG" > "$CFG.tmp" && mv "$CFG.tmp" "$CFG"
           else
@@ -1020,7 +1027,7 @@ jobs:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
           REPO_NAME: ${{ github.event.repository.name }}
         run: |
-          BASE="/${REPO_NAME}/STAGING/${STAGING_SLUG}"
+          BASE="/${REPO_NAME}/${PREVIEW_DIR}/${STAGING_SLUG}"
           # Retried: Maven Central answers 429 under load, and one unretried
           # 429 failed a whole preview build on 2026-10-05 (#2238).
           curl -sSfL --retry 5 --retry-delay 15 --retry-all-errors -o /tmp/plantuml.jar \
@@ -1420,16 +1427,16 @@ jobs:
           ROOT="$W/pages-root"
           if git clone -q --depth 1 --filter=blob:none --no-checkout --branch gh-pages \
                "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "$ROOT" \
-             && git -C "$ROOT" sparse-checkout set --no-cone '/*' '!/STAGING/' '!/_render-log/' \
+             && git -C "$ROOT" sparse-checkout set --no-cone '/*' '!/STAGING/' '!/branches/' '!/_render-log/' \
              && git -C "$ROOT" checkout -q; then
-            QA=(--before "$ROOT" --after ./_site --staging-base "/$REPO_NAME/STAGING/$STAGING_SLUG" --site-base "/$REPO_NAME" --base "$BASE_SHA")
+            QA=(--before "$ROOT" --after ./_site --staging-base "/$REPO_NAME/$PREVIEW_DIR/$STAGING_SLUG" --site-base "/$REPO_NAME" --base "$BASE_SHA")
           else
             echo "could not read the gh-pages root — the page will say 'not measured'"
             QA=()
           fi
           bun run cat-harness-tools/scripts/staging-changes.ts render --sources "$W/sources.json" "${PRED[@]}" "${QA[@]}" \
             --site-url "https://$OWNER.github.io/$REPO_NAME/" \
-            --staging-url "https://$OWNER.github.io/$REPO_NAME/STAGING/$STAGING_SLUG/" \
+            --staging-url "https://$OWNER.github.io/$REPO_NAME/$PREVIEW_DIR/$STAGING_SLUG/" \
             --repo "$GITHUB_REPOSITORY" --branch "$STAGING_BRANCH" --slug "$STAGING_SLUG" --pr "$PR" \
             --out ./_site/changes
           rm -rf "$ROOT"
@@ -1485,7 +1492,7 @@ jobs:
           MAIN_PAGES_ARG=""
           if git fetch --depth=1 origin gh-pages >/dev/null 2>&1; then
             git ls-tree -r --name-only FETCH_HEAD 2>/dev/null \
-              | grep -v '^STAGING/' > /tmp/main-pages.txt || true
+              | grep -Ev '^(branches|STAGING)/' > /tmp/main-pages.txt || true
             if [ -s /tmp/main-pages.txt ]; then
               MAIN_PAGES_ARG="--main-pages /tmp/main-pages.txt"
               echo "Read $(wc -l < /tmp/main-pages.txt) page(s) from the publish ref"
@@ -1537,7 +1544,7 @@ jobs:
           # What changed, which writer wrote it, and what ran again because of it (tools#1217).
           cp build/writer-cone/churn.json ./_site/writer-churn.json 2>/dev/null || true
           RECORD=./_site/staging-preview.json
-          git show "FETCH_HEAD:STAGING/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
+          git show "FETCH_HEAD:${PREVIEW_DIR}/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
             || rm -f "$RECORD"
           PR_ARG=""
           if [ "$PR" != "n/a" ]; then PR_ARG="--pr $PR"; fi
@@ -1550,7 +1557,7 @@ jobs:
             $PR_ARG \
             ${ISSUE:+--issue "$ISSUE"} \
             --host "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
-            || echo "::error title=staging-preview record::not written for STAGING/${STAGING_SLUG} — see the log above; any published record was kept as it was"
+            || echo "::error title=staging-preview record::not written for ${PREVIEW_DIR}/${STAGING_SLUG} — see the log above; any published record was kept as it was"
 
       # The branch's KG, published beside the branch's site, so the graph a
       # reviewer inspects is the one this PR produces rather than main's. The
@@ -1566,7 +1573,7 @@ jobs:
           KG_BRANCH: ${{ steps.slug.outputs.branch }}
           SLUG: ${{ steps.slug.outputs.slug }}
         run: |
-          BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
+          BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/${PREVIEW_DIR}/${SLUG}"
           STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)
           # Both exporters stamp their own output with the build identity, from
           # the one `stagingStamp()` in scripts/staging-stamp.ts. It was an
@@ -1892,7 +1899,7 @@ jobs:
         run: |
           set -o pipefail
           bun run cat-harness-tools/scripts/site-dead-links.ts --site ./_site --root . --fix \
-            --base-path "/${{ github.event.repository.name }}/STAGING/${STAGING_SLUG}" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
+            --base-path "/${{ github.event.repository.name }}/${PREVIEW_DIR}/${STAGING_SLUG}" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
             | tee -a "$GITHUB_STEP_SUMMARY"
 
       # MINIFY LAST — the deploy's pass, mirrored here because
@@ -2014,7 +2021,7 @@ jobs:
           # job has no gh-pages checkout. Read just before the hand-off, so a
           # newer preview that landed while this run built is seen and kept.
           AGENT="$RUNNER_TEMP/agent-record.json"
-          gh api "repos/$REPO/contents/STAGING/$STAGING_SLUG/_build-record.json?ref=gh-pages" \
+          gh api "repos/$REPO/contents/$PREVIEW_DIR/$STAGING_SLUG/_build-record.json?ref=gh-pages" \
             -H 'Accept: application/vnd.github.raw' > "$AGENT" 2>/dev/null || rm -f "$AGENT"
           OUT="$RUNNER_TEMP/verify-comment.md"
           if [ ! -f "$RUNNER_TEMP/ci-record.json" ]; then
@@ -2022,7 +2029,7 @@ jobs:
             echo "same=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
           if [ ! -f "$AGENT" ] || [ "$(jq -r '.builder // empty' "$AGENT")" != "agent" ]; then
-            echo "no agent record at STAGING/$STAGING_SLUG any more: nothing to verify, nothing replaced"
+            echo "no agent record at $PREVIEW_DIR/$STAGING_SLUG any more: nothing to verify, nothing replaced"
             echo "same=gone" >> "$GITHUB_OUTPUT"; exit 0
           fi
           echo "agent_tree=$(jq -r .tree "$AGENT")" >> "$GITHUB_OUTPUT"
@@ -2100,7 +2107,7 @@ jobs:
           jq -n --arg slug "$STAGING_SLUG" --arg branch "$STAGING_BRANCH" --arg sha "$GITHUB_SHA" \
             --arg pr "$PR" --arg run "$RUN_URL" \
             '{slug: $slug, branch: $branch, sha: $sha, pr: (if $pr == "" then null else ($pr | tonumber) end), run: $run}' > "$H/meta.json"
-          echo "packed $(du -h "$H/site.tar" | cut -f1) for STAGING/$STAGING_SLUG"
+          echo "packed $(du -h "$H/site.tar" | cut -f1) for $PREVIEW_DIR/$STAGING_SLUG"
 
       - name: Queue the preview for the batched publisher (Q-SPD-5c)
         id: handoff_upload
@@ -2128,7 +2135,7 @@ jobs:
           ARTIFACT_ID: ${{ steps.handoff_upload.outputs.artifact-id }}
         run: |
           if gh workflow run staging-publish.yml --repo "$REPO" --ref main; then
-            echo "handed STAGING/$SLUG to the batched publisher"
+            echo "handed $PREVIEW_DIR/$SLUG to the batched publisher"
             exit 0
           fi
           # No publisher to take it: deploy in this job, and take the artifact
@@ -2180,7 +2187,7 @@ jobs:
             // The changes page, when the build wrote one: sources, the cone,
             // and what changed against the root that the cone did not name.
             if (require('fs').existsSync('_site/changes/index.html')) {
-              const url = `https://${owner}.github.io/${repo}/STAGING/${process.env.SLUG}/changes/`;
+              const url = `https://${owner}.github.io/${repo}/${process.env.PREVIEW_DIR}/${process.env.SLUG}/changes/`;
               body += `\n\n**What this branch changes:** ${url} — the changed sources, the rendered files in their dependency cone, and a QA list of files that differ from the published root but were not in the cone.\n`;
             }
             // Ours by the marker; by the old heading for a comment written before
@@ -2280,7 +2287,7 @@ jobs:
           # least N pages") would need calibration this has no basis for, which
           # is the same argument that stopped `6xaz` from inventing one.
           if [ -z "$(ls -A _site 2>/dev/null || true)" ]; then
-            echo "::error::the build produced an empty ./_site — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
+            echo "::error::the build produced an empty ./_site — refusing to deploy, so $PREVIEW_DIR/$STAGING_SLUG keeps its last working preview"
             exit 1
           fi
           # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
@@ -2347,16 +2354,16 @@ jobs:
             # push may have put a newer preview there while this run built;
             # that one is not this run's to replace (folio-assistant#2881).
             if [ -n "${VERIFY_TREE:-}" ]; then
-              now=$(jq -r '.tree // empty' "pages/STAGING/$STAGING_SLUG/_build-record.json" 2>/dev/null || true)
+              now=$(jq -r '.tree // empty' "pages/$PREVIEW_DIR/$STAGING_SLUG/_build-record.json" 2>/dev/null || true)
               if [ "$now" != "$VERIFY_TREE" ]; then
-                echo "STAGING/$STAGING_SLUG now holds tree ${now:-none}, not the checked ${VERIFY_TREE}: a newer preview, left alone"
+                echo "$PREVIEW_DIR/$STAGING_SLUG now holds tree ${now:-none}, not the checked ${VERIFY_TREE}: a newer preview, left alone"
                 exit 0
               fi
             fi
             BASE=$(git -C pages rev-parse HEAD)
-            rm -rf "pages/STAGING/$STAGING_SLUG"
-            mkdir -p "pages/STAGING/$STAGING_SLUG"
-            cp -R _site/. "pages/STAGING/$STAGING_SLUG/"
+            rm -rf "pages/$PREVIEW_DIR/$STAGING_SLUG"
+            mkdir -p "pages/$PREVIEW_DIR/$STAGING_SLUG"
+            cp -R _site/. "pages/$PREVIEW_DIR/$STAGING_SLUG/"
             # Store only what differs from the live site (owner, 2026-10-31:
             # "if asset not changed in staging then link to main asset").
             # Compared against the gh-pages tip just fetched, so the live
@@ -2365,7 +2372,7 @@ jobs:
             # the live site and puts the banner back on its pages.
             if [ -f cat-harness-tools/scripts/staging-share.ts ]; then
               bun run cat-harness-tools/scripts/staging-share.ts apply \
-                --root pages --preview "pages/STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG"
+                --root pages --preview "pages/$PREVIEW_DIR/$STAGING_SLUG" --slug "$STAGING_SLUG"
             fi
             # Writes into the directory and never pushes: this step already
             # holds the checkout and the retry loop, and a second pusher racing
@@ -2376,7 +2383,7 @@ jobs:
             # would hide this step from the gate set and orphan its exemption.
             bun run cat-harness-tools/scripts/render-log.ts --dir pages \
               --event rendered --kind staging-preview \
-              --path "STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG" \
+              --path "$PREVIEW_DIR/$STAGING_SLUG" --slug "$STAGING_SLUG" \
               --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
             # THE PREVIEW CAP — owner ruling 2026-10-02, issue #1868: "cap the
             # maximum number of previews (<= 10) and rotate old ones off",
@@ -2391,11 +2398,11 @@ jobs:
             # loop so each attempt decides against the tree it will push onto.
             bun run cat-harness-tools/scripts/staging-rotate.ts --dir pages \
               --current "$STAGING_SLUG" --run "$RUN_URL" --summary-out "$ROTATED"
-            git -C pages add -A "STAGING/$STAGING_SLUG" _render-log
-            MSG=(-m "staging($STAGING_SLUG): from $GITHUB_SHA" -m "render-log: rendered STAGING/$STAGING_SLUG")
+            git -C pages add -A "$PREVIEW_DIR/$STAGING_SLUG" _render-log
+            MSG=(-m "staging($STAGING_SLUG): from $GITHUB_SHA" -m "render-log: rendered $PREVIEW_DIR/$STAGING_SLUG")
             if [ -s "$ROTATED" ]; then
               # The rotated previews' removals and their retired records.
-              git -C pages add -A STAGING
+              git -C pages add -A "$PREVIEW_DIR"
               # `-m` and `-F` are mutually exclusive in `git commit`, so the
               # list is read into one paragraph rather than passed as a file.
               MSG+=(-m "rotated off (preview size budget, owner ruling 2026-10-02 amended 2026-10-04, #1868):"$'\n'"$(cat "$ROTATED")")
@@ -2471,7 +2478,7 @@ jobs:
             // The changes page, when the build wrote one: sources, the cone,
             // and what changed against the root that the cone did not name.
             if (require('fs').existsSync('_site/changes/index.html')) {
-              const url = `https://${owner}.github.io/${repo}/STAGING/${process.env.SLUG}/changes/`;
+              const url = `https://${owner}.github.io/${repo}/${process.env.PREVIEW_DIR}/${process.env.SLUG}/changes/`;
               body += `\n\n**What this branch changes:** ${url} — the changed sources, the rendered files in their dependency cone, and a QA list of files that differ from the published root but were not in the cone.\n`;
             }
             // Ours by the marker; by the old heading for a comment written before
@@ -2759,23 +2766,26 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           SLUG="$STAGING_SLUG"
-          if [ -d "pages/STAGING/$SLUG" ]; then
+          # The preview is under $PREVIEW_DIR, or under the legacy STAGING/ when it
+          # was published before 2026-11-05 (scripts/lib/preview-prefix.ts).
+          PD="$PREVIEW_DIR"; [ ! -d "pages/$PD/$SLUG" ] && [ -d "pages/STAGING/$SLUG" ] && PD=STAGING
+          if [ -d "pages/$PD/$SLUG" ]; then
             # Retire the preview's record BEFORE the preview goes (bean `6pfo`,
             # piece 2): the record outlives the preview as a RETIRED state in
             # STAGING/_retired/, never deleted with it. Retiring twice keeps the
             # first retirement (`staging-record.ts`). A missing live record is
             # a preview staged before 6pfo — nothing to retire, said so.
-            REC="pages/STAGING/$SLUG/staging-preview.json"
+            REC="pages/$PD/$SLUG/staging-preview.json"
             if [ -f "$REC" ]; then
-              mkdir -p pages/STAGING/_retired
-              [ -f "pages/STAGING/_retired/$SLUG.json" ] || cp "$REC" "pages/STAGING/_retired/$SLUG.json"
+              mkdir -p pages/$PREVIEW_DIR/_retired
+              [ -f "pages/$PREVIEW_DIR/_retired/$SLUG.json" ] || cp "$REC" "pages/$PREVIEW_DIR/_retired/$SLUG.json"
               bun run source/cat-harness-tools/scripts/staging-record.ts retire \
-                --out "pages/STAGING/_retired/$SLUG.json" --reason "removed on PR #${{ github.event.pull_request.number }} close; confirmed by: $CLEANUP_REASON" \
-                || echo "::error title=staging-preview record::could not retire STAGING/$SLUG — the preview is removed, its record copy kept as it was"
+                --out "pages/$PREVIEW_DIR/_retired/$SLUG.json" --reason "removed on PR #${{ github.event.pull_request.number }} close; confirmed by: $CLEANUP_REASON" \
+                || echo "::error title=staging-preview record::could not retire $PD/$SLUG — the preview is removed, its record copy kept as it was"
             else
-              echo "No staging-preview record in STAGING/$SLUG (staged before bean 6pfo) — nothing to retire."
+              echo "No staging-preview record in $PD/$SLUG (staged before bean 6pfo) — nothing to retire."
             fi
-            rm -rf "pages/STAGING/$SLUG"
+            rm -rf "pages/$PD/$SLUG"
             # ONE COMMIT for the removal and its record, deliberately. A
             # separate log push can fail on its own and leave a preview that
             # vanished with nothing saying why — which is the exact state bean
@@ -2806,14 +2816,14 @@ jobs:
                         '{summary:$s, reason:$r}')
             bun run source/cat-harness-tools/scripts/render-log.ts --dir pages \
               --event removed --kind staging-preview \
-              --path "STAGING/$SLUG" --slug "$SLUG" \
+              --path "$PD/$SLUG" --slug "$SLUG" \
               --run "$RUN_URL" <<<"$PROSE"
             git -C pages config user.name 'github-actions[bot]'
             git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git -C pages add -A "STAGING/$SLUG" _render-log
+            git -C pages add -A "$PD/$SLUG" _render-log
             # Only when it exists: a pathspec that matches nothing fails `git add`.
-            if [ -d pages/STAGING/_retired ]; then git -C pages add -A STAGING/_retired; fi
-            git -C pages commit -m "staging(cleanup): remove STAGING/$SLUG (PR #${{ github.event.pull_request.number }} closed)" || true
+            if [ -d pages/$PREVIEW_DIR/_retired ]; then git -C pages add -A $PREVIEW_DIR/_retired; fi
+            git -C pages commit -m "staging(cleanup): remove $PD/$SLUG (PR #${{ github.event.pull_request.number }} closed)" || true
             # Same race as the deploy above, and the same reason a queue is not
             # enough: five other workflows push to `gh-pages` without joining
             # it. Rebase and retry rather than losing the cleanup — our commit
@@ -2841,7 +2851,7 @@ jobs:
               # sessions it says contend on it.
               bun run source/cat-harness-tools/scripts/backoff-sleep.ts --attempt "$attempt"
             done
-            echo "Cleaned up STAGING/$SLUG"
+            echo "Cleaned up $PD/$SLUG"
           else
             echo "No staging directory found for $SLUG (already cleaned up)"
           fi
@@ -2863,8 +2873,11 @@ jobs:
         run: |
           set -eu
           SLUG="$STAGING_SLUG"
-          if [ ! -d "pages/STAGING/$SLUG" ]; then
-            echo "No STAGING/$SLUG on gh-pages — nothing was retained, so there is nothing to record."
+          # The preview is under $PREVIEW_DIR, or under the legacy STAGING/ when it
+          # was published before 2026-11-05 (scripts/lib/preview-prefix.ts).
+          PD="$PREVIEW_DIR"; [ ! -d "pages/$PD/$SLUG" ] && [ -d "pages/STAGING/$SLUG" ] && PD=STAGING
+          if [ ! -d "pages/$PD/$SLUG" ]; then
+            echo "No $PD/$SLUG on gh-pages — nothing was retained, so there is nothing to record."
             exit 0
           fi
           # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
@@ -2881,12 +2894,12 @@ jobs:
                       '{summary:$s, reason:$r}')
           bun run source/cat-harness-tools/scripts/render-log.ts --dir pages \
             --event retained --kind staging-preview \
-            --path "STAGING/$SLUG" --slug "$SLUG" \
+            --path "$PD/$SLUG" --slug "$SLUG" \
             --run "$RUN_URL" <<<"$PROSE"
           git -C pages config user.name 'github-actions[bot]'
           git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git -C pages add -A _render-log
-          git -C pages commit -m "render-log: retained STAGING/$SLUG" || exit 0
+          git -C pages commit -m "render-log: retained $PD/$SLUG" || exit 0
           for attempt in 1 2 3; do
             if git -C pages push origin gh-pages; then
               echo "pushed on attempt $attempt"
@@ -2924,7 +2937,7 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const slug = process.env.SLUG;
-            const pagesUrl = `https://${owner}.github.io/${repo}/STAGING/${slug}/`;
+            const pagesUrl = `https://${owner}.github.io/${repo}/${process.env.PREVIEW_DIR}/${slug}/`;
             const body = [
               '### 📌 Staging preview retained',
               '',
@@ -3003,7 +3016,7 @@ jobs:
           # neither names a preview, so they are refused by name.
           case "$SLUG" in
             ""|.|..|_retired)
-              echo "::error::cleanup_slug must name one STAGING/<slug> directory, not a path."
+              echo "::error::cleanup_slug must name one $PREVIEW_DIR/<slug> (or legacy STAGING/<slug>) directory, not a path."
               exit 1
               ;;
             *[!A-Za-z0-9._-]*)
@@ -3019,7 +3032,7 @@ jobs:
             exit 1
           fi
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
-          echo "Confirmed target: STAGING/$SLUG"
+          echo "Confirmed target: $PREVIEW_DIR/$SLUG"
 
       - name: Check out the platform, for the liveness preflight
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -3093,32 +3106,35 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -eu
-          if [ ! -d "STAGING/$CLEANUP_SLUG" ]; then
-            echo "No STAGING/$CLEANUP_SLUG on gh-pages — nothing to remove."
+          # The preview is under $PREVIEW_DIR, or under the legacy STAGING/ when it
+          # was published before 2026-11-05 (scripts/lib/preview-prefix.ts).
+          PD="$PREVIEW_DIR"; [ ! -d "$PD/$CLEANUP_SLUG" ] && [ -d "STAGING/$CLEANUP_SLUG" ] && PD=STAGING
+          if [ ! -d "$PD/$CLEANUP_SLUG" ]; then
+            echo "No $PD/$CLEANUP_SLUG on gh-pages — nothing to remove."
             exit 0
           fi
           # Say what is going, with its size and file count, BEFORE it goes:
           # a deletion that leaves no record of what it removed is the first
           # property `deletion-requires-confirmation` warns about.
-          echo "Removing STAGING/$CLEANUP_SLUG"
-          du -sh "STAGING/$CLEANUP_SLUG" || true
-          find "STAGING/$CLEANUP_SLUG" -type f | wc -l
+          echo "Removing $PD/$CLEANUP_SLUG"
+          du -sh "$PD/$CLEANUP_SLUG" || true
+          find "$PD/$CLEANUP_SLUG" -type f | wc -l
           # Retire the preview's record BEFORE the preview goes (bean `6pfo`,
           # piece 2): the record outlives the preview as a RETIRED state in
           # STAGING/_retired/, never deleted with it. Retiring twice keeps the
           # first retirement (`staging-record.ts`). A missing live record is
           # a preview staged before 6pfo — nothing to retire, said so.
-          REC="STAGING/$CLEANUP_SLUG/staging-preview.json"
+          REC="$PD/$CLEANUP_SLUG/staging-preview.json"
           if [ -f "$REC" ]; then
-            mkdir -p STAGING/_retired
-            [ -f "STAGING/_retired/$CLEANUP_SLUG.json" ] || cp "$REC" "STAGING/_retired/$CLEANUP_SLUG.json"
+            mkdir -p $PREVIEW_DIR/_retired
+            [ -f "$PREVIEW_DIR/_retired/$CLEANUP_SLUG.json" ] || cp "$REC" "$PREVIEW_DIR/_retired/$CLEANUP_SLUG.json"
             bun run ../source/cat-harness-tools/scripts/staging-record.ts retire \
-              --out "STAGING/_retired/$CLEANUP_SLUG.json" --reason "removed by dispatch from $DISPATCHED_BY" \
-              || echo "::error title=staging-preview record::could not retire STAGING/$CLEANUP_SLUG — the preview is removed, its record copy kept as it was"
+              --out "$PREVIEW_DIR/_retired/$CLEANUP_SLUG.json" --reason "removed by dispatch from $DISPATCHED_BY" \
+              || echo "::error title=staging-preview record::could not retire $PD/$CLEANUP_SLUG — the preview is removed, its record copy kept as it was"
           else
-            echo "No staging-preview record in STAGING/$CLEANUP_SLUG (staged before bean 6pfo) — nothing to retire."
+            echo "No staging-preview record in $PD/$CLEANUP_SLUG (staged before bean 6pfo) — nothing to retire."
           fi
-          rm -rf -- "STAGING/$CLEANUP_SLUG"
+          rm -rf -- "$PD/$CLEANUP_SLUG"
           # The record rides in the SAME commit as the removal, so a preview
           # cannot vanish without an entry saying who dispatched it and why.
           # `--path` is re-checked by VALUE inside the tool rather than trusted
@@ -3139,15 +3155,15 @@ jobs:
                       '{summary:$s, reason:$r}')
           bun run ../source/cat-harness-tools/scripts/render-log.ts --dir . \
             --event removed --kind staging-preview \
-            --path "STAGING/$CLEANUP_SLUG" --slug "$CLEANUP_SLUG" \
+            --path "$PD/$CLEANUP_SLUG" --slug "$CLEANUP_SLUG" \
             --run "$RUN_URL" <<<"$PROSE"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A "STAGING/$CLEANUP_SLUG" _render-log
+          git add -A "$PD/$CLEANUP_SLUG" _render-log
           # Only when it exists: a pathspec that matches nothing fails `git add`.
-          if [ -d STAGING/_retired ]; then git add -A STAGING/_retired; fi
+          if [ -d $PREVIEW_DIR/_retired ]; then git add -A $PREVIEW_DIR/_retired; fi
           git commit \
-            -m "staging(cleanup): remove STAGING/$CLEANUP_SLUG (dispatched)" \
+            -m "staging(cleanup): remove $PD/$CLEANUP_SLUG (dispatched)" \
             -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in cat-harness-tools/scripts/staging-cleanup-preflight.ts." \
             -m "$RUN_URL" || true
           # Same race as every other writer of this ref, and the same reason a
@@ -3176,4 +3192,4 @@ jobs:
             # sessions it says contend on it.
             bun run ../source/cat-harness-tools/scripts/backoff-sleep.ts --attempt "$attempt"
           done
-          echo "Removed STAGING/$CLEANUP_SLUG"
+          echo "Removed $PD/$CLEANUP_SLUG"

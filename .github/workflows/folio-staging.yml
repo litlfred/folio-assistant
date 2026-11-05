@@ -129,6 +129,22 @@ on:
         required: false
         default: gh-pages
         type: string
+      preview_dir:
+        description: >
+          The directory on the publish branch a preview goes under, as
+          `<preview_dir>/<slug>/`. `branches` (owner, 2026-11-05), the
+          directory an IG Publisher's own branch previews use, so on an IG
+          repository the two share it. Previews from before then stay under
+          `STAGING/`, which the base-preview lookup and the comments job
+          still read.
+        required: false
+        default: branches
+        type: string
+
+# Read by every step below as `$PREVIEW_DIR` (cat-harness-tools
+# `scripts/lib/preview-prefix.ts`).
+env:
+  PREVIEW_DIR: ${{ inputs.preview_dir || 'branches' }}
 
 permissions:
   contents: write
@@ -507,9 +523,11 @@ jobs:
           if [ "$BASE_REF" != "$DEFAULT_BRANCH" ]; then
             BASE_SLUG=$(echo "$BASE_REF" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
             case "$BASE_SLUG" in ""|.|..) BASE_SLUG="" ;; esac
-            if [ -n "$BASE_SLUG" ] && [ -d "pages/STAGING/$BASE_SLUG" ]; then
-              DIR="pages/STAGING/$BASE_SLUG"
-              URL="$SITE/STAGING/$BASE_SLUG"
+            # The base's preview: under $PREVIEW_DIR, else the legacy STAGING/.
+            PD="$PREVIEW_DIR"; [ ! -d "pages/$PD/$BASE_SLUG" ] && [ -d "pages/STAGING/$BASE_SLUG" ] && PD=STAGING
+            if [ -n "$BASE_SLUG" ] && [ -d "pages/$PD/$BASE_SLUG" ]; then
+              DIR="pages/$PD/$BASE_SLUG"
+              URL="$SITE/$PD/$BASE_SLUG"
               LABEL="$BASE_REF"
             else
               LABEL="$DEFAULT_BRANCH (the base, $BASE_REF, has no preview)"
@@ -612,7 +630,7 @@ jobs:
           bun run "$PLATFORM_DIR/folio-assistant-core/scripts/review-comments.ts" "${TODOS_ARGS[@]}" \
             --repo "$GITHUB_REPOSITORY" --pr "$PR" --commit "$GITHUB_SHA" \
             --folio "$FOLIO_DIR" --blocks-out "$SITE_DIR/blocks.json" \
-            --existing "pages/STAGING/$STAGING_SLUG/review-comments.json" \
+            --existing "pages/$PREVIEW_DIR/$STAGING_SLUG/review-comments.json" \
             --rendered "$SITE_DIR/rendered-impact.json" --measured "$SITE_DIR/rendered-measured.json" \
             --out "$SITE_DIR/review-comments.json"
 
@@ -642,26 +660,26 @@ jobs:
           # (changeset and its text, blocks, block QA, review comments, the
           # visual diff and its pictures) are not a site on their own.
           if [ -z "$(ls -A "$SITE_DIR" 2>/dev/null | grep -vxE 'changeset\.json|changeset-text\.json|rendered-impact\.json|rendered-measured\.json|blocks\.json|block-qa\.json|review-comments\.json|visual-diff\.json|visual' || true)" ]; then
-            echo "::error::the build produced no site in $SITE_DIR — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
+            echo "::error::the build produced no site in $SITE_DIR — refusing to deploy, so $PREVIEW_DIR/$STAGING_SLUG keeps its last working preview"
             exit 1
           fi
           # REPLACE this slug's preview, never overlay it (bean `85im`): an
           # overlay keeps files the build stopped producing, so a reviewer
           # checking a REMOVAL is told it did not happen.
-          rm -rf "pages/STAGING/$STAGING_SLUG"
-          mkdir -p "pages/STAGING/$STAGING_SLUG"
-          cp -R "$SITE_DIR/." "pages/STAGING/$STAGING_SLUG/"
+          rm -rf "pages/$PREVIEW_DIR/$STAGING_SLUG"
+          mkdir -p "pages/$PREVIEW_DIR/$STAGING_SLUG"
+          cp -R "$SITE_DIR/." "pages/$PREVIEW_DIR/$STAGING_SLUG/"
           PROSE=$(jq -n --arg s 'folio staging preview published' '{summary:$s}')
           bun run "$PLATFORM_DIR/cat-harness-tools/scripts/render-log.ts" --dir pages \
             --event rendered --kind staging-preview \
-            --path "STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG" \
+            --path "$PREVIEW_DIR/$STAGING_SLUG" --slug "$STAGING_SLUG" \
             --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
           git -C pages config user.name 'github-actions[bot]'
           git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git -C pages add -A "STAGING/$STAGING_SLUG" _render-log
+          git -C pages add -A "$PREVIEW_DIR/$STAGING_SLUG" _render-log
           git -C pages commit \
             -m "staging($STAGING_SLUG): from $GITHUB_SHA" \
-            -m "render-log: rendered STAGING/$STAGING_SLUG" \
+            -m "render-log: rendered $PREVIEW_DIR/$STAGING_SLUG" \
             -m "$RUN_URL" || exit 0
           for attempt in 1 2 3; do
             if git -C pages push origin "$PUBLISH_BRANCH"; then
@@ -694,7 +712,7 @@ jobs:
             const slug = process.env.SLUG;
             const sha = context.sha.substring(0, 7);
             const { owner, repo } = context.repo;
-            const url = `https://${owner}.github.io/${repo}/STAGING/${slug}/`;
+            const url = `https://${owner}.github.io/${repo}/${process.env.PREVIEW_DIR}/${slug}/`;
             // The review page is wherever this build wrote it: `en/review/` once the
             // folio's core puts pages under the page locale (folio-assistant#2527),
             // `review/` before. Read the built site rather than assume a layout, so
@@ -1044,12 +1062,15 @@ jobs:
               exit 1
               ;;
           esac
-          DIR="pages/STAGING/$SLUG"
+          # Under $PREVIEW_DIR, or the legacy STAGING/ for a preview published
+          # before 2026-11-05 (scripts/lib/preview-prefix.ts).
+          PD="$PREVIEW_DIR"; [ ! -d "pages/$PD/$SLUG" ] && [ -d "pages/STAGING/$SLUG" ] && PD=STAGING
+          DIR="pages/$PD/$SLUG"
           git -C pages config user.name 'github-actions[bot]'
           git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           for attempt in 1 2 3; do
             if [ ! -f "$DIR/blocks.json" ]; then
-              echo "::notice::STAGING/$SLUG has no blocks.json yet — no preview to attach comments to. The next build of the PR ingests them."
+              echo "::notice::$PD/$SLUG has no blocks.json yet — no preview to attach comments to. The next build of the PR ingests them."
               exit 0
             fi
             # Recomputed from the publish branch as it is NOW on every
@@ -1061,7 +1082,7 @@ jobs:
               --blocks "$DIR/blocks.json" --existing "$DIR/review-comments.json" \
               --rendered "$DIR/rendered-impact.json" --measured "$DIR/rendered-measured.json" \
               --out "$DIR/review-comments.json"
-            git -C pages add "STAGING/$SLUG/review-comments.json"
+            git -C pages add "$PD/$SLUG/review-comments.json"
             git -C pages commit -m "review-comments($SLUG): refresh on a PR comment" || exit 0
             if git -C pages push origin "$PUBLISH_BRANCH"; then
               echo "pushed on attempt $attempt"

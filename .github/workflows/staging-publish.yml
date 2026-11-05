@@ -22,6 +22,13 @@ name: Staging publish (batched gh-pages push)
 on:
   workflow_dispatch:
 
+# Where previews are published on gh-pages: `branches/<slug>/` (owner,
+# 2026-11-05; cat-harness-tools `scripts/lib/preview-prefix.ts`). Previews
+# published before that under `STAGING/` are left in place: readers and the
+# cleanup accept both, writers write this one only.
+env:
+  PREVIEW_DIR: branches
+
 permissions:
   contents: write       # push gh-pages
   pull-requests: write  # the "preview pushed" comment
@@ -106,8 +113,8 @@ jobs:
                 { env: { ...process.env, SLUG: p.slug, BRANCH: p.branch, SHA: p.sha } });
               let body = fs.readFileSync(out, 'utf8');
               body += `\n\n**CI results:** https://github.com/${owner}/${repo}/pull/${p.pr}/checks — the preview does not wait for them.\n`;
-              if (fs.existsSync(`pages/STAGING/${p.slug}/changes/index.html`)) {
-                const url = `https://${owner}.github.io/${repo}/STAGING/${p.slug}/changes/`;
+              if (fs.existsSync(`pages/${process.env.PREVIEW_DIR}/${p.slug}/changes/index.html`)) {
+                const url = `https://${owner}.github.io/${repo}/${process.env.PREVIEW_DIR}/${p.slug}/changes/`;
                 body += `\n\n**What this branch changes:** ${url} — the changed sources, the rendered files in their dependency cone, and a QA list of files that differ from the published root but were not in the cone.\n`;
               }
               const comments = await github.paginate(github.rest.issues.listComments, {
