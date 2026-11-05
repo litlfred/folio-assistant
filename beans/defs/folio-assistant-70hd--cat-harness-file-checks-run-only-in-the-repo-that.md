@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T19:35:00Z
+updated_at: 2026-11-05T19:40:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -91,3 +91,5 @@ _2026-11-05T19:35:00Z_ — **All five cat-harness-tools PRs merged**, each on al
 - #1533 711e078: reference-direction, process-index, ci-invocations, translate-bpmn --check
 - #1534 ee88ead: generator checks (publish-check, bpmn:checklist, library:viz, branch:readme); Standalone needed one re-run, its first run failed on src/tools/degradation.test.ts, a machine capability probe the diff does not touch.
 Still open under this bean: the folio-assistant-core materialized-fixity PR (session_01VQDpPcbpLjEo8EuzFLVq5Z, after core re-pins tools past fc768f6); not started: core kg:materialize / glossary:pot, who-iris dc:render, bootstrap-tools iri:sync. The effect on downstream false failures shows once each layer re-pins cat-harness-tools past ee88ead. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-05T19:40:00Z_ — Owner card "Next step" option 1: confirm it worked. Re-count of false cross-layer failures scheduled for ~22:10Z, after the next re-pin train brings cat-harness-tools past ee88ead (before: 22 cross-layer false failures across 4 repos; see the 16:45Z note). Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
