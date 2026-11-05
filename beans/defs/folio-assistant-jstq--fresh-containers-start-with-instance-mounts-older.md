@@ -18,4 +18,4 @@ Measured 2026-11-05 (session of bean x38u): in a fresh folio-assistant container
 ## Progress 2026-11-05
 - [x] mount-from-lock replaces a mount at an earlier pin of the lock (priorPins); edited mounts still refused — cat-harness-tools#1531
 - [ ] #1531 merged
-- [ ] SessionStart hook in folio-assistant stops discarding mount-from-lock output (separate change, owner's call)
+- [ ] SessionStart hook warns in one line on a problem (owner: "Warn on problems") — folio-assistant#2976
