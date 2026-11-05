@@ -2,13 +2,13 @@
 # folio-assistant-tv20
 $schema: bean/1.0.0
 title: 'CI speed II (c2): Feature Staging still builds its own site (cis4, closed undone)'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T08:26:16Z
+updated_at: 2026-11-05T08:33:40Z
 parent: folio-assistant-k3vv
 ---
 
@@ -20,3 +20,5 @@ Filed as a follow-up rather than reopening cis4, because an archived bean must s
 - [ ] Feature Staging reuses the gates run's derived output for the same tree, or the bean records why it cannot
 
 _2026-11-05T08:40:00Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk from the CI-speed analysis of session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.
+
+_2026-11-05T08:33:40Z_ — Claimed by claude/ci-skip-main-only-reruns — pushed to cat/cat-harness/beans so sibling sessions see it before this branch has a PR (bean 35nj).
