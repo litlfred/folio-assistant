@@ -139,10 +139,18 @@ def judge_tests(kind, junit, log, exit_code):
             return None, f"exit {exit_code} and no `N fail` summary in bun's output"
         # bun 1.4.4's account, captured as fixtures in
         # test/workflows/fixtures/bun-1.4.4-*: the JUnit report lists the
-        # failing test cases and no unhandled error; `N fail` counts exactly
-        # those cases; each `# Unhandled error between tests` is counted on
-        # the `N error` line alone. Anything else is could-not-determine.
-        if fail_n != len(failing) or err_n != len(unhandled):
+        # failing test cases and no unhandled error; each `# Unhandled error
+        # between tests` is counted on the `N error` line. Whether it is ALSO
+        # counted in `N fail` depends on its kind, and bun's output does not
+        # say which: an unhandled rejection while a file loads is not
+        # (bun-1.4.4-unhandled, b.test.ts), a throw that stops a file loading
+        # is (bun-1.4.4-load-failure, c.test.ts; and CI, kg-export.test.ts's
+        # top-level await). So `N fail` is the JUnit failures plus between 0
+        # and every unhandled error, and nothing else; outside that, or with
+        # `N error` not the unhandled errors, could-not-determine. Every
+        # unhandled error is judged as a failure below, so neither count is
+        # ever a pass.
+        if err_n != len(unhandled) or not len(failing) <= fail_n <= len(failing) + len(unhandled):
             return None, (f"bun reported {fail_n} fail / {err_n} error, the JUnit report names "
                           f"{len(failing)} failing test(s) and the output {len(unhandled)} unhandled error(s)")
         failing += unhandled

@@ -1,0 +1,4 @@
+import { test } from "bun:test";
+test("c ok", () => {});
+const X = await (async () => { throw new Error("load boom"); })();
+test("c never", () => { void X; });

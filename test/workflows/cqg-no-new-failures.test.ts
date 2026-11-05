@@ -322,11 +322,33 @@ describe("bun test is judged per test", () => {
     expect(sb.summary()).toContain("a.test.ts > after");
   });
 
-  test("an unhandled error counted in `N fail` as well is not bun 1.4.4's account, so could-not-determine", () => {
+  test("real bun 1.4.4, a file that fails to load: its error is counted in `N fail` too, and still judged", () => {
     const sb = sandbox(mainLog);
     sb.begin();
-    const out = "b.test.ts:\n\n# Unhandled error between tests\n-----\nerror: boom\n" + summaryOut(2, 1);
+    const { junit, out } = real("bun-1.4.4-load-failure");
+    // 4 fail = the 3 JUnit failures + c.test.ts's load failure; 2 errors = b's rejection and c's throw.
+    expect(out).toContain(" 4 fail");
+    expect(out).toContain(" 2 errors");
+    testStep(sb, "bun", junit, out, 1);
+    expect(sb.verdict("pull_request").status).toBe(1);
+    expect(sb.summary()).not.toContain("Could not determine");
+    expect(sb.summary()).toContain("c.test.ts > (unhandled error between tests)");
+    expect(sb.summary()).toContain("b.test.ts > (unhandled error between tests)");
+  });
+
+  test("`N fail` beyond the JUnit failures plus every unhandled error is could-not-determine", () => {
+    const sb = sandbox(mainLog);
+    sb.begin();
+    const out = "b.test.ts:\n\n# Unhandled error between tests\n-----\nerror: boom\n" + summaryOut(3, 1);
     testStep(sb, "bun", BUN_JUNIT(FAIL("old")), out, 1);
+    expect(sb.verdict("pull_request").status).toBe(1);
+    expect(sb.summary()).toContain("Could not determine");
+  });
+
+  test("`N fail` below the JUnit failures is could-not-determine", () => {
+    const sb = sandbox(mainLog);
+    sb.begin();
+    testStep(sb, "bun", BUN_JUNIT(FAIL("old") + FAIL("other")), summaryOut(1), 1);
     expect(sb.verdict("pull_request").status).toBe(1);
     expect(sb.summary()).toContain("Could not determine");
   });
