@@ -243,6 +243,7 @@ describe("one whole tick, against a stub GitHub", () => {
   const C = "c".repeat(40), M1 = "1".repeat(40), M2 = "2".repeat(40), MAIN = "f".repeat(40);
   const pull = (n: number, sha: string, labels: string[], ref = `b${n}`, extra: object = {}) => ({
     number: n, state: "open", draft: false, body: "", head: { sha, ref, repo: { full_name: R } }, base: { ref: "main" },
+    // A stub value; the train reads `mergeable_state` only to word a refusal (fx5r).
     labels: labels.map((name) => ({ name })), mergeable: true, mergeable_state: "clean", ...extra,
   });
   function world() {

@@ -228,6 +228,8 @@ interface PullJson {
   base: { ref: string };
   labels: Array<{ name: string }>;
   mergeable?: boolean | null;
+  // Read only to word a refusal: it can go stale (bean fx5r), and `unknown`
+  // means not computed yet (h2s9). The merge itself relies on the PUT's sha.
   mergeable_state?: string;
 }
 
@@ -356,6 +358,7 @@ async function land(api: Api, repo: string, t: TrainPr): Promise<{ merged: boole
   }
   if (!pr || pr.state !== "open" || !isOwnTrain(pr, repo)) return { merged: false, why: "not an open train PR of this repository" };
   if (pr.head.sha !== t.headSha) return { merged: false, why: "its head moved after it was judged" };
+  // `mergeable_state` only labels the refusal; it can be stale (fx5r).
   if (pr.mergeable !== true) return { merged: false, why: `GitHub does not call it mergeable (${pr.mergeable_state ?? "unknown"}); main moved, so the next train is rebuilt` };
   try {
     await api.send("PUT", `/repos/${repo}/pulls/${t.number}/merge`, {
