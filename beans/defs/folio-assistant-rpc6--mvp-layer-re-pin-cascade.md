@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T17:38:53Z
+updated_at: 2026-11-05T17:40:17Z
 parent: folio-assistant-rwmf
 ---
 
@@ -68,3 +68,5 @@ _2026-11-05T17:23:10Z_ — All 7 fix PRs MERGED: who-iris#181 0237087, #183 54af
 _2026-11-05T17:34:39Z_ — All 7 site PRs re-pinned to the freeze set (lock verified equal to it): smart-immunizations#114 77137db, smart-ra#228 f323d7d, dth-sc#18 69b6fac, dth-phc#29 ebb7106, smart-ips-pilgrimage#8 759ed30, smart-immunizations-uganda#18 fc689b9, dth-pc#18 e8c908f. Workflow edits: lock-following uses: pins only. Watcher on all 7; reds judged by hand vs main's + the 3 known.
 
 _2026-11-05T17:38:53Z_ — Survey of the freeze set (dth-sc + smart-immunizations, ~310 gates vs site main) done. Owner card, all option 1: (Q1) freeze bootstrap = 12fa6d5 (bootstrap main), not c90ef45 — at c90ef45 sites get 25 stale bootstrap .pot; the 2 cat-harness bpmn checklists are a KNOWN red until the folio-assistant index re-pins bootstrap (cat-harness CI judges them at the index pin). (Q2) KNOWN reds extended to the publish-skipped family: rendered-labels, state:visualizer, slice:sqlite. (Q3) tools: scope lockfile-pinning and split:baseline baselines to the folio-assistant root. (Q4) content calls become work items, known reds meanwhile: who-iris command paths to removed iris-oxigraph/iris-cdn scripts; cat-harness CRDM links to an absent library entry (methodologies/crdm.md, sdlc/skills/crdm/crdm-requirements-template.md); subgraph-coverage serialisations/visualiser for cat-harness sdlc*, work-plan*, smart-base-templates, smart-ra references, who-iris attestations; core review-sheet-script.md:221 example path. Mechanical fixes next: cat-harness (4 command paths, requirements-filing SVG link), core (back-matter-order.ts literal), tools (2 baselines, context-leak in NEEDS_INPUT_SCRIPTS), sites (dth-sc AGENTS.md:106, dth-sc overrides smart-base-templates + references, gen-block-jsonld ns# -> ns/, tools-ref: main).
+
+_2026-11-05T17:40:17Z_ — Filed folio-assistant-y4pw (the 4 content calls, parent rwmf). Opened folio-assistant-core#649 (back-matter-order.ts through folioDir; test 5/5). Agents on cat-harness (4 command paths + requirements-filing SVG link) and cat-harness-tools (lockfile-pinning + split:baseline scoped to fa, context-leak needs-input). Then one more re-pin of all 7 sites: freeze set with bootstrap 12fa6d5 and those merges, plus the site-owned fixes.
