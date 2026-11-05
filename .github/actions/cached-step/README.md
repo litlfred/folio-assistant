@@ -110,9 +110,11 @@ them cheaply, so CI only verifies.
 ### What a committer runs before pushing
 
 `bun run cat cache:publish <step>` for each class-(a) step their change
-moves the key of. Today that
-is the mount cache (`cat-mount`) when the change edits `index.lock.json`.
-Others join the list as the audit clears them.
+moves the key of. None is listed yet. The mounts have their own committer
+path, the layers ref (`refs/cat/layers/<key>`, `layers:publish`), whose
+replayer verifies per layer and reuses every layer that did not move. When
+it lands, the `cat-mount` Actions-cache entry in `jsonld-gen-check.yml` is
+superseded by it and removed.
 
 ## Budget
 
