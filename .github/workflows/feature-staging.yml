@@ -310,9 +310,12 @@ jobs:
       # `ready_for_review` always build, and any failure to compute or read an
       # id builds, because a missing preview costs the reviewer.
       #
-      # The history is fetched into a bare repository, without file contents;
-      # `git diff` then fetches just the blobs the diff touches. Nothing of the
-      # PR is checked out or run: this job only reads git objects.
+      # The diff is GitHub's own PR diff (merge base to head), read through the
+      # API: nothing of the PR is fetched, checked out or run here. A binary
+      # file shows in it only as its `index` line (blob ids), which
+      # `patch-id` ignores, so those lines are hashed in beside the id and a
+      # changed binary still changes the key. A diff too large for the API is
+      # an error, and the preview builds.
       - id: own-diff
         if: github.event_name == 'pull_request' && steps.defer.outputs.deferred != 'true'
         continue-on-error: true
@@ -322,18 +325,18 @@ jobs:
           ACTION: ${{ github.event.action }}
           HEAD_REF: ${{ github.event.pull_request.head.ref }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
-          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PR: ${{ github.event.pull_request.number }}
         run: |
           set -u
-          export GIT_DIR="$RUNNER_TEMP/own-diff.git"
-          git init -q --bare "$GIT_DIR"
-          git fetch -q --filter=blob:none "https://github.com/$REPO" "$HEAD_SHA" "$BASE_SHA" \
-            || { echo "could not fetch the PR's history: the preview builds"; exit 0; }
-          mb=$(git merge-base "$BASE_SHA" "$HEAD_SHA" 2>/dev/null) || { echo "no merge base: the preview builds"; exit 0; }
-          pid=$(git diff --binary "$mb" "$HEAD_SHA" | git patch-id --stable | cut -d' ' -f1)
+          diff="$RUNNER_TEMP/own-diff.patch"
+          gh api "repos/$REPO/pulls/$PR" -H 'Accept: application/vnd.github.diff' > "$diff" \
+            || { echo "could not read the PR's diff: the preview builds"; exit 0; }
+          pid=$(git patch-id --stable < "$diff" | cut -d' ' -f1)
           [ -n "$pid" ] || { echo "no patch id (an empty diff?): the preview builds"; exit 0; }
+          bin=$(awk '/^index /{i=$0} /^Binary files /{print i}' "$diff")
+          pid=$(printf '%s\n%s\n' "$pid" "$bin" | sha256sum | cut -c1-40)
           echo "patch_id=$pid" >> "$GITHUB_OUTPUT"
-          echo "the PR's own change (merge base ${mb:0:12} → head ${HEAD_SHA:0:12}) has patch id ${pid:0:12}"
+          echo "the PR's own change (to head ${HEAD_SHA:0:12}) has key ${pid:0:12}"
           [ "$ACTION" = "synchronize" ] || { echo "$ACTION: the preview always builds"; exit 0; }
           SLUG=$(echo "$HEAD_REF" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
           case "$SLUG" in ""|.|..|_retired) exit 0 ;; esac
