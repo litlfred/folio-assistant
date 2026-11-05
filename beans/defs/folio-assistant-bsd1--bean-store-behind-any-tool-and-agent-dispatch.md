@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-11-02T19:10:00Z
-updated_at: 2026-11-02T19:13:00Z
+updated_at: 2026-11-05T13:34:27Z
 parent: folio-assistant-yj32
 tags:
     - work-plan-store
@@ -34,3 +34,5 @@ Owner ask 2026-11-02 18:56Z (thread cmsg_017WNUkNK8kdDziPK58Pv6G9PqHijxfA1UbP1sL
 - Also in this thread: tools#1414 (processed-beans pages, ready; owner said merge to main 18:50Z; repo has no auto-merge, merge by hand when base-exact checks finish)
 
 _2026-11-02T19:13Z_ — handover: all work pushed; see checklist above.
+
+_2026-11-05T13:34:27Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
