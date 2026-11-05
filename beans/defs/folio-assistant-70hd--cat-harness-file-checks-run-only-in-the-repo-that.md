@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T17:40:00Z
+updated_at: 2026-11-05T17:42:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -25,7 +25,7 @@ parent: folio-assistant-4j43
 - A test.
 
 ## Done when
-- [ ] PR in litlfred/cat-harness-tools merged (green, or only main's own reds)
+- [x] PR in litlfred/cat-harness-tools merged (green, or only main's own reds) — #1508, a094099
 - [ ] a downstream root lists `check:schema-nodes` as skipped `other-layer`
 
 Parent: 4j43. Related: tsh9 (two-phase move rule), k3vv (CI speed II).
@@ -69,3 +69,5 @@ _2026-11-05T18:00:00Z_ — Owner (relayed by session_01VQDpPfGantMCt7AV4LCCK2, ~
 _2026-11-05T18:10:00Z_ — Owner card "Core fix" option 1: the core materialized-fixity patch was sent in full to session_01VQDpPfGantMCt7AV4LCCK2 (which can attach repos), to open in litlfred/folio-assistant-core after core re-pins cat-harness-tools past #1529. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
 
 _2026-11-05T17:40:00Z_ — #1521 standalone red: declared-paths ratchet counted the "library/" literal in a check-tabular-stubs message; fixed in 1fab7a0 (words, not path literals), merged forward to #1529/#1533/#1534. #1508 head 295afe2: all head jobs green, main comparison running. Core fix handed to session_01VQDpPcbpLjEo8EuzFLVq5Z (waits on #1529). Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-05T17:42:00Z_ — **Merged** litlfred/cat-harness-tools#1508 (a094099) on all-green CI, incl. Tests/Index gates/Standalone (no new failures). Next #1521 → #1529 → #1533 → #1534. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
