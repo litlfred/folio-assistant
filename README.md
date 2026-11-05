@@ -171,10 +171,11 @@ layer with no WHO in it.
 
 ### `folio-assistant-sci`
 
-Scientific source material used by folios that formalise mathematics. Staged as
-a top-level directory ahead of becoming its own repository — the same
-arrangement as [`who-iris/`](who-iris/) and
-[`folio-assistant-core/`](folio-assistant-core/).
+Scientific source material used by folios that formalise mathematics, the
+methodologies for formalising it in Lean that this layer adopts from that
+material, and the paper content adapter, skills, tools and processes a paper
+folio works with. `folio-assistant-sci.json` declares every directory; each has
+a generated README.
 
 → [folio-assistant-sci/README.md](folio-assistant-sci/README.md)
 
