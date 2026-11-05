@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T18:16:06Z
+updated_at: 2026-11-05T18:17:17Z
 parent: folio-assistant-rwmf
 ---
 
@@ -77,3 +77,5 @@ _2026-11-05T18:01:31Z_ — smart-immunizations#114 at freeze head 77137db: 4 new
 
 _2026-11-05T18:16:06Z_ — Owner card "1. Known red": a gate that exited 0 on main and exits 78 (NOT APPLICABLE in this root) at the re-pin counts as a KNOWN red on site re-pins (first seen: dth-phc#29 ebb7106, check:qa-reviewer-permission, content root with no QA corpus; this settles drnh's open exit-78 question for site re-pins). dth-phc#29 other new reds: check:subgraphs, translate-bpmn:bootstrap (both covered by the final re-pin).
 KNOWN reds now: translation:block-qa, check:process-index, library:viz, rendered-labels, state:visualizer, slice:sqlite, bpmn:checklist (until the index re-pins bootstrap), 0->78 not-applicable, y4pw content items; dth-sc also corpus-gate.
+
+_2026-11-05T18:17:17Z_ — MERGED smart-ips-pilgrimage#8 as 5642333 (freeze head 759ed30; only new red state:visualizer = known publish-skipped family; tests 0 new; comment on PR). dth-sc#18 69b6fac: corpus-gate (owner OK), check:subgraphs, translate-bpmn:bootstrap. dth-pc#18 e8c908f: check:subgraphs, translate-bpmn:bootstrap, gen:jsonld + dth-pc:check:kg-blocks (block .jsonld ns# -> ns/ regen). All three classes are covered by the final re-pin (bootstrap 12fa6d5, cat-harness#1069, site block regen).
