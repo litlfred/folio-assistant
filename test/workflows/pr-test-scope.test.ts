@@ -184,5 +184,12 @@ describe("pr-bun-test.sh", () => {
     expect(some.env?.CQG_VERDICT).toBe("true");
     expect(all.env?.CQG_VERDICT).toBe("true");
     expect(some.env?.BUN_OPTIONS).not.toContain("--shard");
+    // folio-assistant#2963's contract: cqg_judge marks this step's record as
+    // "scoped" from CQG_TESTS + CQG_TEST_SCOPE and refuses to reuse a run whose
+    // label starts with `bash .github/scripts/pr-bun-test.sh`, so a push to main
+    // never skips the full suite on a PR's partial run.
+    expect(some.env?.CQG_TESTS).toBe("bun");
+    expect(some.env?.CQG_TEST_SCOPE).toBe("${{ runner.temp }}/test-scope.json");
+    expect(some.run!.startsWith("bash .github/scripts/pr-bun-test.sh")).toBe(true);
   });
 });
