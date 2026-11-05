@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
@@ -368,7 +368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "tex-source-audit",
       "title": "TeX-source hazard audit",
-      "description": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript. Born from named build failures rather than from a style opinion.",
+      "description": "Catch the source patterns that crash pdflatex but read as ordinary prose — a bare `_` or `^` in a bibliography field, `|` inside a markdown table cell where it is also the column separator, a `$…$` span across two lines, markdown link syntax inside a fenced tex block, a double subscript.",
       "install": {
         "none": true
       },

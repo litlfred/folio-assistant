@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
@@ -368,7 +368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "folio-block-screenshots",
       "title": "Folio block screenshots",
-      "description": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Adds no dependency: Playwright is already the platform's browser driver.",
+      "description": "Picture each changed figure, diagram, table, equation or simulator block on the published main site and on a staging build, and compare the two pictures pixel by pixel in Chromium's canvas. Writes `visual-diff.json` (`folio-visual-diff/v1`: per block, the share of pixels changed beyond anti-aliasing, and the before, after and diff pictures) and `visual/*.png`, which the review page's visual renderer shows. A side that cannot be pictured (page or anchor missing) is recorded as missing, never drawn blank. Drives Chromium through Playwright.",
       "install": {
         "none": true
       },

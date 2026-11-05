@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
@@ -16,8 +16,8 @@
       "summary": "How a proposal in docs/proposals/<slug>.md is promoted into docs/requirements/<slug>.md when its feature ships, or how an existing filed requirement is amended in place, superseded by a new requirement (status: superseded + supersededBy: req:<new-slug>), or r…",
       "description": "How a proposal in docs/proposals/<slug>.md is promoted into docs/requirements/<slug>.md when its feature ships, or how an existing filed requirement is amended in place, superseded by a new requirement (status: superseded + supersededBy: req:<new-slug>), or retired (status: retired) without deleting historical records. Every filed requirement keeps its flat path docs/requirements/<slug>.md (id: req:<slug>) and is organised in docs/requirements/index.md under its canonical concern group from code-lists/concern-group.json, verified by check:requirements, and signed off by the Business Analyst / Owner.",
       "enforcement": "strict",
-      "sourcePath": "processes/sdlc/requirements-filing.bpmn",
-      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/requirements-filing.bpmn",
+      "sourcePath": "sdlc/processes/requirements-filing.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/requirements-filing.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/assets/img/workflows/requirements-filing.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/Start_Process_RequirementsFiling"
@@ -28,7 +28,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/externalSchema/omg-dd-1.0"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling"
     },
     {
@@ -37,7 +37,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/Start_Process_RequirementsFiling",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_ClassifyFiling",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_1"
     },
     {
@@ -46,7 +46,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_ClassifyFiling",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/GW_FilingMode",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_2"
     },
     {
@@ -56,7 +56,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/GW_FilingMode",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_PromoteOrUpdate",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_Promote"
     },
     {
@@ -66,7 +66,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/GW_FilingMode",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_BindFrontMatter",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_Amend"
     },
     {
@@ -76,7 +76,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/GW_FilingMode",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_UpdateLifecycle",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_Retire"
     },
     {
@@ -85,7 +85,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_PromoteOrUpdate",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_BindFrontMatter",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_3"
     },
     {
@@ -94,7 +94,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_BindFrontMatter",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_UpdateLifecycle",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_4"
     },
     {
@@ -103,7 +103,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_UpdateLifecycle",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_UpdateIndex",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_5"
     },
     {
@@ -112,7 +112,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_UpdateIndex",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_RunCheck",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_6"
     },
     {
@@ -121,7 +121,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_RunCheck",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/GW_CheckPassed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_7"
     },
     {
@@ -131,7 +131,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/GW_CheckPassed",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_BindFrontMatter",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_CheckFail"
     },
     {
@@ -141,7 +141,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/GW_CheckPassed",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/BA_ReviewFiling",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_CheckPass"
     },
     {
@@ -150,7 +150,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/BA_ReviewFiling",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_RecordFilingSignoff",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_8"
     },
     {
@@ -159,7 +159,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/A_RecordFilingSignoff",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/GW_FilingAccepted",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_9"
     },
     {
@@ -169,7 +169,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/GW_FilingAccepted",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/End_RequirementFiled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_Approved"
     },
     {
@@ -179,7 +179,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/GW_FilingAccepted",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_RequirementsFiling/node/End_FilingHeld",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling#flow/SF_RF_Held"
     }
   ]

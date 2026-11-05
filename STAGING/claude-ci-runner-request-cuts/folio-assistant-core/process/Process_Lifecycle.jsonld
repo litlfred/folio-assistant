@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Content lifecycle",
       "summary": "One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities.",
-      "description": "One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities. folio-assistant — the content lifecycle end to end, one cycle of a folio.\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it; <cat-harness.processes:bean> marks a step that reads or writes the shared\nwork plan in beans/.",
+      "description": "One cycle of a folio from plan to retirement, calling editing and the draft-to-publication path as call activities.",
       "enforcement": "strict",
       "sourcePath": "processes/content/content-lifecycle.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/content-lifecycle.bpmn",

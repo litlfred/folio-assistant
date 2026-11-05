@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
@@ -21,7 +21,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "The PAPER profile of the files `folio_init` writes into a new folio: `paper/` holds the Lean build, lake-cache restore and blueprint workflows and the `.github/scripts` they call, written into a paper folio after the `document/` profile the tools layer keeps. Moved here from cat-harness-tools `templates/paper/` (move M11, folio-assistant#2598; owner 2026-10-23): only a paper folio is given them, and the paper profile is this layer's. The id is the tools layer's `folio-templates`, so this directory is a member of that subgraph and `init-folio` finds it by id across the checkout, never by a path naming this layer. `{{assistant}}`, `{{folio}}`, `{{platform_git}}` and `{{platform_repo}}` are substituted at write time. Declared `code`: executable sources whose target is another repository. `dependents: skip` -- a folio inherits them through `folio_init`, not by owning a copy. Declared WITH its files, per bean dh4f.",
+      "description": "The PAPER profile of the files `folio_init` writes into a new folio: `paper/` holds the Lean build, lake-cache restore and blueprint workflows and the `.github/scripts` they call, written into a paper folio after the `document/` profile the tools layer keeps. Only a paper folio is given them, and the paper profile is this layer's. The id is the tools layer's `folio-templates`, so this directory is a member of that subgraph and `init-folio` finds it by id across the checkout, never by a path naming this layer. `{{assistant}}`, `{{folio}}`, `{{platform_git}}` and `{{platform_repo}}` are substituted at write time. Declared `code`: executable sources whose target is another repository. `dependents: skip` -- a folio inherits them through `folio_init`, not by owning a copy.",
       "readmePath": "templates/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-sci/directory/folio-templates",

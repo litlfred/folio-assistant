@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
@@ -16,8 +16,8 @@
       "summary": "A criterion's reviewer entries disagree and no mechanism can settle them: this is the judgement that does, and the record it must leave.",
       "description": "A criterion's reviewer entries disagree and no mechanism can settle them: this is the judgement that does, and the record it must leave.\n\nYou are in this process when a sidecar holds two entries for ONE criterion that do not agree — a script failing what a reviewer passed, an agent and a person reading the same block differently. That is the entry condition and it is computable, which is why the first gateway leaves rather than guessing: one reviewer and no checker is a review, one checker and no reviewer is a gate, and neither is adjudicable. Nobody enters this process by declaring that they have entered it.\n\nThree things the diagram holds that prose kept losing. The adjudicator is DISPATCHED rather than briefed — given the findings and the checker's output and, deliberately, never the artefact, because an adjudicator shown the artefact can talk itself into any reading of the finding and that failure raises no error. The adjudication LEADS the criterion and the checker's entry is KEPT beneath it, because a disagreement between a checker and a reviewer is information and a sidecar showing only the winner has lost it. And the dispensation is scoped to the version it was granted against by its `field_hash`, so it lapses when the source moves and never becomes precedent.\n\nThis process ENDS at the judgement. What the answer means, and what is done about it, belongs to whoever asked — `criterion-adjudication.bpmn` is the QA-criterion specialisation, where the finding stands, the criterion is scoped, or a dispensation is granted with its reason. Until 2026-09-23 those three lived here and every caller ran them: six diagrams called this process and only two asked a question they answer. Bean `bvuk`.\n\nWhat stays shared is what must not vary: the entry condition nobody may declare their way past, the untainted dispatch, and the restriction to a person or an agent. What a legitimate outcome IS does vary, and it now varies where it is asked.",
       "enforcement": "advisory",
-      "sourcePath": "processes/sdlc/adjudication.bpmn",
-      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/sdlc/adjudication.bpmn",
+      "sourcePath": "sdlc/processes/adjudication.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/sdlc/processes/adjudication.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/assets/img/workflows/adjudication.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/Start_Disagreement"
@@ -28,7 +28,7 @@
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/externalSchema/omg-dd-1.0"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication"
     },
     {
@@ -37,7 +37,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/Start_Disagreement",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/A_StateFinding",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_1"
     },
     {
@@ -46,7 +46,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/A_StateFinding",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/GW_Adjudicable",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_2"
     },
     {
@@ -56,7 +56,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/GW_Adjudicable",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/A_Dispatch",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_Adjudicable"
     },
     {
@@ -66,7 +66,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/GW_Adjudicable",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/End_NotAdjudicable",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_NotAdjudicable"
     },
     {
@@ -75,7 +75,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/A_Dispatch",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/A_Adjudicate",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_3"
     },
     {
@@ -84,7 +84,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication",
       "from": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/A_Adjudicate",
       "to": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/process/Process_Adjudication/node/End_Adjudicated",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/processes",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication#flow/F_4"
     }
   ]

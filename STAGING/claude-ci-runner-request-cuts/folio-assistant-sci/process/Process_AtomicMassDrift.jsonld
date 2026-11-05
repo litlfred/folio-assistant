@@ -4,17 +4,17 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-sci/process/Process_AtomicMassDrift",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Is AtomicMass.lean still in sync with its data table?",
-      "summary": "Check that `AtomicMass.lean` is still in sync with the data table it is generated from.",
-      "description": "Check that `AtomicMass.lean` is still in sync with the data table it is generated from. THE SMALLEST WORKFLOW HERE, AND THE ONE WHOSE OUTPUT A PROOF DEPENDS ON. `AtomicMass.lean` is generated from a data table; if the two part company, a Lean file that compiles is nevertheless carrying numbers nothing produced. So the job regenerates and diffs, and any difference is red.\n\nThe check itself is the shared `generated-file-drift` process (Process_GeneratedFileDrift), drawn once for every drift check. This diagram stays because its workflow's job names Start_Change (`# bpmn-node:`), which is what lets check:workflow-coverage see the job.",
+      "summary": "Check that `AtomicMass.lean` is still in sync with the data table it is generated from: the job regenerates and diffs, and any difference fails.",
+      "description": "Check that `AtomicMass.lean` is still in sync with the data table it is generated from: the job regenerates and diffs, and any difference fails.\n\nThe check itself is the shared `generated-file-drift` process (Process_GeneratedFileDrift), drawn once for every drift check. Its workflow's job names Start_Change (`# bpmn-node:`), which is how check:workflow-coverage sees the job.",
       "enforcement": "strict",
       "sourcePath": "processes/content/atomic-mass-drift-check.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/atomic-mass-drift-check.bpmn",

@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
@@ -14,9 +14,9 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "latex-build-cache",
       "title": "LaTeX build performance — findings + what's safe",
-      "description": "LaTeX build performance — findings + what's safe. The headline goal was to cache a large multi-chapter `report` build (a ~35-chapter / ~2900-block `report` with a heavy `pgf`/`tikz`/`tikz-cd`/`hyperref` preamble + many tikz-cd diagrams). Both standard caching mechanisms were tested on a real engine and FAILED on this toolchain (see §Negative results), so there is currently NO preamble/diagram cache. What DOES work is the iterative loop: a static preflight with no TeX, getting an engine into the sandbox (Tool `tex-install`), quick changed-chapter feature builds with latexdiff (Tool `paper-feature-build`), then the full build. Read this BEFORE re-attempting a LaTeX cache so you don't re-walk the rakes.",
+      "description": "LaTeX build performance. What works is the iterative loop: a static preflight with no TeX, Tool `tex-install` for an engine, Tool `paper-feature-build` for quick changed-chapter builds with latexdiff, then the full build. Both standard preamble/diagram caching mechanisms failed on this toolchain, so there is no cache; read the negative results before attempting one.",
       "instructionsPath": "skills/content/folio-paper-adapter/latex-build-cache.md",
-      "instructionLines": 173,
+      "instructionLines": 157,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
@@ -16,14 +16,14 @@
       "title": "The work plan's contract",
       "description": "The contract the work plan (beans) keeps as a data store, as operations any Tool must provide: get, list, create, update with ifMatch, note, history, and where a bean is in its processes. Give back a bean exactly as written, keep ids unique and links whole, keep status and type to their closed lists, lose nothing to concurrent writers, and answer a bean's history. A mechanical Actor plays this Role through whichever Tool the deployment names.",
       "inPackage": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/package/sdlc-core"
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/package/work-plan"
       ],
-      "instructionsPath": "skills/sdlc/sdlc-core/work-plan-store.md",
+      "instructionsPath": "work-plan/skills/work-plan/work-plan-store.md",
       "instructionLines": 113,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/work-plan",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store"
     }
   ]

@@ -5,9 +5,9 @@
   "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/glossary.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
@@ -22,7 +22,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/folio-assistant-core/v0/ns/graphTypology/glossary"
       ],
-      "description": "FHIR Harness's generated glossary (`glossary/generated/fhir-harness/`): candidate `folio-glossary/v1` schemes extracted from this layer's tools, skills, BPMN activities and schema fields by core's `glossary:page`. Moved here from `folio-assistant-core/glossary/generated/fhir-harness/` (bean q3n9, owner ruling 2026-10-24: a scheme is keyed by (instance, scheme), and each layer holds its own glossary, following rfev).",
+      "description": "FHIR Harness's generated glossary (`glossary/generated/fhir-harness/`): candidate `folio-glossary/v1` schemes extracted from this layer's tools, skills, BPMN activities and schema fields by core's `glossary:page`. A scheme is keyed by (instance, scheme), and each layer holds its own glossary.",
       "readmePath": "glossary/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/glossary"

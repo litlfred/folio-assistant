@@ -4,27 +4,18 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/package/spec-kit",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/SkillPackage",
       "name": "spec-kit",
-      "version": "0.1.0",
-      "description": "Spec Kit — spec-driven development for platform feature work, adopted whole from github/spec-kit. A skill package, as CRDM became (skills/sdlc/crdm/): placed here on the owner's decision of 2026-09-26 rather than as a methodologies/ subgraph, the shape removed on 2026-09-22. PARALLEL to crdm rather than composed with it: crdm governs stakeholder-facing WHO/IG work, spec-kit governs folio-assistant feature development by tool developers. Which applies is a question of who is asking and whether the answer depends on what a folio says; the question itself is in methodology-adoption's ladder, and the answers are in each methodology's applies-when.",
-      "path": "skills/sdlc/spec-kit",
+      "path": "sdlc/skills/spec-kit",
       "hasManifest": true,
-      "declaresSkill": [
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skill/change-size",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skill/spec-kit",
-        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skill/spec-template"
-      ],
-      "providesCapability": [],
-      "requiresCapability": [],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/skills",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/directory/sdlc",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/package/spec-kit"
     }
   ]

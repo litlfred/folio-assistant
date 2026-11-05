@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Make a decided public comment change",
       "summary": "Called by Process_PublicComment (CallActivity_MakeChange) once the editor's decision on a comment changes the document.",
-      "description": "Called by Process_PublicComment (CallActivity_MakeChange) once the\neditor's decision on a comment changes the document. An author makes\nthe edit on a feature branch, the change set is reviewed on its staging\npreview as any content change (Process_ContentChangeReview), an\nindependent QA gate checks the dispositions against the pull request,\nand each comment the change set answers is marked incorporated when it\nmerges. Drawn on its own page so that each phase fits the screen.\nSkill: public-comment.",
+      "description": "Called by Process_PublicComment (CallActivity_MakeChange) once the\neditor's decision on a comment changes the document. An author makes\nthe edit on a feature branch, the change set is reviewed on its staging\npreview as any content change (Process_ContentChangeReview), an\nindependent QA gate checks the dispositions against the pull request,\nand each comment the change set answers is marked incorporated when it\nmerges.\nSkill: public-comment.",
       "enforcement": "strict",
       "sourcePath": "processes/content/public-comment-change.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/public-comment-change.bpmn",

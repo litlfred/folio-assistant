@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-runner-request-cuts/cat-harness/skills/bean-drain/output.schema.json",
   "title": "Bean Drain Output",
-  "description": "What a drain produces: the queue, one claim check per bean taken, and what each bean ended as. The three definitions are also the outputs of the drain-queue, bean-claim-check and open-work-lookup Tools. Skill skills/sdlc/sdlc-core/bean-drain.md, bean n7x7.",
+  "description": "What a drain produces: the queue, one claim check per bean taken, and what each bean ended as. The three definitions are also the outputs of the drain-queue, bean-claim-check and open-work-lookup Tools. Skill work-plan/skills/work-plan/bean-drain.md, bean n7x7.",
   "type": "object",
   "required": [
     "queue",
@@ -62,14 +62,14 @@
     },
     "stagingLinks": {
       "$ref": "#/definitions/stagingLinks",
-      "description": "The staging preview behind any request the drain puts to the owner (an asked-owner question, a PR left for review): one deep link per changed page, with the same page on main. Required whenever a preview exists; when it does not, say so in `missing`. Rule: cat-harness skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\"."
+      "description": "The staging preview behind any request the drain puts to the owner (an asked-owner question, a PR left for review): one deep link per changed page, with the same page on main. Required whenever a preview exists; when it does not, say so in `missing`. Rule: cat-harness sdlc/skills/sdlc-core/staging-review.md §\"The deep-link rule\"."
     }
   },
   "additionalProperties": false,
   "definitions": {
     "stagingLinks": {
       "title": "Staging links",
-      "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/sdlc/staging.ts. The rule is skills/sdlc/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
+      "description": "The staging preview of the work a request for feedback is about: one deep link per changed page (the page and the anchor where the change sits) with the same page on main as `before`. Mirrors StagingComparison in schemas/sdlc/staging.ts. The rule is sdlc/skills/sdlc-core/staging-review.md §\"The deep-link rule\". Copied inline as `definitions.stagingLinks` into every skill contract that carries it; schemas/staging.test.ts fails when a copy drifts.",
       "type": "object",
       "required": [
         "branch",
@@ -552,8 +552,8 @@
   },
   "staging": {
     "branch": "claude/ci-runner-request-cuts",
-    "sha": "a1ce404b8a6520351dd0499471b8fb49cc52a779",
+    "sha": "7c181b2732f27281877668b0e9ee1c0eb70aa270",
     "pr": "2950/merge",
-    "run": "42004214237"
+    "run": "42012471733"
   }
 }
