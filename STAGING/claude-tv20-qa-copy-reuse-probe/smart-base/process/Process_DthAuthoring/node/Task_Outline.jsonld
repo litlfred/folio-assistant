@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/smart-base/process/Process_DthAuthoring/node/Task_Outline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Outline.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Outline",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "2 · Outline chapters against the dth kind",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/skill/document-structure"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F10"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F11"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

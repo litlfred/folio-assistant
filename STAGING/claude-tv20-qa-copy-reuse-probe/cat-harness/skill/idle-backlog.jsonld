@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/skill/idle-backlog.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/skill/idle-backlog",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "idle-backlog",
+      "title": "idle-backlog",
+      "description": "While idle or waiting on a long-running async task (a build, a long compute script, a CI run, a background agent), pull the applicable backlog in priority order and work non-conflicting items instead of stalling. Generalises AGENTS.md's 5-minute idle trigger into a reusable skill. Use whenever blocked on an async wait with no substantive output to produce.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/package/work-plan"
+      ],
+      "instructionsPath": "work-plan/skills/work-plan/idle-backlog.md",
+      "instructionLines": 59,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/idle-backlog"
+    }
+  ]
+}

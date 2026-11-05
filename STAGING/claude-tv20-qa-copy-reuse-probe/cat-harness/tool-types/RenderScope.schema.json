@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/tool-types/RenderScope.schema.json",
+  "title": "RenderScope",
+  "type": "string",
+  "enum": [
+    "full",
+    "chapter",
+    "section"
+  ],
+  "description": "How much of the folio to render.",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  }
+}

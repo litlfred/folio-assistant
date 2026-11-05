@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/skill/associate-harness.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/skill/associate-harness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "associate-harness",
+      "title": "Associate a harness",
+      "description": "Declare a harness this one knows about and does not hold (`associatedHarnesses`): a folio in another repository, published at its own site. Referenced, never loaded, never materialized. Issue #1146.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/associate-harness.md",
+      "instructionLines": 90,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/associate-harness"
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_MergeManagerWatch",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
+ "tasks": {
+  "Task_Read": {
+   "id": "Task_Read",
+   "name": "Read PRs, runner queue, main verdict and owners",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Read",
+   "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
+   "skills": [
+    {
+     "name": "merge-manager-watcher"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-manager-watcher"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     },
+     {
+      "name": "saturation-meta-merge"
+     }
+    ]
+   }
+  },
+  "Call_Meta": {
+   "id": "Call_Meta",
+   "name": "Saturation meta-merge",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Call_Meta",
+   "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
+   "skills": [],
+   "calls": {
+    "name": "Saturation meta-merge: land the ready PRs when the runners are full",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
+    "diagram": "saturation-meta-merge.html"
+   },
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-manager-watcher"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     },
+     {
+      "name": "saturation-meta-merge"
+     }
+    ]
+   }
+  },
+  "Call_Train": {
+   "id": "Call_Train",
+   "name": "Merge train",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Call_Train",
+   "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
+   "skills": [],
+   "calls": {
+    "name": "A merge train",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain",
+    "diagram": "merge-train.html"
+   },
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-manager-watcher"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     },
+     {
+      "name": "saturation-meta-merge"
+     }
+    ]
+   }
+  },
+  "Call_Stalled": {
+   "id": "Call_Stalled",
+   "name": "Stalled-agent triage",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Call_Stalled",
+   "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
+   "skills": [],
+   "calls": {
+    "name": "Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
+    "diagram": "stalled-agent-triage.html"
+   },
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns"
+     },
+     {
+      "name": "merge-manager-watcher"
+     },
+     {
+      "name": "merge-queue"
+     },
+     {
+      "name": "merge-to-main"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "ref-stewardship"
+     },
+     {
+      "name": "saturation-meta-merge"
+     }
+    ]
+   }
+  }
+ }
+}

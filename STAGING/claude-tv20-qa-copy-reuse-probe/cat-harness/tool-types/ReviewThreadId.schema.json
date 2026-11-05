@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/tool-types/ReviewThreadId.schema.json",
+  "title": "ReviewThreadId",
+  "type": "string",
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{6,127}$",
+  "description": "A review thread id — a GitHub review-thread node id or a GitLab discussion id",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  }
+}

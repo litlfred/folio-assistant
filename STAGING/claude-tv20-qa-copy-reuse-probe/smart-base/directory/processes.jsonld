@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/smart-base/directory/processes.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/processes.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/processes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "processes",
+      "path": "methodologies/processes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/processes"
+      ],
+      "description": "The executable half of this layer's methodologies: `diig-investment-path.bpmn` renders DIIG's nine chapters as a process with its two progress checks as gateways. Declared separately from `methodologies/` because a directory entry names one graph typology: the prose says what the method is, the diagram how it runs.",
+      "readmePath": "methodologies/processes/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/processes"
+    }
+  ]
+}

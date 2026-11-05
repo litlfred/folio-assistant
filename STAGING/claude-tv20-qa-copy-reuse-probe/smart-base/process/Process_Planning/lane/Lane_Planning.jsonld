@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/smart-base/process/Process_Planning/lane/Lane_Planning.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_Planning/lane/Lane_Planning",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Programme Manager",
+      "partOf": "http://smart.who.int/base/process/Process_Planning",
+      "bindsRole": "http://smart.who.int/base/role/programme-manager",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

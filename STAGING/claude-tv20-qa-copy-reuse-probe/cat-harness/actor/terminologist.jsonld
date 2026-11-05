@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/actor/terminologist.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/actor/terminologist",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "terminologist",
+      "actorKind": "person",
+      "title": "Terminologist",
+      "description": "Semantic interoperability and terminology governance specialist who maps data elements to standard terminologies (ICD-11, SNOMED CT, LOINC).",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.Terminologist",
+        "lifecycle": [
+          "author",
+          "validate"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/role/terminologist",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/role/author"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/terminologist"
+    }
+  ]
+}

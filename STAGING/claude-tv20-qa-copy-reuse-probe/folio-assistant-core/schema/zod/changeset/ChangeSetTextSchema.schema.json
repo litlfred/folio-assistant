@@ -1,0 +1,68 @@
+{
+  "$ref": "#/definitions/ChangeSetText",
+  "definitions": {
+    "ChangeSetText": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-changeset-text/v1"
+        },
+        "blocks": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "base": {
+                "type": "object",
+                "properties": {
+                  "prose": {
+                    "type": "string"
+                  },
+                  "html": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "prose",
+                  "html"
+                ]
+              },
+              "head": {
+                "type": "object",
+                "properties": {
+                  "prose": {
+                    "type": "string"
+                  },
+                  "html": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "prose",
+                  "html"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "blocks"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/schema/zod/changeset/ChangeSetTextSchema.schema.json",
+  "title": "ChangeSetTextSchema",
+  "description": "Generated from `ChangeSetTextSchema` in schemas/changeset.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  }
+}

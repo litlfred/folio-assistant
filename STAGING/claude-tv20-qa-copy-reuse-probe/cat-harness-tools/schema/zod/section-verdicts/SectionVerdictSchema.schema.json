@@ -1,0 +1,33 @@
+{
+  "$ref": "#/definitions/SectionVerdict",
+  "definitions": {
+    "SectionVerdict": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "type": "string",
+          "enum": [
+            "specimen"
+          ]
+        },
+        "saw": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "role",
+        "saw"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/section-verdicts/SectionVerdictSchema.schema.json",
+  "title": "SectionVerdictSchema",
+  "description": "Generated from `SectionVerdictSchema` in schemas/content/section-verdicts.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/tool-types/LakeCacheAction.schema.json",
+  "title": "LakeCacheAction",
+  "type": "string",
+  "enum": [
+    "status",
+    "restore",
+    "restore-toolchain",
+    "install-toolchain",
+    "verify",
+    "seed",
+    "contribute",
+    "list",
+    "doctor"
+  ],
+  "description": "A lake-cache verb: restore prebuilt oleans, seed them, or diagnose why a restore missed.",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  }
+}

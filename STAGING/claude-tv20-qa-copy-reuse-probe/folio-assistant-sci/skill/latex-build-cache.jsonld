@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/folio-assistant-sci/skill/latex-build-cache.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/folio-assistant-sci/skill/latex-build-cache",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "latex-build-cache",
+      "title": "LaTeX build performance — findings + what's safe",
+      "description": "LaTeX build performance. What works is the iterative loop: a static preflight with no TeX, Tool `tex-install` for an engine, Tool `paper-feature-build` for quick changed-chapter builds with latexdiff, then the full build. Both standard preamble/diagram caching mechanisms failed on this toolchain, so there is no cache; read the negative results before attempting one.",
+      "instructionsPath": "skills/content/folio-paper-adapter/latex-build-cache.md",
+      "instructionLines": 157,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/latex-build-cache"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/skill/work-plan-store.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/skill/work-plan-store",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "work-plan-store",
+      "title": "The work plan's contract",
+      "description": "The contract the work plan (beans) keeps as a data store, as operations any Tool must provide: get, list, create, update with ifMatch, note, history, and where a bean is in its processes. Give back a bean exactly as written, keep ids unique and links whole, keep status and type to their closed lists, lose nothing to concurrent writers, and answer a bean's history. A mechanical Actor plays this Role through whichever Tool the deployment names.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/package/work-plan"
+      ],
+      "instructionsPath": "work-plan/skills/work-plan/work-plan-store.md",
+      "instructionLines": 113,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store"
+    }
+  ]
+}

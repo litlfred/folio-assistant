@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/tool-types/InstanceId.schema.json",
+  "title": "InstanceId",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$",
+  "description": "A workflow instance id — the stem of a file in the bean graph's workflow-state node",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  }
+}

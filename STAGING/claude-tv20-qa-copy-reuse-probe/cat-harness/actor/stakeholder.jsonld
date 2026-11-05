@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/actor/stakeholder.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "f63e56d82b6abd292815177e1e797056c7302dab",
+    "pr": "2953/merge",
+    "run": "42019489421"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/actor/stakeholder",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "stakeholder",
+      "actorKind": "person",
+      "title": "Stakeholder",
+      "description": "Signs off that a requirement is met. Holds no capabilities here deliberately: sign-off is a judgement, and a capability would suggest it could be automated.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-tv20-qa-copy-reuse-probe/cat-harness/role/stakeholder"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/stakeholder"
+    }
+  ]
+}
