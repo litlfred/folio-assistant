@@ -79,3 +79,7 @@ Per merged PR in a train of k: its own pushes (unchanged, linear) + 1/k candidat
 ## Owner ruling, 2026-11-05
 
 Asked in session https://claude.ai/code/session_01VQDpPdXwTy9PWgFEpEYCSM, answer **1. Declared only**: the train resolves conflicts that a declared pattern covers, mechanically at train time, and refuses (hands back) any authored conflict. This narrows the 2026-10-04 "members must stack cleanly" ruling for the automated train only; `merge-queue` should say so (cat-harness follow-up).
+
+## Owner ruling, 2026-11-05 (card, relayed by the analysis session): "Resolve generated only"
+
+Supersedes the 2026-10-04 "stack cleanly" ruling **for generated paths only**. At train time the train resolves conflicts in declared generated paths mechanically (declared patterns + one regen, judged by the candidate's CI). A conflict in any hand-written file EJECTS that PR with a comment (label removed); it waits for its author. Implemented: `merge-train.ts eject-refused`, run after each build.
