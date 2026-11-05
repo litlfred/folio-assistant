@@ -193,6 +193,11 @@ describe("pr-bun-test.sh", () => {
     const steps = wf.jobs["typescript-test"]!.steps;
     const scope = steps.find((s) => s.id === "scope")!;
     expect(scope.if).toContain("github.event_name == 'pull_request'");
+    // A train PR is the only CI its members get before landing: it runs the
+    // whole suite, and a skipped scope step leaves `kind` empty, which the
+    // last step reads as "the whole suite".
+    expect(scope.if).toContain("!startsWith(github.head_ref, 'merge-train/')");
+    expect(scope.if).toContain("!startsWith(github.head_ref, 'repin-train/')");
     expect(scope.run).toBe("bash .github/scripts/pr-bun-test.sh --scope");
     const some = steps.find((s) => s.run === "bash .github/scripts/pr-bun-test.sh ${{ matrix.shard }} 4")!;
     const all = steps.at(-1)!;

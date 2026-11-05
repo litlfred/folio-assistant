@@ -1198,9 +1198,13 @@ jobs:
       # what a PR leaves out, the push of its merge to main runs. Selection
       # never fails: whatever it cannot determine selects everything. Not a
       # judged step (`CQG_UNJUDGED`): it asks no question about the tree.
+      # A merge-train or repin-train PR runs the whole suite: the train's
+      # verdict is the only CI its members get before landing, and main never
+      # reuses a scoped run (#2963), so a scoped train would make main run
+      # everything again anyway.
       - name: Select the test files this pull request can affect
         id: scope
-        if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.head_ref, 'merge-train/') && !startsWith(github.head_ref, 'repin-train/') }}
         env:
           CQG_UNJUDGED: "true"
           CQG_TEST_SCOPE: ${{ runner.temp }}/test-scope.json
