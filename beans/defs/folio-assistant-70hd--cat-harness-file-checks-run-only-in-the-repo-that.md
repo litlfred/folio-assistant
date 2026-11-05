@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T15:20:00Z
+updated_at: 2026-11-05T16:45:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -52,3 +52,10 @@ _2026-11-05T15:20:00Z_ — Owner card "Generators" option 3 (re-measure with acc
 - Lower-layer code defects: check:qa-reviewer-permission (exit 78 counted as failing), publish:derive:publish (uml:overview writer exit 2).
 - s3/own: check:harness-state:check, translate-bpmn:check, check:declared-dirs; translation:* unclassified.
 Unread: 17 smart-immunizations and 5 who-iris failed runs (ids in the session). Conclusion: generator --check gates DO produce false NEW failures (s2 is the largest group); scoping validators alone is not enough.
+
+_2026-11-05T16:45:00Z_ — smart-ra + smart-base counted by the parent session (session_01VQDpPfGantMCt7AV4LCCK2, which could attach them): 26 NEW rows on 21 PRs (2026-11-01..05). Classified here by whose files the output names:
+- **Cross-layer, clear (10):** cat-harness-tools-standalone ×4 (smart-ra#213, tools' own tests); translate-bpmn:bootstrap ×1 (cat-harness .pot in smart-ra#228); processes:render ×1 (smart-base SVGs in smart-ra#213); check:materialized-fixity ×1 (who-iris nodes in smart-ra#228); check:reference-direction ×1 (core files in smart-base#298); check:ci-invocations ×1 (tools scripts in smart-base#291); iri:sync ×1 (cat-harness docs in smart-ra#223).
+- **Cross-layer, likely (2):** translation:block-qa ×2 (smart-base#307/#308, the cat-harness onboarding guide's translation QA).
+- **Own repo (9):** dth-terms ×3, corpus-gate ×3, translation:pot/obsolete ×2 (smart-ra's own translations), check:subgraphs ×1 (./FORMS.md, a root file).
+- **Unclassified (5):** kg:materialize, split:baseline, branch:readme (no paths); kind:json-schemas, gen:jsonld (mixed paths).
+Across all four repos, the gates with cross-layer false failures that the open scoping PRs do NOT cover: reference-direction (×4), materialized-fixity (×2), translate-bpmn:bootstrap (×3), processes/render:bpmn (×2), process-index (×2), ci-invocations, iri:sync, kg:materialize, glossary (×3), bpmn:checklist (×2), library:viz (×2), uml:overview, state-on-main.
