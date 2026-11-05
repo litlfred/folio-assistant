@@ -7,7 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/ci-health.jsonld",
       "@type": "cat-harness:Tool",
-      "description": "Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow — fanning out would exhaust the unauthenticated 60/hr limit and make it unusable at session start.",
+      "description": "Report each workflow's state on the default branch, which a checkout cannot see: a red workflow looks exactly like a green one from in here. One API call over the recent run history, not one request per workflow, so it stays inside the unauthenticated 60/hr limit and stays usable at session start.",
       "install": {
         "none": true
       },
@@ -20,7 +20,7 @@
             "arg": {
               "flag": "--markdown"
             },
-            "description": "Emit the block the session-start sweep prints. ALWAYS exits 0, deliberately: the sweep runs it as `if ! …; then` and would otherwise print the report AND declare it unchecked every time CI is red.",
+            "description": "Emit the block the session-start sweep prints. ALWAYS exits 0: the sweep runs it as `if ! …; then`, and a non-zero exit would print the report AND declare it unchecked every time CI is red.",
             "name": "markdown",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
@@ -38,7 +38,7 @@
             "arg": {
               "flag": "--out"
             },
-            "description": "Write the markdown report to a file AND keep the exit code — which `--markdown` cannot do, since it always exits 0. The notifier gets its own flag rather than one API call being spent twice.",
+            "description": "Write the markdown report to a file AND keep the exit code — which `--markdown` cannot do, since it always exits 0. Its own flag, so one API call is not spent twice.",
             "name": "out",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"

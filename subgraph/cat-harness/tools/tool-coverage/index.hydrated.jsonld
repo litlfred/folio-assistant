@@ -18,7 +18,7 @@
         "inputs": [],
         "outputs": [
           {
-            "description": "Four tiers with A, B and C listed by name and their evidence, D as a count. Always exit 0: this REPORTS a judgement queue and never gates — an uncovered skill is not a defect, and failing on one would make stubbing a gap turn CI red.",
+            "description": "Four tiers with A, B and C listed by name and their evidence, D as a count. Always exit 0: this REPORTS a judgement queue and never gates; an uncovered skill is not a defect, and failing on one would turn CI red for stubbing a gap.",
             "name": "triage",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
           }

@@ -39,7 +39,7 @@
     "complete": true
   },
   "statusSrc":"../../assets/translation-status/index.json"
-}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content=""><meta name="fa-search-index" content=""><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=b4497e8e1c4a"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=ed3e33f033fe"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=456c57efeed4"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=69d9894b0281" defer></script><script src="../../assets/js/edit-links.js?v=23ca1803a02a" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content=""><meta name="fa-search-index" content=""><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=34ea92e5aa62"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=bd8c73337b01"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=1553b2dc199e"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=3b0c7c7f085a" defer></script><script src="../../assets/js/edit-links.js?v=3ea7379a98f2" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
   .folio-landing { position: relative; margin: 0 0 2rem; }
 
   /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
@@ -108,46 +108,38 @@
   
   
 </h1><p><code class="language-plaintext highlighter-rouge">kg-export</code> serialises the instance’s graph to one JSON-LD document. This skill
-is the other half of bean <code class="language-plaintext highlighter-rouge">1dfh</code>: <strong>making that document legible to a person.</strong>
-The two are deliberately separate capabilities — serialising is mechanical and
+is <strong>making that document legible to a person.</strong> The two are separate
+capabilities — serialising is mechanical and
 host-agnostic, rendering is a design problem, and posting the result to a host
 is a third thing that belongs to the <code class="language-plaintext highlighter-rouge">pages-publish</code> Tool.</p><h2 id="the-page-is-generated-not-committed"><a href="#the-page-is-generated-not-committed" class="anchor-heading" aria-labelledby="the-page-is-generated-not-committed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The page is generated, not committed
   
   
 </h2><p>The viewer must fetch the graph document, and that document is named after the
 repository — <code class="language-plaintext highlighter-rouge">&lt;stub&gt;.jsonld</code>, never a generic <code class="language-plaintext highlighter-rouge">kg.json</code>. A committed page would
-have to do one of two things, and both are defects this project has already
-paid for:</p><ul><li><strong>Hardcode one instance’s stub</strong>, which is the genericity failure <code class="language-plaintext highlighter-rouge">AGENTS.md</code>
-catalogues — a platform script carrying <code class="language-plaintext highlighter-rouge">quantum-observable-universe</code> and
-working in exactly one repository.</li><li><strong>Compose the name at runtime</strong> from the URL or a convention, which is the
-“resolve, do not compose” rule. A consumer should never have to manipulate a
-string to find a document.</li></ul><p>So the exporter, which already knows the stub, writes it into the page. The
+have to either:</p><ul><li><strong>Hardcode one instance’s stub</strong>, so a platform script works in exactly one
+repository; or</li><li><strong>Compose the name at runtime</strong> from the URL or a convention, which breaks
+the “resolve, do not compose” rule: a consumer should never have to
+manipulate a string to find a document.</li></ul><p>So the exporter, which already knows the stub, writes it into the page. The
 page resolves nothing.</p><p><strong>It fetches the document relative to its own location.</strong> The page is
 <code class="language-plaintext highlighter-rouge">&lt;site&gt;/&lt;stub&gt;/index.html</code> and reads <code class="language-plaintext highlighter-rouge">../&lt;name&gt;/&lt;stub&gt;.jsonld</code> (the document’s
-own path, under its instance’s directory, the host’s included, since
-2026-10-23), so the same bytes
-work on the canonical site and under <code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code> with no configuration,
-no <code class="language-plaintext highlighter-rouge">--base-url</code>, and no build-time branch. A staging build that needed a
-different page would be a staging build testing something other than what
-ships. Which documents the site publishes, and where:
+own path, under its instance’s directory, the host’s included), so the same
+bytes work on the canonical site and under <code class="language-plaintext highlighter-rouge">branches/&lt;slug&gt;/</code> with no
+configuration, no <code class="language-plaintext highlighter-rouge">--base-url</code>, and no build-time branch. A staging build that
+needed a different page would test something other than what ships. Which
+documents the site publishes, and where:
 <a href="../../reference/skill-instructions/instance-publication.html"><code class="language-plaintext highlighter-rouge">instance-publication</code></a> §”What each
 instance publishes”.</p><h2 id="no-dependencies-and-that-is-a-requirement-rather-than-a-preference"><a href="#no-dependencies-and-that-is-a-requirement-rather-than-a-preference" class="anchor-heading" aria-labelledby="no-dependencies-and-that-is-a-requirement-rather-than-a-preference"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> No dependencies, and that is a requirement rather than a preference
   
   
-</h2><p>No CDN, no framework, no build step — one HTML file.</p><p>A page that needs a network fetch to render cannot be opened from a file,
-cannot be reviewed offline or from a restricted network, and adds a third party
-to the trust boundary of a page whose entire job is to display <em>this
-repository’s own data</em>. The graph is the thing being made trustworthy; loading
-it through someone else’s script tag is at odds with that.</p><p>“No CDN” means no THIRD party’s. A script or stylesheet this site publishes
+</h2><p>No CDN, no framework, no build step — one HTML file. A page that needs a
+third-party fetch to render cannot be opened from a file or reviewed offline
+or from a restricted network, and adds a third party to the trust boundary of a page that displays
+this repository’s own data.</p><p>“No CDN” means no THIRD party’s. A script or stylesheet this site publishes
 itself, shared by many of its own pages, is the opposite case and is what the
 next section requires.</p><h2 id="every-asset-has-its-own-iri--a-materialized-path-loading-published-json-ld"><a href="#every-asset-has-its-own-iri--a-materialized-path-loading-published-json-ld" class="anchor-heading" aria-labelledby="every-asset-has-its-own-iri--a-materialized-path-loading-published-json-ld"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Every asset has its own IRI — a materialized path, loading published JSON-LD
   
   
-</h2><p>Owner, 2026-10-02 (#1881), in order: <em>“404 githubpages is a hack. does not work
-according to stanrds”</em>; <em>“each link/page needs to be materialized on the CDN
-(gh-pagees), just load the content from the KG json(ld) assets already
-published”</em>; <em>“no query strings… each asset gets its own IRI”</em>. It started
-with <code class="language-plaintext highlighter-rouge">/cat-harness/library/&lt;dak-layer&gt;/&lt;trust-ig&gt;</code> returning 404.</p><p>Four rules, for every viewer that shows addressable things:</p><ol><li><strong>Every addressable asset has its own IRI, and it is a PATH</strong> —
+</h2><p>Four rules, for every viewer that shows addressable things:</p><ol><li><strong>Every addressable asset has its own IRI, and it is a PATH</strong> —
 <code class="language-plaintext highlighter-rouge">&lt;viewer&gt;/&lt;instance&gt;/&lt;id&gt;/</code>. Never a query string (<code class="language-plaintext highlighter-rouge">?entry=</code>, <code class="language-plaintext highlighter-rouge">?id=</code>) and
 never a fragment (<code class="language-plaintext highlighter-rouge">#&lt;id&gt;</code>) as the asset’s address. A fragment may still
 point INSIDE a page; it is not an asset’s name.</li><li><strong>The IRI is a real file on gh-pages</strong>, returning 200, written by the
@@ -161,17 +153,12 @@ the viewer’s SHARED stylesheet and script by reference. No content of the
 asset is written into it; the script loads it from the KG JSON / JSON-LD
 the site already publishes. If the asset’s own serialisation is not yet
 published, publish the KG’s existing one — do not invent a format. A shell
-is a few KB; inlining chrome into each one is how an IG mirror reached
-~230 KB a page.</li><li><strong>An old <code class="language-plaintext highlighter-rouge">#&lt;id&gt;</code> link is legacy</strong>: the shell normalises it ONCE to the path
+is a few KB; never inline shared chrome into each one.</li><li><strong>An old <code class="language-plaintext highlighter-rouge">#&lt;id&gt;</code> link is legacy</strong>: the shell normalises it ONCE to the path
 IRI with <code class="language-plaintext highlighter-rouge">history.replaceState</code> (or navigates, when the asset belongs to
 another page), and nothing new emits it.</li></ol><h3 id="the-asset-and-its-rendering-are-two-resources-with-two-iris"><a href="#the-asset-and-its-rendering-are-two-resources-with-two-iris" class="anchor-heading" aria-labelledby="the-asset-and-its-rendering-are-two-resources-with-two-iris"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The asset and its rendering are two resources with two IRIs
   
   
-</h3><p>Owner, 2026-10-02 (#1881): <em>“each asset should have one IRI, but the view page
-is a rendering of that asset, a different page. fix IRIs”</em>; and, against
-putting <code class="language-plaintext highlighter-rouge">schema:subjectOf</code> on the asset, <em>“hard to maintain? asset doesnt know
-about its renderings”</em>. <strong>This is the one place the rule is stated</strong>; other
-skills point here.</p><ul><li><strong>The asset’s IRI is the address of its published JSON-LD</strong>, and its <code class="language-plaintext highlighter-rouge">@id</code>
+</h3><p><strong>This is the one place the rule is stated</strong>; other skills point here.</p><ul><li><strong>The asset’s IRI is the address of its published JSON-LD</strong>, and its <code class="language-plaintext highlighter-rouge">@id</code>
 says so: absolute, instance-qualified, under the site root the docs are
 served at, and it dereferences to that file. A library entry’s is
 <code class="language-plaintext highlighter-rouge">&lt;site&gt;/assets/library/jsonld/&lt;instance&gt;/&lt;id&gt;/manifest.jsonld</code>, minted by
@@ -186,9 +173,8 @@ computed by <code class="language-plaintext highlighter-rouge">visualiserRoute</
 the asset. The library does exactly this: each entry in the GENERATED
 projection (<code class="language-plaintext highlighter-rouge">assets/library/index.json</code>) carries <code class="language-plaintext highlighter-rouge">view</code> — the site-root path
 of the page that renders it (another instance’s declared root route for an
-entry that instance renders, e.g. the trust IG’s <code class="language-plaintext highlighter-rouge">/&lt;trust-ig&gt;/</code>; else the
-entry’s own library page) — and the row’s slug links there. Owner,
-2026-10-02, paraphrased: clicking a library entry’s slug should open its visualiser.</li></ul><p>Reference implementation: <code class="language-plaintext highlighter-rouge">gen-library-viz.ts</code> (<code class="language-plaintext highlighter-rouge">viewerHtml</code>, <code class="language-plaintext highlighter-rouge">VIEWER_JS</code>,
+entry that instance renders; else the entry’s own library page) — and the
+row’s slug links there, so clicking it opens the entry’s visualiser.</li></ul><p>Reference implementation: <code class="language-plaintext highlighter-rouge">gen-library-viz.ts</code> (<code class="language-plaintext highlighter-rouge">viewerHtml</code>, <code class="language-plaintext highlighter-rouge">VIEWER_JS</code>,
 <code class="language-plaintext highlighter-rouge">VIEWER_CSS</code>) and <code class="language-plaintext highlighter-rouge">scripts/lib/library-address.ts</code>; browser check
 <code class="language-plaintext highlighter-rouge">test/library-entry-iri.e2e.ts</code>.
 A library entry’s DOCUMENT view — TOC, pages with printed labels, figures,
@@ -198,9 +184,9 @@ module so a test runs the same text the page runs.</p><h2 id="do-not-draw-the-wh
   
   
 </h2><p><strong>The instinct is a force-directed node-link diagram of everything. Resist it.</strong>
-Measured on this instance: 1111 nodes and roughly 2000 edges. That renders as a
-hairball — it looks like a knowledge graph and answers no question about one,
-while costing a layout library and a frame budget.</p><p>The questions people actually arrive with are local:</p><ul><li><em>What is this node?</em> → a detail panel with every property.</li><li><em>What does it point at?</em> → edges rendered as controls you can follow.</li><li><em>What points at it?</em> → back-links, <strong>computed at load</strong> rather than published.
+At the size of a real instance (on the order of a thousand nodes) it renders
+as a hairball that answers no question, while costing a layout library and a
+frame budget.</p><p>The questions people actually arrive with are local:</p><ul><li><em>What is this node?</em> → a detail panel with every property.</li><li><em>What does it point at?</em> → edges rendered as controls you can follow.</li><li><em>What points at it?</em> → back-links, <strong>computed at load</strong> rather than published.
 An inverse index stored in the document is a second copy of the edge set that
 can disagree with the first.</li><li><em>What else is of this kind?</em> → facets, with counts from the document’s own
 <code class="language-plaintext highlighter-rouge">counts</code> rather than recounted.</li></ul><p>A <strong>one-hop</strong> neighbourhood diagram for the selected node is worth drawing,
@@ -208,17 +194,15 @@ because at that scale a picture beats a list. Cap it; a node with two hundred
 neighbours is a list, not a diagram.</p><h2 id="render-what-the-document-is-missing-in-the-documents-own-terms"><a href="#render-what-the-document-is-missing-in-the-documents-own-terms" class="anchor-heading" aria-labelledby="render-what-the-document-is-missing-in-the-documents-own-terms"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Render what the document is missing, in the document’s own terms
   
   
-</h2><p><strong>The first real consumer of a graph is the right place to surface what the
-graph lacks</strong>, and a viewer that quietly displayed everything as though it were
-all part of the graph would be hiding exactly what it exists to reveal.</p><p>Two things the export reports and the viewer must not swallow:</p><ul><li><strong><code class="language-plaintext highlighter-rouge">undeclaredTerms</code></strong> — property names absent from the <code class="language-plaintext highlighter-rouge">@context</code>. Every one
-is <em>dropped</em> when the document is processed as the JSON-LD it claims to be.
-It was 34 names and 3583 occurrences on this instance when the viewer was
-written, which is how the gap was found; bean <code class="language-plaintext highlighter-rouge">ovkk</code> took it to <strong>zero</strong> and
-<code class="language-plaintext highlighter-rouge">kg-export</code> now exits non-zero rather than publishing a new one. Mark them in
+</h2><p>A viewer must surface what the graph lacks rather than display everything as
+though it were all part of the graph. Two things the export reports and the viewer must not swallow:</p><ul><li><strong><code class="language-plaintext highlighter-rouge">undeclaredTerms</code></strong> — property names absent from the <code class="language-plaintext highlighter-rouge">@context</code>. Every one
+is <em>dropped</em> when the document is processed as the JSON-LD it claims to be,
+and <code class="language-plaintext highlighter-rouge">kg-export</code> exits non-zero rather than publishing a new one. Mark them in
 the detail panel; do not silently show them as ordinary properties. <strong>Keep
 the marking even while the list is empty</strong> — it is the guard that makes the
 next one visible, and a viewer for this instance is a viewer for any
-instance, including one whose export is older or whose context is thinner.</li><li><strong><code class="language-plaintext highlighter-rouge">danglingLinks</code></strong> and <strong><code class="language-plaintext highlighter-rouge">problems</code></strong> — a link with no target node, and a
+instance, including one whose export is older or whose
+context is thinner.</li><li><strong><code class="language-plaintext highlighter-rouge">danglingLinks</code></strong> and <strong><code class="language-plaintext highlighter-rouge">problems</code></strong> — a link with no target node, and a
 source that could not be read.</li></ul><h2 id="three-states-on-the-page-as-everywhere"><a href="#three-states-on-the-page-as-everywhere" class="anchor-heading" aria-labelledby="three-states-on-the-page-as-everywhere"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Three states, on the page as everywhere
   
   
@@ -256,12 +240,10 @@ the page falls back to English string by string.</p><h2 id="say-where-the-transl
 </h2><p><strong>Chrome-only translation is half a translation, and the half that is missing
 is the half the reader came for.</strong> Node titles, descriptions and property names
 arrive in the graph document in whatever language the corpus is written in; no
-catalogue in the viewer can reach them.</p><p>Draw that boundary <strong>on the page</strong>, in the language the reader chose. A screen
-that is two-thirds translated and silent about it is worse than one that states
-its edge: the reader cannot tell a missing translation from a corpus that is
-simply English, and will read the gap as a defect or as a claim, depending on
-which way they guess.</p><p>The same rule that governs an unreadable document governs this: three states,
-never two.</p><h2 id="a-language-switcher-is-a-ui-control"><a href="#a-language-switcher-is-a-ui-control" class="anchor-heading" aria-labelledby="a-language-switcher-is-a-ui-control"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A language switcher is a UI control
+catalogue in the viewer can reach them.</p><p>Draw that boundary <strong>on the page</strong>, in the language the reader chose, so the
+reader can tell a missing translation from a corpus that is simply English;
+silent about it, the reader reads the gap as a defect or as a claim. Three
+states, never two, as for an unreadable document.</p><h2 id="a-language-switcher-is-a-ui-control"><a href="#a-language-switcher-is-a-ui-control" class="anchor-heading" aria-labelledby="a-language-switcher-is-a-ui-control"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A language switcher is a UI control
   
   
 </h2><p>It is bound by <a href="../../reference/skill-instructions/ui-accessibility.html"><code class="language-plaintext highlighter-rouge">ui-accessibility</code></a> like everything else,
@@ -280,18 +262,16 @@ not a language the viewer can render, and listing it would promise a
 translation the reader would not get.</p><h2 id="verifying-it"><a href="#verifying-it" class="anchor-heading" aria-labelledby="verifying-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Verifying it
   
   
-</h2><p><strong>A rendered artefact is not verified by reading its source.</strong> <code class="language-plaintext highlighter-rouge">AGENTS.md</code> is
-explicit that a human cannot assess a rendering from a description of it; the
-same holds for the agent that wrote it. “The HTML looks right” is not evidence
+</h2><p><strong>A rendered artefact is not verified by reading its source</strong>: nobody can
+assess a rendering from a description of it, including the agent that wrote
+it. “The HTML looks right” is not evidence
 that the document loads, that an edge is clickable, or that a failed fetch says
 so.</p><p>Drive the real page in a real browser. <code class="language-plaintext highlighter-rouge">test/kg-viewer.e2e.ts</code> is the worked
 example, and it asserts against the <em>generated</em> artefacts rather than a fixture,
 so a test cannot agree with a stand-in while disagreeing with what ships. It
-generates them if absent, so the suite runs from a clean checkout.</p><p><strong>Look at it, too.</strong> Collapsing nested objects behind a disclosure was not a
-design decision made in advance — it came from taking a screenshot and seeing
-that a Tool’s <code class="language-plaintext highlighter-rouge">io</code>, ~900 characters of JSON rendered inline, pushed <code class="language-plaintext highlighter-rouge">satisfies</code>
-and the neighbourhood diagram off the bottom of the screen. The most
-interesting property on the node was the one making the node unreadable, and no
-test would have said so.</p></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+generates them if absent, so the suite runs from a clean checkout.</p><p><strong>Look at it, too.</strong> Take a screenshot: layout problems such as a long nested
+property (a Tool’s <code class="language-plaintext highlighter-rouge">io</code>) pushing the rest of a node off screen are caught only
+by looking, because no test reports that a property makes a node unreadable.
+Nested objects are collapsed behind a disclosure for that reason.</p></main><hr><footer><details class="fa-provenance" id="fa-provenance" data-fa-provenance-count="7"><summary class="fa-provenance-summary">Provenance (7)</summary><p class="fa-provenance-lead">Who decided, when, and under which work item. This record was moved out of the text of the page.</p><h3 class="fa-provenance-section">Rendering the knowledge graph</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean 1dfh</code></span><div class="fa-provenance-text">This skill is the other half of bean <code>1dfh</code>: <strong>making that document legible to a person.</strong></div></li></ul><h3 class="fa-provenance-section">The page is generated, not committed</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="date"><span class="fa-provenance-kind">date</span> <span class="fa-provenance-refs"><code>2026-10-23</code></span><div class="fa-provenance-text">The page is <code>&lt;site&gt;/&lt;stub&gt;/index.html</code> and reads <code>../&lt;name&gt;/&lt;stub&gt;.jsonld</code> (the document&#39;s own path, under its instance&#39;s directory, the host&#39;s included, since 2026-10-23), so the same bytes work on the canonical site and under <code>branches/&lt;slug&gt;/</code> with no configuration, no <code>--base-url</code>, and no build-time branch.</div></li></ul><h3 class="fa-provenance-section">Every asset has its own IRI — a materialized path, loading published JSON-LD</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>Owner</code> <code>#1881</code> <code>2026-10-02</code></span><div class="fa-provenance-text">Owner, 2026-10-02 (#1881), in order: <em>&quot;404 githubpages is a hack. does not work according to stanrds&quot;</em>; <em>&quot;each link/page needs to be materialized on the CDN (gh-pagees), just load the content from the KG json(ld) assets already published&quot;</em>; <em>&quot;no query strings... each asset gets its own IRI&quot;</em>.</div></li></ul><h3 class="fa-provenance-section">The asset and its rendering are two resources with two IRIs</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>Owner</code> <code>#1881</code> <code>2026-10-02</code></span><div class="fa-provenance-text">Owner, 2026-10-02 (#1881): <em>&quot;each asset should have one IRI, but the view page is a rendering of that asset, a different page. fix IRIs&quot;</em>; and, against putting <code>schema:subjectOf</code> on the asset, <em>&quot;hard to maintain? asset doesnt know about its renderings&quot;</em>.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>Owner</code> <code>2026-10-02</code></span><div class="fa-provenance-text">Owner, 2026-10-02, paraphrased: clicking a library entry&#39;s slug should open its visualiser.</div></li></ul><h3 class="fa-provenance-section">Do not draw the whole graph</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text">Measured on this instance: 1111 nodes and roughly 2000 edges.</div></li></ul><h3 class="fa-provenance-section">Render what the document is missing, in the document&#39;s own terms</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean ovkk</code></span><div class="fa-provenance-text">It was 34 names and 3583 occurrences on this instance when the viewer was written, which is how the gap was found; bean <code>ovkk</code> took it to <strong>zero</strong> and <code>kg-export</code> now exits non-zero rather than publishing a new one.</div></li></ul></details><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

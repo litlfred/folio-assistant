@@ -21,7 +21,7 @@ Rendered at 1280×800 and 390×844.
 2. **Lede** (derived; sub-graph `cat-harness/glossary`).
 3. **Note** "This is an index, not the documentation."
 4. **Sibling list:** one row, **glossary** `cat-harness/glossary` 46.
-5. **Table of 46 rows**, from Adjudicator, Administrator, Attestation service, Author, Authoring agent … to User, Validation pipeline and Work plan (beans). Every row has `status current`, and first seen is 2026-09-21 or 2026-09-22.
+5. **Table of 46 rows**, from Adjudicator, Administrator, Attestation service, Author, Authoring agent … to User, Validation pipeline and Work plan (work items). Every row has `status current`, and first seen is 2026-09-21 or 2026-09-22.
 
 The page has no mobile layout of its own. At 390 px the same two columns squeeze to about 130 px and 200 px, and the ledger path breaks anywhere. The page does not scroll sideways at 390 px (`scrollWidth` 390), but it is 16,252 px tall, against 8,261 px at 1280.
 
@@ -38,7 +38,7 @@ The page has no mobile layout of its own. At 390 px the same two columns squeeze
 
 Re-measured on a local build of `main` cf3e62487, at 1280×800 and 390×844. Pictures in `rendered-2026-10-02/`. The as-is drawing above is NOT re-drawn.
 
-1. **No longer holds.** The page has a "Filter this table" box (bean `0fua`, the standalone table filter). There is still no A–Z jump. With the order fixed (2), the filter is the way in.
+1. **No longer holds.** The page has a "Filter this table" box (work item `0fua`, the standalone table filter). There is still no A–Z jump. With the order fixed (2), the filter is the way in.
 2. **Fixed.** Rows sort by the displayed term, with the notation as a tie-break. Measured: 0 descending pairs over 55 rows, against 4 before. Before, each ledger restarted the alphabet ("Agent, Actor, …").
 3. **No longer holds** (#1594). There are 0 literal backticks, and inline code renders as `<code>` and links.
 4. **Fixed.** The term cell prints the ledger relative to the sub-graph (`glossary-ledger.json` or `bootstrap/glossary-ledger.json`). The `#key` is already the `notation` fact, and the link still goes to the full path. The first column is 20rem (was 26rem). Below 800 px every auto-docs row stacks the term above its definition at full width. Measured at 390: `scrollWidth` 390, and the definition is 296 px wide (was 214 px beside an 89 px term).

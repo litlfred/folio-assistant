@@ -570,6 +570,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphTypology/building-blocks",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "building-blocks",
+      "comment": "Building-block catalogues -- layers and blocks (tools, systems, standards, trust networks) with their jurisdiction and what each is, the targets of a journey step's `uses` edges.",
+      "prefLabel": "building-blocks",
+      "definition": "Building-block catalogues -- layers and blocks (tools, systems, standards, trust networks) with their jurisdiction and what each is, the targets of a journey step's `uses` edges.",
+      "notation": "cat-harness:graphTypology/building-blocks",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/business-processes",
       "@type": [
         "bootstrap:GraphTypology",
@@ -1515,6 +1530,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphTypology/user-scenario",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "user-scenario",
+      "comment": "User scenarios as journey maps -- one file per journey: ordered steps, per actor what they do and feel, pain points, enablers, the record's trust state, and edges to user stories, BPMN tasks, requirements, FHIR examples and the building blocks each step uses.",
+      "prefLabel": "user-scenario",
+      "definition": "User scenarios as journey maps -- one file per journey: ordered steps, per actor what they do and feel, pain points, enablers, the record's trust state, and edges to user stories, BPMN tasks, requirements, FHIR examples and the building blocks each step uses.",
+      "notation": "cat-harness:graphTypology/user-scenario",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/validators",
       "@type": [
         "bootstrap:GraphTypology",
@@ -1615,6 +1645,21 @@
       "prefLabel": "workflow-state",
       "definition": "Running BPMN instances — one JSON file each, carrying `\"$schema\": \"folio-workflow-instance/v1\"`. Owned by the interpreter, never hand-edited.",
       "notation": "cat-harness:graphTypology/workflow-state",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:graphTypology/workshop",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "workshop",
+      "comment": "Workshops over journeys -- modules, learning objectives, questions for the room per journey step, reference tables, printable sheets, job aids and readings.",
+      "prefLabel": "workshop",
+      "definition": "Workshops over journeys -- modules, learning objectives, questions for the room per journey step, reference tables, printable sheets, job aids and readings.",
+      "notation": "cat-harness:graphTypology/workshop",
       "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
       "layer": "harness"

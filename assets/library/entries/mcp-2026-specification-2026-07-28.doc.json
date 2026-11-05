@@ -33,7 +33,7 @@
           "heading": false
         },
         {
-          "term": "recommended",
+          "term": "visit",
           "heading": false
         }
       ],
@@ -222,11 +222,11 @@
           "heading": false
         },
         {
-          "term": "hosts",
+          "term": "user data",
           "heading": false
         },
         {
-          "term": "user data",
+          "term": "hosts",
           "heading": false
         },
         {
@@ -2328,11 +2328,11 @@
           "heading": true
         },
         {
-          "term": "notify",
+          "term": "server",
           "heading": false
         },
         {
-          "term": "server",
+          "term": "notify",
           "heading": false
         }
       ],
@@ -2714,11 +2714,11 @@
           "heading": false
         },
         {
-          "term": "mime types",
+          "term": "support rendering",
           "heading": false
         },
         {
-          "term": "support rendering",
+          "term": "mime types",
           "heading": false
         },
         {
@@ -2833,7 +2833,7 @@
           "heading": false
         },
         {
-          "term": "waiting",
+          "term": "progress",
           "heading": false
         }
       ],
@@ -3476,8 +3476,8 @@
           "heading": false
         },
         {
-          "term": "requirements",
-          "heading": true
+          "term": "in-progress",
+          "heading": false
         }
       ],
       "extract": "1. Progress notifications MUST only reference tokens that: Were provided in an active request Are associated with an in-progress operation 2. Servers receiving a request with a progress token MAY: Choose not to send any progress notifications Send notifications at whatever frequency they deem appropriate Omit the total value if unknown sequenceDiagram participant Client participant Server Note over Client,Server:",
@@ -3734,11 +3734,11 @@
           "heading": false
         },
         {
-          "term": "binding",
+          "term": "transport",
           "heading": false
         },
         {
-          "term": "transport",
+          "term": "binding",
           "heading": false
         },
         {
@@ -3854,11 +3854,11 @@
           "heading": false
         },
         {
-          "term": "message",
+          "term": "bidirectional",
           "heading": false
         },
         {
-          "term": "bidirectional",
+          "term": "message",
           "heading": false
         }
       ],
@@ -4281,19 +4281,19 @@
           "heading": false
         },
         {
-          "term": "messages",
-          "heading": true
-        },
-        {
           "term": "specification basic",
           "heading": false
         },
         {
-          "term": "mrtr",
-          "heading": false
+          "term": "messages",
+          "heading": true
         },
         {
           "term": "line beginning",
+          "heading": false
+        },
+        {
+          "term": "mrtr",
           "heading": false
         },
         {
@@ -4361,7 +4361,7 @@
           "heading": false
         },
         {
-          "term": "disconnect",
+          "term": "cancelled",
           "heading": false
         }
       ],
@@ -5092,11 +5092,11 @@
           "heading": false
         },
         {
-          "term": "multi round-trip",
+          "term": "http transport",
           "heading": false
         },
         {
-          "term": "http transport",
+          "term": "multi round-trip",
           "heading": false
         },
         {
@@ -5381,7 +5381,7 @@
           "heading": false
         },
         {
-          "term": "mode",
+          "term": "support",
           "heading": false
         }
       ],
@@ -5822,11 +5822,11 @@
           "heading": false
         },
         {
-          "term": "third-party service",
+          "term": "mcp client",
           "heading": false
         },
         {
-          "term": "mcp client",
+          "term": "third-party service",
           "heading": false
         },
         {
@@ -6585,7 +6585,7 @@
           "heading": true
         },
         {
-          "term": "appended",
+          "term": "follow-up",
           "heading": false
         }
       ],
@@ -7147,11 +7147,11 @@
           "heading": true
         },
         {
-          "term": "http sse",
+          "term": "sse transport",
           "heading": false
         },
         {
-          "term": "sse transport",
+          "term": "http sse",
           "heading": false
         },
         {
@@ -9168,7 +9168,7 @@
           "heading": false
         },
         {
-          "term": "numberschema",
+          "term": "maximum",
           "heading": false
         }
       ],
@@ -10819,11 +10819,11 @@
           "heading": false
         },
         {
-          "term": "universal compatibility",
+          "term": "nbsp",
           "heading": false
         },
         {
-          "term": "nbsp",
+          "term": "universal compatibility",
           "heading": false
         },
         {
@@ -10946,11 +10946,11 @@
           "heading": false
         },
         {
-          "term": "contents quot",
+          "term": "text quot",
           "heading": false
         },
         {
-          "term": "text quot",
+          "term": "contents quot",
           "heading": false
         },
         {
@@ -11990,11 +11990,11 @@
           "heading": false
         },
         {
-          "term": "string intended",
+          "term": "support rendering",
           "heading": false
         },
         {
-          "term": "support rendering",
+          "term": "string intended",
           "heading": false
         },
         {
@@ -12050,11 +12050,11 @@
           "heading": false
         },
         {
-          "term": "tools quot",
+          "term": "support x7b",
           "heading": false
         },
         {
-          "term": "support x7b",
+          "term": "tools quot",
           "heading": false
         },
         {
@@ -13452,7 +13452,7 @@
           "heading": false
         },
         {
-          "term": "return",
+          "term": "retrying",
           "heading": false
         }
       ],
@@ -13682,12 +13682,12 @@
           "heading": true
         },
         {
-          "term": "common",
-          "heading": true
-        },
-        {
           "term": "exhaustive",
           "heading": false
+        },
+        {
+          "term": "common",
+          "heading": true
         }
       ],
       "extract": "The protocol defines several standard URI schemes. This list is not exhaustive&mdash;implementations are always free to use additional, custom URI schemes.",
@@ -13888,7 +13888,7 @@
           "heading": false
         },
         {
-          "term": "tools",
+          "term": "loop",
           "heading": false
         }
       ],
@@ -14134,11 +14134,11 @@
           "heading": false
         },
         {
-          "term": "tool parameters",
+          "term": "http transport",
           "heading": false
         },
         {
-          "term": "http transport",
+          "term": "tool parameters",
           "heading": false
         },
         {
@@ -14283,11 +14283,11 @@
           "heading": true
         },
         {
-          "term": "suitable",
+          "term": "regular",
           "heading": false
         },
         {
-          "term": "regular",
+          "term": "suitable",
           "heading": false
         }
       ],
@@ -15358,8 +15358,8 @@
           "heading": true
         },
         {
-          "term": "persist",
-          "heading": false
+          "term": "implementation",
+          "heading": true
         }
       ],
       "extract": "1. Servers SHOULD: Rate limit log messages Include relevant context in data field Use consistent logger names Remove sensitive information 2. Clients MAY: Present log messages in the UI Implement log filtering/search Display severity visually Persist log messages",

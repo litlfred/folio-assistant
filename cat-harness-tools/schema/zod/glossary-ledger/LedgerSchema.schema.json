@@ -17,7 +17,7 @@
           "type": "object",
           "propertyNames": {
             "type": "string",
-            "pattern": "^(?:role\\/[a-z0-9][a-z0-9-]*|process\\/[A-Za-z_][\\w.-]*\\/lane\\/[A-Za-z_][\\w.-]*)$"
+            "pattern": "^(?:role\\/[a-z0-9][a-z0-9-]*|process\\/[A-Za-z_][\\w.-]*\\/lane\\/[A-Za-z_][\\w.-]*|(?:kind|node-kind|harness)\\/[a-z][a-z0-9-]*)$"
           },
           "additionalProperties": {
             "type": "object",

@@ -8,7 +8,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Ingestion subprocess — ingest a theme",
       "summary": "Decide whether an ingested artefact is a theme source and, when it is, extract its palette roles and layouts and send them to theme and UI review.",
-      "description": "Decide whether an ingested artefact is a theme source and, when it is, extract its palette roles and layouts and send them to theme and UI review. folio-assistant — Ingestion subprocess — ingest a theme.\n\nSource of truth: this file. Open it in bpmn.io, Camunda Modeler, or any other\nBPMN 2.0 tool. The SVG under docs/assets/img/workflows/ is generated from it\nby `bun run cat render:bpmn` — never hand-edit the SVG.\n\nThe <bootstrap.processes:skill> extension on an activity names the folio-assistant skill\nthat implements it.\nThe engine keeps the work context; no step carries work-plan markup.\n\nBean j66n. One Theme node with kind sticky | webpage | publication, not three\nnode kinds: the palette vocabulary is shared and only the GEOMETRY varies.",
+      "description": "Decide whether an ingested artefact is a theme source and, when it is, extract its palette roles and layouts and send them to theme and UI review.\n\nOne Theme node with kind sticky | webpage | publication, not three\nnode kinds: the palette vocabulary is shared and only the GEOMETRY varies.",
       "enforcement": "advisory",
       "sourcePath": "processes/ui/ingest-theme.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/ui/ingest-theme.bpmn",

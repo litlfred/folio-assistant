@@ -28,7 +28,7 @@ Index page:
 - one row per process: steps, and undocumented steps
 - the skill → processes reverse join
 - lane names
-- bean ops
+- work item ops
 - declared versus defaulted enforcement
 - findings
 
@@ -43,7 +43,7 @@ Per-process page:
 
 ## Observed on main (re-checked against main 0bcf94bd)
 
-Re-checked against the index as regenerated in this checkout. Since the first drawing, three processes are new (`methodology-from-source`, `related-work`, `wireframe-design-review`) and the undocumented-steps counts were cleared on every older row. The counts below and in the drawing are updated. The adjudication page changed only in its "Called by" line, which already listed "Wireframe design review" in the drawing, so that screen is unchanged.
+Re-checked against the index as regenerated in this checkout; the counts below and in the drawing are current.
 
 The chrome is the same as on every just-the-docs page (see the navbar wireframe):
 - a 56 px strip at rest, or the theme's top bar below 800 px
@@ -77,5 +77,5 @@ Per-process page (`/processes/adjudication.html`), in reading order:
 3. **The index's skill → process column is not linked.** `run by` lists `.bpmn` filenames as code text. The per-process pages exist, but a reader cannot follow "which process runs `adjudication`" to the page for that process.
 4. **At phone width the BPMN diagram is unreadable at rest.** A 1330 px-wide viewBox scaled to about 358 px is about 0.27×, so the diagram's text of about 12 px renders at about 3 px. The zoom and Full width controls exist, but the diagram offers nothing until they are used.
 5. **The purpose is a single paragraph of about 330 words, above the diagram.** On mobile the diagram, which is what the page is for, begins more than a screen down. The lanes and steps cells hold 40 to 190 words each, and on mobile they scroll sideways inside the table wrapper.
-6. **The "undocumented steps" column mixes "—" with numbers.** "—" means zero, but a reader cannot tell it from "not computed". Now that 66 of 68 rows read "—", the column is almost all dashes.
+6. **The "undocumented steps" column mixes "—" with numbers.** "—" means zero, but a reader cannot tell it from "not computed". With 66 of 68 rows reading "—", the column is almost all dashes.
 7. **`nav_exclude: true` on all 69 pages.** The pages are reachable only through the Processes icon (a glyph with an accessible name but no visible label at rest), the Folders list, the C@T Harness divider's "processes" link, or search. The theme's own navigation never lists them.

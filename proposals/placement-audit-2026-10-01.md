@@ -1,6 +1,6 @@
 # Placement audit — every skill, tool, scenario, process and role checked against its layer (2026-10-01)
 
-**Status:** read-only audit for the separation arc (epic bean `folio-assistant-7x5n`, issue [#1770](https://github.com/litlfred/folio-assistant/issues/1770), story S4 `rfuq`). **Nothing was moved.** *Amended 2026-10-30 (bean `saqd`):* eight rows that the heuristic sent to sci or core are reclassified as `CODE` rows that stay in cat-harness-tools: `gen-content-graph-uml.ts`, `content-graph-analysis.py`, `artefact-verification.json`, `content-graph.ts`, `markdown-ast.ts`, `profile-check.ts`, `qa-criteria-registry.ts` and `schemas/translation.ts`. Each `signal` gives the measurement; the counts below include the change. The plan it serves is `cat-harness/docs/proposals/separation-arc-2026-10-01.md` (on branch `claude/blissful-ride-c2f26u`). Every row is in [`placement-audit-2026-10-01.json`](placement-audit-2026-10-01.json): `{kind, id, path, instance, concern, verdict, target, signal, evidence, pr}`.
+**Status:** read-only audit for the separation arc (epic work item `folio-assistant-7x5n`, issue [#1770](https://github.com/litlfred/folio-assistant/issues/1770), story S4 `rfuq`). **Nothing was moved.** *Amended 2026-10-30 (work item `saqd`):* eight rows that the heuristic sent to sci or core are reclassified as `CODE` rows that stay in cat-harness-tools: `gen-content-graph-uml.ts`, `content-graph-analysis.py`, `artefact-verification.json`, `content-graph.ts`, `markdown-ast.ts`, `profile-check.ts`, `qa-criteria-registry.ts` and `schemas/translation.ts`. Each `signal` gives the measurement; the counts below include the change. The plan it serves is `cat-harness/docs/proposals/separation-arc-2026-10-01.md` (on branch `claude/blissful-ride-c2f26u`). Every row is in [`placement-audit-2026-10-01.json`](placement-audit-2026-10-01.json): `{kind, id, path, instance, concern, verdict, target, signal, evidence, pr}`.
 
 **Measured at:** `origin/main` `cdb0a018c4a`, with the `bootstrap` (`f70a56c`) and `bootstrap-tools` (`920c772`) submodules initialised. **2266 items** across 20 kinds in 14 instance directories (`smart-l1`, `smart-dak`, `smart-ig` and `smart-immunizations` hold none of these kinds yet: only a declaration and QA results).
 
@@ -57,7 +57,7 @@
 
 ### Per planned PR
 
-Which existing bean each non-OK row belongs to (iirv placement PR2–PR9: `pzwb` `63wl` `4fv8` `tlat` `apcg` `8fq9` `f8wp` `p9bu`; S5 stages `70lx` `8lcl` `y9r6`). "unplanned" means no bean covers that row yet.
+Which existing work item each non-OK row belongs to (iirv placement PR2–PR9: `pzwb` `63wl` `4fv8` `tlat` `apcg` `8fq9` `f8wp` `p9bu`; S5 stages `70lx` `8lcl` `y9r6`). "unplanned" means no work item covers that row yet.
 
 | planned PR | rows |
 |---|---:|
@@ -153,7 +153,7 @@ Each question gives the context, the options, and a recommendation, so it can be
 - *Options:* (a) move each with its importers to `folio-assistant-sci` (the qou-era pipeline becomes sci code); (b) split: generic pipeline core to `cat-harness-tools`, the math checkers to sci; (c) keep all of `content/pipeline/` in `cat-harness-tools` as the shared pipeline for now.
 - *Recommendation:* **(b)**, done inside S5: it is the only option that leaves no upward import and does not drag the document path into sci.
 - *If unanswered:* S5 moves these modules to cat-harness-tools with the rest of `content/pipeline/` (option c by default).
-- *Reclassified 2026-10-30 (bean `saqd`):* `content-graph.ts`, `markdown-ast.ts`, `profile-check.ts`, `qa-criteria-registry.ts` and `translation.ts` are generic and imported by 3–11 non-test cat-harness-tools modules each, so they are now `CODE` rows that stay in cat-harness-tools. `qa-checkers-q-usage.ts` moves to sci; the rest remain open.
+- *Reclassified 2026-10-30 (work item `saqd`):* `content-graph.ts`, `markdown-ast.ts`, `profile-check.ts`, `qa-criteria-registry.ts` and `translation.ts` are generic and imported by 3–11 non-test cat-harness-tools modules each, so they are now `CODE` rows that stay in cat-harness-tools. `qa-checkers-q-usage.ts` moves to sci; the rest remain open.
 
 **Q5. Form of the large-datasets and agent-skills subgraphs**
 

@@ -4,11 +4,11 @@
 - `cat-harness/docs/cat-harness/voices/index.html` (declared by `agent-skills/agent-skills.json`)
 - `cat-harness/docs/cat-harness/voices/<content-core>/index.html` (the content core's `<content-core>.json`)
 - `cat-harness/docs/cat-harness/voices/<science-layer>/index.html` (the science layer's `<science-layer>.json`)
-- `cat-harness/docs/cat-harness/voices/<iris-replica>/index.html` (the IRIS replica's `skills/skills.json`; this was `voices/who-style-guide/`, declared by `who-style-guide/who-style-guide.json`, until the style guide was folded into the IRIS replica on 2026-10-01, bean `qsx4`. The observations below were made on the `who-style-guide` page and are kept as made)
+- `cat-harness/docs/cat-harness/voices/<iris-replica>/index.html` (the IRIS replica's `skills/skills.json`; the observations below were made on its earlier address, `voices/who-style-guide/`, from before the style guide was folded into the IRIS replica, and are kept as made)
 
 All four are written by `cat-harness/scripts/gen-voices-viz.ts`, "a zero-dependency viewer … that fetches the projection relative to its own location" (`assets/voices/`). A per-instance page is the same viewer with the instance filter preset. For example, `voices/who-style-guide/` opens with "who-style-guide" selected and 3 voices showing.
 
-**Who it is for:** anyone upholding or reviewing a finding made against a voice, such as a reviewer or the owner. The generator says the page's one job is "show the citations": every rule "carries the page and the quote it was read from … and until this page, unreadable by a person without opening JSON". The owner's ask (bean `bu2q`) was *"shoulld show list of voices defined"*.
+**Who it is for:** anyone upholding or reviewing a finding made against a voice, such as a reviewer or the owner. The generator says the page's one job is "show the citations": every rule "carries the page and the quote it was read from", which is otherwise unreadable without opening JSON. It also lists every voice defined.
 
 **What they need to do:**
 - see every declared voice and which instance ships it, including a declared-but-absent voice directory, which "gets a ROW, not silence"

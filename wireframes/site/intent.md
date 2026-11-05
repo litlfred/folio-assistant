@@ -2,7 +2,7 @@
 
 ## Covers
 
-- Declared visualiser `cat-harness/site` (cat-harness `visualisers`, `renderedBy: site-viewer`, `coversKinds: ["basic-cdn-site"]`; bean `folio-assistant-6gme`, owner 2026-10-20: "Build route listing").
+- Declared visualiser `cat-harness/site` (cat-harness `visualisers`, `renderedBy: site-viewer`, `coversKinds: ["basic-cdn-site"]`).
 - Generator: `cat-harness-tools/scripts/gen-site-viz.ts` (`bun run cat site:viz`), one page at `<base>/en/cat-harness/site/`, built at publish (`builtAtPublish`, cause `state`, from `site`).
 - Drawn from the generated page against the `gh-pages` tip of 2026-10-20; the route table is cut to six rows of the 58, and the two other states are drawn below it, although a real page shows exactly one state per site.
 
@@ -15,7 +15,7 @@
 
 - an `h1` "Published site" and one sentence saying where the listing comes from and what counts as a page
 - per declared `basic-cdn-site` directory: the instance and id, the branch and remote, then exactly one of three states
-  - **present:** the tip, the totals, a Route / Pages / Files table of top-level routes, and a Preview table of `STAGING/<slug>/`
+  - **present:** the tip, the totals, a Route / Pages / Files table of top-level routes, and a Preview table of `branches/<slug>/`
   - **empty:** git answered and the branch is absent or holds no files, said in words
   - **could not read:** git did not answer; the reason, and no table and no counts — never a zero standing in for "could not look"
 - links relative to the site root, so the same bytes serve the canonical base and a staging slug

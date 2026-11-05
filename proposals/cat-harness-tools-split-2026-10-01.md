@@ -3,7 +3,7 @@
 **Status:** plan for review. Nothing in it has been done. It follows the
 `kg-separation` method (`cat-harness/skills/kg/graph-management/kg-separation.md`,
 `processes/kg/kg-separation.bpmn`, stages 0–13) and the bootstrap / bootstrap-tools
-worked example (bean `xsqm`, `fsh-guts/retired/bootstrap-split.md`).
+worked example (work item `xsqm`, `fsh-guts/retired/bootstrap-split.md`).
 
 **Checkout measured:** origin/main at `609b7532ee3` (2026-10-01), in a throwaway
 worktree with submodules `bootstrap@f70a56c` and `bootstrap-tools@920c772`.
@@ -20,11 +20,11 @@ The other counts in this document are `git ls-files` / `git grep` / `grep -c`
 one-liners, and each is named where it is used. Counts marked **≈** are
 heuristic: they come from a path-name pattern and may be off by about ±10 %.
 
-**Bean:** `folio-assistant-w2gr` ("cat-harness-tools: split the MCP server and
+**Work item:** `folio-assistant-w2gr` ("cat-harness-tools: split the MCP server and
 tool implementations…", in-progress). Its scope was the MCP server only. Under
 this plan it becomes the whole code half. That widening needs the owner's
 agreement, and it is recorded as a premise of decision D1. The owner's
-2026-10-01 rulings in that bean are still binding: Q1 (core does not import the
+2026-10-01 rulings in that work item are still binding: Q1 (core does not import the
 server half; the document adapter is split) and Q2 (`cat-harness-tools` has its
 own `package.json`, the root entry points are repointed, and there are no
 compatibility re-exports).
@@ -345,7 +345,7 @@ unless the table says otherwise.
 ### Stage 3: authorise (owner)
 
 The report covers what moves, the sizes and what breaks (§1–§2). It goes in
-the bean and the PR. Wait for the owner's go
+the work item and the PR. Wait for the owner's go
 (`deletion-requires-confirmation`). Confirm that both repositories exist and
 are empty. `litlfred/cat-harness-tools` was measured empty on 2026-09-30, and
 `litlfred/cat-harness` was not checked.
@@ -392,7 +392,7 @@ whose message names the folio-assistant source SHA.
 - Under this split every line of code leaves `cat-harness`, including the Zod schemas, `src/workflow/*` and `content/pipeline/*`.
 - Today, 46 files in core, sci, who-iris, smart-trust, fhir-harness, smart-base and root `tools/` import cat-harness Zod. Another 27 files import cat-harness scripts and src.
 - Your 2026-10-01 ruling Q1 says "core does not import cat-harness-tools". That ruling was made when cat-harness-tools was **only the MCP server**.
-- The `kg-separation` skill's own table says the parent "imports the tools' Zod and writers". Here the parent is core, just as cat-harness imports bootstrap-tools today (bean `0lj4`).
+- The `kg-separation` skill's own table says the parent "imports the tools' Zod and writers". Here the parent is core, just as cat-harness imports bootstrap-tools today (work item `0lj4`).
 
 **Options:**
 1. **(Rec.) Code may, content may not, and never the server.**

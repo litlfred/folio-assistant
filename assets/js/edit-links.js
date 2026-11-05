@@ -759,18 +759,19 @@
     ".ba-ic.ba-copied{border-color:#2e7d32;background:#2e7d32;color:#fff}" +
     ".ba-ic{position:relative;width:28px;height:28px;padding:0;border:1px solid #8885;border-radius:7px;background:color-mix(in srgb,currentColor 5%,transparent);color:inherit;font-size:14px;line-height:1;cursor:pointer}" +
     "html.fa-bp .block-actions{opacity:1}" +
-    "html.fa-bp .block-actions>.ba-ic:not(.ba-trigger){display:none}" +
+    "html.fa-bp .block-actions>.ba-ic:not(.ba-trigger):not(.ba-bookmark),html.fa-bp .fa-block-panel .block-actions>.ba-ic{display:none}" +
     // Owner, 2026-11-02 (dth-pc): "need a bit of padding between content and
     // grill": the left gutter is inside the document's own box, so the icons
     // never sit on the theme's backdrop.
     "@media (min-width:50rem){html.fa-bp .main-content .fa-doc{padding-left:1.75rem}html.fa-bp .main-content .block-actions{float:left;clear:left;width:1.5rem;margin:0 0 6px -1.5rem;text-align:center}}" +
-    "html.fa-bp .block-actions>.ba-trigger{width:20px;height:20px;border:0;background:none;font-size:13px;opacity:.35;filter:grayscale(1)}" +
+    "html.fa-bp .block-actions>.ba-trigger,html.fa-bp .block-actions>.ba-bookmark{width:20px;height:20px;border:0;background:none;font-size:13px;opacity:.35;filter:grayscale(1)}" +
     "html.fa-bp .block-actions>.ba-trigger .ba-n{top:-4px;right:-6px;font-size:9px;padding:0 3px}" +
     "html.fa-bp .block-actions:hover>.ba-trigger,html.fa-bp .ba-trigger:focus-visible,html.fa-bp .ba-trigger[aria-expanded=true],html.fa-bp :hover>.block-actions>.ba-trigger,html.fa-bp p:has(+.fa-blk:hover)>.block-actions>.ba-trigger" + ON +
+    "html.fa-bp .block-actions:hover>.ba-bookmark,html.fa-bp .ba-bookmark:focus-visible,html.fa-bp .ba-bookmark[aria-pressed=true],html.fa-bp :hover>.block-actions>.ba-bookmark,html.fa-bp p:has(+.fa-blk:hover)>.block-actions>.ba-bookmark" + ON +
     "html.fa-bp .main-content .anchor-heading svg{visibility:visible;opacity:.35;filter:grayscale(1)}" +
     "html.fa-bp .main-content .fa-hot>.anchor-heading svg,html.fa-bp .main-content :hover>.anchor-heading svg,html.fa-bp .main-content .anchor-heading:focus svg" + ON +
-    ".fa-block-panel .bp-copy{font:inherit;font-size:.82rem;margin:.1rem 0 .3rem;padding:.3rem .6rem;border:1px solid #8886;border-radius:6px;background:none;color:inherit;cursor:pointer}" +
-    ".fa-block-panel .bp-copy.ba-copied{border-color:#2e7d32;background:#2e7d32;color:#fff}" +
+    ".fa-block-panel .bp-copy{font:inherit;font-size:.82rem;margin:.1rem .35rem .3rem 0;padding:.3rem .6rem;border:1px solid #8886;border-radius:6px;background:none;color:inherit;cursor:pointer}" +
+    ".fa-block-panel .bp-copy.ba-copied,.fa-block-panel .bp-bookmark[aria-pressed=true]{border-color:#2e7d32;background:#2e7d32;color:#fff}" +
     ".fa-block-panel .bp-pane{margin-top:1rem}.fa-block-panel .bp-pane>h4{margin:0 0 .3rem;font-size:.9rem}";
   const EXPLAIN = {
     suggest: ["✍ Suggest a change", "Propose new wording in an editor. It is sent as a GitHub issue with your change, and the editors decide on it."],
@@ -809,7 +810,7 @@
     // One panel for the block: its link, its own links, then every other
     // pane a layer added (public comments), in that order.
     const hasLinks = !!box.querySelector(":scope > a[data-fa-link]");
-    const others = Array.from(box.querySelectorAll(":scope > .ba-ic:not(.ba-link)")).map((b) => b.dataset.pane).filter((k) => k !== "edit" && panes[k] && panes[k].render);
+    const others = Array.from(box.querySelectorAll(":scope > .ba-ic:not(.ba-link):not(.ba-bookmark)")).map((b) => b.dataset.pane).filter((k) => k !== "edit" && panes[k] && panes[k].render);
     const x = el("button", { className: "bp-x", type: "button", textContent: "✕", title: "Close (Esc)" });
     x.onclick = close;
     const p = hasLinks ? panes.edit : panes[others[0]] || { title: id };
@@ -821,6 +822,18 @@
       c.dataset.anchor = lk.dataset.anchor;
       c.onclick = (e) => { e.stopPropagation(); copyLink(c); };
       head.push(c);
+    }
+    if (box.hasAttribute("data-fa-pin")) {
+      for (const k of ["data-fa-pin", "data-fa-pin-kind", "data-fa-pin-node-kind", "data-fa-pin-title", "data-fa-pin-href", "data-fa-pin-avatar", "data-fa-pin-source"]) {
+        const v = box.getAttribute(k);
+        if (v !== null) panel.setAttribute(k, v);
+        else panel.removeAttribute(k);
+      }
+      const bm = el("button", { className: "bp-copy bp-bookmark", type: "button", textContent: "🔖 Bookmark", title: "Bookmark on your folio" });
+      bm.setAttribute("data-fa-pin-control", "");
+      bm.setAttribute("aria-pressed", "false");
+      bm.setAttribute("aria-label", "Bookmark " + (titleOf(box) || label) + " to your folio glass");
+      head.push(bm);
     }
     panel.replaceChildren(...head, body);
     if (hasLinks) {
@@ -840,6 +853,7 @@
       moved = box;
       body.append(box);
     }
+    if (window.faFolio && typeof window.faFolio.paint === "function") window.faFolio.paint(panel);
     for (const k of others) {
       const sec = el("div", { className: "bp-pane" });
       if (hasLinks || others.length > 1) sec.append(el("h4", { textContent: (panes[k].icon ? panes[k].icon + " " : "") + panes[k].title }));
@@ -867,7 +881,7 @@
   // The one icon a block shows: 📣 when it has links, else the first pane's
   // own icon. The 📣 carries the count of the other panes (public comments).
   const retrigger = (box) => {
-    const ics = Array.from(box.querySelectorAll(":scope > .ba-ic:not(.ba-link)"));
+    const ics = Array.from(box.querySelectorAll(":scope > .ba-ic:not(.ba-link):not(.ba-bookmark)"));
     if (!ics.length) return;
     const t = box.querySelector(':scope > .ba-ic[data-pane="edit"]') || ics[0];
     for (const b of ics) b.classList.toggle("ba-trigger", b === t);
@@ -900,6 +914,43 @@
     const done = (t) => { b.title = t; b.classList.add("ba-copied"); setTimeout(() => { b.classList.remove("ba-copied"); b.title = "Copy link"; }, 2000); };
     try { navigator.clipboard.writeText(url).then(() => done("Link copied"), () => done(url)); } catch { done(url); }
   };
+  // 🔖 Bookmark (cat-harness#982): every anchored block carries a bookmark
+  // control in the left gutter and in the block panel header, wired to the
+  // folio glass via data-fa-pin / data-fa-pin-control.
+  const pageCover = () => {
+    if (!document || typeof document.querySelector !== "function") return "";
+    const img = document.querySelector(".main-content .page-cover img[src], .main-content .page-title-row img.page-cover[src], .main-content .fa-doc > p:first-child > img[src]");
+    return img ? img.getAttribute("src") || "" : "";
+  };
+  const pageSource = () => {
+    if (!document || typeof document.querySelector !== "function") return "";
+    const m = document.querySelector('meta[name="fa-instance"], [data-fa-instance]');
+    if (!m) return "";
+    return m.getAttribute("content") || m.getAttribute("data-fa-instance") || "";
+  };
+  const bookmarkIcon = (box, label) => {
+    if (!label || box.querySelector(":scope > .ba-bookmark")) return;
+    const base = location.pathname || "/"; // a page is addressed by its path, never a query string (#1881)
+    const href = base + "#" + encodeURIComponent(label).replace(/%3A/g, ":").replace(/%2F/g, "/");
+    const title = titleOf(box) || label;
+    if (!box.hasAttribute("data-fa-pin")) {
+      box.setAttribute("data-fa-pin", href);
+      box.setAttribute("data-fa-pin-kind", "bookmark");
+      box.setAttribute("data-fa-pin-title", title);
+      box.setAttribute("data-fa-pin-href", href);
+      const cov = pageCover();
+      if (cov) box.setAttribute("data-fa-pin-avatar", cov);
+      const src = pageSource();
+      if (src) box.setAttribute("data-fa-pin-source", src);
+    }
+    const b = el("button", { className: "ba-ic ba-bookmark", type: "button", title: "Bookmark on your folio" });
+    b.setAttribute("data-fa-pin-control", "");
+    b.setAttribute("aria-pressed", "false");
+    b.setAttribute("aria-label", "Bookmark " + title + " to your folio glass");
+    b.append(el("span", { textContent: "🔖" }));
+    box.append(b);
+    if (window.faFolio && typeof window.faFolio.paint === "function") window.faFolio.paint(box);
+  };
   const icons = (root) => {
     const r = root || document;
     if (!r || typeof r.querySelectorAll !== "function") return;
@@ -914,6 +965,7 @@
         // The block's own anchor link, if the build drew one, now lives in the group.
         for (const a of document.querySelectorAll("a.block-anchor")) if (a.getAttribute("href") === "#" + label) a.classList.add("ba-moved");
       }
+      if (label) bookmarkIcon(box, label);
     }
   };
   // The heading whose section the pointer is in: walk up to the document's
@@ -933,6 +985,7 @@
   });
   document.addEventListener("click", (e) => {
     const b = e.target.closest && e.target.closest(".ba-ic");
+    if (b && b.hasAttribute("data-fa-pin-control")) return;
     if (b && b.dataset.pane === "link") { e.preventDefault(); e.stopPropagation(); copyLink(b); return; }
     if (b && !(panel && panel.contains(b))) {
       e.preventDefault();

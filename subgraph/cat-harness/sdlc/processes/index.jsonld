@@ -1175,22 +1175,16 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_1b",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_2",
       "@type": "bootstrap:SequenceFlow"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_3",
       "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_4",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "something is missing"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_5",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "complete"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_6",
@@ -1229,6 +1223,20 @@
       "name": "no"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J2",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_J3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no — the site is live"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_S1",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -1247,16 +1255,6 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_V2",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "yes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite#flow/Flow_V3",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "no, or could not tell"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
       "@type": "cat-harness:Lane",
       "name": "CI/CD Pipeline"
@@ -1265,6 +1263,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Alert",
       "@type": "bootstrap:ProcessNode",
       "name": "Alert the publication manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_InstanceSites",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Compose each instance's site [its Tool]"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Verify",
@@ -1282,14 +1285,14 @@
       "name": "Site published, previews intact"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Complete",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Is every maintained artefact present?"
-    },
-    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Deployed",
       "@type": "bootstrap:ProcessNode",
       "name": "Did the deploy succeed?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Judged",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Did every built-site check pass?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Secure",
@@ -1300,11 +1303,6 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Survived",
       "@type": "bootstrap:ProcessNode",
       "name": "Did the previews survive?"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/GW_Verified",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Verified?"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Start_Push",
@@ -1325,6 +1323,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Export",
       "@type": "bootstrap:ProcessNode",
       "name": "Export the knowledge graph and its schema"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Judge",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Judge the built-site checks"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Publish",
@@ -1509,7 +1512,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_Deploy",
       "@type": "bootstrap:ProcessNode",
-      "name": "Push to the CDN under STAGING/"
+      "name": "Push to the CDN under branches/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging/node/Task_LogRendered",

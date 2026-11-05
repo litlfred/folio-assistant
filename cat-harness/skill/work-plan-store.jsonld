@@ -8,12 +8,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "work-plan-store",
       "title": "The work plan's contract",
-      "description": "The contract the work plan (beans) keeps as a data store, as operations any Tool must provide: get, list, create, update with ifMatch, note, history, and where a bean is in its processes. Give back a bean exactly as written, keep ids unique and links whole, keep status and type to their closed lists, lose nothing to concurrent writers, and answer a bean's history. A mechanical Actor plays this Role through whichever Tool the deployment names.",
+      "description": "The contract the work plan (work items) keeps as a data store, as operations any Tool must provide: get, list, create, update with ifMatch, note, history, and where a work item is in its processes. Give back a work item exactly as written, keep ids unique and links whole, keep status and type to their closed lists, lose nothing to concurrent writers, and answer a work item's history. A mechanical Actor plays this Role through whichever Tool the deployment names.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness/package/work-plan"
       ],
       "instructionsPath": "work-plan/skills/work-plan/work-plan-store.md",
-      "instructionLines": 113,
+      "instructionLines": 109,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

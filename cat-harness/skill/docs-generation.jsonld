@@ -7,13 +7,13 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "docs-generation",
-      "title": "Documentation Generation Skill",
-      "description": "Generate and deploy documentation artifacts: schema docs (TypeDoc), formal-layer API docs, dependency graphs, schema manifests, and per-paper HTML/PDF/Markdown outputs.",
+      "title": "Docs generation",
+      "description": "How a checkout of this harness generates and publishes its docs site: regenerating derived references, composing the docs layers and each instance's site into one Jekyll source, building it with just-the-docs, the post-build passes, the TypeDoc API reference, the knowledge-graph export, and the full-replace publish to gh-pages and its branches/ previews.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/docs-generation.md",
-      "instructionLines": 193,
+      "instructionLines": 108,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

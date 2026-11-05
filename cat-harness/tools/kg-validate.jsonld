@@ -362,7 +362,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "kg-validate",
       "title": "Validate a node in the graph",
-      "description": "Check one file against the schema for its graph typology. ONE tool rather than one per schema: the declaration already says which directory holds which kind, so the kind is the parameter and the lookup does the rest.",
+      "description": "Check one file against the schema for its graph typology. ONE tool for every schema: the kind is resolved from the declared directory that holds the file.",
       "install": {
         "none": true
       },

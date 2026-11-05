@@ -6,7 +6,7 @@
 - Generator: `cat-harness/scripts/gen-methodologies-viz.ts` (graph typology `methodology`; page location read from the `coverage.visualiser` of the directory declaring that kind in `cat-harness.json`). It does not read the graph itself: the rows come from `check-methodology-evidence.ts` (`methodologyNodes`, `checkMethodologyEvidence`).
 - Rendered by Jekyll with just-the-docs `v0.12.0` (`remote_theme` in `_config.yml`, `color_scheme: dark`). The page has no `layout:` in its front matter. The chrome comes from `_includes/title.html`, `_includes/nav_footer_custom.html`, `_includes/footer_custom.html`, `assets/js/docs-ui.js` and `assets/css/docs-ui.css`.
 
-I could not build the site here: there is no local just-the-docs, and the published site is not reachable from this session. So the wireframe is drawn from the Markdown (as regenerated in the working tree), the generator and the chrome's templates, JS and CSS. The findings are read off the Markdown and the generator, not measured on a rendered page; the mobile behaviour is the theme's (tables scroll sideways inside its table wrapper).
+The wireframe is drawn from the Markdown, the generator and the chrome's templates, JS and CSS, not measured on a rendered page, because the site could not be built where this was drawn (no local just-the-docs, and the published site unreachable); the mobile behaviour is the theme's (tables scroll sideways inside its table wrapper).
 
 ## Who it is for, and what they need to do
 
@@ -29,7 +29,7 @@ The page's own description: *"The methodologies this repository has adopted — 
 
 ## Observed on main (Markdown as regenerated in the working tree)
 
-The committed page (HEAD) listed 9 methodologies and failed `gen-methodologies-viz.ts --check`, because `wiregen` was missing. During this drawing the page was regenerated in the working tree (not by this wireframe): it now lists 10 and `--check` passes. The drawing and the findings follow the regenerated page.
+The drawing and the findings follow the regenerated page (10 methodologies; `gen-methodologies-viz.ts --check` passes).
 
 Regions in reading order, web (≥ 800 px, drawn at 1280):
 1. **Sidebar strip, 56 px at rest** (as on every page). "On this page" would hold 13 rows (3 `h2` + 10 `h3`) inside the opened sidebar.

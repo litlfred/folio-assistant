@@ -2,7 +2,7 @@
 
 **Status:** proposal for review. It follows the owner's process ruling: *"review, resolve issues, then staged PRs"*. §4 lists the issues that still need a ruling, and every staged PR in §2 waits on that ruling.
 
-**Checkout measured:** `/home/user/wt/bt/folio-assistant` at `3d5a11111af`, on branch `next/inherit`, 3 commits ahead of `origin/main`. This checkout includes bean `1g4s` (option A: an inherited subgraph gains the same-named directory of each instance as a member). It also includes #1702 (`rqao`), which split the skill definitions by theme. The earlier `placement-review.md` was measured at `8ad74abcd12`. Where the two disagree, this document uses the newer checkout.
+**Checkout measured:** `/home/user/wt/bt/folio-assistant` at `3d5a11111af`, on branch `next/inherit`, 3 commits ahead of `origin/main`. This checkout includes work item `1g4s` (option A: an inherited subgraph gains the same-named directory of each instance as a member). It also includes #1702 (`rqao`), which split the skill definitions by theme. The earlier `placement-review.md` was measured at `8ad74abcd12`. Where the two disagree, this document uses the newer checkout.
 
 **Method:** every count comes from `git ls-files` or from a script in `scratchpad/prop/`:
 
@@ -37,7 +37,7 @@ The earlier review was re-checked against the corpus. The review said one thing;
 | `delivery-summary` → core | **split it**. The restart command and PR/viewer links stay in the harness (`sdlc`). The block-level change list becomes a new core skill, `block-change-summary` | The harness processes `crdm-deliver.bpmn` and `upstream-version-adoption.bpmn` name it. Only its §2 ("content block change links") is about folio content. |
 | `technical-documentation`: move the skill to core, or move the voice down | **keep the skill in the harness and drop its link to the voice.** The core `technical-writer` voice points at the skill | #1168's rule: *"a voice points at the role it addresses, so the role names no voice"*. The skill currently cites a stale path, `cat-harness/voices/technical-writer.json`. |
 | move `materialize-remote` DOWN because "bootstrap uses it" | **that evidence is stale** (see §4 issue 2) | `bootstrap/processes/initialize-harness.bpmn` does not reference materialization. The path the skill cites, `bootstrap/workflows/initialize-harness.bpmn`, does not exist. `materialize-remote.bpmn`'s `Task_Enumerate` depends on large-datasets' `source-descriptor`. |
-| CRDM is an SDLC skill | **CRDM belongs to `process`**, as a workflow methodology, beside `raci` | Owner, bean `g43o`: *"RACI, CRDM, SDLC, MADR and other methodologies should be in own topical subgraphs under workflow"*. `skills/process/raci/` already follows that ruling. |
+| CRDM is an SDLC skill | **CRDM belongs to `process`**, as a workflow methodology, beside `raci` | Owner, work item `g43o`: *"RACI, CRDM, SDLC, MADR and other methodologies should be in own topical subgraphs under workflow"*. `skills/process/raci/` already follows that ruling. |
 
 The review also lists `.claude/skills/local/*.json` (22 files) as unplaced. That item is already fixed: #1702 moved them to `<owner>/skills/skill-definitions/`.
 
@@ -54,13 +54,13 @@ One new finding came out of the re-check. The harness's own basic metadata step,
 
 A path carries both, for example `folio-assistant-sci/skills/content/folio-paper-adapter/`. The group ids are **shared**: every instance and every subgraph typology uses the same eight. Under `1g4s` option A, the harness declares each group once, and each higher instance's same-named directory (for example `folio-assistant-core/skills/library/`) is a **named member** of it. Higher instances therefore add no groups of their own. Their content-type work (paper, WHO SMART, FHIR IG, document) goes in as *packages* under `content/`, and their detailed methodologies go in as packages under the harness group they refine (`library/`, `ui/`, `conduct/`).
 
-**Where the vocabulary lives (settled by the corpus, not asked):** one code list, `cat-harness/code-lists/concern-group`, holding the eight codes, each with a title and a definition. Each kind's declaration file names its members by that code. `skills/skills.json` topics already carry a title and description. Restating those in four more declaration files would break *"one fact, one place"* (AGENTS.md, beans section).
+**Where the vocabulary lives (settled by the corpus, not asked):** one code list, `cat-harness/code-lists/concern-group`, holding the eight codes, each with a title and a definition. Each kind's declaration file names its members by that code. `skills/skills.json` topics already carry a title and description. Restating those in four more declaration files would break *"one fact, one place"* (AGENTS.md, work items section).
 
 ### 1.2 The eight groups
 
 Definitions:
 
-- **`sdlc`**: how a change is planned, tracked, verified and shipped. Covers the work plan (beans), branches, PRs, CI and gates, QA and adjudication, staging, and release.
+- **`sdlc`**: how a change is planned, tracked, verified and shipped. Covers the work plan (work items), branches, PRs, CI and gates, QA and adjudication, staging, and release.
 - **`process`**: how work is modelled and run. Covers BPMN and DMN, roles and task authorization, workflow-engine state, and the methodologies a process adopts (RACI, CRDM, spec-kit, SWOT, Kepner-Tregoe, MADR).
 - **`tools`**: how a capability becomes a Tool node and an MCP service, and how that service is deployed and authenticated.
 - **`kg`**: how the graph is declared, placed, read, restructured, exported and audited, including skill registration and placement.
@@ -158,7 +158,7 @@ That changes three things in the suggested order:
 **Common to every PR:**
 - Skill ids and paths follow location, so every rewrite is a codemod over `git grep` hits.
 - Generated trees are regenerated, never hand-edited: `cat-harness/docs/reference/**`, `uml/`, translation POT/PO files, `glossary/generated/**`.
-- `beans/**` is history and is **not rewritten**. The bean store has 112 files naming `skills/folio-core/` alone.
+- `beans/**` is history and is **not rewritten**. The work item store has 112 files naming `skills/folio-core/` alone.
 - **kg-qa sidecars.** A moved subject strands its sidecar as SUBJECT GONE, and deleting one needs owner approval (`9umr`, `deletion-requires-confirmation`). Instead, each PR **relocates** the sidecar using `lps0`'s identity-checked relocation (`scripts/tests/sidecar-relocation.test.ts`). That relocation is currently exercised within one instance only. A cross-instance move is PR0's falsifier.
 - **Gates that break on every move:**
   - `skill:register:check`, `skills:docs:check`, `docs:harness:check`
@@ -172,7 +172,7 @@ That changes three things in the suggested order:
 | part | what | files | references to update | gates most likely to break |
 |---|---|---|---|---|
 | 0a | **The checkout aggregates** (`cmsl` option A, step 3, owner round 3). `folio-assistant.json` `needs` every staged instance. Corpus-wide tools resolve over the root overlay. The 19 upward `scope: repository` mirrors are removed from `cat-harness.json`. The 7 root-level entries (`fsh-guts`, `beans`, `todos`, `memory`, `interaction`, `issue-marks`, `root-docs`) move to `folio-assistant.json`. A check refuses any new mirror. | `folio-assistant.json`, `cat-harness/cat-harness.json`, the new helper (`checkoutDirectoriesForGraph`), and the ~25 call sites the `cmsl` proposal names | `INSTANCE_ROOT = cat-harness` in the corpus-wide scripts (for example `check-workflow-refs.ts`); `kgDirectories` / `workflowDirs` consumers | `check:declared-dirs`, `check:harness-dirs`, `harness:dirs:check`, `check:instance-graph`, `check:subgraph-coverage`, `check:declaration-claims`, `kg:audit:*`; the tests `resolution-across-needs`, `own-kg-roots`, `harness-config` |
-| 0b | **Overlay by id** for `scenarios/roles.json` and `scenarios/actors/*.json`. A higher instance's entry with an existing harness id *extends* it: it adds `skills` to a role, or `roles` to an actor. It overrides nothing else. This is the same id-matching rule as directory overrides and `inherits`. It does **not** restore `roles:` in skill front matter (beans `tuvg` and `v625`). | `schemas/role-graph.ts` (`readRoleGraph`, `readActors`); `kg-audit.ts` already walks per-dependency role graphs (line 2539) | `raci-chart.ts`, `stakeholder-map.ts`, `kg-export.ts`, `check-fallback-roles.ts` | `check:raci`, `check:actor-reach`, `check:fallback-roles`, `check:lane-documentation`, `kg:audit:check` |
+| 0b | **Overlay by id** for `scenarios/roles.json` and `scenarios/actors/*.json`. A higher instance's entry with an existing harness id *extends* it: it adds `skills` to a role, or `roles` to an actor. It overrides nothing else. This is the same id-matching rule as directory overrides and `inherits`. It does **not** restore `roles:` in skill front matter (work items `tuvg` and `v625`). | `schemas/role-graph.ts` (`readRoleGraph`, `readActors`); `kg-audit.ts` already walks per-dependency role graphs (line 2539) | `raci-chart.ts`, `stakeholder-map.ts`, `kg-export.ts`, `check-fallback-roles.ts` | `check:raci`, `check:actor-reach`, `check:fallback-roles`, `check:lane-documentation`, `kg:audit:check` |
 | 0c | **Sub-subgraph declarations for the other kinds.** `declarationFile` for `processes` (`processes.json`), `schemas` (`schemas.json`), `library` (`library.json`), and for the test directories. The `concern-group` code list. Member resolution at the nested level, so that core's `skills/library/` is a member of the harness's `library` sub-subgraph. The `sdlc`, `tools` and `content` topics are declared in the PR that first fills them ("declare only what exists"). | `schemas/graph-typology-registry.ts`, `schemas/cat-harness.ts` (`resolveDirectories`), `scripts/skill-topics.ts`, `code-lists/concern-group` | – | `check:layout-norms` (it rejects a nested declared directory unless the kind declares it from within), `check:subgraphs`, `code-lists:check`, `uml:overview:check` |
 
 **Falsifiers:**
@@ -240,7 +240,7 @@ The code sites with hard-coded package names:
 
 | path | total | zone breakdown |
 |---|---|---|
-| `skills/folio-core/` | 1,568 refs in 423 files | 447 in 84 qa sidecars; 190 in 90 generated docs; 378 in 34 authored docs; 168 in 50 skill files; 139 in 10 JSON; 71 in 37 code files; 169 in 112 bean files (history, left alone) |
+| `skills/folio-core/` | 1,568 refs in 423 files | 447 in 84 qa sidecars; 190 in 90 generated docs; 378 in 34 authored docs; 168 in 50 skill files; 139 in 10 JSON; 71 in 37 code files; 169 in 112 work item files (history, left alone) |
 | `AGENTS.md` | 20 | – |
 | `.claude/`, `memory/`, `todos/` | 33 refs in 28 files | – |
 | `skills/crdm/` | ~167 | – |

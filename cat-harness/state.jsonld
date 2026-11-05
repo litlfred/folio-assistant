@@ -74,21 +74,14 @@
       "type": "cat-harness:WorkflowInstance",
       "store": "cat-harness",
       "process": "Process_CodeChangeReview",
-      "status": "running",
-      "tokens": [
-        "Task_RunCI"
-      ],
+      "status": "completed",
+      "tokens": [],
       "lastMoved": "2026-10-03T13:33:00.000Z",
       "beans": [
         "folio-assistant-1j3q"
       ],
       "children": [],
-      "stuck": [
-        {
-          "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-10-03T13:33:00.000Z — 32 day(s), past the 7-day threshold"
-        }
-      ],
+      "stuck": [],
       "page": "en/cat-harness/beans/cat-harness/workflows/code-change-review--bean-1j3q-route-keyed-storage/"
     },
     {
@@ -96,25 +89,14 @@
       "type": "cat-harness:WorkflowInstance",
       "store": "cat-harness",
       "process": "Process_CodeChangeReview",
-      "status": "unknown",
-      "tokens": [
-        "Task_PrepareMerge"
-      ],
+      "status": "completed",
+      "tokens": [],
       "lastMoved": "2026-09-22T20:35:00.000Z",
       "beans": [
         "folio-assistant-kpcl"
       ],
       "children": [],
-      "stuck": [
-        {
-          "kind": "no-status",
-          "detail": "the instance file records no status, so whether it is running cannot be read"
-        },
-        {
-          "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-09-22T20:35:00.000Z — 43 day(s), past the 7-day threshold"
-        }
-      ],
+      "stuck": [],
       "page": "en/cat-harness/beans/cat-harness/workflows/code-change-review--consolidation-956/"
     },
     {
@@ -122,23 +104,14 @@
       "type": "cat-harness:WorkflowInstance",
       "store": "cat-harness",
       "process": "Process_CodeChangeReview",
-      "status": "unknown",
+      "status": "completed",
       "tokens": [],
       "lastMoved": "2026-09-23T08:52:00.000Z",
       "beans": [
         "folio-assistant-zaqn"
       ],
       "children": [],
-      "stuck": [
-        {
-          "kind": "no-status",
-          "detail": "the instance file records no status, so whether it is running cannot be read"
-        },
-        {
-          "kind": "no-token",
-          "detail": "no step holds a token, so nothing can be completed and the instance cannot finish"
-        }
-      ],
+      "stuck": [],
       "page": "en/cat-harness/beans/cat-harness/workflows/code-change-review--issue-1015-prefix-is-stub/"
     },
     {
@@ -146,21 +119,14 @@
       "type": "cat-harness:WorkflowInstance",
       "store": "cat-harness",
       "process": "Process_CodeChangeReview",
-      "status": "unknown",
-      "tokens": [
-        "End_Merged"
-      ],
+      "status": "completed",
+      "tokens": [],
       "lastMoved": "2026-09-24T05:55:00.000Z",
       "beans": [
         "folio-assistant-8v0y"
       ],
       "children": [],
-      "stuck": [
-        {
-          "kind": "no-status",
-          "detail": "the instance file records no status; its token rests on an end event, so it looks finished, but nothing said so"
-        }
-      ],
+      "stuck": [],
       "page": "en/cat-harness/beans/cat-harness/workflows/code-change-review--issue-1190-bean-restates-skill/"
     },
     {
@@ -168,21 +134,14 @@
       "type": "cat-harness:WorkflowInstance",
       "store": "cat-harness",
       "process": "Process_CodeChangeReview",
-      "status": "running",
-      "tokens": [
-        "Task_RunCI"
-      ],
+      "status": "completed",
+      "tokens": [],
       "lastMoved": "2026-09-30T00:36:58.209Z",
       "beans": [
         "folio-assistant-ojai"
       ],
       "children": [],
-      "stuck": [
-        {
-          "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-09-30T00:36:58.209Z — 35 day(s), past the 7-day threshold"
-        }
-      ],
+      "stuck": [],
       "page": "en/cat-harness/beans/cat-harness/workflows/code-change-review--issue-1531-upload-step/"
     },
     {
@@ -190,10 +149,8 @@
       "type": "cat-harness:WorkflowInstance",
       "store": "cat-harness",
       "process": "Process_CRDM",
-      "status": "running",
-      "tokens": [
-        "A_AnnounceBranch"
-      ],
+      "status": "completed",
+      "tokens": [],
       "lastMoved": "2026-09-20T21:48:45.270Z",
       "beans": [
         "folio-assistant-6lb8"
@@ -221,18 +178,11 @@
         },
         {
           "process": "Process_CRDM_Signoff",
-          "status": "running",
-          "tokens": [
-            "BA_Signoff"
-          ]
+          "status": "completed",
+          "tokens": []
         }
       ],
-      "stuck": [
-        {
-          "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-09-20T21:48:45.270Z — 45 day(s), past the 7-day threshold"
-        }
-      ],
+      "stuck": [],
       "page": "en/cat-harness/beans/cat-harness/workflows/crdm--folio-assistant-6lb8/"
     },
     {
@@ -240,21 +190,14 @@
       "type": "cat-harness:WorkflowInstance",
       "store": "cat-harness",
       "process": "Process_CRDM",
-      "status": "running",
-      "tokens": [
-        "Call_Needs"
-      ],
+      "status": "completed",
+      "tokens": [],
       "lastMoved": "2026-09-21T16:16:02.000Z",
       "beans": [
         "folio-assistant-b94c"
       ],
       "children": [],
-      "stuck": [
-        {
-          "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-09-21T16:16:02.000Z — 44 day(s), past the 7-day threshold"
-        }
-      ],
+      "stuck": [],
       "page": "en/cat-harness/beans/cat-harness/workflows/crdm--folio-assistant-b94c/"
     },
     {
@@ -262,10 +205,8 @@
       "type": "cat-harness:WorkflowInstance",
       "store": "cat-harness",
       "process": "Process_CRDM",
-      "status": "running",
-      "tokens": [
-        "Call_Needs"
-      ],
+      "status": "completed",
+      "tokens": [],
       "lastMoved": "2026-09-21T06:14:27.079Z",
       "beans": [
         "folio-assistant-xies"
@@ -278,18 +219,11 @@
         },
         {
           "process": "Process_CRDM_Needs",
-          "status": "running",
-          "tokens": [
-            "S_ConfirmNeeds"
-          ]
+          "status": "completed",
+          "tokens": []
         }
       ],
-      "stuck": [
-        {
-          "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-09-21T06:14:27.079Z — 44 day(s), past the 7-day threshold"
-        }
-      ],
+      "stuck": [],
       "page": "en/cat-harness/beans/cat-harness/workflows/crdm--issue-607-kg-to-cdn-portal/"
     },
     {
@@ -314,10 +248,8 @@
       "type": "cat-harness:WorkflowInstance",
       "store": "cat-harness",
       "process": "Process_MergeTrain",
-      "status": "running",
-      "tokens": [
-        "Call_EjectHandBack"
-      ],
+      "status": "completed",
+      "tokens": [],
       "lastMoved": "2026-10-04T16:44:25.893Z",
       "beans": [
         "folio-assistant-hfag"
@@ -335,18 +267,11 @@
         },
         {
           "process": "Process_MergeRefusal",
-          "status": "running",
-          "tokens": [
-            "Task_Fix"
-          ]
+          "status": "completed",
+          "tokens": []
         }
       ],
-      "stuck": [
-        {
-          "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-10-04T16:44:25.893Z — 31 day(s), past the 7-day threshold"
-        }
-      ],
+      "stuck": [],
       "page": "en/cat-harness/beans/cat-harness/workflows/mergetrain--merge-train-2026-10-04a/"
     },
     {
@@ -396,10 +321,8 @@
       "type": "cat-harness:WorkflowInstance",
       "store": "cat-harness-tools",
       "process": "Process_TestPlanExecution",
-      "status": "running",
-      "tokens": [
-        "Call_Sign"
-      ],
+      "status": "completed",
+      "tokens": [],
       "lastMoved": "2026-10-11T07:02:09.501Z",
       "beans": [
         "folio-assistant-ff09"
@@ -407,26 +330,11 @@
       "children": [
         {
           "process": "Process_QaReportSigning",
-          "status": "running",
-          "tokens": [
-            "Task_StoreSigned"
-          ]
+          "status": "completed",
+          "tokens": []
         }
       ],
-      "stuck": [
-        {
-          "kind": "enabled-not-taken",
-          "detail": "the token has not moved since 2026-10-11T07:02:09.501Z — 24 day(s), past the 7-day threshold"
-        },
-        {
-          "kind": "bean-closed",
-          "detail": "`folio-assistant-ff09` is completed while this instance still runs"
-        },
-        {
-          "kind": "bean-moved-on",
-          "detail": "`folio-assistant-ff09` was updated 2026-10-22T16:45:00Z, 11 day(s) after the instance last moved — the work went on and the position did not"
-        }
-      ],
+      "stuck": [],
       "page": "en/cat-harness/beans/cat-harness-tools/workflows/crdm-detect-evaluation-r-3554a15543fc-54762ece6646/"
     }
   ]

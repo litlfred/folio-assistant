@@ -5,7 +5,7 @@
 This is the chrome every just-the-docs visualiser sits inside, the landing page that the harness dividers open, and the folio glass that sits over every page.
 
 - `cat-harness/docs/_includes/title.html`: the sidebar title and the avatar mark, which is the one control that opens and closes the bar.
-- `cat-harness/docs/_includes/nav_footer_custom.html`: the **▦ Harnesses** group with its dividers and their graph links, and ⌂ home. It no longer emits a ☰ or × control (#1762, #1808).
+- `cat-harness/docs/_includes/nav_footer_custom.html`: the **▦ Harnesses** group with its dividers and their graph links, and ⌂ home. It emits no ☰ or × control.
 - `cat-harness/docs/_includes/harness_details.html`: "What each harness holds" on the landing, one section per harness, with a `summary` and an "Also written" line when the declaration has them.
 - `cat-harness/docs/_includes/landing.html`: the collapsed **Stickies** panel.
 - `cat-harness/docs/_includes/footer_custom.html`: the build stamp.
@@ -13,7 +13,7 @@ This is the chrome every just-the-docs visualiser sits inside, the landing page 
 - `cat-harness/docs/index.md`: the landing page.
 - `cat-harness/docs/assets/js/docs-ui.js`:
   - `mountActionTiles`: the header controls and the launcher, whose settings view is **Page settings**
-  - the icon row: Todos, Beans, fsh-guts, More actions, scheme, each with a tooltip (`data-fa-tip`)
+  - the icon row: Todos, Work items, fsh-guts, More actions, scheme, each with a tooltip (`data-fa-tip`)
   - `mountSidebarRail`: On this page, Pages, Folders and Harnesses in one scroller
   - `mountGlass`: the "▾ Folio" handle, the sheet, the zoom control, the tile dock, and the Todos, **Glass settings** and More panels
 - `cat-harness/docs/assets/css/docs-ui.css`: the 56 px strip at rest and the 264 px open state at 800 px and wider, the tooltips, and the glass (`.fa-glass-*`).
@@ -21,9 +21,9 @@ This is the chrome every just-the-docs visualiser sits inside, the landing page 
 
 ### How this was drawn
 
-Re-drawn on 2026-10-06 (bean `1q4b`) from a **built page**, not from source.
+Drawn from a **built page**, not from source.
 
-- **The build:** the published site, as CI deployed it to `gh-pages`. Its `build.json` names source `7ef9d3a` on `main` (the merge of #2287), built 2026-10-06T15:04:58Z, and the footer reads "deployed 7ef9d3a · 2026-10-06T14:48:45Z". The proxy here refuses the published URL, so the files were taken from the `gh-pages` branch with `git archive` (the root, without `STAGING/`), served at `/folio-assistant/`, and driven with Playwright in Chromium at 1280×800 and 390×844. This is CI's own build, with the pinned remote theme, so the chrome is evidence. `preview:site` also builds here, but it uses the local theme gem, so it was not used for layout.
+- **The build:** the published site, as CI deployed it to `gh-pages` (source `7ef9d3a` on `main`, built 2026-10-06), taken from the `gh-pages` branch with `git archive`, because the published URL was unreachable from where this was drawn (the root, without `branches/`), served at `/folio-assistant/`, and driven with Playwright in Chromium at 1280×800 and 390×844. It is CI's own build with the pinned remote theme, so the chrome is evidence; `preview:site` uses the local theme gem, so it was not used for layout.
 - **The page:** the landing page, because the harness dividers open it.
 - **What was done on it:** the sidebar at rest, hovered and pinned open; every group unfolded; ▦ Harnesses opened; the glass pulled down; the dock shown; More, Todos and Glass settings opened; ▦ More actions → Page settings opened; and each cross-link followed.
 - **Visibility:** "visible" means hit-tested with `elementFromPoint`, because the closed strip keeps labels in the DOM at opacity 0.
@@ -31,12 +31,12 @@ Re-drawn on 2026-10-06 (bean `1q4b`) from a **built page**, not from source.
 
 ## Who it is for, and what they need to do
 
-The template comments quote the owner:
-- the dividers are *"like a giant tabbed folio"*: *"a thing you REACH FOR"*, not a dashboard
-- *"harnesses should be collapsible"*, and on 2026-09-23 *"harnesses start closed"*
-- closed means a strip *"icon width thick"*, not gone
+The design rules, as the template comments state them:
+- the dividers are a tabbed folio, a thing the reader reaches for, not a dashboard
+- harnesses are collapsible, and start closed
+- closed means an icon-width strip, not gone
 - home stays at the bottom
-- the glass: *"where are the todo, fsh guts etc tiles on bottom of glass?"*, *"tile to change folio settings … should be able to set opactiy"*, *"library items need avatar (book's)"*, *"start with the glass being 20% opaque with a blur effect"* (bean `zrvt`), and *"have folio bottom strip tiles default to hidden away when folio first opened"* (ob3m, finding 10)
+- the glass has the todo and fsh-guts tiles on its bottom strip, a tile for folio settings including opacity, a book avatar on library items, starts 20% opaque with a blur, and its bottom strip tiles are hidden when the folio first opens
 
 The declared interaction profile is low-dexterity. That is why the tab bodies are large targets, and why the glass has −/+ buttons beside every slider.
 
@@ -44,7 +44,7 @@ The declared interaction profile is low-dexterity. That is why the tab bodies ar
 - **Tasks:**
   - know which instance they are in
   - jump to a harness and to its graphs (library, docs, processes …)
-  - reach the harness actions (todos, beans, fsh-guts, launcher, scheme)
+  - reach the harness actions (todos, work items, fsh-guts, launcher, scheme)
   - see the current page's sections
   - get home
   - reach page settings, language, QR and search
@@ -69,7 +69,7 @@ The declared interaction profile is low-dexterity. That is why the tab bodies ar
 ## Observed (built page: gh-pages from main 7ef9d3a, 2026-10-06)
 
 Web, at 1280×800:
-1. **At rest the sidebar is a 56 px strip.** From the top: the avatar, then Todos with a badge **3**, Beans **541**, fsh-guts **82**, More actions, and the scheme switch. Lower down are **▦** (Harnesses) and ⌂. Hovering a mark shows its name as a tooltip at x = 64 px ("Todos — 3 outstanding"), and the strip stays 56 px. No ☰ or × is drawn anywhere in the sidebar (0 by class, 0 by glyph).
+1. **At rest the sidebar is a 56 px strip.** From the top: the avatar, then Todos with a badge **3**, Work items **541**, fsh-guts **82**, More actions, and the scheme switch. Lower down are **▦** (Harnesses) and ⌂. Hovering a mark shows its name as a tooltip at x = 64 px ("Todos — 3 outstanding"), and the strip stays 56 px. No ☰ or × is drawn anywhere in the sidebar (0 by class, 0 by glyph).
 2. **Pinned open** by the avatar (264 px), from the top:
    - avatar and "C@T Harness"
    - the icon row
@@ -80,7 +80,7 @@ Web, at 1280×800:
    - ⌂ C@T Harness, pinned at the foot
 
    There is **one** scroll region, `.fa-nav-middle` (627 of 1,902 px on arrival). With every group unfolded it is still one region (627 of 6,297 px, 695 links), and nothing is clipped.
-3. **▦ Harnesses, one click from rest:** seven dividers. Folio Assistant lists Bean definitions, Beans, Docs, FSH guts (staging only), Issue marks, Todos, Uploads, and 12 kinds marked "no viewer yet". Each divider has a ⚙ for its properties. Folio Assistant → `/#harness-folio-assistant`; C@T Harness → `/#harness-cat-harness`; the trust IG, SMART Base, WHO IRIS and Folio Assistant Core → their own pages.
+3. **▦ Harnesses, one click from rest:** seven dividers. Folio Assistant lists Work item definitions, Work items, Docs, FSH guts (staging only), Issue marks, Todos, Uploads, and 12 kinds marked "no viewer yet". Each divider has a ⚙ for its properties. Folio Assistant → `/#harness-folio-assistant`; C@T Harness → `/#harness-cat-harness`; the trust IG, SMART Base, WHO IRIS and Folio Assistant Core → their own pages.
 4. **Main:**
    - the "▾ Folio" handle, fixed at top centre, 86×28, z-index 91
    - ⊕ language at the top left of the content, ⌕ search at the right
@@ -94,7 +94,7 @@ Web, at 1280×800:
    - The sheet tints and blurs the page. It holds the note "Nothing on your folio glass yet. To add something: …" and a zoom control.
    - **The dock arrives hidden.** Its tab reads "▴ Show tiles (18)", with `aria-expanded="false"`.
    - Shown, the dock holds **Todos, Glass settings, Library 42, Processes, Tools, Skills, +12 more**. scrollWidth is 1280 of 1280, and the 7 tiles draw 7 different glyphs.
-   - **+12 more** opens "More — every visualisation this folio declares, and where each tile lives". It holds 12 tiles, each with a "↓ Strip" action: Filter, Beans 943, Docs (C@T Harness), External schemas, Folio 5, Methodologies, Latent semantic indexes 1107, Docs (Folio Assistant), Schemas 235, Swimlane glossary, Translation sources 5, Uploads 30. They use **8 distinct drawings**. Folio, Docs (Folio Assistant), Swimlane glossary and Translation sources share one; External schemas and Schemas share another.
+   - **+12 more** opens "More — every visualisation this folio declares, and where each tile lives". It holds 12 tiles, each with a "↓ Strip" action: Filter, Work items 943, Docs (C@T Harness), External schemas, Folio 5, Methodologies, Latent semantic indexes 1107, Docs (Folio Assistant), Schemas 235, Swimlane glossary, Translation sources 5, Uploads 30. They use **8 distinct drawings**. Folio, Docs (Folio Assistant), Swimlane glossary and Translation sources share one; External schemas and Schemas share another.
    - **☑ Todos** opens "Todos — pull one onto your glass": 3 todos, each with "Pull out to folio", then "Open the full todo board".
    - **⚙ Glass settings** opens "Glass settings — theme, avatars, opacity, blur". Its first control is "**Page settings (scheme, reading, Discarded) →**". Then come:
      - Theme: Glass, High contrast, Paper, Night, Rose window, Leaded grid
@@ -117,37 +117,22 @@ Mobile, at 390×844:
 
 ## Findings
 
-All twelve of bean `ob3m`'s findings, in its numbering (its 3, 4 and 5 were one finding with two bullets in the previous draw). Each verdict comes from the built page above, not from a bean note. **Fixed**: what the finding described is no longer on the page. **Ruled as-is**: the owner chose to keep it.
+Twelve findings. Each verdict comes from the built page above. **Fixed**: what the finding described is no longer on the page. **Kept as is**: a deliberate choice.
 
-1. **At rest the strip is marks with no labels; harnesses not reachable from the strip.** **Fixed by #1805** (landed through merge train #1893). Every mark names itself in a tooltip on hover or focus, and the strip stays 56 px. The three counted marks also carry visible badges (3, 541, 82). ▦ Harnesses is visible at rest, and one click lists the harnesses. The rail stays icon-width at rest, as ruled (option 1 of 4; always-visible captions were not chosen).
-2. **Two dividers open the same page.** **Fixed by #1762.** Folio Assistant → `/#harness-folio-assistant` and C@T Harness → `/#harness-cat-harness`, two different sections.
-3. **Harness descriptions leak authoring notes and formatting into the landing page.** **Fixed:** the landing half by #1762, the Stickies half by #1807. Both surfaces now show the declaration's `summary` and "Also written". The C@T card's authored introduction and Scope line are **ruled as-is** (#1807 keeps `bodyAppend`).
-4. **Folio Assistant's description is a naming rationale with literal backticks.** **Fixed by #1762** (the `summary` field). The landing and the sticky both read "This repository as a working instance: the platform and the folios it hosts." The rationale stays in `description`, for authors.
-5. **C@T Harness's description is alternative spellings run together on one line.** **Fixed by #1762** (`alsoWritten`). It now reads "Computable adjudication and agentic test harness.", then a separate "Also written: caaat-harness, ca&at-harness, .c&at-harness, c@t-harness". The owner ruled that the spellings stay visible, as a list.
-6. **Each harness's navigation appears in several places, and one destination has two names.** **Fixed by #1804** ("one name everywhere"). Measured on four surfaces (sidebar Harnesses, Folders, the landing's viewer links, and the glass dock and More): 50 destinations, 43 of them on two or more surfaces, and **0** with two names after folding case and plurals. A harness qualifier is added as a suffix ("Docs · C@T Harness"), never as a different name. The surfaces are still four, by design. The Stickies' "Visualisations" row was not measured this round.
-7. **The open sidebar is long even with its caps.** **Fixed by #1808.** There is one scroll region with every group unfolded (627 of 6,297 px) and no clipping. Only Pages is open on arrival. The list is long by content, not by layout.
-8. **Mobile: the sidebar's own × / ☰ labels are unstyled below 800 px.** **Fixed:** the markup by #1762, the left-over rules by #1808. There are 0 `.fa-nav-head`, `.fa-nav-close` or `.fa-nav-toggle` elements, and 0 ☰ or × glyphs in the sidebar, at both 1280 and 390. ☰ Menu in the top bar is the theme's own control.
-9. **The "▾ Folio" handle covers the title and the glass's own content, and its glyph stays ▾.** **Fixed by #1762.** It reads ▴ while the glass is down and ▾ after Escape. At 390 the title ends at 153 px and the handle starts at 157 px, with no header control under it. Hit-testing under the handle with Glass settings open finds no panel text.
-10. **The bottom strip hides most of its tiles, and says nothing about it.** **Fixed by #1819** (pins plus "+N more", hidden on arrival; the earlier move of tiles behind More was dbbc2b6, through #1160). The dock never scrolls: 1280 of 1280 and 390 of 390. "+N" is exact: 6 + 12 and 4 + 14, against "Show tiles (18)".
-11. **Most declared tiles wear the same glyph.** **Fixed by #1762** (commit 352227a, one drawing per graph kind with a kind fallback). The declaration half is gated by `check:navbar-consistency` (#1589), and the rendered half is asserted in `action-tiles.e2e.ts` (#1723). The dock draws 7 different glyphs for 7 tiles, and More draws 8 for 12. Four More tiles still share the fallback drawing (Folio, Docs · Folio Assistant, Swimlane glossary, Translation sources), because their kinds have no drawing. That is a minority, not "most".
-12. **Two unrelated "Settings".** **Fixed by #1810** (ruled: rename both, and cross-link them). The glass panel is "Glass settings — theme, avatars, opacity, blur". The launcher's is "Page settings". Each opens with a link to the other, and Page settings says where the Discarded items are.
+1. **At rest the strip is marks with no labels; harnesses not reachable from the strip.** **Fixed.** Every mark names itself in a tooltip on hover or focus, and the strip stays 56 px. The three counted marks also carry visible badges (3, 541, 82). ▦ Harnesses is visible at rest, and one click lists the harnesses. The rail stays icon-width at rest, as ruled (option 1 of 4; always-visible captions were not chosen).
+2. **Two dividers open the same page.** **Fixed.** Folio Assistant → `/#harness-folio-assistant` and C@T Harness → `/#harness-cat-harness`, two different sections.
+3. **Harness descriptions leak authoring notes and formatting into the landing page.** **Fixed.** Both surfaces show the declaration's `summary` and "Also written". The C@T card's authored introduction and Scope line are **kept as is** (`bodyAppend`).
+4. **Folio Assistant's description is a naming rationale with literal backticks.** **Fixed** (the `summary` field). The landing and the sticky both read "This repository as a working instance: the platform and the folios it hosts." The rationale stays in `description`, for authors.
+5. **C@T Harness's description is alternative spellings run together on one line.** **Fixed** (`alsoWritten`). It reads "Computable adjudication and agentic test harness.", then a separate "Also written: caaat-harness, ca&at-harness, .c&at-harness, c@t-harness". The spellings stay visible, as a list.
+6. **Each harness's navigation appears in several places, and one destination has two names.** **Fixed** ("one name everywhere"). Measured on four surfaces (sidebar Harnesses, Folders, the landing's viewer links, and the glass dock and More): 50 destinations, 43 of them on two or more surfaces, and **0** with two names after folding case and plurals. A harness qualifier is added as a suffix ("Docs · C@T Harness"), never as a different name. The surfaces are still four, by design. The Stickies' "Visualisations" row was not measured this round.
+7. **The open sidebar is long even with its caps.** **Fixed.** There is one scroll region with every group unfolded (627 of 6,297 px) and no clipping. Only Pages is open on arrival. The list is long by content, not by layout.
+8. **Mobile: the sidebar's own × / ☰ labels are unstyled below 800 px.** **Fixed.** There are 0 `.fa-nav-head`, `.fa-nav-close` or `.fa-nav-toggle` elements, and 0 ☰ or × glyphs in the sidebar, at both 1280 and 390. ☰ Menu in the top bar is the theme's own control.
+9. **The "▾ Folio" handle covers the title and the glass's own content, and its glyph stays ▾.** **Fixed.** It reads ▴ while the glass is down and ▾ after Escape. At 390 the title ends at 153 px and the handle starts at 157 px, with no header control under it. Hit-testing under the handle with Glass settings open finds no panel text.
+10. **The bottom strip hides most of its tiles, and says nothing about it.** **Fixed** (pins plus "+N more", hidden on arrival). The dock never scrolls: 1280 of 1280 and 390 of 390. "+N" is exact: 6 + 12 and 4 + 14, against "Show tiles (18)".
+11. **Most declared tiles wear the same glyph.** **Fixed** (one drawing per graph kind with a kind fallback). The declaration half is gated by `check:navbar-consistency`, and the rendered half is asserted in `action-tiles.e2e.ts`. The dock draws 7 different glyphs for 7 tiles, and More draws 8 for 12. Four More tiles still share the fallback drawing (Folio, Docs · Folio Assistant, Swimlane glossary, Translation sources), because their kinds have no drawing. That is a minority, not "most".
+12. **Two unrelated "Settings".** **Fixed** (both renamed, and cross-linked). The glass panel is "Glass settings — theme, avatars, opacity, blur". The launcher's is "Page settings". Each opens with a link to the other, and Page settings says where the Discarded items are.
 
 ### Seen on the build, not one of the twelve
 
-- At 1280×800 the Glass settings panel opens at y = 591, and its body sits under the dock until the glass is scrolled. #1810 recorded this as "found, not fixed". **Fixed by #2312** (bean `zpso`). The panel sat in the glass's flow after the 50vh shelf. Now it opens fixed in the visible glass, below the zoom bar and above the dock's visible top, with the dock shown or hidden. On a `preview:site` build at 1280×800 with the dock shown, it runs from y = 116 to 637 against the dock at 656, and every control shows at once (body 455 of 455 px). At 390×844 its frame, title and × stay above the dock, and its body scrolls inside the frame (823 of 610 px), because the content is taller than the room. Every strip panel (Todos, More, Filter) opens the same way. Gated by `glass-panel-in-view.e2e.ts`.
-- Beans carries two counts: **541** on the icon row ("Beans — 541 open") and **943** on the glass and launcher tile. The icon row's name says "open". The tile's caption does not say what it counts. **Fixed by #2312** (bean `v215`). The two numbers counted different things: open beans (`count.json`) against every bean ever filed (the bean index's `tile.beans`). The board's own "open" was a third count, because it left out drafts. Ruled: one was wrong, so they agree. Every Beans badge counts open beans (`openBeanCount`, the owner's headline under `gkv6`), and its name and tooltip say "open beans". On the build, the icon row, the glass tile and the launcher tile all read 540. Gated by `beans-count-agrees.e2e.ts`. The as-is drawing above keeps the 943 it was drawn with in #2295.
-
-## History
-
-- **#1010 (`zrvt`)** added the folio glass: the 20 % blurred sheet, movable book-avatar cards, the bottom tile strip, the Todos panel, and the glass's own settings panel.
-- **#1022 (`ka1p`)** folded On this page, Folders and Harnesses on arrival.
-- **This wireframe's first draw** was made from source on main with those two merged. It recorded the findings above.
-- **What has changed since:**
-  - #1762: the rail, findings 2, 4, 5, 8, 9 and 11, and the dividers' kinds
-  - #1804: one name everywhere
-  - #1805: tooltips, and Harnesses at rest
-  - #1807: sticky summaries
-  - #1808: the one-scroller rail
-  - #1810: two settings names, cross-linked
-  - #1819: the pinned, fitted, hidden-on-arrival dock
-  - #2312: Glass settings opens clear of the dock, and Beans has one count
+- At 1280×800 the Glass settings panel opens at y = 591, and its body sits under the dock until the glass is scrolled. **Fixed.** It opens fixed in the visible glass, below the zoom bar and above the dock's visible top, with the dock shown or hidden. On a `preview:site` build at 1280×800 with the dock shown, it runs from y = 116 to 637 against the dock at 656, and every control shows at once (body 455 of 455 px). At 390×844 its frame, title and × stay above the dock, and its body scrolls inside the frame (823 of 610 px), because the content is taller than the room. Every strip panel (Todos, More, Filter) opens the same way. Gated by `glass-panel-in-view.e2e.ts`.
+- Work items carries two counts: **541** on the icon row ("Beans — 541 open") and **943** on the glass and launcher tile. The icon row's name says "open". The tile's caption does not say what it counts. **Fixed.** The two numbers counted different things (open work items against every work item ever filed), so every Work items badge now counts open work items (`openBeanCount`), and its name and tooltip say "open beans". On the build, the icon row, the glass tile and the launcher tile all read 540. Gated by `beans-count-agrees.e2e.ts`. The as-is drawing above keeps the 943 it was drawn with.

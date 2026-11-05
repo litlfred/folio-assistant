@@ -4,7 +4,7 @@
 
 - Declared visualisers (cat-harness `visualisers`, `renderedBy: state-viewer`): `cat-harness/qa`, `cat-harness/health`, `cat-harness/attestations`, `cat-harness/issue-marks`, `cat-harness/swimlane-glossary` and `cat-harness/uploads-queue` — each at `<base>/cat-harness/<id>/`, with the bare `<base>/<id>/` (and `/uploads/` for `uploads-queue`) as a declared alias. `beans` and `todos` are the same generator with their own boards and keep their own wireframes.
 - Generator: `cat-harness/scripts/state-visualizer.ts`, one themed page per declared visualiser it renders.
-- Declared as visualisers on 2026-10-09, when the owner ruled that the harness declares every visualiser (*"Need harness to declare visualizer is renderedBy"*). They were drawn before that too, at the site root, and no tile counted them as anyone's viewer; declared, they owe a wireframe like every other visualiser (issue #1023).
+- The harness declares every visualiser with its `renderedBy`, so that every page drawn is counted as some instance's viewer, and a declared visualiser owes a wireframe.
 - Drawn from the committed `health` dashboard, the common case: a graph with no projection of its own. `qa` adds server-side family panels above the same registry.
 
 ## Who it is for, and what they need to do

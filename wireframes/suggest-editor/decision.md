@@ -1,13 +1,13 @@
 # ✍ Suggest editor — decision
 
-**Chosen: candidate A** (one screen, changes marked as you type). Owner, 2026-10-14, choosing from the options put to them. The blind review (`reviews/agent-blind-1.md`) recommended A independently.
+**Chosen: candidate A** (one screen, changes marked as you type). The blind review (`reviews/agent-blind-1.md`) recommended A independently.
 
-**Underline: left out of the toolbar.** Owner, 2026-10-14: "Leave it out". Markdown has no underline, and underline is the insertion mark. The dialog says so where the button would be.
+**Underline: left out of the toolbar.** Markdown has no underline, and underline is the insertion mark. The dialog says so where the button would be.
 
 ## Why A
 
 From the review:
-- It is the only candidate that marks changes *while typing*, which is what the owner asked for.
+- It is the only candidate that marks changes *while typing*, which the intent requires.
 - It takes one screen and one Submit, where B needs Next and Back.
 - Its toolbar is complete, with every button named.
 
@@ -26,4 +26,4 @@ From the review:
 
 ## Deferred
 
-From B: "show only changes" and previous/next-change buttons. These are tracked on the bean, not built now.
+From B: "show only changes" and previous/next-change buttons. These are not built now.

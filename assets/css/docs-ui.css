@@ -6855,6 +6855,77 @@ a.fa-harness-tab__body:focus-visible {
   border-color: currentColor;
 }
 
+/* ═══ The provenance footer — `_includes/generated/provenance/` ═══════════
+ *
+ * A collapsed record of who decided what, moved out of the page's text. It is
+ * read rarely, so it starts closed and stays quiet: small type, one rule.
+ */
+.fa-provenance {
+  margin: 2rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.35));
+  font-size: 0.8125rem;
+}
+
+.fa-provenance-summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* One row of a page that lists several logs (the tools page): no rule, no
+ * lead, so 35 tools read as one list rather than 35 boxes. */
+.fa-provenance.fa-provenance-item {
+  margin: 0;
+  padding: 0.375rem 0;
+  border-top: 0;
+}
+
+.fa-provenance-items {
+  border-top: 1px solid var(--fa-rule, rgba(128, 128, 128, 0.35));
+  padding-top: 0.5rem;
+}
+
+.fa-provenance-lead {
+  opacity: 0.8;
+  margin: 0.5rem 0 1rem;
+}
+
+/* `!important` because just-the-docs sets `h3` with `!important` at every
+ * breakpoint, which no selector can outrank otherwise. */
+.fa-provenance .fa-provenance-section {
+  font-size: 0.875rem !important;
+  font-weight: 600;
+  margin: 1rem 0 0.25rem;
+}
+
+.fa-provenance-list {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.fa-provenance-entry {
+  margin: 0 0 0.5rem;
+}
+
+.fa-provenance-kind {
+  display: inline-block;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.75;
+  margin-right: 0.375rem;
+}
+
+.fa-provenance-refs code {
+  font-size: 0.75rem;
+  margin-right: 0.25rem;
+}
+
+.fa-provenance-text {
+  margin-top: 0.125rem;
+  overflow-wrap: anywhere;
+}
+
 /* ═══ The linear floor — `_includes/generated/todo-listing.html` ═══════════
  *
  * The tile listing is the artefact and the board is the overlay, so this is
@@ -8310,6 +8381,33 @@ a.fa-harness-tab__body:focus-visible {
 .fa-glass-asset:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-name { margin: -0.5rem -0.5rem 0; width: calc(100% + 1rem); box-sizing: border-box; }
 /* Room for a bookmark or pin badge on the title strip (#982). */
 .fa-glass-asset[data-fa-badged]:has(> .fa-glass-asset-face > .fa-glass-avatar) .fa-glass-asset-name { padding-right: 2.2rem; }
+/* Live windows for pinned blocks on the glass (#985). */
+.fa-glass-asset[data-fa-window="open"] > .fa-glass-asset-face { flex: 0 0 auto; min-height: 0; }
+.fa-glass-asset[data-fa-window="open"] > .fa-glass-asset-face > .fa-glass-avatar { display: none; }
+.fa-glass-window {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+  z-index: 1;
+  background: var(--fa-glass-card);
+  padding: 0.45rem 0.55rem;
+  border-top: 1px solid var(--fa-glass-edge);
+  font-size: 0.88rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.fa-glass-window[hidden],
+.fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-window { display: none !important; }
+.fa-glass-window-meta { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 0.2rem 0.5rem; font-size: 0.84rem; }
+.fa-glass-window-meta dt { font-weight: 600; opacity: 0.8; }
+.fa-glass-window-meta dd { margin: 0; }
+.fa-glass-window-link { margin: 0.35rem 0 0; font-size: 0.84rem; }
+.fa-glass-asset-tool[data-fa-control="window"][aria-expanded="true"] {
+  background: var(--fa-glass-accent);
+  color: #fff;
+  border-color: var(--fa-glass-accent);
+}
 /* Zoomed out to its avatar, the cover is the whole card: no strip over it. */
 .fa-glass-asset[data-fa-zoom="avatar"] .fa-glass-asset-tools { background: transparent; }
 /* On a phone the column gives a card no height of its own, so a covered card

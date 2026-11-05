@@ -2,7 +2,7 @@
 
 ## Covers
 
-- Declared visualiser (cat-harness `visualisers`, `renderedBy: state-viewer`, `coversKinds: ["code"]`, `subgraphs: "instance"`): `cat-harness/code` (bean `folio-assistant-svgx`, 2026-10-15).
+- Declared visualiser (cat-harness `visualisers`, `renderedBy: state-viewer`, `coversKinds: ["code"]`, `subgraphs: "instance"`): `cat-harness/code`.
 - Generator: `cat-harness-tools/scripts/state-visualizer.ts` — one page per instance at `<base>/cat-harness/code/<instance>/`, built at publish.
 - Drawn from the generated `code/<content-core>/` page.
 

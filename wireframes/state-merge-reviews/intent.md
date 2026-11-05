@@ -2,7 +2,7 @@
 
 ## Covers
 
-- Declared visualiser (cat-harness `visualisers`, `renderedBy: state-viewer`, `covers: ["merge-reviews"]`): `cat-harness/merge-reviews` (bean `w8jq`, 2026-10-23).
+- Declared visualiser (cat-harness `visualisers`, `renderedBy: state-viewer`, `covers: ["merge-reviews"]`): `cat-harness/merge-reviews`.
 - Generator: the tools layer's `state:visualizer` — one page at `<base>/cat-harness/merge-reviews/`, built at publish from the mounted `cat/cat-harness/merge-reviews` branch.
 - Drawn from the generated page with one sample verdict in the store.
 

@@ -16,18 +16,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-blocking",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Default to non-blocking when updating a bean's status. Mark blocked only when the work genuinely cannot proceed, and then always with what it waits on, when the wait expires, and what the next agent should do.",
+      "description": "Default to non-blocking when updating a work item's status. Mark blocked only when the work genuinely cannot proceed, and then always with what it waits on, when the wait expires, and what the next agent should do.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/work-plan",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/work-plan",
-      "instructionLines": 117,
+      "instructionLines": 104,
       "instructionsPath": "work-plan/skills/work-plan/bean-blocking.md",
       "name": "bean-blocking",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/918fb4a92c34a6ace72b4c0c1fefb9a37810182d3a71639fc78f4b4de3dac1ab",
-        "bytes": 5135,
-        "sha256": "918fb4a92c34a6ace72b4c0c1fefb9a37810182d3a71639fc78f4b4de3dac1ab"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/12fe21217ea12ba4a89489db55c5452d761989fee13fc142153723d8709eaf43",
+        "bytes": 4566,
+        "sha256": "12fe21217ea12ba4a89489db55c5452d761989fee13fc142153723d8709eaf43"
       },
       "title": "Blocking is a claim about the work, not a mood"
     },
@@ -35,18 +35,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-coordination",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Pointer to the bean-based session work-plan system (the `beans` CLI flat-file issue tracker, data under `beans/`). Operational usage lives in todo-manager.md / session-intent.md; the generic coordinator/orchestrator logic is owned by the folio-assistant platform.",
+      "description": "Pointer to the bean-based session work-plan system (the `beans` CLI flat-file issue tracker, data under `beans/`). Operational usage lives in todo-manager.md / session-intent.md; this file is the canonical copy of the coordinator logic that downstream repositories sync from.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/work-plan",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/work-plan",
-      "instructionLines": 981,
+      "instructionLines": 692,
       "instructionsPath": "work-plan/skills/work-plan/bean-coordination.md",
       "name": "bean-coordination",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f1af8ac0ffa6bc2c5c1231ab6e7b326ecf27ea92b590624f80506e5595cb9d6a",
-        "bytes": 53753,
-        "sha256": "f1af8ac0ffa6bc2c5c1231ab6e7b326ecf27ea92b590624f80506e5595cb9d6a"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4bd34022c1efe1440c2a9efe7009c38f084c5ac1b0f075f809c3e42ebda247fd",
+        "bytes": 36212,
+        "sha256": "4bd34022c1efe1440c2a9efe7009c38f084c5ac1b0f075f809c3e42ebda247fd"
       },
       "title": "Bean Coordination"
     },
@@ -54,20 +54,20 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-drain",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Drain open beans (stories, bugs, features) with several agents at once, as part of the SDLC: build the queue, group it by owner, check and claim each bean on every bean copy before any work, open the PR at the first commit, ask the owner through ask-the-person, close, and refill. Use when a thread or agent is asked to drain beans, when a coordinator spawns drain threads, or when an idle agent pulls from a shared queue next to other agents.",
+      "description": "Drain open work items (stories, bugs, features) with several agents at once, as part of the SDLC: build the queue, group it by owner, check and claim each work item on every work item copy before any work, open the PR at the first commit, ask the owner through ask-the-person, close, and refill. Use when a thread or agent is asked to drain work items, when a coordinator spawns drain threads, or when an idle agent pulls from a shared queue next to other agents.",
       "hasIOContract": true,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/work-plan",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/work-plan",
       "inputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/bean-drain/input.schema.json",
-      "instructionLines": 222,
+      "instructionLines": 188,
       "instructionsPath": "work-plan/skills/work-plan/bean-drain.md",
       "name": "bean-drain",
       "outputSchema": "https://litlfred.github.io/folio-assistant/cat-harness/skills/bean-drain/output.schema.json",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5108f1ba6690104c4ff4e1e6fb840d4f733de7bda0a61e4dc2df9014421b5e6f",
-        "bytes": 11644,
-        "sha256": "5108f1ba6690104c4ff4e1e6fb840d4f733de7bda0a61e4dc2df9014421b5e6f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3e8db8b9240514b40c38a9c85610166eb776280c20cc0e7f5320329b13511c9a",
+        "bytes": 10160,
+        "sha256": "3e8db8b9240514b40c38a9c85610166eb776280c20cc0e7f5320329b13511c9a"
       },
       "title": "Bean drain"
     },
@@ -75,18 +75,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/idle-backlog",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "While idle or waiting on a long-running async task (a build, a long compute script, a CI run, a background agent), pull the applicable backlog in priority order and work non-conflicting items instead of stalling. Generalises AGENTS.md's 5-minute idle trigger into a reusable skill. Use whenever blocked on an async wait with no substantive output to produce.",
+      "description": "While idle or waiting on a long-running async task (a build, a long compute script, a CI run, a background agent), pull the applicable backlog in priority order and work non-conflicting items instead of stalling. Use whenever blocked on an async wait with no substantive output to produce.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/work-plan",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/work-plan",
-      "instructionLines": 59,
+      "instructionLines": 57,
       "instructionsPath": "work-plan/skills/work-plan/idle-backlog.md",
       "name": "idle-backlog",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7928549bef176be7d74c9650369ac465d8bf8a51d72f6c5cc148e1215b7b9c5e",
-        "bytes": 2839,
-        "sha256": "7928549bef176be7d74c9650369ac465d8bf8a51d72f6c5cc148e1215b7b9c5e"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d98cc10f5eb840e16b194a52b488a29c74874b037a6326905b534b815e948e47",
+        "bytes": 2646,
+        "sha256": "d98cc10f5eb840e16b194a52b488a29c74874b037a6326905b534b815e948e47"
       },
       "title": "idle-backlog"
     },
@@ -99,13 +99,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/work-plan",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/work-plan",
-      "instructionLines": 752,
+      "instructionLines": 700,
       "instructionsPath": "work-plan/skills/work-plan/todo-manager.md",
       "name": "todo-manager",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f08fd38b2a7432bfa3799bdbf547e8ebc60fa2467398b3c1d8856b82a9ec5b06",
-        "bytes": 41419,
-        "sha256": "f08fd38b2a7432bfa3799bdbf547e8ebc60fa2467398b3c1d8856b82a9ec5b06"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/490373678cb1ff1f13acedfefd3a8c66c8a8166827103fa20618e5ebb41c4727",
+        "bytes": 37946,
+        "sha256": "490373678cb1ff1f13acedfefd3a8c66c8a8166827103fa20618e5ebb41c4727"
       },
       "title": "Session Task Manager (`beans`)"
     },
@@ -113,18 +113,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-restructure",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template beans, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per bean (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of beans at once.",
+      "description": "Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template work items, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per work item (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of work items at once.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/work-plan",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/work-plan",
-      "instructionLines": 176,
+      "instructionLines": 160,
       "instructionsPath": "work-plan/skills/work-plan/work-plan-restructure.md",
       "name": "work-plan-restructure",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/86871217d91de890181d83b4680b85fde928dbd3af65b1fcf5c654ef390b857f",
-        "bytes": 9304,
-        "sha256": "86871217d91de890181d83b4680b85fde928dbd3af65b1fcf5c654ef390b857f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3895cae257df2b2668fe9bd11d4ab9fc48689a6023be88ed67c56c66681258b9",
+        "bytes": 8775,
+        "sha256": "3895cae257df2b2668fe9bd11d4ab9fc48689a6023be88ed67c56c66681258b9"
       },
       "title": "Restructuring a work plan — a reviewed plan, not a bulk edit"
     },
@@ -132,18 +132,18 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "The contract the work plan (beans) keeps as a data store, as operations any Tool must provide: get, list, create, update with ifMatch, note, history, and where a bean is in its processes. Give back a bean exactly as written, keep ids unique and links whole, keep status and type to their closed lists, lose nothing to concurrent writers, and answer a bean's history. A mechanical Actor plays this Role through whichever Tool the deployment names.",
+      "description": "The contract the work plan (work items) keeps as a data store, as operations any Tool must provide: get, list, create, update with ifMatch, note, history, and where a work item is in its processes. Give back a work item exactly as written, keep ids unique and links whole, keep status and type to their closed lists, lose nothing to concurrent writers, and answer a work item's history. A mechanical Actor plays this Role through whichever Tool the deployment names.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/work-plan",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/work-plan",
-      "instructionLines": 113,
+      "instructionLines": 109,
       "instructionsPath": "work-plan/skills/work-plan/work-plan-store.md",
       "name": "work-plan-store",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/83f6026fea716777e4090cba86951d341c1dd0f3a6d369c68a7e565e167a3e50",
-        "bytes": 5948,
-        "sha256": "83f6026fea716777e4090cba86951d341c1dd0f3a6d369c68a7e565e167a3e50"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f80a10bd076a17dd04def1913bb83f4028988318cee9be007c12a8a2b7e7b501",
+        "bytes": 5875,
+        "sha256": "f80a10bd076a17dd04def1913bb83f4028988318cee9be007c12a8a2b7e7b501"
       },
       "title": "The work plan's contract"
     },
@@ -156,13 +156,13 @@
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/work-plan",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/work-plan",
-      "instructionLines": 74,
+      "instructionLines": 72,
       "instructionsPath": "work-plan/skills/work-plan/work-plan-store-git-branch.md",
       "name": "work-plan-store-git-branch",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2c033396283518c079d45b91b58b2907319b94c101d5b1a09bbdf556bd65977b",
-        "bytes": 3678,
-        "sha256": "2c033396283518c079d45b91b58b2907319b94c101d5b1a09bbdf556bd65977b"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cbb3996900983c0fa55b0ab4434e0878888967fe350687d318fcc74546aef1a8",
+        "bytes": 3628,
+        "sha256": "cbb3996900983c0fa55b0ab4434e0878888967fe350687d318fcc74546aef1a8"
       },
       "title": "The work plan on a git state branch"
     }

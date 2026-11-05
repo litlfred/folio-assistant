@@ -14,14 +14,14 @@ Rendered at 1280×800 and 390×844 from the committed page and projection. The p
 
 1. **Title block:** `todos`, then `todos/ · todos`. There is no site header or navbar.
 2. **Counts panel** "Todos — the human half": **1** open, **3** total. At 1280 px it fills the first grid column (about 277 px) and leaves the rest of the row empty.
-3. **"State graphs this harness declares":** 7 cards: beans (live), glossary (elsewhere), health (declared), issue-marks (declared), qa (live), todos (here, outlined, not linked), uploads (elsewhere).
+3. **"State graphs this harness declares":** 7 cards: work items (live), glossary (elsewhere), health (declared), issue-marks (declared), qa (live), todos (here, outlined, not linked), uploads (elsewhere).
 
 The dashed box (web) and the note (mobile) in `as-is.html` are **annotations**, not page regions. They name the three items the projection holds, which the page does not draw.
 
 ## Findings
 
 1. **The items are not on the page.** `assets/todos/index.json` carries 3 items, each with a summary, status, priority, target page and `viewHref`/`editHref`: "The human-todos page still says 'Not built yet' — the store now exists" (open, high), "Decide which roles content-pipeline-navigator and platform-boundary-guard take on" (blocked), and "Decide what 'kick off' means mechanically for the two CI-watcher dispatch points" (in_progress). The visualiser shows only "1 open / 3 total". A person cannot find out from it *which* item is open, or reach any item.
-2. **"Open" means something different from the beans page beside it.** The counts panel counts only status `open`, so the blocked and in-progress items appear only in "total". On `beans/`, "open" is the resting status plus in-progress. The two sibling dashboards use one word for two definitions.
+2. **"Open" means something different from the work items page beside it.** The counts panel counts only status `open`, so the blocked and in-progress items appear only in "total". On `beans/`, "open" is the resting status plus in-progress. The two sibling dashboards use one word for two definitions.
 3. **Most of the first screen is the list of other graphs.** At 1280×800 the counts panel takes about 115 px, and the rest of the viewport is the 7 state-graph cards. At 390 px it is the same pattern.
 4. **The heading order skips a level, and the tags run into the names.** These are shared with `beans/`: the panel title is an `h3` directly under the `h1`, and the card headings' text reads "beanslive", "todoslive" and so on, because the tag span has no separator.
 5. **No way back to the site.** There is no `nav` or `header` and no link home. The page is dark by default, with no scheme control.

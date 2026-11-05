@@ -1,13 +1,12 @@
 # Harness config panel, and associated harnesses: intent
 
-Issue #1146. Owner, 2026-09-23:
-> "we need a good mechanism for 'associated' harnessed KGs. it should be an optional list property of any harness inheriting cat-harness (including itself). should add to cat-harness harness visualize a config panel/popup which shows properties of cat-harness and other instances. add in to render appropriate edit skills as well."
+Wanted: an optional list of **associated** harnessed KGs on any harness inheriting cat-harness (including cat-harness itself), and a config panel or popup in the cat-harness harness visualiser that shows the properties of cat-harness and the other instances, each with the skill that edits it.
 
 Not wanted: publishing an associated harness at `/folio-assistant/<name>/`, and any materialized copy.
 
 ## Who, and what they need to do
 
-**Who:** an owner or agent maintaining harnesses. They know the declarations exist but should not have to read `cat-harness.json`, which has 39 directories and long `_comment` fields, to see what a harness declares.
+**Who:** an owner or agent maintaining harnesses. They know the declarations exist but should not have to read `cat-harness.json`, which has over forty directories and long `_comment` fields, to see what a harness declares.
 
 **What they need to do:**
 1. See every harness in one place:

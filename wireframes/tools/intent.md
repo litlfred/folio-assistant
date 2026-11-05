@@ -6,11 +6,11 @@
 - Generator: `cat-harness/scripts/gen-tools-viz.ts` (graph typology `tools`, page location read from the `coverage.visualiser` of the `tools` directory in `cat-harness.json`).
 - Rendered by Jekyll with just-the-docs `v0.12.0` (`remote_theme` in `_config.yml`). The page has no `layout:` in its front matter and relies on the github-pages default layout. The chrome comes from `_includes/title.html`, `_includes/nav_footer_custom.html`, `_includes/footer_custom.html`, `assets/js/docs-ui.js` and `assets/css/docs-ui.css`.
 
-I could not build the site here: there is no local just-the-docs, and `litlfred.github.io` is refused at the proxy. So the wireframe is drawn from the committed Markdown, the generator and the chrome's templates, JS and CSS.
+The wireframe is drawn from the committed Markdown, the generator and the chrome's templates, JS and CSS, not from a built site, because the site could not be built where this was drawn (no local just-the-docs, and the published site unreachable).
 
 ## Who it is for, and what they need to do
 
-The page's own description: *"The Tool nodes this instance declares — how each is installed and invoked, and which skill it satisfies."* The generator header gives the purpose: keep **tools and skills separate** (owner, 2026-09-21), and render `satisfies` from the tool side.
+The page's own description: *"The Tool nodes this instance declares — how each is installed and invoked, and which skill it satisfies."* The generator header gives the purpose: keep **tools and skills separate**, and render `satisfies` from the tool side.
 
 - **Reader:** someone (a person, or an agent reading the site) who needs to know which concrete mechanism exercises a skill.
 - **Tasks:**
@@ -28,13 +28,13 @@ The page's own description: *"The Tool nodes this instance declares — how each
 
 ## Observed on main (re-checked against main 0bcf94bd)
 
-Re-checked against the page as regenerated in this checkout. The template, the chrome and the tag colours are unchanged. Only the counts moved: one new Tool, `context-prefixes` (JSON-LD prefix check, satisfies `kg-export`), and `kg-graph-export` now satisfies three skills (`bootstrap-graph-emission`, `bootstrap-graph-publication`, `kg-export`). The drawing is updated to match: invocation shell 53, installation `none` 66, and the verdict "all 52 skills named across 71 tools resolve".
+Re-checked against the page as regenerated in this checkout; the drawing's counts are current for that commit: invocation shell 53, installation `none` 66, and the verdict "all 52 skills named across 71 tools resolve".
 
 Regions in reading order, web (≥ 800 px, drawn at 1280):
 1. **Sidebar strip, 56 px at rest.** It shows marks only:
    - the site mark
    - the action launcher ▦ and the ☰ "Keep navigation open" toggle
-   - the icon row: Todos, Beans, Processes, Knowledge graph, More
+   - the icon row: Todos, Work items, Processes, Knowledge graph, More
    - The five instantiated harness dividers as initials: the trust IG, WHO IRIS, Folio Assistant, C@T Harness, Bootstrap
    - ⌂ home, at the bottom
 

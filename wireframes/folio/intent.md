@@ -7,7 +7,7 @@
 **What they need to do:**
 - see which nodes ("stickies") the folio graph holds
 - see, for each node, what it anchors to, which theme it claims, where it was declared, and the links it carries
-- see which declared directories were scanned, and whether each one is present. A declared-but-absent directory gets a row, not silence (bean `dh4f`).
+- see which declared directories were scanned, and whether each one is present. A declared-but-absent directory gets a row, not silence (work item `dh4f`).
 - tell an empty folio apart from a folio that could not be loaded. The page words the two states differently.
 
 **What it must show** (read off the page and the generator):

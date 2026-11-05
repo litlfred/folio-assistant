@@ -7,6 +7,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/classify-and-code-content.svg",
       "description": "Classifies and codes L1 extracted statements (recommendations, implementation practices, remarks, proposed coverage exclusions) and L2 DAK slots (personas, business processes, guideline domains, conditions, interventions, medicines, GRADE ratings), following the terminology-coding methodology and the classify-and-code-content skill. The authoring agent runs terminology-lookup down the four-rung reuse-first ladder, records provenance (declared, context, inferred) and candidate status, and stages the result. A person in the l1-extraction-reviewer lane signs or rejects each exclusion proposed in exclusions.proposed.json against the printed page (sections/page-NNN.md). A person in the terminologist / ontologist lane then adjudicates the candidate codings, SKOS match precision (exactMatch vs closeMatch) and any Rung 4 local glossary candidates.",
       "enforcement": "advisory",
       "flowCount": 13,
@@ -359,6 +360,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_DakL3Ig",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/dak-l3-ig.svg",
       "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit becomes a published L3 FHIR Implementation Guide: map the DAK's L2 content to the FHIR artefacts it calls for, then run fhir-harness's generic L3 pipeline (Process_L3Fhir) with that mapping as its source model. The WHO L2 → L3 ordering lives here because fhir-harness's pipeline does not know about DAKs; that pipeline is called, not copied.",
       "enforcement": "advisory",
       "flowCount": 3,
@@ -468,6 +470,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/dth-authoring.svg",
       "description": "Produces a WHO Digital Transformation Handbook (DTH) from its sources to publication, in seven stages that each end in a recorded milestone: initiate (M0 charter), ingest sources into the library (M1 library frozen), outline and scope (M2 outline agreed), structured drafting (M3 zero draft), working-group feedback (M4), public comment (M5 released, M6 dispositioned), and finalise and publish (M7).\nMilestones are recorded checkpoints, not gates: each is written as a note on the handbook's epic bean (which milestone, when, evidence), so the site can show stage and progress. Review runs beside drafting as QA, as in smart-guideline-end-to-end.bpmn.\nStructured drafting uses the smart-base DAK block kinds for personas, scenarios, processes, decisions, data elements, indicators and requirements, and each track calls Process_L2ComponentEditReview, as l2-dak-authoring.bpmn does. Contributor feedback from the contributor log sheet and from GitHub pc: comments lands in one review store.\nHandbooks ingested from a published WHO PDF (PHC, SC, PC, SFP) enter at stage 1 with their library built and their outline given by the publication; dth-hrh, authored natively, is the pilot. Steps with no platform subprocess are marked as placeholders in their documentation.\nEmpirical content (figures, statistics, country examples) stays as cited narrative blocks and never enters formal content.",
       "enforcement": "advisory",
       "flowCount": 52,
@@ -1736,6 +1739,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l2-component-edit-review.svg",
       "description": "One pass over one L2 DAK component: the agent edits it, runs its checker, renders and stages it with a before/after, and hands it on; review forks off beside the hand-on and never holds it up (adjudication is QA, not a gate). Called once per component pass by each authoring track of l2-dak-authoring.bpmn (Process_L2Dak).\n\nOnly the call's inputs differ between components (skill l2-component-edit-review, \"The inputs, per component\"):\n- component: personas and user scenarios (C2, C3), business processes (C4), core data elements and glossary (C5) with their terminology bindings, decision-support and scheduling logic (C6, C7), indicators and requirements (C8, C9);\n- authoring skill: l2-dak-authoring, bpmn-authoring, dmn-authoring or terminology-management, named on the calling activity, so it joins this process's skills along the call path (review-task.bpmn's scoped composition);\n- renderer and diff: what the reviewer sees, before and after;\n- checker: the mechanical checks the agent runs before asking anyone;\n- reviewing role: the person who takes this process's reviewer lane for the call.",
       "enforcement": "advisory",
       "flowCount": 13,
@@ -2097,6 +2101,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l2-dak-authoring.svg",
       "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. Each of the six authoring tracks calls l2-component-edit-review.bpmn (Process_L2ComponentEditReview): the agent edits, checks, renders and stages the component and hands it on, while a person in the component's reviewing role reviews it alongside, never as a gate. Each track's renderer, checker and reviewer are tabled in the skill l2-component-edit-review.",
       "enforcement": "advisory",
       "flowCount": 29,
@@ -2809,6 +2814,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_Planning",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/SGAuthoring.DAKLifecycle.svg",
       "description": "Plans a DAK: scope, team, method, sources, roadmap and consultations, then starts the sprint cycle.",
       "enforcement": "strict",
       "flowCount": 8,
@@ -3035,6 +3041,7 @@
     {
       "@id": "http://smart.who.int/base/process/Process_SgEndToEnd",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/smart-guideline-end-to-end.svg",
       "description": "From a use case to a consuming application: identify the L1 guidelines, ingest them into an L1 knowledge graph, choose the L2 DAKs to build on, create or adapt the L2 assets, choose the L3 IGs to build on, produce the L3 assets, then build the L4 consuming application the requester describes. Adjudication follows every stage as QA, not as a gate, but the order is strict: no L3 asset before the L1 extraction and L2 assets it derives from exist with their review requested (Gateway_L3Ready). Each stage forks into the next stage and its adjudication, and each adjudication has its own end event, so the instance completes only when all are recorded. Each stage runs the skill named on its activity, with its own input and output contract (l2-dak-authoring.bpmn for stage 4, dak-l3-ig.bpmn for stage 6), and its output is the next stage's input. The smart-guideline-end-to-end skill orchestrates the stages and says who adjudicates each.",
       "enforcement": "advisory",
       "flowCount": 38,

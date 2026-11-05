@@ -669,3 +669,33 @@ summary.fa-workplan-tree-row:focus-visible,
   .fa-workplan-tree-type, .fa-workplan-tree-row .fa-workplan-bean-status { min-width: 0; }
   .fa-workplan-tree { padding-left: 0.7rem; }
 }
+
+/* A work plan's marker (work item folio-assistant-exrp): an epic or milestone
+   that names the process it runs. Quiet, so the tree still reads as a tree. */
+.fa-workplan-plan {
+  /* Its own line under the title, after the counts, so the row's right-hand
+     column (counts, "Only this") stays where the other rows have it. */
+  flex: 1 0 100%;
+  order: 99;
+  padding-left: 1.6rem;
+  font-size: 0.72rem;
+  color: var(--fa-wp-muted);
+  min-width: 0;
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+}
+.fa-workplan-plan-label {
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 600;
+}
+.fa-workplan-plan code {
+  font-size: inherit;
+}
+.fa-workplan-plan-proposal-link {
+  color: inherit;
+}
+.fa-workplan-plan-items {
+  margin-left: 0.5rem;
+  font-size: inherit;
+}

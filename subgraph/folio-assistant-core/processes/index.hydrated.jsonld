@@ -5936,7 +5936,6 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish",
           "@type": "bootstrap:Process",
-          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/folio-review-publish.svg",
           "description": "Review a rendered folio and publish it, or send it back with changes. Shared by every authoring process: authoring-a-document (this instance) and authoring-a-paper (folio-assistant-sci) call it after they validate and render, so review, publish and committee feedback are drawn once. What differs by folio kind stays with the caller: its writing loop, its own check (the content profile for a document, the Lean build for a paper), and its renderer. It ends one of three ways. `Published`: the caller closes its bean. `Changes asked` and `Feedback in: changes asked`: the caller goes back to its writing loop.",
           "enforcement": "advisory",
           "flowCount": 7,
@@ -6161,7 +6160,6 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates",
           "@type": "bootstrap:Process",
-          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/guideline-updates.svg",
           "description": "Taking up a new version of a guideline, or a changed lower layer, is a\nre-pin and a review at once. The steward maps the affected layers and\nre-pins them in dependency order. For each re-pin, the adaptation team\ncompares the old version, the new version and its own adaptations. A\nchange that touches no adaptation or policy merges on the technical\npath. One that does goes to the adaptation committee, which decides for\neach adaptation whether to keep, revise or retire it. Revisions are\nordinary content changes (Process_ContentChangeReview), and the re-pin\nmerges with them. The loop runs until every layer is current.",
           "enforcement": "strict",
           "flowCount": 16,

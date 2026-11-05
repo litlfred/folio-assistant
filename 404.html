@@ -5,8 +5,8 @@
 <body><h1>Page not found</h1><p id="fa-404-detail">This page does not exist on this site.</p>
 <p><a id="fa-404-live" href="/">Go to the home page</a></p>
 <script>(function(){
-var path=location.pathname,m=path.match(/^(.*\/STAGING\/[^/]+\/)/);if(!m)return;
-var root=m[1],live=root.replace(/STAGING\/[^/]+\/$/,'')+path.slice(root.length);
+var path=location.pathname,m=path.match(/^(.*\/(?:branches|STAGING)\/[^/]+\/)/);if(!m)return;
+var root=m[1],live=root.replace(/(?:branches|STAGING)\/[^/]+\/$/,'')+path.slice(root.length);
 var d=document.getElementById('fa-404-detail'),a=document.getElementById('fa-404-live');
 a.href=live;a.textContent='Open the live site\u2019s copy of this page';
 d.textContent='This preview does not carry this page. It may be unchanged on the branch, so the preview serves the live site\u2019s copy through a script.';

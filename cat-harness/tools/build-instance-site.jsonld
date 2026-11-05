@@ -361,8 +361,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/build-instance-site.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "build-instance-site",
-      "title": "Build, check and (on request) publish an instance's own site, or a STAGING/<branch> preview",
-      "description": "From a checkout whose layers arrive by remote mount: mount the pinned closure, install, run the instance's own gates (`--pre`), compose the harness chrome for THIS instance, run its source steps, build with Jekyll at the base path read from the git remote (`/<repo>`, or `/<repo>/STAGING/<branch>` for a preview), run the post-build steps (mount-instance-docs, pdf-viewer, set-html-lang, publish-id-lookup, rail-standalone-pages), and check that every relative or base-rooted link in every page resolves to a file under the site, reading each page with an HTML parser. Any failing step stops the run; a link that does not resolve means nothing is published. It never decides to publish: only `--publish` does, and then a root publish keeps `STAGING/` and `_render-log/` on the branch, and a preview replaces only its own `STAGING/<branch>/`.",
+      "title": "Build, check and (on request) publish an instance's own site, or a branches/<branch> preview",
+      "description": "From a checkout whose layers arrive by remote mount: mount the pinned closure, install, run the instance's own gates (`--pre`), compose the harness chrome for THIS instance, run its source steps, build with Jekyll at the base path read from the git remote (`/<repo>`, or `/<repo>/branches/<branch>` for a preview), run the post-build steps (mount-instance-docs, pdf-viewer, set-html-lang, publish-id-lookup, rail-standalone-pages), and check that every relative or base-rooted link in every page resolves to a file under the site, reading each page with an HTML parser. Any failing step stops the run; a link that does not resolve means nothing is published. It never decides to publish: only `--publish` does, and then a root publish keeps `branches/` and `_render-log/` on the branch, and a preview replaces only its own `branches/<branch>/`.",
       "install": {
         "none": true
       },
@@ -428,7 +428,7 @@
           {
             "name": "staging",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Branch",
-            "description": "Build (and with --publish, publish) a preview of this branch at STAGING/<branch>/.",
+            "description": "Build (and with --publish, publish) a preview of this branch at branches/<branch>/.",
             "required": false,
             "arg": {
               "flag": "--staging"
