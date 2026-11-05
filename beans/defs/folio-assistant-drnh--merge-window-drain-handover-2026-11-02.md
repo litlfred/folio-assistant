@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-05T08:45:00Z
+updated_at: 2026-11-05T12:56:00Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -222,3 +222,5 @@ _2026-11-05T06:28:22Z_ — Session restarted again (down about 21:00Z to 06:27Z 
 _2026-11-05T06:35:32Z_ — Owner (06:3xZ): 'merge when ready', and approved merging fa#2945 (adds leitnerc to mountApprovers) on green. Watching fa #2945, #2926, train #2944, and cat-harness#1036 (provenance logs may name any instance; owner card).
 
 _2026-11-05T08:45:00Z_ — Correction to the 2026-11-03T00:41Z line above, which calls 4j43 completed: the owner re-opened 4j43 at 2026-11-03T07:13Z (card "1. Re-open 4j43") because five children were still open, and it reads in-progress now. Checked 2026-11-05: drnh, fbmk, rbib and sbpn are in-progress, gzgh is todo. So in-progress is correct; 4j43 closes when they do. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
+
+_2026-11-05T12:56:00Z_ — Stalled-agent pickup (owner: "pick up all stalled work"; logs of ~10 sessions that hit the weekly limit). Already done: tools#1442, #1483, fa#2945, #2924, smart-immunizations#111, cat-harness#1036 merged; tools#1485, fa#2926 (→ #2946 merged), trains #2923, #2944 closed. Live owners kept: fa#2954 and trains → "Broken beans links" session_01XueePufkpx8fwJxavyDS5h; fa#2951/#2948 → session_01VQDpPcHWmicLn8QLKRMQTL. Handed to new siblings (tag stalled-pickup-2026-11-05): A library chain tools#1479 → cat-harness#1032 → core#639 → session_01VQDpPg681u1Pt3MCpbmx8J; B Plans and work tools#1484 + cat-harness#1038 (bean exrp) → session_01VQDpPfeNxqnLV7Dcpo1Uo1; C provenance cat-harness#1037 → tools#1486 + footer/audit-coverage → session_01VQDpPfwYbADcuuX2ZBXvqn; D site re-pins smart-ra#228, smart-immunizations#114 and the rest of rpc6 → session_01VQDpPcVohXoCeZb3TEMGfp; E dth-hrh export page + "latest" copies (core document-export.ts, under dthl) → session_01VQDpPfQjS6Ah9hRnot9HUp. Open for the owner: whether cat-harness-file checks run only in the committing repo (exit-78 counts as a new failure). Session https://claude.ai/code/session_01VQDpPfGantMCt7AV4LCCK2
