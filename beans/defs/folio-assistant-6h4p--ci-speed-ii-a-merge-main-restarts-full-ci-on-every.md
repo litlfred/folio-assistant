@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:15Z
-updated_at: 2026-11-05T14:38:58Z
+updated_at: 2026-11-05T23:28:34Z
 parent: folio-assistant-k3vv
 ---
 
@@ -29,3 +29,5 @@ _2026-11-05T11:42:47Z_ — Verification attempt (owner card "Next k3vv" option 1
 _2026-11-05T11:47:29Z_ — **Owner ruling (card "Merge main", option 1):** agents merge main into a branch that has a PR only when it conflicts, when the work needs something that just landed, or once just before it merges. Reading main stays frequent. Skill change: litlfred/cat-harness#1042 (branch-freshness). Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
 
 _2026-11-05T14:38:58Z_ — Check-in: still unproven. merge-main push runs since #2947 (42012218063, 42016877441, 42017912916, 42022080188, 42035515935) printed no pick or skip line, so no opted-in PR existed for the conflicted-only rule to judge. The box stays open. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
+
+_2026-11-05T23:28:34Z_ — Still unproven. merge-main push runs 42079318182 (17:55Z) and 42126723318 (23:04Z) printed no pick or skip line, so no PR had opted in for the conflicted-only rule to judge. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
