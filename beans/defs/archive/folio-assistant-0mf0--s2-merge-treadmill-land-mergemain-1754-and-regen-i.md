@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-10-01T08:14:33Z
-updated_at: 2026-10-06T19:30:00Z
+updated_at: 2026-11-05T08:45:00Z
 parent: folio-assistant-7x5n
 ---
 
@@ -55,3 +55,5 @@ Read-only GitHub REST data: every PR merged into main in each window, excluding 
 - PRs opened before #1820 but merged after it fall in the after window.
 
 Measured 2026-10-06 by a read-only sub-agent. Two of its merge timestamps (#1758, #1824) were spot-checked against the GitHub API in this session.
+
+_2026-11-05T08:45:00Z_ — Noted in the CI speed II epic folio-assistant-k3vv: the green→merged median measured here got slower (2.2 → 5.7 min); what improved was merging while red (32 % → 3 %). Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.

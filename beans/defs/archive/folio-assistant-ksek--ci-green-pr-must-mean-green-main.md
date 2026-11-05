@@ -6,7 +6,7 @@ status: completed
 type: epic
 priority: normal
 created_at: 2026-10-23T08:42:44Z
-updated_at: 2026-11-01T23:05:00Z
+updated_at: 2026-11-05T08:45:00Z
 ---
 Owner-approved process fix, 2026-10-23. Two checks ran only after merge (Liquid undefined-variable check, workflow_run on main; Post-merge regen check and repair, push to main), so a PR could be fully green and still turn main red, and every such merge emailed the owner a failure. The rule: whatever can be judged before a merge is judged before it, on the PR's own runs, and merge-guard is the only way in. Children: (a) PR-time Liquid + regen checks, (b) layer PRs need a green folio-assistant run with the change pinned, (c) stop-the-line while a post-merge check is red on main, (d) folio-assistant PRs merge only on merge-guard success. Follow-ups found while doing (a): merge-guard does not WAIT for Feature Staging (NOT_WAITED_FOR_WORKFLOW_FILES, bean gnnj), so the in-run Liquid job is judged only once that run finishes, and closing that needs a cat-harness-tools change. post-merge-regen.yml is red for its own environment, not for main: on 6cf10d9 main's gates were green while it was red (run 39820219694). A local check-mode run on 3a52ac6 reports 13 stale checks because that job lacks publish-pages, qa-working-copy and smart:pages. Give it the gates' inputs, or narrow it to the pairs whose inputs it builds.
 
@@ -73,3 +73,5 @@ _2026-10-31T20:25:00Z_ — Evening merges and open green PRs across `cat-harness
   - **Post-merge `#2862` (`2026-11-01T08:09:00Z`)**: [`litlfred/folio-assistant#2862`](https://github.com/litlfred/folio-assistant/pull/2862) merged (`d198a196`); `Post-merge regen check and repair` run [`41284861623`](https://github.com/litlfred/folio-assistant/actions/runs/41284861623) on `main` reproduced the exact two checks (`slice:sqlite:check`, `check:nav-names:check` in `unrepairedChecks`) fixed by [`litlfred/folio-assistant#2857`](https://github.com/litlfred/folio-assistant/pull/2857) (`b5263f74`), which is now marked ready for review (`MERGEABLE`/`CLEAN`, all checks green).
 
 _2026-11-01T23:05:00Z_ — Closed: the last open item, `post-merge-regen.yml` lacking the gates' inputs, landed with [folio-assistant#2857](https://github.com/litlfred/folio-assistant/pull/2857) (merged as `36b4fe0`). All 5 child beans were already closed (`6g6o`, `dft1`, `hfiu`, `jwg8` completed; `pwi4` scrapped). The post-merge regen pairs it cannot repair on its own (`slice:sqlite`, `nav-names`) are tracked under `p7mb` (tools#1347). Closed for the MVP freeze (folio-assistant#2894), thread "Stabilize platform state and CI", https://claude.ai/code/session_01Qmmkt7MDaBjNz44vg9ZzbR.
+
+_2026-11-05T08:45:00Z_ — Moved to defs/archive (status completed, all five children closed; archiving is a view, bean e8m3). Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.

@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-15T20:27:00Z
-updated_at: 2026-10-15T21:05:30Z
+updated_at: 2026-11-05T08:45:00Z
 parent: folio-assistant-cisp
 ---
 
@@ -17,3 +17,5 @@ On `folio-assistant` and layer repositories, every PR push triggers both `Code-q
 ## Remedy
 
 Cache the mounted layers and derived build artifacts across workflows on the same commit, and allow `Feature Staging` to reuse cached layer mounts and skip redundant rebuilds when only `index.config.json` / `index.lock.json` repins occur unless staging is requested.
+
+_2026-11-05T08:45:00Z_ — Not done: on main b3bc4d2, feature-staging.yml still runs derive:publish itself. Follow-up folio-assistant-tv20 under epic folio-assistant-k3vv. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.

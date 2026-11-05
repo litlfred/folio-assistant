@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-05T06:35:32Z
+updated_at: 2026-11-05T08:45:00Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -220,3 +220,5 @@ _2026-11-04T20:57:30Z_ — who-iris#176 merged at 20:56Z as 35f23d3 (by litlfred
 _2026-11-05T06:28:22Z_ — Session restarted again (down about 21:00Z to 06:27Z on 11-05). The owner gave a standing OK to merge re-pins whose only workflow edits are lock-following uses: pins. Window reopened 06:27-10:27Z. Overnight, fa #2936, #2940 and #2941 merged (by others), and #2939 closed. fa#2926 at 1ea51d4 has one new-vs-main red (subgraphs dangling); asked …RpQZ whether it can merge now. Train #2943 is down to 7 new failures, mostly what #2926 fixes.
 
 _2026-11-05T06:35:32Z_ — Owner (06:3xZ): 'merge when ready', and approved merging fa#2945 (adds leitnerc to mountApprovers) on green. Watching fa #2945, #2926, train #2944, and cat-harness#1036 (provenance logs may name any instance; owner card).
+
+_2026-11-05T08:45:00Z_ — Correction to the 2026-11-03T00:41Z line above, which calls 4j43 completed: the owner re-opened 4j43 at 2026-11-03T07:13Z (card "1. Re-open 4j43") because five children were still open, and it reads in-progress now. Checked 2026-11-05: drnh, fbmk, rbib and sbpn are in-progress, gzgh is todo. So in-progress is correct; 4j43 closes when they do. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.

@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: high
 created_at: 2026-10-15T20:27:00Z
-updated_at: 2026-10-15T21:05:30Z
+updated_at: 2026-11-05T08:45:00Z
 parent: folio-assistant-cisp
 ---
 
@@ -19,3 +19,5 @@ parent: folio-assistant-cisp
 
 - Support a local content-addressed mount cache directory (`CAT_MOUNT_CACHE_DIR` / `~/.cache/cat-mount/<treeDigest>`) in `scripts/mount-from-lock.ts`, verified by `digestOf(dst).treeDigest === d.treeDigest`, and cache `~/.cache/cat-mount` in CI keyed by `hashFiles('index.lock.json')`.
 - Decouple static repository gates that do not read publish-time site output from `Publish-time pages`.
+
+_2026-11-05T08:45:00Z_ — Part b was not done: on main b3bc4d2, six code-quality-gates jobs still need both qa-working-copy and publish-pages. Follow-up folio-assistant-9set under epic folio-assistant-k3vv. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
