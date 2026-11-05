@@ -52,8 +52,11 @@ inputs:
   committer-refs:
     description: >-
       `exact` only: `true` also looks for an entry a committer published with
-      `bun run cat cache:publish` at `refs/cache/<step>/<key>`, and accepts it
-      only through `verify`.
+      `bun run cat cache:publish` at `refs/cache/cs1-<step>-<key>`, and accepts
+      it only through `verify`. Use it only when `verify` checks against a
+      reference derived from THIS tree (e.g. the lock's digests), never a
+      manifest the entry carries itself. Never on main: main is the backstop
+      and builds, or reads what main saved.
     default: "false"
 
 outputs:
@@ -100,6 +103,7 @@ runs:
         inputs.phase == 'restore' && steps.ns.outputs.determined == 'true'
         && inputs.trust == 'exact' && inputs.committer-refs == 'true'
         && steps.exact.outputs.cache-hit != 'true'
+        && !(github.ref == 'refs/heads/main' && github.event_name != 'pull_request')
       shell: bash
       env:
         STEP: ${{ inputs.step }}

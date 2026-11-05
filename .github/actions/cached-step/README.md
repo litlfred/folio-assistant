@@ -11,7 +11,9 @@ hit/miss/why line in the job summary, and shows up in the daily hit-rate
 report. The bespoke caches that predate it (the mount cache, the prepared
 image, the layers ref, `bundle-cache.sh`, the derived-input cone,
 verdict-reuse by tree) are ported onto it one at a time, by their owners.
-The first port is the mount cache in `jsonld-gen-check.yml`.
+The first port is the mount cache in `jsonld-gen-check.yml`. A pull request
+that adds a private cache scheme instead is held and returned to its author
+with a pointer here.
 
 ## Usage
 
@@ -83,17 +85,21 @@ A save is only ever called after a green step (`if: success()`).
 Committers — people and agents — produce entries locally where CI can verify
 them cheaply, so CI only verifies.
 
-- **(a) Exactly verifiable** — the output can be checked against its inputs
-  without re-running the producer: the mounts and the layers ref against the
-  lock's tree digests; a bundle against its manifest, **when its producer is
-  deterministic** (the determinism audit, `.github/scripts/determinism-audit.sh`,
-  says which are). A committer may run `bun run cat cache:publish <step>`,
-  which pushes the output to `refs/cache/cs1-<step>-<key>`; `cached-step`
-  with `committer-refs: true` fetches it and accepts it only if `verify`
-  passes. A manifest proves the bytes are the ones the committer built, not
-  that the build was right: what makes that hold is the determinism of the
-  producer plus the full set that still runs on `main` and nightly, which
-  rebuilds and compares.
+- **(a) Exactly verifiable** — `verify` checks the output against a
+  reference derived from THIS tree, so a bad entry is only a miss and the
+  entry is safe to take from anyone: the mounts and the layers ref against
+  the lock's tree digests. A committer may run `bun run cat cache:publish
+  <step>`, which pushes the output to `refs/cache/cs1-<step>-<key>`;
+  `cached-step` with `committer-refs: true` fetches it and accepts it only if
+  `verify` passes. Never on main, which is the backstop.
+- **(a′) Verifiable with provenance** — a bundle checked only against the
+  manifest it carries. A manifest proves the bundle is intact, not that it
+  was built from these inputs: a poisoner ships a matching manifest. So it
+  ALSO needs a source rule: an Actions-cache entry saved on main (no PR can
+  write main's scope), or `bundle-cache.sh`'s rule (the source run's head is
+  this head, a parent of this commit, or a commit with this tree). Its
+  producer must also be deterministic (the determinism audit) for a hit
+  across commits. Committers do not publish these.
 - **(b) Verdicts** — "this gate passed on these inputs". CI cannot verify one
   without re-running it, so a committer's verdict goes through the deferred
   or sampled re-verification of the local gate records (#2957, #2958), not
@@ -103,8 +109,8 @@ them cheaply, so CI only verifies.
 
 ### What a committer runs before pushing
 
-`bun run cat cache:publish <step>` for each `exact` step their change moves
-the key of and that the determinism audit lists as DETERMINISTIC. Today that
+`bun run cat cache:publish <step>` for each class-(a) step their change
+moves the key of. Today that
 is the mount cache (`cat-mount`) when the change edits `index.lock.json`.
 Others join the list as the audit clears them.
 

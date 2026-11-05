@@ -147,6 +147,10 @@ describe("action.yml", () => {
   test("every third-party action is pinned to a full commit sha", () => {
     for (const s of action.runs.steps) if (s.uses) expect(s.uses).toMatch(/@[0-9a-f]{40}$/);
   });
+  test("main never consumes a committer-published entry (it is the backstop)", () => {
+    const ref = (action.runs.steps as Array<{ id?: string; if?: string }>).find((s) => s.id === "ref");
+    expect(ref?.if).toContain("!(github.ref == 'refs/heads/main'");
+  });
   test("restores by prefix only for exact", () => {
     const restore = action.runs.steps.find((s) => s.uses?.startsWith("actions/cache/restore"));
     expect(restore?.with?.["restore-keys"]).toContain("inputs.trust == 'exact'");
