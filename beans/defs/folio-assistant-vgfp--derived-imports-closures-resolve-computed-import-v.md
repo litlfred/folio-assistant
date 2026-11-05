@@ -2,13 +2,13 @@
 # folio-assistant-vgfp
 $schema: bean/1.0.0
 title: 'Derived imports closures: resolve computed-import verdicts (kind-validator, harness-config tables) from the declarations at fingerprint time, instead of static globs'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T12:36:36Z
-updated_at: 2026-11-05T12:36:36Z
+updated_at: 2026-11-05T13:46:41Z
 parent: folio-assistant-x35i
 ---
 
