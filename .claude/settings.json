@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cd \"$CLAUDE_PROJECT_DIR\" && { bash .github/mount-from-lock.sh --root . >/dev/null 2>&1; bun install --frozen-lockfile >/dev/null 2>&1; bash cat-harness-tools/scripts/session-start-coord-sweep.sh; }",
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && { log=$(mktemp -t mount-lock.XXXXXX); if bash .github/mount-from-lock.sh --root . >\"$log\" 2>&1; then grep -E 'layers cache|^mount:lock' \"$log\"; else echo \"WARNING: LAYERS NOT CURRENT. mount:lock failed, so mounts are missing or stale and local checks may pass falsely. Full log: $log\"; grep -vE '^ +(current|mounted) ' \"$log\" | tail -20; fi; bun install --frozen-lockfile >/dev/null 2>&1; bash cat-harness-tools/scripts/session-start-coord-sweep.sh; }",
             "timeout": 900
           }
         ]
