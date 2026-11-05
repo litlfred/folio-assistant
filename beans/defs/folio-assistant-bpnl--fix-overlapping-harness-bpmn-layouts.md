@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:55:00Z
-updated_at: 2026-11-02T19:13:00Z
+updated_at: 2026-11-05T13:33:51Z
 parent: folio-assistant-rwmf
 tags:
     - bpmn-layout
@@ -44,3 +44,5 @@ NEXT: translation-workflow, copy-into-folio, then subscribe-kg, human-translatio
 _2026-11-02T20:30:00Z_ — Pushed to #990: translation-workflow (2 rows, names shortened to fit, .pot updated), copy-into-folio, qa-publish, bean-drain, voice-review, crdm-issue-linking, staging-render-log, crdm-requirements-definition. 28 redrawn, 17 left.
 NEXT: subscribe-kg, human-translation-workflow, kg-separation, test-data-curation, merge-train, crdm-deliver, sub-kg-lifecycle, named-query-execution, mount-subgraph, kg-to-portal, requirements-filing, narrative-code-review, merge-refusal, bean-close, document-ingestion, mount-dependency, graph-detanglement.
 Note: translation-workflow has a laneSet but no pool/lanes drawn (left as-is; follow-up).
+
+_2026-11-05T13:33:51Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
