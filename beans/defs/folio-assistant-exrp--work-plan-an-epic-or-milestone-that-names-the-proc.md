@@ -41,3 +41,5 @@ _2026-11-05T13:00Z_ — Picked up after stalled session (weekly limit). Blocked:
 _2026-11-05T13:08Z_ — Fixed both reds (mcp-project: workflow-start Tool node lacked `plan`; reference-direction in todo-manager). Added proposal link, "Its work items", "Work plans" filter, proposal search; renamed kind/page to "Plans and work" with schema+glossary regenerated. Verified in Chromium. Pushed cat-harness-tools#1484 f64f71d, cat-harness#1038 fae1c31c; awaiting CI, then lockstep merge.
 
 _2026-11-05T14:00Z_ — Owner asked for the glossary term; chose "narrower Work item". Added WorkPlanKind (schemas/sdlc/work-plan.ts) found by new node-kind name rule `process-tag`; ledger mints node-kind/work-plan "Work plan". Pushed #1484 355a7fb, #1038 a65e450d.
+
+_2026-11-05T16:55Z_ — #1038 verdict green at a65e450d; #1484 reds are the lockstep set (needs #1038 on cat-harness main) plus docs.schema.json stale from my process-tag enum — regenerated, pushed #1038 9627b1b5. Plan: merge #1038 on green, then #1484 straight after (lockstep proven composed: tests 58/58, kind check 0, glossary current).
