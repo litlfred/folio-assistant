@@ -502,6 +502,11 @@
         "match": "bun .github/scripts/repin-train.ts verdict",
         "kind": "ci-only",
         "reason": "repin-train-verdict.yml's no-new-failures status (issue #2873, owner card Q-SPD-3 B): it compares the check runs GitHub reported on a train head with those on main and WRITES a commit status and PR comment, so its inputs exist only after those runs finish. A write about other checks' results, never a verdict on the tree; its logic is pinned by test/workflows/repin-train.test.ts in `bun test`."
+      },
+      {
+        "match": "--publish --root .",
+        "kind": "ci-only",
+        "reason": "the layers cache WRITER (layers-cache.yml on main, and repin-train.yml for the train's own lock): `mount-from-lock.ts --publish` pushes refs/cat/layers/<key> for a lock whose mounts it first requires to read current. A write to a git ref, never a verdict on the tree, and it needs a push credential that exists only in those jobs; what it publishes is verified by every reader against the lock, and its logic is pinned by cat-harness-tools/scripts/tests/layers-cache.test.ts in `bun test`."
       }
     ],
     "scripts": [
