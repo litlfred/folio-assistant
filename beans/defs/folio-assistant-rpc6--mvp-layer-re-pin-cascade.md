@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-01T21:32:00Z
-updated_at: 2026-11-05T16:48:17Z
+updated_at: 2026-11-05T17:16:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -58,3 +58,5 @@ _2026-11-05T16:33:28Z_ — MERGED who-iris#183 as 54af134 (all green: 17 passed,
 _2026-11-05T16:40:03Z_ — core#648 went green at d21b9a3 but then conflicted with main (main regenerated cat-harness and core kg-bpmn-activities glossaries after #644). Merged main in, kept main's two copies: 9570a32; CI re-running. Disk was full (scratch trees of finished agents, ~7G); deleted them, survey agent's freeze/ tree kept.
 
 _2026-11-05T16:48:17Z_ — MERGED cat-harness#1061 as e0e27ee (all green: 9 passed, 2 skipped; 3 glossary skos.jsonld). Merged so far: who-iris#181, #183; core#647; cat-harness#1061. Open: cat-harness#1054, tools#1518, core#648.
+
+_2026-11-05T17:16:00Z_ — MERGED cat-harness-tools#1518 as 78a982e (all green): qa-refresh claims the root test/results/library-qa (+ its test), and tools' 3 foreign-paths literals. Open: cat-harness#1054, core#648.
