@@ -2,10 +2,11 @@
 # folio-assistant-xxow
 $schema: bean/1.0.0
 title: 'Export page: list every exported file with its details, plus stable ''latest'' copies'
-status: in-progress
+status: completed
 type: task
+priority: normal
 created_at: 2026-11-05T12:58:58Z
-updated_at: 2026-11-05T12:58:58Z
+updated_at: 2026-11-05T20:15:44Z
 parent: folio-assistant-dthl
 ---
 
@@ -21,3 +22,10 @@ Owner: 'Export/ page ... Why doesn't show show what it can export with any filte
 - 16:09Z dth-hrh#103 red: check:subgraphs, 23 broken links. Cause is core c081e35 (core#635, cat-harness sdlc/work-plan move) which lies between c938217 and 21da85c; dth-hrh's cat-harness pin febffc6 predates the move. Not #645. Explained on #103; asked owner: (1) narrow pin c938217+#645, (2) also move cat-harness pin (re-pin train), (3) hold.
 - Owner (relayed, verified in parent transcript): "Also move cat-harness". Tried 35031e3 (14 broken) and 5e07b09 (6 broken: fhir-harness, smart-base, cat-harness-tools; tools' main not fixed). Asked again; owner chose "1. Narrow pin". Core branch claude/export-page-on-c938217 = c938217 + #645 (974958c). dth-hrh#103 now pins that (87ba3a3); check:subgraphs passes locally. Next: CI green → merge → site-publish → screenshots.
 - 17:37Z dth-hrh#103 merged green (01db7a7). site-publish dispatched (run 42076453040); watching gh-pages for the deploy, then screenshots.
+
+
+## Result (2026-11-05)
+- core #645 merged; dth-hrh #103 merged (core pinned to 974958c).
+- CI publish run 42076453040 failed at site:export (no pandoc on runner) -> bean v29t.
+- Published locally with stage-local --main: gh-pages f8b42d5. en/dth-hrh/export/ has index.html, 4 *-latest.* copies and the 01db7a7 files. Screenshots sent.
+- Known blemish: the site's page furniture injects a duplicated title link and an unstyled search box at the top of export/index.html (the page is self-contained, so the theme CSS is absent).
