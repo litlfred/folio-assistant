@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "7463bdc6352e40e8df51ce22d5b50e06d581ba6e",
+    "sha": "0e9a5364c852b7d198ad124be63aa34fb5c26e96",
     "pr": "2926/merge",
-    "run": "41935408380"
+    "run": "41981371111"
   },
   "@graph": [
     {
@@ -368,7 +368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "fsh-cone",
       "title": "FSH dependency cone",
-      "description": "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. What makes an incremental IG build possible: without it, any edit rebuilds everything.",
+      "description": "Compute the dependency cone over an IG's FSH graph, and the blast radius of a set of changed files. It is what lets an incremental IG build rebuild less than everything.",
       "install": {
         "none": true
       },
@@ -398,7 +398,7 @@
           {
             "name": "top",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count",
-            "description": "Show only the N largest cones. `0` is a legitimate request for none, which is why `Count` admits zero.",
+            "description": "Show only the N largest cones; `0` shows none.",
             "required": false,
             "arg": {
               "flag": "--top"
@@ -416,7 +416,7 @@
           {
             "name": "fileUsers",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "Also write `fsh-file-users/v1`: for each FSH file, the files that use what it declares. The IG AST's incremental plan reads it (`AstPlanCli -fsh-users`) so a changed RuleSet- or Alias-only file reaches its users rather than forcing a full build (bean `a9tx`).",
+            "description": "Also write `fsh-file-users/v1`: for each FSH file, the files that use what it declares. The IG AST's incremental plan reads it (`AstPlanCli -fsh-users`) so a changed RuleSet- or Alias-only file reaches its users rather than forcing a full build.",
             "required": false,
             "arg": {
               "flag": "--file-users"

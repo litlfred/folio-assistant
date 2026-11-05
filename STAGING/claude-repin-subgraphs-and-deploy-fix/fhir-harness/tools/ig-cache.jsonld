@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "7463bdc6352e40e8df51ce22d5b50e06d581ba6e",
+    "sha": "0e9a5364c852b7d198ad124be63aa34fb5c26e96",
     "pr": "2926/merge",
-    "run": "41935408380"
+    "run": "41981371111"
   },
   "@graph": [
     {
@@ -380,7 +380,7 @@
           {
             "name": "action",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/IgCacheAction",
-            "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
+            "description": "The verb. `doctor` diagnoses a restore that missed.",
             "required": true,
             "arg": {
               "positional": 0
@@ -406,7 +406,7 @@
           {
             "name": "remote",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/PackageName",
-            "description": "Git remote to fetch from / push to. Default 'origin'. Use when the IG's origin is upstream (WHO) and the cache lives on a fork.",
+            "description": "Git remote to fetch from / push to. Default 'origin'. Use when the IG's origin is upstream and the cache lives on a fork.",
             "required": false,
             "arg": {
               "flag": "--remote"

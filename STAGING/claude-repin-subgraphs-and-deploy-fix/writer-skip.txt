@@ -1,102 +1,102 @@
-  writer skip: ON (records of 7bfe2cc1d3f2, 36 writer(s))
+  writer skip: ON (records of 9537d71d40fc, 36 writer(s))
   ig-index:build runs: not recorded: git ls-remote is not a read-only command the cone replays [decided in 0.0s]
-  uml:overview runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran ig-index:build (reuse off) [8.1s]
-  smart-base:document-kinds runs: its script, imports, audited environment or tools changed [decided in 0.1s]
-  ran smart-base:document-kinds (reuse off) [0.5s]
-qa:refresh: kg:audit:all runs: its script, imports, audited environment or tools changed
-qa:refresh: kg:detangle runs: its script, imports, audited environment or tools changed
-qa:refresh: translation:block-qa runs: its script, imports, audited environment or tools changed
+  uml:overview runs: . changed (+3099 more: cat-harness, cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/_data, cat-harness/docs/_data/todo_listing.json, cat-harness/docs/_includes, cat-harness/docs/_includes/generated, and 3092 others) [decided in 0.2s]
+  ran ig-index:build (reuse off) [10.9s]
+  smart-base:document-kinds runs: . changed (+21 more: cat-harness, cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/cat-harness/auto-docs/auto-docs.json, cat-harness/docs/todos.json, cat-harness/package.json, cat-harness/processes, and 14 others) [decided in 0.1s]
+  ran smart-base:document-kinds (reuse off) [0.7s]
+qa:refresh: kg:audit:all runs: cat-harness changed (+7 more: cat-harness/cat-harness.json, cat-harness/package.json, fhir-harness/fhir-harness.json, fhir-harness/package.json, folio-assistant-core/folio-assistant-core.json, folio-assistant-sci/folio-assistant-sci.json, index.lock.json)
+qa:refresh: kg:detangle runs: cat-harness changed (+434 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/package.json, cat-harness/processes, cat-harness/processes/process/crdm-requirements.checklist.md, cat-harness/processes/processes.json, cat-harness/processes/sdlc, and 427 others)
+qa:refresh: translation:block-qa runs: cat-harness changed (+75 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/architecture/sdlc-agentic-coverage.md, cat-harness/docs/concepts/agentic-harness.md, cat-harness/docs/concepts/ar/agentic-harness.md, cat-harness/docs/concepts/architecture/cat-harness-minimum.md, cat-harness/docs/concepts/es/agentic-harness.md, and 68 others)
 qa:refresh: qa-sweep:docs runs: not recorded: the run reached a traced input site (qa-checkers-ids: git)
   voice gate: 42 criterion(s) skipped — this folio activates agent-skill-authoring (voice-overlay-address-adjudicator, voice-overlay-address-administrator, voice-overlay-address-author, voice-overlay-address-authoring-agent, voice-overlay-address-business-analyst, voice-overlay-address-clinical-sme, voice-overlay-address-code-reviewer, voice-overlay-address-compute-authoring-agent, voice-overlay-address-deep-researcher, voice-overlay-address-docs-authoring-agent, voice-overlay-address-editor, voice-overlay-address-editorial-authoring-agent, voice-overlay-address-evidence-agent, voice-overlay-address-feedback-provider, voice-overlay-address-ingestion-agent, voice-overlay-address-integration-watcher, voice-overlay-address-lean-authoring-agent, voice-overlay-address-librarian, voice-overlay-address-narrative-reviewer, voice-overlay-address-onboarding-agent, voice-overlay-address-platform-authoring-agent, voice-overlay-address-programme-manager, voice-overlay-address-proof-review-agent, voice-overlay-address-publication-manager, voice-overlay-address-qc-reviewer, voice-overlay-address-review-coordinator, voice-overlay-address-reviewer, voice-overlay-address-session-coordinator, voice-overlay-address-sibling-session, voice-overlay-address-stakeholder, voice-overlay-address-terminologist, voice-overlay-address-translation-adjudicator, voice-overlay-address-translation-coordinator, voice-overlay-address-translator, voice-overlay-address-user, voice-overlay-milnor, voice-overlay-technical-writer, voice-overlay-who-digital-health, voice-overlay-who-digital-transformation-handbook, voice-overlay-who-editorial, voice-overlay-who-guideline-development, voice-overlay-who-publication-design)
-  subgraph:jsonld runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-qa:refresh: check:l1-complete runs: its script, imports, audited environment or tools changed
-qa:refresh: p2:refusals runs: its script, imports, audited environment or tools changed
-qa:refresh: lsi:index:cat-harness:skills runs: its script, imports, audited environment or tools changed
-qa:refresh: lsi:index:library runs: its script, imports, audited environment or tools changed
-qa:refresh: lsi:audit runs: its script, imports, audited environment or tools changed
-qa:refresh: docs:pages runs: its script, imports, audited environment or tools changed
-qa:refresh: viewer:nav:audit runs: its script, imports, audited environment or tools changed
+  subgraph:jsonld runs: beans/defs changed (+713 more: cat-harness, cat-harness/AGENTS.md, cat-harness/cat-harness.json, cat-harness/docs/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--kg-skills.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--platform.skos.jsonld, and 706 others) [decided in 0.3s]
+qa:refresh: check:l1-complete runs: cat-harness changed (+18 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, and 11 others)
+qa:refresh: p2:refusals runs: cat-harness changed (+7 more: cat-harness/cat-harness.json, cat-harness/package.json, fhir-harness/fhir-harness.json, fhir-harness/package.json, fhir-harness/scripts, folio-assistant-core/folio-assistant-core.json, folio-assistant-sci/folio-assistant-sci.json)
+qa:refresh: lsi:index:cat-harness:skills runs: cat-harness changed (+163 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/package.json, cat-harness/processes, cat-harness/skills, cat-harness/skills/README.md, cat-harness/skills/authoring/authoring-core/devils-advocate-watcher.md, and 156 others)
+qa:refresh: lsi:index:library runs: cat-harness changed (+13 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/package.json, cat-harness/processes, cat-harness/skills, cat-harness/tools, fhir-harness/fhir-harness.json, and 6 others)
+qa:refresh: lsi:audit runs: beans/defs changed (+448 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-dkqd--say-work-item-not-bean-in-prose-generate-a-glossar.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, cat-harness, cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/architecture/sdlc-agentic-coverage.md, and 441 others)
+qa:refresh: docs:pages runs: beans/defs changed (+402 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-dkqd--say-work-item-not-bean-in-prose-generate-a-glossar.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, cat-harness, cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/architecture/sdlc-agentic-coverage.md, and 395 others)
+qa:refresh: viewer:nav:audit runs: cat-harness changed (+10 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/en, cat-harness/docs/en/cat-harness, cat-harness/docs/proposals, cat-harness/package.json, fhir-harness/fhir-harness.json, and 3 others)
 qa:refresh: eval:crdm-detect runs: not recorded: the run reached a traced input site (test-run: clock)
-qa:refresh: root-scan-census runs: its script, imports, audited environment or tools changed
+qa:refresh: root-scan-census runs: cat-harness changed (+10 more: cat-harness/cat-harness.json, cat-harness/package.json, fhir-harness/fhir-harness.json, fhir-harness/package.json, fhir-harness/scripts, fhir-harness/scripts/questionnaire-form.ts, folio-assistant-core/folio-assistant-core.json, and 3 others)
 qa:refresh: skill:register runs: not recorded: Maximum call stack size exceeded.
 qa:refresh: term:mapping runs: not recorded: the run reached a traced input site (check-term-mapping: clock)
-qa:refresh: check:harness-state runs: its script, imports, audited environment or tools changed
-qa:refresh: check:wireframes runs: its script, imports, audited environment or tools changed
-qa:refresh: check:source-licence runs: its script, imports, audited environment or tools changed
-qa:refresh: check:layout-norms runs: its script, imports, audited environment or tools changed
-qa:refresh: check:rendered-labels runs: its script, imports, audited environment or tools changed
-qa:refresh: check:lane-documentation runs: its script, imports, audited environment or tools changed
-qa:refresh: check:methodology-evidence runs: its script, imports, audited environment or tools changed
-qa:refresh: check:avatar-coverage runs: its script, imports, audited environment or tools changed
-qa:refresh: check:unlinked-beans runs: its script, imports, audited environment or tools changed
+qa:refresh: check:harness-state runs: .claude/agent-memory/ci-health-watcher/MEMORY.md changed (+527 more: .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, .claude/commands/dispatch-agent.md, .claude/commands/generalise-the-fix.md, and 520 others)
+qa:refresh: check:wireframes runs: cat-harness changed (+10 more: cat-harness/cat-harness.json, cat-harness/package.json, fhir-harness/docs/wireframes/ig-ast/intent.md, fhir-harness/fhir-harness.json, fhir-harness/package.json, folio-assistant-core/docs/wireframes/bibliography/intent.md, folio-assistant-core/docs/wireframes/glossary-page/intent.md, and 3 others)
+qa:refresh: check:source-licence runs: .agents/rules/agent-memory.md changed (+141 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 134 others)
+qa:refresh: check:layout-norms runs: cat-harness changed (+13 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 6 others)
+qa:refresh: check:rendered-labels runs: cat-harness changed (+184 more: cat-harness/cat-harness.json, cat-harness/docs/assets/img/workflows/activity-log.svg, cat-harness/docs/assets/img/workflows/actor-role-administration.svg, cat-harness/docs/assets/img/workflows/adjudication.svg, cat-harness/docs/assets/img/workflows/archimate-publish.svg, cat-harness/docs/assets/img/workflows/ask-the-person.svg, cat-harness/docs/assets/img/workflows/bean-close.svg, and 177 others)
+qa:refresh: check:lane-documentation runs: .agents/rules/agent-memory.md changed (+215 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 208 others)
+qa:refresh: check:methodology-evidence runs: cat-harness changed (+345 more: cat-harness/cat-harness.json, cat-harness/methodologies/agentic-se-literature-synthesis.md, cat-harness/methodologies/kepner-tregoe.md, cat-harness/methodologies/madr.md, cat-harness/methodologies/requirements-filing-and-organisation.md, cat-harness/methodologies/sdlc-agentic-landscape.md, cat-harness/methodologies/wiregen.md, and 338 others)
+qa:refresh: check:avatar-coverage runs: cat-harness changed (+6 more: cat-harness/cat-harness.json, cat-harness/package.json, fhir-harness/fhir-harness.json, fhir-harness/package.json, folio-assistant-core/folio-assistant-core.json, folio-assistant-sci/folio-assistant-sci.json)
+qa:refresh: check:unlinked-beans runs: beans/defs changed (+103 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-dkqd--say-work-item-not-bean-in-prose-generate-a-glossar.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, cat-harness, cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, and 96 others)
 qa:refresh: kg:export runs: not recorded: git status is not a read-only command the cone replays
-qa:refresh: check:reference-direction runs: its script, imports, audited environment or tools changed
-qa:refresh: audit:coverage runs: its script, imports, audited environment or tools changed
-qa:refresh: readme:subgraphs runs: its script, imports, audited environment or tools changed
-  ran subgraph:jsonld (reuse off) [20.6s]
-  library:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  voices:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran voices:viz (reuse off) [0.7s]
-  theme:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran theme:viz (reuse off) [0.5s]
-  uploads:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran uploads:viz (reuse off) [2.0s]
-  document-kinds:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran document-kinds:viz (reuse off) [0.7s]
-  skills:docs runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran skills:docs (reuse off) [5.2s]
-  node-kinds runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran node-kinds (reuse off) [1.3s]
-  bibliography:page runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran bibliography:page (reuse off) [0.5s]
+qa:refresh: check:reference-direction runs: .agents/rules/agent-memory.md changed (+3061 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .cursor/agents/ci-health-watcher.md, .gemini/agents/ci-health-watcher.md, .github/agents/ci-health-watcher.agent.md, .github/workflows/ci-health.yml, .github/workflows/code-quality-gates.yml, .github/workflows/docs-site.yml, and 3054 others)
+qa:refresh: audit:coverage runs: .github/workflows/ci-health.yml changed (+317 more: .github/workflows/code-quality-gates.yml, .github/workflows/docs-site.yml, .github/workflows/feature-staging.yml, .github/workflows/health-check.yml, .github/workflows/jsonld-gen-check.yml, .github/workflows/merge-main.yml, .github/workflows/pr-checks-present.yml, and 310 others)
+qa:refresh: readme:subgraphs runs: cat-harness changed (+7 more: cat-harness/cat-harness.json, cat-harness/package.json, fhir-harness/fhir-harness.json, fhir-harness/package.json, folio-assistant-core/folio-assistant-core.json, folio-assistant-sci/folio-assistant-sci.json, index.lock.json)
+  ran subgraph:jsonld (reuse off) [30.0s]
+  library:viz runs: cat-harness changed (+1488 more: cat-harness/cat-harness.json, cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html, cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, and 1481 others) [decided in 0.9s]
+  voices:viz runs: cat-harness changed (+18 more: cat-harness/cat-harness.json, cat-harness/docs/reference/skill-instructions, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, and 11 others) [decided in 0.0s]
+  ran voices:viz (reuse off) [1.1s]
+  theme:viz runs: cat-harness changed (+16 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 9 others) [decided in 0.0s]
+  ran theme:viz (reuse off) [0.8s]
+  uploads:viz runs: cat-harness changed (+20 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 13 others) [decided in 0.2s]
+  ran uploads:viz (reuse off) [3.4s]
+  document-kinds:viz runs: cat-harness changed (+16 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 9 others) [decided in 0.0s]
+  ran document-kinds:viz (reuse off) [1.1s]
+  skills:docs runs: .claude/skills/local/bean-coordination.md changed (+554 more: .claude/skills/local/todo-manager.md, cat-harness, cat-harness/AGENTS.md, cat-harness/cat-harness.json, cat-harness/docs/architecture/sdlc-agentic-coverage.md, cat-harness/docs/assets/img/workflows/activity-log.svg, cat-harness/docs/assets/img/workflows/actor-role-administration.svg, and 547 others) [decided in 0.0s]
+  ran skills:docs (reuse off) [7.5s]
+  node-kinds runs: cat-harness changed (+20 more: cat-harness/AGENTS.md, cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, and 13 others) [decided in 0.0s]
+  ran node-kinds (reuse off) [1.9s]
+  bibliography:page runs: cat-harness changed (+16 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 9 others) [decided in 0.0s]
+  ran bibliography:page (reuse off) [0.7s]
   smart:pages runs: not recorded: the writer reads smart-base/docs/artifact and then rewrites it [decided in 0.0s]
-  ran smart:pages (reuse off) [0.5s]
-  jsonld:contexts runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran jsonld:contexts (reuse off) [1.2s]
-  tools:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
+  ran smart:pages (reuse off) [0.7s]
+  jsonld:contexts runs: bootstrap changed (+300 more: cat-harness, cat-harness/cat-harness.json, cat-harness/docs/assets/glossary/cat-harness--kg-bpmn-activities.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--kg-dmn-decisions.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--kg-skills.skos.jsonld, cat-harness/docs/assets/glossary/cat-harness--platform.skos.jsonld, cat-harness/docs/assets/img/uml/overview/cat-harness, and 293 others) [decided in 0.3s]
+  ran jsonld:contexts (reuse off) [2.0s]
+  tools:viz runs: cat-harness changed (+104 more: cat-harness/cat-harness.json, cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html, cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, and 97 others) [decided in 0.0s]
   smart-base:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output [decided in 0.0s]
   smart-trust:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output [decided in 0.0s]
   smart-trust-phw:pages runs: not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output [decided in 0.0s]
-  ran smart-trust-phw:pages (reuse off) [0.5s]
-  ran smart-trust:pages (reuse off) [0.7s]
-  ran smart-base:pages (reuse off) [0.8s]
-  smart-base:l1-extraction:pages runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran smart-base:l1-extraction:pages (reuse off) [0.7s]
-  ran tools:viz (reuse off) [2.5s]
-  auto:docs runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran auto:docs (reuse off) [7.3s]
-  openapi:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
+  ran smart-trust-phw:pages (reuse off) [0.8s]
+  ran smart-trust:pages (reuse off) [1.1s]
+  ran smart-base:pages (reuse off) [1.1s]
+  smart-base:l1-extraction:pages runs: cat-harness changed (+16 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 9 others) [decided in 0.0s]
+  ran smart-base:l1-extraction:pages (reuse off) [1.0s]
+  ran tools:viz (reuse off) [3.9s]
+  auto:docs runs: cat-harness changed (+901 more: cat-harness/cat-harness.json, cat-harness/docs/architecture/sdlc-agentic-coverage.md, cat-harness/docs/assets/img/uml/overview/cat-harness, cat-harness/docs/assets/workflows/checklists/complete-initialization.checklist.md, cat-harness/docs/assets/workflows/checklists/initialize-harness.checklist.md, cat-harness/docs/concepts/agentic-harness.md, cat-harness/docs/concepts/ar/agentic-harness.md, and 894 others) [decided in 0.2s]
+  ran auto:docs (reuse off) [11.3s]
+  openapi:viz runs: cat-harness changed (+7 more: cat-harness/cat-harness.json, cat-harness/package.json, fhir-harness/fhir-harness.json, fhir-harness/package.json, folio-assistant-core/folio-assistant-core.json, folio-assistant-sci/folio-assistant-sci.json, index.lock.json) [decided in 0.0s]
   ran openapi:viz (reuse off) [0.2s]
-  schema:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran schema:viz (reuse off) [2.8s]
-  methodologies:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran methodologies:viz (reuse off) [1.7s]
-  external-schemas:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran external-schemas:viz (reuse off) [5.1s]
-  subscriptions:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran subscriptions:viz (reuse off) [0.2s]
-  docs:pages runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran docs:pages (reuse off) [1.7s]
-  docs:harness runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran docs:harness (reuse off) [3.7s]
-  navbar:include runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran navbar:include (reuse off) [0.1s]
-  kind:table runs: its script, imports, audited environment or tools changed [decided in 0.0s]
+  schema:viz runs: cat-harness changed (+24 more: cat-harness/cat-harness.json, cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html, cat-harness/docs/en/cat-harness/beans/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/memory/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, and 17 others) [decided in 0.0s]
+  ran schema:viz (reuse off) [3.9s]
+  methodologies:viz runs: cat-harness changed (+347 more: cat-harness/cat-harness.json, cat-harness/methodologies/agentic-se-literature-synthesis.md, cat-harness/methodologies/kepner-tregoe.md, cat-harness/methodologies/madr.md, cat-harness/methodologies/requirements-filing-and-organisation.md, cat-harness/methodologies/sdlc-agentic-landscape.md, cat-harness/methodologies/wiregen.md, and 340 others) [decided in 0.0s]
+  ran methodologies:viz (reuse off) [2.4s]
+  external-schemas:viz runs: .agents/rules/agent-memory.md changed (+2886 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 2879 others) [decided in 0.6s]
+  ran external-schemas:viz (reuse off) [6.7s]
+  subscriptions:viz runs: cat-harness changed (+7 more: cat-harness/cat-harness.json, cat-harness/package.json, fhir-harness/fhir-harness.json, fhir-harness/package.json, folio-assistant-core/folio-assistant-core.json, folio-assistant-sci/folio-assistant-sci.json, index.config.json) [decided in 0.0s]
+  ran subscriptions:viz (reuse off) [0.3s]
+  docs:pages runs: beans/defs changed (+887 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-dkqd--say-work-item-not-bean-in-prose-generate-a-glossar.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, cat-harness, cat-harness/cat-harness.json, cat-harness/docs/architecture/sdlc-agentic-coverage.md, cat-harness/docs/assets/img/uml/overview/cat-harness, and 880 others) [decided in 0.1s]
+  ran docs:pages (reuse off) [2.4s]
+  docs:harness runs: .agents/rules/agent-memory.md changed (+192 more: .agents/skills/ci-health-watcher-memory/SKILL.md, .claude/agent-memory/ci-health-watcher/MEMORY.md, .claude/commands/before-after-preview.md, .claude/commands/continual-progress.md, .claude/commands/coordinate.md, .claude/commands/delivery-summary.md, .claude/commands/diff.md, and 185 others) [decided in 0.1s]
+  ran docs:harness (reuse off) [5.8s]
+  navbar:include runs: cat-harness changed (+7 more: cat-harness/cat-harness.json, cat-harness/docs/_data/harness.json, cat-harness/package.json, fhir-harness/fhir-harness.json, fhir-harness/package.json, folio-assistant-core/folio-assistant-core.json, folio-assistant-sci/folio-assistant-sci.json) [decided in 0.0s]
+  ran navbar:include (reuse off) [0.2s]
+  kind:table runs: cat-harness changed (+6 more: cat-harness/cat-harness.json, cat-harness/package.json, fhir-harness/fhir-harness.json, fhir-harness/package.json, folio-assistant-core/folio-assistant-core.json, folio-assistant-sci/folio-assistant-sci.json) [decided in 0.0s]
   ran kind:table (reuse off) [0.1s]
-  avatars:css runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran avatars:css (reuse off) [0.1s]
-  themes:css runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran themes:css (reuse off) [0.5s]
-  folio:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran folio:viz (reuse off) [0.6s]
-  kg:viewer runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran kg:viewer (reuse off) [0.4s]
+  avatars:css runs: cat-harness changed (+6 more: cat-harness/cat-harness.json, cat-harness/package.json, fhir-harness/fhir-harness.json, fhir-harness/package.json, folio-assistant-core/folio-assistant-core.json, folio-assistant-sci/folio-assistant-sci.json) [decided in 0.0s]
+  ran avatars:css (reuse off) [0.2s]
+  themes:css runs: cat-harness changed (+11 more: cat-harness/cat-harness.json, cat-harness/package.json, fhir-harness/fhir-harness.json, fhir-harness/package.json, fhir-harness/scripts, folio-assistant-core/folio-assistant-core.json, folio-assistant-sci/docs/docs.json, and 4 others) [decided in 0.0s]
+  ran themes:css (reuse off) [0.7s]
+  folio:viz runs: cat-harness changed (+18 more: cat-harness/cat-harness.json, cat-harness/docs/concepts/agentic-harness.md, cat-harness/docs/en/cat-harness/folio, cat-harness/docs/guides/beans-and-todos.md, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, and 11 others) [decided in 0.0s]
+  ran folio:viz (reuse off) [0.8s]
+  kg:viewer runs: cat-harness changed (+11 more: cat-harness/cat-harness.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, cat-harness/skills, cat-harness/skills/skills.json, cat-harness/tools, and 4 others) [decided in 0.0s]
+  ran kg:viewer (reuse off) [0.6s]
   state:visualizer runs: not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git) [decided in 0.0s]
-  ran state:visualizer (reuse off) [11.5s]
+  ran state:visualizer (reuse off) [15.7s]
   site:viz runs: not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git) [decided in 0.0s]
-  ran site:viz (reuse off) [1.1s]
-  render:bpmn runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran render:bpmn (reuse off) [5.6s]
-  processes:viz runs: its script, imports, audited environment or tools changed [decided in 0.0s]
-  ran processes:viz (reuse off) [6.9s]
+  ran site:viz (reuse off) [1.3s]
+  render:bpmn runs: cat-harness changed (+117 more: cat-harness/cat-harness.json, cat-harness/docs/guides/beans-and-todos.md, cat-harness/docs/process/crdm-methodology.md, cat-harness/docs/source/guides-beans-and-todos/guides-beans-and-todos.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, and 110 others) [decided in 0.0s]
+  ran render:bpmn (reuse off) [6.7s]
+  processes:viz runs: beans/defs changed (+463 more: beans/defs/folio-assistant-djj5--ig-bibliography-derived-from-library.md, beans/defs/folio-assistant-dkqd--say-work-item-not-bean-in-prose-generate-a-glossar.md, beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md, cat-harness, cat-harness/cat-harness.json, cat-harness/docs/assets/img/workflows/ig-ast-delta-review.svg, cat-harness/docs/assets/img/workflows/ig-incremental-build.svg, and 456 others) [decided in 0.1s]
+  ran processes:viz (reuse off) [10.7s]

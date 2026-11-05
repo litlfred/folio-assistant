@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "7463bdc6352e40e8df51ce22d5b50e06d581ba6e",
+    "sha": "0e9a5364c852b7d198ad124be63aa34fb5c26e96",
     "pr": "2926/merge",
-    "run": "41935408380"
+    "run": "41981371111"
   },
   "@graph": [
     {
@@ -21,7 +21,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library"
       ],
-      "description": "Ingested L1 source material for the sciences. `milnorlink` was the whole of it until 2026-09-29, when three Lean-autoformalization papers arrived as the `evidence` of this layer's methodology nodes (bean h3rw). `milnorlink` is the source text the derived `milnor` skill reads, moved out of cat-harness/library/ because the PLATFORM holds no content (bean r1lz, and the rule AGENTS.md states as 'folio-assistant is the platform, not the content'). Its `image-verdicts.json` moved with it rather than staying behind: a verdict belongs to the library it judges, and one file judging documents in two libraries is how one library's judgement comes to rewrite another's sidecar. The id is `library`, the CONVENTIONAL one, so this entry OVERRIDES the default rather than joining it: overrides match on id and never on path, so a distinct id at the same path yields two entries for one directory and every fan-out consumer scans it twice. Measured while doing exactly that.",
+      "description": "Ingested L1 source material for the sciences: `milnorlink`, the source text the `milnor-exposition-standard` skill reads; the Lean-autoformalization papers this layer's methodology nodes cite as `evidence`; papers on extracting mathematics from PDFs; and the CODATA 2022 constants table. `image-verdicts.json` holds the image-role judgements for this library's documents. The id is `library`, the conventional one, so this entry overrides the default rather than joining it: overrides match on id, never on path, so a distinct id at the same path would yield two entries for one directory and every fan-out consumer would scan it twice.",
       "readmePath": "library/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-sci/directory/library",

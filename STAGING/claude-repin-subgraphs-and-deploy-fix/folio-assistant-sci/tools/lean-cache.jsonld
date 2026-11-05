@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "7463bdc6352e40e8df51ce22d5b50e06d581ba6e",
+    "sha": "0e9a5364c852b7d198ad124be63aa34fb5c26e96",
     "pr": "2926/merge",
-    "run": "41935408380"
+    "run": "41981371111"
   },
   "@graph": [
     {
@@ -380,7 +380,7 @@
           {
             "name": "action",
             "schema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/cat-harness/tool-types.schema.json#/$defs/LakeCacheAction",
-            "description": "The verb. `doctor` exists because a restore that silently missed used to look exactly like one that worked.",
+            "description": "The verb. `doctor` tells a restore that silently missed from one that worked.",
             "required": true,
             "arg": {
               "positional": 0

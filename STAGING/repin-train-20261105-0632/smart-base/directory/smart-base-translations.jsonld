@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/smart-base/directory/smart-base-translations.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-translations.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-0632",
+    "sha": "fb772d28cc509cf06f82f4fcc1f33eb32a6bc802",
+    "pr": "repin-train/20261105-0632",
+    "run": "41981110960"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-translations",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-translations",
+      "path": "translations/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/translation-sources"
+      ],
+      "description": "The gettext side of smart-base's own strings, one directory per target locale: the `processes/` templates of the BPMN diagrams this instance draws.",
+      "readmePath": "translations/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-translations"
+    }
+  ]
+}

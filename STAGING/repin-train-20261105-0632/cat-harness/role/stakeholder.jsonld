@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/role/stakeholder.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-0632",
+    "sha": "fb772d28cc509cf06f82f4fcc1f33eb32a6bc802",
+    "pr": "repin-train/20261105-0632",
+    "run": "41981110960"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/role/stakeholder",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Stakeholder",
+      "title": "Stakeholder",
+      "notation": "stakeholder",
+      "description": "Signs off that a requirement is met. Carries no skills deliberately: sign-off is a judgement, not a procedure, and a skill here would suggest an agent could supply it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "judgementOnly": true,
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/stakeholder"
+    }
+  ]
+}

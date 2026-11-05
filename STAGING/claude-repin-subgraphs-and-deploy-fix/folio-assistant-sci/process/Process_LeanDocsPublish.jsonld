@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-subgraphs-and-deploy-fix/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "7463bdc6352e40e8df51ce22d5b50e06d581ba6e",
+    "sha": "0e9a5364c852b7d198ad124be63aa34fb5c26e96",
     "pr": "2926/merge",
-    "run": "41935408380"
+    "run": "41981371111"
   },
   "@graph": [
     {
@@ -14,7 +14,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Publish a folio's Lean render with the harness chrome",
       "summary": "Build the visualiser of a folio's declared `lean` directory — the Lake package's doc-gen4 HTML render — and put it inside the folio's built site with the harness navbar and rail.",
-      "description": "Build the visualiser of a folio's declared `lean` directory — the Lake package's doc-gen4 HTML render — and put it inside the folio's built site with the harness navbar and rail. Owner, 2026-10-10: \"there should be a lean/ visualizer which is then the lean html render (but wrapped w/ cat-harness navbar chrome/rails)\".\n\nTWO STEPS IN TWO LANES, BECAUSE THEY FAIL DIFFERENTLY. The build is a Lake run over the folio's warm olean cache: expensive, and able to damage the cache it reads (a Lake build over an untraced restore evicts it). The publish is a file pass over the build's output: seconds, and unable to touch the cache. So the build sits with the Lean toolchain and refuses rather than risks; the publish sits with the build pipeline, in the slot where `stage-folio-local.ts` rails the folio's own pages — after the site is built, before the chrome check and deploy.\n\nBOTH ENDS THAT ARE NOT \"READY\" PUBLISH NOTHING. A guard that refused, a build that failed, and a page the rail did not reach are all reported as such, never as a site without Lean docs that looks complete.",
+      "description": "Build the visualiser of a folio's declared `lean` directory — the Lake package's doc-gen4 HTML render — and put it inside the folio's built site with the harness navbar and rail.\n\nTwo steps in two lanes. The build is a Lake run over the folio's warm olean cache: expensive, and able to damage the cache (a Lake build over an untraced restore evicts it), so it sits with the Lean toolchain and refuses rather than risks. The publish is a file pass over the build's output that cannot touch the cache; it sits with the build pipeline, after the site is built and before the chrome check and deploy, where `stage-folio-local.ts` rails the folio's own pages.\n\nOnly End_Ready publishes: a refused guard, a failed build and an unrailed page are each reported as such, never as a complete site without Lean docs.",
       "enforcement": "strict",
       "sourcePath": "processes/content/lean-docs-publish.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-sci/blob/main/processes/content/lean-docs-publish.bpmn",

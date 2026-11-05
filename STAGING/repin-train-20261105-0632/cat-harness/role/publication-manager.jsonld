@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/role/publication-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261105-0632",
+    "sha": "fb772d28cc509cf06f82f4fcc1f33eb32a6bc802",
+    "pr": "repin-train/20261105-0632",
+    "run": "41981110960"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/role/publication-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Publication manager",
+      "title": "Publication manager",
+      "notation": "publication-manager",
+      "description": "Takes an authorised release to its published form and is accountable for what is live.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/skill/qa-report-signing",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/skill/publish-verification",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/skill/instance-publication",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/skill/package-release",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/skill/render-kg-to-cdn",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261105-0632/cat-harness/skill/staging-review"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager"
+    }
+  ]
+}

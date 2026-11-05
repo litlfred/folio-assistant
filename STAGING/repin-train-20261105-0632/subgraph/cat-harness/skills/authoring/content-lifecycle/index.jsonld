@@ -1,0 +1,117 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/authoring/content-lifecycle/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/content-lifecycle",
+      "@type": "cat-harness:SkillPackage",
+      "name": "content-lifecycle"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-author",
+      "@type": "bootstrap:Skill",
+      "name": "content-author",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/db87d9aad42ad0af7af56bf70c9bea824cb34be1f33ce3300063859b1e79ff46",
+        "bytes": 1709,
+        "sha256": "db87d9aad42ad0af7af56bf70c9bea824cb34be1f33ce3300063859b1e79ff46"
+      },
+      "title": "Content Authoring"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-feedback",
+      "@type": "bootstrap:Skill",
+      "name": "content-feedback",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/070eb59846e3f80842bee0db4f3d69c0b21ba421ed499ecf7825a3beb972870d",
+        "bytes": 1548,
+        "sha256": "070eb59846e3f80842bee0db4f3d69c0b21ba421ed499ecf7825a3beb972870d"
+      },
+      "title": "Content Feedback Collection"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-plan",
+      "@type": "bootstrap:Skill",
+      "name": "content-plan",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f4d7044eb58e715c4f81db0eb202a178f70630056527cb8dd2ea372aec00c1e",
+        "bytes": 819,
+        "sha256": "1f4d7044eb58e715c4f81db0eb202a178f70630056527cb8dd2ea372aec00c1e"
+      },
+      "title": "Content Planning"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-publish",
+      "@type": "bootstrap:Skill",
+      "name": "content-publish",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1a3bf809e12a50888dcc0a962f1c2803a5a917d1e795ec976af290a3500f0534",
+        "bytes": 1246,
+        "sha256": "1a3bf809e12a50888dcc0a962f1c2803a5a917d1e795ec976af290a3500f0534"
+      },
+      "title": "Content Publication"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-retire",
+      "@type": "bootstrap:Skill",
+      "name": "content-retire",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/0461e4044e3d917944a15d9b3f1f565fb0c5ae8e6a41a2bd1f939435f8165609",
+        "bytes": 649,
+        "sha256": "0461e4044e3d917944a15d9b3f1f565fb0c5ae8e6a41a2bd1f939435f8165609"
+      },
+      "title": "Content Retirement"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review",
+      "@type": "bootstrap:Skill",
+      "name": "content-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3cd9e969de33521ca235d629384b78dae3d608824ee122505d6bc6b89e90aa16",
+        "bytes": 2318,
+        "sha256": "3cd9e969de33521ca235d629384b78dae3d608824ee122505d6bc6b89e90aa16"
+      },
+      "title": "Content Review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-test",
+      "@type": "bootstrap:Skill",
+      "name": "content-test",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8391564957019519e77192d0536173061a814bb0577dce928a030b11b6815d46",
+        "bytes": 3717,
+        "sha256": "8391564957019519e77192d0536173061a814bb0577dce928a030b11b6815d46"
+      },
+      "title": "Content Testing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate",
+      "@type": "bootstrap:Skill",
+      "name": "content-validate",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c142908bd8ffa7687fc0ec2a634241a95a94529b6637fd9cb19cdbb28cb85720",
+        "bytes": 1025,
+        "sha256": "c142908bd8ffa7687fc0ec2a634241a95a94529b6637fd9cb19cdbb28cb85720"
+      },
+      "title": "Content Validation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/evidence-appraisal",
+      "@type": "bootstrap:Skill",
+      "name": "evidence-appraisal",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b7b37b3df86e9ff90acf2ceda6c3a77a6d49ad4933269796a41f0acd0a1eeda",
+        "bytes": 3664,
+        "sha256": "3b7b37b3df86e9ff90acf2ceda6c3a77a6d49ad4933269796a41f0acd0a1eeda"
+      },
+      "title": "Evidence Appraisal"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/authoring/content-lifecycle",
+  "path": "skills/authoring/content-lifecycle/"
+}

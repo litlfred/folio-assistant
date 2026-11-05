@@ -358,9 +358,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "claude/repin-subgraphs-and-deploy-fix",
-    "sha": "7463bdc6352e40e8df51ce22d5b50e06d581ba6e",
+    "sha": "0e9a5364c852b7d198ad124be63aa34fb5c26e96",
     "pr": "2926/merge",
-    "run": "41935408380"
+    "run": "41981371111"
   },
   "@graph": [
     {
@@ -368,7 +368,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "ig-ast-measure-real-igs",
       "title": "Measure the AST export on real IGs",
-      "description": "Build the WHO SMART Trust and Immunizations IGs through `ig-ast-export` and print the W1/W2 measurements: counts, whether FSH sources sit where the plan expects, and logic-layer edge coverage per resource type against 458 of 458. `--byte-identical` adds a stock build and an `output/` diff.",
+      "description": "Build the WHO SMART Trust and Immunizations IGs through `ig-ast-export` and print the fork's measurements: counts, whether FSH sources sit where the plan expects, and logic-layer edge coverage per resource type. `--byte-identical` adds a stock build and an `output/` diff.",
       "install": {
         "cli": "git clone -b claude/ast-export https://github.com/litlfred/fhir-ig-publisher"
       },
