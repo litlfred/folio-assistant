@@ -5,7 +5,7 @@ name: Folio Staging (reusable)
 #
 # `feature-staging.yml` stages THIS repository's docs site. It is 1,554 lines
 # built around that site (docs layers, TypeDoc, the KG viewer, navbar tiles),
-# so a folio in its own repository (a DAK, an L1 handbook) got no STAGING
+# so a folio in its own repository (a DAK, an L1 handbook) got no branches/
 # build at all: that workflow has no `workflow_call`, and `init-folio` never
 # wrote one. With no "after" there is nothing to review.
 #
@@ -23,7 +23,7 @@ name: Folio Staging (reusable)
 # - the slug;
 # - the banner;
 # - the ChangeSet (`folio-assistant-core/schemas/changeset.ts`);
-# - the deploy to `STAGING/<slug>/` on the publish branch;
+# - the deploy to `branches/<slug>/` on the publish branch;
 # - the PR comment.
 #
 # ## Removal is not here, on purpose
@@ -646,7 +646,7 @@ jobs:
           set -eu
           # The slug RE-CHECKED BY VALUE after crossing a step boundary: the
           # next lines delete a directory, and an empty slug would make it
-          # `pages/STAGING/`, which is every open PR's preview (`plj1`).
+          # `pages/branches/`, which is every open PR's preview (`plj1`).
           case "$STAGING_SLUG" in
             ""|.|..|*/*)
               echo "::error::staging slug '$STAGING_SLUG' is not one safe path segment. Refusing to deploy."
@@ -789,7 +789,7 @@ jobs:
     # visual diff pictures "before" and the review page links "view on main".
     # Until this job nothing published a folio's main, so every before
     # picture was missing. `publish-main-site.ts` deletes only files its own
-    # manifest names: `STAGING/`, `_render-log/` and anything a person put at
+    # manifest names: `branches/`, `_render-log/` and anything a person put at
     # the root are never touched.
     # A DISPATCH on the default branch publishes main too (bean v26p): a
     # workflow that commits to main with GITHUB_TOKEN (the public-comment

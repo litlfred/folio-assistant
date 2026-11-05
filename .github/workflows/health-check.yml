@@ -128,7 +128,7 @@ jobs:
       # in the sweep below reads it offline. Without it, that check reads
       # `unknown`, which makes the whole report `unknown`.
       #
-      # Every page here is a directory's index on `gh-pages` (STAGING previews,
+      # Every page here is a directory's index on `gh-pages` (branches/ previews,
       # assets and `_`/dot entries excepted), plus the root. "Its own page" means
       # HTTP 200 and a body that is NOT what Pages serves for a path that cannot
       # exist, fetched once as the control. That 404 document is the

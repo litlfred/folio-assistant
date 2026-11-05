@@ -81,7 +81,7 @@ describe("a staging deploy is one commit — bean `bm6d`", () => {
   });
 
   test("the peaceiris action is gone from the stage job — it cannot reach the root", () => {
-    // Not style. `destination_dir` confines the action to `STAGING/<slug>/`,
+    // Not style. `destination_dir` confines the action to `branches/<slug>/`,
     // so as long as it deploys the payload the entry needs a second push.
     expect(stage).not.toMatch(/peaceiris\/actions-gh-pages/);
   });

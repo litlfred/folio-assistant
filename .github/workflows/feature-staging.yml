@@ -1,29 +1,29 @@
 # bpmn: cat-harness/sdlc/processes/feature-staging.bpmn
 name: Feature Staging (GitHub Pages)
 
-# Deploy feature-branch rendered content to gh-pages under STAGING/<branch>/
+# Deploy feature-branch rendered content to gh-pages under branches/<branch>/
 # so reviewers can preview changes at:
-#   https://<user>.github.io/<repo>/STAGING/<branch-slug>/
+#   https://<user>.github.io/<repo>/branches/<branch-slug>/
 #
 # This is the "before/after" comparison surface for publication review:
 # - main renders at the Pages root (via docs-site.yml)
-# - feature branches render under STAGING/<slug>/ (this workflow)
+# - feature branches render under branches/<slug>/ (this workflow)
 # - each deployment is stamped with the commit SHA, timestamp, and
 #   source branch so it is always clear what is deployed
 #
 # Example scenario (from issue #215):
 #   Author changes the immunization schedule → agent opens a feature branch →
 #   agent renders the changed content → guidance review committee compares
-#   STAGING/update-immunization-schedule/ against the main site → approves →
-#   merge to main → STAGING/<slug>/ is cleaned up automatically.
+#   branches/update-immunization-schedule/ against the main site → approves →
+#   merge to main → branches/<slug>/ is cleaned up automatically.
 #
-# Cleanup: when a PR is merged or closed, the STAGING/<slug>/ directory
+# Cleanup: when a PR is merged or closed, the branches/<slug>/ directory
 # is removed from gh-pages so stale previews don't accumulate.
 #
 # **This workflow is folio-generic.** It builds the docs site (Jekyll +
 # TypeDoc), not the TeX paper PDF. A folio that also needs a staged PDF
 # build should call publish.yml with publish_branch: gh-pages and the
-# STAGING prefix — that is handled by the publish workflow's
+# branches/ prefix — that is handled by the publish workflow's
 # `publish_branch` input.
 
 on:
@@ -178,7 +178,7 @@ on:
 
 # Where previews are published on gh-pages: `branches/<slug>/` (owner,
 # 2026-11-05; cat-harness-tools `scripts/lib/preview-prefix.ts`). Previews
-# published before that under `STAGING/` are left in place: readers and the
+# published before that under `branches/` are left in place: readers and the
 # cleanup accept both, writers write this one only.
 env:
   PREVIEW_DIR: branches
@@ -328,7 +328,7 @@ jobs:
           gh api "repos/$REPO/statuses/$HEAD_SHA" -f state=success -f context=preview/own-diff-unchanged \
             -f description="PR's own change unchanged since the live preview; not rebuilt (dispatch to rebuild)" >/dev/null || true
 
-  # ── Deploy feature branch to STAGING/ ─────────────────────────
+  # ── Deploy feature branch to branches/ ─────────────────────────
   stage:
     needs: conflict-gate
     # bpmn-node: Start_PR
@@ -341,7 +341,7 @@ jobs:
     # the reviewers of a pull request; a queue entry has none, and it lives for
     # minutes. Without this clause every guard above passes on a `merge_group`
     # run — `github.event.action` is empty and the event is not a dispatch — so
-    # the job would deploy `STAGING/<slug>/` named after the ephemeral
+    # the job would deploy `branches/<slug>/` named after the ephemeral
     # `gh-readonly-queue/...` ref. Nothing would ever remove it: `cleanup`
     # fires on `pull_request_target: closed`, and a queue branch is never a
     # pull request that closes. That is the `plj1` shape — previews
@@ -407,7 +407,7 @@ jobs:
     #
     # The retry below is the mechanism that actually works here, and it is safe
     # for the same reason it is in `discoverability-docs`: each branch writes
-    # its own `STAGING/<slug>/` with `keep_files: true`, so a re-clone picks up
+    # its own `branches/<slug>/` with `keep_files: true`, so a re-clone picks up
     # whoever won and adds this branch's directory beside it.
     steps:
       # On `pull_request` the steps below come from the PR's test MERGE
@@ -511,7 +511,7 @@ jobs:
         # check:derived-from names them; this runs each one's declared writer
         # against the mount above, sources before consumers.
         # Each writer's skip-or-run line goes to a file the preview publishes
-        # (STAGING/<slug>/writer-skip.txt): job logs cannot be read from
+        # (branches/<slug>/writer-skip.txt): job logs cannot be read from
         # where the cone is measured (bean fwtz).
         #
         # A preview has no stamped QA working copy, so `uml:overview` builds one
@@ -553,7 +553,7 @@ jobs:
           #
           # `.` is in the permitted class above and `sed` REPLACES rather than
           # deletes, so two adjacent input dots survive: input `..` gives output
-          # `..`, measured. A slug of `..` makes `STAGING/$SLUG` the checkout
+          # `..`, measured. A slug of `..` makes `branches/$SLUG` the checkout
           # root.
           #
           # Two guards already stand between that and harm, and BOTH were found
@@ -562,9 +562,9 @@ jobs:
           #      `../..`, `feat/../x`, `...`, `.git` all refused by
           #      `git check-ref-format`. A ref-derived slug cannot be `..`.
           #   2. `rm` refuses `.` and `..` operands outright: `rm -rf
-          #      "STAGING/.."` skips and exits 1, deleting nothing.
+          #      "branches/.."` skips and exits 1, deleting nothing.
           #
-          # What neither covers is `git add -A "STAGING/.."`, which does NOT
+          # What neither covers is `git add -A "branches/.."`, which does NOT
           # refuse — it stages the whole tree above, so the job would commit
           # unrelated changes. That is the residual, and it is why the check is
           # on the VALUE: guard 1 holds only while the slug comes from a ref,
@@ -909,7 +909,7 @@ jobs:
           } > cat-harness/docs/_data/build.yml
           cat cat-harness/docs/_data/build.yml
 
-      # Set baseurl so Jekyll generates links relative to the STAGING subdir.
+      # Set baseurl so Jekyll generates links relative to the branches/ subdir.
       #
       # THE REPOSITORY NAME IS READ, NEVER SPELLED (bean `kuxk`). Jekyll builds
       # every internal link from `baseurl`, so a literal here means that in any
@@ -986,7 +986,7 @@ jobs:
       # them with the full theme. MEASURED on `origin/gh-pages` 2026-09-23:
       # 3.2 MB of markdown in, **111.6 MB of HTML out** across 681 pages at
       # ~164 KiB each, and **776.6 MB summed over the 13 live previews — 37 %
-      # of a 2.10 GB `STAGING/` tree** against a 1 GB Pages limit the main site
+      # of a 2.10 GB `branches/` tree** against a 1 GB Pages limit the main site
       # shares. That is larger than the `reference/` lever `tebu` already
       # pulled (464.7 MB), and nothing conditioned it: a branch that never
       # mentions the instance still published a full themed copy of the IG.
@@ -1251,9 +1251,9 @@ jobs:
       # `jekyll-seo-tag` is in the gem set the Jekyll build runs
       # (.github/pages-jekyll/Gemfile), so every page gets three assertions
       # about its own identity, composed from `site.url + baseurl + page.url` —
-      # and under this job's appended `baseurl` that address is the STAGING one:
+      # and under this job's appended `baseurl` that address is the branches/ one:
       #
-      #   <link rel="canonical" href="https://…/STAGING/<slug>/x.html">
+      #   <link rel="canonical" href="https://…/branches/<slug>/x.html">
       #   <meta property="og:url" content="…">
       #   <script type="application/ld+json">{… "@type":"WebPage","url":"…"}
       #
@@ -1347,7 +1347,7 @@ jobs:
       # regress that way in either mode.
       # The graph's viewer page, emitted BEFORE the banner injection below so
       # the `find ./_site -name "*.html"` picks it up like every other page. It
-      # is a page, not data: a reviewer opening it under STAGING/ should get
+      # is a page, not data: a reviewer opening it under branches/ should get
       # the same way back to the branch and the PR that every other page gives
       # them. The export itself runs later and stays unbannered, correctly —
       # injecting HTML into a JSON-LD document would corrupt it.
@@ -1382,7 +1382,7 @@ jobs:
       # re-inline them here: the property this step buys is that the injected
       # bytes do not depend on the build, and it is pinned by
       # `staging-banner-constant.test.ts`.
-      # THE CHANGES PAGE, `STAGING/<slug>/changes/` (owner, 2026-10-14): every
+      # THE CHANGES PAGE, `branches/<slug>/changes/` (owner, 2026-10-14): every
       # changed source asset (a re-pinned mount in index.lock.json expanded
       # into the files its repository changed between the pins), the rendered
       # files the docs renderer's dependency cone predicts from them, and a QA
@@ -1391,7 +1391,7 @@ jobs:
       #
       # BEFORE the banner: the banner names the commit on every page, and the
       # diff must see the build as main's publish would have made it. The root
-      # side is a blobless sparse clone without STAGING/ and _render-log/.
+      # side is a blobless sparse clone without branches/ and _render-log/.
       #
       # Best effort: a failure here never blocks the preview. No file list (a
       # dispatch, or an API failure) writes no page, rather than a page that
@@ -1483,7 +1483,7 @@ jobs:
           # same rule `readme-sections.ts` follows for PDF cells.
           #
           # `gh-pages` is not in this checkout (checkout@v4, depth 1), so fetch
-          # a shallow copy of just that ref. Paths under STAGING/ are other
+          # a shallow copy of just that ref. Paths under branches/ are other
           # branches' previews, not the main site, and are excluded.
           #
           # ABSENT and EMPTY are different answers, which is why the file is
@@ -1529,7 +1529,7 @@ jobs:
           # The preview's own record — bean `6pfo`, owner's option A (2026-09-30):
           # written at DEPLOY time, the only moment that knows the PR and the
           # issue, onto the publish branch beside the preview, so it lands at
-          # STAGING/<slug>/staging-preview.json. `staging-record.ts` holds the
+          # branches/<slug>/staging-preview.json. `staging-record.ts` holds the
           # rules (`schemas/staging-preview.ts`); this is a thin caller.
           #
           # The record already published for this preview is copied in FIRST,
@@ -1638,7 +1638,7 @@ jobs:
           # the fixed `<slice>.sqlite3.json` manifest names it (bean `wixl`), so
           # a CDN cannot pair a fresh manifest with stale bytes. Old builds do
           # not pile up: each run writes only the current file, the deploy step `rm -rf`s
-          # `STAGING/<slug>/` before copying `_site` in, and `staging-rotate.ts`
+          # `branches/<slug>/` before copying `_site` in, and `staging-rotate.ts`
           # caps how many previews exist at all.
           # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
           # manifest and the older file it names -- a self-consistent pair --
@@ -1911,7 +1911,7 @@ jobs:
       #
       # It matters more on a preview than on the deploy: every preview is a
       # FULL copy of the site, so this is ~42 MiB off each one (measured on
-      # the published `STAGING/agy-wnhh-sushi-publisher-local`: 417.5 MiB of
+      # the published `branches/agy-wnhh-sushi-publisher-local`: 417.5 MiB of
       # HTML, 10.0% of it comments and unrendered whitespace).
       #
       # The pass is asserted IDEMPOTENT (`minify-site.test.ts`) rather than
@@ -1985,11 +1985,11 @@ jobs:
       # The split had a real reason, recorded here so it is not reintroduced:
       # the log CANNOT ride in `_site`, because the old deploy wrote into
       # `destination_dir`, which would put the entry at
-      # `STAGING/<slug>/_render-log/` — inside the very directory a cleanup
+      # `branches/<slug>/_render-log/` — inside the very directory a cleanup
       # removes, the one place a record of the removal must not be.
       #
       # Checking the branch out and committing by hand removes that
-      # constraint: the payload goes to `STAGING/<slug>/` and the entry to
+      # constraint: the payload goes to `branches/<slug>/` and the entry to
       # `_render-log/` at the root, in one `git add` and one commit. The
       # cleanup job below already does exactly this — "The record rides in the
       # SAME commit as the removal" — so this is the proven pattern in this
@@ -2224,7 +2224,7 @@ jobs:
           # but it has crossed a job boundary as an output since — and this
           # file's own rule is "checked by VALUE, never trusted because of
           # where it came from" (bean `fuzm`). The next line deletes a
-          # directory; an empty slug would make it `pages/STAGING/`, which is
+          # directory; an empty slug would make it `pages/branches/`, which is
           # EVERY open PR's preview. That is `plj1` exactly, and it is worth
           # four lines to make it unreachable rather than merely unlikely.
           case "$STAGING_SLUG" in
@@ -2391,7 +2391,7 @@ jobs:
             # ONCE, as `MAX_PREVIEW_BYTES` in `staging-rotate.ts`. It stamps
             # this preview's `.staged-at`, keeps it plus the most recently
             # updated others while the total fits, and for each one removed
-            # retires its record into `STAGING/_retired/`, appends a `removed`
+            # retires its record into `branches/_retired/`, appends a `removed`
             # render-log entry, and prints slug, age and size — the record
             # `deletion-requires-confirmation` asks of every removal. It never
             # touches `_retired/` or anything that is not a preview. Inside the
@@ -2566,7 +2566,7 @@ jobs:
           fi
           echo "preview/agent-build: $state ($desc)"
 
-  # ── Cleanup: remove STAGING/<slug>/ when PR is closed ─────────
+  # ── Cleanup: remove branches/<slug>/ when PR is closed ─────────
   # MERGED closes the question; CLOSED-UNMERGED does not.
   #
   # Owner, 2026-09-20: "change policy, if merged to main, then staging goes
@@ -2772,7 +2772,7 @@ jobs:
           if [ -d "pages/$PD/$SLUG" ]; then
             # Retire the preview's record BEFORE the preview goes (bean `6pfo`,
             # piece 2): the record outlives the preview as a RETIRED state in
-            # STAGING/_retired/, never deleted with it. Retiring twice keeps the
+            # branches/_retired/, never deleted with it. Retiring twice keeps the
             # first retirement (`staging-record.ts`). A missing live record is
             # a preview staged before 6pfo — nothing to retire, said so.
             REC="pages/$PD/$SLUG/staging-preview.json"
@@ -2827,7 +2827,7 @@ jobs:
             # Same race as the deploy above, and the same reason a queue is not
             # enough: five other workflows push to `gh-pages` without joining
             # it. Rebase and retry rather than losing the cleanup — our commit
-            # only removes one STAGING/ directory, so it rebases onto whatever
+            # only removes one branches/ directory, so it rebases onto whatever
             # landed first without touching it.
             for attempt in 1 2 3; do
               if git -C pages push origin gh-pages; then
@@ -3121,7 +3121,7 @@ jobs:
           find "$PD/$CLEANUP_SLUG" -type f | wc -l
           # Retire the preview's record BEFORE the preview goes (bean `6pfo`,
           # piece 2): the record outlives the preview as a RETIRED state in
-          # STAGING/_retired/, never deleted with it. Retiring twice keeps the
+          # branches/_retired/, never deleted with it. Retiring twice keeps the
           # first retirement (`staging-record.ts`). A missing live record is
           # a preview staged before 6pfo — nothing to retire, said so.
           REC="$PD/$CLEANUP_SLUG/staging-preview.json"

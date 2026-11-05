@@ -113,7 +113,7 @@ describe("a deploy replaces its own preview, and only its own", () => {
   });
 
   test("the removal names ONE slug — never the STAGING root", () => {
-    // `rm -rf pages/STAGING/` would be every open PR's preview, which is
+    // `rm -rf pages/branches/` would be every open PR's preview, which is
     // `plj1` exactly. Asserting the shape rather than trusting the variable.
     for (const m of step.matchAll(/rm -rf\s+"?([^"\n]+)"?/g)) {
       expect(m[1]!.trim()).toBe("pages/STAGING/$STAGING_SLUG");
@@ -124,7 +124,7 @@ describe("a deploy replaces its own preview, and only its own", () => {
     // It was validated in the `slug` step, but it crosses a job boundary as an
     // output. This file's own rule (bean `fuzm`): checked by value, never
     // trusted because of where it came from. An empty slug turns the removal
-    // into the STAGING root.
+    // into the branches/ root.
     expect(step).toContain('case "$STAGING_SLUG" in');
     expect(step).toMatch(/""\|\.\|\.\.\|\*\/\*/);
     expect(step).toContain("exit 1");
@@ -136,7 +136,7 @@ describe("a deploy replaces its own preview, and only its own", () => {
     //
     // Comment lines are stripped first. The first version of this test did not
     // strip them and failed on its own prose — the warning above the `rm`
-    // spells `pages/STAGING/` while explaining why that spelling must never be
+    // spells `pages/branches/` while explaining why that spelling must never be
     // reached. A comment describing the hazard is not the hazard, which is the
     // distinction `folio-root-is-asked` and `workflow-paths-resolve` both draw.
     const code = step
