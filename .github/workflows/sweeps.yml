@@ -21,9 +21,10 @@
 #     conflicts with its base. Feature Staging's `push` trigger used to start a
 #     runner on EVERY branch push to cover that case (23/day, almost all
 #     deciding "not conflicted"). Here: an open PR of this repository whose
-#     `mergeable_state` is `dirty` and whose head has no Feature Staging run is
-#     dispatched on its own branch (`--ref`), which is the run the push used to
-#     start. An `unknown` state is left for the next tick, which asks again.
+#     `mergeable_state` is `dirty` (which licenses only "conflicts", bean yv4z)
+#     and whose head has no Feature Staging run is dispatched on its own branch
+#     (`--ref`), which is the run the push used to start. An `unknown` state
+#     means not computed yet (bean h2s9): the next tick asks again.
 #
 # Each workflow keeps its own `workflow_dispatch`, concurrency and semantics;
 # only who starts it changed. One runner per tick instead of three-plus.
@@ -122,6 +123,7 @@ jobs:
           set -euo pipefail
           while IFS=$'\t' read -r num ref sha; do
             [ -n "$num" ] || continue
+            # `dirty` licenses only "conflicts" (bean yv4z); `unknown` is not computed yet (bean h2s9).
             state=$(gh api "repos/$REPO/pulls/$num" --jq '.mergeable_state // "unknown"')
             [ "$state" = "dirty" ] || continue
             runs=$(gh api "repos/$REPO/actions/workflows/feature-staging.yml/runs?head_sha=$sha&per_page=1" --jq '.total_count')
