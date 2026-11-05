@@ -8,7 +8,7 @@ priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T12:36:36Z
-updated_at: 2026-11-05T12:45:16Z
+updated_at: 2026-11-05T13:26:35Z
 parent: folio-assistant-x35i
 ---
 
@@ -21,3 +21,5 @@ parent: folio-assistant-x35i
 _2026-11-05T12:35:29Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk at the request of the analysis session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.
 
 *2026-11-05* — PR https://github.com/litlfred/cat-harness-tools/pull/1502 (stacked on #1499). The edge was not a static import: `node-kind-index.ts`'s validator `imports` input-site still claimed `src/**`/`*/src/**`. It now carries #1499's exact glob, and the input-sites test holds both annotations. Measured with a static closure walk over 209 `task-io.ts` tasks: 142 reach node-kind-index; those reaching `src/auth/gateway.ts` went from 142 to 0. Their shared core (node-kind-index's closure) went from 600 to 494 files, and `src/` files in their union from 96 to 23. They still share that core through the harness-config plugin tables (bean vgfp). The CI-run criterion is still open.
+
+_2026-11-05T13:26:35Z_ — litlfred/cat-harness-tools#1502 merged (f97b2ab) into #1499's branch, `claude/kind-validator-imports-exact`, not into main. The change reaches cat-harness-tools main when #1499 merges (the merge steward has it, in chain order after #1495, #1497 and #1498). Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
