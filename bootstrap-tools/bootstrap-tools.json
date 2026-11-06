@@ -1,0 +1,84 @@
+{
+  "_comment": "The toolset that DESCRIBES bootstrap, kept outside it so bootstrap does not have one. Re-created 2026-09-29 (bean xsqm) on the terms bean etg1 first set, after bean 319n had folded it into a harness: across two repositories, Zod in a harness would make a bootstrap release depend on that harness, which depends on bootstrap. A SIBLING, never nested in bootstrap, because nesting would put .ts inside the tree a Bootstrapping Agent is told holds none. It depends on bootstrap and on nothing above it — `check:tools-closure` fails on any import that leaves it. It is ONE toolset over swappable content: someone who wants a different visualiser or generator uses a different toolset against the same bootstrap.",
+  "name": "bootstrap-tools",
+  "repository": "litlfred/bootstrap-tools",
+  "version": "0.1.0",
+  "title": "Bootstrap tools",
+  "description": "The Zod source of bootstrap's schemas, the generators that write bootstrap's JSON Schemas, schema page and READMEs, and the checks bootstrap's content must pass — runnable by an agent, with zod, liquidjs, Playwright and bpmn-js as its dependencies.",
+  "_needs_comment": "The one layer below it. It reads and writes bootstrap; bootstrap never imports from here.",
+  "needs": [
+    "bootstrap"
+  ],
+  "_supports_comment": "Which content versions these tools handle, as a list of supported MAJOR versions per content graph — never a range expression (instance-versioning rule 2). Within one major a newer minor or patch only adds. At the split both started at the same version (0.1.0); from here each is versioned on its own, and a tools release may support several content majors (owner, 2026-09-29). A tool refuses a content major not listed here rather than guessing. `bootstrap-tools` is listed too, since 2026-09-30: the toolset now carries a small content graph of its own (its processes, scenarios and skills), and the tools that draw and describe a content graph draw and describe that one as well.",
+  "supports": {
+    "bootstrap": [
+      0
+    ],
+    "bootstrap-tools": [
+      0
+    ]
+  },
+  "assets": [
+    {
+      "id": "agent-instructions",
+      "src": "AGENTS.md",
+      "role": "agent-instructions",
+      "title": "AGENTS.md — bootstrap-tools",
+      "description": "The one-way boundary: this reads and writes bootstrap, bootstrap never imports from here, and nothing here imports above bootstrap. How an agent runs each tool, and what a Zod change does to a published contract."
+    },
+    {
+      "id": "readme",
+      "src": "README.md",
+      "role": "instance-readme",
+      "title": "bootstrap-tools",
+      "description": "What the toolset holds, why it is outside bootstrap, and how to run it."
+    }
+  ],
+  "directories": [
+    {
+      "id": "bootstrap-tools-schemas",
+      "path": "schemas/",
+      "title": "Bootstrap's shapes, in Zod",
+      "description": "The Zod source of every schema bootstrap publishes, bootstrap's defined terms and graph typologies, and the small readers the tools share: a declaration reader over bootstrap's own shape, release addresses, and the declared-order check.",
+      "graphTypologies": [
+        "schemas"
+      ]
+    },
+    {
+      "id": "bootstrap-tools-scripts",
+      "path": "scripts/",
+      "title": "The tools",
+      "description": "The schema generator and drawn schema page, the README writers (each directory's README, and the `kg:processes` and `kg:files` sections) with their Liquid templates, the Process renderer, the release-IRI sync, the term linker, and the checks: import closure, node identifiers, bootstrap's concepts, bootstrap's documents parsed against their Zod (`bootstrap:validate`), and the semver bump the published schemas require, computed from a diff (`bootstrap:semver`).",
+      "graphTypologies": [
+        "code"
+      ]
+    },
+    {
+      "id": "bootstrap-tools-skills",
+      "path": "skills/",
+      "title": "The toolset's skills",
+      "description": "The skills this toolset owns: `bootstrap-contract-semver`, what MAJOR, MINOR and PATCH mean for bootstrap's published schemas and why the bump is computed from a diff; and `render-kg-to-github-pages`, rendering a Knowledge Graph (or a list of its Subgraphs) to GitHub Pages at a publication root URL and reporting the push's status with one message.",
+      "graphTypologies": [
+        "skills"
+      ]
+    },
+    {
+      "id": "bootstrap-tools-processes",
+      "path": "processes/",
+      "title": "The toolset's Processes",
+      "description": "The toolset's own Processes, in bootstrap's diagram vocabulary: `render-kg-to-github-pages.bpmn`, rendering a Knowledge Graph (or a list of its Subgraphs) to GitHub Pages at a publication root URL, with each step one of these tools and the push's status and message as its output. The same process for a staging preview and a release; only the root URL differs.",
+      "graphTypologies": [
+        "processes"
+      ]
+    },
+    {
+      "id": "bootstrap-tools-scenarios",
+      "path": "scenarios/",
+      "title": "The toolset's Roles",
+      "description": "`roles.json`: the Roles the toolset's Processes bind their lanes to. The Site Publisher, who renders, deploys, checks and reports; and GitHub Pages, the host, acted upon.",
+      "graphTypologies": [
+        "scenarios"
+      ]
+    }
+  ]
+}

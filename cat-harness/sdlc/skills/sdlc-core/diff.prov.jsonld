@@ -1,0 +1,37 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of diff.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "sdlc/skills/sdlc-core/diff.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "sdlc/skills/sdlc-core/diff.md#provenance-1"
+        },
+        {
+          "@id": "sdlc/skills/sdlc-core/diff.md#provenance-2"
+        }
+      ]
+    },
+    {
+      "@id": "sdlc/skills/sdlc-core/diff.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Finding changed blocks: use the ChangeSet",
+      "prov:value": "**Why not `git diff --name-only` over `.ts` files**, which this section used\nto do. That misses three things a reviewer needs:\n- **A prose-only edit."
+    },
+    {
+      "@id": "sdlc/skills/sdlc-core/diff.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Change categories: the ChangeSet's, verbatim",
+      "prov:value": "Report them separately from `rendered[]` hashes, as before."
+    }
+  ]
+}

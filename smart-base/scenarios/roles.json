@@ -1,0 +1,122 @@
+{
+  "_comment": "Role EXTENSIONS by id (placement PR0b; PR1, bean ybwt). Each entry adds this instance's skills to a role the harness declares, so the edge points DOWN: the harness's scenarios/roles.json names no skill that lives above it. An extension adds skills and nothing else; a role this instance owns outright would go in `roles` (placement PR4 moves whole roles). Schema: cat-harness/schemas/role-graph.ts (RoleExtensionSchema); overlay: cat-harness/schemas/scenario-overlay.ts. `roles` holds the roles this instance owns outright: `l1-extraction-reviewer` (owner ruling 3b, 2026-10-12; equipped by bean 4nfs), which signs L1 extraction exclusions.",
+  "name": "smart-base",
+  "roles": [
+    {
+      "id": "l1-extraction-reviewer",
+      "title": "L1 extraction reviewer",
+      "description": "Signs, or rejects, the exclusions an L1 extraction proposes: each normative-looking sentence of a WHO publication that the curation says is not a recommendation, an implementation practice or a remark. Until a person acting in this role signs an exclusion, its sentence stays unaccounted and coverage stays below 100 %. Owner ruling 3b, 2026-10-12: exclusions are signed by this named role, never by the agent that proposed them. Inherits the harness's generic reviewer and performs exclusion sign-off in `classify-and-code-content.bpmn` (bean 4nfs).",
+      "actorKinds": [
+        "person"
+      ],
+      "inherits": [
+        "reviewer"
+      ],
+      "skills": [
+        "classify-and-code-content",
+        "content-review",
+        "recommendation-extraction"
+      ],
+      "persona": "Has the publication open beside the work list and reads each proposed exclusion against the printed page. A wrong exclusion silently drops guidance from every DAK built on the extraction, so they sign one only having read the sentence in place, and reject it with a reason otherwise."
+    }
+  ],
+  "extensions": [
+    {
+      "role": "business-analyst",
+      "skills": [
+        "l2-dak-authoring",
+        "dak-l1-library",
+        "recommendation-extraction",
+        "wireframe-design-review",
+        "l2-component-edit-review"
+      ]
+    },
+    {
+      "role": "terminologist",
+      "skills": [
+        "l2-component-edit-review",
+        "classify-and-code-content",
+        "ontologist",
+        "glossary-terms",
+        "terminology-management",
+        "content-review"
+      ]
+    },
+    {
+      "role": "build-pipeline",
+      "skills": [
+        "smart-base-tools"
+      ]
+    },
+    {
+      "role": "user",
+      "skills": [
+        "smart-guideline-end-to-end",
+        "guideline-use-case",
+        "l4-application-brief"
+      ]
+    },
+    {
+      "role": "authoring-agent",
+      "skills": [
+        "smart-guideline-end-to-end",
+        "dak-l1-library",
+        "recommendation-extraction",
+        "recommendation-scenarios",
+        "classify-and-code-content",
+        "glossary-terms",
+        "l2-dak-authoring",
+        "dak-preprocessing",
+        "dak-postprocessing",
+        "ig-artifact-ingestion",
+        "l3-fhir-authoring",
+        "decision-comparison",
+        "l2-component-edit-review",
+        "content-validate",
+        "content-test",
+        "artefact-reachability",
+        "staging-review",
+        "interaction-modality",
+        "guideline-use-case",
+        "l2-dependency-choice",
+        "l3-dependency-choice",
+        "l4-application-brief",
+        "l4-application-build"
+      ]
+    },
+    {
+      "role": "reviewer",
+      "skills": [
+        "recommendation-extraction",
+        "classify-and-code-content",
+        "ig-ast-delta",
+        "wireframe-design-review",
+        "l2-component-edit-review"
+      ]
+    },
+    {
+      "role": "programme-manager",
+      "skills": [
+        "dak-l1-library",
+        "raci",
+        "todo-manager"
+      ]
+    },
+    {
+      "role": "fhir-modeller",
+      "skills": [
+        "l2-dak-authoring",
+        "smart-guideline-create",
+        "ig-build-pipeline"
+      ]
+    },
+    {
+      "role": "qc-reviewer",
+      "skills": [
+        "qa-reports",
+        "fhir-validation",
+        "content-test"
+      ]
+    }
+  ]
+}

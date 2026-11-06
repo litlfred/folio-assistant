@@ -1,0 +1,94 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p021-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p021-1.png",
+  "pageStart": 21,
+  "pageEnd": 21,
+  "narrative": [
+    {
+      "text": "Figure 12, the Social workflow. It receives a data_source_plan and an expanded_query_set, validates payloads, initialises a run context, loads social provider config and credentials, selects platforms and builds base query parameters (keywords, hashtags, accounts, date range). \"Any platforms selected?\" gates the rest. On Yes it initialises metrics (request_count, post_count, error_count), expands queries into platform-specific search terms, constructs and sends the first platform request and receives a response. Four gateways follow in sequence — \"Response success?\", \"Payload contains items?\", \"Language and region allowed?\" and \"Any items remain after filters?\" — with extraction of raw social items (posts, comments, threads) and normalisation of id, text, author, timestamp, engagement and platform between them. Accepted items append to a collection buffer. Every No branch converges on \"Update metrics and diagnostics (requests, posts, errors)\", after which the buffer is aggregated into a unified raw_social_data structure and a run summary is built and persisted.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-09-23",
+      "lang": "en"
+    },
+    {
+      "text": "Figure 12, le workflow Social. Il reçoit un data_source_plan et un expanded_query_set, valide les charges utiles, initialise un contexte d'exécution, charge la configuration des fournisseurs sociaux et les identifiants, sélectionne les plateformes et construit les paramètres de requête de base (mots-clés, hashtags, comptes, plage de dates). « Any platforms selected? » conditionne la suite. Sur Yes, il initialise les métriques (request_count, post_count, error_count), développe les requêtes en termes de recherche propres à chaque plateforme, construit et envoie la première requête à la plateforme et reçoit une réponse. Quatre passerelles suivent en séquence : « Response success? », « Payload contains items? », « Language and region allowed? » et « Any items remain after filters? », avec entre elles l'extraction des éléments sociaux bruts (posts, commentaires, fils) et la normalisation de id, text, author, timestamp, engagement et platform. Les éléments acceptés sont ajoutés à un tampon de collecte. Toutes les branches No convergent vers « Update metrics and diagnostics (requests, posts, errors) », après quoi le tampon est agrégé en une structure unifiée raw_social_data et un résumé d'exécution est construit et persisté.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "fr"
+    },
+    {
+      "text": "Figura 12, el flujo Social. Recibe un data_source_plan y un expanded_query_set, valida las cargas, inicializa un contexto de ejecución, carga la configuración de proveedores sociales y las credenciales, selecciona plataformas y construye los parámetros de consulta base (palabras clave, hashtags, cuentas, rango de fechas). «Any platforms selected?» condiciona el resto. En Yes inicializa las métricas (request_count, post_count, error_count), amplía las consultas en términos de búsqueda propios de cada plataforma, construye y envía la primera solicitud y recibe una respuesta. Siguen cuatro pasarelas en secuencia: «Response success?», «Payload contains items?», «Language and region allowed?» y «Any items remain after filters?», con la extracción de elementos sociales en bruto (publicaciones, comentarios, hilos) y la normalización de id, text, author, timestamp, engagement y platform entre ellas. Los elementos aceptados se añaden a un búfer de recogida. Todas las ramas No convergen en «Update metrics and diagnostics (requests, posts, errors)», tras lo cual el búfer se agrega en una estructura unificada raw_social_data y se construye y guarda un resumen de ejecución.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "es"
+    },
+    {
+      "text": "الشكل 12، سير عمل Social. يتلقى data_source_plan وexpanded_query_set، ويتحقق من الحمولات، ويهيّئ سياق تشغيل، ويحمّل إعدادات مزوّدي المنصات الاجتماعية وبيانات الاعتماد، ويختار المنصات، ويبني معاملات الاستعلام الأساسية (الكلمات المفتاحية، والوسوم، والحسابات، ونطاق التاريخ). وتتحكم «Any platforms selected?» في ما يلي. عند Yes يهيّئ المقاييس (request_count، post_count، error_count)، ويوسّع الاستعلامات إلى مصطلحات بحث خاصة بكل منصة، ويبني أول طلب ويرسله ويتلقى ردًا. ثم تأتي أربع بوابات متتالية: «Response success?» و«Payload contains items?» و«Language and region allowed?» و«Any items remain after filters?»، وبينها استخراج العناصر الاجتماعية الخام (المنشورات، والتعليقات، والسلاسل) وتوحيد id وtext وauthor وtimestamp وengagement وplatform. وتُضاف العناصر المقبولة إلى مخزن التجميع. وتلتقي كل فروع No عند «Update metrics and diagnostics (requests, posts, errors)»، وبعدها يُجمَّع المخزن في البنية الموحّدة raw_social_data ويُبنى ملخص التشغيل ويُحفظ.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ar"
+    },
+    {
+      "text": "Рисунок 12, процесс Social. Он получает data_source_plan и expanded_query_set, проверяет нагрузки, инициализирует контекст запуска, загружает конфигурацию социальных поставщиков и учётные данные, выбирает платформы и строит базовые параметры запроса (ключевые слова, хештеги, аккаунты, диапазон дат). «Any platforms selected?» определяет, пойдёт ли процесс дальше. При Yes инициализируются метрики (request_count, post_count, error_count), запросы разворачиваются в поисковые термины конкретных платформ, строится и отправляется первый запрос и принимается ответ. Затем последовательно четыре шлюза — «Response success?», «Payload contains items?», «Language and region allowed?» и «Any items remain after filters?» — а между ними извлечение сырых социальных элементов (посты, комментарии, ветки) и нормализация id, text, author, timestamp, engagement и platform. Принятые элементы добавляются в буфер сбора. Все ветки No сходятся к «Update metrics and diagnostics (requests, posts, errors)», после чего буфер агрегируется в единую структуру raw_social_data, а сводка запуска формируется и сохраняется.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ru"
+    },
+    {
+      "text": "图 12，Social 工作流。它接收 data_source_plan 和 expanded_query_set，校验载荷，初始化运行上下文，加载社交平台提供方配置和凭据，选择平台，并构建基础查询参数（关键词、话题标签、账号、日期范围）。“Any platforms selected?”决定后续是否进行。Yes 时初始化指标（request_count、post_count、error_count），将查询扩展为各平台的搜索词，构建并发送首个平台请求并接收响应。随后依次是四个网关——“Response success?”“Payload contains items?”“Language and region allowed?”和“Any items remain after filters?”——其间提取原始社交条目（帖子、评论、话题串）并规范化 id、text、author、timestamp、engagement 和 platform。被接受的条目追加到收集缓冲区。所有 No 分支汇合到“Update metrics and diagnostics (requests, posts, errors)”，之后缓冲区被汇总为统一的 raw_social_data 结构，并生成和持久化运行摘要。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-021",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/arxiv-2607.14456v1/manifest.jsonld",
+  "provenance": "ingested"
+}
