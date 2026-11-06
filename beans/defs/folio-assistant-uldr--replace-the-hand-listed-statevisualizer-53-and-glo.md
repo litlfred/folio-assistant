@@ -63,3 +63,5 @@ Drop the 6 lines and their .gitignore lines. publish:check glossary:page stays a
 ### Risks and open points
 - A visualiser rendered on its OWN instance's site (not the host) must not be derived onto the host: derive only for visualisers the host serves (`viewersOf` already composes this).
 - Step 3's in-route .gitignore is a new convention: the alternative is one generic host pattern `/docs/*/<instance>/`, which still names instances. Recommended: the in-route file.
+
+- **Owner, 2026-11-06 (card "Design"): option A**: derive the routes from the viewer declaration, and the writer puts a .gitignore in each route folder. Implementing.
