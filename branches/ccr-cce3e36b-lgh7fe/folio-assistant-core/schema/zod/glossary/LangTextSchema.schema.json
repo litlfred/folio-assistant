@@ -1,0 +1,33 @@
+{
+  "$ref": "#/definitions/LangText",
+  "definitions": {
+    "LangText": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]+)*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/schema/zod/glossary/LangTextSchema.schema.json",
+  "title": "LangTextSchema",
+  "description": "Generated from `LangTextSchema` in schemas/glossary.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "7fc3f1e7487d01dd245161b10bd8824de2043718",
+    "pr": "2985/merge",
+    "run": "42184538168"
+  }
+}

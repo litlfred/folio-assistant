@@ -1,0 +1,24 @@
+{
+  "$ref": "#/definitions/RenderEvent",
+  "definitions": {
+    "RenderEvent": {
+      "type": "string",
+      "enum": [
+        "rendered",
+        "removed",
+        "restored",
+        "retained"
+      ],
+      "description": "A render-log event: rendered, removed, restored or retained."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/RenderEventSchema.schema.json",
+  "title": "RenderEventSchema",
+  "description": "Generated from `RenderEventSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "7fc3f1e7487d01dd245161b10bd8824de2043718",
+    "pr": "2985/merge",
+    "run": "42184538168"
+  }
+}

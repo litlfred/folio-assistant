@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/SurveyAxis",
+  "definitions": {
+    "SurveyAxis": {
+      "type": "object",
+      "properties": {
+        "axis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "covered": {
+          "type": "boolean"
+        },
+        "finding": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "axis",
+        "covered",
+        "finding"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/session-survey/SurveyAxisSchema.schema.json",
+  "title": "SurveyAxisSchema",
+  "description": "Generated from `SurveyAxisSchema` in schemas/sdlc/session-survey.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "7fc3f1e7487d01dd245161b10bd8824de2043718",
+    "pr": "2985/merge",
+    "run": "42184538168"
+  }
+}

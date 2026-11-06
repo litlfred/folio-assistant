@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/capability/plantuml.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "7fc3f1e7487d01dd245161b10bd8824de2043718",
+    "pr": "2985/merge",
+    "run": "42184538168"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/capability/plantuml",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "plantuml",
+      "name": "PlantUML",
+      "description": "PlantUML diagram generator for UML, BPMN, and other diagram types.",
+      "detection": {
+        "method": "command",
+        "command": "plantuml -version"
+      },
+      "requiresCapability": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/capability/java-runtime",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/capability/graphviz"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/plantuml"
+    }
+  ]
+}

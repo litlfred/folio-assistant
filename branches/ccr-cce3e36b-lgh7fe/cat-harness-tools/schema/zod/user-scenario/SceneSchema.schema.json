@@ -1,0 +1,59 @@
+{
+  "$ref": "#/definitions/Scene",
+  "definitions": {
+    "Scene": {
+      "type": "object",
+      "properties": {
+        "icon": {
+          "type": "string",
+          "enum": [
+            "baby",
+            "person",
+            "family",
+            "clinician",
+            "health-worker",
+            "hospital",
+            "clinic",
+            "home",
+            "phone",
+            "tablet",
+            "qr",
+            "paper",
+            "wifi-off",
+            "wifi",
+            "shield-check",
+            "calendar-check",
+            "stethoscope",
+            "link",
+            "transfer",
+            "globe",
+            "key",
+            "lock",
+            "database",
+            "tent",
+            "bus",
+            "plane"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "icon",
+        "label"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/SceneSchema.schema.json",
+  "title": "SceneSchema",
+  "description": "Generated from `SceneSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "7fc3f1e7487d01dd245161b10bd8824de2043718",
+    "pr": "2985/merge",
+    "run": "42184538168"
+  }
+}

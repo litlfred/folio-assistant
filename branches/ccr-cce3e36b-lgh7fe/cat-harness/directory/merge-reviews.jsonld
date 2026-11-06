@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/merge-reviews.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "7fc3f1e7487d01dd245161b10bd8824de2043718",
+    "pr": "2985/merge",
+    "run": "42184538168"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/merge-reviews",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "merge-reviews",
+      "path": "merge-reviews/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/cat-harness/tree/cat/cat-harness/merge-reviews",
+        "kind": "branch",
+        "branch": "cat/cat-harness/merge-reviews",
+        "keyedBy": "tip",
+        "declaredIn": "declaration"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/merge-reviews"
+      ],
+      "description": "The adversarial review verdict on each pull request's head: `<head sha>.json`, one `merge-review/v1` file per head. Written by a reviewing session that is not the author (`adversarial-code-review`) and read by `check:adversarial-review`. REPOSITORY-scoped for the reason `beans/` and `issue-marks/` are.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/merge-reviews"
+    }
+  ]
+}

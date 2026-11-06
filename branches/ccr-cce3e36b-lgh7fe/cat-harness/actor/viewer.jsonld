@@ -1,0 +1,24 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/actor/viewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "7fc3f1e7487d01dd245161b10bd8824de2043718",
+    "pr": "2985/merge",
+    "run": "42184538168"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/actor/viewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "viewer",
+      "actorKind": "person",
+      "title": "Viewer",
+      "description": "A read-only identity. Takes on no role: it never appears in a swimlane, which is why `roles` is empty rather than absent.",
+      "hasCapability": [],
+      "mayTakeRole": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/viewer"
+    }
+  ]
+}

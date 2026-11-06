@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/actor/qc-reviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "7fc3f1e7487d01dd245161b10bd8824de2043718",
+    "pr": "2985/merge",
+    "run": "42184538168"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/actor/qc-reviewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "qc-reviewer",
+      "actorKind": "person",
+      "title": "QC Reviewer",
+      "description": "Quality control reviewer who validates publication readiness across L1-L4 layers, runs QA reports, and verifies conformance.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.QCReviewer",
+        "lifecycle": [
+          "validate",
+          "test"
+        ]
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/qc-reviewer"
+      ],
+      "permissionName": [
+        "qa-reporting"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/qc-reviewer"
+    }
+  ]
+}
