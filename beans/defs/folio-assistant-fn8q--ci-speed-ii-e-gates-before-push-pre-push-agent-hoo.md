@@ -8,7 +8,7 @@ priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-06T04:51:52Z
+updated_at: 2026-11-06T04:59:28Z
 parent: folio-assistant-k3vv
 ---
 
@@ -29,3 +29,9 @@ _2026-11-05T14:38:58Z_ — Check-in: main still pins cat-harness-tools c807dc9, 
 _2026-11-05T23:28:34Z_ — folio-assistant#2954 landed (04cf7ef). Main now pins cat-harness-tools 55b1925, which is 190 commits past #1487 and has scripts/git-hooks/claude-pre-push.sh, so #2951's guard now lets the hook run. #2951 is out of draft, and main was merged into it at ee39971 (23:04Z). CI was running when checked: 17 green, 0 red. It merges once green, with the owner's approval. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
 
 _2026-11-06T04:51:52Z_ — folio-assistant#2951 merged (35d5b4e, 2026-11-06T04:48Z), so agents now run the fast gates before `git push`. The first box is ticked. The second box is partly met: CI reading the tree-keyed record is folio-assistant#2957 (merged), but it is **off by default**. The box stays open until it is switched on, or the owner decides it stays off. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
+
+_2026-11-06T04:59:28Z_ — **Owner ruling (litlfred, card "Record on", option 1):** switch the local gate record on, in this order:
+1. merge the re-check sweep folio-assistant#2958 once it is green;
+2. litlfred then sets the repository variable `CQG_HONOUR_LOCAL_RECORDS=true`.
+
+The switch is a repository variable, not a file, so a PR cannot turn skipping on for its own run, and clearing it turns skipping off at once. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
