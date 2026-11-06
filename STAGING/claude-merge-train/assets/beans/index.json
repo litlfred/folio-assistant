@@ -188,7 +188,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:02:05Z",
-      "updatedAt": "2026-11-05T22:50:00Z",
+      "updatedAt": "2026-11-06T00:50:00Z",
       "preview": "**Owner ruling, 2026-11-05 ~13:00Z**, verbatim choice: \"Move the checks (Recommended)\": checks of cat-harness's own files run only in the repo that commits those files, so other layers stop seeing false new failures.\n\n## Evidence\n- `check:schema-nodes` judges the harness's own `schemas/` (cat-harness-tools#1478 left two modules untagged; fixed by #1483 / #1485). Every root that mounts the layer ra",
       "file": "beans/defs/folio-assistant-70hd--cat-harness-file-checks-run-only-in-the-repo-that.md"
     },
@@ -1284,7 +1284,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:19:16Z",
-      "updatedAt": "2026-11-05T13:19:16Z",
+      "updatedAt": "2026-11-06T00:55:57Z",
       "preview": "One git ref per lock in the index repo, `refs/cat/layers/<sha256 of the lock's instances>`, plus a moving `refs/cat/layers/main`. Its tree is the composed overlay that mount-from-lock lays down.\n\n- **Reading:** `mount:lock` first tries one shallow fetch of the ref. It verifies every byte against the lock, and falls back to a per-repo fetch for each layer that does not verify. The lock stays the on",
       "file": "beans/defs/folio-assistant-yeg4--shared-verified-layers-cache-ref.md"
     },
