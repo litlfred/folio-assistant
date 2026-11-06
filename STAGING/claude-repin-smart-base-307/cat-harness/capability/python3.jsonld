@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/capability/python3.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-307",
+    "sha": "677c4c5cac0fb4b6729b947ebbcd322e667b2efb",
+    "pr": "2987/merge",
+    "run": "42164983708"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/capability/python3",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "python3",
+      "name": "Python 3",
+      "description": "Python 3 runtime with pip package manager.",
+      "detection": {
+        "method": "command",
+        "command": "python3 --version"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/python3"
+    }
+  ]
+}

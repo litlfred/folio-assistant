@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/actor/clinical-sme.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-307",
+    "sha": "677c4c5cac0fb4b6729b947ebbcd322e667b2efb",
+    "pr": "2987/merge",
+    "run": "42164983708"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/actor/clinical-sme",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "clinical-sme",
+      "actorKind": "person",
+      "title": "Clinical Subject Matter Expert",
+      "description": "Clinical validator and ground-truth provider who ensures clinical accuracy and completeness of authored content.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.ClinicalSME",
+        "lifecycle": [
+          "validate",
+          "review",
+          "feedback"
+        ]
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/role/clinical-sme"
+      ],
+      "permissionName": [
+        "clinical-validation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/clinical-sme"
+    }
+  ]
+}

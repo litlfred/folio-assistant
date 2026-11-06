@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/schema/tool-invocation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-307",
+    "sha": "677c4c5cac0fb4b6729b947ebbcd322e667b2efb",
+    "pr": "2987/merge",
+    "run": "42164983708"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/schema/tool-invocation",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "tool-invocation",
+      "title": "tool-invocation",
+      "summary": "What happened when a Tool ran, and under whose authority.",
+      "module": "schemas/tools/tool-invocation.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-invocation"
+    }
+  ]
+}

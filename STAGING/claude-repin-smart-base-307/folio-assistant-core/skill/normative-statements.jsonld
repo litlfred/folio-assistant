@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/skill/normative-statements.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-307",
+    "sha": "677c4c5cac0fb4b6729b947ebbcd322e667b2efb",
+    "pr": "2987/merge",
+    "run": "42164983708"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/skill/normative-statements",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "normative-statements",
+      "title": "normative-statements",
+      "instructionsPath": "skills/content/folio-document-adapter/normative-statements.md",
+      "instructionLines": 96,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/schema/skills/normative-statements/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/schema/skills/normative-statements/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/normative-statements"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/skill/work-plan-store.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-307",
+    "sha": "677c4c5cac0fb4b6729b947ebbcd322e667b2efb",
+    "pr": "2987/merge",
+    "run": "42164983708"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/skill/work-plan-store",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "work-plan-store",
+      "title": "The work plan's contract",
+      "description": "The contract the work plan (work items) keeps as a data store, as operations any Tool must provide: get, list, create, update with ifMatch, note, history, and where a work item is in its processes. Give back a work item exactly as written, keep ids unique and links whole, keep status and type to their closed lists, lose nothing to concurrent writers, and answer a work item's history. A mechanical Actor plays this Role through whichever Tool the deployment names.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/package/work-plan"
+      ],
+      "instructionsPath": "work-plan/skills/work-plan/work-plan-store.md",
+      "instructionLines": 109,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store"
+    }
+  ]
+}

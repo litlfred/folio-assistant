@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/process/Process_GettingStarted/node/Task_CreateRepo.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-307",
+    "sha": "677c4c5cac0fb4b6729b947ebbcd322e667b2efb",
+    "pr": "2987/merge",
+    "run": "42164983708"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/process/Process_GettingStarted/node/Task_CreateRepo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Create the repository",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/process/Process_GettingStarted",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/role/onboarding-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/skill/repo-conversion"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/process/Process_GettingStarted#flow/Flow_newrepo"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/process/Process_GettingStarted#flow/Flow_created"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_CreateRepo"
+    }
+  ]
+}

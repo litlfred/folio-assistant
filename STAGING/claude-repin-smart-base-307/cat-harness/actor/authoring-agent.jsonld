@@ -1,0 +1,41 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/actor/authoring-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-307",
+    "sha": "677c4c5cac0fb4b6729b947ebbcd322e667b2efb",
+    "pr": "2987/merge",
+    "run": "42164983708"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/actor/authoring-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "authoring-agent",
+      "actorKind": "agent",
+      "title": "Authoring Agent",
+      "description": "LLM agent that drafts and revises a PROPOSED change to a content block. It never commits: its output enters the HCI validation pipeline and the editor accepts, revises or discards it.",
+      "meta": {
+        "lifecycle": [
+          "author"
+        ],
+        "workflow": "sdlc/processes/code-change-review.bpmn#Lane_Agent"
+      },
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/role/authoring-agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/role/sibling-session",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/role/docs-authoring-agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/role/editorial-authoring-agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/role/platform-authoring-agent",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/role/session-coordinator",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/cat-harness/role/merge-steward"
+      ],
+      "permissionName": [
+        "content-authoring"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/authoring-agent"
+    }
+  ]
+}

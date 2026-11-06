@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/smart-trust/smart-trust.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/smart-trust/directory/library.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/smart-trust/smart-trust.jsonld",
+  "staging": {
+    "branch": "claude/repin-smart-base-307",
+    "sha": "677c4c5cac0fb4b6729b947ebbcd322e667b2efb",
+    "pr": "2987/merge",
+    "run": "42164983708"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/smart-trust/directory/library",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "library",
+      "path": "library/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library"
+      ],
+      "description": "L1 source documents materialized for smart-trust: the GDHCN Administrative and Operational Framework 1.2 (9 October 2026), the legal source for GDHCN definitions and Trust Domains. Every knowledge-graph reference to the Framework resolves through here, and `check:materialized-fixity` verifies its SHA-256 digest against `catalogue/`.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-repin-smart-base-307/smart-trust/directory/library",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust/directory/library"
+    }
+  ]
+}
