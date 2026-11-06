@@ -1,0 +1,307 @@
+{
+  "$ref": "#/definitions/Cache",
+  "definitions": {
+    "Cache": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "cache/1.0.0"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "actions-cache",
+            "artifact-reuse",
+            "ghcr-image",
+            "git-ref",
+            "branch-store",
+            "on-disk",
+            "setup-action-cache"
+          ]
+        },
+        "trustClass": {
+          "type": "string",
+          "enum": [
+            "a",
+            "a-provenance",
+            "b",
+            "c",
+            "unclassified"
+          ]
+        },
+        "location": {
+          "type": "string",
+          "minLength": 1
+        },
+        "keyRecipe": {
+          "type": "object",
+          "properties": {
+            "source": {
+              "type": "string",
+              "enum": [
+                "cache:key",
+                "cache:key --base",
+                "hashFiles",
+                "script",
+                "hand-listed",
+                "per-run"
+              ]
+            },
+            "script": {
+              "type": "string",
+              "minLength": 1
+            },
+            "files": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "implementation": {
+              "type": "string",
+              "minLength": 1
+            },
+            "expression": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "source"
+          ],
+          "additionalProperties": false
+        },
+        "derivedInputs": {
+          "type": "string",
+          "minLength": 1
+        },
+        "holds": {
+          "type": "string",
+          "minLength": 1
+        },
+        "producer": {
+          "type": "string",
+          "minLength": 1
+        },
+        "consumers": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "materializes": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "stateInputs": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "reads": {
+                  "type": "string",
+                  "const": "none"
+                },
+                "how": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "reads",
+                "how"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "reads": {
+                  "type": "string",
+                  "const": "keyed"
+                },
+                "refs": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "how": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "reads",
+                "refs",
+                "how"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "reads": {
+                  "type": "string",
+                  "const": "unkeyed"
+                },
+                "refs": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "how": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "reads",
+                "how"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "reads": {
+                  "type": "string",
+                  "const": "unmeasured"
+                },
+                "how": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "reads"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "needs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]*$"
+          }
+        },
+        "refresh": {
+          "type": "object",
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": [
+                "incremental",
+                "whole"
+              ]
+            },
+            "how": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "mode",
+            "how"
+          ],
+          "additionalProperties": false
+        },
+        "savePolicy": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verify": {
+          "type": "string",
+          "minLength": 1
+        },
+        "budget": {
+          "type": "object",
+          "properties": {
+            "maxBytes": {
+              "type": "integer",
+              "exclusiveMinimum": 0,
+              "maximum": 9007199254740991
+            },
+            "note": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "uses": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[^:\\s]+(:\\d+(-\\d+)?)?( .*)?$"
+          }
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "$schema",
+        "id",
+        "title",
+        "instance",
+        "kind",
+        "trustClass",
+        "location",
+        "keyRecipe",
+        "derivedInputs",
+        "holds",
+        "producer",
+        "consumers",
+        "stateInputs",
+        "savePolicy",
+        "verify",
+        "uses"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheSchema.schema.json",
+  "title": "CacheSchema",
+  "description": "Generated from `CacheSchema` in schemas/sdlc/cache.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "1eb682a384dd14cc8d8393abdc9de1f5660df764",
+    "pr": "2985/merge",
+    "run": "42153468946"
+  }
+}
