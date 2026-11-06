@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 55,
+      "count": 54,
       "unit": "open beans"
     }
   },
@@ -195,14 +195,14 @@
     {
       "id": "folio-assistant-711q",
       "title": "CI speed II (j): pull requests run only the bun-test files their change can affect",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T12:06:06Z",
-      "updatedAt": "2026-11-05T12:06:12Z",
+      "updatedAt": "2026-11-06T01:48:35Z",
       "preview": "Launched by session_01VQDpPffYARDQ8juksAZScf (owner litlfred: \"do it all properly, shave every second\"); worked by \"CI speed 7\" (session_01VQDpPfihRU4aFLjQGkhvs8).\n\nOn pull_request, the four typescript-test shards run only the test files the PR's change can affect: the relative-import closure of every changed file (cat-harness-tools scripts/affected-tests.ts, cat-harness-tools#1487) plus each test",
       "file": "beans/defs/folio-assistant-711q--ci-speed-ii-h-pull-requests-run-only-the-bun-test.md"
     },
@@ -1351,18 +1351,18 @@
         "status": "in-progress",
         "epics": 3,
         "total": 57,
-        "closed": 16,
-        "open": 41,
-        "inProgress": 23,
+        "closed": 17,
+        "open": 40,
+        "inProgress": 22,
         "todo": 18,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.2807017543859649
+        "share": 0.2982456140350877
       }
     ],
     "orphanOpen": 13,
-    "openTotal": 55,
-    "coveredOpen": 41,
+    "openTotal": 54,
+    "coveredOpen": 40,
     "duplicateIds": 0
   }
 }

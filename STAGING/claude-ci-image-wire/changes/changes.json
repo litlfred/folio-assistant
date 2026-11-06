@@ -3,14 +3,14 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "10a7a0158ff20c636f843c58b090e26dbc0e9eb3",
+    "head": "04aed59427d838a865df70cc0a7205f753dc4ead",
     "changes": [
       {
         "path": ".github/workflows/code-quality-gates.yml",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/code-quality-gates.yml",
-        "ref": "10a7a0158ff20c636f843c58b090e26dbc0e9eb3",
+        "ref": "04aed59427d838a865df70cc0a7205f753dc4ead",
         "mounted": true
       },
       {
@@ -18,7 +18,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/feature-staging.yml",
-        "ref": "10a7a0158ff20c636f843c58b090e26dbc0e9eb3",
+        "ref": "04aed59427d838a865df70cc0a7205f753dc4ead",
         "mounted": true
       }
     ],
@@ -36,7 +36,7 @@
     "status": "not-base",
     "beforeCommit": "c5e754827fb3d0a1f8e373ba8a2af42f60698cf8",
     "baseCommit": "3955a1496679ee9273b1a71276a57403babe1d98",
-    "measured": 27067,
+    "measured": 27064,
     "notInCone": [
       {
         "path": "ar/folio-assistant-core/glossary/index.html",
@@ -57,7 +57,7 @@
         "via": []
       },
       {
-        "path": "assets/auto-docs/index.json",
+        "path": "assets/beans/count.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -87,12 +87,6 @@
         "via": []
       },
       {
-        "path": "assets/glossary/cat-harness-tools--kg-schema-fields.skos.jsonld",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
         "path": "assets/glossary/fhir-harness--kg-bpmn-activities.skos.jsonld",
         "change": "changed",
         "role": "data",
@@ -118,6 +112,12 @@
       },
       {
         "path": "assets/glossary/folio-assistant-core--kg-tools.skos.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/harness/tiles.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -226,6 +226,12 @@
       },
       {
         "path": "assets/img/uml/overview/smart-trust/smart-trust-document-kinds.svg",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "assets/js/harness-data.js",
         "change": "changed",
         "role": "data",
         "via": []
@@ -717,7 +723,7 @@
         "via": []
       },
       {
-        "path": "assets/slices/beans.f5b0c26ff72800e5cc2a73a84da633941ca9ccd0de107bd481f8e3c69f45b699.sqlite3",
+        "path": "assets/slices/beans.90ea2cb62b5ef5736a4c77673503e778c0b5866effcfeeaa87563c6ac083d5d0.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
@@ -735,31 +741,13 @@
         "via": []
       },
       {
-        "path": "assets/slices/kg.2d4f4251e61e7f410993a52357765476288fe2853a94756e06c8da30178192b4.sqlite3",
+        "path": "assets/slices/kg.4371ccf655f64df92f6e16352f4c4ef0cd48ede239cd44aa6bd545d5d9ab05fa.sqlite3",
         "change": "added",
         "role": "data",
         "via": []
       },
       {
         "path": "assets/slices/kg.sqlite3.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/slices/library.dd77ee3429ea27a2a5667464d0e8cf2ba3cf6ebb0e5894ec1f65691d4545ca3e.sqlite3",
-        "change": "added",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/slices/library.sqlite3.json",
-        "change": "changed",
-        "role": "data",
-        "via": []
-      },
-      {
-        "path": "assets/translation-status/index.json",
         "change": "changed",
         "role": "data",
         "via": []
@@ -5523,6 +5511,24 @@
         "via": []
       },
       {
+        "path": "en/cat-harness-tools/building-blocks/index.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness-tools/user-scenario/index.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness-tools/workshop/index.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
         "path": "en/cat-harness/attestations/cat-harness/index.html",
         "change": "changed",
         "role": "content",
@@ -5674,6 +5680,12 @@
       },
       {
         "path": "en/cat-harness/bean/cat-harness-tools/beans/defs/cat-tools-p4tr--mcp-tool-paths-not-contained/index.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/bean/cat-harness-tools/beans/defs/cat-tools-pp9g--pre-push-fast-gates-on-the-committers-machine-and/index.html",
         "change": "changed",
         "role": "content",
         "via": []
@@ -12700,6 +12712,12 @@
       },
       {
         "path": "en/cat-harness/software-library/cat-harness-tools/libraries/playwright__test.library/index.html",
+        "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/software-library/cat-harness-tools/libraries/plus-jakarta-sans-2.7.1.vendored.library/index.html",
         "change": "changed",
         "role": "content",
         "via": []
@@ -74886,7 +74904,7 @@
       },
       {
         "dir": "assets",
-        "count": 158,
+        "count": 157,
         "sample": [
           "assets/beans/burndown.json",
           "assets/harnesses/bootstrap-tools.json",
@@ -75081,17 +75099,6 @@
           "pins.json",
           "tool-types.schema.json",
           "tool.schema.json"
-        ]
-      },
-      {
-        "dir": "en",
-        "count": 5,
-        "sample": [
-          "en/cat-harness-tools/building-blocks/index.html",
-          "en/cat-harness-tools/user-scenario/index.html",
-          "en/cat-harness-tools/workshop/index.html",
-          "en/cat-harness/bean/cat-harness-tools/beans/defs/cat-tools-pp9g--pre-push-fast-gates-on-the-committers-machine-and/index.html",
-          "en/cat-harness/software-library/cat-harness-tools/libraries/plus-jakarta-sans-2.7.1.vendored.library/index.html"
         ]
       },
       {
