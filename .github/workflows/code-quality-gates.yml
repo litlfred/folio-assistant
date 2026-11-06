@@ -682,8 +682,13 @@ jobs:
     if: ${{ github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # `actions: read` lists and downloads another run's bundle (`bundle-cache.sh`).
+    permissions:
+      contents: read
+      actions: read
     outputs:
-      manifest: ${{ steps.pack.outputs.manifest }}
+      # Built here, or restored from a run that recorded the same digest.
+      manifest: ${{ steps.cache.outputs.manifest || steps.pack.outputs.manifest }}
     # Every `run:` step goes through `gate-shell.sh`, for the reason the
     # `typescript-static` job gives (bean `yqc4`).
     defaults:
@@ -704,6 +709,30 @@ jobs:
         # refuses an unmounted copy (exit 2) rather than reading it as empty, and
         # this step exits 1 loudly if the branch cannot be reached.
         run: bun run cat state:mount
+
+      # ## Built only when its inputs changed (beans x35i, tv20)
+      #
+      # The copy is keyed on a digest of the tree and the tool versions the
+      # tree does not pin (`bundle-cache.sh`, which says what is and is not in
+      # the key). A run that already built this digest, and passes every check
+      # there (trusted source, whole, names no other commit), hands its copy
+      # over: the build steps below are skipped and the same manifest is this
+      # job's output, so every reader still restores and checks it in place.
+      # Measured 2026-11-05: the docs-site deploy reused the merged PR's copy
+      # on 8 of its last 10 pushes by the same tree rule; this job rebuilt it
+      # each time (268 s on run 42012108138).
+      - name: Digest of what the QA working copy is built from (bundle cache)
+        id: digest
+        run: echo "digest=$(bash .github/scripts/bundle-cache.sh digest qa-working-copy)" >> "$GITHUB_OUTPUT"
+
+      - name: Reuse a QA working copy already built from this digest (bundle cache)
+        id: cache
+        if: ${{ steps.digest.outputs.digest != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: bash .github/scripts/bundle-cache.sh fetch qa-working-copy "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/qa-working-copy"
 
       - name: Build the IG artefact indexes this run reads (fhir-harness#124)
         # Each IG instance's fhir-artifact-index/ (index, menu, releases) is
@@ -761,9 +790,11 @@ jobs:
           retention-days: 3
 
       - name: Snapshot the checkout before the build (bean jtfk)
+        if: ${{ steps.cache.outputs.hit != 'true' }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/qa-before.txt"
 
       - name: Produce the QA working copy this run reads (bean 72a8)
+        if: ${{ steps.cache.outputs.hit != 'true' }}
         # The derived QA results are not committed (bean `5hox`): their record is
         # the `qa-reports` branch and `test/results/` is gitignored. The gates and
         # tests READ that tree, so it is computed here, once: the external
@@ -787,6 +818,7 @@ jobs:
 
       - name: Pack everything the build wrote, with its manifest (bean jtfk)
         id: pack
+        if: ${{ steps.cache.outputs.hit != 'true' }}
         run: |
           manifest=$(bash cat-harness-tools/scripts/qa-working-copy-bundle.sh pack "$RUNNER_TEMP/qa-before.txt" "$RUNNER_TEMP/qa-working-copy")
           echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
@@ -806,6 +838,25 @@ jobs:
           if-no-files-found: error
           # A re-run of the whole workflow builds again; it must replace,
           # not collide with, the first attempt's copy.
+          overwrite: true
+          retention-days: 3
+
+      - name: Record this copy under its digest (bundle cache)
+        # Last, so a record exists only when the copy above was uploaded.
+        if: ${{ steps.digest.outputs.digest != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: bash .github/scripts/bundle-cache.sh record qa-working-copy "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/bundle-record"
+
+      - name: Upload the digest record (bundle cache)
+        if: ${{ steps.digest.outputs.digest != '' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: bundle-qa-working-copy-${{ steps.digest.outputs.digest }}
+          path: ${{ runner.temp }}/bundle-record/bundle-cache.txt
+          if-no-files-found: error
           overwrite: true
           retention-days: 3
 
@@ -843,8 +894,13 @@ jobs:
     if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # `actions: read` lists and downloads another run's bundle (`bundle-cache.sh`).
+    permissions:
+      contents: read
+      actions: read
     outputs:
-      manifest: ${{ steps.pack.outputs.manifest }}
+      # Built here, or restored from a run that recorded the same digest.
+      manifest: ${{ steps.cache.outputs.manifest || steps.pack.outputs.manifest }}
     # Every `run:` step goes through `gate-shell.sh`, for the reason the
     # `typescript-static` job gives (bean `yqc4`).
     defaults:
@@ -873,6 +929,28 @@ jobs:
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         run: bun run cat state:mount
+
+      # Built only when its inputs changed (beans x35i, tv20), as the QA
+      # working copy is: the digest adds that copy's manifest sha256, since the
+      # pages are built over it. A PR run's pages name its merge ref (measured
+      # 2026-11-05, `test/results/witnesses/**`), so `bundle-cache.sh` reuses
+      # them only on the same commit: a re-run, a dispatch, Feature Staging.
+      - name: Digest of what the publish-time pages are built from (bundle cache)
+        id: digest
+        env:
+          QA_MANIFEST: ${{ needs.qa-working-copy.outputs.manifest }}
+        run: |
+          [ -n "$QA_MANIFEST" ] || { echo "no QA working copy manifest: no digest, so the pages are built"; exit 0; }
+          echo "digest=$(bash .github/scripts/bundle-cache.sh digest publish-pages "qa-working-copy $QA_MANIFEST")" >> "$GITHUB_OUTPUT"
+
+      - name: Reuse publish-time pages already built from this digest (bundle cache)
+        id: cache
+        if: ${{ steps.digest.outputs.digest != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: bash .github/scripts/bundle-cache.sh fetch publish-pages "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/publish-pages"
 
       - name: Download the IG artefact indexes built for this run (fhir-harness#124)
         # Built once by `qa-working-copy` (`ig-index:build`); without them
@@ -910,16 +988,20 @@ jobs:
       # 2026-10-30 13:23Z (#2744). The major is read from the plantuml
       # tool-release declaration, so a later bump moves it too.
       - name: Java runtime the PlantUML release declares (#2744)
+        if: ${{ steps.cache.outputs.hit != 'true' }}
         uses: ./.github/actions/plantuml-java
 
       - name: Snapshot the checkout before the build (B1)
+        if: ${{ steps.cache.outputs.hit != 'true' }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/pages-before.txt"
 
       - name: Build the publish-time pages the tests read (B1)
+        if: ${{ steps.cache.outputs.hit != 'true' }}
         run: bun run cat derive:publish
 
       - name: Pack everything the build wrote, with its manifest (B1)
         id: pack
+        if: ${{ steps.cache.outputs.hit != 'true' }}
         run: |
           manifest=$(bash cat-harness-tools/scripts/qa-working-copy-bundle.sh pack "$RUNNER_TEMP/pages-before.txt" "$RUNNER_TEMP/publish-pages")
           echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
@@ -932,6 +1014,25 @@ jobs:
           path: |
             ${{ runner.temp }}/publish-pages/manifest.txt
             ${{ runner.temp }}/publish-pages/qa-working-copy.tar
+          if-no-files-found: error
+          overwrite: true
+          retention-days: 3
+
+      - name: Record these pages under their digest (bundle cache)
+        # Last, so a record exists only when the pages above were uploaded.
+        if: ${{ steps.digest.outputs.digest != '' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          SHA: ${{ github.sha }}
+        run: bash .github/scripts/bundle-cache.sh record publish-pages "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/bundle-record"
+
+      - name: Upload the digest record (bundle cache)
+        if: ${{ steps.digest.outputs.digest != '' }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: bundle-publish-pages-${{ steps.digest.outputs.digest }}
+          path: ${{ runner.temp }}/bundle-record/bundle-cache.txt
           if-no-files-found: error
           overwrite: true
           retention-days: 3
