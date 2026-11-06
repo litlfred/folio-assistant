@@ -2,11 +2,11 @@
 # folio-assistant-y4pw
 $schema: bean/1.0.0
 title: 'Freeze-set content calls: four site-re-pin reds that need an author, not a regen'
-status: todo
+status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-05T17:40:03Z
-updated_at: 2026-11-05T20:42:21Z
+updated_at: 2026-11-06T05:40:18Z
 parent: folio-assistant-rwmf
 tags:
     - repin-freeze-2026-11-05
@@ -23,3 +23,5 @@ Filed from folio-assistant-rpc6. Owner card (2026-11-05, Q4 "1. Work items, know
 
 ## Done when
 Each item is fixed in its owning repo and merged, or the owner rules it stays.
+
+_2026-11-06T05:40:18Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
