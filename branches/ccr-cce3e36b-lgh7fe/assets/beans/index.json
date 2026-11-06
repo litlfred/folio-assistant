@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 51,
+      "count": 47,
       "unit": "open beans"
     }
   },
@@ -111,14 +111,14 @@
     {
       "id": "folio-assistant-55ka",
       "title": "Siblings asked the owner in prose without cards on 2026-11-05; make interaction-modality part of every sibling brief, and check that it's followed",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:47:16Z",
-      "updatedAt": "2026-11-06T05:53:00Z",
+      "updatedAt": "2026-11-06T08:38:30Z",
       "preview": "The owner, litlfred, has low dexterity. On 2026-11-05 they asked: *\"did you and your siblings forget I am disabled? why has it not been heeded lately?\"* (relayed by the CI-speed parent session).\n\nSome sibling sessions asked the owner in prose only, without numbered options and without a tappable card. The rule is the cat-harness skill `interaction-modality`:\n- the full question in chat first, with",
       "file": "beans/defs/folio-assistant-55ka--siblings-asked-the-owner-in-prose-without-cards-on.md"
     },
@@ -363,14 +363,14 @@
     {
       "id": "folio-assistant-audl",
       "title": "cat-harness: French translation of the rewritten docs/guides/agent-onboarding.md",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T14:22:39Z",
-      "updatedAt": "2026-11-06T05:52:40Z",
+      "updatedAt": "2026-11-06T08:38:30Z",
       "preview": "Docs QA passes d6e155a6, 756943ad and 7c759481 rewrote cat-harness's `docs/guides/agent-onboarding.md`. Then 944dbd62 regenerated `translations/fr/guides/agent-onboarding.po`: 41 msgids, 25 of them empty. That is an inherited `translation:block-qa` finding, one of 16 inherited at `qa-reports:main/83c80d73`.\n\nFound by \"CI speed 12\" while judging smart-base#307.\n\nSign-off follows the translation pro",
       "file": "beans/defs/folio-assistant-audl--cat-harness-french-translation-of-the-rewritten-do.md"
     },
@@ -398,21 +398,21 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T18:30:00Z",
-      "updatedAt": "2026-11-02T19:26:00Z",
+      "updatedAt": "2026-11-06T08:35:33Z",
       "preview": "## How to resume (read this first)\n\n1. Read this bean, newest comment last. The last comment is the current state.\n2. Project thread: \"Move glossary and acronyms to end matter\" (cmsg_017WNUkNK8kdDziPK58Pv6G9AcL9aRjjsVCideLLzUF3hc). Project memory: `document-back-matter-order.md`.\n3. Check the open PRs below: CI, merge state. Structure-only PRs merge when green (owner OK'd smart-ra#230 at 18:17Z; m",
       "file": "beans/defs/folio-assistant-bmat--document-back-matter-glossary-acronyms.md"
     },
     {
       "id": "folio-assistant-bpnl",
       "title": "Fix overlapping harness BPMN layouts (nice-BPMN criteria)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T18:55:00Z",
-      "updatedAt": "2026-11-05T14:03:00Z",
+      "updatedAt": "2026-11-06T08:31:00Z",
       "preview": "Owner 2026-11-02 18:41Z, on the cat-harness BPMN in the beans-by-process mockup: \"this bpmn has overlaps, does not meet nice bpmn criteria\". Thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9TKtbAKvnZPFwBmpCcBD2oP\n\nCriteria: skill `bpmn-detangle` (cat-harness skills/process/workflow/bpmn-detangle.md), checks in cat-harness-tools src/workflow/d",
       "file": "beans/defs/folio-assistant-bpnl--fix-overlapping-harness-bpmn-layouts.md"
     },
@@ -552,7 +552,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-06T05:06:13Z",
-      "updatedAt": "2026-11-06T05:23:43Z",
+      "updatedAt": "2026-11-06T08:36:21Z",
       "preview": "folio-assistant#2986 (cat-harness 7321322, cat-harness-tools 925882a, bootstrap 12fa6d5) fails 5 checks that pass on main ae0fe43 (run 42152541993): activity-skill-coverage and process-index chatter (cat-harness sdlc/processes/cache.bpmn: 8 tasks name no skill; Process_Cache summary carries a dated owner quote), bpmn:checklist:check (2 cat-harness checklists stale vs bootstrap 12fa6d5), audit:cove",
       "file": "beans/defs/folio-assistant-evtx--re-pin-train-20261106-0425-has-five-new-failures-p.md"
     },
@@ -622,7 +622,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T19:30:00Z",
-      "updatedAt": "2026-11-02T20:05:00Z",
+      "updatedAt": "2026-11-06T08:35:45Z",
       "preview": "## Goal\n\nOwner saw \"POTENTIAL RISKS MITIGATION MITIGATION ...\" run-on text under the real risks table on the dth-pc staging site (Chapter 4). The seeder copied PDF table text into prose pages next to the structured t-chNN-step-N table blocks.\n\nSame owner message also asked: more padding between content and the \"grill\" (side decoration), and no right-side grill. That is site chrome (cat-harness), n",
       "file": "beans/defs/folio-assistant-ftpc--dth-pc-flattened-table-prose-cleanup.md"
     },
@@ -1018,7 +1018,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-06T05:55:05Z",
-      "updatedAt": "2026-11-06T05:55:05Z",
+      "updatedAt": "2026-11-06T08:36:09Z",
       "preview": "Owner litlfred 2026-11-06 chose 'One new session': fix the 3 causes failing re-pin trains fa#2975…#2986.\n\n## Done when\n- [x] Cause 1: cat-harness#1097 merged 43d7648 — (re-pin bootstrap 12fa6d5 / tools 9f478d4 + 2 checklists) merged\n- [x] Cause 3: cat-harness#1088 merged — (CI speed 14, Process_Cache skills + summary) merged\n- [ ] Cause 2: fa#2985 (integrator, caches:viz:check gate) merged\n- [ ] T",
       "file": "beans/defs/folio-assistant-pdsq--re-pin-trains-fix-the-3-standing-blockers-owner-20.md"
     },
@@ -1039,14 +1039,14 @@
     {
       "id": "folio-assistant-pqlh",
       "title": "Re-pin trains: keep bootstrap checklists in step with the train's bootstrap pin",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-06T05:55:06Z",
-      "updatedAt": "2026-11-06T05:55:06Z",
+      "updatedAt": "2026-11-06T08:35:57Z",
       "preview": "Structural fix for cause 1 of the 2026-11-06 train failures: cat-harness commits bootstrap's checklists built from its own bootstrap pin, so any train that moves folio-assistant's bootstrap past cat-harness's lock fails bpmn:checklist:check. Options: (a) the train never moves bootstrap/-tools past cat-harness's lock (re-pin cat-harness first, as a cascade), or (b) build below-harness checklists at",
       "file": "beans/defs/folio-assistant-pqlh--re-pin-trains-keep-bootstrap-checklists-in-step-wi.md"
     },
@@ -1095,15 +1095,15 @@
     {
       "id": "folio-assistant-rwhr",
       "title": "A process declares whether it starts from a work plan; workflow_start says so when one is missing",
-      "status": "todo",
+      "status": "in-progress",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T20:10:15Z",
-      "updatedAt": "2026-11-05T20:10:15Z",
-      "preview": "Split from folio-assistant-exrp (plan step 3), owner 2026-11-05: not chosen for now; filed as its own work item. A BPMN process declares (optionally) that it starts from a work plan; small processes need none. workflow_start reports, without refusing, when such a process is started with no plan.",
+      "updatedAt": "2026-11-06T08:35:21Z",
+      "preview": "Split from folio-assistant-exrp (plan step 3), owner 2026-11-05: not chosen for now; filed as its own work item. A BPMN process declares (optionally) that it starts from a work plan; small processes need none. workflow_start reports, without refusing, when such a process is started with no plan.\n\n_2026-11-06T08:35:21Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: ",
       "file": "beans/defs/folio-assistant-rwhr--a-process-declares-whether-it-starts-from-a-work-p.md"
     },
     {
@@ -1235,14 +1235,14 @@
     {
       "id": "folio-assistant-veb9",
       "title": "cat-harness-tools: adversarial-backfill.ts resolveSidecarPath still uses the pre-#1014 path",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T17:24:23Z",
-      "updatedAt": "2026-11-06T05:55:20Z",
+      "updatedAt": "2026-11-06T08:38:30Z",
       "preview": "`resolveSidecarPath` in cat-harness-tools `adversarial-backfill.ts` still maps a skill to `kg-qa/skills/sdlc/sdlc-core/`. Since #1014 the store has been at cat-harness `test/attestations/adversarial-review/sdlc/skills/sdlc-core/<name>.attestations.json`.\n\nAs a result:\n- `--rank` reports reviewed sdlc skills as \"never\" reviewed;\n- the write path would create orphaned files.\n\nFound during the owner-",
       "file": "beans/defs/folio-assistant-veb9--cat-harness-tools-adversarial-backfillts-resolvesi.md"
     },
@@ -1312,7 +1312,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:21:54Z",
-      "updatedAt": "2026-11-05T13:21:54Z",
+      "updatedAt": "2026-11-06T08:36:33Z",
       "preview": "Every fresh folio-assistant session: the container's instance mounts are older than index.lock.json (mount-from-lock leaves them untouched), and a plain `bun run cat state:mount` rewrites the root .gitignore 'state mounts' block from those stale declarations, dropping /who-iris/test/attestations/** (declared by the pinned who-iris 35f23d3, absent from the stale on-disk copy). The staleLayerMounts ",
       "file": "beans/defs/folio-assistant-x38u--statemount-rewrites-the-gitignore-block-from-stale.md"
     },
@@ -1435,18 +1435,18 @@
         "status": "in-progress",
         "epics": 3,
         "total": 62,
-        "closed": 22,
-        "open": 40,
-        "inProgress": 26,
-        "todo": 14,
+        "closed": 26,
+        "open": 36,
+        "inProgress": 24,
+        "todo": 12,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.3548387096774194
+        "share": 0.41935483870967744
       }
     ],
     "orphanOpen": 10,
-    "openTotal": 51,
-    "coveredOpen": 40,
+    "openTotal": 47,
+    "coveredOpen": 36,
     "duplicateIds": 0
   }
 }

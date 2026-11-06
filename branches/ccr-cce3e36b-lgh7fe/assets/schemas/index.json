@@ -1978,6 +1978,21 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/process/device-screen.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "device-screen.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "instance": "cat-harness-tools",
+      "name": "device-screen",
+      "graphNode": "schema",
+      "summary": "Device screens: what one person sees on one device at a moment of a",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/process/methodology.test.ts",
       "instance": "cat-harness-tools",
       "name": "methodology.test",
@@ -35444,8 +35459,9 @@
         {
           "name": "updated_at",
           "type": "string",
-          "optional": false,
-          "array": false
+          "optional": true,
+          "array": false,
+          "doc": "Optional and no longer written (owner rulings 2026-11-06, cards \"QA dates\" and \"Date source\"): the date is derived on read from the entries' `reviewed_tree`."
         }
       ],
       "extendsNames": [],
@@ -46625,6 +46641,991 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ActionsBlockSchema",
+      "name": "ActionsBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"actions\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "buttons",
+          "type": "z .array(z.object({ label: Text, style: z.enum([\"primary\", \"secondary\", \"danger\", \"success\"]).default(\"primary\"), icon:…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "caption",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#AlertBlockSchema",
+      "name": "AlertBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"alert\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "severity",
+          "type": "z.enum([\"info\", \"success\", \"warning\", \"danger\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#BlockOf",
+      "name": "BlockOf",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "name": "ChipSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "text",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tone",
+          "type": "Tone.default(\"neutral\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text",
+        "cat-harness-tools/schemas/process/device-screen.ts#Tone"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#common",
+      "name": "common",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "undetermined",
+      "note": "{ /** A block's id, when something must name it (a test, a translation). */ id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/).optional(), /** `side`: the second col…",
+      "doc": "What every block may carry.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "name": "ConsentBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"consent\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "who",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "Who may see it."
+        },
+        {
+          "name": "what",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "What they may see."
+        },
+        {
+          "name": "until",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Until when."
+        },
+        {
+          "name": "granted",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Whether the person has said yes: drawn as a toggle."
+        },
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#Device",
+      "name": "Device",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreen",
+      "name": "DeviceScreen",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenKind",
+      "name": "DeviceScreenKind",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "doc": "`device-screen/0.1.0`, as a node kind.",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenSchema",
+      "name": "DeviceScreenSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "DeviceScreenKind"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ExampleKey",
+      "name": "ExampleKey",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-scalar",
+      "doc": "A FHIR example key, `Type/id`, as an artifact index holds it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#FieldsBlockSchema",
+      "name": "FieldsBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"fields\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "rows",
+          "type": "z.array(FieldSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "columns",
+          "type": "z.union([z.literal(1), z.literal(2)]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Two columns of fields, on a screen wide enough."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "name": "FieldSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "value",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mono",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "name": "HeaderBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"header\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "app",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "The app's or the facility's name."
+        },
+        {
+          "name": "subtitle",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "brand",
+          "type": "z.string().regex(/^#[0-9a-fA-F]{6}$/).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The brand colour of the bar's mark."
+        },
+        {
+          "name": "status",
+          "type": "ChipSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A status at the right: \"Offline (28d)\", \"Online · CA key active\"."
+        },
+        {
+          "name": "chips",
+          "type": "z.array(ChipSchema).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#Id",
+      "name": "Id",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-scalar",
+      "doc": "An actor or scenario id: lower-case kebab.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#NoteBlockSchema",
+      "name": "NoteBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"note\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "mono",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#PasscodeBlockSchema",
+      "name": "PasscodeBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"passcode\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "digits",
+          "type": "z.string().regex(/^[0-9]{1,12}$/, \"a passcode is digits\")",
+          "optional": false,
+          "array": false,
+          "doc": "The digits."
+        },
+        {
+          "name": "shown",
+          "type": "z.boolean().default(false)",
+          "optional": true,
+          "array": false,
+          "doc": "Shown, or drawn as dots."
+        },
+        {
+          "name": "entry",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Drawn as boxes being typed into (a verifier's entry) rather than a code held."
+        },
+        {
+          "name": "note",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "name": "PersonCardBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"personCard\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "actor",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "doc": "The actor shown: name and avatar from its persona."
+        },
+        {
+          "name": "name",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The name as the screen spells it, when it is not the persona's (\"Somsack Sengmany\")."
+        },
+        {
+          "name": "subtitle",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A line under the name."
+        },
+        {
+          "name": "fields",
+          "type": "z.array(FieldSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "chips",
+          "type": "z.array(ChipSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "banner",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Drawn as a dark banner across the screen, as an EMR's patient bar."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Id",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "name": "QrBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"qr\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "payload",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "What the code encodes: drawn as a real QR code of this text."
+        },
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The card's title (\"Digital Vaccine Certificate\")."
+        },
+        {
+          "name": "holder",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Whose it is, as the card prints it (\"Somsack Sengmany\")."
+        },
+        {
+          "name": "holderNote",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A line under the holder (\"Guardian: Khamla Sengmany\")."
+        },
+        {
+          "name": "label",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What it is, under the title (\"Vaccine: Hep B birth dose\")."
+        },
+        {
+          "name": "mode",
+          "type": "z.enum([\"show\", \"scan\"]).default(\"show\")",
+          "optional": true,
+          "array": false,
+          "doc": "`show`: a code on this screen; `scan`: the camera reading one."
+        },
+        {
+          "name": "badge",
+          "type": "ChipSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "caption",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "example",
+          "type": "ExampleKey.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The FHIR example the code carries, `Type/id`: linked to its page."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ExampleKey",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "name": "RecordListBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"recordList\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "ChipSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A chip beside the title (\"2 doses completed\")."
+        },
+        {
+          "name": "example",
+          "type": "ExampleKey.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A FHIR example, `Type/id`, whose resources are the rows when `rows` is"
+        },
+        {
+          "name": "rows",
+          "type": "z.array(RecordRowSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "footnote",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Small print under the rows."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ExampleKey",
+        "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "name": "RecordRowSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "code",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A code or an identifier, drawn in mono."
+        },
+        {
+          "name": "detail",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A line under the label."
+        },
+        {
+          "name": "status",
+          "type": "ChipSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "struck",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Drawn struck through: a thing that must NOT be given (an allergy)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ScreenBlock",
+      "name": "ScreenBlock",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ScreenBlockSchema",
+      "name": "ScreenBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyph",
+      "name": "ScreenGlyph",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "name": "ScreenGlyphSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ScreenId",
+      "name": "ScreenId",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-scalar",
+      "doc": "A screen id: as a room calls it (`S4`, `P4-scanner`). Also its URL segment.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#StatusBadgeBlockSchema",
+      "name": "StatusBadgeBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"statusBadge\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.enum(STATUSES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "detail",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "fields",
+          "type": "z.array(FieldSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "verdict",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A short verdict at the right (\"PASS\")."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "STATUSES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "name": "Text",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#Tone",
+      "name": "Tone",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness-tools/schemas/process/methodology.ts#MethodologyFrontMatter",
       "name": "MethodologyFrontMatter",
       "module": "cat-harness-tools/schemas/process/methodology.ts",
@@ -48469,6 +49470,13 @@
           "optional": true,
           "array": false,
           "doc": "A glyph drawn in the avatar instead of the initials (a baby, who has none)."
+        },
+        {
+          "name": "avatar",
+          "type": "z.string().regex(/^[^/][^\\\\]*\\.(?:webp|png|jpe?g|svg)$/i, \"an avatar is an image path from the instance root\").optional…",
+          "optional": true,
+          "array": false,
+          "doc": "A square picture of the person, a path from the instance root; the initials are the fallback."
         }
       ],
       "extendsNames": [],
@@ -50967,9 +51975,9 @@
         {
           "name": "updated_at",
           "type": "string",
-          "optional": false,
+          "optional": true,
           "array": false,
-          "doc": "Report creation / last-update timestamp (ISO-8601 UTC)."
+          "doc": "Report creation / last-update timestamp (ISO-8601 UTC). Optional and no longer written, as {@link QaCriterionEntry.reviewed_at}."
         },
         {
           "name": "runContext",
@@ -51325,9 +52333,9 @@
         {
           "name": "reviewed_at",
           "type": "string",
-          "optional": false,
+          "optional": true,
           "array": false,
-          "doc": "When the audit ran (ISO-8601 UTC)."
+          "doc": "When the audit ran (ISO-8601 UTC). Optional, and no longer written by the"
         },
         {
           "name": "reviewed_tree",
@@ -51581,9 +52589,9 @@
         {
           "name": "last_run_at",
           "type": "string",
-          "optional": false,
+          "optional": true,
           "array": false,
-          "doc": "ISO-8601 UTC timestamp of the most recent qa-sweep run."
+          "doc": "ISO-8601 UTC timestamp of the most recent qa-sweep run. Optional and no longer written: the run's time is in its run record."
         },
         {
           "name": "last_run_sha",
@@ -59391,9 +60399,9 @@
         {
           "name": "updated_at",
           "type": "string",
-          "optional": false,
+          "optional": true,
           "array": false,
-          "doc": "ISO-8601 UTC timestamp of last write."
+          "doc": "ISO-8601 UTC timestamp of last write. Optional and no longer written (owner rulings 2026-11-06, cards \"QA dates\" and \"Date source\"): the date is derived on read from the entries' `reviewed_tree`."
         },
         {
           "name": "references",
@@ -96017,6 +97025,462 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ActionsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "buttons",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ActionsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "buttons",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ActionsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "caption",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#AlertBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#AlertBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "text",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#AlertBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "text",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Tone",
+      "via": "tone",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "until",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "what",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "who",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenKind",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#FieldsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "via": "rows",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#FieldsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#FieldsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "value",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "chips",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "app",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "subtitle",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#NoteBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#NoteBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "text",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PasscodeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PasscodeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "note",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "chips",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "via": "fields",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Id",
+      "via": "actor",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "name",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "subtitle",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "badge",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ExampleKey",
+      "via": "example",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "caption",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "holder",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "holderNote",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "payload",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "summary",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ExampleKey",
+      "via": "example",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "via": "rows",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "footnote",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "code",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "detail",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#StatusBadgeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "via": "fields",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#StatusBadgeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "detail",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#StatusBadgeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "text",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#StatusBadgeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "verdict",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness-tools/schemas/process/role-graph.ts#ActorDef",
       "to": "cat-harness-tools/schemas/kg/skill-package.ts#ActorKind",
       "via": "kind",
@@ -103522,6 +104986,19 @@
       ],
       "page": "en/smart-base/dak-swimlanes/",
       "note": "smart-base/schemas/dak-annexes.ts#DakSwimlaneMapKind — an export this reader does not model as a declaration"
+    },
+    {
+      "id": "device-screen",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "decl": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenKind",
+      "tag": "device-screen/0.1.0",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "device-screen"
+      ],
+      "page": "en/cat-harness-tools/device-screen/"
     },
     {
       "id": "diig-phases-figure",

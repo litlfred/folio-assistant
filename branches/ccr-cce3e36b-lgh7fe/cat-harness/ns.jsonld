@@ -720,6 +720,21 @@
       "layer": "harness"
     },
     {
+      "@id": "cat-harness:graphTypology/device-screen",
+      "@type": [
+        "bootstrap:GraphTypology",
+        "skos:Concept"
+      ],
+      "label": "device-screen",
+      "comment": "Device screens -- what one person sees on one device at a journey step, as typed data-only blocks (QR code, passcode, verdict, record list, consent), drawn as a device mock.",
+      "prefLabel": "device-screen",
+      "definition": "Device screens -- what one person sees on one device at a journey step, as typed data-only blocks (QR code, passcode, verdict, record list, consent), drawn as a device mock.",
+      "notation": "cat-harness:graphTypology/device-screen",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
+    },
+    {
       "@id": "cat-harness:graphTypology/doc-group",
       "@type": [
         "bootstrap:GraphTypology",
@@ -3441,6 +3456,21 @@
       "prefLabel": "sourceTreeDirty",
       "definition": "Whether the working tree had uncommitted changes when the export ran.",
       "notation": "cat-harness:sourceTreeDirty",
+      "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
+      "layer": "harness"
+    },
+    {
+      "@id": "cat-harness:sourceTree",
+      "@type": [
+        "rdf:Property",
+        "skos:Concept"
+      ],
+      "label": "sourceTree",
+      "comment": "The git tree the export was taken from: what its content is a function of, shared by a pull request's merge commit and main's.",
+      "prefLabel": "sourceTree",
+      "definition": "The git tree the export was taken from: what its content is a function of, shared by a pull request's merge commit and main's.",
+      "notation": "cat-harness:sourceTree",
       "inScheme": "https://litlfred.github.io/cat-harness/v0/ns/",
       "isDefinedBy": "https://litlfred.github.io/cat-harness/v0/ns/",
       "layer": "harness"

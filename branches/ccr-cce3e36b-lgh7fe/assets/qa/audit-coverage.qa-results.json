@@ -10,8 +10,8 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 96 of 96 declared kind(s), 278 gate(s), 107 criteria.",
-      "count": 96,
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 97 of 97 declared kind(s), 278 gate(s), 107 criteria.",
+      "count": 97,
       "entries": [
         {
           "kind": "archimate",
@@ -531,6 +531,17 @@
           "typed": true,
           "adversarial": "never",
           "hasFiles": true
+        },
+        {
+          "kind": "device-screen",
+          "state": "no-directory",
+          "directories": [],
+          "criteria": [],
+          "subjectKinds": [],
+          "gates": [],
+          "typed": true,
+          "adversarial": "never",
+          "hasFiles": false
         },
         {
           "kind": "doc-group",
@@ -2012,7 +2023,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 22,
+      "count": 23,
       "entries": [
         {
           "kind": "archimate",
@@ -2048,6 +2059,11 @@
         },
         {
           "kind": "conjectures",
+          "criteria": 0,
+          "gates": []
+        },
+        {
+          "kind": "device-screen",
           "criteria": 0,
           "gates": []
         },
@@ -2146,5 +2162,5 @@
       "entries": []
     }
   },
-  "total": 119
+  "total": 121
 }
