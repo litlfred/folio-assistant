@@ -1,0 +1,79 @@
+# The shared, verified layers cache — the WRITER (bean: "Shared verified
+# layers cache ref", child of folio-assistant-k3vv).
+#
+# `refs/cat/layers/<key>` in this repository holds ONE commit whose tree is the
+# composed overlay of every layer `index.lock.json` pins, exactly as
+# `mount-from-lock.ts` lays it down (key = sha256 of the lock's `instances`);
+# `refs/cat/layers/main` points at main's. A replay (`.github/mount-from-lock.sh`,
+# the session-start hook, every CI job) tries that one shallow fetch first and
+# verifies every byte against the lock; a layer that does not verify, or a
+# missing ref, falls back to the per-repository fetch. The lock stays the sole
+# authority: this cache can cost time, never correctness.
+#
+# Whoever changes the lock writes the ref. On main that is this workflow: a
+# push that touches `index.lock.json` (a re-pin, the train, a merge) mounts the
+# lock, and `layers:publish` refuses unless every mount reads `current`, so only
+# bytes that already hash to the lock are published. Nothing secret is in it.
+#
+# Retention: the newest 20 lock refs, plus `main`, plus the key of every open
+# PR's lock (so a PR's CI keeps its hit until it merges or closes).
+#
+# TRIGGERS, ACTUAL: `push` to main on `index.lock.json`, and `workflow_dispatch`.
+name: layers cache
+
+on:
+  push:
+    branches: [main]
+    paths: [index.lock.json]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: layers-cache
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    name: Publish the layers cache ref
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 1
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.4
+      - name: Mount the lock (bytes only)
+        shell: bash
+        run: |
+          start=$(date +%s)
+          bash .github/mount-from-lock.sh --root . --no-install
+          echo "mount took $(( $(date +%s) - start ))s"
+      - name: Keys of the locks open PRs pin
+        id: keep
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          keys=""
+          for ref in $(gh pr list --state open --limit 200 --json headRefOid --jq '.[].headRefOid'); do
+            git fetch -q --depth 1 origin "$ref" 2>/dev/null || continue
+            k=$(git show "$ref:index.lock.json" 2>/dev/null | bun -e 'const t=await Bun.stdin.text();const l=JSON.parse(t);console.log(new Bun.CryptoHasher("sha256").update(JSON.stringify(l.instances)).digest("hex"))' 2>/dev/null) || continue
+            [ -n "$k" ] && keys="$keys --keep $k"
+          done
+          echo "args=$keys" >> "$GITHUB_OUTPUT"
+      - name: Publish refs/cat/layers/<key> and refs/cat/layers/main
+        shell: bash
+        run: |
+          s=cat-harness-tools/scripts/mount-from-lock.ts
+          if ! grep -q -- '--publish' "$s"; then
+            echo "::notice::the pinned cat-harness-tools has no layers:publish yet; nothing to publish until it is re-pinned"
+            exit 0
+          fi
+          start=$(date +%s)
+          bun "$s" --publish --root . --main --prune 20 ${{ steps.keep.outputs.args }}
+          echo "publish took $(( $(date +%s) - start ))s"

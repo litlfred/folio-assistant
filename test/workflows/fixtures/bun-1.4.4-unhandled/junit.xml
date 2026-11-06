@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="bun test" tests="5" assertions="3" failures="3" skipped="0" time="1.297856544">
+  <testsuite name="a.test.ts" file="a.test.ts" tests="5" assertions="3" failures="3" skipped="0" time="0.670708064" hostname="vm">
+    <testcase name="ok" classname="" time="0.000674" file="a.test.ts" line="2" assertions="1" />
+    <testcase name="bad1" classname="" time="0.054378" file="a.test.ts" line="3" assertions="1">
+      <failure type="AssertionError" message="expect(received).toBe(expected)&#10;&#10;Expected: 2&#10;Received: 1&#10;">AssertionError: expect(received).toBe(expected)&#10;&#10;Expected: 2&#10;Received: 1&#10;&#10;</failure>
+    </testcase>
+    <testcase name="bad2" classname="" time="0.000122" file="a.test.ts" line="4" assertions="1">
+      <failure type="AssertionError" message="expect(received).toBe(expected)&#10;&#10;Expected: 3&#10;Received: 1&#10;">AssertionError: expect(received).toBe(expected)&#10;&#10;Expected: 3&#10;Received: 1&#10;&#10;</failure>
+    </testcase>
+    <testcase name="schedules a late throw" classname="" time="0.000939" file="a.test.ts" line="5" assertions="0" />
+    <testcase name="after" classname="" time="0.05" file="a.test.ts" line="6" assertions="0">
+      <failure type="Error" message="late boom">Error: late boom&#10;      at a.test.ts:5:86&#10;</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

@@ -112,6 +112,33 @@ jobs:
           echo "stamp=$stamp" >> "$GITHUB_OUTPUT"
           echo "tree=$(git rev-parse 'HEAD^{tree}')" >> "$GITHUB_OUTPUT"
 
+      # The train WROTE a lock, so it writes that lock's layers cache ref
+      # (refs/cat/layers/<key>; skill `remote-mount`, "The layers cache"): the
+      # train PR's CI then mounts every layer with one verified fetch instead
+      # of a partial hit through refs/cat/layers/main. Best-effort: the cache
+      # only saves time, `layers:publish` refuses unless every mount hashes to
+      # the lock, and a pin with no `--publish` yet is a notice.
+      - name: Publish this train's layers cache ref
+        if: steps.pins.outputs.moved == 'true'
+        continue-on-error: true
+        env:
+          PUSH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GIT_CONFIG_GLOBAL: /dev/null
+          GIT_CONFIG_NOSYSTEM: "1"
+        run: |
+          set -euo pipefail
+          s=cat-harness-tools/scripts/mount-from-lock.ts
+          if ! grep -q -- '--publish' "$s"; then
+            echo "::notice::the pinned cat-harness-tools has no layers:publish yet; no cache ref for this train"
+            exit 0
+          fi
+          auth=$(printf 'x-access-token:%s' "$PUSH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          GIT_CONFIG_COUNT=2 \
+          GIT_CONFIG_KEY_0="http.$GITHUB_SERVER_URL/.extraheader" GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth" \
+          GIT_CONFIG_KEY_1=core.hooksPath GIT_CONFIG_VALUE_1=/dev/null \
+            bun "$s" --publish --root . --url "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git"
+
       # The verdict workflow sweeps open trains every 15 minutes (its
       # workflow_run trigger never fires for CI started by GITHUB_TOKEN). Each
       # open train is judged here too, so the decision reads a current verdict
