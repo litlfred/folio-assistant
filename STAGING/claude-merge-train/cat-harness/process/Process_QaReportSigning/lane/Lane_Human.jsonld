@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_QaReportSigning/lane/Lane_Human.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/merge-train",
+    "sha": "60c18977192a6acbceb96800f12dacf96fbcea3e",
+    "pr": "2960/merge",
+    "run": "42130337876"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_QaReportSigning/lane/Lane_Human",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Human signer",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_QaReportSigning",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/role/publication-manager",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Human"
+    }
+  ]
+}

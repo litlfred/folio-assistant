@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_MergeTrain/node/Call_ChecksPresent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/merge-train",
+    "sha": "60c18977192a6acbceb96800f12dacf96fbcea3e",
+    "pr": "2960/merge",
+    "run": "42130337876"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_MergeTrain/node/Call_ChecksPresent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Find members with no CI on their head",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_MergeTrain",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_MergeTrain/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/skill/ci-health"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_PrChecksPresent",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_MergeTrain#flow/t11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_MergeTrain#flow/t12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_ChecksPresent"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/smart-base/directory/tools.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/tools.jsonld",
+  "staging": {
+    "branch": "claude/merge-train",
+    "sha": "60c18977192a6acbceb96800f12dacf96fbcea3e",
+    "pr": "2960/merge",
+    "run": "42130337876"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/tools",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "tools",
+      "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/tools"
+      ],
+      "description": "smart-base's Tool nodes: DAK-shaped capabilities such as DMN to FHIR Questionnaire. A Tool node is a declaration (what it consumes, what it produces, which skill it satisfies), not a copy of upstream Python; execution stays upstream until it moves too. Capabilities that are not DAK-shaped, such as the two Library strippers, belong to `fhir-harness` by `smart-stack-layering`.",
+      "readmePath": "tools/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/tools"
+    }
+  ]
+}

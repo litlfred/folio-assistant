@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_SecureAgentPermissions/node/GW_Granted.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/merge-train",
+    "sha": "60c18977192a6acbceb96800f12dacf96fbcea3e",
+    "pr": "2960/merge",
+    "run": "42130337876"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_SecureAgentPermissions/node/GW_Granted",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Anything granted?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_SecureAgentPermissions",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_SecureAgentPermissions/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_SecureAgentPermissions#flow/p8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_SecureAgentPermissions#flow/p9",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/process/Process_SecureAgentPermissions#flow/p10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/node/GW_Granted"
+    }
+  ]
+}

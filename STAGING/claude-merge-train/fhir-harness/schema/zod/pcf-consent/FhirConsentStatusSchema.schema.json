@@ -1,0 +1,25 @@
+{
+  "$ref": "#/definitions/FhirConsentStatus",
+  "definitions": {
+    "FhirConsentStatus": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "proposed",
+        "active",
+        "rejected",
+        "inactive",
+        "entered-in-error"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/pcf-consent/FhirConsentStatusSchema.schema.json",
+  "title": "FhirConsentStatusSchema",
+  "description": "Generated from `FhirConsentStatusSchema` in schemas/pcf-consent.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/merge-train",
+    "sha": "60c18977192a6acbceb96800f12dacf96fbcea3e",
+    "pr": "2960/merge",
+    "run": "42130337876"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/skill/spec-template.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/merge-train",
+    "sha": "60c18977192a6acbceb96800f12dacf96fbcea3e",
+    "pr": "2960/merge",
+    "run": "42130337876"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/skill/spec-template",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "spec-template",
+      "title": "Feature Specification: [Feature Name]",
+      "description": "The single declared template artefact for platform feature specifications, adopted from github/spec-kit. Mandatory sections and required fields are machine-readable here for automated validation.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/package/spec-kit"
+      ],
+      "instructionsPath": "sdlc/skills/spec-kit/spec-template.md",
+      "instructionLines": 112,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/spec-template"
+    }
+  ]
+}

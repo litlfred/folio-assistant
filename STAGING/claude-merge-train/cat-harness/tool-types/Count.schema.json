@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-merge-train/cat-harness/tool-types/Count.schema.json",
+  "title": "Count",
+  "type": "integer",
+  "minimum": 0,
+  "maximum": 1000000000,
+  "description": "A non-negative count — how many of something, or how many to show. Zero is a real answer.",
+  "staging": {
+    "branch": "claude/merge-train",
+    "sha": "60c18977192a6acbceb96800f12dacf96fbcea3e",
+    "pr": "2960/merge",
+    "run": "42130337876"
+  }
+}

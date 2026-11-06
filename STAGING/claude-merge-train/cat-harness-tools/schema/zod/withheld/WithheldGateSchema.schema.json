@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/WithheldGate",
+  "definitions": {
+    "WithheldGate": {
+      "type": "object",
+      "properties": {
+        "gate": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verdict": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "gate",
+        "verdict"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/withheld/WithheldGateSchema.schema.json",
+  "title": "WithheldGateSchema",
+  "description": "Generated from `WithheldGateSchema` in schemas/content/withheld.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/merge-train",
+    "sha": "60c18977192a6acbceb96800f12dacf96fbcea3e",
+    "pr": "2960/merge",
+    "run": "42130337876"
+  }
+}
