@@ -632,7 +632,14 @@ jobs:
           PRODUCER_JOB: QA working copy, built once for this run (not a gate)
           EVENT: ${{ github.event_name }}
         run: |
-          if [ "$EVENT" = "workflow_dispatch" ]; then
+          # A dispatch on MAIN whose HEAD is a two-parent merge (a merge-train
+          # or re-pin-train PR merged with GITHUB_TOKEN, whose merge starts no
+          # push run, so the gates are dispatched instead; bean hd58) is looked
+          # up exactly as a push of that merge would be: by its second parent,
+          # the tested head. The tree rule still decides.
+          if [ "$EVENT" = "workflow_dispatch" ] && [ "$GITHUB_REF" = refs/heads/main ] && git rev-parse -q --verify 'HEAD^2' >/dev/null; then
+            :
+          elif [ "$EVENT" = "workflow_dispatch" ]; then
             # See "PR and dispatch runs too" above: a local commit, tree
             # unchanged, second parent the dispatched head. Never pushed.
             # The first parent is an empty root commit: git drops a repeated
@@ -1025,6 +1032,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: "TypeScript — bun test, shard ${{ matrix.shard }}/4"  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -1189,12 +1197,57 @@ jobs:
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
+
+      # A pull request runs only the test files its change can affect (CI
+      # speed 7, child of bean folio-assistant-k3vv): the import closure of
+      # every changed file, re-pinned upstream files included, plus each test
+      # that names a changed file. Every other event runs the whole suite, so
+      # what a PR leaves out, the push of its merge to main runs. Selection
+      # never fails: whatever it cannot determine selects everything. Not a
+      # judged step (`CQG_UNJUDGED`): it asks no question about the tree.
+      # A merge-train or repin-train PR runs the whole suite: the train's
+      # verdict is the only CI its members get before landing, and main never
+      # reuses a scoped run (#2963), so a scoped train would make main run
+      # everything again anyway.
+      - name: Select the test files this pull request can affect
+        id: scope
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.head_ref, 'merge-train/') && !startsWith(github.head_ref, 'repin-train/') }}
+        env:
+          CQG_UNJUDGED: "true"
+          CQG_TEST_SCOPE: ${{ runner.temp }}/test-scope.json
+        run: bash .github/scripts/pr-bun-test.sh --scope
+
+      # Exactly one of the next two steps runs, and each gives the verdict
+      # (`CQG_VERDICT`). This one, on a pull request with a selection, runs
+      # this shard's share of it; an empty share runs nothing and writes
+      # "skipped — not affected" to the summary, never a pass. It comes BEFORE
+      # `bun test` so that one stays the job's last step
+      # (`check:red-gate-is-last`) and its `bun test` line stays the local gate
+      # set's (`gatesFrom`).
+      - name: bun test — the files this pull request can affect
+        if: ${{ steps.scope.outputs.kind == 'some' }}
+        env:
+          BUN_OPTIONS: --reporter=junit --reporter-outfile=${{ runner.temp }}/cqg/bun-junit.xml
+          CQG_TEST_SCOPE: ${{ runner.temp }}/test-scope.json
+          CQG_TESTS: bun
+          CQG_JUNIT: ${{ runner.temp }}/cqg/bun-junit.xml
+          CQG_VERDICT: "true"
+          CQG_TOKEN: ${{ github.token }}
+        run: bash .github/scripts/pr-bun-test.sh ${{ matrix.shard }} 4
 
       # The JUnit report names each failing test, so the verdict compares tests,
       # not the step. It stays the job's last step (`check:red-gate-is-last`),
-      # so it gives the verdict itself (`CQG_VERDICT`).
+      # so it gives the verdict itself (`CQG_VERDICT`). The whole suite: every
+      # push, merge group, dispatch and nightly run, and a pull request whose
+      # change selects everything.
       - name: bun test
+        if: ${{ steps.scope.outputs.kind != 'some' }}
         env:
           BUN_OPTIONS: --shard=${{ matrix.shard }}/4 --reporter=junit --reporter-outfile=${{ runner.temp }}/cqg/bun-junit.xml
           CQG_TESTS: bun
@@ -1354,6 +1407,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — workflows, skills, knowledge graph (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -1523,7 +1577,29 @@ jobs:
       - name: Java runtime the PlantUML release declares (#2744)
         uses: ./.github/actions/plantuml-java
 
+      # The CI cone (bean 4rbc; CI speed 7): on a pull request a gate whose
+      # strace-derived read set and script are unchanged since main's last
+      # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
+      # a pass); on a push to main each gate is recorded. The records are
+      # restored from main's run on the PR's base sha (nearest older one
+      # otherwise) and saved by this action's post-job step, which saves only
+      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      - name: Restore the CI cone records (bean 4rbc)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-gates-kg-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          restore-keys: |
+            ci-cone-v1-gates-kg-
+      - name: Turn on the CI cone (bean 4rbc)
+        run: bash .github/scripts/ci-cone-prepare.sh
+
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The base workflow processes are strict; a content package may relax a
@@ -2079,6 +2155,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — instances, docs, translations (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -2272,7 +2349,29 @@ jobs:
           EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
+      # The CI cone (bean 4rbc; CI speed 7): on a pull request a gate whose
+      # strace-derived read set and script are unchanged since main's last
+      # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
+      # a pass); on a push to main each gate is recorded. The records are
+      # restored from main's run on the PR's base sha (nearest older one
+      # otherwise) and saved by this action's post-job step, which saves only
+      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      - name: Restore the CI cone records (bean 4rbc)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-gates-docs-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          restore-keys: |
+            ci-cone-v1-gates-docs-
+      - name: Turn on the CI cone (bean 4rbc)
+        run: bash .github/scripts/ci-cone-prepare.sh
+
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The same audit, over EVERY declared instance rather than the root alone.
@@ -3101,6 +3200,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — cat-harness standalone ratchet (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -3223,6 +3323,11 @@ jobs:
         run: bun run smart:pages
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
@@ -3275,6 +3380,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — registered, never run elsewhere (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -3423,7 +3529,29 @@ jobs:
       - name: Java runtime the PlantUML release declares (#2744)
         uses: ./.github/actions/plantuml-java
 
+      # The CI cone (bean 4rbc; CI speed 7): on a pull request a gate whose
+      # strace-derived read set and script are unchanged since main's last
+      # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
+      # a pass); on a push to main each gate is recorded. The records are
+      # restored from main's run on the PR's base sha (nearest older one
+      # otherwise) and saved by this action's post-job step, which saves only
+      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      - name: Restore the CI cone records (bean 4rbc)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-gates-unrun-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          restore-keys: |
+            ci-cone-v1-gates-unrun-
+      - name: Turn on the CI cone (bean 4rbc)
+        run: bash .github/scripts/ci-cone-prepare.sh
+
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       - name: gates that were registered and never run
@@ -4583,6 +4711,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: "End-to-end + accessibility, shard ${{ matrix.shard }}/3"  # this job's `name:`, to find its record on main
     strategy:
@@ -4697,6 +4826,11 @@ jobs:
         run: npx --yes playwright install --with-deps chromium
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The suite generates what it needs under _kg/ if absent, so the

@@ -1,0 +1,196 @@
+# The merge train — bean `folio-assistant-hd58` (owner, 2026-11-05: "quadratic
+# compute time in terms of # PRs to merge — how to linearize? do it all
+# properly").
+#
+# Landing PRs one at a time moves main once per PR, and each move re-runs
+# something per open PR: merge-main re-merging a conflicted PR, an author's
+# update-branch, a full main run. That is O(N²) runner time in the N PRs
+# merged. This workflow lands a BATCH per main move, judged by ONE CI run:
+#
+#   1. Judge the open train PR (label `merge-train-batch`), if there is one,
+#      with the re-pin train's rule: no check fails on its head that passes on
+#      main, check by check. Green: merge it with a merge commit (expected sha
+#      = the judged head). Its second parent is the tested head, so main's run
+#      reuses that run's verdict (`verdict-reuse.sh`). Every member's head is
+#      now on main, so GitHub marks each member merged. Red: close it; a batch
+#      of one is ejected (its `merge-train` label removed, with the failures),
+#      a larger batch is split in halves and bisected, so one culprit among k
+#      costs about log2 k extra runs and the innocent halves land on the way.
+#   2. With no open train, stack the next batch on main with
+#      `bun run cat merge:train` (declared conflict patterns only, ONE regen
+#      over the stack): the head of the bisect queue, else every ready PR a
+#      person opted in (`merge-train` label added by a person, or an approved
+#      review). Push `merge-train/<stamp>`, open ONE train PR, and have CI
+#      judge it once.
+#
+# Conflicts are resolved here, once, never per main move: `merge-main.yml`
+# skips a PR labelled `merge-train`. Owner, 2026-11-05 ("Resolve generated
+# only"; supersedes the 2026-10-04 "stack cleanly" ruling for generated paths
+# only): conflicts in declared generated paths are resolved mechanically; a
+# conflict in a hand-written file is refused by `merge:train`, and that PR is
+# ejected with a comment and waits for its author.
+#
+# Nothing here waits for CI: a run takes one step and ends. `sweeps.yml` asks
+# `merge-train.ts pending` every 15 minutes and dispatches this workflow only
+# when there is work, and a finished CI run on a train branch starts it too.
+#
+# TRIGGERS, ACTUAL (the owner's decision, 2026-11-05, bean hd58):
+# `workflow_dispatch` (by `sweeps.yml` when a train waits or a batch is ready,
+# or by hand) and `workflow_run` (the gates finished on a `merge-train/`
+# branch). It opens, merges and closes train PRs; no PR or push to main
+# triggers it.
+
+name: Merge train
+
+on:
+  workflow_run:
+    workflows: ["Code-quality gates"]
+    types: [completed]
+    branches: ['merge-train/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# One train at a time: two runs would build two candidates on one main.
+concurrency:
+  group: merge-train
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    name: Judge, land or bisect the open train; build the next
+    # A fork can name a branch `merge-train/…` too; this job holds write.
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.head_repository.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      actions: write
+      statuses: write
+      checks: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: main
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.4
+      - id: bot
+        if: vars.HARNESS_BOT_ID != ''
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          app-id: ${{ vars.HARNESS_BOT_ID }}
+          private-key: ${{ secrets.HARNESS_BOT_PRIVATE_KEY }}
+
+      # main's copy of the script: a train branch's code is what is judged.
+      - name: Judge the open train, then plan the next
+        id: tick
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MERGE_TOKEN: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || github.token }}
+          MERGE_TRIGGERS_CI: ${{ steps.bot.outputs.token != '' || secrets.PUSH_BRANCH_TRIGGERING_CI != '' }}
+          # Off switch (owner, 2026-11-05): workflow-changing PRs ride only with
+          # the variable set AND a bot token, since GITHUB_TOKEN can neither
+          # push nor merge a workflow file.
+          MERGE_TRAIN_CARRIES_WORKFLOWS: ${{ vars.MERGE_TRAIN_CARRIES_WORKFLOWS == 'true' && (steps.bot.outputs.token != '' || secrets.PUSH_BRANCH_TRIGGERING_CI != '') }}
+        run: |
+          set -euo pipefail
+          bun .github/scripts/merge-train.ts tick --out "$RUNNER_TEMP" | tee -a "$GITHUB_OUTPUT"
+
+      - name: Cache remote mounts (bean cis1)
+        if: steps.tick.outputs.action == 'build'
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: ~/.cache/cat-mount
+          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
+          restore-keys: |
+            cat-mount-v1-
+      - name: Mount the layers and install
+        if: steps.tick.outputs.action == 'build'
+        run: |
+          bash .github/mount-from-lock.sh --root .
+          bun install --frozen-lockfile
+
+      - name: Stack the batch on main (declared patterns only, one regen)
+        id: build
+        if: steps.tick.outputs.action == 'build'
+        env:
+          SPECS: ${{ steps.tick.outputs.build }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -uo pipefail
+          git config user.name "merge-train[bot]"
+          git config user.email "merge-train@users.noreply.github.com"
+          stamp=$(date -u +%Y%m%d-%H%M)
+          branch="merge-train/$stamp"
+          # Exit 1 is "built, but something needs a person" (a refused member,
+          # a failed check): the members that merged still go to CI. Exit 2
+          # could not build at all.
+          code=0
+          # shellcheck disable=SC2086
+          bun run cat merge:train -- --base origin/main --branch "$branch" --no-main \
+            --out "$RUNNER_TEMP/report.json" $SPECS > /dev/null || code=$?
+          if [ "$code" -ge 2 ]; then echo "::error::merge:train could not build (exit $code)"; exit 1; fi
+          # A member refused for a hand-written conflict is ejected with a
+          # comment (owner, 2026-11-05, "Resolve generated only").
+          bun .github/scripts/merge-train.ts eject-refused --plan "$RUNNER_TEMP/plan.json" --report "$RUNNER_TEMP/report.json" \
+            || echo "::warning::could not eject the refused members; they are named in the train PR"
+          tree=$(git rev-parse 'HEAD^{tree}')
+          if bun .github/scripts/merge-train.ts body --plan "$RUNNER_TEMP/plan.json" \
+              --report "$RUNNER_TEMP/report.json" --tree "$tree" > "$RUNNER_TEMP/body.md"; then
+            echo "open=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No member merged; nothing to open." | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "open=false" >> "$GITHUB_OUTPUT"
+          fi
+          echo "branch=$branch" >> "$GITHUB_OUTPUT"
+          echo "stamp=$stamp" >> "$GITHUB_OUTPUT"
+
+      # As in repin-train.yml: a push with the default token starts no
+      # pull_request workflow, so the App (or the secret) pushes when set up,
+      # and the dispatch below covers the rest. Either way CI runs ONCE.
+      - name: Push the train and open its PR
+        id: open
+        if: steps.build.outputs.open == 'true'
+        env:
+          PUSH_TOKEN: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ steps.bot.outputs.token || secrets.PUSH_BRANCH_TRIGGERING_CI || secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ steps.build.outputs.branch }}
+          STAMP: ${{ steps.build.outputs.stamp }}
+          GIT_CONFIG_GLOBAL: /dev/null
+          GIT_CONFIG_NOSYSTEM: "1"
+        run: |
+          set -euo pipefail
+          url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY.git"
+          auth=$(printf 'x-access-token:%s' "$PUSH_TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          GIT_CONFIG_COUNT=3 \
+          GIT_CONFIG_KEY_0="http.$GITHUB_SERVER_URL/.extraheader" GIT_CONFIG_VALUE_0="AUTHORIZATION: basic $auth" \
+          GIT_CONFIG_KEY_1=core.hooksPath GIT_CONFIG_VALUE_1=/dev/null \
+          GIT_CONFIG_KEY_2=credential.helper GIT_CONFIG_VALUE_2= \
+            git push "$url" "HEAD:refs/heads/$BRANCH"
+          gh label create merge-train-batch --color 5319E7 --description "A merge-train batch PR (bean hd58)" --force
+          out=$(gh pr create --repo "$GITHUB_REPOSITORY" --base main --head "$BRANCH" \
+            --title "Merge train $STAMP" --label merge-train-batch --body-file "$RUNNER_TEMP/body.md")
+          number=$(printf '%s\n' "$out" | grep -oE '[0-9]+$' | tail -1)
+          echo "number=$number" >> "$GITHUB_OUTPUT"
+          echo "Opened train #$number from $BRANCH" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Have CI judge the train (once)
+        if: steps.open.outputs.number != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ steps.build.outputs.branch }}
+          PUSHED_AS_BOT: ${{ steps.bot.outputs.token != '' || secrets.PUSH_BRANCH_TRIGGERING_CI != '' }}
+        run: |
+          if [ "$PUSHED_AS_BOT" = "true" ]; then
+            echo "pushed with a token that starts pull_request workflows; nothing to dispatch"
+            exit 0
+          fi
+          gh workflow run code-quality-gates.yml -R "$GITHUB_REPOSITORY" --ref "$BRANCH"
+          echo "dispatched code-quality-gates.yml on $BRANCH"
