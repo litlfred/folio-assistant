@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/process/Process_CRDM_Close/node/A_RecordSignoff.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-library-subgraph",
+    "sha": "5abc14274e280e2ce1b414ed3dc05b25cea964e6",
+    "pr": "2994/merge",
+    "run": "42187252485"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/process/Process_CRDM_Close/node/A_RecordSignoff",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Record the sign-off attestation",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/process/Process_CRDM_Close",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/process/Process_CRDM_Close/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/globalTask/GT_RecordSignoff",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/process/Process_CRDM_Close#flow/SF_Process_CRDM_Close_3",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/process/Process_CRDM_Close#flow/SF_Close_Missing"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/process/Process_CRDM_Close#flow/SF_Close_Gate"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/A_RecordSignoff"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/skill/content-author.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-library-subgraph",
+    "sha": "5abc14274e280e2ce1b414ed3dc05b25cea964e6",
+    "pr": "2994/merge",
+    "run": "42187252485"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/skill/content-author",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-author",
+      "title": "Content Authoring",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/content-author.md",
+      "instructionLines": 48,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/skills/content-author/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/skills/content-author/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-author"
+    }
+  ]
+}

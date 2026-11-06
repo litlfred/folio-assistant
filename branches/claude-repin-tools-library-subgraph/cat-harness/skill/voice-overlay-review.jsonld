@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/skill/voice-overlay-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-library-subgraph",
+    "sha": "5abc14274e280e2ce1b414ed3dc05b25cea964e6",
+    "pr": "2994/merge",
+    "run": "42187252485"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/skill/voice-overlay-review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "voice-overlay-review",
+      "title": "Voice overlay review",
+      "description": "Review a block against the active voices' rules and record the verdict on its QA sidecar. The human/agent half of the voice overlay; the mechanical half is whatever `patterns` and `terminology` a rule carries.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/package/authoring-core"
+      ],
+      "instructionsPath": "skills/authoring/authoring-core/voice-overlay-review.md",
+      "instructionLines": 86,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/voice-overlay-review"
+    }
+  ]
+}

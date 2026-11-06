@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/skill/role-model.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-library-subgraph",
+    "sha": "5abc14274e280e2ce1b414ed3dc05b25cea964e6",
+    "pr": "2994/merge",
+    "run": "42187252485"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/skill/role-model",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "role-model",
+      "title": "Roles are swimlanes",
+      "description": "Actors, roles and skills — who performs a BPMN task, under which swimlane, with which skills. How a role's skill set is resolved through `inherits` and through a subprocess call chain, how a lane binds to a declared role, and how `kg:audit` finds a dangling skill, lane, role or decision.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/role-model.md",
+      "instructionLines": 606,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/role-model"
+    }
+  ]
+}

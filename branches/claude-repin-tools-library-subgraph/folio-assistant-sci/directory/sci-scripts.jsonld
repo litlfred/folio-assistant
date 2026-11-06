@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/folio-assistant-sci/directory/sci-scripts.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-library-subgraph",
+    "sha": "5abc14274e280e2ce1b414ed3dc05b25cea964e6",
+    "pr": "2994/merge",
+    "run": "42187252485"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/folio-assistant-sci/directory/sci-scripts",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "sci-scripts",
+      "path": "scripts/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "This instance's scripts: its checkout checks (`check-lean-dirs.ts`, `check-editor-checkers.ts`, `check-workflows-security.ts`, `extract-references.ts`), Lean helpers (`setup-lean-toolchain.sh`, `lean-audit.ts`, `lean-coverage.ts`, `lsi-lean-decls.ts`), the Lean cache service (`lake-cache.sh` — the `lean-cache` tool — `reseed-lean-cache.sh`, `lake-cache-fetch.sh`, `lake-cache-produce.py`, `lake-cache-fetch-multi.py` and their `.bat` entry points, which only a Lean folio runs; they read and write the branch family `cat/folio-assistant-sci/lake-cache/<pkg>`), and `tests/`, which hold the harness's code, imported down from cat-harness, against this instance's paper processes, decision tables, pipeline plugins and contributed checkers.",
+      "readmePath": "scripts/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/folio-assistant-sci/directory/sci-scripts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-scripts"
+    }
+  ]
+}

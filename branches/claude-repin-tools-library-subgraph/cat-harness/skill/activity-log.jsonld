@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/skill/activity-log.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-library-subgraph",
+    "sha": "5abc14274e280e2ce1b414ed3dc05b25cea964e6",
+    "pr": "2994/merge",
+    "run": "42187252485"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/skill/activity-log",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "activity-log",
+      "title": "Activity log — what an agent did, kept out of the graph",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/activity-log.md",
+      "instructionLines": 191,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/activity-log"
+    }
+  ]
+}

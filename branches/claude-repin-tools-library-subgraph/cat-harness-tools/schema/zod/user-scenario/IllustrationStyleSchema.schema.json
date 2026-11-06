@@ -1,0 +1,55 @@
+{
+  "$ref": "#/definitions/IllustrationStyle",
+  "definitions": {
+    "IllustrationStyle": {
+      "type": "object",
+      "properties": {
+        "prompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "cast": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "actor": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "actor",
+              "description"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "prompt"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/IllustrationStyleSchema.schema.json",
+  "title": "IllustrationStyleSchema",
+  "description": "Generated from `IllustrationStyleSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-tools-library-subgraph",
+    "sha": "5abc14274e280e2ce1b414ed3dc05b25cea964e6",
+    "pr": "2994/merge",
+    "run": "42187252485"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/folio-assistant-core/directory/core-scripts.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-tools-library-subgraph",
+    "sha": "5abc14274e280e2ce1b414ed3dc05b25cea964e6",
+    "pr": "2994/merge",
+    "run": "42187252485"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/folio-assistant-core/directory/core-scripts",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "core-scripts",
+      "path": "scripts/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "Core's own executable surface, with every test beside its subject: the review-comment Tool and its move helper, the glossary extractors and builder (`build-glossary.ts`, its `:refterm` codemod `codemod-refterm.ts`), the sample-import pair, the materialisation trio (`check-materialized-fixity`, `backfill-materialized-fixity`, `cache-index`), `check-voices.ts` (every voice rule's citation resolved through `schemas/library-ref.ts` into a folio's `library/`), `build-document-site.ts` (which reads `schemas/changeset.ts`), and the document, bibliography, public-comment and tabular tools. Pipeline scripts are addressed by id, and `resolvePipelineScript` searches the folio, then the platform, then here. Two scripts are invocation surfaces, named by path and so not to be moved without updating their callers: `build-document-site.ts`, which a DOCUMENT folio's generated staging workflow names (`init-folio.ts` writes `folio-assistant-core/scripts/build-document-site.ts` and `init-folio.test.ts` pins it), and `review-comments.ts`, invoked by path from `folio-staging.yml`.",
+      "readmePath": "scripts/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-tools-library-subgraph/folio-assistant-core/directory/core-scripts",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-scripts"
+    }
+  ]
+}
