@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/technical-documentation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/technical-documentation",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "technical-documentation",
+      "title": "Technical documentation",
+      "description": "Write and review technical documentation of standards, software and knowledge assets as an SDO writes. Carries the RFC 2119 requirement levels as RFC 8174 constrains them, the three questions a first draft is measured against, and the rule that an ingested specification is checked for supersession before it is cited.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/package/authoring-core"
+      ],
+      "instructionsPath": "skills/authoring/authoring-core/technical-documentation.md",
+      "instructionLines": 102,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/technical-documentation"
+    }
+  ]
+}

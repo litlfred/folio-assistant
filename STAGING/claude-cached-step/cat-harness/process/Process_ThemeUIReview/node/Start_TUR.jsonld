@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_ThemeUIReview/node/Start_TUR.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_ThemeUIReview/node/Start_TUR",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Graphical assets ingested",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_ThemeUIReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_ThemeUIReview/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_ThemeUIReview#flow/SF_TUR_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ThemeUIReview/node/Start_TUR"
+    }
+  ]
+}

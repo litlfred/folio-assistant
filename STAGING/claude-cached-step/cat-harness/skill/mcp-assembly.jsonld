@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/mcp-assembly.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/mcp-assembly",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "mcp-assembly",
+      "title": "MCP assembly — many Tools, one service, one namespace",
+      "description": "Compose several Tool nodes into one MCP service — naming, collisions, grouping and versioning. Read when a service will expose more than one tool, or when two instances' tools land in the same namespace.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/package/folio-core"
+      ],
+      "instructionsPath": "skills/tools/folio-core/mcp-assembly.md",
+      "instructionLines": 92,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/mcp-assembly"
+    }
+  ]
+}

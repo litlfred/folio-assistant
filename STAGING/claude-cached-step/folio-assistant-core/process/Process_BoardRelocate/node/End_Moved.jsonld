@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_BoardRelocate/node/End_Moved.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_BoardRelocate/node/End_Moved",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "The content lives in the trashcan",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_BoardRelocate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/role/board-renderer",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_BoardRelocate/lane/Lane_Renderer",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_BoardRelocate#flow/F_5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/node/End_Moved"
+    }
+  ]
+}

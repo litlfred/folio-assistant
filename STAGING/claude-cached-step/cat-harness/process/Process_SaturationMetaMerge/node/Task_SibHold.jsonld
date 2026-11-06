@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_SaturationMetaMerge/node/Task_SibHold.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_SaturationMetaMerge/node/Task_SibHold",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Hold, and name the heads to merge",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_SaturationMetaMerge",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/role/sibling-session",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Sibling",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/saturation-meta-merge"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_SaturationMetaMerge#flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_SaturationMetaMerge#flow/Flow_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_SibHold"
+    }
+  ]
+}

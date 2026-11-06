@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/schema/index-config.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/schema/index-config",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "index-config",
+      "title": "index-config",
+      "summary": "`index.config.json` — the instantiation root's INDEX (`folio-index-config/v1`).",
+      "module": "schemas/kg/index-config.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/index-config"
+    }
+  ]
+}

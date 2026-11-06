@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_ContentAcquisition/lane/Lane_Agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_ContentAcquisition/lane/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_ContentAcquisition",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/role/ingestion-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ContentAcquisition/lane/Lane_Agent"
+    }
+  ]
+}

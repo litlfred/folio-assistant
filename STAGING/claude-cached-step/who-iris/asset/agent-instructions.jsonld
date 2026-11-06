@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/who-iris/asset/agent-instructions.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/who-iris/asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — who-iris",
+      "description": "Cold start for work in this layer. The gap between the nodes modelled here and the million-odd files upstream is the point, not a backlog; every node declares its state with no default, because \"the author did not say\" and \"the author said they could not tell\" are different facts.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/asset/agent-instructions"
+    }
+  ]
+}

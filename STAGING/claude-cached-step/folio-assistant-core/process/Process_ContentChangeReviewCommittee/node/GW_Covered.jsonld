@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/GW_Covered.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/GW_Covered",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Every changed block and page reviewed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_ContentChangeReviewCommittee",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/role/review-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Coordinator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "decisionRef": "decisions/review-coverage-gate.dmn#Decision_ReviewCoverageGate",
+      "decidedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/decision/review-coverage-gate/Decision_ReviewCoverageGate",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/Flow_GW_Covered_Join"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/c8",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/process/Process_ContentChangeReviewCommittee#flow/c11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/GW_Covered"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/skill/bib-qa.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/skill/bib-qa",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "bib-qa",
+      "title": "Bibliography QA Skill",
+      "description": "Bibliography quality-assurance agent — validates every reference in content/schema/references.ts against several QA checks: URL availability, URL resolution, metadata completeness, citation coverage, and screenshot/image evidence.  Generates bib-qa.json consumed by the standalone bib-qa.html dashboard.",
+      "instructionsPath": "skills/library/cataloguing/bib-qa.md",
+      "instructionLines": 337,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bib-qa"
+    }
+  ]
+}

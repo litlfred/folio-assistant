@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_TestDataCuration/node/Task_VerifySelfIdentifying.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_TestDataCuration/node/Task_VerifySelfIdentifying",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Verify file self-identifies by $schema and kind and bind into test plan",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_TestDataCuration",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/role/tester",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_TestDataCuration/lane/Lane_Tester",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/test-data-sets"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_TestDataCuration#flow/Flow_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_TestDataCuration#flow/Flow_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_VerifySelfIdentifying"
+    }
+  ]
+}

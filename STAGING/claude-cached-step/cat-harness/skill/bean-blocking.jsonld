@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/bean-blocking.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/bean-blocking",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "bean-blocking",
+      "title": "Blocking is a claim about the work, not a mood",
+      "description": "Default to non-blocking when updating a work item's status. Mark blocked only when the work genuinely cannot proceed, and then always with what it waits on, when the wait expires, and what the next agent should do.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/package/work-plan"
+      ],
+      "instructionsPath": "work-plan/skills/work-plan/bean-blocking.md",
+      "instructionLines": 104,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-blocking"
+    }
+  ]
+}

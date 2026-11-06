@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/tool-types/ScriptName.schema.json",
+  "title": "ScriptName",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9:._-]*$",
+  "description": "A package script name",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  }
+}

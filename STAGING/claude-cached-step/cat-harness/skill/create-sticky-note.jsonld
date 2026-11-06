@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/create-sticky-note.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/create-sticky-note",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "create-sticky-note",
+      "title": "Create a sticky note",
+      "description": "Draft a sticky note from the conversation, choose its theme and its place, preview it, and only then attach it to a node.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/package/theming"
+      ],
+      "instructionsPath": "skills/ui/theming/create-sticky-note.md",
+      "instructionLines": 137,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/create-sticky-note"
+    }
+  ]
+}

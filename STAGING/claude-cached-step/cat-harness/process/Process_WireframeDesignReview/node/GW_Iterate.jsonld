@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_WireframeDesignReview/node/GW_Iterate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_WireframeDesignReview/node/GW_Iterate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Revise the intent?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_WireframeDesignReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/role/adjudicator",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_WireframeDesignReview/lane/Lane_Adjudicator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_12",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/process/Process_WireframeDesignReview#flow/SF_Process_WireframeDesignReview_13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview/node/GW_Iterate"
+    }
+  ]
+}

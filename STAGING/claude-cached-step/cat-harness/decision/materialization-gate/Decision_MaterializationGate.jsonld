@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/decision/materialization-gate/Decision_MaterializationGate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/decision/materialization-gate/Decision_MaterializationGate",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Decision",
+      "name": "All five answered, none refused?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/library/decisions/materialization-gate.dmn",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/externalSchema/omg-dmn-1.3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/decision/materialization-gate/Decision_MaterializationGate"
+    }
+  ]
+}

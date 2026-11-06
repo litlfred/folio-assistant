@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/actor/terminologist.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/actor/terminologist",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "terminologist",
+      "actorKind": "person",
+      "title": "Terminologist",
+      "description": "Semantic interoperability and terminology governance specialist who maps data elements to standard terminologies (ICD-11, SNOMED CT, LOINC).",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.Terminologist",
+        "lifecycle": [
+          "author",
+          "validate"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/role/terminologist",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/role/author"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/terminologist"
+    }
+  ]
+}

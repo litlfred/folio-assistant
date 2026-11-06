@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/mcp-projection.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/mcp-projection",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "mcp-projection",
+      "title": "MCP projection — turning a Tool node into an MCP service",
+      "description": "Generate an MCP server from Tool nodes — the mapping from this harness's skill/Tool vocabulary onto the current MCP standard. Read before exposing a CLI tool over MCP, or when asked how an agent stands a service up.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/package/folio-core"
+      ],
+      "instructionsPath": "skills/tools/folio-core/mcp-projection.md",
+      "instructionLines": 149,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/mcp-projection"
+    }
+  ]
+}

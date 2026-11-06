@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/docs-generation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/docs-generation",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "docs-generation",
+      "title": "Docs generation",
+      "description": "How a checkout of this harness generates and publishes its docs site: regenerating derived references, composing the docs layers and each instance's site into one Jekyll source, building it with just-the-docs, the post-build passes, the TypeDoc API reference, the knowledge-graph export, and the full-replace publish to gh-pages and its branches/ previews.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/docs-generation.md",
+      "instructionLines": 108,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation"
+    }
+  ]
+}

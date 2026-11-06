@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/covered-is-not-reachable.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/skill/covered-is-not-reachable",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "covered-is-not-reachable",
+      "title": "Covered is not reachable — and `check:tools` cannot tell you which",
+      "description": "A skill can be satisfied by the neighbours of its mechanism while the mechanism is reachable from no Tool node. Read before concluding from check:tools that a command is reachable, and before adding a Tool node or a `maintains` claim.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/package/folio-core"
+      ],
+      "instructionsPath": "skills/tools/folio-core/covered-is-not-reachable.md",
+      "instructionLines": 195,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/covered-is-not-reachable"
+    }
+  ]
+}

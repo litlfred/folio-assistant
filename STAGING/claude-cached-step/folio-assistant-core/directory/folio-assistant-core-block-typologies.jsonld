@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/directory/folio-assistant-core-block-typologies.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/directory/folio-assistant-core-block-typologies",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "folio-assistant-core-block-typologies",
+      "path": "block-kinds/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/block-kinds"
+      ],
+      "description": "The document profile's block kinds (prose, example, remark, algorithm, simulator, equation, diagram, table, figure, recommendation), one folio-block-kind/v1 node per file. Kinds are discoverable and not centrally managed: cat-harness/schemas/block-kinds.ts finds these by scanning every instance's declared block-kinds graph.",
+      "readmePath": "block-kinds/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-core/directory/folio-assistant-core-block-typologies",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/folio-assistant-core-block-typologies"
+    }
+  ]
+}

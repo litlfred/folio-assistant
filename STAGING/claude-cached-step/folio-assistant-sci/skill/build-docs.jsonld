@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-sci/skill/build-docs.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-sci/skill/build-docs",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "build-docs",
+      "title": "/build-docs",
+      "description": "Builds the Lean HTML documentation (doc-gen4) locally in the workspace, for any paper folio's Lean package.",
+      "instructionsPath": "skills/content/folio-paper-adapter/build-docs.md",
+      "instructionLines": 72,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/build-docs"
+    }
+  ]
+}

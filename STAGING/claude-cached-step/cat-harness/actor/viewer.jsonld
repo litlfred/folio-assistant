@@ -1,0 +1,24 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/actor/viewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/actor/viewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "viewer",
+      "actorKind": "person",
+      "title": "Viewer",
+      "description": "A read-only identity. Takes on no role: it never appears in a swimlane, which is why `roles` is empty rather than absent.",
+      "hasCapability": [],
+      "mayTakeRole": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/viewer"
+    }
+  ]
+}

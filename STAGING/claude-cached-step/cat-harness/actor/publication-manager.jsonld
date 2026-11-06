@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/actor/publication-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/cached-step",
+    "sha": "cf8b434a30e1657bd2ed4e4e064f2c7aa2eb210d",
+    "pr": "claude/cached-step",
+    "run": "42146722537"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/actor/publication-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "publication-manager",
+      "actorKind": "person",
+      "title": "Publication Manager",
+      "description": "Release and deployment manager responsible for IG configuration, builds, versioning, publication, and platform updates.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.PublicationManager",
+        "lifecycle": [
+          "publish"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/capability/git-push",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/capability/jekyll"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/role/publication-manager",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-cached-step/cat-harness/role/author"
+      ],
+      "permissionName": [
+        "release-management"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/publication-manager"
+    }
+  ]
+}
