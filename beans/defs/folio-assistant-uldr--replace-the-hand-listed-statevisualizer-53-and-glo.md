@@ -2,13 +2,13 @@
 # folio-assistant-uldr
 $schema: bean/1.0.0
 title: Replace the hand-listed state:visualizer (53) and glossary:page (36) builtAtPublish entries with rules (plan, awaiting owner approval)
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-06T04:51:38Z
-updated_at: 2026-11-06T04:51:38Z
+updated_at: 2026-11-06T05:25:02Z
 parent: folio-assistant-k3vv
 ---
 
@@ -29,3 +29,10 @@ Both have akiq's defect: a lower layer naming files of the layers above it. A ne
 ## Done when
 - No `builtAtPublish` line in cat-harness names another layer's file or a locale-specific copy of one.
 - Adding a layer, a state graph, a glossary scheme or a locale needs no edit in cat-harness, and every check stays green.
+
+## Owner ruling (2026-11-06, card "Built lists")
+Option 1: one built-at-publish folder entry per writer.
+
+## Progress
+- [x] cat-harness#1091: state:visualizer's beans/, qa/, health/, attestations/ and code/ become one folder entry each (33 lines → 5). docs/assets/glossary/ becomes one folder entry (30 → 1); its 8 committed files leave git, including smart-trust--gdhcn, a higher layer's file.
+- [ ] The 6 per-locale docs/<locale>/folio-assistant-core/ entries: core's glossary visualiser routes on the host site. A folder entry cannot remove the name. Awaiting an owner decision.
