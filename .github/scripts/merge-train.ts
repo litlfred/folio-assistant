@@ -479,7 +479,7 @@ export async function tick(api: Api, repo: string, opts: TickOptions = {}): Prom
  * queued, or an opted-in PR that is READY (one that is not would start a
  * runner every tick to find nothing).
  */
-export async function pending(api: Api, repo: string): Promise<string | undefined> {
+export async function pending(api: Api, repo: string, log: (line: string) => void = () => {}): Promise<string | undefined> {
   const trains = await trainPrs(api, repo);
   const open = trains.find((t) => t.state === "open");
   if (open) {
@@ -488,11 +488,17 @@ export async function pending(api: Api, repo: string): Promise<string | undefine
     // re-pin train's sweep asks the same (`trainsToJudge`).
     const runs = await checkRuns(api, repo, open.headSha);
     const done = runs.length > 0 && runs.every((r) => r.status === "completed");
+    if (!done) log(`train #${open.number}: its checks are still running`);
     return done ? `train #${open.number}'s checks have finished: judge it` : undefined;
   }
   const queue = readState(trains.find((t) => readState(t.body))?.body)?.queue ?? [];
   const base = await mainBaseline(api, repo);
-  const ready = (await pool(api, repo, base?.runs ?? [])).filter((x) => !x.why).map((x) => x.c.number);
+  // Say why each opted-in PR waits: "nothing to do" alone could not tell a
+  // PR whose checks still run from one the train failed to see (2026-11-06,
+  // #2987).
+  const all = await pool(api, repo, base?.runs ?? []);
+  for (const { c, why } of all) if (why) log(`#${c.number} waits: ${why}`);
+  const ready = all.filter((x) => !x.why).map((x) => x.c.number);
   const { batch } = nextBatch(ready, queue);
   return batch.length ? `ready to build: ${batch.map((n) => `#${n}`).join(" ")}` : undefined;
 }
@@ -550,7 +556,7 @@ async function main(argv: string[]): Promise<number> {
   const api = githubApi();
   const cmd = argv[0];
   if (cmd === "pending") {
-    const why = await pending(api, repo);
+    const why = await pending(api, repo, (line) => console.error(line));
     if (why) console.log(why);
     return 0;
   }
