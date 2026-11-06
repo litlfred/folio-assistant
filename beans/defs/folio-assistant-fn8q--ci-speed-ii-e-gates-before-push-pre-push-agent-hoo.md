@@ -8,7 +8,7 @@ priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-06T04:59:28Z
+updated_at: 2026-11-06T05:46:09Z
 parent: folio-assistant-k3vv
 ---
 
@@ -35,3 +35,5 @@ _2026-11-06T04:59:28Z_ — **Owner ruling (litlfred, card "Record on", option 1)
 2. litlfred then sets the repository variable `CQG_HONOUR_LOCAL_RECORDS=true`.
 
 The switch is a repository variable, not a file, so a PR cannot turn skipping on for its own run, and clearing it turns skipping off at once. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
+
+_2026-11-06T05:46:09Z_ — The re-check sweep litlfred/folio-assistant#2958 merged (3f2aeaa; owner card "Record on", option 1). Step 1 of the ruling is done. Step 2 is for litlfred: set the repository variable `CQG_HONOUR_LOCAL_RECORDS=true`. The second box closes once a PR run shows a step skipped on a local record, with the sweep re-verifying it. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
