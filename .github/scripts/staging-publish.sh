@@ -37,6 +37,8 @@
 set -euo pipefail
 
 : "${REPO:?}" "${RUN_URL:?}"
+# Where previews go on gh-pages (cat-harness-tools scripts/lib/preview-prefix.ts).
+PREVIEW_DIR="${PREVIEW_DIR:-branches}"
 T="${RUNNER_TEMP:-/tmp}/staging-publish"
 mkdir -p "$T"
 PUBLISHED="$RUNNER_TEMP/published.json"
@@ -126,7 +128,7 @@ while [ "$attempt" -le 3 ]; do
       echo "$slug: its PR is closed or its branch is gone; dropped, not published"; echo "$id" >> "$T/drop.txt"; continue
     fi
     if [ -z "$(ls -A "$d/site" 2>/dev/null || true)" ]; then
-      echo "::warning::$slug: the built site is empty; dropped, STAGING/$slug keeps its last preview"; echo "$id" >> "$T/drop.txt"; continue
+      echo "::warning::$slug: the built site is empty; dropped, $PREVIEW_DIR/$slug keeps its last preview"; echo "$id" >> "$T/drop.txt"; continue
     fi
     printf '%s\t%s\t%s\n' "$slug" "$id" "$d" >> "$T/batch.tsv"
   done 3<<< "$queue"
@@ -141,14 +143,14 @@ while [ "$attempt" -le 3 ]; do
   # fd 3, so a tool that reads stdin cannot eat the rest of the batch.
   while IFS=$'\t' read -r slug id d <&3; do
     branch=$(jq -r .branch "$d/meta.json"); sha=$(jq -r .sha "$d/meta.json"); run=$(jq -r .run "$d/meta.json")
-    rm -rf "pages/STAGING/$slug"
-    mkdir -p "pages/STAGING/$slug"
-    cp -R "$d/site/." "pages/STAGING/$slug/"
+    rm -rf "pages/$PREVIEW_DIR/$slug"
+    mkdir -p "pages/$PREVIEW_DIR/$slug"
+    cp -R "$d/site/." "pages/$PREVIEW_DIR/$slug/"
     if [ -f "$TOOLS/staging-share.ts" ]; then
-      bun run "$TOOLS/staging-share.ts" apply --root pages --preview "pages/STAGING/$slug" --slug "$slug"
+      bun run "$TOOLS/staging-share.ts" apply --root pages --preview "pages/$PREVIEW_DIR/$slug" --slug "$slug"
     fi
     jq -n --arg s 'staging preview published' '{summary:$s}' | bun run "$TOOLS/render-log.ts" --dir pages \
-      --event rendered --kind staging-preview --path "STAGING/$slug" --slug "$slug" \
+      --event rendered --kind staging-preview --path "$PREVIEW_DIR/$slug" --slug "$slug" \
       --branch "$branch" --commit "$sha" --run "$run"
     bun run "$TOOLS/staging-rotate.ts" --dir pages --current "$slug" --run "$RUN_URL" --summary-out "$T/rot-$slug.txt"
     cat "$T/rot-$slug.txt" >> "$T/rotated.txt" 2>/dev/null || true
@@ -156,7 +158,7 @@ while [ "$attempt" -le 3 ]; do
     n=$((n + 1))
   done 3< "$T/batch.tsv"
 
-  git -C pages add -A STAGING
+  git -C pages add -A "$PREVIEW_DIR"
   if [ -d pages/_render-log ]; then git -C pages add -A _render-log; fi
   if [ "$n" = 1 ]; then
     first=$(head -1 "$T/batch.tsv" | cut -f1)

@@ -4056,7 +4056,7 @@ jobs:
           # platform's submodules, because `cat-harness/schemas/` imports from
           # `bootstrap-tools`. Measured 2026-10-02 — `feature-staging.yml`'s
           # `cleanup` job had failed on exactly this for six consecutive runs
-          # and `STAGING/` held 80 previews, 47 for closed PRs. The failure is
+          # and `branches/` held 80 previews, 47 for closed PRs. The failure is
           # worse than a missing cleanup: `rm -rf` runs, then `render-log.ts`
           # dies and aborts the step under `bash -e`, so the commit and push
           # never happen — a cleanup that reports failure having changed
