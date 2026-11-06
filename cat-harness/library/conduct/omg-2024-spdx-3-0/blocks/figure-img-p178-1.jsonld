@@ -1,0 +1,95 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p178-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p178-1.png",
+  "pageStart": 178,
+  "pageEnd": 178,
+  "narrative": [
+    {
+      "text": "UML class diagram of the SPDX 3.0 Core profile. The abstract Element (spdxId anyURI[1], name, summary, description, comment, creationInfo CreationInfo[1], verifiedUsing IntegrityMethod[0..*], externalRef, externalIdentifier, extension) is the root. Agent (with subclasses Person, Organization, SoftwareAgent), Tool, Artifact (originatedBy, suppliedBy, builtTime, releaseTime, validUntilTime, standardName, supportLevel), IndividualElement, Annotation (annotationType[1], statement, contentType; subject 1 Element), Relationship (relationshipType[1], completeness, startTime, endTime; from 1 Element, to 1..* Elements) and the abstract ElementCollection (profileConformance; element and rootElement) all specialise Element. SpdxDocument (import ExternalMap, dataLicense, namespaceMap) and Bundle (context) specialise ElementCollection, Bom specialises Bundle, and LifecycleScopedRelationship (scope) specialises Relationship. A 'Non-Element Classes' box holds CreationInfo (specVersion SemVer[1], created DateTime[1], createdBy Agent[1..*], createdUsing Tool[0..*], comment), ExternalIdentifier, ExternalMap, ExternalRef, DictionaryEntry, NamespaceMap, PositiveIntegerRange and IntegrityMethod with its subclasses Hash (algorithm, hashValue) and PackageVerificationCode. Two further boxes list the simple data types (DateTime, MediaType, SemVer) and the enumerations (AnnotationType, ExternalIdentifierType, ExternalRefType, HashAlgorithm, LifecycleScopeType, PresenceType, ProfileIdentifierType, RelationshipCompleteness, RelationshipType, SupportType).",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+      },
+      "drafted_at": "2026-10-03",
+      "lang": "en"
+    },
+    {
+      "text": "Diagramme de classes UML du profil Core de SPDX 3.0. La classe abstraite Element (spdxId anyURI[1], name, summary, description, comment, creationInfo CreationInfo[1], verifiedUsing IntegrityMethod[0..*], externalRef, externalIdentifier, extension) en est la racine. Agent (avec les sous-classes Person, Organization, SoftwareAgent), Tool, Artifact (originatedBy, suppliedBy, builtTime, releaseTime, validUntilTime, standardName, supportLevel), IndividualElement, Annotation (annotationType[1], statement, contentType ; subject 1 Element), Relationship (relationshipType[1], completeness, startTime, endTime ; from 1 Element, to 1..* Elements) et la classe abstraite ElementCollection (profileConformance ; element et rootElement) spécialisent toutes Element. SpdxDocument (import ExternalMap, dataLicense, namespaceMap) et Bundle (context) spécialisent ElementCollection, Bom spécialise Bundle, et LifecycleScopedRelationship (scope) spécialise Relationship. Un cadre « Non-Element Classes » contient CreationInfo (specVersion SemVer[1], created DateTime[1], createdBy Agent[1..*], createdUsing Tool[0..*], comment), ExternalIdentifier, ExternalMap, ExternalRef, DictionaryEntry, NamespaceMap, PositiveIntegerRange et IntegrityMethod avec ses sous-classes Hash (algorithm, hashValue) et PackageVerificationCode. Deux autres cadres listent les types de données simples (DateTime, MediaType, SemVer) et les énumérations (AnnotationType, ExternalIdentifierType, ExternalRefType, HashAlgorithm, LifecycleScopeType, PresenceType, ProfileIdentifierType, RelationshipCompleteness, RelationshipType, SupportType).",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "fr"
+    },
+    {
+      "text": "Diagrama de clases UML del perfil Core de SPDX 3.0. La clase abstracta Element (spdxId anyURI[1], name, summary, description, comment, creationInfo CreationInfo[1], verifiedUsing IntegrityMethod[0..*], externalRef, externalIdentifier, extension) es la raíz. Agent (con las subclases Person, Organization, SoftwareAgent), Tool, Artifact (originatedBy, suppliedBy, builtTime, releaseTime, validUntilTime, standardName, supportLevel), IndividualElement, Annotation (annotationType[1], statement, contentType; subject 1 Element), Relationship (relationshipType[1], completeness, startTime, endTime; from 1 Element, to 1..* Elements) y la clase abstracta ElementCollection (profileConformance; element y rootElement) especializan Element. SpdxDocument (import ExternalMap, dataLicense, namespaceMap) y Bundle (context) especializan ElementCollection, Bom especializa Bundle y LifecycleScopedRelationship (scope) especializa Relationship. Un recuadro «Non-Element Classes» contiene CreationInfo (specVersion SemVer[1], created DateTime[1], createdBy Agent[1..*], createdUsing Tool[0..*], comment), ExternalIdentifier, ExternalMap, ExternalRef, DictionaryEntry, NamespaceMap, PositiveIntegerRange e IntegrityMethod con sus subclases Hash (algorithm, hashValue) y PackageVerificationCode. Otros dos recuadros enumeran los tipos de datos simples (DateTime, MediaType, SemVer) y las enumeraciones (AnnotationType, ExternalIdentifierType, ExternalRefType, HashAlgorithm, LifecycleScopeType, PresenceType, ProfileIdentifierType, RelationshipCompleteness, RelationshipType, SupportType).",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "es"
+    },
+    {
+      "text": "مخطط أصناف UML لملف التعريف Core في SPDX 3.0. الصنف المجرّد Element (spdxId anyURI[1]، name، summary، description، comment، creationInfo CreationInfo[1]، verifiedUsing IntegrityMethod[0..*]، externalRef، externalIdentifier، extension) هو الجذر. وتخصّص Element كلٌّ من Agent (وأصنافه الفرعية Person وOrganization وSoftwareAgent) وTool وArtifact (originatedBy، suppliedBy، builtTime، releaseTime، validUntilTime، standardName، supportLevel) وIndividualElement وAnnotation (annotationType[1]، statement، contentType؛ subject 1 Element) وRelationship (relationshipType[1]، completeness، startTime، endTime؛ from 1 Element، to 1..* Elements) والصنف المجرّد ElementCollection (profileConformance؛ element وrootElement). ويخصّص SpdxDocument (import ExternalMap، dataLicense، namespaceMap) وBundle (context) الصنفَ ElementCollection، ويخصّص Bom الصنفَ Bundle، ويخصّص LifecycleScopedRelationship (scope) الصنفَ Relationship. ويضم إطار «Non-Element Classes» الأصناف CreationInfo (specVersion SemVer[1]، created DateTime[1]، createdBy Agent[1..*]، createdUsing Tool[0..*]، comment) وExternalIdentifier وExternalMap وExternalRef وDictionaryEntry وNamespaceMap وPositiveIntegerRange وIntegrityMethod مع صنفيه الفرعيين Hash (algorithm، hashValue) وPackageVerificationCode. ويسرد إطاران آخران أنواع البيانات البسيطة (DateTime، MediaType، SemVer) والتعدادات (AnnotationType، ExternalIdentifierType، ExternalRefType، HashAlgorithm، LifecycleScopeType، PresenceType، ProfileIdentifierType، RelationshipCompleteness، RelationshipType، SupportType).",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ar"
+    },
+    {
+      "text": "Диаграмма классов UML профиля Core в SPDX 3.0. Корнем служит абстрактный класс Element (spdxId anyURI[1], name, summary, description, comment, creationInfo CreationInfo[1], verifiedUsing IntegrityMethod[0..*], externalRef, externalIdentifier, extension). Его специализируют Agent (с подклассами Person, Organization, SoftwareAgent), Tool, Artifact (originatedBy, suppliedBy, builtTime, releaseTime, validUntilTime, standardName, supportLevel), IndividualElement, Annotation (annotationType[1], statement, contentType; subject 1 Element), Relationship (relationshipType[1], completeness, startTime, endTime; from 1 Element, to 1..* Elements) и абстрактный ElementCollection (profileConformance; element и rootElement). SpdxDocument (import ExternalMap, dataLicense, namespaceMap) и Bundle (context) специализируют ElementCollection, Bom специализирует Bundle, а LifecycleScopedRelationship (scope) специализирует Relationship. Блок «Non-Element Classes» содержит CreationInfo (specVersion SemVer[1], created DateTime[1], createdBy Agent[1..*], createdUsing Tool[0..*], comment), ExternalIdentifier, ExternalMap, ExternalRef, DictionaryEntry, NamespaceMap, PositiveIntegerRange и IntegrityMethod с подклассами Hash (algorithm, hashValue) и PackageVerificationCode. Ещё два блока перечисляют простые типы данных (DateTime, MediaType, SemVer) и перечисления (AnnotationType, ExternalIdentifierType, ExternalRefType, HashAlgorithm, LifecycleScopeType, PresenceType, ProfileIdentifierType, RelationshipCompleteness, RelationshipType, SupportType).",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ru"
+    },
+    {
+      "text": "SPDX 3.0 Core 配置文件的 UML 类图。抽象类 Element（spdxId anyURI[1]、name、summary、description、comment、creationInfo CreationInfo[1]、verifiedUsing IntegrityMethod[0..*]、externalRef、externalIdentifier、extension）是根。Agent（子类 Person、Organization、SoftwareAgent）、Tool、Artifact（originatedBy、suppliedBy、builtTime、releaseTime、validUntilTime、standardName、supportLevel）、IndividualElement、Annotation（annotationType[1]、statement、contentType；subject 1 Element）、Relationship（relationshipType[1]、completeness、startTime、endTime；from 1 Element，to 1..* Elements）以及抽象类 ElementCollection（profileConformance；element 和 rootElement）都特化 Element。SpdxDocument（import ExternalMap、dataLicense、namespaceMap）和 Bundle（context）特化 ElementCollection，Bom 特化 Bundle，LifecycleScopedRelationship（scope）特化 Relationship。“Non-Element Classes”框中有 CreationInfo（specVersion SemVer[1]、created DateTime[1]、createdBy Agent[1..*]、createdUsing Tool[0..*]、comment）、ExternalIdentifier、ExternalMap、ExternalRef、DictionaryEntry、NamespaceMap、PositiveIntegerRange，以及 IntegrityMethod 及其子类 Hash（algorithm、hashValue）和 PackageVerificationCode。另外两个框列出简单数据类型（DateTime、MediaType、SemVer）和枚举（AnnotationType、ExternalIdentifierType、ExternalRefType、HashAlgorithm、LifecycleScopeType、PresenceType、ProfileIdentifierType、RelationshipCompleteness、RelationshipType、SupportType）。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-324",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/omg-2024-spdx-3-0/manifest.jsonld",
+  "provenance": "ingested"
+}

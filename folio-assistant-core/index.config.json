@@ -1,0 +1,116 @@
+{
+  "$schema": "folio-index-config/v1",
+  "instances": [
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "5e07b091c84dc75a0a2bf671a775590fe6d756f2",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-04",
+              "ref": "5e07b091c84dc75a0a2bf671a775590fe6d756f2",
+              "evidence": "litlfred, 2026-11-04, Claude Code session session_01EucfRpQZx7mVyrxsxxbSCF decision card: '1. Yes, re-pin (Rec.)' (re-pin cat-harness in folio-assistant-core to current main, past the sdlc/work-plan folder move of cat-harness#1014, so core's links to the moved skills resolve; cat-harness#991 step 23.4)."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "8205c6a49b3a0f04172f750da10e7cba2fa81b77",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-05",
+              "ref": "8205c6a49b3a0f04172f750da10e7cba2fa81b77",
+              "evidence": "litlfred, 2026-11-05, Claude Code session session_01VQDpPcbpLjEo8EuzFLVq5Z decision card 'Core re-pin': '1. Re-pin here (Recommended)' (re-pin cat-harness-tools in folio-assistant-core to current main, past cat-harness-tools#1529, so check:materialized-fixity can import scripts/lib/gate-own.ts; bean folio-assistant-70hd)."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "c90ef456067a874fd7017a370232908ba62e9fcd",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-02",
+              "ref": "c90ef456067a874fd7017a370232908ba62e9fcd",
+              "evidence": "Owner litlfred, 2026-11-01 (20:41Z, MVP thread cmsg_017WNUkNK8kdDziPK58Pv6G991qa3xg86ZCWdyH2spZ7FS): 'i want to get all functional stuff done, the full repin on harnesses done and stablized as MVP goal.' Re-pin to mains for cat-harness-tools#1299 (harness drain, card Q-HDR-3 A, 2026-11-02)."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "076173fe036f16300e8e2767dd35ab81411b46ab",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-02",
+              "ref": "076173fe036f16300e8e2767dd35ab81411b46ab",
+              "evidence": "Owner litlfred, 2026-11-01 (20:41Z, MVP thread cmsg_017WNUkNK8kdDziPK58Pv6G991qa3xg86ZCWdyH2spZ7FS): 'i want to get all functional stuff done, the full repin on harnesses done and stablized as MVP goal.' Re-pin to mains for cat-harness-tools#1299 (harness drain, card Q-HDR-3 A, 2026-11-02)."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "site": {
+    "landing": "folio-assistant-core"
+  }
+}

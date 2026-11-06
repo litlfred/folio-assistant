@@ -1,0 +1,156 @@
+{
+  "$schema": "folio-index-config/v1",
+  "instances": [
+    {
+      "name": "who-iris",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/site-home.md",
+          "sourceSteps": [
+            "site:catalogue",
+            "site:home"
+          ],
+          "keep": [
+            "ns"
+          ]
+        }
+      }
+    },
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "remote": {
+          "repository": "litlfred/folio-assistant-core",
+          "ref": "e072ec2d606d396c5e3b54ad9872332de0836cc7",
+          "overrides": {
+            "folio-assistant-core": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            },
+            "cat-harness-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "e072ec2d606d396c5e3b54ad9872332de0836cc7",
+              "evidence": "Owner card \"Re-pin how\" option 2 \"All layers to mains\" and \"Re-pin OK?\" option 1, 2026-11-06 ~01:00Z, session_01VQDpPbqnwyoWW5d3Rc1vEk"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+              "evidence": "Owner card \"Re-pin how\" option 2 \"All layers to mains\" and \"Re-pin OK?\" option 1, 2026-11-06 ~01:00Z, session_01VQDpPbqnwyoWW5d3Rc1vEk"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "a94472709dea78bd3b988934ca89130ef84b2ced",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "a94472709dea78bd3b988934ca89130ef84b2ced",
+              "evidence": "Owner card \"Re-pin how\" option 2 \"All layers to mains\" and \"Re-pin OK?\" option 1, 2026-11-06 ~01:00Z, session_01VQDpPbqnwyoWW5d3Rc1vEk"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+              "evidence": "Owner card \"Re-pin how\" option 2 \"All layers to mains\" and \"Re-pin OK?\" option 1, 2026-11-06 ~01:00Z, session_01VQDpPbqnwyoWW5d3Rc1vEk"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
+              "evidence": "Owner card \"Re-pin how\" option 2 \"All layers to mains\" and \"Re-pin OK?\" option 1, 2026-11-06 ~01:00Z, session_01VQDpPbqnwyoWW5d3Rc1vEk"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "site": {
+    "landing": "who-iris"
+  }
+}
