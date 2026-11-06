@@ -1,0 +1,322 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "process",
+    "id": "Process_Cache",
+    "path": "sdlc/processes/cache.bpmn"
+  },
+  "source_hash": "sha256:336d8d7a7009ee89446d5eb85f314ba0da86889e66192a8acda3ec3acc1807cb",
+  "criteria": {
+    "raci-role-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-single-accountable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "raci-accountable-not-consulted": {
+      "result": "n/a",
+      "findings": []
+    },
+    "convention-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "skill-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "skill-servable": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-skill-has-tool": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Layers",
+          "detail": "names skill \"cache-first-ci\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Image",
+          "detail": "names skill \"cache-first-ci\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Deps",
+          "detail": "names skill \"cache-first-ci\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Gates",
+          "detail": "names skill \"cache-first-ci\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Sets",
+          "detail": "names skill \"cache-first-ci\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_RenderSeed",
+          "detail": "names skill \"incremental-render\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        },
+        {
+          "where": "Task_Jekyll",
+          "detail": "names skill \"cache-first-ci\", which no Tool declares `satisfies` for — the step's mechanism is still prose."
+        }
+      ]
+    },
+    "decision-ref-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-ref-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-in-lane": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-binds-role": {
+      "result": "pass",
+      "findings": []
+    },
+    "variable-performer-declared-alone": {
+      "result": "n/a",
+      "findings": []
+    },
+    "role-carries-activity-skill": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Layers",
+          "detail": "needs skill \"cache-first-ci\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Image",
+          "detail": "needs skill \"cache-first-ci\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Deps",
+          "detail": "needs skill \"cache-first-ci\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Gates",
+          "detail": "needs skill \"cache-first-ci\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Sets",
+          "detail": "needs skill \"cache-first-ci\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_RenderSeed",
+          "detail": "needs skill \"incremental-render\", but its lane's role \"build-pipeline\" does not carry it."
+        },
+        {
+          "where": "Task_Jekyll",
+          "detail": "needs skill \"cache-first-ci\", but its lane's role \"build-pipeline\" does not carry it."
+        }
+      ]
+    },
+    "lane-role-legacy-binding": {
+      "result": "pass",
+      "findings": []
+    },
+    "task-skill-outside-lane-role": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Task_Layers",
+          "detail": "task \"Layers ref: restore / save\" requires skill \"cache-first-ci\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_Image",
+          "detail": "task \"Prepared image + node_modules\" requires skill \"cache-first-ci\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_Deps",
+          "detail": "task \"bun / pip dependencies\" requires skill \"cache-first-ci\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_Gates",
+          "detail": "task \"Gate results: restore / save\" requires skill \"cache-first-ci\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_Sets",
+          "detail": "task \"Generated sets: QA copy, pages\" requires skill \"cache-first-ci\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_RenderSeed",
+          "detail": "task \"Render seed: writer records\" requires skill \"incremental-render\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        },
+        {
+          "where": "Task_Jekyll",
+          "detail": "task \"Jekyll cache: restore / save\" requires skill \"cache-first-ci\", which role \"build-pipeline\" (named by lane \"Build pipeline\") does not list, directly or through `inherits`."
+        }
+      ]
+    },
+    "activity-names-skill": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-fulfilment-kind": {
+      "result": "n/a",
+      "findings": []
+    },
+    "call-activity-resolves": {
+      "result": "n/a",
+      "findings": []
+    },
+    "process-diagram-published": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Process_Cache",
+          "detail": "cache.svg is rendered but no docs page shows it — run `bun run cat processes:viz`."
+        }
+      ]
+    },
+    "activity-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-calls-skill-process": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-documented": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-branches-named": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-reachable": {
+      "result": "pass",
+      "findings": []
+    },
+    "node-has-exit": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-implicit-split": {
+      "result": "pass",
+      "findings": []
+    },
+    "gateway-mixed": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-size": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-decompose": {
+      "result": "pass",
+      "findings": []
+    },
+    "process-single-start": {
+      "result": "pass",
+      "findings": []
+    },
+    "decision-label-question": {
+      "result": "pass",
+      "findings": []
+    },
+    "activity-label-verb-first": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-rectilinear": {
+      "result": "pass",
+      "findings": []
+    },
+    "edge-crossing": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "f3×f91",
+          "detail": "flows f3 and f91 cross."
+        },
+        {
+          "where": "f3×f101",
+          "detail": "flows f3 and f101 cross."
+        }
+      ]
+    },
+    "edge-through-node": {
+      "result": "pass",
+      "findings": []
+    },
+    "diagram-too-wide": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "diagram",
+          "detail": "1580 wide, budget 1400: text shows at 12.2px in a 1200px band. Close the gaps between columns, stack steps of different lanes in one column, or split by phase."
+        }
+      ]
+    },
+    "diagram-too-tall": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "label-on-edge": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "PG_After_Layers/f50",
+          "detail": "label \"Independent&#10;components\" sits on flow f50. Move the label off the line (`bpmn:detangle --write` does it)."
+        },
+        {
+          "where": "PG_After_Layers/f51",
+          "detail": "label \"Independent&#10;components\" sits on flow f51. Move the label off the line (`bpmn:detangle --write` does it)."
+        }
+      ]
+    },
+    "label-on-shape": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "Start_Cache/Lane_Ci",
+          "detail": "label \"A consumer asks for its caches\" runs into the name of \"Build pipeline\"."
+        }
+      ]
+    },
+    "label-on-lane-line": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "End_Skipped/Lane_Ci",
+          "detail": "label \"Skipped: the consumer builds\" is drawn across the edge of \"Build pipeline\". Move it inside one lane (`bpmn:detangle --write` does it)."
+        }
+      ]
+    },
+    "shape-overlap": {
+      "result": "pass",
+      "findings": []
+    },
+    "lane-order": {
+      "result": "pass",
+      "findings": []
+    },
+    "prose-reviewed-since-code-changed": {
+      "result": "n/a",
+      "findings": []
+    },
+    "prose-claims-resolve": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 26,
+    "fail": 9,
+    "n/a": 10,
+    "unknown": 0
+  }
+}
