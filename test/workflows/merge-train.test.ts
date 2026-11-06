@@ -302,3 +302,30 @@ describe("a member already on main is neither carried nor ejected", () => {
     expect(builtMembers(plan, report)).toEqual({ members: [], refused: [] });
   });
 });
+
+describe("pending says why an opted-in PR waits (2026-11-06, #2987)", () => {
+  test("a labelled PR whose checks still run is named, with its reason", async () => {
+    const { pending } = await import("../../.github/scripts/merge-train.ts");
+    const R = "o/r";
+    const pr = { number: 33, state: "open", draft: false, body: "", head: { sha: "a".repeat(40), ref: "b33", repo: { full_name: R } }, base: { ref: "main" }, labels: [{ name: "merge-train" }] };
+    const api = {
+      async get<T>(p: string): Promise<T> {
+        if (p.startsWith(`/repos/${R}/pulls?state=all`)) return [] as T;
+        if (p.startsWith(`/repos/${R}/commits?sha=main`)) return [{ sha: "f".repeat(40) }] as T;
+        if (p.includes(`/commits/${"f".repeat(40)}/check-runs`)) return { check_runs: [{ id: 1, name: "lint (hard)", status: "completed", conclusion: "success" }] } as T;
+        if (p.includes("/check-runs")) return { check_runs: [{ id: 2, name: "lint (hard)", status: "in_progress", conclusion: null }] } as T;
+        if (p.startsWith(`/repos/${R}/pulls?state=open`)) return [pr] as T;
+        if (p.startsWith("/search/issues")) return { items: [] } as T;
+        if (p.includes("/issues/33/events")) return [{ event: "labeled", label: { name: "merge-train" }, actor: { type: "User" } }] as T;
+        if (p.includes("/pulls/33/reviews")) return [] as T;
+        if (p.includes("/pulls/33/files")) return [{ filename: "a.json" }] as T;
+        throw new Error(`unexpected GET ${p}`);
+      },
+      async send<T>(): Promise<T> { throw new Error("pending must not write"); },
+      async text(): Promise<string> { return ""; },
+    };
+    const lines: string[] = [];
+    expect(await pending(api as never, R, (l) => lines.push(l))).toBeUndefined();
+    expect(lines).toEqual(["#33 waits: its own checks are still running (1)"]);
+  });
+});
