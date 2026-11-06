@@ -75,3 +75,11 @@ mechanical to rewrite.
 ## Backfill PRs
 
 Filled in as each opens; the session stops after three for the owner to choose the rest.
+
+| Repo | PR | Tests → Scenarios |
+|---|---|---|
+| smart-trust-demo | [#44](https://github.com/litlfred/smart-trust-demo/pull/44) | 8 → 8 |
+| who-iris | [#188](https://github.com/litlfred/who-iris/pull/188) | 109 → 109 |
+| bootstrap-tools | [#81](https://github.com/litlfred/bootstrap-tools/pull/81) | 259 → 259 |
+
+Owner chose the `_` tag encoding (option 1) on 2026-11-06.
