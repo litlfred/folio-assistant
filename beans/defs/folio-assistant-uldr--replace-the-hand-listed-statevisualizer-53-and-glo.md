@@ -36,3 +36,4 @@ Option 1: one built-at-publish folder entry per writer.
 ## Progress
 - [x] cat-harness#1091: state:visualizer's beans/, qa/, health/, attestations/ and code/ become one folder entry each (33 lines → 5). docs/assets/glossary/ becomes one folder entry (30 → 1); its 8 committed files leave git, including smart-trust--gdhcn, a higher layer's file.
 - [ ] The 6 per-locale docs/<locale>/folio-assistant-core/ entries: core's glossary visualiser routes on the host site. A folder entry cannot remove the name. Awaiting an owner decision.
+- Owner, 2026-11-06 (card "Locales"): derive the per-locale host routes from core's declared viewer, so the publish checks treat every declared viewer route on the host as built at publish and cat-harness lists none. Medium cat-harness-tools change, separate PR. The owner also approved merging #1091 once green.
