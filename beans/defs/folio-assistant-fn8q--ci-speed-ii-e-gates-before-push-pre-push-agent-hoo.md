@@ -8,7 +8,7 @@ priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-06T05:58:28Z
+updated_at: 2026-11-06T06:08:19Z
 parent: folio-assistant-k3vv
 ---
 
@@ -39,3 +39,5 @@ The switch is a repository variable, not a file, so a PR cannot turn skipping on
 _2026-11-06T05:46:09Z_ — The re-check sweep litlfred/folio-assistant#2958 merged (3f2aeaa; owner card "Record on", option 1). Step 1 of the ruling is done. Step 2 is for litlfred: set the repository variable `CQG_HONOUR_LOCAL_RECORDS=true`. The second box closes once a PR run shows a step skipped on a local record, with the sweep re-verifying it. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
 
 _2026-11-06T05:58:28Z_ — **Owner ruling (litlfred, cards "Turn on?" and "Unused code"):** CI will **never** honour agents' local gate records. As built, honouring re-runs every skipped run, so each PR costs about two full runs (#2958's own text). Keep the pre-push hook: it stops red runs before they start. Remove the unused parts: the hook's note-writing (cat-harness-tools), #2957's `cqg_judge.py local-record` and `covered` paths, #2958's sweep step and its `statuses: write` / `issues: write`, and the `CQG_HONOUR_LOCAL_RECORDS` switch. Open as PRs; they merge after the owner says yes. Correction to an earlier note: the repository setting did NOT stop a PR enabling skips for itself, because a PR runs its own copy of the workflow code. Its real value was only the instant off switch. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
+
+_2026-11-06T06:08:19Z_ — Removal PRs for the 05:58 ruling are open, ready for review, not merged: litlfred/cat-harness-tools#1572 (https://github.com/litlfred/cat-harness-tools/pull/1572) removes the hook's `refs/notes/cat-gates` note and also its Class B `refs/cat-gates/local/` verdict refs, which only the cqg judge was to read, plus the `cat-gates-notes` cache node. It keeps the gates, the new-failure refusal, the local tree record, and `CAT_GATES_BYPASS` logging. litlfred/folio-assistant#2989 (https://github.com/litlfred/folio-assistant/pull/2989) reverts exactly what #2957 and #2958 added, including `statuses: write` on the six judged jobs and the `issues`/`statuses` write in `sweeps.yml` (no other sweep needs them). It keeps #2951's hook and `reuse-check`. Workflow tests: 314 pass. check:workflows, workflow-injection and workflow-paths pass. Once #2989 merges, litlfred can delete the `CQG_HONOUR_LOCAL_RECORDS` repository variable. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
