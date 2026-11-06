@@ -111,3 +111,5 @@ _2026-11-06T00:50:00Z_ — Re-count 2 (the last scheduled one): **still nothing 
 - fa train #2980 (pin 55b1925): ❌ with 1 NEW on a scoped gate. bpmn:checklist:check flags two cat-harness checklists as stale. That is index-owned output, not cross-layer; the run judged the whole index (`scoped: null`).
 - Before, measured earlier: about 22 cross-layer false NEW across 4 repos. After: not yet measurable.
 Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-06T05:45:00Z_ — **Merged** litlfred/folio-assistant-core#651 (d9e0836) on all-green CI (typecheck, 10 shards, No new failures), owner approved on a card. Core check:materialized-fixity now judges only the caller's own records; core pins cat-harness-tools 8205c6a. Session https://claude.ai/code/session_01VQDpPcbpLjEo8EuzFLVq5Z
