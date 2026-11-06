@@ -1094,6 +1094,186 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_deps",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "bun / pip dependencies"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 2b. RESTORE: the package managers' download caches, keyed by the lockfile digest (`bun.lock`; the pip requirements file) and the tool version — never by a hand-listed version string. A restored download is re-verified by the package manager against the lockfile's integrity hashes: class (a). SAVE: main; a PR into its own ref scope. Owner role: the integrator (CI speed 14). `cache` node: `bun-deps`, `pip-deps`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Deps",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Deps",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_gates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Gate results: restore / save"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 2c. RESTORE: the result store (`build/result-store/`) and the CI cone records, by prefix — a WARM start: the cone (`ci-cone.ts`) then matches each stored entry exactly (fingerprint from `cache:key --base`, every recorded path state, every replayed git answer) and only an exact match is reported SKIPPED, never passed. A committer's local gate record is class (b): honoured on the critical path, then re-verified off it. SAVE: main only (class c for CI's records). Owner roles: the gate-reuse session (CI speed 8) and the committer-side session (CI speed 3). `cache` nodes: `result-store`, `ci-cone`, `local-gate-records`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Gates",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Gates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_igast",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FHIR IG ASTs: Process_IgAstCache"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 4b, in its own lane: the FHIR IG layer's IG AST cache, `Process_IgAstCache` (declared by that layer), integrated, not replaced. It is drawn as a task because this layer may not name a process of a layer above it; the steps are that process's. RESTORE: read the cached AST from its branch store and judge it — that process's \"valid for this commit?\" IS this component's verify (class a: the AST is judged against this commit's IG sources and tooling); valid → the site is built from it. SAVE: that process's own path, not `cached-step` — a miss dispatches an AST refresh on a Java runner with 10 GB, which rewrites the branch store. The branch store is a `cache` node (`ig-ast`). Owner: CI speed 12, the IG layers' session. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_IgAst",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_IgAst",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_image",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Prepared image + node_modules"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 2a. RESTORE: the prepared CI image `ghcr.io/<owner>/<repo>-ci`, keyed by `.github/ci-image/key.sh` (the lock, `bun.lock`, `package.json`, the recipe files, the bun version and `ImageOS`) — computed BEFORE anything is mounted, so it is not `cache:key`; `cache:key --check image` asserts the two agree. Each layer's sha256 is checked as it streams and `mount:lock:check` re-hashes the result: class (a). SAVE: main or a dispatch only (the one job with `packages: write`). Owner role: the prepared-image session (CI speed 9). `cache` node: `ci-image`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Image",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Image",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_jekyll",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Jekyll cache: restore / save"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 5, last: it caches the rendering of what the components above produce. RESTORE: `.jekyll-cache`, keyed by the theme, the layouts, includes and plugins, `Gemfile.lock` and the Ruby version, by exact key only. Jekyll invalidates an entry whose source changed, but a template change is not visible to it, which is why the templates are in the key. SAVE: main only — class (c). Owner role: the preview session (CI speed 2). `cache` node: `jekyll-cache`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Jekyll",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Jekyll",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_layers",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Layers ref: restore / save"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 1, which everything else needs. RESTORE: `mount-from-lock` replays the lock from `refs/cat/layers/<key>` (key = sha256 of the lock's instances), verifying every layer's tree digest, declaration and asset sha256 against the committed lock — class (a), verified against THIS tree, so a bad entry is only a miss, and a stale `refs/cat/layers/main` still serves every layer that did not move. SAVE: the committer (`layers:publish`, run by `mount:remote` after it changes the lock), with the re-pin train and main as fallbacks. Not wrapped in `cached-step`: its per-layer verify is finer than one hit. Owner role: the layers-ref session (CI speed 13). `cache` node: `layers`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Layers",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Layers",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_lean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Lean .oleans: restore / save"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 3, after the layers (the Lean packages are mounted content). RESTORE: the compiled `.olean`s of each declared Lean package, keyed by the package, the toolchain AND the lake manifest (the Mathlib revision) — the manifest is part of the key, so an entry from another revision is a miss. `lake build` re-checks every restored module's trace, so a stale module is rebuilt, not trusted: class (a). SAVE: main; a contributor's warm build may be offered back (`compiled-artefact-cache`) and is accepted only through that same trace check. Owner role: the integrator (CI speed 14). `cache` node: `lean-oleans`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Lean",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Lean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_renderseed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Render seed: writer records"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 4a, the seed of CI's render (owner, 2026-11-05: CI does not run `render`; its render is `derive:publish`). SAVE: main's `writer-records.yml` records each publish-time writer under trace (`writer-cone`): its read set, the state of every path it read, and the outputs it wrote. RESTORE: a run with `CAT_WRITER_SKIP=1` (a pull request, staging, the preview) skips every writer whose recorded reads all still match and puts back main's recorded outputs; a writer whose reads moved runs. The key is the writer's recorded read set; trust (a′): the outputs are the recording's own, so their PROVENANCE is checked — they come only from main's recording run, never from a run a pull request could write. Owner roles: the integrator and the preview session (CI speed 2). `cache` node: `writer-records`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_RenderSeed",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_RenderSeed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_sets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Generated sets: QA copy, pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 2d. RESTORE: the QA working copy and the publish-time pages, keyed by `bundle-cache.sh digest` (the tree and the exact tool versions). A bundle is checked against the manifest it carries AND a source rule (the source run's head is this head, a parent, or a commit with this tree; or a main-scoped save) — class (a′), because a manifest alone proves a bundle intact, not built from these inputs. Hits across commits wait on the producers being byte-reproducible (the determinism audit). SAVE: the run that built it, recorded; main's records are read by every branch. Owner role: the generated-sets session (CI speed 10); the preview's copy, the preview session (CI speed 2). `cache` nodes: `qa-working-copy`, `publish-pages`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Sets",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Sets",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cihealth.call_watch",
       "@type": "skos:Concept",
       "skos:inScheme": {

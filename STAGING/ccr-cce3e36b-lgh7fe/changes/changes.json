@@ -3,14 +3,22 @@
   "sources": {
     "$schema": "staging-changes/v1",
     "repository": "litlfred/folio-assistant",
-    "head": "8ddcb9d33f733bcbd7ff8728b9c859c370164385",
+    "head": "1928c95d14418c47981078ac97d23dd2fe163305",
     "changes": [
       {
         "path": ".github/workflows/cancel-on-close.yml",
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/cancel-on-close.yml",
-        "ref": "8ddcb9d33f733bcbd7ff8728b9c859c370164385",
+        "ref": "1928c95d14418c47981078ac97d23dd2fe163305",
+        "mounted": true
+      },
+      {
+        "path": ".github/workflows/code-quality-gates.yml",
+        "status": "modified",
+        "repository": "litlfred/folio-assistant",
+        "upstreamPath": ".github/workflows/code-quality-gates.yml",
+        "ref": "1928c95d14418c47981078ac97d23dd2fe163305",
         "mounted": true
       },
       {
@@ -18,7 +26,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": ".github/workflows/main-qa.yml",
-        "ref": "8ddcb9d33f733bcbd7ff8728b9c859c370164385",
+        "ref": "1928c95d14418c47981078ac97d23dd2fe163305",
         "mounted": true
       },
       {
@@ -26,7 +34,7 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.config.json",
-        "ref": "8ddcb9d33f733bcbd7ff8728b9c859c370164385",
+        "ref": "1928c95d14418c47981078ac97d23dd2fe163305",
         "mounted": true
       },
       {
@@ -34,7 +42,34 @@
         "status": "modified",
         "repository": "litlfred/folio-assistant",
         "upstreamPath": "index.lock.json",
-        "ref": "8ddcb9d33f733bcbd7ff8728b9c859c370164385",
+        "ref": "1928c95d14418c47981078ac97d23dd2fe163305",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/AGENTS.md",
+        "status": "modified",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "AGENTS.md",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/SKILLS.md",
+        "status": "modified",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "SKILLS.md",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/docs/assets/img/workflows/cache.svg",
+        "status": "added",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "docs/assets/img/workflows/cache.svg",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
         "mounted": true
       },
       {
@@ -42,7 +77,34 @@
         "status": "modified",
         "repository": "litlfred/cat-harness",
         "upstreamPath": "processes/kg/mount-dependency.bpmn",
-        "ref": "7102ee5ca858f88d414e8682ff805dfedf303ff6",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/sdlc/processes/README.md",
+        "status": "modified",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "sdlc/processes/README.md",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/sdlc/processes/cache.bpmn",
+        "status": "added",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "sdlc/processes/cache.bpmn",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/sdlc/processes/cache.checklist.md",
+        "status": "added",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "sdlc/processes/cache.checklist.md",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
         "instance": "cat-harness",
         "mounted": true
       },
@@ -51,7 +113,7 @@
         "status": "added",
         "repository": "litlfred/cat-harness",
         "upstreamPath": "sdlc/skills/sdlc-core/cache-first-ci.md",
-        "ref": "7102ee5ca858f88d414e8682ff805dfedf303ff6",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
         "instance": "cat-harness",
         "mounted": true
       },
@@ -60,7 +122,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness",
         "upstreamPath": "sdlc/skills/sdlc-core/package-manifest.json",
-        "ref": "7102ee5ca858f88d414e8682ff805dfedf303ff6",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
         "instance": "cat-harness",
         "mounted": true
       },
@@ -69,7 +131,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness",
         "upstreamPath": "sdlc/skills/sdlc-core/prepare-merge.md",
-        "ref": "7102ee5ca858f88d414e8682ff805dfedf303ff6",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
         "instance": "cat-harness",
         "mounted": true
       },
@@ -78,7 +140,7 @@
         "status": "modified",
         "repository": "litlfred/cat-harness",
         "upstreamPath": "skills/kg/kg-core/remote-mount.md",
-        "ref": "7102ee5ca858f88d414e8682ff805dfedf303ff6",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
         "instance": "cat-harness",
         "mounted": true
       },
@@ -87,7 +149,97 @@
         "status": "modified",
         "repository": "litlfred/cat-harness",
         "upstreamPath": "skills/kg/kg-core/remote-mount.prov.jsonld",
-        "ref": "7102ee5ca858f88d414e8682ff805dfedf303ff6",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/translations/ar/processes/cache.pot",
+        "status": "added",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "translations/ar/processes/cache.pot",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/translations/ar/processes/mount-dependency.pot",
+        "status": "modified",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "translations/ar/processes/mount-dependency.pot",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/translations/es/processes/cache.pot",
+        "status": "added",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "translations/es/processes/cache.pot",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/translations/es/processes/mount-dependency.pot",
+        "status": "modified",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "translations/es/processes/mount-dependency.pot",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/translations/fr/processes/cache.pot",
+        "status": "added",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "translations/fr/processes/cache.pot",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/translations/fr/processes/mount-dependency.pot",
+        "status": "modified",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "translations/fr/processes/mount-dependency.pot",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/translations/ru/processes/cache.pot",
+        "status": "added",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "translations/ru/processes/cache.pot",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/translations/ru/processes/mount-dependency.pot",
+        "status": "modified",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "translations/ru/processes/mount-dependency.pot",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/translations/zh/processes/cache.pot",
+        "status": "added",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "translations/zh/processes/cache.pot",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "instance": "cat-harness",
+        "mounted": true
+      },
+      {
+        "path": "cat-harness/translations/zh/processes/mount-dependency.pot",
+        "status": "modified",
+        "repository": "litlfred/cat-harness",
+        "upstreamPath": "translations/zh/processes/mount-dependency.pot",
+        "ref": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
         "instance": "cat-harness",
         "mounted": true
       },
@@ -412,8 +564,8 @@
         "instance": "cat-harness",
         "repository": "litlfred/cat-harness",
         "from": "669a957700fa6ce003b4ec5e8b50e7f0b516a8d5",
-        "to": "7102ee5ca858f88d414e8682ff805dfedf303ff6",
-        "files": 6
+        "to": "7321322d08bf79e09bd2d255a2abd3cfce9d2995",
+        "files": 22
       },
       {
         "instance": "cat-harness-tools",
@@ -430,6 +582,15 @@
     "method": "cone",
     "inputs": [],
     "files": [
+      {
+        "path": "assets/img/workflows/cache.svg",
+        "change": "changed",
+        "role": "data",
+        "via": [
+          "cat-harness/docs/assets/img/workflows/cache.svg"
+        ],
+        "hash": "bd9f0c55f4265bd341d93af7ecdd44d21b5a0e8c4fc77104a78abcb1029b69db"
+      },
       {
         "path": "en/cat-harness/processes/mount-dependency.html",
         "change": "changed",
@@ -607,6 +768,24 @@
         "hash": "ffa40f9bee470d9baa14c6517f149b970a9a70646c746291f5eb6cdbec4f44e1"
       },
       {
+        "input": "cat-harness/sdlc/processes/README.md",
+        "reason": "the staging cone carries cat-harness/sdlc (the branch changes cat-harness/sdlc/processes/README.md); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "6885736646bdad3617834fd95c2ab8a7d60a10ea8f5d54237b92ba8cc96cc100"
+      },
+      {
+        "input": "cat-harness/sdlc/processes/cache.bpmn",
+        "reason": "the staging cone carries cat-harness/sdlc (the branch changes cat-harness/sdlc/processes/cache.bpmn); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "7e1aa0918e27bf8de068297e20e492820db34a5e2768c0fa7144b8f9dda796ac"
+      },
+      {
+        "input": "cat-harness/sdlc/processes/cache.checklist.md",
+        "reason": "the staging cone carries cat-harness/sdlc (the branch changes cat-harness/sdlc/processes/cache.checklist.md); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "83fa6dbc4086f3b5af8469577f4df2046a850b75d48beedaf66319c0cf77b33e"
+      },
+      {
         "input": "cat-harness/sdlc/skills/sdlc-core/cache-first-ci.md",
         "reason": "the staging cone carries cat-harness/sdlc (the branch changes cat-harness/sdlc/skills/sdlc-core/cache-first-ci.md); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
@@ -635,6 +814,66 @@
         "reason": "the staging cone carries cat-harness/skills (the branch changes cat-harness/skills/kg/kg-core/remote-mount.prov.jsonld); the pages rendered from them are not mapped file by file",
         "scope": "unknown",
         "hash": "b1f800516430831dcfd26a4dffa88648ed953a694421b228cdb2474617bc04c0"
+      },
+      {
+        "input": "cat-harness/translations/ar/processes/cache.pot",
+        "reason": "the staging cone carries cat-harness/translation-sources (the branch changes cat-harness/translations/ar/processes/cache.pot); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "9fbb3acd2fe3b3f30de10a3bab6a960904c53b5a2949cf52dece3f2b70edabf9"
+      },
+      {
+        "input": "cat-harness/translations/ar/processes/mount-dependency.pot",
+        "reason": "the staging cone carries cat-harness/translation-sources (the branch changes cat-harness/translations/ar/processes/mount-dependency.pot); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "afb7411e7c6ec6e39193fec23d69779cfe636b007df04f722ab0e6bde7801d70"
+      },
+      {
+        "input": "cat-harness/translations/es/processes/cache.pot",
+        "reason": "the staging cone carries cat-harness/translation-sources (the branch changes cat-harness/translations/es/processes/cache.pot); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "1c8c439788e089b77eb78e97b9486b78396369ae43f7fa489156d24ce16fd748"
+      },
+      {
+        "input": "cat-harness/translations/es/processes/mount-dependency.pot",
+        "reason": "the staging cone carries cat-harness/translation-sources (the branch changes cat-harness/translations/es/processes/mount-dependency.pot); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "a8c16a79f1e33c395e3337b94d510ea259ce2eda1a4a8d42e643dea8b7411c11"
+      },
+      {
+        "input": "cat-harness/translations/fr/processes/cache.pot",
+        "reason": "the staging cone carries cat-harness/translation-sources (the branch changes cat-harness/translations/fr/processes/cache.pot); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "af8d9cdc7f1337b52ecb9bf426192c74d74c1e4987c25a291b7f243486f5e280"
+      },
+      {
+        "input": "cat-harness/translations/fr/processes/mount-dependency.pot",
+        "reason": "the staging cone carries cat-harness/translation-sources (the branch changes cat-harness/translations/fr/processes/mount-dependency.pot); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "fa36d4cab3faad375d2b505b3068a55d6a5abdfaf43754474c0417da836be7fe"
+      },
+      {
+        "input": "cat-harness/translations/ru/processes/cache.pot",
+        "reason": "the staging cone carries cat-harness/translation-sources (the branch changes cat-harness/translations/ru/processes/cache.pot); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "07b5aa4444e7aee2c4544cef0986e25fb08dd2c5a90144773134e93aac111e31"
+      },
+      {
+        "input": "cat-harness/translations/ru/processes/mount-dependency.pot",
+        "reason": "the staging cone carries cat-harness/translation-sources (the branch changes cat-harness/translations/ru/processes/mount-dependency.pot); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "94782c560355185ab925d827c7228699d1afceed0ac0c4adf50deb595f339e06"
+      },
+      {
+        "input": "cat-harness/translations/zh/processes/cache.pot",
+        "reason": "the staging cone carries cat-harness/translation-sources (the branch changes cat-harness/translations/zh/processes/cache.pot); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "2d48813a0c03c4bb618f914959e3c0d6477afc4d99c49a89befe1c777b218e3f"
+      },
+      {
+        "input": "cat-harness/translations/zh/processes/mount-dependency.pot",
+        "reason": "the staging cone carries cat-harness/translation-sources (the branch changes cat-harness/translations/zh/processes/mount-dependency.pot); the pages rendered from them are not mapped file by file",
+        "scope": "unknown",
+        "hash": "b7acf461d48eab9355ef2213547ecb1a7d5033521460e9a46137d1989db4e8d8"
       }
     ]
   },
@@ -642,7 +881,7 @@
     "status": "not-base",
     "beforeCommit": "99ce89bd86a75cd3d197799b4095bcee028e51a7",
     "baseCommit": "ae0fe43b0f0a30370d5320dcf8c3bef12ac5cf9a",
-    "measured": 26943,
+    "measured": 26951,
     "notInCone": [
       {
         "path": "api/classes/folio-assistant_schemas_kind-validator.ValidatorRefError.html",
@@ -18111,6 +18350,12 @@
         "via": []
       },
       {
+        "path": "assets/todos/index.json",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "assets/workflows/checklists/complete-initialization.checklist.html",
         "change": "changed",
         "role": "content",
@@ -20909,6 +21154,12 @@
       {
         "path": "cat-harness/processes/bootstrap/index.html",
         "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "cat-harness/processes/cache.html",
+        "change": "added",
         "role": "content",
         "via": []
       },
@@ -28101,6 +28352,18 @@
         "via": []
       },
       {
+        "path": "en/cat-harness/processes/cache.html",
+        "change": "added",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "en/cat-harness/processes/cache.tasks.json",
+        "change": "added",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "en/cat-harness/processes/cat-harness/index.html",
         "change": "changed",
         "role": "content",
@@ -34997,6 +35260,12 @@
       {
         "path": "processes/bootstrap/index.html",
         "change": "changed",
+        "role": "content",
+        "via": []
+      },
+      {
+        "path": "processes/cache.html",
+        "change": "added",
         "role": "content",
         "via": []
       },
@@ -91689,6 +91958,18 @@
         "via": []
       },
       {
+        "path": "subgraph/cat-harness/sdlc/processes/index.hydrated.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
+        "path": "subgraph/cat-harness/sdlc/processes/index.jsonld",
+        "change": "changed",
+        "role": "data",
+        "via": []
+      },
+      {
         "path": "subgraph/cat-harness/sdlc/skills/index.hydrated.jsonld",
         "change": "changed",
         "role": "data",
@@ -93994,6 +94275,7 @@
       }
     ],
     "confirmed": [
+      "assets/img/workflows/cache.svg",
       "en/cat-harness/processes/mount-dependency.html",
       "reference/skill-instructions/prepare-merge.html",
       "reference/skill-instructions/remote-mount.html"

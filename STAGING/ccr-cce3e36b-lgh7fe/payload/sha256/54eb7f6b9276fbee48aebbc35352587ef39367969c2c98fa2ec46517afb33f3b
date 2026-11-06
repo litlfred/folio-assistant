@@ -30,7 +30,7 @@ audit.
 
 ## The key is DERIVED, never hand-declared
 
-Owner ruling, bean `4rbc`: *"derived is BEST"*; *"DERIVED = no drift, no extra
+Owner ruling, work item `4rbc`: *"derived is BEST"*; *"DERIVED = no drift, no extra
 data fields"*. A key comes from one of these:
 
 - `bun run cat cache:key <script>` (cat-harness-tools `scripts/cache-key.ts`).
