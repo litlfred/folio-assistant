@@ -1,5 +1,6 @@
 ---
-# cat-harness-724x
+# folio-assistant-724x
+$schema: bean/1.0.0
 title: 'Every test has a Gherkin: @test:<name> Scenario per executable test, test-has-gherkin criterion, check:test-gherkin'
 status: in-progress
 type: feature
