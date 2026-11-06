@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0826",
+    "sha": "374b764d9c45e0a796ddabadc8237308f83cfed8",
+    "pr": "repin-train/20261106-0826",
+    "run": "42187857328"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Write the change set's Agent row",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/skill/review-sheet-agent-columns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/process/Process_RecordAgentStep#flow/RS01",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/process/Process_RecordAgentStep#flow/RS05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/process/Process_RecordAgentStep#flow/RS02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow"
+    }
+  ]
+}

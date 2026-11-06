@@ -1,0 +1,64 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/memory-note/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/memory-note.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Keep a short note on the work you are doing — what you did, what you decided and why, and what is left open — so it is there when the work is picked up again.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/memory.ts"
+        },
+        "mcp": {
+          "tool": "memory_note"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "stdin": true
+            },
+            "description": "The note, in plain words. One paragraph is plenty.",
+            "name": "note",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          },
+          {
+            "arg": {
+              "flag": "--shared"
+            },
+            "description": "true: the memory you share with the other agents working with you. Default: your own memory of this work.",
+            "name": "shared",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Whether it was kept.",
+            "name": "kept",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "memory-note",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-context",
+      "title": "Keep a note on the work"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/memory-note",
+  "path": "tools/memory-note/"
+}

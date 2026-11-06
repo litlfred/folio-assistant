@@ -1,0 +1,64 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/memory-checkpoint/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/memory-checkpoint.jsonld",
+      "@type": "cat-harness:Tool",
+      "description": "Before you stop or hand over, keep where the work stands: what is done, what is next, and anything the next person must know to carry on.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "inProcess": {
+          "module": "src/tools/memory.ts"
+        },
+        "mcp": {
+          "tool": "memory_checkpoint"
+        }
+      },
+      "io": {
+        "inputs": [
+          {
+            "arg": {
+              "stdin": true
+            },
+            "description": "Where the work stands, in plain words.",
+            "name": "note",
+            "required": true,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+          },
+          {
+            "arg": {
+              "flag": "--shared"
+            },
+            "description": "true: the memory you share with the other agents working with you. Default: your own memory of this work.",
+            "name": "shared",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+          }
+        ],
+        "outputs": [
+          {
+            "description": "Whether it was kept.",
+            "name": "kept",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+          }
+        ]
+      },
+      "name": "memory-checkpoint",
+      "requirements": {
+        "network": false
+      },
+      "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-context",
+      "title": "Keep where the work stands"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/tools"
+  ],
+  "name": "tools/memory-checkpoint",
+  "path": "tools/memory-checkpoint/"
+}

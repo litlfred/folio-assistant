@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/smart-base/skill/smart-base-tools.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-0826/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/smart-base-tools.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0826",
+    "sha": "374b764d9c45e0a796ddabadc8237308f83cfed8",
+    "pr": "repin-train/20261106-0826",
+    "run": "42187857328"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/smart-base-tools",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "smart-base-tools",
+      "title": "smart-base Toolchain",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
+      "instructionLines": 134,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}
