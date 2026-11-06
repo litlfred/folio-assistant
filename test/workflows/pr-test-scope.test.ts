@@ -142,6 +142,9 @@ describe("pr-bun-test.sh", () => {
     mkdirSync(bin);
     writeFileSync(join(bin, "bun"), `#!/usr/bin/env bash\nif [ "$1" = test ]; then shift; echo "BUN_OPTIONS=[$BUN_OPTIONS] bun test $*"; exit 0; fi\nexec "${process.execPath}" "$@"\n`, { mode: 0o755 });
     const env: Record<string, string> = { ...process.env, PATH: `${bin}:${process.env.PATH}`, BUN_OPTIONS: "--shard=1/4 --reporter=junit", GITHUB_STEP_SUMMARY: summary } as Record<string, string>;
+    // In CI this test itself runs inside the selection step, whose own
+    // CQG_TEST_SCOPE would otherwise leak into the "no scope" case.
+    delete env.CQG_TEST_SCOPE;
     if (scope) {
       writeFileSync(join(dir, "scope.json"), JSON.stringify(scope));
       env.CQG_TEST_SCOPE = join(dir, "scope.json");
