@@ -1311,11 +1311,17 @@
     "zod/user-scenario/ExperienceSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/ExperienceSchema.schema.json"
     },
+    "zod/user-scenario/FhirChangeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/FhirChangeSchema.schema.json"
+    },
     "zod/user-scenario/IllustrationSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/IllustrationSchema.schema.json"
     },
     "zod/user-scenario/IllustrationStyleSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/IllustrationStyleSchema.schema.json"
+    },
+    "zod/user-scenario/JourneyGlyphSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/JourneyGlyphSchema.schema.json"
     },
     "zod/user-scenario/JourneyPersonaSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/JourneyPersonaSchema.schema.json"
@@ -1325,6 +1331,9 @@
     },
     "zod/user-scenario/ReferenceSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/ReferenceSchema.schema.json"
+    },
+    "zod/user-scenario/SceneSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/SceneSchema.schema.json"
     },
     "zod/user-scenario/UserScenarioSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/UserScenarioSchema.schema.json"
@@ -1346,6 +1355,9 @@
     },
     "zod/workshop/WorkshopModuleSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopModuleSchema.schema.json"
+    },
+    "zod/workshop/WorkshopPresentationSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopPresentationSchema.schema.json"
     },
     "zod/workshop/WorkshopResourceSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopResourceSchema.schema.json"
@@ -2563,8 +2575,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
   "staging": {
     "branch": "claude/charming-lamport-a61w1n",
-    "sha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
+    "sha": "6f9c553947f53aa478b1d457152b3248422e41d0",
     "pr": "2970/merge",
-    "run": "42101071547"
+    "run": "42165728261"
   }
 }

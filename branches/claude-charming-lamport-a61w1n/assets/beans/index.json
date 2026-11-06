@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 57,
+      "count": 53,
       "unit": "open beans"
     }
   },
@@ -174,7 +174,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T08:26:15Z",
-      "updatedAt": "2026-11-05T14:38:58Z",
+      "updatedAt": "2026-11-05T23:28:34Z",
       "preview": "## Evidence\nmerge-main (`.github/workflows/merge-main.yml`, from #1820 and #1834) merged main into **every** labelled PR on each push to main, conflicted or not. Each merge is a new head commit, so each PR restarted its full CI: about 130 runner-minutes per PR per push to main.\n\n## Fix\nThe sweep merges main only into PRs that are actually conflicted. A clean PR keeps its head and its runs; the mer",
       "file": "beans/defs/folio-assistant-6h4p--ci-speed-ii-a-merge-main-restarts-full-ci-on-every.md"
     },
@@ -188,21 +188,21 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:02:05Z",
-      "updatedAt": "2026-11-05T20:12:00Z",
+      "updatedAt": "2026-11-06T00:50:00Z",
       "preview": "**Owner ruling, 2026-11-05 ~13:00Z**, verbatim choice: \"Move the checks (Recommended)\": checks of cat-harness's own files run only in the repo that commits those files, so other layers stop seeing false new failures.\n\n## Evidence\n- `check:schema-nodes` judges the harness's own `schemas/` (cat-harness-tools#1478 left two modules untagged; fixed by #1483 / #1485). Every root that mounts the layer ra",
       "file": "beans/defs/folio-assistant-70hd--cat-harness-file-checks-run-only-in-the-repo-that.md"
     },
     {
       "id": "folio-assistant-711q",
       "title": "CI speed II (j): pull requests run only the bun-test files their change can affect",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T12:06:06Z",
-      "updatedAt": "2026-11-05T12:06:12Z",
+      "updatedAt": "2026-11-06T01:48:35Z",
       "preview": "Launched by session_01VQDpPffYARDQ8juksAZScf (owner litlfred: \"do it all properly, shave every second\"); worked by \"CI speed 7\" (session_01VQDpPfihRU4aFLjQGkhvs8).\n\nOn pull_request, the four typescript-test shards run only the test files the PR's change can affect: the relative-import closure of every changed file (cat-harness-tools scripts/affected-tests.ts, cat-harness-tools#1487) plus each test",
       "file": "beans/defs/folio-assistant-711q--ci-speed-ii-h-pull-requests-run-only-the-bun-test.md"
     },
@@ -293,14 +293,14 @@
     {
       "id": "folio-assistant-akiq",
       "title": "Each layer draws its own BPMN diagrams; cat-harness stops drawing and hand-listing other layers' (plan, awaiting owner approval)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T11:35:43Z",
-      "updatedAt": "2026-11-05T12:58:12Z",
+      "updatedAt": "2026-11-06T04:50:12Z",
       "preview": "Follows bean folio-assistant-3v2t (a layer commits only what it derives from itself) and bean folio-assistant-tsh9 (red-main cycle). Owner, 2026-11-05: \"i want this cleanup properly. may need to move diagrams to correct layers\"; \"why would source drawings be in another layer? (only exception is if drawing in bootstrap)\". Owner chose \"Plan first\", then said \"then implement\" and chose option 1 (\"Bot",
       "file": "beans/defs/folio-assistant-akiq--derive-builtatpublish-entries-for-foreign-bpmn-dra.md"
     },
@@ -531,7 +531,7 @@
     {
       "id": "folio-assistant-exrp",
       "title": "Work plan = an epic or milestone that names the process it instantiates; approved proposals seed it",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "",
       "parent": "folio-assistant-rwmf",
@@ -580,8 +580,8 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T08:26:16Z",
-      "updatedAt": "2026-11-05T14:38:58Z",
-      "preview": "Catch failures before they reach a runner: a pre-push hook, an agent hook, and a record keyed by the tree hash so CI can see the gates already passed on that exact tree. Sibling \"CI speed 3\", in cat-harness-tools. An agent's record never stands in for the QA verdict; it only lets CI skip a rebuild it will check.\n\n## Done when\n- [ ] the pre-push and agent hooks run the fast gates\n- [ ] the tree-key",
+      "updatedAt": "2026-11-06T04:59:28Z",
+      "preview": "Catch failures before they reach a runner: a pre-push hook, an agent hook, and a record keyed by the tree hash so CI can see the gates already passed on that exact tree. Sibling \"CI speed 3\", in cat-harness-tools. An agent's record never stands in for the QA verdict; it only lets CI skip a rebuild it will check.\n\n## Done when\n- [x] the pre-push and agent hooks run the fast gates — the hook is litl",
       "file": "beans/defs/folio-assistant-fn8q--ci-speed-ii-e-gates-before-push-pre-push-agent-hoo.md"
     },
     {
@@ -1011,14 +1011,14 @@
     {
       "id": "folio-assistant-rpc6",
       "title": "MVP Phase 4: re-pin the layers on the 11 site PRs, bottom-up",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-01T21:32:00Z",
-      "updatedAt": "2026-11-05T20:08:03Z",
+      "updatedAt": "2026-11-05T20:42:21Z",
       "preview": "Thread \"Prepare the layer re-pin cascade\" (cmsg_017WNUkNK8kdDziPK58Pv6G9FDPvN5ktTn4HS2iruRVeZj), session_01Qmmkt5oYY58dMFeUfYD8ee. Epic litlfred/folio-assistant#2894. Merge window to 2026-11-03 00:40Z (freeze lifted 17:54Z).\n\n## Done\n- Merged site re-pins: smart-base-clinical#17, smart-hiv#23.\n- Merged cascade fixes: cat-harness#966, #973, #979, #983; smart-base#290, #295; folio-assistant#2914; ca",
       "file": "beans/defs/folio-assistant-rpc6--mvp-layer-re-pin-cascade.md"
     },
@@ -1119,6 +1119,34 @@
       "updatedAt": "2026-11-01T22:00:00Z",
       "preview": "## The owner's ruling, verbatim\n\nParaphrase would lose the shape, and the shape is the whole decision:\n\n> `core->fhir-harness-> smart-base->siblings{smart-l1, smart-dak, smart-ig}`,  no smart-guidelines.\n\nGiven 2026-09-22, in answer to four options offered on the same question. The\noption chosen was NOT among the four — the owner supplied a fifth, and the\ndifference matters: every option offered k",
       "file": "beans/defs/folio-assistant-uhkv--smart-stack-core-fhir-harness-smart-base-smart-l1.md"
+    },
+    {
+      "id": "folio-assistant-uldr",
+      "title": "Replace the hand-listed state:visualizer (53) and glossary:page (36) builtAtPublish entries with rules (plan, awaiting owner approval)",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-06T04:51:38Z",
+      "updatedAt": "2026-11-06T04:51:38Z",
+      "preview": "Follows bean folio-assistant-akiq (done 2026-11-06), which removed the same pattern for BPMN drawings. Owner chose this follow-up on 2026-11-06 (\"2 3\": retire smart-base's render script, and plan these two lists). **Plan only: no code until the owner approves.**\n\n## Evidence (cat-harness main, 2026-11-06)\ncat-harness.json `builtAtPublish` still hand-lists per-instance files written by two writers:",
+      "file": "beans/defs/folio-assistant-uldr--replace-the-hand-listed-statevisualizer-53-and-glo.md"
+    },
+    {
+      "id": "folio-assistant-v29t",
+      "title": "CI site publish has no pandoc/LibreOffice, so site:export fails every CI publish of dth-hrh",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-dthl",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-05T20:09:21Z",
+      "updatedAt": "2026-11-05T20:09:21Z",
+      "preview": "Found 2026-11-05 (bean xxow). dth-hrh run 42076453040 failed at site:export with 'pandoc is not installed (needed for release)'. The shared reusable workflow cat-harness-tools/.github/workflows/folio-site-publish.yml (pinned at 9b62dbf; main is the same) installs Ruby but not pandoc, LibreOffice or poppler-utils. No CI publish of dth-hrh main has succeeded since site:export was added (fcd940b, 202",
+      "file": "beans/defs/folio-assistant-v29t--ci-site-publish-has-no-pandoclibreoffice-so-siteex.md"
     },
     {
       "id": "folio-assistant-vbhb",
@@ -1235,14 +1263,14 @@
     {
       "id": "folio-assistant-xxow",
       "title": "Export page: list every exported file with its details, plus stable 'latest' copies",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-dthl",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T12:58:58Z",
-      "updatedAt": "2026-11-05T12:58:58Z",
+      "updatedAt": "2026-11-05T20:15:44Z",
       "preview": "Owner: 'Export/ page ... Why doesn't show show what it can export with any filters, parameters in the UI'. Chose options 1 and 3: (1) export page listing each exported file with format, filters, parameters, size, date, link; (3) stable 'latest' copies. Code: folio-assistant-core scripts/document-export.ts. Then re-pin dth-hrh, republish, verify in Chromium.\n\n## Progress 2026-11-05\n\n- Implemented i",
       "file": "beans/defs/folio-assistant-xxow--export-page-list-every-exported-file-with-its-deta.md"
     },
@@ -1256,21 +1284,21 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T17:40:03Z",
-      "updatedAt": "2026-11-05T20:08:03Z",
+      "updatedAt": "2026-11-05T20:42:21Z",
       "preview": "Filed from folio-assistant-rpc6. Owner card (2026-11-05, Q4 \"1. Work items, known\"): each of these is a content decision, so it is recorded here and treated as a KNOWN red on the site re-pins until it is done. Found by the freeze-set survey (cat-harness a2da2ed, cat-harness-tools 78a982e, folio-assistant-core 4f18e66, who-iris 90bb3f5, smart-base 1e111a6, fhir-harness 299de78, bootstrap-tools 9f47",
       "file": "beans/defs/folio-assistant-y4pw--freeze-set-content-calls.md"
     },
     {
       "id": "folio-assistant-yeg4",
       "title": "Shared verified layers cache ref",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:19:16Z",
-      "updatedAt": "2026-11-05T13:19:16Z",
+      "updatedAt": "2026-11-06T02:30:06Z",
       "preview": "One git ref per lock in the index repo, `refs/cat/layers/<sha256 of the lock's instances>`, plus a moving `refs/cat/layers/main`. Its tree is the composed overlay that mount-from-lock lays down.\n\n- **Reading:** `mount:lock` first tries one shallow fetch of the ref. It verifies every byte against the lock, and falls back to a per-repo fetch for each layer that does not verify. The lock stays the on",
       "file": "beans/defs/folio-assistant-yeg4--shared-verified-layers-cache-ref.md"
     },
@@ -1336,19 +1364,19 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 3,
-        "total": 57,
-        "closed": 14,
-        "open": 43,
-        "inProgress": 25,
-        "todo": 18,
+        "total": 58,
+        "closed": 19,
+        "open": 39,
+        "inProgress": 20,
+        "todo": 19,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.24561403508771928
+        "share": 0.3275862068965517
       }
     ],
     "orphanOpen": 13,
-    "openTotal": 57,
-    "coveredOpen": 43,
+    "openTotal": 53,
+    "coveredOpen": 39,
     "duplicateIds": 0
   }
 }

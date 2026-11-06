@@ -366,10 +366,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-05T20:30:58.765Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/1fd3ea05142032368c9c5c3bea36d164bf51427c",
-  "sourceCommitSha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
-  "sourceCommitAt": "2026-11-05T20:11:37Z",
+  "generatedAt": "2026-11-06T05:21:35.830Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6f9c553947f53aa478b1d457152b3248422e41d0",
+  "sourceCommitSha": "6f9c553947f53aa478b1d457152b3248422e41d0",
+  "sourceCommitAt": "2026-11-06T04:59:44Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -391,7 +391,7 @@
       "title": "Bootstrap contract semver",
       "description": "What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's `schemas/*.schema.json` are generated from, and before publishing one.",
       "instructionsPath": "skills/bootstrap-contract-semver.md",
-      "instructionLines": 94,
+      "instructionLines": 108,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -405,7 +405,7 @@
       "title": "GitHub Pages' contract",
       "description": "The contract GitHub Pages keeps as the host of a rendered Knowledge Graph: serve the gh-pages branch at the publication root URL, exactly as committed, and answer 404 for what is not there. A mechanical Actor plays this Role; this is what it must do, and what it is tested against.",
       "instructionsPath": "skills/github-pages.md",
-      "instructionLines": 39,
+      "instructionLines": 41,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -419,7 +419,7 @@
       "title": "Render a Knowledge Graph to GitHub Pages",
       "description": "Render a Knowledge Graph, or a list of its Subgraphs, to GitHub Pages at a publication root URL, and report the push: a status (pushed, not pushed, could not determine) and one message carrying the deployed commit and the QA result. The same steps for a staging preview and for a release; only the root URL differs.",
       "instructionsPath": "skills/render-kg-to-github-pages.md",
-      "instructionLines": 93,
+      "instructionLines": 97,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -431,7 +431,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Render a Knowledge Graph to GitHub Pages",
       "summary": "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — to GitHub Pages at a publication root URL, and report the push: a STATUS (pushed, not pushed, could not determine) and one MESSAGE carrying the deployed commit and the QA result.",
-      "description": "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — to GitHub Pages at a publication root URL, and report the push: a STATUS (pushed, not pushed, could not determine) and one MESSAGE carrying the deployed commit and the QA result.\n\nbranches/ AND RELEASE ARE THE SAME PROCESS. A preview is this with a root under the release root; a release is this with the release root. What differs between them — who may start it, what must be reviewed first, what else lives on the same host — belongs to whatever calls this, never in here.\n\nEVERY STEP IS ONE OF THESE TOOLS: site.ts stages, site.ts --check and readme-book.ts --check check the staging, publish-site.ts deploys, pages-status.ts checks what is served and writes the message. The skill render-kg-to-github-pages has each command.\n\nTHREE STATES, NOT TWO. A check that could not look (a 403 from a proxy, no network) is could-not-determine, and never reported as pushed.\n\nisExecutable is false and no activity carries a work-plan element: this diagram is in bootstrap's diagram vocabulary, which has none.",
+      "description": "Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — to GitHub Pages at a publication root URL, and report the push: a STATUS (pushed, not pushed, could not determine) and one MESSAGE carrying the deployed commit and the QA result. Owner, 2026-09-30: \"render content of a KG (or list of subgraphs within) for publication to a CDN at a given publication root URL … independent of staging vs publication … just rendering … output is status of push to CDN + message\", and \"the rendering bpmn is ok in bootstrap-tools … so 'render KG to githubpages' works and self described\".\n\nSTAGING AND RELEASE ARE THE SAME PROCESS. A preview is this with a root under the release root; a release is this with the release root. What differs between them — who may start it, what must be reviewed first, what else lives on the same host — belongs to whatever calls this, never in here.\n\nEVERY STEP IS ONE OF THESE TOOLS: site.ts stages, site.ts --check and readme-book.ts --check check the staging, the instance's Pages workflow deploys, pages-status.ts checks what is served and writes the message. The skill render-kg-to-github-pages has each command.\n\nTHREE STATES, NOT TWO. A check that could not look (a 403 from a proxy, no network) is could-not-determine, and never reported as pushed.\n\nNO work-plan element on any activity, and isExecutable is false: this is bootstrap-tools' own diagram, in bootstrap's diagram vocabulary, and bootstrap's diagrams carry no work plan.",
       "enforcement": "strict",
       "sourcePath": "processes/render-kg-to-github-pages.bpmn",
       "sourceUrl": "https://github.com/litlfred/bootstrap-tools/blob/main/processes/render-kg-to-github-pages.bpmn",
@@ -895,7 +895,7 @@
       "prefLabel": "GitHub Pages",
       "title": "GitHub Pages",
       "notation": "github-pages",
-      "description": "The host that serves what the Site Publisher deployed, at the publication root URL. It receives a deployment — a commit on the `gh-pages` branch — and serves it, deciding nothing. Its skill is its contract, `github-pages`, which `pages-status` tests.",
+      "description": "The host that serves what the Site Publisher deployed, at the publication root URL. It receives a deployment — a commit on the `gh-pages` branch — and serves it, deciding nothing. Its skill is its contract, `github-pages`, which `pages-status` tests (owner, 2026-10-16).",
       "sourceKind": "role-registry",
       "actorKinds": [
         "system"
@@ -937,7 +937,7 @@
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
       "title": "The tools",
-      "description": "The schema generator and drawn schema page; the vocabulary, graph and named-subgraph exporters; the README writers (each directory's README, the `kg:processes`, `kg:files`, `kg:roles` and `kg:toc` sections, and the one-page README book) with their Liquid templates; the Process renderer; the site stager, publisher and push status; initialization; the release-IRI sync and the term linker; and the checks: import closure, node identifiers, bootstrap's concepts, bootstrap's documents parsed against their Zod (`validate`), and the semver bump the published schemas require, computed from a diff (`semver`).",
+      "description": "The schema generator and drawn schema page, the README writers (each directory's README, and the `kg:processes` and `kg:files` sections) with their Liquid templates, the Process renderer, the release-IRI sync, the term linker, and the checks: import closure, node identifiers, bootstrap's concepts, bootstrap's documents parsed against their Zod (`bootstrap:validate`), and the semver bump the published schemas require, computed from a diff (`bootstrap:semver`).",
       "readmePath": "scripts/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap-tools/directory/bootstrap-tools-scripts",
@@ -956,7 +956,7 @@
         "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/skills"
       ],
       "title": "The toolset's skills",
-      "description": "The skills this toolset owns: `bootstrap-contract-semver`, what MAJOR, MINOR and PATCH mean for bootstrap's published schemas and why the bump is computed from a diff; `render-kg-to-github-pages`, rendering a Knowledge Graph (or a list of its Subgraphs) to GitHub Pages at a publication root URL and reporting the push's status with one message; and `github-pages`, the contract the host keeps.",
+      "description": "The skills this toolset owns: `bootstrap-contract-semver`, what MAJOR, MINOR and PATCH mean for bootstrap's published schemas and why the bump is computed from a diff; and `render-kg-to-github-pages`, rendering a Knowledge Graph (or a list of its Subgraphs) to GitHub Pages at a publication root URL and reporting the push's status with one message.",
       "readmePath": "skills/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-charming-lamport-a61w1n/bootstrap-tools/directory/bootstrap-tools-skills",
@@ -1023,8 +1023,8 @@
   ],
   "staging": {
     "branch": "claude/charming-lamport-a61w1n",
-    "sha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
+    "sha": "6f9c553947f53aa478b1d457152b3248422e41d0",
     "pr": "2970/merge",
-    "run": "42101071547"
+    "run": "42165728261"
   }
 }

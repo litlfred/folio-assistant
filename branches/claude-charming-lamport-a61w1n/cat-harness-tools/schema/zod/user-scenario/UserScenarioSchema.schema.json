@@ -139,6 +139,56 @@
           ],
           "additionalProperties": false
         },
+        "scene": {
+          "minItems": 1,
+          "maxItems": 5,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string",
+                "enum": [
+                  "baby",
+                  "person",
+                  "family",
+                  "clinician",
+                  "health-worker",
+                  "hospital",
+                  "clinic",
+                  "home",
+                  "phone",
+                  "tablet",
+                  "qr",
+                  "paper",
+                  "wifi-off",
+                  "wifi",
+                  "shield-check",
+                  "calendar-check",
+                  "stethoscope",
+                  "link",
+                  "transfer",
+                  "globe",
+                  "key",
+                  "lock",
+                  "database",
+                  "tent",
+                  "bus",
+                  "plane"
+                ]
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "icon",
+              "label"
+            ],
+            "additionalProperties": false
+          }
+        },
         "steps": {
           "type": "array",
           "items": {
@@ -279,11 +329,11 @@
                   },
                   "from": {
                     "type": "string",
-                    "pattern": "^[a-z0-9][a-z0-9-]*$"
+                    "minLength": 1
                   },
                   "to": {
                     "type": "string",
-                    "pattern": "^[a-z0-9][a-z0-9-]*$"
+                    "minLength": 1
                   },
                   "offline": {
                     "type": "boolean"
@@ -397,6 +447,50 @@
                   "pattern": "^[A-Z][A-Za-z]+\\/[A-Za-z0-9.-]+$"
                 }
               },
+              "fhirChanges": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "resource": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "change": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "why": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "profile": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "profileOf": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "examples": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "pattern": "^[A-Z][A-Za-z]+\\/[A-Za-z0-9.-]+$"
+                      }
+                    },
+                    "spec": {
+                      "type": "string",
+                      "format": "uri"
+                    }
+                  },
+                  "required": [
+                    "resource",
+                    "change"
+                  ],
+                  "additionalProperties": false
+                }
+              },
               "gaps": {
                 "type": "array",
                 "items": {
@@ -484,8 +578,8 @@
   "description": "Generated from `UserScenarioSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "claude/charming-lamport-a61w1n",
-    "sha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
+    "sha": "6f9c553947f53aa478b1d457152b3248422e41d0",
     "pr": "2970/merge",
-    "run": "42101071547"
+    "run": "42165728261"
   }
 }

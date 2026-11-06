@@ -42,6 +42,37 @@
         "color": {
           "type": "string",
           "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "icon": {
+          "type": "string",
+          "enum": [
+            "baby",
+            "person",
+            "family",
+            "clinician",
+            "health-worker",
+            "hospital",
+            "clinic",
+            "home",
+            "phone",
+            "tablet",
+            "qr",
+            "paper",
+            "wifi-off",
+            "wifi",
+            "shield-check",
+            "calendar-check",
+            "stethoscope",
+            "link",
+            "transfer",
+            "globe",
+            "key",
+            "lock",
+            "database",
+            "tent",
+            "bus",
+            "plane"
+          ]
         }
       },
       "required": [
@@ -55,8 +86,8 @@
   "description": "Generated from `JourneyPersonaSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "claude/charming-lamport-a61w1n",
-    "sha": "1fd3ea05142032368c9c5c3bea36d164bf51427c",
+    "sha": "6f9c553947f53aa478b1d457152b3248422e41d0",
     "pr": "2970/merge",
-    "run": "42101071547"
+    "run": "42165728261"
   }
 }
