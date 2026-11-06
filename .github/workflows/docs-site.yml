@@ -1140,6 +1140,18 @@ jobs:
           # none addresses a stored result on `main`. Mirrored in
           # `feature-staging.yml`.
           bun run cat check:qa-result-links --site ./_site
+          # The tree-to-commit index the QA panel links through (bean `69lr`,
+          # owner 2026-11-05 "Tree is the identity" and "Separate index"): a
+          # witness records the repository TREE it reviewed, which survives a
+          # PR's synthetic merge commit onto main, and the panel looks that
+          # tree up in `assets/qa/tree-commits.json` to link the oldest commit
+          # on main's first-parent line carrying it. The checkout is one commit
+          # deep, so first fetch the commits alone (`tree:0`, about 2 s) to the
+          # 2000 the index reads. A failed fetch leaves a shorter index — a
+          # panel then shows the tree without a link — never a failed deploy.
+          git fetch --no-tags --filter=tree:0 --deepen=1999 origin "$GITHUB_SHA" \
+            || echo "::warning::could not deepen history; tree-commits.json covers what is here"
+          bun run cat-harness-tools/scripts/qa-site-assets.ts tree-commits --site ./_site
 
       # THE NAVBAR TILES POINT AT FILES THIS BUILD PUBLISHES -- checked, not
       # composed.
