@@ -2,13 +2,13 @@
 # folio-assistant-akiq
 $schema: bean/1.0.0
 title: Each layer draws its own BPMN diagrams; cat-harness stops drawing and hand-listing other layers' (plan, awaiting owner approval)
-status: in-progress
+status: completed
 type: task
 priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T11:35:43Z
-updated_at: 2026-11-05T12:58:12Z
+updated_at: 2026-11-06T04:50:12Z
 parent: folio-assistant-k3vv
 ---
 
@@ -51,3 +51,11 @@ Each layer draws its own diagrams. cat-harness draws only its own 82. No layer l
 - [x] fhir-harness#288 (6) and who-iris#180 (4)
 - [ ] folio-assistant re-pin: core, sci and cat-harness first; tools last (it requires every layer's drawings).
 - Later: smart-base's own `render-processes.ts` becomes redundant (same bytes).
+
+## Done (2026-11-06)
+All landed:
+- drawings: core#644, sci#179, fhir-harness#288, who-iris#180, cat-harness#1047 and #1067; redraws cat-harness#1074 and core#650
+- tools: #1504 (render:bpmn draws beside source), #1538 (regen-writers fixture), #1548 (drawing presence beside source)
+- the six-layer re-pin: folio-assistant#2981
+
+Remaining: the folio-assistant re-pin of cat-harness-tools past #1504 (steward's train). Follow-ups not done here: smart-base's own render-processes.ts is now redundant (same bytes); the per-file builtAtPublish lists for state:visualizer (53) and glossary:page (36) drift in the same way.
