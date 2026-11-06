@@ -35,7 +35,7 @@
 set -uo pipefail
 
 # name | command [| prerequisite]. The producers whose bundles CI caches or
-# means to (beans x35i, tv20). A prerequisite lays down what the producer
+# means to (work items x35i, tv20). A prerequisite lays down what the producer
 # reads and another producer writes (as the gate jobs hand it over as an
 # artifact, in code-quality-gates.yml's order: ig-index:build, smart:pages,
 # qa:working-copy, then the publish pages; `p2:refusals`, a QA writer, reads

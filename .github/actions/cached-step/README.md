@@ -46,7 +46,7 @@ A restore is one of three results, and the summary says which:
 
 ## The key
 
-**Inputs are DERIVED, never hand-declared** (owner ruling, bean `4rbc`).
+**Inputs are DERIVED, never hand-declared** (owner ruling, work item `4rbc`).
 A key comes from one of (`cache:key` and `cache:publish` are
 cat-harness-tools `scripts/cache-key.ts`, offered upstream with this action;
 until that is pinned here, use the other two):

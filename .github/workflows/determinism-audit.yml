@@ -58,7 +58,7 @@ jobs:
       - name: Build each producer twice and diff the bytes
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          # What the reset removes and the producers read: the branch-kept graphs (bean 9c7h).
+          # What the reset removes and the producers read: the branch-kept graphs (work item 9c7h).
           PREPARE: bun run cat state:mount
           PRODUCERS: ${{ github.event.inputs.producers }}
         run: |
