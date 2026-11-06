@@ -2,11 +2,11 @@
 # folio-assistant-fbmk
 $schema: bean/1.0.0
 title: 'Folio bookmarks and pinned blocks: pin any graph-kind block to the folio glass (handover bean)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-05T14:04:00Z
+updated_at: 2026-11-06T05:30:30Z
 parent: folio-assistant-4j43
 tags:
     - folio-glass
@@ -63,3 +63,5 @@ _2026-11-02T19:13Z_ — STALL CHECKPOINT (owner 19:12Z). All work committed and 
 _2026-11-05T13:34:01Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
 
 _2026-11-05T14:04:00Z_ — Implemented remaining 3 items: (1) gutter `🔖` `.ba-bookmark[data-fa-pin-control]` + panel header `.bp-bookmark` in `cat-harness-tools/src/core/edit-links.ts` and regenerated `cat-harness/site-chrome/assets/js/edit-links.js` (`#982`); (2) `data-fa-pin*` and `data-fa-pin-control` on KG subject pages in `cat-harness-tools/scripts/kg-export.ts` (`subjectPage`) (`#982`); (3) lazy per-kind live windows on the folio glass via `window.faFolio.viewer(kind, { load, render })`, `openWindow`, and `closeWindow` in `cat-harness/site-chrome/assets/js/docs-ui.js` and `site-chrome/assets/css/docs-ui.css` (`#985`), with unit + Playwright e2e coverage in `test/content/folio-block-pins.e2e.ts` (7 pass). Opened PRs https://github.com/litlfred/cat-harness/pull/1060 and https://github.com/litlfred/cat-harness-tools/pull/1528.
+
+_2026-11-06T05:30:30Z_ — Completed on `origin/main` evidence: `litlfred/cat-harness#1060` merged at `35031e3cffe3d28845765c8838a8f5052be6ad5a` (`2026-11-05T16:51:13Z`) and `litlfred/cat-harness-tools#1528` merged at `55b19257830df716a86caf0ab22731acf9a604dc` (`2026-11-05T22:13:32Z`). Issues `litlfred/cat-harness#982` and `litlfred/cat-harness#985` closed.

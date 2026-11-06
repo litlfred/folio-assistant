@@ -2,11 +2,11 @@
 # folio-assistant-max2
 $schema: bean/1.0.0
 title: 'cat-harness library: ingest the CRDM sources (PHII 2023 web page, PATH 2012 common requirements)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-10-31T01:56:00Z
-updated_at: 2026-11-05T14:44:00Z
+updated_at: 2026-11-06T05:30:30Z
 parent: folio-assistant-dthl
 ---
 
@@ -48,3 +48,5 @@ _2026-10-31T02:11:00Z_ — Fetched by `agy` and committed to `litlfred/cat-harne
 _2026-11-05T13:34:10Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
 
 _2026-11-05T14:44:00Z_ — Ingested all 3 CRDM sources into `cat-harness/library/process/` (`phii-2023-crdm`, `phii-2021-defining-and-validating-requirements-guide`, `path-2012-common-requirements-mhis-crdm`) with visual inspection, verdicts (`library/image-verdicts.json`), 6-locale image descriptions, JSON-LD blocks/sections, and READMEs; removed `uploads/crdm/`; opened PR [`litlfred/cat-harness#1062`](https://github.com/litlfred/cat-harness/pull/1062) (awaiting owner review/merge); and updated `litlfred/dth-phc#1` cross-references + posted R12 comment (`#issuecomment-6660714011`).
+
+_2026-11-06T05:30:30Z_ — Completed on `origin/main` evidence: `litlfred/cat-harness#1062` merged at `2292a377789c7c1c3cb362af9d4c6c3f979ecc4c` (`2026-11-05T16:50:36Z`).
