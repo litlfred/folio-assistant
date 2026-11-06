@@ -72,8 +72,22 @@ interface LockInstance {
   assets?: { src: string; sha256: string }[];
 }
 
+/**
+ * A git call that cannot hang the shard: past `GIT_TIMEOUT_MS` it is killed
+ * and answers undefined, which every caller reads as "select everything".
+ * Measured on #2962 (run 42130795973): an unbounded fetch held all four
+ * shards until the 20-minute job cap.
+ */
+export const GIT_TIMEOUT_MS = 120_000;
+
 function git(cwd: string, args: string[]): string | undefined {
-  const r = spawnSync("git", args, { cwd, encoding: "utf-8", maxBuffer: 256 * 1024 * 1024 });
+  const r = spawnSync("git", args, {
+    cwd,
+    encoding: "utf-8",
+    maxBuffer: 256 * 1024 * 1024,
+    timeout: GIT_TIMEOUT_MS,
+    env: { ...process.env, GIT_TERMINAL_PROMPT: "0" },
+  });
   return r.status === 0 ? r.stdout : undefined;
 }
 
@@ -227,7 +241,13 @@ export async function computeScope(root: string, diff: UpstreamDiff = gitUpstrea
   if (!existsSync(modPath)) return { kind: "all", why: "cat-harness-tools/scripts/affected-tests.ts is not in the pinned cat-harness-tools yet" };
   const mod = (await import(modPath)) as AffectedModule;
   // The merge commit's first parent is the base it was merged into.
-  if (git(root, ["rev-parse", "--verify", "-q", "HEAD^1"]) === undefined) git(root, ["fetch", "-q", "--no-tags", "--deepen=1", "origin"]);
+  // Fetch ONLY the checked-out commit, two deep, so its first parent arrives.
+  // Never a bare `fetch --deepen` of origin: that walks every branch (1,397
+  // here) and held the shards until their cap (run 42130795973).
+  if (git(root, ["rev-parse", "--verify", "-q", "HEAD^1"]) === undefined) {
+    const head = git(root, ["rev-parse", "HEAD"])?.trim();
+    if (head) git(root, ["fetch", "-q", "--no-tags", "--depth=2", "origin", head]);
+  }
   const names = git(root, ["diff", "--name-only", "--no-renames", "HEAD^1", "HEAD"]);
   if (names === undefined) return { kind: "all", why: "the pull request's own diff (HEAD^1..HEAD) could not be read" };
   const own = names.split("\n").filter(Boolean);

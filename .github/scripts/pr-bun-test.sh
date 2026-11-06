@@ -25,7 +25,9 @@ set -uo pipefail
 
 if [ "${1:-}" = "--scope" ]; then
   : "${CQG_TEST_SCOPE:?CQG_TEST_SCOPE names the scope file to write}"
-  bun "$(dirname "${BASH_SOURCE[0]}")/pr-test-scope.ts" --out "$CQG_TEST_SCOPE" || exit 0
+  # Bounded: a selection that cannot finish in 5 minutes selects nothing,
+  # so `kind` stays unset and the last step runs the whole suite.
+  timeout 300 bun "$(dirname "${BASH_SOURCE[0]}")/pr-test-scope.ts" --out "$CQG_TEST_SCOPE" || exit 0
   kind="$(bun -e 'console.log(JSON.parse(require("fs").readFileSync(process.argv[1], "utf-8")).kind)' "$CQG_TEST_SCOPE" 2>/dev/null || echo all)"
   [ -n "${GITHUB_OUTPUT:-}" ] && echo "kind=$kind" >> "$GITHUB_OUTPUT"
   if [ "$kind" != "some" ]; then
