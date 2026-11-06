@@ -53,7 +53,7 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           n=$(gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
-            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")))] | length' | awk '{s+=$1} END{print s+0}')
+            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")) and .workflow_run.head_repository_id != null and .workflow_run.head_repository_id == .workflow_run.repository_id)] | length' | awk '{s+=$1} END{print s+0}')
           echo "waiting=$n" >> "$GITHUB_OUTPUT"
           echo "staging-publish: $n preview artifact(s) waiting"
 

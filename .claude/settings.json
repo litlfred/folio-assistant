@@ -21,6 +21,16 @@
             "command": "bash \"$CLAUDE_PROJECT_DIR/cat-harness-tools/scripts/ask-well.sh\""
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=\"$CLAUDE_PROJECT_DIR/cat-harness-tools/scripts/git-hooks/claude-pre-push.sh\"; [ ! -f \"$f\" ] || sh \"$f\"",
+            "timeout": 1800
+          }
+        ]
       }
     ],
     "Stop": [

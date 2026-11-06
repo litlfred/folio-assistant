@@ -156,7 +156,7 @@ on:
       # preview; and the removal is preflighted against the same liveness
       # signals the health sweep uses, at removal time.
       cleanup_slug:
-        description: 'DELETION: the STAGING/<slug> to remove. Leave blank to stage a branch instead.'
+        description: 'DELETION: the branches/<slug> (or legacy STAGING/<slug>) to remove. Leave blank to stage a branch instead.'
         required: false
         default: ''
         type: string
@@ -425,28 +425,28 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ github.event_name == 'pull_request' && github.sha || (inputs.verify_pr != '' && format('refs/pull/{0}/merge', inputs.verify_pr)) || inputs.branch || github.ref }}
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+      # Bun, the mounts index.lock.json pins, node_modules,
+      # Chromium:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
         with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (beans cis1, cis4)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
+          chromium: browser
+
+      # Chromium's system libraries. The browser itself came from the image
+      # (or was downloaded) above, so this installs the apt packages only. It
+      # stays a step of the JOB, not of ci-setup: `bun run cat gates` sorts a
+      # job into the fast set by whether its own steps run `playwright install`
+      # (cat-harness-tools scripts/gates.ts installsBrowser).
+      - name: Chromium's system libraries
+        run: npx --yes playwright install --with-deps chromium
+
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
-
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-
-      - name: Install deps
-        run: bun install --frozen-lockfile
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -485,9 +485,6 @@ jobs:
       # tool-release declaration, so a later bump moves it too.
       - name: Java runtime the PlantUML release declares (#2744)
         uses: ./.github/actions/plantuml-java
-
-      - name: Install Chromium for the publish-time BPMN drawings (B1)
-        run: npx --yes playwright install --with-deps chromium
 
       # BEAN fwtz: a preview skips each derive:publish writer whose recorded
       # reads all still match, and puts back the outputs main's newest
@@ -1582,194 +1579,225 @@ jobs:
           # command writes went out with no build identity at all (bean `lx2s`).
           # The stamp reads KG_BRANCH above plus the GITHUB_* variables the runner
           # sets for every step.
-          bun run cat-harness-tools/scripts/kg-export.ts             --base-url "$BASE" --scope instance --out "./_site/${STUB}/${STUB}.jsonld"
-          bun run cat-harness-tools/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
-          # The `.json` alias is copied AFTER the export, so the two documents
-          # cannot disagree about which build they came from.
-          cp "./_site/${STUB}/${STUB}.jsonld" "./_site/${STUB}/${STUB}.json"
-          # The host's document sits under its own directory, like every layer's
-          # (owner, 2026-10-23, litlfred/cat-harness-tools#603 decision 1b). The old
-          # root `<stub>.jsonld` is the one-release tombstone the export writes there.
+          # PARALLEL GROUPS (preview-speed front, 2026-11-05). This step ran its
+          # ~20 generators one after another: 66 s on job 127218440011, of which
+          # instance-exports 19 s, the slices 14 s, kg-export 11 s. They write
+          # separate files, so they run as five groups at once and the two that
+          # read what the others wrote, the rail and the root index, run after
+          # all have finished, as before. Inside a group the original order is
+          # kept: each slice rewrites `assets/slices/index.json`, so the four
+          # stay in sequence, and bootstrap's `ns` copy stays before
+          # `publish-instance-files`, which checks that address for collisions.
+          # Each group's output goes to its own log, printed in a fixed order,
+          # and any group's failure fails the step.
+          L="$RUNNER_TEMP/kg-export-logs"; mkdir -p "$L"; PIDS=(); NAMES=()
+          {
+            bun run cat-harness-tools/scripts/kg-export.ts             --base-url "$BASE" --scope instance --out "./_site/${STUB}/${STUB}.jsonld"
+            # The `.json` alias is copied AFTER the export, so the two documents
+            # cannot disagree about which build they came from.
+            cp "./_site/${STUB}/${STUB}.jsonld" "./_site/${STUB}/${STUB}.json"
+            # The host's document sits under its own directory, like every layer's
+            # (owner, 2026-10-23, litlfred/cat-harness-tools#603 decision 1b). The old
+            # root `<stub>.jsonld` is the one-release tombstone the export writes there.
+            # The swimlane glossaries, on the preview too -- `check:invocation-parity`
+            # refused this change until they were here, which is the gate doing
+            # exactly its job. Each concept's `inScheme` names the glossary
+            # document's own URL, so a preview that published the graph and not
+            # the glossary would serve a scheme IRI that 404s on every concept --
+            # `3jhq` again, one document over. `--base-url` so the preview's
+            # copies point at the preview rather than at production.
+            bun run cat-harness-tools/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}/${STUB}-glossary.jsonld"
+            cp "./_site/${STUB}/${STUB}-glossary.jsonld" "./_site/${STUB}/${STUB}-glossary.json"
+            # The graph once per locale -- bean `jmpb`, on the owner's ruling.
+            # Writes NOTHING today and says so: measured 2026-09-22, no locale
+            # carries a catalogue applying to either graph. It is wired now
+            # rather than later so the first diagram `.po` to land publishes its
+            # locale with no workflow edit, and so the gates and the deploy run
+            # the same command. Each document's node `@id`s are the core's --
+            # a translation is not a new term.
+            # `--core`: the document kg-export wrote above, read rather than built a
+            # second time (bean fwtz: 19 s of this step on main). An older tools
+            # pin ignores the flag and builds it, as before.
+            bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --core "./_site/${STUB}/${STUB}.jsonld" --out-dir "./_site/${STUB}"
+            # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
+            # processes are not otherwise published, so it is copied from source.
+            mkdir -p "./_site/${STUB}/processes"
+            for f in ns ns.jsonld ns.json; do cp ./cat-harness/processes/ns.jsonld "./_site/${STUB}/processes/$f"; done
+          } > "$L/core.log" 2>&1 &
+          PIDS+=($!); NAMES+=(core)
+          {
+            bun run cat-harness-tools/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
 
-          # EVERY OTHER declared instance's graph, one document each — bean
-          # `4ak5` item 1. The set is derived from the declarations by the
-          # script, never listed here; the two instances above keep their
-          # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
-          # `check:published-instance-exports` runs the same plan, and fails if
-          # any declared instance is published by neither.
-          bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site --base-url "$BASE"
+            # EVERY OTHER declared instance's graph, one document each — bean
+            # `4ak5` item 1. The set is derived from the declarations by the
+            # script, never listed here; the two instances above keep their
+            # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
+            # `check:published-instance-exports` runs the same plan, and fails if
+            # any declared instance is published by neither.
+            bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site --base-url "$BASE"
+          } > "$L/instances.log" 2>&1 &
+          PIDS+=($!); NAMES+=(instances)
+          {
+            # Content-addressed payloads (bean `f233`): `<BASE_URL>/payload/sha256/<hex>`
+            # plus each `<hex>.json` sidecar. Copied VERBATIM, never through Jekyll
+            # (excluded in _config.yml): a rendered body would not hash to its name.
+            mkdir -p "./_site/payload"
+            cp -R ./cat-harness/docs/payload/. "./_site/payload/"
+            # The SQLite slices (bean `q8ar`), one line each, built from the tree
+            # being deployed rather than committed, because their sources move
+            # on most merges (every session writes `beans/`). The deploy payloads
+            # (bean files, todo files, published library entries) are
+            # content-addressed in the same `payload/sha256/` namespace, added
+            # here and never to the committed `docs/payload/`, whose orphan audit
+            # admits KG nodes only. The `kg` slice writes none: it points at the
+            # committed KG payloads copied just above. Each run also rewrites
+            # `assets/slices/index.json`, which lists every slice built so far.
+            # Searched at `slices/search.html?slice=<name>`.
+            # The database is CONTENT-ADDRESSED, `<slice>.<sha256>.sqlite3`, and
+            # the fixed `<slice>.sqlite3.json` manifest names it (bean `wixl`), so
+            # a CDN cannot pair a fresh manifest with stale bytes. Old builds do
+            # not pile up: each run writes only the current file, the deploy step `rm -rf`s
+            # `branches/<slug>/` before copying `_site` in, and `staging-rotate.ts`
+            # caps how many previews exist at all.
+            # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
+            # manifest and the older file it names -- a self-consistent pair --
+            # or a stale manifest whose file is gone, which the page reports.
+            bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
+            bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
+            bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
+            bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
+          } > "$L/slices.log" 2>&1 &
+          PIDS+=($!); NAMES+=(slices)
+          {
+            # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
+            #
+            # Staging published NONE of these while the live site published all
+            # of them. That is not a missing file, it is a preview that cannot
+            # show the artefact it exists to review: the export above stamps every
+            # node with an `@id` under `$BASE`, and the vocabulary those nodes
+            # reference then dereferenced to 404. A reviewer opening a staged
+            # knowledge-graph change got a graph whose own terms resolved to
+            # nothing.
+            #
+            # The namespace documents are deployment-INDEPENDENT on purpose — a
+            # vocabulary's IRIs are the vocabulary, and they are the same document
+            # at any base — so these are copied from the live build's step
+            # unchanged.
+            mkdir -p "./_site/ns/content"
+            cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
+            # The named-subgraph context (bean `c1m4`): every
+            # `docs/subgraph/**/index*.jsonld` names it by URL rather than inlining it.
+            mkdir -p "./_site/ns/subgraph"
+            cp ./cat-harness/ns/subgraph/v1.jsonld "./_site/ns/subgraph/v1.jsonld"
+            # Each harness's setup position and health (bean `supn`; owner, 2026-10-24,
+            # "Work out at publish time"): bootstrap's setup check, offline and
+            # dry-run, one `<harness>.json` per harness plus `index.json`. Built
+            # from the tree being deployed and never committed.
+            bun run cat harness:state --out ./_site/assets/harnesses
+            for pair in "harness:cat-harness" "core:folio-assistant-core"; do
+              LAYER="${pair%%:*}"; DIR="${pair##*:}"
+              mkdir -p "./_site/${DIR}"
+              bun run cat-harness-tools/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
+              cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
+            done
+          } > "$L/namespaces.log" 2>&1 &
+          PIDS+=($!); NAMES+=(namespaces)
+          {
+            # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
+            # each term is defined by its layer's own document, below, and the
+            # Glossary publishes SKOS for every scheme. bootstrap's document is
+            # bootstrap's own, written by bootstrap-tools and committed, so it is
+            # copied rather than rebuilt by a harness exporter. No extensionless
+            # `<stub>/ns` (owner, 2026-10-15): the term IRIs live at each
+            # instance's own iriBase, and `<stub>/ns/` is a directory here — see
+            # the same step in docs-site.yml.
+            mkdir -p "./_site/bootstrap"
+            for ext in "ns.jsonld" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
 
-          # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
-          #
-          # Staging published NONE of these while the live site published all
-          # of them. That is not a missing file, it is a preview that cannot
-          # show the artefact it exists to review: the export above stamps every
-          # node with an `@id` under `$BASE`, and the vocabulary those nodes
-          # reference then dereferenced to 404. A reviewer opening a staged
-          # knowledge-graph change got a graph whose own terms resolved to
-          # nothing.
-          #
-          # The namespace documents are deployment-INDEPENDENT on purpose — a
-          # vocabulary's IRIs are the vocabulary, and they are the same document
-          # at any base — so these are copied from the live build's step
-          # unchanged.
-          mkdir -p "./_site/ns/content"
-          cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
-          # The named-subgraph context (bean `c1m4`): every
-          # `docs/subgraph/**/index*.jsonld` names it by URL rather than inlining it.
-          mkdir -p "./_site/ns/subgraph"
-          cp ./cat-harness/ns/subgraph/v1.jsonld "./_site/ns/subgraph/v1.jsonld"
-          # Content-addressed payloads (bean `f233`): `<BASE_URL>/payload/sha256/<hex>`
-          # plus each `<hex>.json` sidecar. Copied VERBATIM, never through Jekyll
-          # (excluded in _config.yml): a rendered body would not hash to its name.
-          mkdir -p "./_site/payload"
-          cp -R ./cat-harness/docs/payload/. "./_site/payload/"
-          # The SQLite slices (bean `q8ar`), one line each, built from the tree
-          # being deployed rather than committed, because their sources move
-          # on most merges (every session writes `beans/`). The deploy payloads
-          # (bean files, todo files, published library entries) are
-          # content-addressed in the same `payload/sha256/` namespace, added
-          # here and never to the committed `docs/payload/`, whose orphan audit
-          # admits KG nodes only. The `kg` slice writes none: it points at the
-          # committed KG payloads copied just above. Each run also rewrites
-          # `assets/slices/index.json`, which lists every slice built so far.
-          # Searched at `slices/search.html?slice=<name>`.
-          # The database is CONTENT-ADDRESSED, `<slice>.<sha256>.sqlite3`, and
-          # the fixed `<slice>.sqlite3.json` manifest names it (bean `wixl`), so
-          # a CDN cannot pair a fresh manifest with stale bytes. Old builds do
-          # not pile up: each run writes only the current file, the deploy step `rm -rf`s
-          # `branches/<slug>/` before copying `_site` in, and `staging-rotate.ts`
-          # caps how many previews exist at all.
-          # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
-          # manifest and the older file it names -- a self-consistent pair --
-          # or a stale manifest whose file is gone, which the page reports.
-          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
-          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
-          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
-          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
-          # Each harness's setup position and health (bean `supn`; owner, 2026-10-24,
-          # "Work out at publish time"): bootstrap's setup check, offline and
-          # dry-run, one `<harness>.json` per harness plus `index.json`. Built
-          # from the tree being deployed and never committed.
-          bun run cat harness:state --out ./_site/assets/harnesses
-          # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
-          # each term is defined by its layer's own document, below, and the
-          # Glossary publishes SKOS for every scheme. bootstrap's document is
-          # bootstrap's own, written by bootstrap-tools and committed, so it is
-          # copied rather than rebuilt by a harness exporter. No extensionless
-          # `<stub>/ns` (owner, 2026-10-15): the term IRIs live at each
-          # instance's own iriBase, and `<stub>/ns/` is a directory here — see
-          # the same step in docs-site.yml.
-          mkdir -p "./_site/bootstrap"
-          for ext in "ns.jsonld" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
+            # THE BOOTSTRAP GRAPH — ONE publisher, at the path its `@id` names.
+            #
+            # `--base-url` so the staged copy names ITSELF rather than the live
+            # document: a staged copy minting the canonical `@id` would claim to
+            # BE the live document, which is worse than a 404, because a reader
+            # following it lands somewhere that looks right.
+            #
+            # This workflow did not write this document at all until `3jhq` — the
+            # omission that bean was opened to measure. THIS INSTANCE'S OWN GRAPH
+            # LINKS INTO IT: `skillHome` mints a foreign skill against the
+            # exporting document's base, so a graph staged at `$BASE` carries
+            #
+            #   $BASE/bootstrap/bootstrap.jsonld#skill/discussion
+            #   $BASE/bootstrap/bootstrap.jsonld#skill/log-message
+            #
+            # — measured by building the export with a staged `--base-url` and
+            # reading the link targets out of it, not inferred. Without this
+            # step both 404 on every preview, which is `blv9` exactly: a
+            # link-shaped value that does not resolve, on the artefact whose
+            # purpose is being resolved.
+            #
+            # `gen-bootstrap-graph.ts` published a SECOND bootstrap graph here,
+            # at `bootstrap/bootstrap.jsonld` — bean `dyd3`. Measured 2026-09-21:
+            # 88 nodes each, 85 of them doc-relative, so 85 subjects existed
+            # under two identities that no consumer will ever merge; only the 3
+            # absolute namespace IRIs were shared.
+            #
+            # Collapsing the PATHS alone would not have settled it. With both at
+            # one URL the documents still disagree — 74 of the 88 nodes differ in
+            # content, and the top level differs on six fields — so the site would
+            # publish whichever step ran last. One publisher is the fix; the other
+            # stays as a generator and a test subject.
+            #
+            # The surviving export moved to `<stub>/<stub>.jsonld`, which is where
+            # that instance's other rendered documents (`ns.jsonld`) already sit.
+            # Written by bootstrap-tools since 2026-09-30 — see docs-site.yml.
+            BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)
+            # The instance's directory comes from the one resolver, `publishedPath`
+            # (bean `sthf`): `<name>/`, the NAME naming the directory and the stub
+            # naming the document in it. Exit 3 is `"enabled": false`, declared not
+            # published; anything else non-zero fails the step.
+            if BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap); then
+              BOOT_DIR=${BOOT_DIR%/}
+            else
+              rc=$?; [ "$rc" -eq 3 ] || exit "$rc"
+              BOOT_DIR=""
+            fi
+            if [ -n "$BOOT_DIR" ]; then
+              bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${BASE}/${BOOT_DIR}/" --provenance --out "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld"
+              cp "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}.json"
+            fi
 
-          for pair in "harness:cat-harness" "core:folio-assistant-core"; do
-            LAYER="${pair%%:*}"; DIR="${pair##*:}"
-            mkdir -p "./_site/${DIR}"
-            bun run cat-harness-tools/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
-            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
+            if [ -n "$BOOT_DIR" ]; then
+              bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
+            fi
+
+            if [ -n "$BOOT_DIR" ]; then
+              bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_DIR}"
+              cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
+            fi
+
+            # bootstrap's OWN files, as the deploy publishes them (bean `iwtn`):
+            # LAST, and it never overwrites the graph's `.json` copy above.
+            # `--allow-collision bootstrap.json`: the graph's `.json` copy and bootstrap's
+            # declaration share that address, and the graph keeps it (bootstrap-graph-publication).
+            # Any OTHER different file at a taken address fails this step.
+            if [ -n "$BOOT_DIR" ]; then
+              bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}" --allow-collision bootstrap.json
+            fi
+            # bootstrap's diagram vocabulary at its extensionless address, which is
+            # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
+            # `.json` copy every rendering here carries for Pages.
+            if [ -n "$BOOT_DIR" ]; then
+              cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns"
+              cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns.json"
+            fi
+          } > "$L/bootstrap.log" 2>&1 &
+          PIDS+=($!); NAMES+=(bootstrap)
+          rc=0
+          for i in "${!PIDS[@]}"; do
+            if wait "${PIDS[$i]}"; then st=ok; else st=FAILED; rc=1; fi
+            echo "::group::${NAMES[$i]} ($st)"; cat "$L/${NAMES[$i]}.log"; echo "::endgroup::"
           done
-
-          # THE BOOTSTRAP GRAPH — ONE publisher, at the path its `@id` names.
-          #
-          # `--base-url` so the staged copy names ITSELF rather than the live
-          # document: a staged copy minting the canonical `@id` would claim to
-          # BE the live document, which is worse than a 404, because a reader
-          # following it lands somewhere that looks right.
-          #
-          # This workflow did not write this document at all until `3jhq` — the
-          # omission that bean was opened to measure. THIS INSTANCE'S OWN GRAPH
-          # LINKS INTO IT: `skillHome` mints a foreign skill against the
-          # exporting document's base, so a graph staged at `$BASE` carries
-          #
-          #   $BASE/bootstrap/bootstrap.jsonld#skill/discussion
-          #   $BASE/bootstrap/bootstrap.jsonld#skill/log-message
-          #
-          # — measured by building the export with a staged `--base-url` and
-          # reading the link targets out of it, not inferred. Without this
-          # step both 404 on every preview, which is `blv9` exactly: a
-          # link-shaped value that does not resolve, on the artefact whose
-          # purpose is being resolved.
-          #
-          # `gen-bootstrap-graph.ts` published a SECOND bootstrap graph here,
-          # at `bootstrap/bootstrap.jsonld` — bean `dyd3`. Measured 2026-09-21:
-          # 88 nodes each, 85 of them doc-relative, so 85 subjects existed
-          # under two identities that no consumer will ever merge; only the 3
-          # absolute namespace IRIs were shared.
-          #
-          # Collapsing the PATHS alone would not have settled it. With both at
-          # one URL the documents still disagree — 74 of the 88 nodes differ in
-          # content, and the top level differs on six fields — so the site would
-          # publish whichever step ran last. One publisher is the fix; the other
-          # stays as a generator and a test subject.
-          #
-          # The surviving export moved to `<stub>/<stub>.jsonld`, which is where
-          # that instance's other rendered documents (`ns.jsonld`) already sit.
-          # Written by bootstrap-tools since 2026-09-30 — see docs-site.yml.
-          BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)
-          # The instance's directory comes from the one resolver, `publishedPath`
-          # (bean `sthf`): `<name>/`, the NAME naming the directory and the stub
-          # naming the document in it. Exit 3 is `"enabled": false`, declared not
-          # published; anything else non-zero fails the step.
-          if BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap); then
-            BOOT_DIR=${BOOT_DIR%/}
-          else
-            rc=$?; [ "$rc" -eq 3 ] || exit "$rc"
-            BOOT_DIR=""
-          fi
-          if [ -n "$BOOT_DIR" ]; then
-            bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${BASE}/${BOOT_DIR}/" --provenance --out "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld"
-            cp "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}.json"
-          fi
-
-          # The swimlane glossaries, on the preview too -- `check:invocation-parity`
-          # refused this change until they were here, which is the gate doing
-          # exactly its job. Each concept's `inScheme` names the glossary
-          # document's own URL, so a preview that published the graph and not
-          # the glossary would serve a scheme IRI that 404s on every concept --
-          # `3jhq` again, one document over. `--base-url` so the preview's
-          # copies point at the preview rather than at production.
-          bun run cat-harness-tools/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}/${STUB}-glossary.jsonld"
-          cp "./_site/${STUB}/${STUB}-glossary.jsonld" "./_site/${STUB}/${STUB}-glossary.json"
-          if [ -n "$BOOT_DIR" ]; then
-            bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
-          fi
-
-          # The graph once per locale -- bean `jmpb`, on the owner's ruling.
-          # Writes NOTHING today and says so: measured 2026-09-22, no locale
-          # carries a catalogue applying to either graph. It is wired now
-          # rather than later so the first diagram `.po` to land publishes its
-          # locale with no workflow edit, and so the gates and the deploy run
-          # the same command. Each document's node `@id`s are the core's --
-          # a translation is not a new term.
-          # `--core`: the document kg-export wrote above, read rather than built a
-          # second time (bean fwtz: 19 s of this step on main). An older tools
-          # pin ignores the flag and builds it, as before.
-          bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --core "./_site/${STUB}/${STUB}.jsonld" --out-dir "./_site/${STUB}"
-          if [ -n "$BOOT_DIR" ]; then
-            bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_DIR}"
-            cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
-          fi
-
-          # bootstrap's OWN files, as the deploy publishes them (bean `iwtn`):
-          # LAST, and it never overwrites the graph's `.json` copy above.
-          # `--allow-collision bootstrap.json`: the graph's `.json` copy and bootstrap's
-          # declaration share that address, and the graph keeps it (bootstrap-graph-publication).
-          # Any OTHER different file at a taken address fails this step.
-          if [ -n "$BOOT_DIR" ]; then
-            bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}" --allow-collision bootstrap.json
-          fi
-          # bootstrap's diagram vocabulary at its extensionless address, which is
-          # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
-          # `.json` copy every rendering here carries for Pages.
-          if [ -n "$BOOT_DIR" ]; then
-            cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns"
-            cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns.json"
-          fi
-          # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
-          # processes are not otherwise published, so it is copied from source.
-          mkdir -p "./_site/${STUB}/processes"
-          for f in ns ns.jsonld ns.json; do cp ./cat-harness/processes/ns.jsonld "./_site/${STUB}/processes/$f"; done
+          [ "$rc" = 0 ] || { echo "::error::a knowledge-graph export group failed; see its log above"; exit 1; }
 
           # The harness rail on every standalone page — bean `oi1y`. LAST, after
           # every generator that writes one, for the reason stated at the same
@@ -2067,7 +2095,7 @@ jobs:
         run: |
           set -eu
           waiting=$(gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
-            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")))] | length' | awk '{s+=$1} END{print s+0}')
+            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")) and .workflow_run.head_repository_id != null and .workflow_run.head_repository_id == .workflow_run.repository_id)] | length' | awk '{s+=$1} END{print s+0}')
           busy=$(gh api "repos/$REPO/actions/workflows/staging-publish.yml/runs?per_page=10" \
             --jq '[.workflow_runs[] | select(.status != "completed")] | length' 2>/dev/null || echo 1)
           tip=$(gh api "repos/$REPO/commits/gh-pages" --jq '"\(.commit.committer.date)\t\(.commit.message | split("\n")[0])"')

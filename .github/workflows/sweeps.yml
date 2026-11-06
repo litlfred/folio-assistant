@@ -16,6 +16,8 @@
 #     (`.github/scripts/preview-verify-sweep.sh`): it only dispatches.
 #   - Re-pin train verdict: an open train waits for a verdict
 #     (`repin-train.ts pending`, the same `trainsToJudge` the sweep judges).
+#   - Merge train: an open train waits for a verdict, a bisect batch is
+#     queued, or an opted-in PR is ready (`merge-train.ts pending`, bean hd58).
 #   - Conflicted PR previews (owner, 2026-10-06: "preview can still run, just
 #     not merge ready"): GitHub delivers no `pull_request` event to a PR that
 #     conflicts with its base. Feature Staging's `push` trigger used to start a
@@ -48,9 +50,10 @@ on:
 permissions:
   contents: read
   pull-requests: read
+  issues: read  # the merge-train opt-in: who added the label (bean hd58)
   statuses: read
   checks: read
-  actions: write  # list artifacts and runs; dispatch the workflows
+  actions: write  # list artifacts and runs; dispatch the workflows; read and prune the Actions cache
 
 # A tick that finds the previous one still running is not needed.
 concurrency:
@@ -76,7 +79,7 @@ jobs:
         run: |
           set -euo pipefail
           n=$(gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
-            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")))] | length' | awk '{s+=$1} END{print s+0}')
+            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")) and .workflow_run.head_repository_id != null and .workflow_run.head_repository_id == .workflow_run.repository_id)] | length' | awk '{s+=$1} END{print s+0}')
           echo "staging-publish: $n preview artifact(s) waiting"
           [ "$n" -gt 0 ] || exit 0
           # A publisher queued or running drains the whole queue already.
@@ -116,6 +119,27 @@ jobs:
           gh workflow run repin-train-verdict.yml -R "$REPO"
           echo "dispatched repin-train-verdict.yml (judges every open train)"
 
+      - name: Merge train — a train to judge, or a batch ready? (bean hd58)
+        id: train
+        continue-on-error: true
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          # The same off switch merge-train.yml reads, so a workflow PR counts as ready only when the train may carry it.
+          MERGE_TRAIN_CARRIES_WORKFLOWS: ${{ vars.MERGE_TRAIN_CARRIES_WORKFLOWS == 'true' && (vars.HARNESS_BOT_ID != '' || secrets.PUSH_BRANCH_TRIGGERING_CI != '') }}
+        run: |
+          set -euo pipefail
+          why=$(bun .github/scripts/merge-train.ts pending)
+          if [ -z "$why" ]; then echo "merge train: nothing to do"; exit 0; fi
+          echo "merge train: $why"
+          busy=0
+          for st in queued in_progress waiting pending; do
+            k=$(gh api "repos/$REPO/actions/workflows/merge-train.yml/runs?status=$st&per_page=1" --jq '.total_count')
+            busy=$((busy + k))
+          done
+          if [ "$busy" -gt 0 ]; then echo "a merge-train run is already queued or running ($busy)"; exit 0; fi
+          gh workflow run merge-train.yml -R "$REPO"
+          echo "dispatched merge-train.yml"
+
       - name: Conflicted PRs — stage the ones whose head has no preview run
         id: conflicted
         continue-on-error: true
@@ -133,8 +157,34 @@ jobs:
           done < <(gh api --paginate "repos/$REPO/pulls?state=open&per_page=100" \
             --jq '.[] | select(.head.repo.full_name == "'"$REPO"'") | [.number, .head.ref, .head.sha] | @tsv')
 
-      - name: Any sweep failed?
-        if: steps.publish.outcome == 'failure' || steps.verify.outcome == 'failure' || steps.repin.outcome == 'failure' || steps.conflicted.outcome == 'failure'
+      # Once a day (the first tick of 06:00-06:14 UTC) or on a dispatch: the hit rate of every
+      # `cached-step` and the Actions cache budget, and delete the entries of
+      # closed PRs' merge refs, which no run can read any more
+      # (`.github/actions/cached-step/README.md`, "Budget").
+      - name: Cache report — hit rate per step, budget (daily)
+        id: cache
+        continue-on-error: true
         run: |
-          echo "::error::a sweep failed — publish=${{ steps.publish.outcome }} verify=${{ steps.verify.outcome }} repin=${{ steps.repin.outcome }} conflicted=${{ steps.conflicted.outcome }}"
+          set -uo pipefail
+          if [ "${{ github.event_name }}" != workflow_dispatch ] && ! [[ "$(date -u +%H%M)" =~ ^06(0|1[0-4]) ]]; then
+            echo "not the daily tick"; exit 0
+          fi
+          bash .github/scripts/cache-report.sh --hours 24 --prune --json "$RUNNER_TEMP/cache-report.json"
+
+      # The raw facts the cache viewer reads (cat-harness-tools `caches:viz --stored`).
+      - name: Upload the cache report for the viewer
+        if: steps.cache.outcome == 'success'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        continue-on-error: true
+        with:
+          name: cache-report
+          path: ${{ runner.temp }}/cache-report.json
+          retention-days: 14
+          overwrite: true
+          if-no-files-found: ignore
+
+      - name: Any sweep failed?
+        if: steps.publish.outcome == 'failure' || steps.verify.outcome == 'failure' || steps.repin.outcome == 'failure' || steps.train.outcome == 'failure' || steps.conflicted.outcome == 'failure' || steps.cache.outcome == 'failure'
+        run: |
+          echo "::error::a sweep failed — publish=${{ steps.publish.outcome }} verify=${{ steps.verify.outcome }} repin=${{ steps.repin.outcome }} train=${{ steps.train.outcome }} conflicted=${{ steps.conflicted.outcome }} cache=${{ steps.cache.outcome }}"
           exit 1

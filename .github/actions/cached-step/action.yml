@@ -1,0 +1,181 @@
+name: cached-step
+description: >-
+  Run a CI step as a pure function of its inputs: restore its output (or its
+  verdict) under a key derived from those inputs, and say hit/miss/why. One
+  primitive for every cache in this repository; the policy is in README.md.
+
+# Two calls per step, because a composite action has no post-step:
+#
+#   - uses: ./.github/actions/cached-step        # phase: restore (default)
+#     id: c
+#     with: { step: qa-working-copy, key: ${{ steps.k.outputs.key }}, paths: build/qa, trust: exact, verify: '...' }
+#   - if: steps.c.outputs.hit != 'true'
+#     run: <the step itself>
+#   - uses: ./.github/actions/cached-step
+#     if: success() && steps.c.outputs.hit != 'true'
+#     with: { phase: save, step: qa-working-copy, key: ${{ steps.c.outputs.key }}, paths: build/qa, trust: exact }
+#
+# A `verdict` step caches no files: on a green miss it saves a one-line record
+# under its key, and a later run with the same key reports the step SKIPPED
+# (never "passed") naming the run that recorded it.
+
+inputs:
+  phase:
+    description: >-
+      `restore` (default), `save`, or `report`: record a hit/warm/miss decided
+      ELSEWHERE (a cache with its own transport, e.g. the layers ref or the IG
+      AST, or a `cache:plan` decision), so the daily hit-rate report counts it.
+    default: restore
+  result:
+    description: "`report` only: hit, warm or miss."
+    default: ""
+  why:
+    description: "`report` only: one sentence, why."
+    default: ""
+  step:
+    description: "The step's id: [a-z0-9-]+. It namespaces the key (`cs1-<step>-…`) and the hit-rate report."
+    required: true
+  key:
+    description: >-
+      The derived key, e.g. from `bun run cat cache:key <script>` or a digest
+      script. Never a hand-written list of inputs. An empty key, or one that
+      starts `undetermined`, is a MISS that is never saved: could-not-determine
+      is never a hit.
+    required: true
+  paths:
+    description: "Newline-separated paths the step writes (its output). Empty for a verdict."
+    default: ""
+  trust:
+    description: >-
+      `exact` — the output can be checked exactly and cheaply (`verify`), so a
+      restore by prefix is allowed and a PR may save (branch-scoped by GitHub);
+      `verdict` — a pass record, matched on the EXACT key only, saved from main
+      or from the PR's own ref; `main-only` — restored by exact key, saved only
+      from main.
+    default: main-only
+  verify:
+    description: >-
+      `exact` only: a command run after a restore; non-zero turns the hit into
+      a miss and removes what was restored. Required for `exact`.
+    default: ""
+  committer-refs:
+    description: >-
+      `exact` only: `true` also looks for an entry a committer published with
+      `bun run cat cache:publish` at `refs/cache/cs1-<step>-<key>`, and accepts
+      it only through `verify`. Use it only when `verify` checks against a
+      reference derived from THIS tree (e.g. the lock's digests), never a
+      manifest the entry carries itself. Never on main: main is the backstop
+      and builds, or reads what main saved.
+    default: "false"
+
+outputs:
+  hit:
+    description: "`true` when the output (or verdict) was restored and, for `exact`, verified."
+    value: ${{ steps.decide.outputs.hit }}
+  why:
+    description: "One sentence: why it hit or missed."
+    value: ${{ steps.decide.outputs.why }}
+  key:
+    description: "The namespaced key (`cs1-<step>-<key>`) — pass it to the save phase."
+    value: ${{ steps.ns.outputs.key }}
+  matched-key:
+    description: "The key actually restored (differs from `key` on a prefix restore)."
+    value: ${{ steps.decide.outputs.matched }}
+
+runs:
+  using: composite
+  steps:
+    - name: cached-step — key
+      id: ns
+      shell: bash
+      env:
+        STEP: ${{ inputs.step }}
+        KEY: ${{ inputs.key }}
+        TRUST: ${{ inputs.trust }}
+        PHASE: ${{ inputs.phase }}
+        PATHS: ${{ inputs.paths }}
+        VERIFY: ${{ inputs.verify }}
+      run: bash "$GITHUB_ACTION_PATH/cached-step.sh" key
+
+    - name: cached-step — restore (exact key)
+      id: exact
+      if: inputs.phase == 'restore' && steps.ns.outputs.determined == 'true'
+      uses: actions/cache/restore@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      with:
+        path: ${{ steps.ns.outputs.paths }}
+        key: ${{ steps.ns.outputs.key }}
+        restore-keys: ${{ inputs.trust == 'exact' && steps.ns.outputs.prefix || '' }}
+
+    - name: cached-step — committer-published entry
+      id: ref
+      if: >-
+        inputs.phase == 'restore' && steps.ns.outputs.determined == 'true'
+        && inputs.trust == 'exact' && inputs.committer-refs == 'true'
+        && steps.exact.outputs.cache-hit != 'true'
+        && !(github.ref == 'refs/heads/main' && github.event_name != 'pull_request')
+      shell: bash
+      env:
+        STEP: ${{ inputs.step }}
+        KEY: ${{ steps.ns.outputs.key }}
+      run: bash "$GITHUB_ACTION_PATH/cached-step.sh" fetch-ref
+
+    - name: cached-step — report a decision made elsewhere
+      id: reported
+      if: inputs.phase == 'report'
+      shell: bash
+      env:
+        STEP: ${{ inputs.step }}
+        KEY: ${{ steps.ns.outputs.key }}
+        TRUST: ${{ inputs.trust }}
+        RESULT: ${{ inputs.result }}
+        WHY: ${{ inputs.why }}
+      run: bash "$GITHUB_ACTION_PATH/cached-step.sh" report
+
+    - name: cached-step — decide
+      id: decide
+      if: inputs.phase == 'restore'
+      shell: bash
+      env:
+        STEP: ${{ inputs.step }}
+        KEY: ${{ steps.ns.outputs.key }}
+        TRUST: ${{ inputs.trust }}
+        PATHS: ${{ steps.ns.outputs.paths }}
+        VERIFY: ${{ inputs.verify }}
+        DETERMINED: ${{ steps.ns.outputs.determined }}
+        UNDETERMINED_WHY: ${{ steps.ns.outputs.why }}
+        EXACT_HIT: ${{ steps.exact.outputs.cache-hit }}
+        MATCHED: ${{ steps.exact.outputs.cache-matched-key }}
+        REF_HIT: ${{ steps.ref.outputs.hit }}
+      run: bash "$GITHUB_ACTION_PATH/cached-step.sh" decide
+
+    - name: cached-step — may this run save?
+      id: policy
+      if: inputs.phase == 'save'
+      shell: bash
+      env:
+        STEP: ${{ inputs.step }}
+        KEY: ${{ steps.ns.outputs.key }}
+        TRUST: ${{ inputs.trust }}
+        DETERMINED: ${{ steps.ns.outputs.determined }}
+        UNDETERMINED_WHY: ${{ steps.ns.outputs.why }}
+        PATHS: ${{ steps.ns.outputs.paths }}
+      run: bash "$GITHUB_ACTION_PATH/cached-step.sh" policy
+
+    - name: cached-step — save
+      if: inputs.phase == 'save' && steps.policy.outputs.save == 'true'
+      uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+      with:
+        path: ${{ steps.ns.outputs.paths }}
+        key: ${{ steps.ns.outputs.key }}
+
+    # The hit-rate report (`cache-report.sh`) reads these NAMES only, so it
+    # downloads nothing: cached-step--<step>--<hit|miss>--<unique>.
+    - name: cached-step — record the outcome for the hit-rate report
+      if: inputs.phase == 'restore' || inputs.phase == 'report'
+      uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+      continue-on-error: true
+      with:
+        name: ${{ steps.decide.outputs.record || steps.reported.outputs.record }}
+        path: ${{ runner.temp }}/cached-step/${{ steps.decide.outputs.record || steps.reported.outputs.record }}.txt
+        retention-days: 8
+        if-no-files-found: ignore
