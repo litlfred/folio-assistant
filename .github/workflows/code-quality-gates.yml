@@ -3811,6 +3811,10 @@ jobs:
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run cat tools:viz:check
+          # The caches page renders every `cache` node (cat-harness-tools/caches/)
+          # and refuses one that does not parse (`@covers cache`), so it goes
+          # stale the moment a cache node is added or its recipe changes.
+          bun run cat caches:viz:check
           # The themes page renders every theme in schemas/themes.ts with its
           # declared art, so it goes stale the moment a theme, a palette or a
           # crop changes.
