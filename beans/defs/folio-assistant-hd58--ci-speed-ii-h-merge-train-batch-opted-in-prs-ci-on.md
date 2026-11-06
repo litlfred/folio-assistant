@@ -99,3 +99,5 @@ _2026-11-05T14:30Z_: all in #2960. Still open: #2960 green and merged (waits for
 _2026-11-05T23:30Z_: #2954 landed (04cf7ef); #2960 updated at f4d51da (main merged, plus the landed-member fix and the mergeable_state qualifications). Waiting for its CI; the owner merges it when green (a workflow PR).
 
 _2026-11-06T01:48Z_: **#2960 merged** (the owner merged it; all 30 checks green at 5dd07aa). The train is live. Remaining: the first train run (needs PRs labelled `merge-train` by a person), the after-measurement, and #2962's full-run rule for `merge-train/*` and `repin-train/*`.
+
+_2026-11-06T04:49Z_: #2962 merged with the full-suite rule for `merge-train/*` and `repin-train/*` (confirmed by CI speed 7), so that item is closed. On the owner's OK, #2951 was labelled `merge-train` at 04:48Z for the first live train. The parking branch `claude/merge-train-hold` stays with the owner (delete refused, 403).
