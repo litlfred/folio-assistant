@@ -846,7 +846,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules,
-      # Chromium with its system libraries:
+      # Chromium:
       # from the prepared image when one exists for this key, else mounted
       # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
       # own:
@@ -854,7 +854,15 @@ jobs:
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
         with:
-          chromium: with-deps
+          chromium: browser
+
+      # Chromium's system libraries. The browser itself came from the image
+      # (or was downloaded) above, so this installs the apt packages only. It
+      # stays a step of the JOB, not of ci-setup: `bun run cat gates` sorts a
+      # job into the fast set by whether its own steps run `playwright install`
+      # (cat-harness-tools scripts/gates.ts installsBrowser).
+      - name: Chromium's system libraries
+        run: npx --yes playwright install --with-deps chromium
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         run: bun run cat state:mount
@@ -4535,7 +4543,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules,
-      # Chromium with its system libraries:
+      # Chromium:
       # from the prepared image when one exists for this key, else mounted
       # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
       # own:
@@ -4543,7 +4551,15 @@ jobs:
       - name: Set up from the prepared CI image (bean ay33)
         uses: ./.github/actions/ci-setup
         with:
-          chromium: with-deps
+          chromium: browser
+
+      # Chromium's system libraries. The browser itself came from the image
+      # (or was downloaded) above, so this installs the apt packages only. It
+      # stays a step of the JOB, not of ci-setup: `bun run cat gates` sorts a
+      # job into the fast set by whether its own steps run `playwright install`
+      # (cat-harness-tools scripts/gates.ts installsBrowser).
+      - name: Chromium's system libraries
+        run: npx --yes playwright install --with-deps chromium
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
