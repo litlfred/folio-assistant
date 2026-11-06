@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/skill/qa-witness.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0425",
+    "sha": "1783c43ba2ac5ee0d412be1167a0954b203310d8",
+    "pr": "repin-train/20261106-0425",
+    "run": "42162480911"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/skill/qa-witness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "qa-witness",
+      "title": "QA witnesses — the published projection of every verdict",
+      "description": "The QA projections written to `test/results/witnesses/` and stored on the `qa-reports` branch — what a `qa-witness/v1` document says, which three families produce one, how to read a verdict and the witness behind it, and why \"could not determine\" is a third state everywhere in them.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/qa-witness.md",
+      "instructionLines": 120,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/qa-witness"
+    }
+  ]
+}

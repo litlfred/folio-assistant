@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/skill/named-query-execution.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0425",
+    "sha": "1783c43ba2ac5ee0d412be1167a0954b203310d8",
+    "pr": "repin-train/20261106-0425",
+    "run": "42162480911"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/skill/named-query-execution",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "named-query-execution",
+      "title": "Named Query Execution across CLI, MCP, and Web",
+      "description": "How to execute audited SPARQL 1.1 named queries over partitioned W3C N-Quads dataset distributions across CLI, MCP tools, and WebAssembly browser clients. Enforces graph availability guards to prevent silent partial results, and typed parameter bindings to eliminate SPARQL injection.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/package/graph-management"
+      ],
+      "instructionsPath": "skills/kg/graph-management/named-query-execution.md",
+      "instructionLines": 114,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/named-query-execution"
+    }
+  ]
+}

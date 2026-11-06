@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/skill/code-node-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0425",
+    "sha": "1783c43ba2ac5ee0d412be1167a0954b203310d8",
+    "pr": "repin-train/20261106-0425",
+    "run": "42162480911"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/skill/code-node-review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "code-node-review",
+      "title": "Code node review",
+      "description": "Review the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/` — for the joins a reader cannot see: that a node declares what it is, that what it names resolves, and that the mechanism it describes is the one that actually runs.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/code-node-review.md",
+      "instructionLines": 110,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/code-node-review"
+    }
+  ]
+}

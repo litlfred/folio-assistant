@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/skill/theme-declaration.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0425",
+    "sha": "1783c43ba2ac5ee0d412be1167a0954b203310d8",
+    "pr": "repin-train/20261106-0425",
+    "run": "42162480911"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/skill/theme-declaration",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "theme-declaration",
+      "title": "Declaring a theme",
+      "description": "What a theme IS as data — the palette, the three required layouts, and the per-image regions (`textRegion`, `avatarRegion`). The PRODUCER stage: this is where a number is written down, and the rule is that geometry over art is declared rather than derived, because no amount of arithmetic on an aspect ratio can see where a picture is quiet.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/package/theming"
+      ],
+      "instructionsPath": "skills/ui/theming/theme-declaration.md",
+      "instructionLines": 99,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-declaration"
+    }
+  ]
+}

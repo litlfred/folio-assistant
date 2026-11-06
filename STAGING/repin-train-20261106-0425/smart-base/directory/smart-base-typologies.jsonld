@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/smart-base/directory/smart-base-typologies.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-typologies.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0425",
+    "sha": "1783c43ba2ac5ee0d412be1167a0954b203310d8",
+    "pr": "repin-train/20261106-0425",
+    "run": "42162480911"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-typologies",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-typologies",
+      "path": "typologies/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/typologies"
+      ],
+      "description": "The graph typologies smart-base owns, one folio-graph-typology/v1 node per file, as fhir-harness's typologies/ are: `l1-extraction`, and `web-annex` (a WHO publication's web annexes, L1 or L2, held as data; smart-base's because a web annex is a WHO concept fhir-harness may not name).",
+      "readmePath": "typologies/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-typologies"
+    }
+  ]
+}

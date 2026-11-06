@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/who-iris/skill/iris-oxigraph.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0425",
+    "sha": "1783c43ba2ac5ee0d412be1167a0954b203310d8",
+    "pr": "repin-train/20261106-0425",
+    "run": "42162480911"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/who-iris/skill/iris-oxigraph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "iris-oxigraph",
+      "title": "Oxigraph multi-graph search for WHO IRIS",
+      "description": "How to build WHO IRIS catalogue and Qualified Dublin Core metadata into partitioned N-Quads, and query it with Oxigraph — in Bun on the build side, in WebAssembly in the browser — including cross-graph joins and facet counts.",
+      "instructionsPath": "skills/iris-oxigraph.md",
+      "instructionLines": 204,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/who-iris/directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-oxigraph"
+    }
+  ]
+}

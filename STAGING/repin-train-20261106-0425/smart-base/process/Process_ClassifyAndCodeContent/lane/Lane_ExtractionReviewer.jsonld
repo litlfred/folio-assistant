@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/smart-base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0425/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0425",
+    "sha": "1783c43ba2ac5ee0d412be1167a0954b203310d8",
+    "pr": "repin-train/20261106-0425",
+    "run": "42162480911"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "L1 extraction reviewer (person)",
+      "partOf": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
+      "bindsRole": "http://smart.who.int/base/role/l1-extraction-reviewer",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "$ref": "#/definitions/TranslationConfig",
+  "definitions": {
+    "TranslationConfig": {
+      "type": "object",
+      "properties": {
+        "defaultLocale": {
+          "default": "en",
+          "type": "string",
+          "minLength": 2
+        },
+        "supportedLocales": {
+          "default": [
+            "ar",
+            "zh",
+            "en",
+            "fr",
+            "ru",
+            "es"
+          ],
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 2
+          }
+        },
+        "translationDir": {
+          "default": "translations",
+          "type": "string",
+          "minLength": 1
+        },
+        "potGranularity": {
+          "default": "block",
+          "type": "string",
+          "enum": [
+            "block",
+            "chapter",
+            "folio"
+          ]
+        },
+        "officialRequired": {
+          "default": false,
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/translation/TranslationConfigSchema.schema.json",
+  "title": "TranslationConfigSchema",
+  "description": "Generated from `TranslationConfigSchema` in schemas/content/translation.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261106-0425",
+    "sha": "1783c43ba2ac5ee0d412be1167a0954b203310d8",
+    "pr": "repin-train/20261106-0425",
+    "run": "42162480911"
+  }
+}
