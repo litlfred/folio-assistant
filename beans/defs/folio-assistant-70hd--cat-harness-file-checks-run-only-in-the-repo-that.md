@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-06T00:50:00Z
+updated_at: 2026-11-06T05:58:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -113,3 +113,5 @@ _2026-11-06T00:50:00Z_ — Re-count 2 (the last scheduled one): **still nothing 
 Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
 
 _2026-11-06T05:45:00Z_ — **Merged** litlfred/folio-assistant-core#651 (d9e0836) on all-green CI (typecheck, 10 shards, No new failures), owner approved on a card. Core check:materialized-fixity now judges only the caller's own records; core pins cat-harness-tools 8205c6a. Session https://claude.ai/code/session_01VQDpPcbpLjEo8EuzFLVq5Z
+
+_2026-11-06T05:58:00Z_ — Re-pin PRs open (all layers to current mains, owner cards "Re-pin how" 2 / "Re-pin OK?" 1): litlfred/smart-immunizations#115 and litlfred/who-iris#185. #115's compare job ("No new failures (tests and gates)") is red at 20bbcef and under analysis; these measure the scoping effect on layer PRs. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
