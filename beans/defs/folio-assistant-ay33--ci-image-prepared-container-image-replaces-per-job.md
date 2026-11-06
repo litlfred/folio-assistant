@@ -48,3 +48,9 @@ These need the siblings that own `if:` and work steps (CI speed 2/3/7/10).
 - On #2964 (run 42139985103) the jobs hit the image. TypeScript lint/types (job 127637605921): setup 40 s → 7 s; the whole job 2:32 → 1:24, which includes state:mount 49 → 17 s from cat-harness-tools#1489. Import hygiene (job 127637605474): restore 3.9 s.
 - The baseline is CQG run 42012108138, job 127193424738.
 - Remaining: #2964 merge; repoint to the shared cat-harness-tools action (CI speed 14, #1552); drop the 4 visible replays once a re-pin carries #1498.
+
+## Follow-up queued (2026-11-06)
+
+- [ ] After #2964 merges AND a re-pin moves cat-harness-tools to ≥ 4641d2b (cat-harness-tools#1552, the shared actions): repoint the jobs to `litlfred/cat-harness-tools/.github/actions/ci-setup@<lock sha>` and ci-image.yml to `.../ci-image@<lock sha>` (op key|build|fetch); delete `.github/ci-image` and `.github/actions/ci-setup`. Pins must equal the lock's cat-harness-tools commit (check:workflow-pins, `# index.lock.json`). Expect a key change, so the first publish after the repoint makes a new tag.
+- [ ] In the same follow-up, if the re-pin carries cat-harness-tools#1498: drop the 4 visible mount-from-lock steps (gates-docs, gates-unrun, qa-publish, stage).
+- #2964 fix 04aed59: browser jobs keep a visible `playwright install --with-deps` (gates.ts installsBrowser reads job steps); ci-setup uses `chromium: browser`.
