@@ -103,3 +103,7 @@ _2026-11-06T01:48Z_: **#2960 merged** (the owner merged it; all 30 checks green 
 _2026-11-06T04:49Z_: #2962 merged with the full-suite rule for `merge-train/*` and `repin-train/*` (confirmed by CI speed 7), so that item is closed. On the owner's OK, #2951 was labelled `merge-train` at 04:48Z for the first live train. The parking branch `claude/merge-train-hold` stays with the owner (delete refused, 403).
 
 _2026-11-06T05:15Z_: first live attempt: #2951 was labelled at 04:48:2x and **merged directly at 04:48:31** by the merge-sweep helper (merged_by litlfred), before the train's first tick. The 04:52 sweep then found nothing; merge-train.yml: 0 runs. No defect in the train, but the merge sweep (green PRs one at a time = the per-PR path) starves it. Asked the steward to have the merge sweep skip `merge-train` / `merge-train-batch` PRs, as merge-main.yml does.
+
+## Owner ruling, 2026-11-06T05:16Z: "1. The train"
+
+PRs labelled `merge-train` are landed by the train only; the steward's merge sweep skips them (and `merge-train-batch` PRs), as merge-main.yml does. Every other green PR still merges as before. Sent to the steward to apply in the merge-sweep helper.
