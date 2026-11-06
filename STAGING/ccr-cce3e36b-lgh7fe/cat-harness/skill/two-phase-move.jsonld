@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/skill/two-phase-move.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "cd48da292b289602711faf9646369230cfb98a9c",
+    "pr": "2985/merge",
+    "run": "42169129917"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/skill/two-phase-move",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "two-phase-move",
+      "title": "Two-phase move",
+      "description": "Move a path that other layers link to without making the order of their re-pins matter: the moving layer declares the move and keeps answering at the old path for a window, the dependent layers switch in any order, and the old path goes once nothing links to it. Use before moving or renaming a directory another layer links into.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/two-phase-move.md",
+      "instructionLines": 86,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/two-phase-move"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/actor/reviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "cd48da292b289602711faf9646369230cfb98a9c",
+    "pr": "2985/merge",
+    "run": "42169129917"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/actor/reviewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "reviewer",
+      "actorKind": "person",
+      "title": "Reviewer",
+      "description": "A person who reads a change and judges it. Acting as `reviewer` does not carry the authority to accept — that is the editor's lane.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/role/narrative-reviewer",
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/role/feedback-provider"
+      ],
+      "permissionName": [
+        "review-comments"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/reviewer"
+    }
+  ]
+}

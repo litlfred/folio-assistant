@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/schema/test-plan.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "cd48da292b289602711faf9646369230cfb98a9c",
+    "pr": "2985/merge",
+    "run": "42169129917"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/schema/test-plan",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "test-plan",
+      "title": "test-plan",
+      "summary": "A TEST PLAN — what a system under test must do, case by case, and the rule",
+      "module": "schemas/sdlc/test-plan.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/test-plan"
+    }
+  ]
+}

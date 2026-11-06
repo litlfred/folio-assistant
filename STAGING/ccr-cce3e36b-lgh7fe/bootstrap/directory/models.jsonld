@@ -1,0 +1,18 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/directory/models.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/directory/models",
+      "@type": "bootstrap:Subgraph",
+      "label": "models",
+      "description": "Which languages a model is good at, and whether anybody checked. In bootstrap because an agent needs it before any harness is loaded. Read when a session opens, never written by a process: only a person grants a validation.",
+      "type": [
+        "bootstrap:graphTypology/models"
+      ],
+      "source": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/models/",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/bootstrap/bootstrap.jsonld"
+    }
+  ]
+}

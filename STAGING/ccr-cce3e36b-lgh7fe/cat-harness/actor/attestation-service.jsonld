@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/actor/attestation-service.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "cd48da292b289602711faf9646369230cfb98a9c",
+    "pr": "2985/merge",
+    "run": "42169129917"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/actor/attestation-service",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "attestation-service",
+      "actorKind": "system",
+      "title": "Attestation service",
+      "description": "The signing endpoint. Declares `reach: \"internet\"` because an API signer that cannot reach out is not a signer — this is the one actor whose reach is part of what it IS, rather than a fact about where it happens to run.",
+      "reach": "internet",
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/capability/signing-api"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/ccr-cce3e36b-lgh7fe/cat-harness/role/attestation-service"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/attestation-service"
+    }
+  ]
+}
