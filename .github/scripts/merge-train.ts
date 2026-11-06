@@ -287,6 +287,41 @@ export async function trainPrs(api: Api, repo: string): Promise<TrainPr[]> {
     }));
 }
 
+export const STRAY_MARKER = "<!-- merge-train:stray -->";
+/** How far back a merge outside the train is still reported. */
+export const STRAY_WINDOW_MS = 48 * 3600 * 1000;
+
+/**
+ * Labelled PRs that were MERGED, but not by a train, within the window, and
+ * not yet told so. Owner, 2026-11-06 ("1. The train"): a PR labelled
+ * `merge-train` is the train's to land. On the first two live tries (#2951,
+ * #2987) another merger landed it within minutes and the train never ran,
+ * with nothing on the PR to say so. Reporting each one once makes a race show.
+ */
+export function strayCandidates(closed: readonly PullJson[], trains: readonly TrainPr[], now: number): PullJson[] {
+  const carried = new Set<number>();
+  for (const t of trains) if (t.merged) for (const m of readState(t.body)?.members ?? []) carried.add(m.number);
+  return closed.filter(
+    (p) =>
+      Boolean(p.merged_at) &&
+      now - Date.parse(p.merged_at!) <= STRAY_WINDOW_MS &&
+      p.labels.some((l) => l.name === OPT_IN) &&
+      !p.labels.some((l) => l.name === BATCH_LABEL) &&
+      !carried.has(p.number),
+  );
+}
+
+/** The stray merges not yet reported (each read for the marker comment). */
+export async function strays(api: Api, repo: string, trains: readonly TrainPr[], now = Date.now()): Promise<number[]> {
+  const closed = await api.get<PullJson[]>(`/repos/${repo}/pulls?state=closed&sort=updated&direction=desc&per_page=50`);
+  const out: number[] = [];
+  for (const p of strayCandidates(closed, trains, now)) {
+    const comments = await api.get<Array<{ body: string }>>(`/repos/${repo}/issues/${p.number}/comments?per_page=100`);
+    if (!comments.some((c) => c.body.includes(STRAY_MARKER))) out.push(p.number);
+  }
+  return out;
+}
+
 /**
  * Every opted-in PR, each with the reason it is not ready (or none). Only the
  * labelled PRs, and those a search finds approved, are read in full: reading
@@ -387,6 +422,20 @@ export async function tick(api: Api, repo: string, opts: TickOptions = {}): Prom
   // moved since has new commits, and may.
   const landed = new Map<number, string>();
   const trains = await trainPrs(api, repo);
+  for (const n of await strays(api, repo, trains)) {
+    await api.send("POST", `/repos/${repo}/issues/${n}/comments`, {
+      body: [
+        STRAY_MARKER,
+        "This PR carried the `merge-train` label but was **merged outside the merge train**, so no train judged or landed it.",
+        "",
+        "Owner, 2026-11-06: a PR labelled `merge-train` is the train's to land. Another merger should leave it, or remove the label before merging. This comment is posted once, so that a race between mergers shows instead of passing silently.",
+        "",
+        "---",
+        "_Written by `merge-train.yml` (bean `folio-assistant-hd58`)._",
+      ].join("\n"),
+    });
+    log.push(`#${n}: merged outside the train; told once`);
+  }
   const open = trains.find((t) => t.state === "open");
   let verdict: Verdict["state"] | undefined;
   let judged: { v: Verdict; mainSha: string } | undefined;
@@ -491,6 +540,8 @@ export async function pending(api: Api, repo: string, log: (line: string) => voi
     if (!done) log(`train #${open.number}: its checks are still running`);
     return done ? `train #${open.number}'s checks have finished: judge it` : undefined;
   }
+  const stray = await strays(api, repo, trains);
+  if (stray.length) return `merged outside the train, to report: ${stray.map((n) => `#${n}`).join(" ")}`;
   const queue = readState(trains.find((t) => readState(t.body))?.body)?.queue ?? [];
   const base = await mainBaseline(api, repo);
   // Say why each opted-in PR waits: "nothing to do" alone could not tell a
