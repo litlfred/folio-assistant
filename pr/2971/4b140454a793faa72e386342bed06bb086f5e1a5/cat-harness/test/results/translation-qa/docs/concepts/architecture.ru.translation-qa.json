@@ -1,0 +1,101 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ru/architecture",
+  "block": "Architecture",
+  "locale": "ru",
+  "paths": {
+    "md": "docs/concepts/architecture.md"
+  },
+  "po": "translations/ru/concepts/architecture.po",
+  "source_hashes": {
+    "md": "f92b654fa148",
+    "po": "181f68ce8f92"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "md": "f92b654fa148",
+          "po": "181f68ce8f92"
+        },
+        "result": "fail",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "9dfcb00d088d",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-05T23:29:24.119Z",
+        "reviewed_tree": "b6f297f3b97abe9c966a24e32bd4f41a35f4adb2",
+        "severity": "major",
+        "metrics": {
+          "translated": 24,
+          "total": 61,
+          "pct": 39
+        },
+        "notes": "37 of 61 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "md": "f92b654fa148",
+          "po": "181f68ce8f92"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "9dfcb00d088d",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-05T23:29:24.122Z",
+        "reviewed_tree": "b6f297f3b97abe9c966a24e32bd4f41a35f4adb2",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "IS — absent from: \"Чем ЯВЛЯЕТСЯ инстанс — схемы, визуализации, инструменты; четыре каталога; рендер\""
+          }
+        ],
+        "metrics": {
+          "checked": 24,
+          "missing": 1,
+          "missing_strict": 0,
+          "missing_acronyms": 1,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        },
+        "notes": "1 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/ru/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "md": "f92b654fa148",
+          "po": "181f68ce8f92"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "9dfcb00d088d",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_at": "2026-11-05T23:29:24.126Z",
+        "reviewed_tree": "b6f297f3b97abe9c966a24e32bd4f41a35f4adb2",
+        "metrics": {
+          "echoed": 0,
+          "translated": 24
+        }
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  },
+  "updated_at": "2026-11-05T23:29:24.128Z"
+}
