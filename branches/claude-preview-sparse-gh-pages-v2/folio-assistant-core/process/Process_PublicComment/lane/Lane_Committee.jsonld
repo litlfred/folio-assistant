@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/process/Process_PublicComment/lane/Lane_Committee.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/process/Process_PublicComment/lane/Lane_Committee",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Review committee",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/process/Process_PublicComment",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/role/reviewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Committee"
+    }
+  ]
+}

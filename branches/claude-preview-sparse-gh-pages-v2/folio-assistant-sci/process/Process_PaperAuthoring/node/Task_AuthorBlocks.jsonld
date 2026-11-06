@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_AuthorBlocks.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_AuthorBlocks",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Author blocks",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/skill/content-author"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/process/Process_PaperAuthoring#flow/A07",
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/process/Process_PaperAuthoring#flow/A17"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/process/Process_PaperAuthoring#flow/A08"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_AuthorBlocks"
+    }
+  ]
+}

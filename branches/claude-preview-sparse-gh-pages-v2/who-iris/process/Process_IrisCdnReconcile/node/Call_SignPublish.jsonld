@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Sign and publish the release",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/process/Process_IrisCdnReconcile",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/skill/iris-cdn-signing"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/process/Process_IrisCdnSignPublish",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/process/Process_IrisCdnReconcile#flow/R9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/process/Process_IrisCdnReconcile#flow/R10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish"
+    }
+  ]
+}

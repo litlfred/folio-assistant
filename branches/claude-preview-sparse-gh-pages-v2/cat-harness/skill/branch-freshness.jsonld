@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/skill/branch-freshness.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/skill/branch-freshness",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "branch-freshness",
+      "title": "Branch freshness — stay current with main",
+      "description": "Read what changed on main often, and re-analyse the session workplan. Put main INTO the branch rarely: freely before a PR exists, and on a branch with a PR only when it conflicts, when the work needs something that just landed, or once just before it merges, because each such push re-runs the PR's whole CI. Prevents stale assumptions, merge conflicts, and duplicated work without spending CI on churn.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/branch-freshness.md",
+      "instructionLines": 144,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/branch-freshness"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_CRDM_Signoff/node/A_RecordSignoff.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_CRDM_Signoff/node/A_RecordSignoff",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Record the sign-off attestation",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_CRDM_Signoff",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_CRDM_Signoff/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/skill/adjudication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": false,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/globalTask/GT_RecordSignoff",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_CRDM_Signoff#flow/SF_Process_CRDM_Signoff_3",
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_CRDM_Signoff#flow/SF_Signoff_Missing"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_CRDM_Signoff#flow/SF_Signoff_Gate"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/A_RecordSignoff"
+    }
+  ]
+}

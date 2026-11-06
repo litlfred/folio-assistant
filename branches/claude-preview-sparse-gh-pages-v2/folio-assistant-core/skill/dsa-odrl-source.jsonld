@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/skill/dsa-odrl-source.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/skill/dsa-odrl-source",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "dsa-odrl-source",
+      "title": "`dsa-odrl-source` — Make the ODRL Agreement cite the legal text distribution (P2.3)",
+      "description": "Bind a computable Data Sharing Agreement's W3C ODRL 2.2 `Agreement` to its signed legal text distribution using DCMI Metadata Terms `dcterms:source`, naming the exact `dcat:Distribution` whose `spdx:checksum` is checked (DSA building block B3, process step P2.3 `Task_OdrlCitesText`).",
+      "instructionsPath": "skills/content/folio-document-adapter/dsa-odrl-source.md",
+      "instructionLines": 91,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-odrl-source"
+    }
+  ]
+}

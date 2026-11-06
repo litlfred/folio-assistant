@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-immunizations/smart-immunizations.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-immunizations/directory/smart-immunizations-catalogue.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-immunizations/smart-immunizations.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-immunizations/directory/smart-immunizations-catalogue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-immunizations-catalogue",
+      "path": "catalogue/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/catalogue"
+      ],
+      "description": "Qualified Dublin Core (`folio-dublin-core/v1`) and catalogue node (`folio-catalogue-node/v1`) records of the works this IG cites that are not ingested. Each is a `referenced` item whose record is the IG's bibliography entry for it, keyed by the citation (`#ref-<slug>`). A capture of a work, when one exists, is kept in the repository's `uploads/` data store, which is not part of the KG. `bun run cat check:catalogue` verifies every node and metadataRef.",
+      "readmePath": "catalogue/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-immunizations/directory/smart-immunizations-catalogue",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/smart-immunizations-catalogue"
+    }
+  ]
+}

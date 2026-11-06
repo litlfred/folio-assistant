@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_MountSubgraph/node/Task_RefuseUnknownKind.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_MountSubgraph/node/Task_RefuseUnknownKind",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Refuse: no flow for this source kind",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_MountSubgraph",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_MountSubgraph/lane/Lane_MountPipeline",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/skill/sub-kg-lifecycle"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_MountSubgraph#flow/F_M5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/process/Process_MountSubgraph#flow/F_M9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountSubgraph/node/Task_RefuseUnknownKind"
+    }
+  ]
+}

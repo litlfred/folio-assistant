@@ -1,0 +1,451 @@
+{
+  "against": "41255769830c561b65d3f6a5c3fb3f03ebe41940",
+  "skipped": 15,
+  "ran": 23,
+  "reused": 0,
+  "groups": [
+    {
+      "cause": ".",
+      "writtenBy": "the commit",
+      "reran": [
+        "smart-base:document-kinds",
+        "uml:overview"
+      ],
+      "seconds": 287.40824059799996
+    },
+    {
+      "cause": "cat-harness/docs/_data/provenance",
+      "writtenBy": "skills:docs",
+      "reran": [
+        "subgraph:jsonld"
+      ],
+      "seconds": 31.231573216999998
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "writtenBy": "-",
+      "reran": [
+        "state:visualizer",
+        "site:viz"
+      ],
+      "seconds": 18.197065694999996
+    },
+    {
+      "cause": "beans/defs/folio-assistant-55ka--siblings-asked-the-owner-in-prose-without-cards-on.md",
+      "writtenBy": "the commit",
+      "reran": [
+        "docs:pages",
+        "processes:viz"
+      ],
+      "seconds": 12.830368075000006
+    },
+    {
+      "cause": ".github/actions/cached-step/README.md",
+      "writtenBy": "the commit",
+      "reran": [
+        "external-schemas:viz",
+        "docs:harness"
+      ],
+      "seconds": 12.601905003000052
+    },
+    {
+      "cause": "cat-harness/docs/en/cat-harness/attestations/index.html",
+      "writtenBy": "state:visualizer",
+      "reran": [
+        "auto:docs"
+      ],
+      "seconds": 11.033696112000035
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 10.811616096000012
+    },
+    {
+      "cause": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html",
+      "writtenBy": "auto:docs",
+      "reran": [
+        "library:viz",
+        "tools:viz"
+      ],
+      "seconds": 10.385749392000026
+    },
+    {
+      "cause": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html",
+      "writtenBy": "state:visualizer",
+      "reran": [
+        "schema:viz"
+      ],
+      "seconds": 3.764366418999969
+    },
+    {
+      "cause": "bootstrap",
+      "writtenBy": "the commit",
+      "reran": [
+        "jsonld:contexts"
+      ],
+      "seconds": 2.1772286800000584
+    },
+    {
+      "cause": "cat-harness/schemas",
+      "writtenBy": "the commit",
+      "reran": [
+        "kind:json-schemas"
+      ],
+      "seconds": 1.58670217100007
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-base:pages"
+      ],
+      "seconds": 1.2293564580000238
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust:pages"
+      ],
+      "seconds": 1.1020744189999532
+    },
+    {
+      "cause": "cat-harness/docs/reference/skill-instructions",
+      "writtenBy": "skills:docs",
+      "reran": [
+        "voices:viz"
+      ],
+      "seconds": 1.030083910999936
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust-phw:pages"
+      ],
+      "seconds": 0.8358866919999709
+    },
+    {
+      "cause": "cat-harness/docs/en/cat-harness/folio",
+      "writtenBy": "the commit",
+      "reran": [
+        "folio:viz"
+      ],
+      "seconds": 0.8222721090000122
+    },
+    {
+      "cause": "not recorded: the writer reads smart-base/docs/assets and then rewrites it",
+      "writtenBy": "-",
+      "reran": [
+        "smart:pages"
+      ],
+      "seconds": 0.7984461240000091
+    },
+    {
+      "cause": "cat-harness/docs/_data/harness.json",
+      "writtenBy": "docs:harness",
+      "reran": [
+        "navbar:include"
+      ],
+      "seconds": 0.20200956099992617
+    }
+  ],
+  "writers": [
+    {
+      "writer": "auto:docs",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/attestations/index.html changed (+25 more: cat-harness/docs/en/cat-harness/beans/beans-processed/index.html, cat-harness/docs/en/cat-harness/beans/cat-harness/beans-processed/index.html, cat-harness/docs/en/cat-harness/beans/cat-harness/index.html, cat-harness/docs/en/cat-harness/beans/index.html, cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/bootstrap-tools/index.html, cat-harness/docs/en/cat-harness/code/cat-harness-tools/index.html, and 18 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/attestations/index.html"
+      },
+      "seconds": 11.033696112000035
+    },
+    {
+      "writer": "avatars:css",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (314 paths, 1 outputs)",
+      "seconds": 0.007004155000089668
+    },
+    {
+      "writer": "bibliography:page",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (1839 paths, 805 outputs)",
+      "seconds": 0.08748254699993413
+    },
+    {
+      "writer": "docs:harness",
+      "did": "ran",
+      "why": ".github/actions/cached-step/README.md changed (+28 more: .github/scripts/determinism-audit.sh, .github/scripts/merge-train.ts, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, cat-harness/docs/_data, cat-harness/docs/assets/beans/index.json, cat-harness/docs/en/cat-harness/beans/cat-harness/index.html, and 21 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github/actions/cached-step/README.md"
+      },
+      "seconds": 5.177702955999994
+    },
+    {
+      "writer": "docs:pages",
+      "did": "ran",
+      "why": "beans/defs/folio-assistant-55ka--siblings-asked-the-owner-in-prose-without-cards-on.md changed (+133 more: beans/defs/folio-assistant-70hd--cat-harness-file-checks-run-only-in-the-repo-that.md, beans/defs/folio-assistant-audl--cat-harness-french-translation-of-the-rewritten-do.md, beans/defs/folio-assistant-bmat--document-back-matter-glossary-acronyms.md, beans/defs/folio-assistant-bpnl--fix-overlapping-harness-bpmn-layouts.md, beans/defs/folio-assistant-evtx--re-pin-train-20261106-0425-has-five-new-failures-p.md, beans/defs/folio-assistant-f1nc--library-chain-library-becomes-a-named-sub-graph-to.md, beans/defs/folio-assistant-ftpc--dth-pc-flattened-table-prose-cleanup.md, and 126 others)",
+      "cause": {
+        "kind": "path",
+        "path": "beans/defs/folio-assistant-55ka--siblings-asked-the-owner-in-prose-without-cards-on.md"
+      },
+      "seconds": 2.754585434000008
+    },
+    {
+      "writer": "document-kinds:viz",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (888 paths, 10 outputs); evidence only, the audit did not clear it: unannotated input site at fhir-harness/scripts/stage-local-ig.ts:180 (host)",
+      "seconds": 0.020098925000056625
+    },
+    {
+      "writer": "external-schemas:viz",
+      "did": "ran",
+      "why": ".github/actions/cached-step/README.md changed (+640 more: .github/scripts/determinism-audit.sh, .github/scripts/merge-train.ts, .github/workflows/code-quality-gates.yml, .github/workflows/feature-staging.yml, beans/defs/folio-assistant-55ka--siblings-asked-the-owner-in-prose-without-cards-on.md, beans/defs/folio-assistant-70hd--cat-harness-file-checks-run-only-in-the-repo-that.md, beans/defs/folio-assistant-audl--cat-harness-french-translation-of-the-rewritten-do.md, and 633 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github/actions/cached-step/README.md"
+      },
+      "seconds": 7.424202047000057
+    },
+    {
+      "writer": "folio:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/folio changed",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/folio"
+      },
+      "seconds": 0.8222721090000122
+    },
+    {
+      "writer": "ig-index:build",
+      "did": "ran",
+      "why": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "seconds": 10.811616096000012
+    },
+    {
+      "writer": "jsonld:contexts",
+      "did": "ran",
+      "why": "bootstrap changed (+11 more: cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/smart-immunizations, cat-harness/ns, fhir-harness, folio-assistant-core, folio-assistant-sci, smart-base, and 4 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap"
+      },
+      "seconds": 2.1772286800000584
+    },
+    {
+      "writer": "kg:viewer",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (673 paths, 3 outputs); evidence only, the audit did not clear it: unannotated input site at cat-harness-tools/scripts/kg-viewer.ts:1247 (env)",
+      "seconds": 0.040385998000041584
+    },
+    {
+      "writer": "kind:json-schemas",
+      "did": "ran",
+      "why": "cat-harness/schemas changed",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/schemas"
+      },
+      "seconds": 1.58670217100007
+    },
+    {
+      "writer": "kind:table",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (311 paths, 1 outputs)",
+      "seconds": 0.007271473999950103
+    },
+    {
+      "writer": "library:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html changed (+199 more: cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html, cat-harness/test/attestations/kg-qa/sdlc/processes/feature-staging.attestations.json, cat-harness/test/results/audit-coverage.qa-results.json, cat-harness/test/results/block-qa/docs/source/concepts-agentic-harness/bpmn-execution.qa.json, and 192 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html"
+      },
+      "seconds": 6.566328763000085
+    },
+    {
+      "writer": "methodologies:viz",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (4444 paths, 76 outputs); evidence only, the audit did not clear it: unannotated input site at fhir-harness/scripts/stage-local-ig.ts:180 (host)",
+      "seconds": 0.0631018140000524
+    },
+    {
+      "writer": "navbar:include",
+      "did": "ran",
+      "why": "cat-harness/docs/_data/harness.json changed",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/_data/harness.json"
+      },
+      "seconds": 0.20200956099992617
+    },
+    {
+      "writer": "node-kinds",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (1041 paths, 1 outputs); evidence only, the audit did not clear it: unannotated input site at fhir-harness/scripts/stage-local-ig.ts:180 (host)",
+      "seconds": 2.0586540420000676
+    },
+    {
+      "writer": "openapi:viz",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (389 paths, 100 outputs); evidence only, the audit did not clear it: unannotated input site at cat-harness-tools/openapi/scripts/ingest-openapi.ts:207 (spawn)",
+      "seconds": 0.01447037800005637
+    },
+    {
+      "writer": "processes:viz",
+      "did": "ran",
+      "why": "beans/defs/folio-assistant-55ka--siblings-asked-the-owner-in-prose-without-cards-on.md changed (+13 more: beans/defs/folio-assistant-70hd--cat-harness-file-checks-run-only-in-the-repo-that.md, beans/defs/folio-assistant-audl--cat-harness-french-translation-of-the-rewritten-do.md, beans/defs/folio-assistant-bmat--document-back-matter-glossary-acronyms.md, beans/defs/folio-assistant-bpnl--fix-overlapping-harness-bpmn-layouts.md, beans/defs/folio-assistant-evtx--re-pin-train-20261106-0425-has-five-new-failures-p.md, beans/defs/folio-assistant-f1nc--library-chain-library-becomes-a-named-sub-graph-to.md, beans/defs/folio-assistant-ftpc--dth-pc-flattened-table-prose-cleanup.md, and 6 others)",
+      "cause": {
+        "kind": "path",
+        "path": "beans/defs/folio-assistant-55ka--siblings-asked-the-owner-in-prose-without-cards-on.md"
+      },
+      "seconds": 10.075782640999998
+    },
+    {
+      "writer": "render:bpmn",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (2585 paths, 138 outputs); evidence only, the audit did not clear it: unannotated input site at fhir-harness/scripts/stage-local-ig.ts:180 (host)",
+      "seconds": 0.0605818900000304
+    },
+    {
+      "writer": "schema:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html changed (+3 more: cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html"
+      },
+      "seconds": 3.764366418999969
+    },
+    {
+      "writer": "site:viz",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 1.5735188590000617
+    },
+    {
+      "writer": "skills:docs",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (5110 paths, 642 outputs); evidence only, the audit did not clear it: unannotated input site at fhir-harness/scripts/stage-local-ig.ts:180 (host)",
+      "seconds": 0.1261897530000424
+    },
+    {
+      "writer": "smart-base:document-kinds",
+      "did": "ran",
+      "why": ". changed (+4 more: cat-harness/docs, cat-harness/docs/cat-harness/auto-docs/auto-docs.json, cat-harness/docs/todos.json, smart-base/document-kinds)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 1.4932932669999428
+    },
+    {
+      "writer": "smart-base:l1-extraction:pages",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (2178 paths, 7 outputs); evidence only, the audit did not clear it: unannotated input site at smart-base/scripts/gen-l1-extraction-pages.ts:360 (spawn)",
+      "seconds": 0.13657663199992384
+    },
+    {
+      "writer": "smart-base:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "seconds": 1.2293564580000238
+    },
+    {
+      "writer": "smart-trust-phw:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "seconds": 0.8358866919999709
+    },
+    {
+      "writer": "smart-trust:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "seconds": 1.1020744189999532
+    },
+    {
+      "writer": "smart:pages",
+      "did": "ran",
+      "why": "not recorded: the writer reads smart-base/docs/assets and then rewrites it",
+      "seconds": 0.7984461240000091
+    },
+    {
+      "writer": "state:visualizer",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 16.623546835999935
+    },
+    {
+      "writer": "subgraph:jsonld",
+      "did": "ran",
+      "why": "cat-harness/docs/_data/provenance changed (+6 more: cat-harness/docs/_includes/generated/provenance, cat-harness/docs/_includes/generated/provenance/skill-instructions, cat-harness/docs/en/cat-harness/code, cat-harness/docs/en/cat-harness/code/smart-immunizations, cat-harness/docs/reference, cat-harness/docs/reference/skill-instructions)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/_data/provenance"
+      },
+      "seconds": 31.231573216999998
+    },
+    {
+      "writer": "subscriptions:viz",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (370 paths, 2 outputs); evidence only, the audit did not clear it: unannotated input site at cat-harness-tools/scripts/kg-subscribe.ts:407 (network)",
+      "seconds": 0.01364387299993541
+    },
+    {
+      "writer": "theme:viz",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (951 paths, 2 outputs); evidence only, the audit did not clear it: unannotated input site at fhir-harness/scripts/stage-local-ig.ts:180 (host)",
+      "seconds": 0.02929684600001201
+    },
+    {
+      "writer": "themes:css",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (705 paths, 2 outputs)",
+      "seconds": 0.017234982999973
+    },
+    {
+      "writer": "tools:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html changed (+6 more: cat-harness/docs/en/cat-harness/code/folio-assistant-core/index.html, cat-harness/docs/en/cat-harness/issue-marks/index.html, cat-harness/docs/en/cat-harness/merge-reviews/index.html, cat-harness/docs/en/cat-harness/todos/index.html, smart-trust, smart-trust-phw)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/cat-harness/auto-docs/index/skills/core-skills/index.html"
+      },
+      "seconds": 3.819420628999942
+    },
+    {
+      "writer": "uml:overview",
+      "did": "ran",
+      "why": ". changed (+3062 more: cat-harness/docs, cat-harness/docs/_data, cat-harness/docs/_data/provenance, cat-harness/docs/_data/provenance/docs-pages.json, cat-harness/docs/_data/provenance/skill-instructions.json, cat-harness/docs/_data/todo_listing.json, cat-harness/docs/_includes, and 3055 others)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 285.914947331
+    },
+    {
+      "writer": "uploads:viz",
+      "did": "skipped",
+      "why": "reads unchanged since 41255769830c (26212 paths, 8 outputs); evidence only, the audit did not clear it: unannotated input site at fhir-harness/scripts/stage-local-ig.ts:180 (host)",
+      "seconds": 0.3483066839999519
+    },
+    {
+      "writer": "voices:viz",
+      "did": "ran",
+      "why": "cat-harness/docs/reference/skill-instructions changed",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/docs/reference/skill-instructions"
+      },
+      "seconds": 1.030083910999936
+    }
+  ]
+}

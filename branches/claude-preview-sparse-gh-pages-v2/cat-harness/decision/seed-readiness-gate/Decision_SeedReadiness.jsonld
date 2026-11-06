@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/decision/seed-readiness-gate/Decision_SeedReadiness.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/decision/seed-readiness-gate/Decision_SeedReadiness",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Decision",
+      "name": "Ready to seed?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/kg/decisions/seed-readiness-gate.dmn",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/externalSchema/omg-dmn-1.3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/decision/seed-readiness-gate/Decision_SeedReadiness"
+    }
+  ]
+}

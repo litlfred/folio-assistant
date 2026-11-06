@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/process/Process_BoardRelocate/node/A_Cancel.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/process/Process_BoardRelocate/node/A_Cancel",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Leave the content exactly where it is",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/process/Process_BoardRelocate",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/role/board-renderer",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/process/Process_BoardRelocate/lane/Lane_Renderer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/skill/board-windows"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/process/Process_BoardRelocate#flow/F_No"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/process/Process_BoardRelocate#flow/F_Cancelled"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardRelocate/node/A_Cancel"
+    }
+  ]
+}

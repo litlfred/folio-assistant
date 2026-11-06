@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-base/directory/smart-base-schemas.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-schemas.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-schemas",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-schemas",
+      "path": "schemas/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code",
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/schemas"
+      ],
+      "description": "The dak vocabulary in code: `dak-blocks.ts` (the block builders `content-adapters/dak.json` names), `dak-kinds.ts` and `dak-jsonld.ts` (read off `block-kinds/`), `dak-content-type.ts`, `dak.ts`, and the l2-dak-authoring skill's input/output JSON Schemas. The mounted adapter and QA checkers name these modules. Also the `schemas` graph, declared so the schema reader never falls back to `<instance>/schemas/` by convention, which stops once any instance stacked on smart-base has a `schemas` directory.",
+      "readmePath": "schemas/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-schemas"
+    }
+  ]
+}

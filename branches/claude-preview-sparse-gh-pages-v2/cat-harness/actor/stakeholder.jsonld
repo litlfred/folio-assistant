@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/actor/stakeholder.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/actor/stakeholder",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "stakeholder",
+      "actorKind": "person",
+      "title": "Stakeholder",
+      "description": "Signs off that a requirement is met. Holds no capabilities here deliberately: sign-off is a judgement, and a capability would suggest it could be automated.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/role/stakeholder"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/stakeholder"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/directory/merge-reviews.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/directory/merge-reviews",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "merge-reviews",
+      "path": "merge-reviews/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/cat-harness/tree/cat/cat-harness/merge-reviews",
+        "kind": "branch",
+        "branch": "cat/cat-harness/merge-reviews",
+        "keyedBy": "tip",
+        "declaredIn": "declaration"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/merge-reviews"
+      ],
+      "description": "The adversarial review verdict on each pull request's head: `<head sha>.json`, one `merge-review/v1` file per head. Written by a reviewing session that is not the author (`adversarial-code-review`) and read by `check:adversarial-review`. REPOSITORY-scoped for the reason `beans/` and `issue-marks/` are.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/directory/merge-reviews"
+    }
+  ]
+}

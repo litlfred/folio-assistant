@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/directory/scenarios.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/directory/scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "scenarios",
+      "path": "scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/scenarios"
+      ],
+      "description": "Scenarios: the roles an actor takes on, in `roles.json`, the user stories told as them, in `stories.json`, and the actors in `actors/` (deep-researcher, evidence-agent, onboarding-agent). This layer's `address-*` voices point at them, and `check:voices` reads this declaration to find the role graph.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/folio-assistant-core/directory/scenarios",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/scenarios"
+    }
+  ]
+}

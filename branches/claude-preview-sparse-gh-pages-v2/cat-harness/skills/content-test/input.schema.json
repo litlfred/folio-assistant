@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/skills/content-test/input.schema.json",
+  "title": "Content Test Input",
+  "description": "Input schema for end-to-end content testing.",
+  "type": "object",
+  "required": [
+    "targetPath"
+  ],
+  "properties": {
+    "targetPath": {
+      "type": "string"
+    },
+    "testPlan": {
+      "type": "string",
+      "description": "Path to test plan file."
+    },
+    "testData": {
+      "type": "string",
+      "description": "Path to test data directory."
+    },
+    "regressionBaseline": {
+      "type": "string",
+      "description": "Git ref for regression baseline."
+    }
+  },
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  }
+}

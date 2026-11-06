@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/actor/author.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/actor/author",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "author",
+      "actorKind": "person",
+      "title": "Author",
+      "description": "A person who writes and revises content. Acts as the `author` role, and as `editor` when accepting a change into the corpus.",
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/role/author",
+        "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/cat-harness/role/editor"
+      ],
+      "permissionName": [
+        "content-authoring"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/author"
+    }
+  ]
+}

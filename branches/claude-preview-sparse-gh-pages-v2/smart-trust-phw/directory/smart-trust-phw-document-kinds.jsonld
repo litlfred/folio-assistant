@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-trust-phw/directory/smart-trust-phw-document-kinds.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "claude/preview-sparse-gh-pages-v2",
+    "sha": "33fe2584f410a02503a776e31453694a7698d7e8",
+    "pr": "2996/merge",
+    "run": "42189050982"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-trust-phw/directory/smart-trust-phw-document-kinds",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-trust-phw-document-kinds",
+      "path": "document-kinds/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/document-kinds"
+      ],
+      "description": "How this IG realises the document kinds of the layers it needs: `dak.coverage.smart-trust-phw.json`, the DAK view of `fhir-artifact-index/`, which places each artefact in one of the ten DAK components by its FHIR resource type and lists what no rule places. Generated at publish by `bun run cat smart-base:document-kinds` (`gen-document-kinds.ts`), after the index it reads, and not committed.",
+      "readmePath": "document-kinds/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-preview-sparse-gh-pages-v2/smart-trust-phw/directory/smart-trust-phw-document-kinds",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-document-kinds"
+    }
+  ]
+}
