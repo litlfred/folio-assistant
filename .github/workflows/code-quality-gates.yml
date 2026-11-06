@@ -679,9 +679,48 @@ jobs:
     # red at its first step, so a broken copy can never be skipped into a
     # vacuous pass (bean `0qjq`).
     # The full tier: not on a draft PR (see `on:`, bean `dft1`).
+    #
+    # ## The publish-time pages are built here too (owner card Q3, 2026-11-05)
+    #
+    # They were a job of their own, `publish-pages`, that waited for this one,
+    # set up again (about 90 s: mounts, install, `state:mount`) and restored
+    # this copy before building over it. Every reader needs both, so the
+    # second job was one more setup and one more runner wait on the critical
+    # path of every run. Now the pages are built in this job, straight after
+    # the copy, and published as before: the `publish-pages` artifact, with
+    # its manifest as this job's `pages_manifest` output. They no longer wait
+    # on `verdict-reuse`: a push whose verdict is reused skipped them while
+    # `gates-kg`, `gates-docs`, `gates-unrun` and the skill chain still read
+    # them. What the separate job said about them follows.
+    #
+    # B1 (owner, 2026-10-14). The pages an instance declares `builtAtPublish`
+    # are not committed, and the unit tests read them, so they are built the
+    # way the deploy builds them: `bun run cat derive:publish` over the mounts.
+    # One of its writers, `render:bpmn`, draws through Chromium.
+    #
+    # ## Why a job of its own (owner, 2026-10-14: "Move the page build out")
+    #
+    # The build first ran inside `typescript-test`, which then installed
+    # Chromium in every shard. `bun run cat gates` takes its fast set from the
+    # jobs that install no browser, so `bun test` left the inner loop. Built
+    # here once, the four shards restore it and stay browser-free: `bun test`
+    # is back in the fast set, Chromium is installed once instead of four
+    # times, and the shards no longer each build the same pages.
+    #
+    # ## Carried like the QA working copy
+    #
+    # Same bundle script, same guarantee: snapshot, build, pack everything that
+    # changed with a sha256 manifest, and each reader checks that manifest
+    # against this job's output and every restored file in place. It runs
+    # after the QA working copy is restored, as the build did in the shards,
+    # so the bundle is exactly what `derive:publish` wrote on top of it.
+    #
+    # Not a gate: it judges nothing. A failed build still fails the run,
+    # because `typescript-test` runs `if: !cancelled()` and goes red at its
+    # first step that reads this job's result.
     if: ${{ github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     # `actions: read` lists and downloads another run's bundle (`bundle-cache.sh`).
     permissions:
       contents: read
@@ -689,6 +728,8 @@ jobs:
     outputs:
       # Built here, or restored from a run that recorded the same digest.
       manifest: ${{ steps.cache.outputs.manifest || steps.pack.outputs.manifest }}
+      # The publish-time pages, built in this job over that copy (owner card Q3, 2026-11-05).
+      pages_manifest: ${{ steps.pages-cache.outputs.manifest || steps.pages-pack.outputs.manifest }}
     # Every `run:` step goes through `gate-shell.sh`, for the reason the
     # `typescript-static` job gives (bean `yqc4`).
     defaults:
@@ -860,127 +901,35 @@ jobs:
           overwrite: true
           retention-days: 3
 
-  publish-pages:
-    # bpmn-node: Task_TypeScript
-    # (The pages the `bun test` shards read; part of that task, as the shards are.)
-    name: Publish-time pages, built once for this run (not a gate)
-    #
-    # B1 (owner, 2026-10-14). The pages an instance declares `builtAtPublish`
-    # are not committed, and the unit tests read them, so they are built the
-    # way the deploy builds them: `bun run cat derive:publish` over the mounts.
-    # One of its writers, `render:bpmn`, draws through Chromium.
-    #
-    # ## Why a job of its own (owner, 2026-10-14: "Move the page build out")
-    #
-    # The build first ran inside `typescript-test`, which then installed
-    # Chromium in every shard. `bun run cat gates` takes its fast set from the
-    # jobs that install no browser, so `bun test` left the inner loop. Built
-    # here once, the four shards restore it and stay browser-free: `bun test`
-    # is back in the fast set, Chromium is installed once instead of four
-    # times, and the shards no longer each build the same pages.
-    #
-    # ## Carried like the QA working copy
-    #
-    # Same bundle script, same guarantee: snapshot, build, pack everything that
-    # changed with a sha256 manifest, and each reader checks that manifest
-    # against this job's output and every restored file in place. It runs
-    # after the QA working copy is restored, as the build did in the shards,
-    # so the bundle is exactly what `derive:publish` wrote on top of it.
-    #
-    # Not a gate: it judges nothing. A failed build still fails the run,
-    # because `typescript-test` runs `if: !cancelled()` and goes red at its
-    # first step that reads this job's result.
-    needs: [qa-working-copy, verdict-reuse]
-    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    # `actions: read` lists and downloads another run's bundle (`bundle-cache.sh`).
-    permissions:
-      contents: read
-      actions: read
-    outputs:
-      # Built here, or restored from a run that recorded the same digest.
-      manifest: ${{ steps.cache.outputs.manifest || steps.pack.outputs.manifest }}
-    # Every `run:` step goes through `gate-shell.sh`, for the reason the
-    # `typescript-static` job gives (bean `yqc4`).
-    defaults:
-      run:
-        shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # Bun, the mounts index.lock.json pins, node_modules,
-      # Chromium:
-      # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
-      # own:
-      # the state branches move with every write, so no image holds them.
-      - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
-        with:
-          chromium: browser
-
-      # Chromium's system libraries. The browser itself came from the image
-      # (or was downloaded) above, so this installs the apt packages only. It
-      # stays a step of the JOB, not of ci-setup: `bun run cat gates` sorts a
-      # job into the fast set by whether its own steps run `playwright install`
-      # (cat-harness-tools scripts/gates.ts installsBrowser).
-      - name: Chromium's system libraries
-        run: npx --yes playwright install --with-deps chromium
-
-      - name: Mount the subgraphs kept on branches (bean 9c7h)
-        run: bun run cat state:mount
-
       # Built only when its inputs changed (beans x35i, tv20), as the QA
       # working copy is: the digest adds that copy's manifest sha256, since the
       # pages are built over it. A PR run's pages name its merge ref (measured
       # 2026-11-05, `test/results/witnesses/**`), so `bundle-cache.sh` reuses
       # them only on the same commit: a re-run, a dispatch, Feature Staging.
       - name: Digest of what the publish-time pages are built from (bundle cache)
-        id: digest
+        id: pages-digest
         env:
-          QA_MANIFEST: ${{ needs.qa-working-copy.outputs.manifest }}
+          QA_MANIFEST: ${{ steps.cache.outputs.manifest || steps.pack.outputs.manifest }}
         run: |
           [ -n "$QA_MANIFEST" ] || { echo "no QA working copy manifest: no digest, so the pages are built"; exit 0; }
           echo "digest=$(bash .github/scripts/bundle-cache.sh digest publish-pages "qa-working-copy $QA_MANIFEST")" >> "$GITHUB_OUTPUT"
 
       - name: Reuse publish-time pages already built from this digest (bundle cache)
-        id: cache
-        if: ${{ steps.digest.outputs.digest != '' }}
+        id: pages-cache
+        if: ${{ steps.pages-digest.outputs.digest != '' }}
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           SHA: ${{ github.sha }}
-        run: bash .github/scripts/bundle-cache.sh fetch publish-pages "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/publish-pages"
+        run: bash .github/scripts/bundle-cache.sh fetch publish-pages "${{ steps.pages-digest.outputs.digest }}" "$RUNNER_TEMP/publish-pages"
 
-      - name: Download the IG artefact indexes built for this run (fhir-harness#124)
-        # Built once by `qa-working-copy` (`ig-index:build`); without them
-        # `smart:pages` would read the IG instances' committed copies.
-        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
-        with:
-          name: ig-indexes
-          path: .
-
-      - name: Build the mounted IG instances' pages (bean hupw)
-        run: bun run cat smart:pages
-
-      - name: The QA working copy was built for this run (bean jtfk)
+      - name: Put the reused QA working copy in place before building the pages (owner card Q3)
+        # Built here, the copy is already on disk. Reused (bundle cache), it
+        # is only in $RUNNER_TEMP, so it is restored and checked in place, as
+        # every reader does, before `derive:publish` builds over it.
+        if: ${{ steps.cache.outputs.hit == 'true' && steps.pages-cache.outputs.hit != 'true' }}
         env:
-          PRODUCER: ${{ needs.qa-working-copy.result }}
-        run: |
-          if [ "$PRODUCER" != "success" ]; then
-            echo "::error::the qa-working-copy job concluded '$PRODUCER', so there is no QA working copy to build the pages over. NOT a pass."
-            exit 1
-          fi
-
-      - name: Download the QA working copy (bean jtfk)
-        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
-        with:
-          name: qa-working-copy
-          path: ${{ runner.temp }}/qa-working-copy
-
-      - name: Restore the QA working copy, byte-identical to the producer's (beans 72a8, jtfk)
-        env:
-          EXPECTED: ${{ needs.qa-working-copy.outputs.manifest }}
+          EXPECTED: ${{ steps.cache.outputs.manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # PlantUML 1.2026.9 needs Java 21 (its ELK classes are class file 65);
@@ -988,20 +937,24 @@ jobs:
       # 2026-10-30 13:23Z (#2744). The major is read from the plantuml
       # tool-release declaration, so a later bump moves it too.
       - name: Java runtime the PlantUML release declares (#2744)
-        if: ${{ steps.cache.outputs.hit != 'true' }}
+        if: ${{ steps.pages-cache.outputs.hit != 'true' }}
         uses: ./.github/actions/plantuml-java
 
+      - name: Install Chromium for the publish-time BPMN drawings (B1)
+        if: ${{ steps.pages-cache.outputs.hit != 'true' }}
+        run: npx --yes playwright install --with-deps chromium
+
       - name: Snapshot the checkout before the build (B1)
-        if: ${{ steps.cache.outputs.hit != 'true' }}
+        if: ${{ steps.pages-cache.outputs.hit != 'true' }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh snapshot "$RUNNER_TEMP/pages-before.txt"
 
       - name: Build the publish-time pages the tests read (B1)
-        if: ${{ steps.cache.outputs.hit != 'true' }}
+        if: ${{ steps.pages-cache.outputs.hit != 'true' }}
         run: bun run cat derive:publish
 
       - name: Pack everything the build wrote, with its manifest (B1)
-        id: pack
-        if: ${{ steps.cache.outputs.hit != 'true' }}
+        id: pages-pack
+        if: ${{ steps.pages-cache.outputs.hit != 'true' }}
         run: |
           manifest=$(bash cat-harness-tools/scripts/qa-working-copy-bundle.sh pack "$RUNNER_TEMP/pages-before.txt" "$RUNNER_TEMP/publish-pages")
           echo "manifest=$manifest" >> "$GITHUB_OUTPUT"
@@ -1020,19 +973,19 @@ jobs:
 
       - name: Record these pages under their digest (bundle cache)
         # Last, so a record exists only when the pages above were uploaded.
-        if: ${{ steps.digest.outputs.digest != '' }}
+        if: ${{ steps.pages-digest.outputs.digest != '' }}
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
           SHA: ${{ github.sha }}
-        run: bash .github/scripts/bundle-cache.sh record publish-pages "${{ steps.digest.outputs.digest }}" "$RUNNER_TEMP/bundle-record"
+        run: bash .github/scripts/bundle-cache.sh record publish-pages "${{ steps.pages-digest.outputs.digest }}" "$RUNNER_TEMP/bundle-record-pages"
 
-      - name: Upload the digest record (bundle cache)
-        if: ${{ steps.digest.outputs.digest != '' }}
+      - name: Upload the pages' digest record (bundle cache)
+        if: ${{ steps.pages-digest.outputs.digest != '' }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
-          name: bundle-publish-pages-${{ steps.digest.outputs.digest }}
-          path: ${{ runner.temp }}/bundle-record/bundle-cache.txt
+          name: bundle-publish-pages-${{ steps.pages-digest.outputs.digest }}
+          path: ${{ runner.temp }}/bundle-record-pages/bundle-cache.txt
           if-no-files-found: error
           overwrite: true
           retention-days: 3
@@ -1074,11 +1027,11 @@ jobs:
     # Skipped on a push to `main` whose tree an earlier run already judged
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
-    # Both producers in `needs`, each READ (bean 9set): a job may read only its
-    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
-    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
-    # restores either bundle. `publish-pages` alone would order it, not reach them.
-    needs: [qa-working-copy, verdict-reuse, publish-pages]
+    # `qa-working-copy` in `needs`, READ (bean 9set): it builds the QA copy and
+    # the publish-time pages (owner card Q3), and this job checks both
+    # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
+    # before it restores either bundle.
+    needs: [qa-working-copy, verdict-reuse]
     if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
@@ -1203,7 +1156,7 @@ jobs:
       # first"): pages an instance declares `builtAtPublish` are not committed,
       # so the tests that read them get them the way the deploy does --
       # `derive:publish` over the mounts -- rather than each test generating
-      # its own copy. They are built ONCE, by `publish-pages`, which installs
+      # its own copy. They are built ONCE, by `qa-working-copy` after the copy, which installs
       # the Chromium `render:bpmn` draws through; this job restores them and
       # installs no browser (owner, 2026-10-14: "Move the page build out"), so
       # it stays in the fast `bun run cat gates` set, which is every job that
@@ -1212,10 +1165,10 @@ jobs:
         # `!cancelled()` above, so a failed build reaches this step and stops
         # the job red, saying why, rather than testing without the pages.
         env:
-          PRODUCER: ${{ needs.publish-pages.result }}
+          PRODUCER: ${{ needs.qa-working-copy.result }}
         run: |
           if [ "$PRODUCER" != "success" ]; then
-            echo "::error::the publish-pages job concluded '$PRODUCER', so the publish-time pages the tests read were not built. This job cannot determine its verdict — NOT a pass."
+            echo "::error::the qa-working-copy job (which builds the publish-time pages) concluded '$PRODUCER', so the publish-time pages the tests read were not built. This job cannot determine its verdict — NOT a pass."
             exit 1
           fi
 
@@ -1230,7 +1183,7 @@ jobs:
         # the producer snapshotted after restoring that copy, so this carries
         # exactly what `derive:publish` wrote over it.
         env:
-          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+          EXPECTED: ${{ needs.qa-working-copy.outputs.pages_manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
@@ -1434,11 +1387,11 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
-    # Both producers in `needs`, each READ (bean 9set): a job may read only its
-    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
-    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
-    # restores either bundle. `publish-pages` alone would order it, not reach them.
-    needs: [qa-working-copy, publish-pages]
+    # `qa-working-copy` in `needs`, READ (bean 9set): it builds the QA copy and
+    # the publish-time pages (owner card Q3), and this job checks both
+    # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
+    # before it restores either bundle.
+    needs: [qa-working-copy]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
@@ -1579,10 +1532,10 @@ jobs:
 
       - name: The publish-time pages were built for this run (B1)
         env:
-          PRODUCER: ${{ needs.publish-pages.result }}
+          PRODUCER: ${{ needs.qa-working-copy.result }}
         run: |
           if [ "$PRODUCER" != "success" ]; then
-            echo "::error::the publish-pages job concluded '$PRODUCER', so the publish-time pages these gates read were not built. This job cannot determine its verdict — NOT a pass."
+            echo "::error::the qa-working-copy job (which builds the publish-time pages) concluded '$PRODUCER', so the publish-time pages these gates read were not built. This job cannot determine its verdict — NOT a pass."
             exit 1
           fi
 
@@ -1594,7 +1547,7 @@ jobs:
 
       - name: Restore the publish-time pages, byte-identical to the producer's (B1)
         env:
-          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+          EXPECTED: ${{ needs.qa-working-copy.outputs.pages_manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: Java runtime the PlantUML release declares (#2744)
@@ -2168,11 +2121,11 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
-    # Both producers in `needs`, each READ (bean 9set): a job may read only its
-    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
-    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
-    # restores either bundle. `publish-pages` alone would order it, not reach them.
-    needs: [qa-working-copy, publish-pages]
+    # `qa-working-copy` in `needs`, READ (bean 9set): it builds the QA copy and
+    # the publish-time pages (owner card Q3), and this job checks both
+    # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
+    # before it restores either bundle.
+    needs: [qa-working-copy]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
@@ -2338,16 +2291,16 @@ jobs:
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/qa-working-copy" "$EXPECTED"
 
       # cat-harness#363 stopped committing `docs/assets/library/` and the other
-      # checkout-built pages; `derive:publish` builds them, which `publish-pages`
+      # checkout-built pages; `derive:publish` builds them, which `qa-working-copy`
       # runs once for this run. `slice:sqlite:check` below reads the library
       # slice's source, `docs/assets/library/index.json`, so this job restores
       # those pages the way the test shards do (B1) instead of judging without them.
       - name: The publish-time pages were built for this run (B1)
         env:
-          PRODUCER: ${{ needs.publish-pages.result }}
+          PRODUCER: ${{ needs.qa-working-copy.result }}
         run: |
           if [ "$PRODUCER" != "success" ]; then
-            echo "::error::the publish-pages job concluded '$PRODUCER', so the publish-time pages the slice gate reads were not built. This job cannot determine its verdict — NOT a pass."
+            echo "::error::the qa-working-copy job (which builds the publish-time pages) concluded '$PRODUCER', so the publish-time pages the slice gate reads were not built. This job cannot determine its verdict — NOT a pass."
             exit 1
           fi
 
@@ -2359,7 +2312,7 @@ jobs:
 
       - name: Restore the publish-time pages, byte-identical to the producer's (B1)
         env:
-          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+          EXPECTED: ${{ needs.qa-working-copy.outputs.pages_manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       # The CI cone (bean 4rbc; CI speed 7): on a pull request a gate whose
@@ -3369,11 +3322,11 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
-    # Both producers in `needs`, each READ (bean 9set): a job may read only its
-    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
-    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
-    # restores either bundle. `publish-pages` alone would order it, not reach them.
-    needs: [qa-working-copy, publish-pages]
+    # `qa-working-copy` in `needs`, READ (bean 9set): it builds the QA copy and
+    # the publish-time pages (owner card Q3), and this job checks both
+    # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
+    # before it restores either bundle.
+    needs: [qa-working-copy]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     permissions:
@@ -3493,14 +3446,14 @@ jobs:
 
       # cat-harness#363 stopped committing the checkout-built pages, among them
       # `document-kinds/`, which `document-kinds:viz:check` below reads;
-      # `publish-pages` builds them once for this run, so this job restores
+      # `qa-working-copy` builds them once for this run, so this job restores
       # them the way the test shards do (B1) instead of judging without them.
       - name: The publish-time pages were built for this run (B1)
         env:
-          PRODUCER: ${{ needs.publish-pages.result }}
+          PRODUCER: ${{ needs.qa-working-copy.result }}
         run: |
           if [ "$PRODUCER" != "success" ]; then
-            echo "::error::the publish-pages job concluded '$PRODUCER', so the publish-time pages these gates read were not built. This job cannot determine its verdict — NOT a pass."
+            echo "::error::the qa-working-copy job (which builds the publish-time pages) concluded '$PRODUCER', so the publish-time pages these gates read were not built. This job cannot determine its verdict — NOT a pass."
             exit 1
           fi
 
@@ -3512,7 +3465,7 @@ jobs:
 
       - name: Restore the publish-time pages, byte-identical to the producer's (B1)
         env:
-          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+          EXPECTED: ${{ needs.qa-working-copy.outputs.pages_manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: Java runtime the PlantUML release declares (#2744)
@@ -4685,16 +4638,16 @@ jobs:
     # empty and the shards run.
     #
     # Reads the QA working copy and the publish-time pages that
-    # `qa-working-copy` and `publish-pages` build once for this run, as the
+    # `qa-working-copy` builds once for this run, as the
     # `bun test` shards do (owner, 2026-10-23: cut CI time). Each shard used to
     # build them itself in `e2e-global-setup.ts` (`derive:publish`, which runs
     # `qa:refresh` for `uml:overview`): about 9 of a shard's ~13 minutes, three
-    # times over, for the bytes `publish-pages` already uploads.
-    # Both producers in `needs`, each READ (bean 9set): a job may read only its
-    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
-    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
-    # restores either bundle. `publish-pages` alone would order it, not reach them.
-    needs: [verdict-reuse, e2e-scope, qa-working-copy, publish-pages]
+    # times over, for the bytes `qa-working-copy` already uploads.
+    # `qa-working-copy` in `needs`, READ (bean 9set): it builds the QA copy and
+    # the publish-time pages (owner card Q3), and this job checks both
+    # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
+    # before it restores either bundle.
+    needs: [verdict-reuse, e2e-scope, qa-working-copy]
     if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true && needs.e2e-scope.outputs.affected != 'false' }}
     runs-on: ubuntu-latest
     permissions:
@@ -4831,10 +4784,9 @@ jobs:
         env:
           CQG_UNJUDGED: "true"  # its own exit status, never recorded
           QA: ${{ needs.qa-working-copy.result }}
-          PAGES: ${{ needs.publish-pages.result }}
         run: |
-          if [ "$QA" != "success" ] || [ "$PAGES" != "success" ]; then
-            echo "::error::qa-working-copy concluded '$QA' and publish-pages '$PAGES', so the pages the e2e specs serve were not built. This shard cannot determine its verdict — NOT a pass."
+          if [ "$QA" != "success" ]; then
+            echo "::error::qa-working-copy concluded '$QA', so the pages the e2e specs serve were not built. This shard cannot determine its verdict — NOT a pass."
             exit 1
           fi
 
@@ -4859,7 +4811,7 @@ jobs:
       - name: Restore the publish-time pages, byte-identical to the producer's (B1)
         env:
           CQG_UNJUDGED: "true"  # its own exit status, never recorded
-          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+          EXPECTED: ${{ needs.qa-working-copy.outputs.pages_manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: playwright test
@@ -4933,11 +4885,11 @@ jobs:
     # `jtfk`). `!cancelled()`, not the default `success()`: if the build
     # fails, this job must still run and go RED at its first step rather
     # than be skipped, which a required check reads as a pass (bean `0qjq`).
-    # Both producers in `needs`, each READ (bean 9set): a job may read only its
-    # direct needs' outputs, and this one checks `qa-working-copy`'s manifest
-    # (and downloads its `ig-indexes`) and `publish-pages`' manifest before it
-    # restores either bundle. `publish-pages` alone would order it, not reach them.
-    needs: [qa-working-copy, publish-pages]
+    # `qa-working-copy` in `needs`, READ (bean 9set): it builds the QA copy and
+    # the publish-time pages (owner card Q3), and this job checks both
+    # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
+    # before it restores either bundle.
+    needs: [qa-working-copy]
     if: ${{ !cancelled() && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -5032,10 +4984,10 @@ jobs:
 
       - name: The publish-time pages were built for this run (B1)
         env:
-          PRODUCER: ${{ needs.publish-pages.result }}
+          PRODUCER: ${{ needs.qa-working-copy.result }}
         run: |
           if [ "$PRODUCER" != "success" ]; then
-            echo "::error::the publish-pages job concluded '$PRODUCER', so the publish-time pages these gates read were not built. This job cannot determine its verdict — NOT a pass."
+            echo "::error::the qa-working-copy job (which builds the publish-time pages) concluded '$PRODUCER', so the publish-time pages these gates read were not built. This job cannot determine its verdict — NOT a pass."
             exit 1
           fi
 
@@ -5047,7 +4999,7 @@ jobs:
 
       - name: Restore the publish-time pages, byte-identical to the producer's (B1)
         env:
-          EXPECTED: ${{ needs.publish-pages.outputs.manifest }}
+          EXPECTED: ${{ needs.qa-working-copy.outputs.pages_manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: Java runtime the PlantUML release declares (#2744)
