@@ -1,0 +1,31 @@
+{
+  "$schema": "cache/1.0.0",
+  "id": "cat-gates-notes",
+  "title": "Local gate records (git notes)",
+  "instance": "cat-harness-tools",
+  "kind": "git-ref",
+  "trustClass": "b",
+  "location": "refs/notes/cat-gates",
+  "keyRecipe": {
+    "source": "cache:key",
+    "script": "(each gate)",
+    "expression": "refs/notes/cat-gates"
+  },
+  "derivedInputs": "the tree of the commit a local gates run passed on (Class B verdicts move to refs/cat-gates/local/<script>/<key>)",
+  "holds": "gate run records as git notes on commits",
+  "producer": "gate-record.ts",
+  "consumers": [
+    "\u2014"
+  ],
+  "savePolicy": "not wired in any workflow",
+  "verify": "re-verified off the critical path (folio-assistant #2957/#2958), never read as a hit",
+  "owner": "cache-first CI (CI speed 14)",
+  "uses": [
+    "cat-harness-tools/scripts/gate-record.ts:40"
+  ],
+  "notes": "Not wired in any workflow yet.",
+  "stateInputs": {
+    "reads": "unmeasured",
+    "how": "not yet derived from a recorded read set; the producer may read state:mount graphs"
+  }
+}
