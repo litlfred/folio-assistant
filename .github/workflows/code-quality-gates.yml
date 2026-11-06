@@ -3524,6 +3524,11 @@ jobs:
           # log-message.pot was measured missing the lane documentation added
           # to its own diagram the same day.
           bun run cat translate-bpmn:bootstrap:check
+          # cat-harness-tools' `cache` kind (#1519) is judged only by this gate
+          # (`@covers cache`). Its own layer CI runs it too, but audit:coverage
+          # counts the gates THIS repository's CI runs, so without it here the
+          # kind reads typed-only and every re-pin train fails the audit.
+          bun run cat caches:viz:check
           bun run cat landing:sticky:check
           bun run cat landing:data:check
           # `sjic`: the Jekyll sidebar's navbar is RENDERED by the same module
