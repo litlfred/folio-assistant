@@ -2,11 +2,11 @@
 # folio-assistant-bpnl
 $schema: bean/1.0.0
 title: 'Fix overlapping harness BPMN layouts (nice-BPMN criteria)'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-11-02T18:55:00Z
-updated_at: 2026-11-05T14:03:00Z
+updated_at: 2026-11-06T08:31:00Z
 parent: folio-assistant-rwmf
 tags:
     - bpmn-layout
@@ -48,3 +48,5 @@ Note: translation-workflow has a laneSet but no pool/lanes drawn (left as-is; fo
 _2026-11-05T13:33:51Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
 
 _2026-11-05T14:03:00Z_ — Merged `origin/main` into `claude/bpmn-layout-overlaps` (adapting to the `processes/sdlc/` -> `sdlc/processes/` move and `Call_BeanOpen`/`Call_BeanClose` removal outside `sdlc/`), resolved all remaining DI layout overlaps across all 17 remaining diagrams (`subscribe-kg`, `human-translation-workflow`, `kg-separation`, `test-data-curation`, `merge-train`, `crdm-deliver`, `sub-kg-lifecycle`, `named-query-execution`, `mount-subgraph`, `kg-to-portal`, `requirements-filing`, `narrative-code-review`, `merge-refusal`, `bean-close`, `document-ingestion`, `mount-dependency`, `graph-detanglement`) plus the `edge-through-own-end` and `label-on-lane-line` findings introduced by `origin/main`'s stricter `diagram-fit.ts` checks. `bpmn-detangle.ts` across all 82 `.bpmn` files in `cat-harness` (`processes/` + `sdlc/processes/`) now reports **0 overlap/crossing/through-shape/through-own-end/detached/label findings** (only 29 `diagram-too-wide`, 5 `lane-order`, 2 `diagram-too-tall`). Pushed to `claude/bpmn-layout-overlaps` (`d75b53815`) and marked PR `litlfred/cat-harness#990` ready for review (awaiting owner sign-off per merge-window rules).
+
+_2026-11-06T08:31:00Z_ — Closed on evidence by agy (Round 2 lane 6, subagent `89613893-33b5-4a66-a6bf-a6e50c42dcb1` under parent `92bff8c9-777d-458a-a380-8dd5bf5cc0f3`): PR [`litlfred/cat-harness#990`](https://github.com/litlfred/cat-harness/pull/990) passed all CI checks (`Prepare the PR side (and typecheck)`, `Prepare the main side`, `head — tests and gates, shard 1/1`, `No new failures (tests and gates)`, `CodeQL`) and merged to `litlfred/cat-harness` `main` at `2026-11-06T07:25:30Z` as commit [`bb3a42b17f60`](https://github.com/litlfred/cat-harness/commit/bb3a42b17f607590a01cccd0171667e9eb68435b) per owner ruling `Q-DRAIN-1 = Option A`, and issue [`litlfred/cat-harness#989`](https://github.com/litlfred/cat-harness/issues/989) is closed (`2026-11-06T07:25:31Z`).
