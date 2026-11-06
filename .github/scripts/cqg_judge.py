@@ -34,35 +34,11 @@ so no upload step can follow it.
 
 `reuse-check` is for the `verdict-reuse` job: a PR run that passed only
 because its failures were also main's must not stand in for main's own run.
-
-## A gate the committer already ran (bean `folio-assistant-fn8q`)
-
-The pre-push hook of cat-harness-tools (`scripts/pre-push-gates.ts`) runs the
-fast gates before a push and, on a pass, attaches a `cat-local-gate-record/v1`
-to the commit as a git note under `refs/notes/cat-gates`. `local-record`, run
-by the `--begin` step, reads the note on the PR's head and HONOURS it only
-when all of these hold, else it says why not and every step runs:
-
-- the switch is on (`CQG_HONOUR_LOCAL_RECORDS=true`, the repository
-  variable), the event is `pull_request`, and this is the run's first
-  attempt: the sweep verifies by re-running the run, and a re-run never
-  honours a record;
-- the record says pass, and its tree IS the tree this job tests (the
-  checked-out merge commit's): the same files, so the same judgment;
-- it was made under this runner's Bun and platform.
-
-`covered` then lets `cqg-step.sh` skip a step every line of which is a gate
-the record ran, and not one it held out. A skipped step is recorded as
-SKIPPED, never as passed, with the record's tree, and the verdict says so. A
-run that skipped anything never stands in for main's (`reuse-check`), and
-the skipped gates are re-run off the critical path by the verification
-sweep, which revokes on a mismatch.
 """
 import base64
 import hashlib
 import json
 import os
-import platform
 import re
 import subprocess
 import sys
@@ -200,13 +176,6 @@ def judge_tests(kind, junit, log, exit_code):
 
 
 def cmd_record(args):
-    if args and args[0] == "--skipped":
-        # A step `covered` skipped: recorded as skipped, with why, never as passed.
-        text = open(args[1], encoding="utf-8", errors="replace").read()
-        entry = {"id": step_id(text), "label": step_label(text), "exit": 0, "skipped": args[2]}
-        with open(os.path.join(state_dir(), "steps.jsonl"), "a", encoding="utf-8") as f:
-            f.write(json.dumps(entry) + "\n")
-        return 0
     script_path, exit_code, log_path = args[0], int(args[1]), args[2]
     text = open(script_path, encoding="utf-8", errors="replace").read()
     entry = {"id": step_id(text), "label": step_label(text), "exit": exit_code}
@@ -256,7 +225,7 @@ def build_report():
     d = state_dir()
     begun = os.path.isfile(os.path.join(d, "phase"))
     status = os.environ.get("CQG_JOB_STATUS", "success")
-    report = {"complete": begun and status == "success", "items": {}, "undetermined": [], "skipped": [], "scoped": None}
+    report = {"complete": begun and status == "success", "items": {}, "undetermined": [], "scoped": None}
     if not begun:
         report["undetermined"].append({"label": "(job)", "why": "the judged steps never began; an earlier step failed"})
     elif status != "success":
@@ -266,9 +235,7 @@ def build_report():
         e = json.loads(line)
         if e.get("scoped") is not None:
             report["scoped"] = e["scoped"]
-        if e.get("skipped"):
-            report["skipped"].append({"label": e["label"], "why": e["skipped"]})
-        elif e.get("undetermined"):
+        if e.get("undetermined"):
             report["undetermined"].append({"label": e["label"], "why": e["undetermined"]})
         elif e.get("tests") is not None and e["exit"] != 0:
             for t in e["tests"]:
@@ -283,7 +250,6 @@ def build_report():
 
 def encode(report):
     slim = {"complete": report["complete"], "undetermined": report["undetermined"], "scoped": report.get("scoped"),
-            "skipped": [k["label"] for k in report.get("skipped", [])],
             "items": {k: {"label": v["label"], "exit": v["exit"]} for k, v in report["items"].items()}}
     return MARKER + base64.b64encode(zlib.compress(json.dumps(slim, sort_keys=True).encode(), 9)).decode()
 
@@ -319,23 +285,6 @@ def compare(head, main):
 
 
 # ---------------------------------------------------------------- the API
-
-
-def gh_post(path, fields):
-    args = ["gh", "api", "-X", "POST", path]
-    for k, v in fields.items():
-        args += ["-f", f"{k}={v}"]
-    r = subprocess.run(args, capture_output=True, text=True)
-    if r.returncode != 0:
-        raise RuntimeError(f"gh api -X POST {path}: {r.stderr.strip()[:300]}")
-    return r.stdout
-
-
-def set_status(repo, sha, state, description, url):
-    if not repo:
-        raise RuntimeError("GITHUB_REPOSITORY is unset")
-    gh_post(f"repos/{repo}/statuses/{sha}", {"state": state, "context": STATUS_CONTEXT,
-                                             "description": description[:139], "target_url": url})
 
 
 def gh(path, raw=False):
@@ -394,10 +343,6 @@ def cmd_verdict(_args):
     print(encode(head))
     fails = failing(head)
     title = "### Q-PIPE-1: no new failures compared with main"
-    if head["skipped"]:
-        summary([f"{len(head['skipped'])} step(s) SKIPPED — passed locally on this tree; verification deferred "
-                 "to the sweep, never counted as passed here:", "",
-                 *[f"- `{k['label']}`: {k['why']}" for k in head["skipped"]], ""])
     if head["undetermined"]:
         summary([title, "", "**Could not determine, so this job fails** (never a pass):", "",
                  *[f"- `{u['label']}`: {u['why']}" for u in head["undetermined"]],
@@ -461,9 +406,6 @@ def cmd_reuse_check(_args):
             rec = record_from_log(gh(f"repos/{repo}/actions/jobs/{j['id']}/logs", raw=True))
             if rec is None or not rec.get("complete") or rec.get("undetermined"):
                 return answer("false", f"`{j['name']}` in run {run_id} left no complete record, so every job runs.")
-            if rec.get("skipped"):
-                return answer("false", f"`{j['name']}` in run {run_id} skipped {len(rec['skipped'])} step(s) on a "
-                                       "local record, so it is not main's own run of them.")
             if rec.get("scoped") is not None or any(
                     v.get("label", "").startswith(SCOPED_STEP) for v in rec["items"].values()):
                 return answer("false", f"`{j['name']}` in run {run_id} ran only the PR's affected tests, "
@@ -476,203 +418,8 @@ def cmd_reuse_check(_args):
     return answer("true", f"every skippable job of run {run_id} recorded no failure.")
 
 
-# ---------------------------------------------------------------- local records
-
-
-LOCAL_RECORD_SCHEMA = "cat-local-gate-record/v1"
-STATUS_CONTEXT = "gates/verified"
-NOTES_REF = "refs/notes/cat-gates"
-ARCH = {"x86_64": "x64", "amd64": "x64", "aarch64": "arm64", "arm64": "arm64"}
-
-
-def git(*args):
-    r = subprocess.run(["git", *args], capture_output=True, text=True)
-    return r.stdout.strip() if r.returncode == 0 else None
-
-
-def note_for(sha):
-    """The note text on `sha` under NOTES_REF, read from the notes tree (the commit need not be fetched)."""
-    listing = git("ls-tree", "-r", NOTES_REF)
-    for line in (listing or "").splitlines():
-        meta, _, path = line.partition("\t")
-        if path.replace("/", "") == sha:
-            return git("cat-file", "-p", meta.split()[2])
-    return None
-
-
-def this_platform():
-    return os.environ.get("CQG_PLATFORM") or f"{sys.platform}-{ARCH.get(platform.machine().lower(), platform.machine().lower())}"
-
-
-def this_bun():
-    r = subprocess.run(["bun", "--version"], capture_output=True, text=True)
-    return r.stdout.strip() if r.returncode == 0 else None
-
-
-def judge_local_record():
-    """(record, None) when the PR head's record may stand in for gates on this tree, else (None, why not)."""
-    if os.environ.get("CQG_HONOUR_LOCAL_RECORDS") != "true":
-        return None, "honouring local records is switched off (CQG_HONOUR_LOCAL_RECORDS)"
-    if os.environ.get("GITHUB_EVENT_NAME") != "pull_request":
-        return None, f"a `{os.environ.get('GITHUB_EVENT_NAME', '')}` run judges every gate itself"
-    if os.environ.get("GITHUB_RUN_ATTEMPT", "1") != "1":
-        # The verification sweep re-runs a run that skipped steps: a re-run
-        # attempt never honours a record, so it judges every gate itself.
-        return None, f"attempt {os.environ.get('GITHUB_RUN_ATTEMPT')} is a re-run, which verifies every gate itself"
-    try:
-        with open(os.environ.get("GITHUB_EVENT_PATH", ""), encoding="utf-8") as f:
-            head = json.load(f)["pull_request"]["head"]["sha"]
-    except (OSError, ValueError, KeyError, TypeError):
-        return None, "the PR's head commit could not be read from the event"
-    remote = os.environ.get("CQG_NOTES_REMOTE", "origin")
-    if git("fetch", "--quiet", "--no-tags", "--depth=1", remote, f"+{NOTES_REF}:{NOTES_REF}") is None:
-        return None, f"no `{NOTES_REF}` could be fetched from {remote}"
-    text = note_for(head)
-    if text is None:
-        return None, f"no local gate record on the head {head[:12]}"
-    try:
-        rec = json.loads(text)
-    except ValueError:
-        return None, "the head's note is not a readable record"
-    if not isinstance(rec, dict) or rec.get("$schema") != LOCAL_RECORD_SCHEMA or rec.get("outcome") != "pass":
-        return None, "the head's note is not a passing cat-local-gate-record/v1"
-    tree = git("rev-parse", "HEAD^{tree}")
-    if tree is None or rec.get("tree") != tree:
-        return None, (f"the record judged tree {str(rec.get('tree'))[:12]}, and this job tests {str(tree)[:12]}: "
-                      "a base that moved, or a different commit")
-    tools = rec.get("tools") or {}
-    if tools.get("bun") != this_bun():
-        return None, f"the record was made under bun {tools.get('bun')}, this runner has {this_bun()}"
-    if tools.get("platform") != this_platform():
-        return None, f"the record was made on {tools.get('platform')}, this runner is {this_platform()}"
-    if not isinstance(rec.get("gates"), list) or not rec["gates"]:
-        return None, "the record names no gate"
-    # The skip is only as good as its verification: the pending status the
-    # sweep resolves is set FIRST, and a record is not honoured without it
-    # (a fork's token cannot write statuses, so a fork PR runs every gate).
-    run_url = (f"{os.environ.get('GITHUB_SERVER_URL', 'https://github.com')}/{os.environ.get('GITHUB_REPOSITORY', '')}"
-               f"/actions/runs/{os.environ.get('GITHUB_RUN_ID', '')}")
-    try:
-        set_status(os.environ.get("GITHUB_REPOSITORY", ""), head, "pending",
-                   f"gates skipped on a local record of tree {tree[:12]}; verification queued", run_url)
-    except RuntimeError as e:
-        return None, f"the pending `{STATUS_CONTEXT}` status could not be set, so nothing would verify a skip ({e})"
-    return rec, None
-
-
-def cmd_local_record(_args):
-    """Writes local-record.json for `covered`; never fails the step: not honouring is the default."""
-    rec, why = judge_local_record()
-    os.makedirs(state_dir(), exist_ok=True)
-    with open(os.path.join(state_dir(), "local-record.json"), "w", encoding="utf-8") as f:
-        json.dump({"honoured": rec is not None, "why": why, "record": rec}, f)
-    if rec is None:
-        print(f"cqg: local gate record not honoured — {why}; every step runs")
-    else:
-        print(f"cqg: honouring the local gate record on tree {rec['tree'][:12]} ({rec.get('runBy')}, "
-              f"{rec.get('finishedAt')}): {len(rec['gates'])} gate(s) passed there; verification deferred")
-    return 0
-
-
-def step_commands(text):
-    return [ln for ln in script_lines(text) if not re.match(r"^set\s+-", ln)]
-
-
-def cmd_covered(args):
-    """Exit 0, printing why, when every command of the step is a gate the honoured record ran; else exit 1."""
-    try:
-        with open(os.path.join(state_dir(), "local-record.json"), encoding="utf-8") as f:
-            state = json.load(f)
-    except (OSError, ValueError):
-        return 1
-    rec = state.get("record") if state.get("honoured") else None
-    if not rec:
-        return 1
-    cmds = step_commands(open(args[0], encoding="utf-8", errors="replace").read())
-    ran = set(rec.get("gates") or []) - set(rec.get("heldOut") or [])
-    if not cmds or any(c not in ran for c in cmds):
-        return 1
-    print(f"passed locally on tree {rec['tree'][:12]} ({rec.get('runBy')}, {rec.get('finishedAt')}); verification deferred")
-    return 0
-
-
-# ---------------------------------------------------------------- the sweep
-
-
-def latest_run(repo, sha):
-    runs = gh(f"repos/{repo}/actions/workflows/{WORKFLOW}/runs?event=pull_request&head_sha={sha}&per_page=5")["workflow_runs"]
-    return runs[0] if runs else None
-
-
-def open_issue(repo, title, body):
-    try:
-        gh_post(f"repos/{repo}/issues", {"title": title, "body": body})
-    except RuntimeError as e:
-        print(f"::warning::could not open the revocation issue: {e}")
-
-
-def cmd_sweep(_args):
-    """Verify, one at a time, each open PR whose pending gates/verified status a local record left.
-
-    A pending status means a first attempt of code-quality gates skipped gates
-    on a local record. The sweep re-runs that same run (attempt 2 honours no
-    record, so it judges every gate on the same merge commit), off the PR's
-    critical path, and only when no other verification is in flight. When the
-    re-run is done it resolves the status from its conclusion; a re-run that
-    fails where the record said pass revokes: the status fails, which blocks
-    the merge, and an issue names the record's tree and run.
-    """
-    repo = os.environ.get("REPO") or os.environ.get("GITHUB_REPOSITORY", "")
-    runs = gh(f"repos/{repo}/actions/workflows/{WORKFLOW}/runs?event=pull_request&per_page=50")["workflow_runs"]
-    busy = any(r.get("run_attempt", 1) > 1 and r.get("status") != "completed" for r in runs)
-    waiting = []
-    for pr in gh(f"repos/{repo}/pulls?state=open&per_page=100"):
-        if (pr.get("head", {}).get("repo") or {}).get("full_name") != repo:
-            continue
-        sha = pr["head"]["sha"]
-        mine = [x for x in gh(f"repos/{repo}/commits/{sha}/statuses?per_page=100") if x.get("context") == STATUS_CONTEXT]
-        if mine and mine[0].get("state") == "pending":  # newest first: [0] is the status as it stands
-            waiting.append((mine[0].get("created_at", ""), pr["number"], sha))
-    if not waiting:
-        print("cqg sweep: no PR waits for the verification of a local gate record")
-        return 0
-    for at, num, sha in sorted(waiting):
-        run = latest_run(repo, sha)
-        if run is None or run.get("status") != "completed":
-            print(f"#{num}: its code-quality run is not finished; the next sweep looks again")
-            continue
-        url = run.get("html_url", "")
-        if run.get("run_attempt", 1) > 1:
-            if run.get("conclusion") == "success":
-                set_status(repo, sha, "success", "every gate re-run on the same tree: the local record holds", url)
-                print(f"#{num}: verified — the re-run of every gate passed")
-            else:
-                set_status(repo, sha, "failure", "the re-run of every gate failed where the local record said pass", url)
-                open_issue(repo, f"Local gate record contradicted on #{num} ({sha[:12]})",
-                           f"Code-quality gates skipped gates on #{num} on a local gate record (bean fn8q). "
-                           f"Re-running every gate on the same tree failed: {url}\n\n"
-                           "The record is revoked for this commit (the `gates/verified` status fails). If the "
-                           "failure is a skipped gate, the record was wrong: find what the local run did not see "
-                           "(an input the hook's environment lacks), and consider turning "
-                           "`CQG_HONOUR_LOCAL_RECORDS` off until it is understood.")
-                print(f"#{num}: REVOKED — the re-run failed: {url}")
-            continue
-        if run.get("conclusion") != "success":
-            set_status(repo, sha, "failure", "the run that skipped gates failed itself; a new push is judged afresh", url)
-            print(f"#{num}: the first attempt failed, so there is nothing to verify")
-            continue
-        if busy:
-            print(f"#{num}: waits — another verification is in flight")
-            continue
-        gh_post(f"repos/{repo}/actions/runs/{run['id']}/rerun", {})
-        busy = True
-        print(f"#{num}: re-running {url} to verify the gates it skipped")
-    return 0
-
-
 def main(argv):
-    cmds = {"record": cmd_record, "verdict": cmd_verdict, "reuse-check": cmd_reuse_check,
-            "local-record": cmd_local_record, "covered": cmd_covered, "sweep": cmd_sweep}
+    cmds = {"record": cmd_record, "verdict": cmd_verdict, "reuse-check": cmd_reuse_check}
     if len(argv) < 2 or argv[1] not in cmds:
         print(f"usage: cqg_judge.py {{{'|'.join(cmds)}}} ...", file=sys.stderr)
         return 2
