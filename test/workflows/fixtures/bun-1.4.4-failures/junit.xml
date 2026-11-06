@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="bun test" tests="3" assertions="3" failures="2" skipped="0" time="0.007275791">
+  <testsuite name="a.test.ts" file="a.test.ts" tests="3" assertions="3" failures="2" skipped="0" time="0.001746446" hostname="vm">
+    <testcase name="ok" classname="" time="0.000055" file="a.test.ts" line="2" assertions="1" />
+    <testcase name="bad1" classname="" time="0.000326" file="a.test.ts" line="3" assertions="1">
+      <failure type="AssertionError" message="expect(received).toBe(expected)&#10;&#10;Expected: 2&#10;Received: 1&#10;">AssertionError: expect(received).toBe(expected)&#10;&#10;Expected: 2&#10;Received: 1&#10;&#10;</failure>
+    </testcase>
+    <testcase name="bad2" classname="" time="0.000023" file="a.test.ts" line="4" assertions="1">
+      <failure type="AssertionError" message="expect(received).toBe(expected)&#10;&#10;Expected: 3&#10;Received: 1&#10;">AssertionError: expect(received).toBe(expected)&#10;&#10;Expected: 3&#10;Received: 1&#10;&#10;</failure>
+    </testcase>
+  </testsuite>
+</testsuites>
