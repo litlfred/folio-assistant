@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 53,
+      "count": 54,
       "unit": "open beans"
     }
   },
@@ -37,6 +37,20 @@
       "updatedAt": "2026-11-01T22:00:00Z",
       "preview": "Owner, 2026-10-24 (bean `2ipj`): *\"eventually we will have WHO/who-iris. leave in smart-base for now, but bean up migration once WHO/who-iris is live\"*.\n\n## What moves\n\nThe public-health and health-system process catalogues (BusinessProcessWorkflow + BPMN, with persona ActorDefinitions), drawn from the DTH handbooks ingested in smart-base's library. The clinical catalogue is not in scope: it goes ",
       "file": "beans/defs/folio-assistant-17iw--migration-public-health-and-health-system-process.md"
+    },
+    {
+      "id": "folio-assistant-2akf",
+      "title": "document-export: pin the Word styling with a reference.docx so the pandoc version cannot change the PDF's pages and lines",
+      "status": "todo",
+      "type": "task",
+      "priority": "",
+      "parent": "folio-assistant-dthl",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-06T05:56:50Z",
+      "updatedAt": "2026-11-06T05:56:50Z",
+      "preview": "Found 2026-11-06 (dth-hrh#104 previews). The same commit exported on the GitHub runner (pandoc 3.7.0.2, LibreOffice 26.2) gives a 169-page, 2514-line PDF; in a Claude container (pandoc 3.1.3, LibreOffice 24.2) 143 pages, 2162 lines. Cause: pandoc 3.7's default reference docx uses the Aptos theme font; 3.1.3's uses Cambria/Calibri. Laying out the CI .docx locally gives 166 pages in Inter (the local",
+      "file": "beans/defs/folio-assistant-2akf--document-export-pin-the-word-styling-with-a-refere.md"
     },
     {
       "id": "folio-assistant-2lfx",
@@ -97,14 +111,14 @@
     {
       "id": "folio-assistant-55ka",
       "title": "Siblings asked the owner in prose without cards on 2026-11-05; make interaction-modality part of every sibling brief, and check that it's followed",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:47:16Z",
-      "updatedAt": "2026-11-05T13:47:16Z",
+      "updatedAt": "2026-11-06T05:53:00Z",
       "preview": "The owner, litlfred, has low dexterity. On 2026-11-05 they asked: *\"did you and your siblings forget I am disabled? why has it not been heeded lately?\"* (relayed by the CI-speed parent session).\n\nSome sibling sessions asked the owner in prose only, without numbered options and without a tappable card. The rule is the cat-harness skill `interaction-modality`:\n- the full question in chat first, with",
       "file": "beans/defs/folio-assistant-55ka--siblings-asked-the-owner-in-prose-without-cards-on.md"
     },
@@ -188,7 +202,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:02:05Z",
-      "updatedAt": "2026-11-06T00:50:00Z",
+      "updatedAt": "2026-11-06T06:20:00Z",
       "preview": "**Owner ruling, 2026-11-05 ~13:00Z**, verbatim choice: \"Move the checks (Recommended)\": checks of cat-harness's own files run only in the repo that commits those files, so other layers stop seeing false new failures.\n\n## Evidence\n- `check:schema-nodes` judges the harness's own `schemas/` (cat-harness-tools#1478 left two modules untagged; fixed by #1483 / #1485). Every root that mounts the layer ra",
       "file": "beans/defs/folio-assistant-70hd--cat-harness-file-checks-run-only-in-the-repo-that.md"
     },
@@ -335,28 +349,28 @@
     {
       "id": "folio-assistant-asq1",
       "title": "Run the dangling-link and retired-word checks before each push to the work-plan store",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:24:22Z",
-      "updatedAt": "2026-11-05T14:04:54Z",
+      "updatedAt": "2026-11-06T05:44:00Z",
       "preview": "On 2026-11-05 two failures reached every layer's CI from text, not code:\n- a work item on the state branch (`hd58`) linked to cat-harness's old `skills/sdlc` path, which reddened the subgraph dangling-link test everywhere;\n- the retired word \"bean\" in skill prose (cat-harness#1046).\n\n`bun run cat state:push` splices edits onto the state branch with no check. Run the dangling-link check (`check:sub",
       "file": "beans/defs/folio-assistant-asq1--run-the-dangling-link-and-retired-word-checks-befo.md"
     },
     {
       "id": "folio-assistant-audl",
       "title": "cat-harness: French translation of the rewritten docs/guides/agent-onboarding.md",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T14:22:39Z",
-      "updatedAt": "2026-11-05T14:22:39Z",
+      "updatedAt": "2026-11-06T05:52:40Z",
       "preview": "Docs QA passes d6e155a6, 756943ad and 7c759481 rewrote cat-harness's `docs/guides/agent-onboarding.md`. Then 944dbd62 regenerated `translations/fr/guides/agent-onboarding.po`: 41 msgids, 25 of them empty. That is an inherited `translation:block-qa` finding, one of 16 inherited at `qa-reports:main/83c80d73`.\n\nFound by \"CI speed 12\" while judging smart-base#307.\n\nSign-off follows the translation pro",
       "file": "beans/defs/folio-assistant-audl--cat-harness-french-translation-of-the-rewritten-do.md"
     },
@@ -412,21 +426,21 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T19:10:00Z",
-      "updatedAt": "2026-11-05T14:00:00Z",
+      "updatedAt": "2026-11-06T06:30:00Z",
       "preview": "## How to resume (read this first)\n\nOwner ask 2026-11-02 18:56Z (thread cmsg_017WNUkNK8kdDziPK58Pv6G9PqHijxfA1UbP1sLEYKpWLG): process docs independent of the Beans store Tool (git branch is one Tool; a server/MCP service another); BPMN state machine starts an agent via API with a bean tagged process+task, tracks it, bean evolution over time readable. 18:58Z: write it in the context of the WHO Assu",
       "file": "beans/defs/folio-assistant-bsd1--bean-store-behind-any-tool-and-agent-dispatch.md"
     },
     {
       "id": "folio-assistant-bx4c",
       "title": "mount:remote re-render writes into mounted instances, breaking mount:lock:check",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T08:53:21Z",
-      "updatedAt": "2026-11-05T11:14:31Z",
+      "updatedAt": "2026-11-06T06:08:30Z",
       "preview": "## Evidence\nOn 2026-11-05 we re-pinned folio-assistant#2926 (commit e5450ee). We seeded cat-harness at its main (c632a56) and ran `bun run cat mount:remote`. That command re-renders the agent surface, and in doing so it wrote into the **mounted cat-harness instance's own files**. cat-harness is mounted whole, so those files are inside the mount. Afterwards `mount:lock:check` and `mount:remote:chec",
       "file": "beans/defs/folio-assistant-bx4c--mountremote-re-render-writes-into-mounted-instance.md"
     },
@@ -529,6 +543,20 @@
       "file": "beans/defs/folio-assistant-eaa6--harness-drain-close-outs.md"
     },
     {
+      "id": "folio-assistant-evtx",
+      "title": "Re-pin train 20261106-0425 has five new failures: Process_Cache skills and summary, stale checklists, cache kind unjudged",
+      "status": "in-progress",
+      "type": "bug",
+      "priority": "normal",
+      "parent": "folio-assistant-4j43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-06T05:06:13Z",
+      "updatedAt": "2026-11-06T05:23:43Z",
+      "preview": "folio-assistant#2986 (cat-harness 7321322, cat-harness-tools 925882a, bootstrap 12fa6d5) fails 5 checks that pass on main ae0fe43 (run 42152541993): activity-skill-coverage and process-index chatter (cat-harness sdlc/processes/cache.bpmn: 8 tasks name no skill; Process_Cache summary carries a dated owner quote), bpmn:checklist:check (2 cat-harness checklists stale vs bootstrap 12fa6d5), audit:cove",
+      "file": "beans/defs/folio-assistant-evtx--re-pin-train-20261106-0425-has-five-new-failures-p.md"
+    },
+    {
       "id": "folio-assistant-exrp",
       "title": "Work plan = an epic or milestone that names the process it instantiates; approved proposals seed it",
       "status": "completed",
@@ -559,14 +587,14 @@
     {
       "id": "folio-assistant-fbmk",
       "title": "Folio bookmarks and pinned blocks: pin any graph-kind block to the folio glass (handover bean)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-4j43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T18:30:00Z",
-      "updatedAt": "2026-11-05T14:04:00Z",
+      "updatedAt": "2026-11-06T05:30:30Z",
       "preview": "## How to resume (read this first)\n\n1. Read this bean, newest comment last. The last comment is the current state.\n2. Project thread: \"Add bookmarks and pinned blocks to folio\" (cmsg_017WNUkNK8kdDziPK58Pv6G9RCjaQapmrcxejK8nANXnjj).\n3. Check whether the left-gutter rework has merged: folio-assistant-core#616, cat-harness-tools#1411, cat-harness#981. Build on top of it, not beside it.\n4. Check wheth",
       "file": "beans/defs/folio-assistant-fbmk--folio-bookmarks-and-pinned-blocks-handover.md"
     },
@@ -580,7 +608,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T08:26:16Z",
-      "updatedAt": "2026-11-06T04:59:28Z",
+      "updatedAt": "2026-11-06T06:08:19Z",
       "preview": "Catch failures before they reach a runner: a pre-push hook, an agent hook, and a record keyed by the tree hash so CI can see the gates already passed on that exact tree. Sibling \"CI speed 3\", in cat-harness-tools. An agent's record never stands in for the QA verdict; it only lets CI skip a rebuild it will check.\n\n## Done when\n- [x] the pre-push and agent hooks run the fast gates — the hook is litl",
       "file": "beans/defs/folio-assistant-fn8q--ci-speed-ii-e-gates-before-push-pre-push-agent-hoo.md"
     },
@@ -767,6 +795,20 @@
       "file": "beans/defs/folio-assistant-k3vv--ci-speed-ii-2026-11-05-restarts-on-main-moves-red.md"
     },
     {
+      "id": "folio-assistant-k6dz",
+      "title": "Split the 23 oversized harness BPMN diagrams into phases",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-rwmf",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-06T05:31:14Z",
+      "updatedAt": "2026-11-06T05:31:14Z",
+      "preview": "Follow-up to litlfred/cat-harness#990 (owner card 2026-11-06, \"1. Merge on green\"). After #990 none of the 57 harness diagrams has an overlap finding, but 23 still fail `bpmn:detangle --check` on `diagram-too-wide`, `diagram-too-tall` or `lane-order`. These are size budgets, not overlaps. The widest are kg-separation (5798 px), sub-kg-lifecycle (4329), human-translation-workflow (3876) and subscri",
+      "file": "beans/defs/folio-assistant-k6dz--split-oversized-bpmn-diagrams.md"
+    },
+    {
       "id": "folio-assistant-lgwt",
       "title": "Review-log watcher: standing rules, how to watch, current state (handover bean)",
       "status": "in-progress",
@@ -783,7 +825,7 @@
     {
       "id": "folio-assistant-llxa",
       "title": "cat-harness CRDM skills: cite PHII and PATH CRDM as the method they adapt",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-dthl",
@@ -792,7 +834,7 @@
         "folio-assistant-max2"
       ],
       "createdAt": "2026-10-31T01:56:00Z",
-      "updatedAt": "2026-11-05T14:44:00Z",
+      "updatedAt": "2026-11-06T05:30:30Z",
       "preview": "Owner, 2026-10-31 01:53Z: \"cat-harness CRDM should be referencing PHII and PATH CRDM so its same, no?\" Card option A at 01:54Z: the citation fix is a bean, not a PR yet.\n\ncat-harness `skills/sdlc/crdm/` (phases 1-6 and `processes/process/crdm-*.bpmn`) uses the CRDM name and phase idea but cites no source. Today \"CRDM\" names two things: PHII's methodology (cited by the PHC handbook) and this platfo",
       "file": "beans/defs/folio-assistant-llxa--cat-harness-crdm-skills-cite-phii-and-path-crdm-as-the-me.md"
     },
@@ -827,7 +869,7 @@
     {
       "id": "folio-assistant-max2",
       "title": "cat-harness library: ingest the CRDM sources (PHII 2023 web page, PATH 2012 common requirements)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-dthl",
@@ -836,7 +878,7 @@
       ],
       "blockedBy": [],
       "createdAt": "2026-10-31T01:56:00Z",
-      "updatedAt": "2026-11-05T14:44:00Z",
+      "updatedAt": "2026-11-06T05:30:30Z",
       "preview": "Owner, 2026-10-31 01:54Z (card \"What should I do with the SDLC alignment findings?\", option A): add the SDLC alignment to the PHC workplan and fetch the CRDM sources. Owner 01:53Z: \"cat-harness CRDM should be referencing PHII and PATH CRDM\".\n\nThe PHC handbook (who-iris 9789240093362-eng, sec-006) says its method \"leverages the Collaborative Requirements Development Methodology (CRDM)\" and cites:\n\n",
       "file": "beans/defs/folio-assistant-max2--cat-harness-library-ingest-the-crdm-sources-phii-and-path.md"
     },
@@ -967,6 +1009,20 @@
       "file": "beans/defs/folio-assistant-pbv1--beans-by-process-visualiser-processed-beans-pages.md"
     },
     {
+      "id": "folio-assistant-pdsq",
+      "title": "Re-pin trains: fix the 3 standing blockers (owner 2026-11-06)",
+      "status": "in-progress",
+      "type": "task",
+      "priority": "high",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-06T05:55:05Z",
+      "updatedAt": "2026-11-06T05:55:05Z",
+      "preview": "Owner litlfred 2026-11-06 chose 'One new session': fix the 3 causes failing re-pin trains fa#2975…#2986.\n\n## Done when\n- [ ] Cause 1: cat-harness#1097 (re-pin bootstrap 12fa6d5 / tools 9f478d4 + 2 checklists) merged\n- [ ] Cause 3: cat-harness#1088 (CI speed 14, Process_Cache skills + summary) merged\n- [ ] Cause 2: fa#2985 (integrator, caches:viz:check gate) merged\n- [ ] Train session (session_01Xu",
+      "file": "beans/defs/folio-assistant-pdsq--re-pin-trains-fix-the-3-standing-blockers-owner-20.md"
+    },
+    {
       "id": "folio-assistant-pga6",
       "title": "Separation Phase III: L4/L5 Content, Tool and Test repos on the harness, plus current and future architecture write-up",
       "status": "todo",
@@ -979,6 +1035,20 @@
       "updatedAt": "2026-11-02T19:53:09Z",
       "preview": "Split from folio-assistant#223 (\"separation of concerns\"), closed on the owner's card Q-S6-2 \"A. Close + bean for Phase III\" (2026-11-01 15:45Z, thread \"Sweep old proposal issues\", https://claude.ai/code/session_01Qmmkt4armXsG8JwtkMqMEW).\n\nPhases I and II of #223 are done: epic 7x5n (separation arc) is completed, and epic iirv has only 6fez (library regroup) left. Two parts of #223 were never star",
       "file": "beans/defs/folio-assistant-pga6--separation-phase-iii-and-architecture-doc.md"
+    },
+    {
+      "id": "folio-assistant-pqlh",
+      "title": "Re-pin trains: keep bootstrap checklists in step with the train's bootstrap pin",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-06T05:55:06Z",
+      "updatedAt": "2026-11-06T05:55:06Z",
+      "preview": "Structural fix for cause 1 of the 2026-11-06 train failures: cat-harness commits bootstrap's checklists built from its own bootstrap pin, so any train that moves folio-assistant's bootstrap past cat-harness's lock fails bpmn:checklist:check. Options: (a) the train never moves bootstrap/-tools past cat-harness's lock (re-pin cat-harness first, as a cascade), or (b) build below-harness checklists at",
+      "file": "beans/defs/folio-assistant-pqlh--re-pin-trains-keep-bootstrap-checklists-in-step-wi.md"
     },
     {
       "id": "folio-assistant-r29x",
@@ -1123,14 +1193,14 @@
     {
       "id": "folio-assistant-uldr",
       "title": "Replace the hand-listed state:visualizer (53) and glossary:page (36) builtAtPublish entries with rules (plan, awaiting owner approval)",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-06T04:51:38Z",
-      "updatedAt": "2026-11-06T04:51:38Z",
+      "updatedAt": "2026-11-06T05:25:02Z",
       "preview": "Follows bean folio-assistant-akiq (done 2026-11-06), which removed the same pattern for BPMN drawings. Owner chose this follow-up on 2026-11-06 (\"2 3\": retire smart-base's render script, and plan these two lists). **Plan only: no code until the owner approves.**\n\n## Evidence (cat-harness main, 2026-11-06)\ncat-harness.json `builtAtPublish` still hand-lists per-instance files written by two writers:",
       "file": "beans/defs/folio-assistant-uldr--replace-the-hand-listed-statevisualizer-53-and-glo.md"
     },
@@ -1165,14 +1235,14 @@
     {
       "id": "folio-assistant-veb9",
       "title": "cat-harness-tools: adversarial-backfill.ts resolveSidecarPath still uses the pre-#1014 path",
-      "status": "todo",
+      "status": "in-progress",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T17:24:23Z",
-      "updatedAt": "2026-11-05T17:24:23Z",
+      "updatedAt": "2026-11-06T05:55:20Z",
       "preview": "`resolveSidecarPath` in cat-harness-tools `adversarial-backfill.ts` still maps a skill to `kg-qa/skills/sdlc/sdlc-core/`. Since #1014 the store has been at cat-harness `test/attestations/adversarial-review/sdlc/skills/sdlc-core/<name>.attestations.json`.\n\nAs a result:\n- `--rank` reports reviewed sdlc skills as \"never\" reviewed;\n- the write path would create orphaned files.\n\nFound during the owner-",
       "file": "beans/defs/folio-assistant-veb9--cat-harness-tools-adversarial-backfillts-resolvesi.md"
     },
@@ -1277,14 +1347,14 @@
     {
       "id": "folio-assistant-y4pw",
       "title": "Freeze-set content calls: four site-re-pin reds that need an author, not a regen",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T17:40:03Z",
-      "updatedAt": "2026-11-05T20:42:21Z",
+      "updatedAt": "2026-11-06T06:01:00Z",
       "preview": "Filed from folio-assistant-rpc6. Owner card (2026-11-05, Q4 \"1. Work items, known\"): each of these is a content decision, so it is recorded here and treated as a KNOWN red on the site re-pins until it is done. Found by the freeze-set survey (cat-harness a2da2ed, cat-harness-tools 78a982e, folio-assistant-core 4f18e66, who-iris 90bb3f5, smart-base 1e111a6, fhir-harness 299de78, bootstrap-tools 9f47",
       "file": "beans/defs/folio-assistant-y4pw--freeze-set-content-calls.md"
     },
@@ -1364,19 +1434,19 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 3,
-        "total": 58,
-        "closed": 19,
-        "open": 39,
-        "inProgress": 20,
-        "todo": 19,
+        "total": 62,
+        "closed": 21,
+        "open": 41,
+        "inProgress": 26,
+        "todo": 15,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.3275862068965517
+        "share": 0.3387096774193548
       }
     ],
-    "orphanOpen": 13,
-    "openTotal": 53,
-    "coveredOpen": 39,
+    "orphanOpen": 12,
+    "openTotal": 54,
+    "coveredOpen": 41,
     "duplicateIds": 0
   }
 }
