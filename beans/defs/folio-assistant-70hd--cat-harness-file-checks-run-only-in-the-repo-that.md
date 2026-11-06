@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-05T22:50:00Z
+updated_at: 2026-11-06T00:50:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -103,3 +103,11 @@ _2026-11-05T22:50:00Z_ — Re-count 1 (owner card "Next step" option 1): **nothi
   - #2979 (pin 5639d93) had 2 NEW on scoped gates, neither cross-layer. reference-direction caught a real tools defect (state-mount.ts → who-iris, fixed in ee5f440 / tools#1551). bpmn:checklist had a cat-harness checklist out of step with the new tools, which is index-owned.
   - #2980 (pin 55b1925) was pending.
 - Second re-count is scheduled for ~00:50Z. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+
+_2026-11-06T00:50:00Z_ — Re-count 2 (the last scheduled one): **still nothing measurable in the layers.**
+- smart-immunizations: main ca8a812 pins both layer-pr-checks.yml and the cat-harness-tools lock at 42cc850.
+- who-iris: main 90bb3f5 pins both at 42af00b.
+- Both pins are older than ee88ead, and neither repo has had a PR run since. The scoping cannot act until they re-pin both the workflow and tools to ≥ ee88ead.
+- fa train #2980 (pin 55b1925): ❌ with 1 NEW on a scoped gate. bpmn:checklist:check flags two cat-harness checklists as stale. That is index-owned output, not cross-layer; the run judged the whole index (`scoped: null`).
+- Before, measured earlier: about 22 cross-layer false NEW across 4 repos. After: not yet measurable.
+Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
