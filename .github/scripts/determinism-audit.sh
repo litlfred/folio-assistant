@@ -41,9 +41,16 @@ set -uo pipefail
 # qa:working-copy, then the publish pages; `p2:refusals`, a QA writer, reads
 # fhir-artifact-index/); it runs after each reset and BEFORE the marker, so
 # its own writes are never measured as the producer's.
+#
+# A fourth field names the producer's RUN RECORDS (space-separated globs):
+# files that say when and how long this run ran. Owner ruling 2026-11-06
+# (card "Run records", option 1, "carry, don't verify"): a run's time belongs
+# in its run record, so the record is carried beside the output as provenance
+# (trust class a-provenance) and never compared; a difference in one is listed,
+# not counted. Everything else the producer writes must be byte-identical.
 PRODUCERS=$(cat <<'EOF'
-qa-working-copy|bun run cat qa:working-copy|bun run cat ig-index:build && bun run smart:pages
-publish-pages|bun run cat derive:publish|bun run cat ig-index:build && bun run smart:pages && bun run cat qa:working-copy
+qa-working-copy|bun run cat qa:working-copy|bun run cat ig-index:build && bun run smart:pages|build/qa-refresh.json build/regen-cache/* */test/results/*.test-run.json
+publish-pages|bun run cat derive:publish|bun run cat ig-index:build && bun run smart:pages && bun run cat qa:working-copy|build/qa-refresh.json build/regen-cache/* */test/results/*.test-run.json
 smart-pages|bun run smart:pages|bun run cat ig-index:build
 ig-index|bun run cat ig-index:build
 kg-export|bun run cat kg:export
@@ -116,7 +123,7 @@ report="$OUT/report.md"
 echo "# Determinism audit at $(git rev-parse --short HEAD)" > "$report"
 status=0
 
-while IFS='|' read -r name cmd pre; do
+while IFS='|' read -r name cmd pre carried; do
   [ -n "$name" ] || continue
   if [ ${#want[@]} -gt 0 ] && [[ ! " ${want[*]} " == *" $name "* ]]; then continue; fi
   echo "== $name: $cmd" >&2
@@ -145,12 +152,29 @@ while IFS='|' read -r name cmd pre; do
   # Every path either run wrote: run 1's bytes (copy1) against the tree after
   # run 2. A path run 2 left alone still holds run 1's bytes, so a producer that
   # skips an up-to-date file is not reported; one that only run 1 wrote is.
-  diffs=$(cat <(cut -c67- "$d/run1.sha") <(cut -c67- "$d/run2.sha") | sort -u | while IFS= read -r p; do
+  alldiffs=$(cat <(cut -c67- "$d/run1.sha") <(cut -c67- "$d/run2.sha") | sort -u | while IFS= read -r p; do
       if [ -f "$d/copy1/$p" ] && [ -f "$p" ]; then cmp -s "$d/copy1/$p" "$p" || echo "$p"; else echo "$p"; fi
     done)
+  # Split off the declared run records: carried, not compared.
+  diffs=""; carriedDiffs=""
+  while IFS= read -r p; do
+    [ -n "$p" ] || continue
+    isrun=false
+    for g in $carried; do
+      # shellcheck disable=SC2053 # $g is a glob on purpose
+      if [[ $p == $g ]]; then isrun=true; break; fi
+    done
+    if [ "$isrun" = true ]; then carriedDiffs+="$p"$'\n'; else diffs+="$p"$'\n'; fi
+  done <<< "$alldiffs"
+  diffs=${diffs%$'\n'}; carriedDiffs=${carriedDiffs%$'\n'}
   n=$(wc -l < "$d/run1.sha")
+  carriedNote=""
+  if [ -n "$carriedDiffs" ]; then
+    carriedNote=$(printf '\n%s run record(s) differ and are carried as provenance, not compared: %s.\n' \
+      "$(printf '%s\n' "$carriedDiffs" | wc -l)" "$(printf '%s\n' "$carriedDiffs" | sed 's/.*/`&`/' | paste -sd, - | sed 's/,/, /g')")
+  fi
   if [ -z "$diffs" ]; then
-    printf '\n## `%s` — DETERMINISTIC\n\n%s files written, byte-identical across two runs.\n' "$name" "$n" >> "$report"
+    printf '\n## `%s` — DETERMINISTIC\n\n%s files written, byte-identical across two runs.\n%s' "$name" "$n" "$carriedNote" >> "$report"
   else
     [ "$status" = 3 ] || status=1
     printf '\n## `%s` — %s of %s files DIFFER\n\n| path | first differing line (run 1 → run 2) |\n|---|---|\n' \
@@ -161,6 +185,7 @@ while IFS='|' read -r name cmd pre; do
       else line=$(diff <(head -c 2000000 "$a") <(head -c 2000000 "$b") | grep -m2 -E '^[<>]' | cut -c1-160 | tr '\n|' ' /'); fi
       printf '| `%s` | %s |\n' "$p" "${line:-binary or long-line difference}" >> "$report"
     done <<< "$(printf '%s\n' "$diffs" | head -60)"
+    [ -z "$carriedNote" ] || printf '%s' "$carriedNote" >> "$report"
   fi
   [ "$keep" = true ] || rm -rf "$d/copy1"
   reset_tree

@@ -73,7 +73,7 @@ describe("...and refuses to replace it with nothing — bean `oisv`", () => {
     // This asserts the ORDER, not the presence, because a guard moved below
     // the `rm` would still satisfy a presence test while protecting no one.
     const guardAt = step.indexOf('if [ -z "$(ls -A _site');
-    const rmAt = step.indexOf('rm -rf "pages/STAGING/$STAGING_SLUG"');
+    const rmAt = step.indexOf('rm -rf "pages/$PREVIEW_DIR/$STAGING_SLUG"');
     expect(guardAt).toBeGreaterThan(-1);
     expect(rmAt).toBeGreaterThan(-1);
     expect(guardAt).toBeLessThan(rmAt);
@@ -81,13 +81,13 @@ describe("...and refuses to replace it with nothing — bean `oisv`", () => {
 
   test("the refusal exits non-zero, so a lost preview is not silent", () => {
     const guardAt = step.indexOf('if [ -z "$(ls -A _site');
-    const rmAt = step.indexOf('rm -rf "pages/STAGING/$STAGING_SLUG"');
+    const rmAt = step.indexOf('rm -rf "pages/$PREVIEW_DIR/$STAGING_SLUG"');
     // `exit 1` must fall inside the guard, not somewhere later in the script.
     expect(step.slice(guardAt, rmAt)).toMatch(/exit 1/);
   });
 
   test("the error names the slug, so the reader knows WHICH preview was spared", () => {
-    expect(step).toMatch(/STAGING\/\$STAGING_SLUG keeps its last working preview/);
+    expect(step).toMatch(/\$PREVIEW_DIR\/\$STAGING_SLUG keeps its last working preview/);
   });
 
   test("it is a floor, not a page-count threshold", () => {
@@ -105,18 +105,18 @@ describe("a deploy replaces its own preview, and only its own", () => {
   test("it removes the slug directory before copying into it", () => {
     // The whole defect: without this, a file the build stopped producing is
     // served until something else deletes it, and nothing else does.
-    const rmAt = step.indexOf('rm -rf "pages/STAGING/$STAGING_SLUG"');
-    const cpAt = step.indexOf('cp -R _site/. "pages/STAGING/$STAGING_SLUG/"');
+    const rmAt = step.indexOf('rm -rf "pages/$PREVIEW_DIR/$STAGING_SLUG"');
+    const cpAt = step.indexOf('cp -R _site/. "pages/$PREVIEW_DIR/$STAGING_SLUG/"');
     expect(rmAt).toBeGreaterThan(-1);
     expect(cpAt).toBeGreaterThan(-1);
     expect(rmAt).toBeLessThan(cpAt);
   });
 
   test("the removal names ONE slug — never the STAGING root", () => {
-    // `rm -rf pages/STAGING/` would be every open PR's preview, which is
+    // `rm -rf pages/branches/` would be every open PR's preview, which is
     // `plj1` exactly. Asserting the shape rather than trusting the variable.
     for (const m of step.matchAll(/rm -rf\s+"?([^"\n]+)"?/g)) {
-      expect(m[1]!.trim()).toBe("pages/STAGING/$STAGING_SLUG");
+      expect(m[1]!.trim()).toBe("pages/$PREVIEW_DIR/$STAGING_SLUG");
     }
   });
 
@@ -124,7 +124,7 @@ describe("a deploy replaces its own preview, and only its own", () => {
     // It was validated in the `slug` step, but it crosses a job boundary as an
     // output. This file's own rule (bean `fuzm`): checked by value, never
     // trusted because of where it came from. An empty slug turns the removal
-    // into the STAGING root.
+    // into the branches/ root.
     expect(step).toContain('case "$STAGING_SLUG" in');
     expect(step).toMatch(/""\|\.\|\.\.\|\*\/\*/);
     expect(step).toContain("exit 1");
@@ -136,16 +136,16 @@ describe("a deploy replaces its own preview, and only its own", () => {
     //
     // Comment lines are stripped first. The first version of this test did not
     // strip them and failed on its own prose — the warning above the `rm`
-    // spells `pages/STAGING/` while explaining why that spelling must never be
+    // spells `pages/branches/` while explaining why that spelling must never be
     // reached. A comment describing the hazard is not the hazard, which is the
     // distinction `folio-root-is-asked` and `workflow-paths-resolve` both draw.
     const code = step
       .split("\n")
       .filter((l) => !/^\s*#/.test(l))
       .join("\n");
-    const paths = [...code.matchAll(/pages\/STAGING\/[^\s"']*/g)].map((m) => m[0]);
+    const paths = [...code.matchAll(/pages\/\$PREVIEW_DIR\/[^\s"']*/g)].map((m) => m[0]);
     expect(paths.length).toBeGreaterThan(0);
-    for (const p of paths) expect(p.startsWith("pages/STAGING/$STAGING_SLUG")).toBe(true);
+    for (const p of paths) expect(p.startsWith("pages/$PREVIEW_DIR/$STAGING_SLUG")).toBe(true);
   });
 
   test("both ends of the tradeoff point at each other", () => {

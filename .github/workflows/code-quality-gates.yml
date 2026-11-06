@@ -1037,7 +1037,6 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
-      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: "TypeScript — bun test, shard ${{ matrix.shard }}/4"  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -1187,11 +1186,6 @@ jobs:
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
-        env:
-          # Bean fn8q: honour the PR head's local gate record. Off unless the
-          # repository variable says true (the verification sweep's switch).
-          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
-          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # A pull request runs only the test files its change can affect (CI
@@ -1397,7 +1391,6 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
-      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — workflows, skills, knowledge graph (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -1571,11 +1564,6 @@ jobs:
         run: bash .github/scripts/ci-cone-prepare.sh
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
-        env:
-          # Bean fn8q: honour the PR head's local gate record. Off unless the
-          # repository variable says true (the verification sweep's switch).
-          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
-          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The base workflow processes are strict; a content package may relax a
@@ -2131,7 +2119,6 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
-      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — instances, docs, translations (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -2333,11 +2320,6 @@ jobs:
         run: bash .github/scripts/ci-cone-prepare.sh
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
-        env:
-          # Bean fn8q: honour the PR head's local gate record. Off unless the
-          # repository variable says true (the verification sweep's switch).
-          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
-          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The same audit, over EVERY declared instance rather than the root alone.
@@ -3166,7 +3148,6 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
-      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — cat-harness standalone ratchet (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -3275,11 +3256,6 @@ jobs:
         run: bun run smart:pages
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
-        env:
-          # Bean fn8q: honour the PR head's local gate record. Off unless the
-          # repository variable says true (the verification sweep's switch).
-          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
-          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
@@ -3332,7 +3308,6 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
-      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — registered, never run elsewhere (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -3489,11 +3464,6 @@ jobs:
         run: bash .github/scripts/ci-cone-prepare.sh
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
-        env:
-          # Bean fn8q: honour the PR head's local gate record. Off unless the
-          # repository variable says true (the verification sweep's switch).
-          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
-          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       - name: gates that were registered and never run
@@ -4090,7 +4060,7 @@ jobs:
           # platform's submodules, because `cat-harness/schemas/` imports from
           # `bootstrap-tools`. Measured 2026-10-02 — `feature-staging.yml`'s
           # `cleanup` job had failed on exactly this for six consecutive runs
-          # and `STAGING/` held 80 previews, 47 for closed PRs. The failure is
+          # and `branches/` held 80 previews, 47 for closed PRs. The failure is
           # worse than a missing cleanup: `rm -rf` runs, then `render-log.ts`
           # dies and aborts the step under `bash -e`, so the commit and push
           # never happen — a cleanup that reports failure having changed
@@ -4657,7 +4627,6 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
-      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: "End-to-end + accessibility, shard ${{ matrix.shard }}/3"  # this job's `name:`, to find its record on main
     strategy:
@@ -4747,11 +4716,6 @@ jobs:
         run: bun run smart:pages
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
-        env:
-          # Bean fn8q: honour the PR head's local gate record. Off unless the
-          # repository variable says true (the verification sweep's switch).
-          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
-          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The suite generates what it needs under _kg/ if absent, so the
@@ -4767,15 +4731,6 @@ jobs:
       - name: rendered BPMN SVGs are current
         if: matrix.shard == 1
         run: bun run cat render:bpmn:check
-
-      # smart-base draws its own processes beside their sources (the drawing is
-      # bootstrap-tools' bpmn-js renderer, through Chromium), and commits them
-      # so its README can show them. Declared and run by no workflow until
-      # 2026-10-14 (owner: "Wire all"); here, beside `render:bpmn:check`, because
-      # this is the job with the browser. Shard 1 only, for the same reason.
-      - name: smart-base's committed process drawings are current
-        if: matrix.shard == 1
-        run: bun run cat smart-base:processes:render:check
 
       # The QA working copy and the publish-time pages, restored AFTER the
       # shard-1 checks above so those read the tree exactly as before, and
