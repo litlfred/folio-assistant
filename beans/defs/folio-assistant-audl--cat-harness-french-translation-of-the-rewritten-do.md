@@ -2,13 +2,13 @@
 # folio-assistant-audl
 $schema: bean/1.0.0
 title: 'cat-harness: French translation of the rewritten docs/guides/agent-onboarding.md'
-status: todo
+status: in-progress
 type: task
 priority: normal
 tags:
     - translation
 created_at: 2026-11-05T14:22:39Z
-updated_at: 2026-11-05T14:22:39Z
+updated_at: 2026-11-06T05:39:32Z
 parent: folio-assistant-rwmf
 ---
 
@@ -25,3 +25,5 @@ Sign-off follows the translation process: the owner or a translator signs off, n
 No translation epic exists in this work plan, so this hangs from the platform milestone. Move it if one is made.
 
 _2026-11-05T14:22:39Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk at the request of the CI-speed parent session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.
+
+_2026-11-06T05:39:32Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
