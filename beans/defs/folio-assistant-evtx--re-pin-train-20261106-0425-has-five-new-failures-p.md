@@ -19,3 +19,4 @@ folio-assistant#2986 (cat-harness 7321322, cat-harness-tools 925882a, bootstrap 
 
 - Remaining for the train #2986: bpmn:checklist:check (2 cat-harness checklists stale vs bootstrap 12fa6d5). Not fixable alone: regenerated, they go stale on main (bootstrap c90ef45). Belongs with the bootstrap re-pin; that choice is the owner's pending question in Stalled pickup D (bean rpc6).
 - Owner, 2026-11-06 (typed in session_01VQDpPfgqJs3xjo9AppknT5): "freeze on bootstrap 12fa6d5. merge green ready. repin if needed." Relayed to the integrator, CI speed 14 (keep the 2 checklists in cat-harness#1088) and Stalled pickup D (its Q1, bean rpc6).
+- cat-harness#1088 merged 2026-11-06 07:06Z (24262360) with the 2 checklists for bootstrap 12fa6d5; one expected red (bpmn:checklist:check against fa main lock at bootstrap c90ef45), proven on the PR. Integrator re-pins #2985 onto it; owner merges #2985.
