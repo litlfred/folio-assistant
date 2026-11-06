@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/smart-immunizations/smart-immunizations.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/smart-immunizations/directory/library.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/smart-immunizations/smart-immunizations.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0658",
+    "sha": "4b811865b218c5ae560946ba599b27bff4062464",
+    "pr": "repin-train/20261106-0658",
+    "run": "42177901239"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/smart-immunizations/directory/library",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "library",
+      "path": "library/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library"
+      ],
+      "description": "L1 source content for this DAK: one `<bib-slug>/` per ingested WHO publication (`sections/*.md`, `structure.json`, `manifest.jsonld`, `blocks/`) and, beside each L1 source the DAK's Component 1 cites, its own L1 3.0 knowledge graph `smart-kg-l1-library.jsonld`. The DAK itself is L2 with no L1 graph, and who-iris holds it (`who-iris/library/9789240099456-eng`). The id is the conventional `library`, so this entry overrides the default. It is declared explicitly because remote-mount reads only declared directories: without it an index mounts none of `library/`, and gen-instance-contexts has no document to build `ns/context/v1.jsonld` from.",
+      "readmePath": "library/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/smart-immunizations/directory/library",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/library"
+    }
+  ]
+}

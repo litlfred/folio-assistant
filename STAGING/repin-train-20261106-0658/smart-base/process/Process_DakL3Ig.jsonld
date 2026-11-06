@@ -1,0 +1,55 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/smart-base/process/Process_DakL3Ig.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DakL3Ig.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0658",
+    "sha": "4b811865b218c5ae560946ba599b27bff4062464",
+    "pr": "repin-train/20261106-0658",
+    "run": "42177901239"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "L2 DAK to L3 FHIR IG",
+      "summary": "How a WHO SMART Guidelines L2 Digital Adaptation Kit becomes a published L3 FHIR Implementation Guide: map the DAK's L2 content to the FHIR artefacts it calls for, then run fhir-harness's generic L3 pipeline (Process_L3Fhir) with that mapping as its source mo…",
+      "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit becomes a published L3 FHIR Implementation Guide: map the DAK's L2 content to the FHIR artefacts it calls for, then run fhir-harness's generic L3 pipeline (Process_L3Fhir) with that mapping as its source model. The WHO L2 → L3 ordering lives here because fhir-harness's pipeline does not know about DAKs; that pipeline is called, not copied.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/dak-l3-ig.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/dak-l3-ig.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/dak-l3-ig.svg",
+      "startNode": [
+        "http://smart.who.int/base/process/Process_DakL3Ig/node/StartEvent_L2Ready"
+      ],
+      "nodeCount": 4,
+      "flowCount": 3,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D01",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "from": "http://smart.who.int/base/process/Process_DakL3Ig/node/StartEvent_L2Ready",
+      "to": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D02",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "from": "http://smart.who.int/base/process/Process_DakL3Ig/node/Task_MapL2",
+      "to": "http://smart.who.int/base/process/Process_DakL3Ig/node/CallActivity_L3Fhir",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DakL3Ig#flow/D03",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DakL3Ig",
+      "from": "http://smart.who.int/base/process/Process_DakL3Ig/node/CallActivity_L3Fhir",
+      "to": "http://smart.who.int/base/process/Process_DakL3Ig/node/EndEvent_IgPublished",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

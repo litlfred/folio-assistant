@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0658",
+    "sha": "4b811865b218c5ae560946ba599b27bff4062464",
+    "pr": "repin-train/20261106-0658",
+    "run": "42177901239"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Build pipeline (system)",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/folio-assistant-core/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build"
+    }
+  ]
+}

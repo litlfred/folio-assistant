@@ -1,0 +1,253 @@
+{
+  "$ref": "#/definitions/WorkshopPresentation",
+  "definitions": {
+    "WorkshopPresentation": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "badge": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tagline": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occasion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "story": {
+          "type": "string",
+          "minLength": 1
+        },
+        "lede": {
+          "type": "string",
+          "minLength": 1
+        },
+        "recordOf": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "presenterNote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "about": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "minLength": 1
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "title"
+          ],
+          "additionalProperties": false
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "href": {
+                "type": "string",
+                "minLength": 1
+              },
+              "frame": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "label",
+              "href"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "notes": {
+          "type": "object",
+          "properties": {
+            "map": {
+              "type": "string",
+              "minLength": 1
+            },
+            "personas": {
+              "type": "string",
+              "minLength": 1
+            },
+            "how": {
+              "type": "string",
+              "minLength": 1
+            },
+            "discuss": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sheets": {
+              "type": "string",
+              "minLength": 1
+            },
+            "demo": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "views": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "model": {
+                "type": "string",
+                "minLength": 1
+              },
+              "view": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "model",
+              "view"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "closingQuestion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ig": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string"
+            },
+            "example": {
+              "type": "string",
+              "minLength": 1
+            },
+            "profile": {
+              "type": "string",
+              "minLength": 1
+            },
+            "processes": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "href"
+          ],
+          "additionalProperties": false
+        },
+        "deviceDemo": {
+          "type": "object",
+          "properties": {
+            "href": {
+              "type": "string",
+              "minLength": 1
+            },
+            "route": {
+              "type": "string",
+              "minLength": 1
+            },
+            "label": {
+              "type": "string",
+              "minLength": 1
+            },
+            "screens": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]*$"
+                  },
+                  "title": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "device": {
+                    "type": "string",
+                    "enum": [
+                      "phone",
+                      "tablet"
+                    ]
+                  },
+                  "steps": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "try": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "id",
+                  "title",
+                  "steps"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "href",
+            "screens"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopPresentationSchema.schema.json",
+  "title": "WorkshopPresentationSchema",
+  "description": "Generated from `WorkshopPresentationSchema` in schemas/process/workshop.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261106-0658",
+    "sha": "4b811865b218c5ae560946ba599b27bff4062464",
+    "pr": "repin-train/20261106-0658",
+    "run": "42177901239"
+  }
+}

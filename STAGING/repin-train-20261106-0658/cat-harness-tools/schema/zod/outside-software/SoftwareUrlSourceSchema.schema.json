@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/SoftwareUrlSource",
+  "definitions": {
+    "SoftwareUrlSource": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "url"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "type",
+        "url"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/outside-software/SoftwareUrlSourceSchema.schema.json",
+  "title": "SoftwareUrlSourceSchema",
+  "description": "Generated from `SoftwareUrlSourceSchema` in schemas/library/outside-software.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261106-0658",
+    "sha": "4b811865b218c5ae560946ba599b27bff4062464",
+    "pr": "repin-train/20261106-0658",
+    "run": "42177901239"
+  }
+}

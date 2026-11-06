@@ -1,0 +1,44 @@
+{
+  "$ref": "#/definitions/AdjudicationAsset",
+  "definitions": {
+    "AdjudicationAsset": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state": {
+          "type": "string",
+          "enum": [
+            "unknown",
+            "referenced",
+            "materialized"
+          ]
+        },
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "ref",
+        "state"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0658/folio-assistant-core/schema/zod/adjudication/AdjudicationAssetSchema.schema.json",
+  "title": "AdjudicationAssetSchema",
+  "description": "Generated from `AdjudicationAssetSchema` in schemas/adjudication.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261106-0658",
+    "sha": "4b811865b218c5ae560946ba599b27bff4062464",
+    "pr": "repin-train/20261106-0658",
+    "run": "42177901239"
+  }
+}
