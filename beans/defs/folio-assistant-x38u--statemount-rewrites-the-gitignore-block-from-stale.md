@@ -5,7 +5,7 @@ title: state:mount rewrites the .gitignore block from stale layer mounts without
 status: in-progress
 type: bug
 created_at: 2026-11-05T13:21:54Z
-updated_at: 2026-11-05T13:21:54Z
+updated_at: 2026-11-06T08:36:33Z
 parent: folio-assistant-4j43
 ---
 
@@ -17,3 +17,5 @@ Every fresh folio-assistant session: the container's instance mounts are older t
 - [ ] reaches folio-assistant through the next re-pin train (not done here)
 
 PR: https://github.com/litlfred/cat-harness-tools/pull/1515
+
+_2026-11-06T08:36:33Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
