@@ -48,6 +48,9 @@ jobs:
         run: bash .github/mount-from-lock.sh --root .
       - name: Install dependencies
         run: bun install --frozen-lockfile
+      # `render:bpmn` (and the QA writers that call it) draw through Chromium.
+      - name: Playwright Chromium
+        run: npx --yes playwright install --with-deps chromium
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: "3.12"

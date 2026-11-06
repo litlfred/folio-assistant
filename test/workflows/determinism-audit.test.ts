@@ -65,6 +65,20 @@ describe("determinism audit", () => {
     expect(r.code).toBe(0);
   }, 60_000);
 
+  test("a prerequisite's writes are not the producer's, and a failure's log is in the report", () => {
+    const d = repo();
+    const out = mkdtempSync(join(tmpdir(), "det-out-"));
+    const producers = [
+      // The prerequisite stamps the clock; only what the producer writes is measured.
+      "reads|mkdir -p out && cp out/in.txt out/copy.txt|mkdir -p out && date +%s%N > out/clock.txt && echo fixed > out/in.txt",
+      "noisy|echo 'the reason it failed' >&2; exit 4",
+    ].join("\n");
+    const r = audit(d, producers, out);
+    expect(r.report).toContain("## `reads` — DETERMINISTIC");
+    expect(r.report).toContain("## `noisy` — COULD NOT DETERMINE");
+    expect(r.report).toContain("the reason it failed");
+  }, 60_000);
+
   test("its output must live outside the checkout, where the reset cannot delete it", () => {
     const d = repo();
     const r = spawnSync("bash", [SCRIPT], { cwd: d, encoding: "utf8", env: { ...process.env, CI: "true", OUT: join(d, "build", "det"), AUDIT_PRODUCERS: "x|true" } });

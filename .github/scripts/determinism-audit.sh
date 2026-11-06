@@ -34,11 +34,15 @@
 
 set -uo pipefail
 
-# name | command. The producers whose bundles CI caches or means to (beans x35i, tv20).
+# name | command [| prerequisite]. The producers whose bundles CI caches or
+# means to (beans x35i, tv20). A prerequisite lays down what the producer
+# reads and another producer writes (as the gate jobs hand it over as an
+# artifact); it runs after each reset and BEFORE the marker, so its own
+# writes are never measured as the producer's.
 PRODUCERS=$(cat <<'EOF'
 qa-working-copy|bun run cat qa:working-copy
-publish-pages|bun run cat derive:publish
-smart-pages|bun run smart:pages
+publish-pages|bun run cat derive:publish|bun run cat qa:working-copy
+smart-pages|bun run smart:pages|bun run cat ig-index:build
 ig-index|bun run cat ig-index:build
 kg-export|bun run cat kg:export
 render-bpmn|bun run cat render:bpmn
@@ -110,17 +114,18 @@ report="$OUT/report.md"
 echo "# Determinism audit at $(git rev-parse --short HEAD)" > "$report"
 status=0
 
-while IFS='|' read -r name cmd; do
+while IFS='|' read -r name cmd pre; do
   [ -n "$name" ] || continue
   if [ ${#want[@]} -gt 0 ] && [[ ! " ${want[*]} " == *" $name "* ]]; then continue; fi
   echo "== $name: $cmd" >&2
   d="$OUT/$name"; rm -rf "$d"; mkdir -p "$d"
-  ok=true; failed=""
+  ok=true; failed=""; log=""
   for i in 1 2; do
     reset_tree || { ok=false; failed="the reset or PREPARE before run $i (see \`$OUT/prepare.log\`)"; break; }
     mkdir -p "$d"
+    if [ -n "$pre" ] && ! bash -c "$pre" > "$d/pre$i.log" 2>&1; then ok=false; failed="the prerequisite \`$pre\` before run $i (see \`$d/pre$i.log\`)"; log="$d/pre$i.log"; break; fi
     touch "$d/marker$i"; sleep 1   # mtime granularity: a write in this second is after the marker
-    if ! bash -c "$cmd" > "$d/run$i.log" 2>&1; then ok=false; failed="\`$cmd\` on run $i (see \`$d/run$i.log\`)"; break; fi
+    if ! bash -c "$cmd" > "$d/run$i.log" 2>&1; then ok=false; failed="\`$cmd\` on run $i (see \`$d/run$i.log\`)"; log="$d/run$i.log"; break; fi
     snapshot "$d/marker$i" > "$d/run$i.sha"
     if [ "$i" = 1 ]; then
       mkdir -p "$d/copy1"
@@ -129,7 +134,10 @@ while IFS='|' read -r name cmd; do
   done
   if [ "$ok" = false ]; then
     printf '\n## `%s` — COULD NOT DETERMINE\n\nFailed: %s.\n' "$name" "$failed" >> "$report"
-    case "$failed" in "the reset or PREPARE"*) [ -f "$OUT/prepare.log" ] && { printf '\n```\n'; tail -n 15 "$OUT/prepare.log"; printf '```\n'; } >> "$report" ;; esac
+    # The end of the log that failed, IN the report: the artifact holding the
+    # logs is not always reachable from where the report is read.
+    case "$failed" in "the reset or PREPARE"*) log="$OUT/prepare.log" ;; esac
+    [ -n "$log" ] && [ -f "$log" ] && { printf '\n```\n'; tail -n 25 "$log" | cut -c1-300; printf '```\n'; } >> "$report"
     status=3; reset_tree; continue
   fi
   # Every path either run wrote: run 1's bytes (copy1) against the tree after
