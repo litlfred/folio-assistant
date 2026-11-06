@@ -10,7 +10,7 @@
 # What a producer WROTE is measured, not declared: every file git reports as
 # modified, untracked or ignored after the run (outside node_modules/ and
 # .git/), hashed. Run 1 and run 2 start from the same tree (run 1's outputs
-# are removed with `git clean`/`git checkout` first), so any path whose hash
+# are put back to the snapshot first, below), so any path whose hash
 # differs, or that only one run wrote, is a non-deterministic writer.
 #
 # Usage: determinism-audit.sh [--keep] [--force] [PRODUCER...]   (--force: outside CI)
@@ -22,8 +22,15 @@
 # line of each. Exit: 0 all deterministic · 1 a producer differs · 3 a
 # producer failed to run (could-not-determine, never "deterministic").
 #
-# THE TREE MUST BE CLEAN: the audit restores it between runs with
-# `git checkout -- . && git clean -fdx -e node_modules -e <mounts>`.
+# THE TREE MUST BE CLEAN. The audit snapshots the whole tree — the mounted
+# layers included — into a private git index before the first run, and every
+# reset restores exactly that snapshot: files changed or deleted are checked
+# out of it, files it does not hold are removed. The mounts are in it because
+# producers write into them (generated READMEs, sidecars), and a mount left
+# drifted is refused by the next `state:mount` (first CI run, 2026-11-06:
+# every producer after the first read "COULD NOT DETERMINE ... no longer hash
+# to the lock", the mounts' bytes having been changed by run 1 and never put
+# back by a reset that skipped them).
 
 set -uo pipefail
 
@@ -56,15 +63,13 @@ cd "$ROOT" || exit 3
 mkdir -p "$OUT" && OUT=$(cd "$OUT" && pwd) || exit 3
 case "$OUT/" in "$ROOT"/*) echo "determinism-audit: OUT ($OUT) must be outside the checkout; the reset would delete it" >&2; exit 2 ;; esac
 
-# Mounted instances are ignored directories the reset must not clean away.
-mounts=$(python3 -c 'import json; print("\n".join(i["name"] for i in json.load(open("index.config.json"))["instances"]))' 2>/dev/null || true)
+# Install artefacts and tool caches are neither snapshotted nor cleaned.
 excl=(-e node_modules -e .cache)
-while IFS= read -r m; do [ -n "$m" ] && excl+=(-e "/$m"); done <<< "$mounts"
 
 # The reset deletes every ignored file outside the mounts (build caches
 # included): that is the point, and why a person has to say --force.
 if [ "${CI:-}" != true ] && [ "$force" != true ]; then
-  echo "determinism-audit: the reset runs \`git clean -fdx\` outside the mounts; pass --force to run it here" >&2
+  echo "determinism-audit: the reset deletes every file written since the snapshot, ignored ones included; pass --force to run it here" >&2
   exit 2
 fi
 if [ -n "$(git status --porcelain --untracked-files=normal)" ]; then
@@ -74,8 +79,19 @@ fi
 
 # PREPARE (optional): a command run after every reset, before the marker, to
 # lay down what the reset removed and a producer reads (e.g. `state:mount`).
+# The snapshot: a private index over every file outside node_modules/ and
+# .cache/, ignored ones (the mounts) included. `snap` runs git against it.
+SNAP_INDEX="$OUT/snapshot.index"
+snap() { GIT_INDEX_FILE="$SNAP_INDEX" git "$@"; }
+take_snapshot() {
+  rm -f "$SNAP_INDEX"
+  snap add -A -f -- . ':(exclude,glob)**/node_modules/**' ':(exclude,glob).cache/**' || return 1
+}
 reset_tree() {
-  git checkout -q -- . && git clean -q -fdx "${excl[@]}" || return 1
+  # Changed or deleted since the snapshot: put the snapshot's bytes back.
+  snap ls-files -m -d -z | sort -zu | xargs -0 -r env GIT_INDEX_FILE="$SNAP_INDEX" git checkout-index -f -q -- || return 1
+  # Not in the snapshot: written by a run, so removed.
+  snap clean -q -fdx "${excl[@]}" || return 1
   [ -z "${PREPARE:-}" ] || bash -c "$PREPARE" > "$OUT/prepare.log" 2>&1 || { echo "determinism-audit: PREPARE failed; the end of $OUT/prepare.log:" >&2; tail -n 40 "$OUT/prepare.log" | sed 's/^/  prepare: /' >&2; return 1; }
 }
 
@@ -89,6 +105,7 @@ snapshot() {
 }
 
 mkdir -p "$OUT"
+take_snapshot || { echo "determinism-audit: could not snapshot the tree" >&2; exit 3; }
 report="$OUT/report.md"
 echo "# Determinism audit at $(git rev-parse --short HEAD)" > "$report"
 status=0

@@ -50,6 +50,21 @@ describe("determinism audit", () => {
     expect(r.code).toBe(3); // a producer that could not run outranks a difference
   }, 60_000);
 
+  test("a producer's writes into an ignored mount are put back by every reset", () => {
+    // A mounted layer is an ignored directory; a reset that skipped it left run
+    // 1's writes there, so run 2 saw a drifted mount (CI, 2026-11-06).
+    const d = repo();
+    writeFileSync(join(d, ".gitignore"), "out/\nmnt/\n");
+    spawnSync("git", ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qam", "ignore mnt"], { cwd: d });
+    spawnSync("mkdir", ["-p", join(d, "mnt")]);
+    writeFileSync(join(d, "mnt", "f"), "a");
+    const out = mkdtempSync(join(tmpdir(), "det-out-"));
+    const r = audit(d, "append|printf a >> mnt/f", out);
+    expect(r.report).toContain("## `append` — DETERMINISTIC");
+    expect(readFileSync(join(d, "mnt", "f"), "utf8")).toBe("a");
+    expect(r.code).toBe(0);
+  }, 60_000);
+
   test("its output must live outside the checkout, where the reset cannot delete it", () => {
     const d = repo();
     const r = spawnSync("bash", [SCRIPT], { cwd: d, encoding: "utf8", env: { ...process.env, CI: "true", OUT: join(d, "build", "det"), AUDIT_PRODUCERS: "x|true" } });
