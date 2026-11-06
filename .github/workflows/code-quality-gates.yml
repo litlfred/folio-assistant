@@ -632,7 +632,14 @@ jobs:
           PRODUCER_JOB: QA working copy, built once for this run (not a gate)
           EVENT: ${{ github.event_name }}
         run: |
-          if [ "$EVENT" = "workflow_dispatch" ]; then
+          # A dispatch on MAIN whose HEAD is a two-parent merge (a merge-train
+          # or re-pin-train PR merged with GITHUB_TOKEN, whose merge starts no
+          # push run, so the gates are dispatched instead; bean hd58) is looked
+          # up exactly as a push of that merge would be: by its second parent,
+          # the tested head. The tree rule still decides.
+          if [ "$EVENT" = "workflow_dispatch" ] && [ "$GITHUB_REF" = refs/heads/main ] && git rev-parse -q --verify 'HEAD^2' >/dev/null; then
+            :
+          elif [ "$EVENT" = "workflow_dispatch" ]; then
             # See "PR and dispatch runs too" above: a local commit, tree
             # unchanged, second parent the dispatched head. Never pushed.
             # The first parent is an empty root commit: git drops a repeated

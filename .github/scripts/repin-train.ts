@@ -289,7 +289,7 @@ export const LABEL = "repin-train";
 
 export interface Api {
   get<T>(path: string): Promise<T>;
-  send<T>(method: "POST" | "PATCH" | "PUT", path: string, body: unknown): Promise<T>;
+  send<T>(method: "POST" | "PATCH" | "PUT" | "DELETE", path: string, body: unknown): Promise<T>;
   /** A text body, such as a job log (its redirect followed without the token). */
   text(path: string): Promise<string>;
 }
