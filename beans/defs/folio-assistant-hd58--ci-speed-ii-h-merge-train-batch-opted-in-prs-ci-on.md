@@ -107,3 +107,5 @@ _2026-11-06T05:15Z_: first live attempt: #2951 was labelled at 04:48:2x and **me
 ## Owner ruling, 2026-11-06T05:16Z: "1. The train"
 
 PRs labelled `merge-train` are landed by the train only; the steward's merge sweep skips them (and `merge-train-batch` PRs), as merge-main.yml does. Every other green PR still merges as before. Sent to the steward to apply in the merge-sweep helper.
+
+_2026-11-06T06:25Z_: second miss: #2987 was labelled at 05:18 and **merged directly at 05:52:34** (merged_by litlfred), after merge-planning's rule R0 should have been in. The 05:43 sweep printed only "nothing to do", most likely because #2987's checks were still running; there was no log to prove it. Fix for the log in #2991 (pending prints why each opted-in PR waits). Asked the steward which merger landed #2987. merge-train.yml: still 0 runs.
