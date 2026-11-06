@@ -145,3 +145,11 @@ uploads a tiny artifact named `cached-step--<step>--<result>--<unique>`
 (8-day retention). The daily report (`.github/scripts/cache-report.sh`, the
 06:00 UTC tick of `sweeps.yml`) counts those NAMES per step, so it downloads
 nothing, and adds the cache usage and the size of each namespace.
+
+## The inventory every scheme was ported from
+
+`.github/cache-inventory/2026-11-05.cache-inventory.json` (`cache-inventory/1.0.0`,
+the schema in cat-harness-tools `schemas/sdlc/cache.ts`) is the survey of every
+cache in every repository this index mounts, taken 2026-11-05. It is kept here
+rather than in cat-harness-tools' `caches/` because it names every layer, and a
+layer may not name the layers above it (`check:reference-direction`).
