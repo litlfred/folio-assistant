@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0041/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0041/cat-harness/process/Process_UpstreamPinWatch/node/End_Current.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0041/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0041",
+    "sha": "1e38ebd8e3d74f6ba090e861b543c8bdae142104",
+    "pr": "repin-train/20261106-0041",
+    "run": "42138704009"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0041/cat-harness/process/Process_UpstreamPinWatch/node/End_Current",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Every pin current",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0041/cat-harness/process/Process_UpstreamPinWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0041/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0041/cat-harness/process/Process_UpstreamPinWatch/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0041/cat-harness/process/Process_UpstreamPinWatch#flow/SF_PW_7"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0041/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/End_Current"
+    }
+  ]
+}
