@@ -65,3 +65,7 @@ Drop the 6 lines and their .gitignore lines. publish:check glossary:page stays a
 - Step 3's in-route .gitignore is a new convention: the alternative is one generic host pattern `/docs/*/<instance>/`, which still names instances. Recommended: the in-route file.
 
 - **Owner, 2026-11-06 (card "Design"): option A**: derive the routes from the viewer declaration, and the writer puts a .gitignore in each route folder. Implementing.
+- **2026-11-06, progress.**
+  - Step 1: folio-assistant-core#654. `glossary-page.ts` writes a `.gitignore` of `*` alone into each of its 6 routes. It does not add `!.gitignore`, so the marker itself is never committed either.
+  - Step 2: cat-harness-tools#1564. The mount digest leaves out any directory below an instance whose `.gitignore` is `*` alone (`withoutSelfIgnored`). It does not read other instances' visualiser declarations, because `builtAtPublishOf(dir)` sees one instance at a time and cannot know which layer writes onto its site. Measured: of cat-harness's files, 179 are dropped, all in the 6 routes, and nothing else.
+  - Step 3 (cat-harness) is next, once #1091 lands, since both PRs edit the same `.gitignore` block.
