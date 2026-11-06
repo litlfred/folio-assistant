@@ -79,6 +79,23 @@ describe("determinism audit", () => {
     expect(r.report).toContain("the reason it failed");
   }, 60_000);
 
+  test("a declared run record is carried, not compared; the rest must still match", () => {
+    // Owner ruling 2026-11-06 (card "Run records", option 1): a run's time
+    // belongs in its run record, which travels beside the output as provenance.
+    const d = repo();
+    const out = mkdtempSync(join(tmpdir(), "det-out-"));
+    const producers = [
+      "stamped|mkdir -p out && echo fixed > out/a.txt && date +%s%N > out/run.json||out/run.json",
+      "leaks|mkdir -p out && date +%s%N > out/b.txt && date +%s%N > out/run.json||out/run.json",
+    ].join("\n");
+    const r = audit(d, producers, out);
+    expect(r.report).toContain("## `stamped` — DETERMINISTIC");
+    expect(r.report).toContain("1 run record(s) differ and are carried as provenance, not compared: `out/run.json`");
+    expect(r.report).toMatch(/## `leaks` — 1 of 2 files DIFFER/);
+    expect(r.report).toContain("| `out/b.txt` |");
+    expect(r.code).toBe(1);
+  }, 60_000);
+
   test("its output must live outside the checkout, where the reset cannot delete it", () => {
     const d = repo();
     const r = spawnSync("bash", [SCRIPT], { cwd: d, encoding: "utf8", env: { ...process.env, CI: "true", OUT: join(d, "build", "det"), AUDIT_PRODUCERS: "x|true" } });

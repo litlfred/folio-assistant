@@ -100,6 +100,17 @@ them cheaply, so CI only verifies.
   this head, a parent of this commit, or a commit with this tree). Its
   producer must also be deterministic (the determinism audit) for a hit
   across commits. Committers do not publish these.
+
+  **Run records are carried, not verified** (owner ruling 2026-11-06, card
+  "Run records", option 1). A producer's run records — the files that say
+  when and how long a run ran (`build/qa-refresh.json`,
+  `build/regen-cache/*`, a `*.test-run.json`) — travel inside the bundle as
+  its provenance and are never compared, so their time stays where the
+  owner's "QA dates" ruling puts a run's time. The determinism audit declares
+  them per producer (its fourth field) and lists one that differs without
+  counting it. Everything else the producer writes must be byte-identical,
+  and a QA verdict's date is derived on read from its reviewed tree, so its
+  bytes carry no clock.
 - **(b) Verdicts** — "this gate passed on these inputs". CI cannot verify one
   without re-running it, so a committer's verdict goes through the deferred
   or sampled re-verification of the local gate records (#2957, #2958), not
