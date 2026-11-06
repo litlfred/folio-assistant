@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-02T19:26:00Z
+updated_at: 2026-11-06T08:35:33Z
 parent: folio-assistant-npuo
 tags:
     - document-structure
@@ -62,3 +62,5 @@ _2026-11-02T19:15Z_ — smart-ra#230 MERGED (8257473): dpi-h-ra opens on Executi
 _2026-11-02T19:26Z_ — cat-harness-tools#1416 MERGED (8560fbe). Asked Re-pin train thread (cmsg_017WNUkNK8kdDziPK58Pv6G9MmDK4fGPz89Zs2mtVYEY36) to pin cat-harness-tools >= 8560fbe in smart-ra, dth-sc, dth-phc. After pins land: open PR from smart-ra claude/glossary-acronyms-nest (rebase on main first); merge dth-sc#24, dth-phc#33, core#622 per card Q-BM-3.
 
 _2026-11-02T19:25Z_ — Re-pin train thread confirmed: will pin cat-harness-tools >= 8560fbe in smart-ra, dth-sc, dth-phc after fa#2921 lands (~within the hour) and will report each pin.
+
+_2026-11-06T08:35:33Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
