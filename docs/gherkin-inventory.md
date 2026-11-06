@@ -67,10 +67,11 @@ How each column is counted (by [`gherkin-inventory.py`](gherkin-inventory.py), r
 One `.feature` per test file (or per test-plan case where one exists); one `Scenario` per test,
 tagged `@test:<path>::<test name>`; Given/When/Then written from what the test really asserts.
 
-Gherkin tags end at whitespace, and most test names contain spaces, so in the tag every run of
-whitespace in the test name is written as `_`; the Scenario's own name is the test name
-verbatim. If `check:test-gherkin` (sibling session) settles a different encoding, the tags are
-mechanical to rewrite.
+Gherkin tags end at whitespace, so **every test is named by an id with no spaces** (owner's
+choice, 2026-11-06): a lowerCamelCase id saying what the test asserts, unique in its file. The tag
+is the exact id, `@test:<path>::<id>`; the Scenario's title keeps the readable sentence. A test
+declared in a loop is named `${id}[${key}]` from a field of its case data, and its tag names the id.
+Kotlin tests (smart-trust-demo) are already named this way.
 
 ## Backfill PRs
 
@@ -82,4 +83,4 @@ Filled in as each opens; the session stops after three for the owner to choose t
 | who-iris | [#188](https://github.com/litlfred/who-iris/pull/188) | 109 → 109 |
 | bootstrap-tools | [#81](https://github.com/litlfred/bootstrap-tools/pull/81) | 259 → 259 |
 
-Owner chose the `_` tag encoding (option 1) on 2026-11-06.
+Tag encoding: first `_` for spaces (owner, 2026-11-06), then replaced the same day by renaming every test to an id.
