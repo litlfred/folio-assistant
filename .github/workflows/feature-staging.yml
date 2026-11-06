@@ -2091,7 +2091,7 @@ jobs:
         run: |
           set -eu
           waiting=$(gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
-            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")))] | length' | awk '{s+=$1} END{print s+0}')
+            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")) and .workflow_run.head_repository_id != null and .workflow_run.head_repository_id == .workflow_run.repository_id)] | length' | awk '{s+=$1} END{print s+0}')
           busy=$(gh api "repos/$REPO/actions/workflows/staging-publish.yml/runs?per_page=10" \
             --jq '[.workflow_runs[] | select(.status != "completed")] | length' 2>/dev/null || echo 1)
           tip=$(gh api "repos/$REPO/commits/gh-pages" --jq '"\(.commit.committer.date)\t\(.commit.message | split("\n")[0])"')

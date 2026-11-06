@@ -1,0 +1,4 @@
+import { test, expect } from "bun:test";
+test("ok", () => expect(1).toBe(1));
+test("bad1", () => expect(1).toBe(2));
+test("bad2", () => expect(1).toBe(3));
