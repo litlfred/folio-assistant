@@ -139,7 +139,7 @@ template’s own CSS, ingested with its conflicts — and is not a palette.</p><
   
   
 </h2><p>A staged site’s theme is checked by finding the palette’s hex values (here
-an <code class="language-plaintext highlighter-rouge">accent</code> of <code class="language-plaintext highlighter-rouge">&lt;hex&gt;</code>) in the built stylesheet:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git show &lt;gh-pages&gt;:STAGING/&lt;slug&gt;/&lt;ig&gt;/ig/assets/css/just-the-docs-default.css <span class="se">\</span>
+an <code class="language-plaintext highlighter-rouge">accent</code> of <code class="language-plaintext highlighter-rouge">&lt;hex&gt;</code>) in the built stylesheet:</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git show &lt;gh-pages&gt;:branches/&lt;slug&gt;/&lt;ig&gt;/ig/assets/css/just-the-docs-default.css <span class="se">\</span>
   | <span class="nb">grep</span> <span class="nt">-c</span> <span class="s1">'&lt;hex&gt;'</span>
 </code></pre></div></div><p><strong>Calling <code class="language-plaintext highlighter-rouge">stageIgSite</code> directly with no <code class="language-plaintext highlighter-rouge">palette</code> option prints <code class="language-plaintext highlighter-rouge">colour
 scheme: NONE</code></strong> — true for that call, not for the instance. Do not read it as

@@ -362,10 +362,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-05T23:14:12.767Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/04cf7ef4f2739604c11dc526ed06c4cdfb5d3f27",
-  "sourceCommitSha": "04cf7ef4f2739604c11dc526ed06c4cdfb5d3f27",
-  "sourceCommitAt": "2026-11-06T00:04:18+01:00",
+  "generatedAt": "2026-11-06T00:25:58.894Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/9020a723b12e15865a20636b11c3d852cfa13c55",
+  "sourceCommitSha": "9020a723b12e15865a20636b11c3d852cfa13c55",
+  "sourceCommitAt": "2026-11-06T01:19:36+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -521,7 +521,7 @@
       "name": "document-structure",
       "title": "document-structure",
       "instructionsPath": "skills/content/folio-document-adapter/document-structure.md",
-      "instructionLines": 71,
+      "instructionLines": 99,
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-structure/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-structure/output.schema.json",
       "hasInstructions": true,
@@ -536,7 +536,7 @@
       "title": "Public comment channels and intake",
       "description": "Set up the channels a public-comment release goes out on (an offline Excel sheet, a Google Form, a GitHub issue form, and the review sheet), each limited to the release's fixed references, with the editor's instructions and the announcement, and bring every channel back in through one intake path that ends in agent triage into thematic change-sets. Use when a draft is released for public comment, when a channel is added to a running review, or when returned comments arrive from any channel.",
       "instructionsPath": "skills/content/folio-document-adapter/public-comment-channels.md",
-      "instructionLines": 211,
+      "instructionLines": 212,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -602,7 +602,7 @@
       "title": "The review sheet's Apps Script",
       "description": "Build, install and reuse the Google Apps Script that keeps a review sheet's links and joined columns current (Tool `review-sheet-sync`). Public-comment mode: comment numbers, sections, pages and lines link into the frozen review draft, and Review Change Sets joins its comments. Drafting mode: one Contributor Feedback tab where each row is a change set with its own GitHub issue, and Sections pick from the document's table of contents. Use when setting up either sheet for a document, when its links are missing or stale, or after a tab, header, anchor or draft link changes.",
       "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
-      "instructionLines": 1254,
+      "instructionLines": 1266,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -614,7 +614,7 @@
       "name": "document-publishing",
       "title": "document-publishing",
       "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
-      "instructionLines": 186,
+      "instructionLines": 188,
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
       "hasInstructions": true,
@@ -667,9 +667,9 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "review-log-watch",
       "title": "Review-log watch",
-      "description": "Poll a drafting review log (a Contributor Feedback sheet) and its folio repository's issues mechanically, with Tool `review-log-watch`, and start agent work only when a cell people set or an open issue changed. Each issue that no row links yet becomes a Contributor Feedback row, and a closed issue's row is hidden with its text struck through. Use on every wake of a review-log watcher, and when setting up a watcher for a new log.",
+      "description": "Poll a review log (a drafting Contributor Feedback sheet, or a public-comment sheet's Review Change Sets) and its folio repository's issues mechanically, with Tool `review-log-watch`, and start agent work only when a cell people set or an open issue changed. Each issue that no row links yet becomes a Contributor Feedback row, and a closed issue's row is hidden with its text struck through. Use on every wake of a review-log watcher, and when setting up a watcher for a new log.",
       "instructionsPath": "skills/content/folio-document-adapter/review-log-watch.md",
-      "instructionLines": 258,
+      "instructionLines": 291,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -6035,7 +6035,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_DeployStaging",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Deploy to STAGING/<slug>/",
+      "name": "Deploy to branches/<slug>/",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage",
@@ -9229,8 +9229,8 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Review-log watch",
-      "summary": "One poll of one drafting review log (a Contributor Feedback sheet) and its folio repository.",
-      "description": "One poll of one drafting review log (a Contributor Feedback sheet) and\nits folio repository. A tool decides, with no agent judgement, whether\nanything a person set in the sheet or any open issue changed since the\nlast poll. Only then does the agent append rows for new issues and do\nits pass. Skill: review-log-watch.",
+      "summary": "One poll of one review log (a drafting Contributor Feedback sheet, or a public-comment sheet's Review Change Sets) and its folio repository.",
+      "description": "One poll of one review log (a drafting Contributor Feedback sheet, or a\npublic-comment sheet's Review Change Sets) and its folio repository. A tool decides, with no agent judgement, whether\nanything a person set in the sheet or any open issue changed since the\nlast poll. Only then does the agent append rows for new issues and do\nits pass. Skill: review-log-watch.",
       "enforcement": "strict",
       "sourcePath": "processes/content/review-log-watch.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/review-log-watch.bpmn",
@@ -12854,7 +12854,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Task_CleanupStaging",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Remove STAGING/<slug>/",
+      "name": "Remove branches/<slug>/",
       "nodeKind": "activity",
       "bpmnType": "bpmn:Task",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish",
@@ -16511,7 +16511,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "review-log-watch",
       "title": "Check a review log and its repository's issues for changes",
-      "description": "The mechanical check a review-log watcher runs on every poll. Given a drafting sheet's Contributor Feedback values and the folio repository, it reads the repository's open and closed issues (leaving out pull requests, issues labelled `no-sheet` and, with `--author`, issues someone else opened) and compares a digest of them and of the cells people set (Title, Selected Sections, Contributor Feedback, Disposition, Ready for agent, Ready for merge, Dispositions confirmed) with the last check's. Unchanged: it prints `{\"status\":\"unchanged\"}` and exits 0. Changed: it exits 10 and lists what changed (issue opened, updated or closed; a cell's old and new text), the Contributor Feedback rows to append, one per issue that no row's Issue cell links yet (Title the issue's title, the first Contributor Feedback column `@login (#N): first paragraph`, Issue the issue's URL; a closed issue's row marked `closed`), and `closedRows`, the rows linking a closed issue, which the watcher hides with their text struck through. It writes no sheet and no issue: the watcher appends the rows and does the agent pass. With `--accept` it stores the new state for the next poll to compare against.",
+      "description": "The mechanical check a review-log watcher runs on every poll. Given a drafting sheet's Contributor Feedback values and the folio repository, it reads the repository's open and closed issues (leaving out pull requests, issues labelled `no-sheet` and, with `--author`, issues someone else opened) and compares a digest of them and of the cells people set (Title, Selected Sections, Contributor Feedback, Disposition, Ready for agent, Ready for merge, Dispositions confirmed; on a public-comment log also Committee Feedback, TWG (CS), TWG (human) and Change Set (human)) with the last check's. Unchanged: it prints `{\"status\":\"unchanged\"}` and exits 0. Changed: it exits 10 and lists what changed (issue opened, updated or closed; a cell's old and new text), the Contributor Feedback rows to append, one per issue that no row's Issue cell links yet (Title the issue's title, the first Contributor Feedback column `@login (#N): first paragraph`, Issue the issue's URL; a closed issue's row marked `closed`), and `closedRows`, the rows linking a closed issue, which the watcher hides with their text struck through. A read with no Issue column (a public-comment log's Review Change Sets) tracks only issues labelled `change-set` unless `--label` says otherwise, and appends no rows: each open issue is reported as an `issue-unlinked` change instead. It writes no sheet and no issue: the watcher appends the rows and does the agent pass. With `--accept` it stores the new state for the next poll to compare against.",
       "install": {
         "none": true
       },
@@ -16532,7 +16532,7 @@
           {
             "name": "sheet",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
-            "description": "The Contributor Feedback tab's values as JSON: the Sheets API `values` array (or the whole `get_values` answer), from row 1, so the header row (first cell `Change-set`) is found.",
+            "description": "The Contributor Feedback tab's values (a public-comment log: Review Change Sets) as JSON: the Sheets API `values` array (or the whole `get_values` answer), from row 1, so the header row (first cell `Change-set`) is found.",
             "required": true,
             "arg": {
               "flag": "--sheet"
@@ -16572,6 +16572,15 @@
             "required": false,
             "arg": {
               "flag": "--sheet-hash"
+            }
+          },
+          {
+            "name": "label",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Only issues with this label, e.g. `change-set`. Default every issue on a read with an Issue column, and `change-set` on one without (a public-comment log).",
+            "required": false,
+            "arg": {
+              "flag": "--label"
             }
           },
           {

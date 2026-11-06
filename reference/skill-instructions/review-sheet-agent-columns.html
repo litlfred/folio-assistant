@@ -156,14 +156,14 @@ for a named cell.</li><li><strong>Per comment</strong> (every PC in the change s
 action taken (what was done, in a sentence); Agentic applied in (the
 sections or blocks changed); Agentic handled by (the agent and its
 session); Agentic date actioned (<code class="language-plaintext highlighter-rouge">YYYY-MM-DD HH:MMZ</code>, UTC, from the clock).</li><li><strong>Per change set:</strong> Pull request (one PR URL per line); Staging review
-page (<code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/en/review/</code> while the PR is open); What the PRs
+page (<code class="language-plaintext highlighter-rouge">branches/&lt;slug&gt;/en/review/</code> while the PR is open); What the PRs
 changed (one line per PR, in the same order as the URLs: what that PR
 changes in the document, in a reader’s words); Agent completed and PR
 head (one line per PR, same order). A change set may have several PRs, and
 a line in any per-PR column always matches the line of its URL in Pull
 request.</li><li><strong>Staging built</strong> and <strong>Staging built from</strong>: when, and from which commit,
 the preview was last built, read from the newest gh-pages commit under
-<code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code>. Write them on every rebuild. The script compares them
+<code class="language-plaintext highlighter-rouge">branches/&lt;slug&gt;/</code>. Write them on every rebuild. The script compares them
 with Agent completed and PR head and flags a preview built before the last
 push as stale.</li><li><strong>Agent step</strong>: write <code class="language-plaintext highlighter-rouge">idle</code> (or the next step) before leaving a change
 set. A step left behind shows “no update for N min” on the sheet.</li><li><strong>Append, never reorder.</strong> A change set new to the tab goes at the end.

@@ -30,6 +30,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
           "@type": "bootstrap:Process",
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-ast-cache.svg",
           "description": "How an IG repository's own site is published, and how the AST it is built from is kept current (skill `ig-build-pipeline` §\"The AST cache lifecycle\").\n\nTHE RULE. An IG site is built from the IG Publisher AST read from the IG repository's cache branch `cat/fhir-harness/fhir-ast/<package id>`, never from Publisher HTML. The publish refuses an AST that is not valid for the commit it publishes (`ig-cache.sh restore` then `verify`). A later commit that changes no IG input (`sushi-config.yaml`, `ig.ini`, `input/`) does not make the AST stale.\n\nTHE REFRESH. The cache is written by ONE thing: fhir-harness's reusable workflow `.github/workflows/ig-ast-refresh.yml`, which an IG repository's Site publish calls as its first job (`ast`; template `templates/ig-repo-site/site-publish.yml`). It runs the Publisher through the AST exporter on a GitHub runner (Java, 10 GB heap, tx.fhir.org). It seeds the branch only from a commit on the default branch whose inputs equal the tip's.\n\nA valid AST is a cache, not a release: every page drawn from it carries the provisional mark (`ig-ast-delta`).",
           "enforcement": "advisory",
           "flowCount": 10,
@@ -320,6 +321,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstDeltaReview",
           "@type": "bootstrap:Process",
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-ast-delta-review.svg",
           "description": "The review step of an incremental FHIR IG build, as its own subprocess: list and inspect the differences between the incremental IG AST and what a full build would have produced, then accept them or raise a finding.\n\nWHERE IT SITS. In `ig-incremental-build.bpmn` it belongs between Task_Merge and Task_Qa: after the restored and rebuilt records are merged, before the QC gates read the aggregate. That diagram does not call it yet; `ig-ast-delta` §\"Where this sits in a process\" states the placement.\n\nWHAT IT GUARDS. An incremental build rebuilds only the cone of a change, computed on the BASE edges. If the cone rules miss a coupling, a resource that should have changed does not, and nothing downstream can tell: the merged AST looks exactly like a correct one. So a person reads the delta, and a difference nobody can explain is treated as a missed coupling.\n\nWHAT IT DOES NOT CLAIM. A clean review says the delta is explained, not that the IG is correct. The AST stays a cache: every rendered page carries the provisional mark, and a release is still cut from a full build (`ig-publisher-reduction` P4).",
           "enforcement": "advisory",
           "flowCount": 9,
@@ -583,6 +585,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
           "@type": "bootstrap:Process",
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-incremental-build.svg",
           "description": "An incremental build for a FHIR Implementation Guide: compile, validate and re-render only the dependency cone of a change, then gate on QA and deploy. One change (a PR push or a push to main) runs:\nrestore the derived state, compute the change's dependency cone, compile and\nvalidate only the cone against the warm validator, re-render the cone's\nrecords, rebuild the meta-index, assemble the site, gate on QA, then deploy;\non main or a release only, seed the cache from the green build. An unusable\ncache falls back to a full build; an environment error stops the run and logs\nwhy. Advisory, like the other content-type pipelines: the package that owns\nthe content owns what adequate means.",
           "enforcement": "advisory",
           "flowCount": 29,
@@ -1348,6 +1351,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
           "@type": "bootstrap:Process",
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l3-fhir-pipeline.svg",
           "description": "How an L3 FHIR Implementation Guide is authored in FSH, built with SUSHI, the validator and the IG Publisher, reviewed and published, starting from a source model that is ready. Generic: what produces the source model is the layer above's own process, which maps its model and then calls Process_L3Fhir. This one names no such model.",
           "enforcement": "advisory",
           "flowCount": 12,
@@ -1678,6 +1682,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
           "@type": "bootstrap:Process",
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/questionnaire-wireframe-review.svg",
           "description": "A built FHIR Questionnaire shown the way a person will meet it — a mid-fidelity wireframe at web and mobile width, and a live LHC-Forms form view — checked field for field against the L2 wireframe it was derived from, reviewed as a design, staged with deep links, and changed through requests that say which side was edited. Operating skill: fhir-questionnaire-wireframe.\n\nWHERE IT SITS. After SUSHI has compiled the Questionnaire to JSON (l3-fhir-pipeline, Task_Sushi), and wherever a layer above reviews a Questionnaire's fidelity to its wireframe. It reads JSON only, so it can run on any IG that produces a Questionnaire.\n\nWHAT IT DOES NOT CLAIM. A faithful Questionnaire is not therefore a good form, and an accepted form is not therefore conformant: wireframe-design-review judges the first and fhir-validation the second.",
           "enforcement": "advisory",
           "flowCount": 15,
@@ -2089,6 +2094,7 @@
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
           "@type": "bootstrap:Process",
+          "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-docs-site-compose.svg",
           "description": "How a host docs site builds every IG it mounts INSIDE itself, so each IG's pages wear the host's chrome (one sidebar, one search, one language selector) rather than being a site of their own. Subprocess of Tool `stage-ig-sites`; reached from `docs-site-publish`'s `Call_InstanceSites` (skill `docs-generation`).\n\nNO IG PUBLISHER RUNS. `build-ig-site` turns the IG's source into Jekyll source, with the Publisher's `site.data.fhir` filled from the IG's AST and `sushi-config.yaml`, and the host's ONE Jekyll build renders it with just-the-docs (skill `ig-render-jekyll`). Which IGs is DATA: each instance whose `fhir-artifact-index/menu.json` records a `source.of` (the IG repository) and `source.ref` (the commit). No workflow and no step here names an IG.\n\n`feature-staging.yml` runs the same steps for a pull request's preview, with `--changed-files`, so only the IGs a change reaches are rebuilt. An IG repository building its OWN site runs `stage-ig-sites --only <instance> --source <checkout> --compose-into <shell> --compose-at-root`, which is `ig-ast-cache`'s `Task_BuildSite`, not this process.",
           "enforcement": "advisory",
           "flowCount": 5,

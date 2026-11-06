@@ -259,7 +259,7 @@ says the change-set is ready to draft. It is not the editor’s decision,
 and a comment’s status still moves only through this tool. Where the
 suggestions and feedback conflict, or one asks for something the
 document cannot say without a decision, set <em>Needs human</em> and write
-what is needed in “agentic action taken”.</li><li>Publish the branch’s staging preview (<code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/</code>).</li><li>Write the Agent rows (skill
+what is needed in “agentic action taken”.</li><li>Publish the branch’s staging preview (<code class="language-plaintext highlighter-rouge">branches/&lt;slug&gt;/</code>).</li><li>Write the Agent rows (skill
 <a href="../../reference/skill-instructions/review-sheet-agent-columns.html"><code class="language-plaintext highlighter-rouge">review-sheet-agent-columns</code></a>, which
 applies to any work on a change set, in a sync or not), and nothing
 anywhere else in the sheet: status
@@ -267,7 +267,7 @@ anywhere else in the sheet: status
 done, the blocks or sections changed, who acted (the agent and its
 session) and the completion time (UTC, <code class="language-plaintext highlighter-rouge">YYYY-MM-DD HH:MMZ</code>) on each
 PC’s row; and on the change-set’s row the PR and
-<code class="language-plaintext highlighter-rouge">STAGING/&lt;slug&gt;/en/review/</code> (Pull request, Staging review page), one
+<code class="language-plaintext highlighter-rouge">branches/&lt;slug&gt;/en/review/</code> (Pull request, Staging review page), one
 line saying what the PR changes in the document (What the PRs changed)
 and the completion time (Agent completed), each on the same line as its
 PR’s URL. The PR body names the feedback it answered by tab, row and column header,
@@ -450,7 +450,7 @@ for merge, an independent reviewer runs the QA gate: every disposition
 against the people’s Blue Disposition and the PR’s diff, and the staging
 QA report (<code class="language-plaintext highlighter-rouge">review-sheet-script</code>, “The QA gate”). Once an Editor sets
 Ready for merge to Yes, that blurb is the summary: in the merge commit and
-as the closing comment on the change set’s issue.</li><li>The staging preview is published to <code class="language-plaintext highlighter-rouge">STAGING/&lt;branch&gt;/</code>. The dashboard links
+as the closing comment on the change set’s issue.</li><li>The staging preview is published to <code class="language-plaintext highlighter-rouge">branches/&lt;branch&gt;/</code>. The dashboard links
 each comment’s anchor on <code class="language-plaintext highlighter-rouge">main</code> (before) and on the preview (after). See
 <a href="../../reference/skill-instructions/staging-review.html"><code class="language-plaintext highlighter-rouge">staging-review</code></a>.</li><li>Merging moves the accepted comments to <em>incorporated</em>. The change-set is
 <em>incorporated</em>, and its primary issue closed, only when <strong>every</strong> comment in

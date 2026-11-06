@@ -24,6 +24,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/iris-cdn-initial-load.svg",
       "description": "The first full export of WHO IRIS onto Cloudflare (git on Artifacts, bytes in R2): every item record and every bitstream: metadata plus PDFs. Run in batches with a checkpoint, so a run that stops resumes where it stopped and never re-fetches what it already holds. Ends in one signed, verified release.",
       "enforcement": "strict",
       "flowCount": 16,
@@ -449,6 +450,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/iris-cdn-nightly.svg",
       "description": "Every night: ask the IRIS DSpace REST API which items changed since the last published run, ingest only those, rebuild the whole graph (sorted output keeps unchanged partitions byte-identical), and publish a signed release. A night with no changes publishes nothing and commits nothing.",
       "enforcement": "strict",
       "flowCount": 12,
@@ -788,6 +790,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/iris-cdn-reconcile.svg",
       "description": "The DSpace REST API reports no deletions, so once a week every item id IRIS lists is compared with what the library holds. An item no longer listed is re-checked by id; only one IRIS confirms withdrawn is marked so.",
       "enforcement": "strict",
       "flowCount": 10,
@@ -1076,6 +1079,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/iris-cdn-sign-publish.svg",
       "description": "Turn a candidate payload into a signed release on Cloudflare: each changed library item gets a detached JWS over its own manifest, and the BagIt bag (RFC 8493) whose tagmanifest pins every item manifest and signature is signed once with a detached JWS (RFC 7515 Appendix F, ES256 per RFC 7518), the key published as a verificationMethod of a did:web DID document whose publicKeyJwk carries an x5c chain to the WHO signing key. Nothing unchanged is re-uploaded or re-signed; an empty diff ends the process with no commit.",
       "enforcement": "strict",
       "flowCount": 13,

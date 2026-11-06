@@ -196,14 +196,14 @@
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/input.schema.json",
-              "instructionLines": 186,
+              "instructionLines": 188,
               "instructionsPath": "skills/content/folio-document-adapter/document-publishing.md",
               "name": "document-publishing",
               "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-publishing/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7fbe7b654e7d94b3d76e11d0bdeec05f2ab2ce6edaa5fb68dbe3111898e6999e",
-                "bytes": 8938,
-                "sha256": "7fbe7b654e7d94b3d76e11d0bdeec05f2ab2ce6edaa5fb68dbe3111898e6999e"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/81c56c5c22e8441833f65561a68610cb7d97fe7b9d723f2e18991fa3b2053e38",
+                "bytes": 9291,
+                "sha256": "81c56c5c22e8441833f65561a68610cb7d97fe7b9d723f2e18991fa3b2053e38"
               },
               "title": "document-publishing"
             },
@@ -215,14 +215,14 @@
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
               "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-structure/input.schema.json",
-              "instructionLines": 71,
+              "instructionLines": 99,
               "instructionsPath": "skills/content/folio-document-adapter/document-structure.md",
               "name": "document-structure",
               "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/document-structure/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/384149f726e3ac6f5cc35ab5af4875a169815571ac3700b6fc50f3d36e68cef9",
-                "bytes": 3042,
-                "sha256": "384149f726e3ac6f5cc35ab5af4875a169815571ac3700b6fc50f3d36e68cef9"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/86e2a7ee3cd1eea750927b4305ee9dadbebedaaf1adbeab6a7389c53a6a63bb1",
+                "bytes": 4452,
+                "sha256": "86e2a7ee3cd1eea750927b4305ee9dadbebedaaf1adbeab6a7389c53a6a63bb1"
               },
               "title": "document-structure"
             },
@@ -456,9 +456,9 @@
               "name": "public-comment",
               "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/skills/public-comment/output.schema.json",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ceb61f47fabaf0173f5a99d57301a6fe672461cd578c4e3c3a160473baa0cdbb",
-                "bytes": 38816,
-                "sha256": "ceb61f47fabaf0173f5a99d57301a6fe672461cd578c4e3c3a160473baa0cdbb"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d6f74ab0a2b9ca1c195a26b3e941ef8b32a56de142d57219239c28c876ccc5fd",
+                "bytes": 38819,
+                "sha256": "d6f74ab0a2b9ca1c195a26b3e941ef8b32a56de142d57219239c28c876ccc5fd"
               },
               "title": "public-comment"
             },
@@ -470,13 +470,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 211,
+              "instructionLines": 212,
               "instructionsPath": "skills/content/folio-document-adapter/public-comment-channels.md",
               "name": "public-comment-channels",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/6672afdc3255e754477096dfd5dd71e814397545a07f29b83cd9fa1669d06472",
-                "bytes": 11995,
-                "sha256": "6672afdc3255e754477096dfd5dd71e814397545a07f29b83cd9fa1669d06472"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/592dd14ee6c60837fe82bc3718fcd918c13e4d7000f7d300d01b9450b2b7fe68",
+                "bytes": 12197,
+                "sha256": "592dd14ee6c60837fe82bc3718fcd918c13e4d7000f7d300d01b9450b2b7fe68"
               },
               "title": "Public comment channels and intake"
             },
@@ -484,17 +484,17 @@
               "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-log-watch",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
-              "description": "Poll a drafting review log (a Contributor Feedback sheet) and its folio repository's issues mechanically, with Tool `review-log-watch`, and start agent work only when a cell people set or an open issue changed. Each issue that no row links yet becomes a Contributor Feedback row, and a closed issue's row is hidden with its text struck through. Use on every wake of a review-log watcher, and when setting up a watcher for a new log.",
+              "description": "Poll a review log (a drafting Contributor Feedback sheet, or a public-comment sheet's Review Change Sets) and its folio repository's issues mechanically, with Tool `review-log-watch`, and start agent work only when a cell people set or an open issue changed. Each issue that no row links yet becomes a Contributor Feedback row, and a closed issue's row is hidden with its text struck through. Use on every wake of a review-log watcher, and when setting up a watcher for a new log.",
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 258,
+              "instructionLines": 291,
               "instructionsPath": "skills/content/folio-document-adapter/review-log-watch.md",
               "name": "review-log-watch",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/45c906082361ce01c6d494a0a3b02265166bc95b0704ac045aa4c4fce478c009",
-                "bytes": 13261,
-                "sha256": "45c906082361ce01c6d494a0a3b02265166bc95b0704ac045aa4c4fce478c009"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/749c4a5f374db291355b5faf5df143cb418a1ad6bca179c9f2b13a72f18e2d05",
+                "bytes": 15067,
+                "sha256": "749c4a5f374db291355b5faf5df143cb418a1ad6bca179c9f2b13a72f18e2d05"
               },
               "title": "Review-log watch"
             },
@@ -510,9 +510,9 @@
               "instructionsPath": "skills/content/folio-document-adapter/review-sheet-agent-columns.md",
               "name": "review-sheet-agent-columns",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/52fed7a7c5baa1f89a4ee989ac7eee39227a49d5d083ba2c7d0c1e3c69c6c09f",
-                "bytes": 6785,
-                "sha256": "52fed7a7c5baa1f89a4ee989ac7eee39227a49d5d083ba2c7d0c1e3c69c6c09f"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d3a380f002ee16c632bc167ff64d3658bc6cf920d8894d58064323f13541f045",
+                "bytes": 6787,
+                "sha256": "d3a380f002ee16c632bc167ff64d3658bc6cf920d8894d58064323f13541f045"
               },
               "title": "Keep the review sheet's Agent columns current"
             },
@@ -524,13 +524,13 @@
               "hasIOContract": false,
               "hasInstructions": true,
               "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-              "instructionLines": 1254,
+              "instructionLines": 1266,
               "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
               "name": "review-sheet-script",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/841780951326fdf730ecdc6652e8b2c5fc32928f68bd66b02d8fca93331c6d44",
-                "bytes": 79256,
-                "sha256": "841780951326fdf730ecdc6652e8b2c5fc32928f68bd66b02d8fca93331c6d44"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/9b4fe02b92d8e1e4e4db19cb48160eb4d2e5191275c42b39bf926110e1802943",
+                "bytes": 79952,
+                "sha256": "9b4fe02b92d8e1e4e4db19cb48160eb4d2e5191275c42b39bf926110e1802943"
               },
               "title": "The review sheet's Apps Script"
             }

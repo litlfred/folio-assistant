@@ -549,7 +549,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Task_CleanupStaging",
       "@type": "bootstrap:ProcessNode",
-      "name": "Remove STAGING/<slug>/"
+      "name": "Remove branches/<slug>/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Task_Merge",
@@ -619,7 +619,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_DeployStaging",
       "@type": "bootstrap:ProcessNode",
-      "name": "Deploy to STAGING/<slug>/"
+      "name": "Deploy to branches/<slug>/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_WatchBranchCI",

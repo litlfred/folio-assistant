@@ -7,6 +7,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
       "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/ig-docs-site-compose.svg",
       "description": "How a host docs site builds every IG it mounts INSIDE itself, so each IG's pages wear the host's chrome (one sidebar, one search, one language selector) rather than being a site of their own. Subprocess of Tool `stage-ig-sites`; reached from `docs-site-publish`'s `Call_InstanceSites` (skill `docs-generation`).\n\nNO IG PUBLISHER RUNS. `build-ig-site` turns the IG's source into Jekyll source, with the Publisher's `site.data.fhir` filled from the IG's AST and `sushi-config.yaml`, and the host's ONE Jekyll build renders it with just-the-docs (skill `ig-render-jekyll`). Which IGs is DATA: each instance whose `fhir-artifact-index/menu.json` records a `source.of` (the IG repository) and `source.ref` (the commit). No workflow and no step here names an IG.\n\n`feature-staging.yml` runs the same steps for a pull request's preview, with `--changed-files`, so only the IGs a change reaches are rebuilt. An IG repository building its OWN site runs `stage-ig-sites --only <instance> --source <checkout> --compose-into <shell> --compose-at-root`, which is `ig-ast-cache`'s `Task_BuildSite`, not this process.",
       "enforcement": "advisory",
       "flowCount": 5,

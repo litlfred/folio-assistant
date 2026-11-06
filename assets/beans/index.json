@@ -174,7 +174,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T08:26:15Z",
-      "updatedAt": "2026-11-05T14:38:58Z",
+      "updatedAt": "2026-11-05T23:28:34Z",
       "preview": "## Evidence\nmerge-main (`.github/workflows/merge-main.yml`, from #1820 and #1834) merged main into **every** labelled PR on each push to main, conflicted or not. Each merge is a new head commit, so each PR restarted its full CI: about 130 runner-minutes per PR per push to main.\n\n## Fix\nThe sweep merges main only into PRs that are actually conflicted. A clean PR keeps its head and its runs; the mer",
       "file": "beans/defs/folio-assistant-6h4p--ci-speed-ii-a-merge-main-restarts-full-ci-on-every.md"
     },
@@ -580,7 +580,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T08:26:16Z",
-      "updatedAt": "2026-11-05T14:38:58Z",
+      "updatedAt": "2026-11-05T23:28:34Z",
       "preview": "Catch failures before they reach a runner: a pre-push hook, an agent hook, and a record keyed by the tree hash so CI can see the gates already passed on that exact tree. Sibling \"CI speed 3\", in cat-harness-tools. An agent's record never stands in for the QA verdict; it only lets CI skip a rebuild it will check.\n\n## Done when\n- [ ] the pre-push and agent hooks run the fast gates\n- [ ] the tree-key",
       "file": "beans/defs/folio-assistant-fn8q--ci-speed-ii-e-gates-before-push-pre-push-agent-hoo.md"
     },

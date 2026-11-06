@@ -267,9 +267,9 @@ reusable <code class="language-plaintext highlighter-rouge">ig-ast-refresh.yml</
 every agent-run repository publishes with:
     <ul><li>it builds the site from the IG’s cached AST with the steps the mounted
 layers provide (<a href="../../reference/skill-instructions/ig-build-pipeline.html"><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></a> §”The IG
-repository’s site route”), and runs no Publisher;</li><li>it publishes <code class="language-plaintext highlighter-rouge">main</code> at the root (keeping <code class="language-plaintext highlighter-rouge">STAGING/</code>, <code class="language-plaintext highlighter-rouge">_render-log/</code> and
+repository’s site route”), and runs no Publisher;</li><li>it publishes <code class="language-plaintext highlighter-rouge">main</code> at the root (keeping <code class="language-plaintext highlighter-rouge">branches/</code>, <code class="language-plaintext highlighter-rouge">_render-log/</code> and
 <code class="language-plaintext highlighter-rouge">branches/</code>) and any other branch as a preview under
-<code class="language-plaintext highlighter-rouge">STAGING/&lt;branch&gt;/</code>;</li><li><code class="language-plaintext highlighter-rouge">--plan</code> prints what it would do and <code class="language-plaintext highlighter-rouge">--dry-run</code> builds without
+<code class="language-plaintext highlighter-rouge">branches/&lt;branch&gt;/</code>;</li><li><code class="language-plaintext highlighter-rouge">--plan</code> prints what it would do and <code class="language-plaintext highlighter-rouge">--dry-run</code> builds without
 publishing; do not use <code class="language-plaintext highlighter-rouge">--bare-ig</code>;</li><li>an IG that needs steps beyond the layers’ declares <code class="language-plaintext highlighter-rouge">site.build</code> inline
 in its <code class="language-plaintext highlighter-rouge">index.config.json</code> entry, never in a <code class="language-plaintext highlighter-rouge">&lt;instance&gt;.config.json</code>;</li><li>the menu is read from <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code> at build time; nothing is
 committed for it.</li></ul></li><li><strong>Tell the owner how to run it</strong>: Actions tab → “Site publish (by hand)”
