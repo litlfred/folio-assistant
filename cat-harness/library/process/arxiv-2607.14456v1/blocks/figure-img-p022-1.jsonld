@@ -1,0 +1,94 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p022-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p022-1.png",
+  "pageStart": 22,
+  "pageEnd": 22,
+  "narrative": [
+    {
+      "text": "Figure 13, captioned \"Customer promotion workflow\". From \"Start: Start - Receive CIF\" it fetches and validates the customer profile; an Invalid/Inactive edge returns 'No Deals Found'. Otherwise it retrieves order history, determines total spend and gets the loyalty points balance, then \"Check Promo Eligibility (Accepts point balance and total spent)\" splits into two symmetric branches — \"Low Value Customer (Bronze/Silver)\" to a standard discount and standard recommendations, and \"High Value Customer (Platinum/Gold)\" to a premium discount and premium recommendations. Both rejoin at \"Is promotion Urgent\", which sends either a scheduled or an immediate notification before End Process. NOTE, as an observation about the paper rather than about the diagram: the ten workflows are figured in alphabetical order (Cart, Cost, Deal, Label, News, Risk, Social, …, Tournament, Weather) and this is the eighth, the position of the workflow the results call \"Spam\"; the caption calls it a customer promotion workflow and the diagram shows one. Which name is intended is not established here.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-09-23",
+      "lang": "en"
+    },
+    {
+      "text": "Figure 13, légendée « Customer promotion workflow ». Depuis « Start: Start - Receive CIF », il récupère et valide le profil client ; une arête Invalid/Inactive renvoie « No Deals Found ». Sinon, il récupère l'historique des commandes, détermine les dépenses totales et obtient le solde de points de fidélité, puis « Check Promo Eligibility (Accepts point balance and total spent) » se divise en deux branches symétriques : « Low Value Customer (Bronze/Silver) » vers une remise standard et des recommandations standard, et « High Value Customer (Platinum/Gold) » vers une remise premium et des recommandations premium. Les deux se rejoignent à « Is promotion Urgent », qui envoie une notification planifiée ou immédiate avant End Process. REMARQUE, en tant qu'observation sur l'article et non sur le diagramme : les dix workflows sont présentés par ordre alphabétique (Cart, Cost, Deal, Label, News, Risk, Social, …, Tournament, Weather) et celui-ci est le huitième, la position du workflow que les résultats appellent « Spam » ; la légende parle d'un workflow de promotion client et le diagramme en montre un. Le nom voulu n'est pas établi ici.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "fr"
+    },
+    {
+      "text": "Figura 13, con el pie «Customer promotion workflow». Desde «Start: Start - Receive CIF» obtiene y valida el perfil del cliente; una arista Invalid/Inactive devuelve «No Deals Found». Si no, recupera el historial de pedidos, determina el gasto total y obtiene el saldo de puntos de fidelidad, y luego «Check Promo Eligibility (Accepts point balance and total spent)» se divide en dos ramas simétricas: «Low Value Customer (Bronze/Silver)» hacia un descuento estándar y recomendaciones estándar, y «High Value Customer (Platinum/Gold)» hacia un descuento premium y recomendaciones premium. Ambas se reúnen en «Is promotion Urgent», que envía una notificación programada o inmediata antes de End Process. NOTA, como observación sobre el artículo y no sobre el diagrama: los diez flujos aparecen en orden alfabético (Cart, Cost, Deal, Label, News, Risk, Social, …, Tournament, Weather) y este es el octavo, la posición del flujo que los resultados llaman «Spam»; el pie habla de un flujo de promoción de clientes y el diagrama muestra uno. No queda establecido aquí qué nombre se pretendía.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "es"
+    },
+    {
+      "text": "الشكل 13، وتسميته «Customer promotion workflow». من «Start: Start - Receive CIF» يجلب ملف العميل ويتحقق منه؛ وتعيد حافة Invalid/Inactive النتيجة «No Deals Found». وإلا فإنه يسترجع سجل الطلبات، ويحدد إجمالي الإنفاق، ويجلب رصيد نقاط الولاء، ثم تنقسم «Check Promo Eligibility (Accepts point balance and total spent)» إلى فرعين متناظرين: «Low Value Customer (Bronze/Silver)» إلى خصم عادي وتوصيات عادية، و«High Value Customer (Platinum/Gold)» إلى خصم مميز وتوصيات مميزة. ويلتقي الفرعان عند «Is promotion Urgent» التي ترسل إشعارًا مجدولًا أو فوريًا قبل End Process. ملاحظة، بوصفها ملاحظة عن الورقة لا عن المخطط: تُعرض السير العشرة بترتيب أبجدي (Cart، Cost، Deal، Label، News، Risk، Social، …، Tournament، Weather) وهذا هو الثامن، وهو موضع السير الذي تسميه النتائج «Spam»؛ والتسمية التوضيحية تتحدث عن سير لترويج العملاء والمخطط يُظهر ذلك. ولا يثبت هنا أي الاسمين هو المقصود.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ar"
+    },
+    {
+      "text": "Рисунок 13 с подписью «Customer promotion workflow». От «Start: Start - Receive CIF» он получает и проверяет профиль клиента; ребро Invalid/Inactive возвращает «No Deals Found». Иначе он извлекает историю заказов, определяет общие траты и получает баланс бонусных баллов, после чего «Check Promo Eligibility (Accepts point balance and total spent)» разделяется на две симметричные ветки: «Low Value Customer (Bronze/Silver)» к стандартной скидке и стандартным рекомендациям и «High Value Customer (Platinum/Gold)» к премиальной скидке и премиальным рекомендациям. Обе сходятся в «Is promotion Urgent», откуда отправляется запланированное или немедленное уведомление перед End Process. ПРИМЕЧАНИЕ — это наблюдение о статье, а не о диаграмме: десять процессов приведены в алфавитном порядке (Cart, Cost, Deal, Label, News, Risk, Social, …, Tournament, Weather), и этот восьмой — позиция процесса, который в результатах назван «Spam»; подпись говорит о процессе продвижения для клиентов, и диаграмма показывает именно его. Какое название имелось в виду, здесь не установлено.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ru"
+    },
+    {
+      "text": "图 13，图题为“Customer promotion workflow”。从“Start: Start - Receive CIF”开始，它获取并校验客户资料；一条 Invalid/Inactive 边返回“No Deals Found”。否则它检索订单历史、确定总消费并获取积分余额，然后“Check Promo Eligibility (Accepts point balance and total spent)”分成两个对称分支：“Low Value Customer (Bronze/Silver)”通往标准折扣和标准推荐，“High Value Customer (Platinum/Gold)”通往高级折扣和高级推荐。两支在“Is promotion Urgent”汇合，在 End Process 之前发送定时或即时通知。注意，这是对论文而非对图的观察：十个工作流按字母顺序排列（Cart、Cost、Deal、Label、News、Risk、Social、…、Tournament、Weather），这是第八个，即结果中称为“Spam”的工作流的位置；图题称其为客户促销工作流，图中所示也是如此。此处无法确定其本意是哪个名称。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-022",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/arxiv-2607.14456v1/manifest.jsonld",
+  "provenance": "ingested"
+}

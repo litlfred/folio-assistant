@@ -1,0 +1,156 @@
+{
+  "$schema": "folio-index-config/v1",
+  "instances": [
+    {
+      "name": "who-iris",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/site-home.md",
+          "sourceSteps": [
+            "site:catalogue",
+            "site:home"
+          ],
+          "keep": [
+            "ns"
+          ]
+        }
+      }
+    },
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "remote": {
+          "repository": "litlfred/folio-assistant-core",
+          "ref": "478cd43f3dc6a535131cfb303597e7ea665c9dd2",
+          "overrides": {
+            "folio-assistant-core": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            },
+            "cat-harness-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-02",
+              "ref": "478cd43f3dc6a535131cfb303597e7ea665c9dd2",
+              "evidence": "Owner litlfred merge window (to 2026-11-03 02:40Z): merge non-content when green. Re-pin core to main (with core#593, dspace namespace …/v0/ns/dspace/) so the Dublin Core renderings carry the right dspace IRIs, for who-iris#165."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "4bb08ed8239158ad4dcba9c5a747f5995100cc33",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-02",
+              "ref": "4bb08ed8239158ad4dcba9c5a747f5995100cc33",
+              "evidence": "Owner litlfred merge window (to 2026-11-03 02:40Z): merge non-content when green. Re-pin to main tips carrying cat-harness#968 (library kind schema accepts one @type) and cat-harness-tools#1390 (candidate fields into meta), for who-iris#165 and the stacked #171 indicators."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "42af00bcdb9526330db806a0376bee7f637b0c69",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-04",
+              "ref": "42af00bcdb9526330db806a0376bee7f637b0c69",
+              "evidence": "Owner leitnerc/litlfred, 2026-11-04 ~06:55Z, in session https://claude.ai/code/session_01EucfRodNcVYWoFyT9Zwyb3: \"Repin and merge when needed and ready for the next 3 hours\" (bean folio-assistant-djj5): re-pin cat-harness-tools to cat-harness-tools#1453's merge, which who-iris#176 needs."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "0d655b74e9ffd1e246a0bd4df60967e158d665de",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-02",
+              "ref": "0d655b74e9ffd1e246a0bd4df60967e158d665de",
+              "evidence": "Owner litlfred, 2026-11-01 (20:41Z, MVP thread cmsg_017WNUkNK8kdDziPK58Pv6G991qa3xg86ZCWdyH2spZ7FS): 'i want to get all functional stuff done, the full repin on harnesses done and stablized as MVP goal.'"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "ed547a9ab77e8445f13f52fe2152d6e82776bcaf",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-02",
+              "ref": "ed547a9ab77e8445f13f52fe2152d6e82776bcaf",
+              "evidence": "Owner litlfred, 2026-11-01 (20:41Z, MVP thread cmsg_017WNUkNK8kdDziPK58Pv6G991qa3xg86ZCWdyH2spZ7FS): 'i want to get all functional stuff done, the full repin on harnesses done and stablized as MVP goal.'"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "site": {
+    "landing": "who-iris"
+  }
+}

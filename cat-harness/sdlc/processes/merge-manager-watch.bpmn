@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns/"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/v0/processes/ns/"
+                  id="Definitions_Process_MergeManagerWatch" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns/" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:resource id="merge-steward" name="Merge steward"/>
+  <bpmn:collaboration id="Collaboration_Process_MergeManagerWatch">
+    <bpmn:participant id="Participant_Process_MergeManagerWatch" name="Merge manager watch: wake, read the queue live, route" processRef="Process_MergeManagerWatch"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_MergeManagerWatch" name="Merge manager watch: wake, read the queue live, route" isExecutable="false">
+    <bpmn:documentation>The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK.</bpmn:documentation>
+    <bpmn:laneSet id="LaneSet_Process_MergeManagerWatch">
+      <bpmn:lane id="Lane_Steward" name="Merge steward" partitionElementRef="merge-steward">
+        <bpmn:documentation>The merge manager, holding the merge-steward role across one or more repositories. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, then routes to the process the queue needs (merge train, saturation meta-merge, stalled-agent takeover) or stays idle.</bpmn:documentation>
+        <bpmn:flowNodeRef>Start_Wake</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_Read</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gw_Route</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Meta</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Train</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Call_Stalled</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Done</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Idle</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Start_Wake" name="Timer, PR event, main run done, or sibling message">
+      <bpmn:documentation>Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn.</bpmn:documentation>
+      <bpmn:outgoing>Flow_1</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="Timer_Wake"/>
+    </bpmn:startEvent>
+    <bpmn:task id="Task_Read" name="Read PRs, runner queue, main verdict and owners">
+      <bpmn:documentation>Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment.</bpmn:documentation>
+      <bpmn:extensionElements><bootstrap.processes:skill ref="merge-manager-watcher"/></bpmn:extensionElements>
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="Gw_Route" name="What does the queue need?">
+      <bpmn:documentation>Saturated: queued runs are 60+ minutes old and nothing has landed, or the owner says the runners are full. Stalled: a PR owner has been silent for 2+ hours. Ready: a PR stacks with green owed CI. Otherwise nothing.</bpmn:documentation>
+      <bpmn:incoming>Flow_2</bpmn:incoming>
+      <bpmn:outgoing>Flow_3</bpmn:outgoing>
+      <bpmn:outgoing>Flow_4</bpmn:outgoing>
+      <bpmn:outgoing>Flow_5</bpmn:outgoing>
+      <bpmn:outgoing>Flow_6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="Call_Meta" name="Saturation meta-merge" calledElement="Process_SaturationMetaMerge">
+      <bpmn:documentation>Offer the card and land only on the owner's tap.</bpmn:documentation>
+      <bpmn:incoming>Flow_3</bpmn:incoming>
+      <bpmn:outgoing>Flow_7</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:callActivity id="Call_Train" name="Merge train" calledElement="Process_MergeTrain">
+      <bpmn:documentation>Ready PRs that stack land as a train through merge:guard.</bpmn:documentation>
+      <bpmn:incoming>Flow_4</bpmn:incoming>
+      <bpmn:outgoing>Flow_8</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:callActivity id="Call_Stalled" name="Stalled-agent triage" calledElement="Process_StalledAgentTriage">
+      <bpmn:documentation>Tell the owner, then take the stalled PR over.</bpmn:documentation>
+      <bpmn:incoming>Flow_5</bpmn:incoming>
+      <bpmn:outgoing>Flow_9</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:endEvent id="End_Done" name="Wake handled">
+      <bpmn:incoming>Flow_7</bpmn:incoming>
+      <bpmn:incoming>Flow_8</bpmn:incoming>
+      <bpmn:incoming>Flow_9</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="End_Idle" name="Nothing to do">
+      <bpmn:incoming>Flow_6</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Wake" targetRef="Task_Read"/>
+    <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_Read" targetRef="Gw_Route"/>
+    <bpmn:sequenceFlow id="Flow_3" name="Saturated" sourceRef="Gw_Route" targetRef="Call_Meta"/>
+    <bpmn:sequenceFlow id="Flow_4" name="Ready" sourceRef="Gw_Route" targetRef="Call_Train"/>
+    <bpmn:sequenceFlow id="Flow_5" name="Stalled" sourceRef="Gw_Route" targetRef="Call_Stalled"/>
+    <bpmn:sequenceFlow id="Flow_6" name="Nothing" sourceRef="Gw_Route" targetRef="End_Idle"/>
+    <bpmn:sequenceFlow id="Flow_7" sourceRef="Call_Meta" targetRef="End_Done"/>
+    <bpmn:sequenceFlow id="Flow_8" sourceRef="Call_Train" targetRef="End_Done"/>
+    <bpmn:sequenceFlow id="Flow_9" sourceRef="Call_Stalled" targetRef="End_Done"/>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="Diagram_Process_MergeManagerWatch">
+    <bpmndi:BPMNPlane id="Plane_Process_MergeManagerWatch" bpmnElement="Collaboration_Process_MergeManagerWatch">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_MergeManagerWatch" bpmnElement="Participant_Process_MergeManagerWatch" isHorizontal="true">
+        <dc:Bounds x="60" y="60" width="1090" height="640"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Steward" bpmnElement="Lane_Steward" isHorizontal="true">
+        <dc:Bounds x="90" y="60" width="1060" height="640"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_Wake" bpmnElement="Start_Wake">
+        <dc:Bounds x="212" y="362" width="36" height="36"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="170" y="402" width="120" height="40"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Task_Read" bpmnElement="Task_Read">
+        <dc:Bounds x="370" y="320" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Gw_Route" bpmnElement="Gw_Route" isMarkerVisible="true">
+        <dc:Bounds x="605" y="355" width="50" height="50"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="508.59" y="302.5" width="120" height="53" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Meta" bpmnElement="Call_Meta">
+        <dc:Bounds x="770" y="95" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Train" bpmnElement="Call_Train">
+        <dc:Bounds x="770" y="245" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Call_Stalled" bpmnElement="Call_Stalled">
+        <dc:Bounds x="770" y="395" width="120" height="120"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Done" bpmnElement="End_Done">
+        <dc:Bounds x="1012" y="362" width="36" height="36"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="888" y="371.5" width="120" height="17" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Idle" bpmnElement="End_Idle">
+        <dc:Bounds x="812" y="587" width="36" height="36"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="770" y="627" width="120" height="40"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
+        <di:waypoint x="248" y="380"/>
+        <di:waypoint x="370" y="380"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_2" bpmnElement="Flow_2">
+        <di:waypoint x="490" y="380"/>
+        <di:waypoint x="605" y="380"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_3" bpmnElement="Flow_3">
+        <di:waypoint x="630" y="355"/>
+        <di:waypoint x="630" y="155"/>
+        <di:waypoint x="770" y="155"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="640" y="131" width="70" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_4" bpmnElement="Flow_4">
+        <di:waypoint x="630" y="355"/>
+        <di:waypoint x="630" y="305"/>
+        <di:waypoint x="770" y="305"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="640" y="281" width="70" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_5" bpmnElement="Flow_5">
+        <di:waypoint x="630" y="405"/>
+        <di:waypoint x="630" y="455"/>
+        <di:waypoint x="770" y="455"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="640" y="431" width="70" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_6" bpmnElement="Flow_6">
+        <di:waypoint x="630" y="405"/>
+        <di:waypoint x="630" y="605"/>
+        <di:waypoint x="812" y="605"/>
+        <bpmndi:BPMNLabel><dc:Bounds x="640" y="581" width="70" height="20"/></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_7" bpmnElement="Flow_7">
+        <di:waypoint x="890" y="155"/>
+        <di:waypoint x="1030" y="155"/>
+        <di:waypoint x="1030" y="362"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_8" bpmnElement="Flow_8">
+        <di:waypoint x="890" y="305"/>
+        <di:waypoint x="1030" y="305"/>
+        <di:waypoint x="1030" y="362"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_9" bpmnElement="Flow_9">
+        <di:waypoint x="890" y="455"/>
+        <di:waypoint x="1030" y="455"/>
+        <di:waypoint x="1030" y="398"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

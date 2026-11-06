@@ -1,0 +1,2852 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2503.18813v2",
+ "source": {
+  "file": "arxiv-2503.18813v2.pdf",
+  "sha256": "c3719f6ce73eecf45e3764debef8a3d8ff8c9233b37d128c558b694ec3790cc7",
+  "bytes": 5531468,
+  "pages": 125,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-07T06:36:45Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2503.18813",
+   "version": "2",
+   "primary_class": "cs.CR",
+   "stamp_date": "24 Jun 2025"
+  },
+  "doi": null,
+  "title": "Defeating Prompt Injections by Design",
+  "authors_raw": "Edoardo Debenedetti1,3*, Ilia Shumailov2, Tianqi Fan1, Jamie Hayes2, Nicholas Carlini2",
+  "title_lines": [
+   "Defeating Prompt Injections by Design"
+  ],
+  "abstract": null,
+  "docinfo": {
+   "Title": "Defeating Prompt Injections by Design",
+   "Author": "Edoardo Debenedetti; Ilia Shumailov; Tianqi Fan; Jamie Hayes; Nicholas Carlini; Daniel Fabian; Christoph Kern; Chongyang Shi; Andreas Terzis; Florian Tram\u00e8r",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:)"
+  },
+  "title_raw": "Defeating Prompt Injections by Design",
+  "title_source": "metadata",
+  "title_verified": true,
+  "title_evidence": {
+   "metadata": "Defeating Prompt Injections by Design",
+   "heading": "Defeating Prompt Injections by Design",
+   "outline": "Introduction",
+   "text": "Defeating Prompt Injections by Design",
+   "corroborated_by": [
+    "heading",
+    "text",
+    "page"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Defeating Prompt Injections by Design",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "2"
+  },
+  {
+   "level": 1,
+   "title": "Threat Model",
+   "page": 4,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "4"
+  },
+  {
+   "level": 2,
+   "title": "Explicit non-goals of CaMeL",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "5"
+  },
+  {
+   "level": 1,
+   "title": "The Prompt Injection Security Game",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "5"
+  },
+  {
+   "level": 1,
+   "title": "CaMeL Design",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "6"
+  },
+  {
+   "level": 2,
+   "title": "The Privileged and Quarantined LLMs",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "6"
+  },
+  {
+   "level": 2,
+   "title": "Security Policies",
+   "page": 8,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "8"
+  },
+  {
+   "level": 2,
+   "title": "Capabilities",
+   "page": 9,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "9"
+  },
+  {
+   "level": 2,
+   "title": "CaMeL Interpreter",
+   "page": 9,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "9"
+  },
+  {
+   "level": 1,
+   "title": "Evaluation",
+   "page": 11,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "11"
+  },
+  {
+   "level": 2,
+   "title": "Utility evaluation",
+   "page": 11,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "11"
+  },
+  {
+   "level": 3,
+   "title": "CaMeL has a (small) Impact on Utility",
+   "page": 11,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "11"
+  },
+  {
+   "level": 3,
+   "title": "How does CaMeL impact utility?",
+   "page": 11,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "11"
+  },
+  {
+   "level": 3,
+   "title": "Cheaper Q-LLM Models Have Little Impact on Utility",
+   "page": 12,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "12"
+  },
+  {
+   "level": 2,
+   "title": "Security evaluation",
+   "page": 12,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "12"
+  },
+  {
+   "level": 3,
+   "title": "Case study: without any Security Policies",
+   "page": 14,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "14"
+  },
+  {
+   "level": 3,
+   "title": "Case study: with Security Policies",
+   "page": 15,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "15"
+  },
+  {
+   "level": 2,
+   "title": "Baseline comparisons",
+   "page": 16,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "16"
+  },
+  {
+   "level": 2,
+   "title": "Case study: when data flow becomes control flow",
+   "page": 17,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "17"
+  },
+  {
+   "level": 2,
+   "title": "Overheads",
+   "page": 18,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "18"
+  },
+  {
+   "level": 1,
+   "title": "Side Channels Can Be a Problem",
+   "page": 19,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "19"
+  },
+  {
+   "level": 1,
+   "title": "Secondary attack scenarios that CaMeL can help with",
+   "page": 21,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "21"
+  },
+  {
+   "level": 1,
+   "title": "Discussion",
+   "page": 23,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "23"
+  },
+  {
+   "level": 2,
+   "title": "Past problems with adoption of capabilities",
+   "page": 23,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "23"
+  },
+  {
+   "level": 2,
+   "title": "De-classification and user fatigue",
+   "page": 23,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "23"
+  },
+  {
+   "level": 2,
+   "title": "So, Are Prompt Injections Solved Now?",
+   "page": 24,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "24"
+  },
+  {
+   "level": 1,
+   "title": "Future work",
+   "page": 24,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "24"
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 25,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "25"
+  },
+  {
+   "level": 1,
+   "title": "Extended Related Work",
+   "page": 30,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "30"
+  },
+  {
+   "level": 2,
+   "title": "Background: Software Security Concepts",
+   "page": 30,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "30"
+  },
+  {
+   "level": 3,
+   "title": "Computer security nomenclature",
+   "page": 30,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "30"
+  },
+  {
+   "level": 3,
+   "title": "Access and Information Flow Controls",
+   "page": 31,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "31"
+  },
+  {
+   "level": 3,
+   "title": "Tool-calling LLM Agents",
+   "page": 31,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "31"
+  },
+  {
+   "level": 2,
+   "title": "Prompt Injection Defenses",
+   "page": 32,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "32"
+  },
+  {
+   "level": 1,
+   "title": "Full results tables",
+   "page": 32,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "32"
+  },
+  {
+   "level": 1,
+   "title": "Baseline results",
+   "page": 32,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "32"
+  },
+  {
+   "level": 1,
+   "title": "NORMAL vs. STRICT modes",
+   "page": 34,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "34"
+  },
+  {
+   "level": 1,
+   "title": "Security Policy evaluation",
+   "page": 36,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "36"
+  },
+  {
+   "level": 1,
+   "title": "Extended overheads results",
+   "page": 38,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "38"
+  },
+  {
+   "level": 1,
+   "title": "Breakdown for individual failure modes for Claude 3.5 Sonnet v2",
+   "page": 40,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "40"
+  },
+  {
+   "level": 1,
+   "title": "Implementation details",
+   "page": 40,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "40"
+  },
+  {
+   "level": 2,
+   "title": "System prompt",
+   "page": 40,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "40"
+  },
+  {
+   "level": 2,
+   "title": "Exceptions prompt",
+   "page": 48,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "48"
+  },
+  {
+   "level": 2,
+   "title": "Case-study: when control flow turns into data flow from Claude and o3-mini",
+   "page": 49,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "49"
+  },
+  {
+   "level": 2,
+   "title": "Examples of failed tasks",
+   "page": 51,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "51"
+  },
+  {
+   "level": 3,
+   "title": "Workspace 11: Query misunderstanding",
+   "page": 52,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "52"
+  },
+  {
+   "level": 3,
+   "title": "Slack 11: Data Requires action",
+   "page": 59,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "59"
+  },
+  {
+   "level": 3,
+   "title": "Workspace 18: Wrong assumptions from P-LLM",
+   "page": 69,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "69"
+  },
+  {
+   "level": 3,
+   "title": "Banking 2: Not enough context for Q-LLM",
+   "page": 76,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "76"
+  },
+  {
+   "level": 3,
+   "title": "Workspace 36: Q-LLM overdoes it/Strict eval",
+   "page": 83,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "83"
+  },
+  {
+   "level": 3,
+   "title": "Banking 14: Ambiguous task",
+   "page": 87,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "87"
+  },
+  {
+   "level": 3,
+   "title": "Travel 19: Underdocumented API",
+   "page": 90,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "90"
+  },
+  {
+   "level": 3,
+   "title": "Travel 19: AgentDojo Bug",
+   "page": 118,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "118"
+  },
+  {
+   "level": 1,
+   "title": "More sophisticated side-channel",
+   "page": 124,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "124"
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "figure",
+   "number": "1",
+   "title": "Agent actions have both a control flow and a data flow\u2014and either can be corrupted with prompt injections. This example shows how the query \u201cCan you send Bob the document he requested in our last meeting?\u201d is converted into four key steps: (1) finding the most recent meeting",
+   "page": 2,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "2"
+  },
+  {
+   "kind": "figure",
+   "number": "2",
+   "title": "Prompt injections can cause harm even if they do not change the sequence of agent actions. Here we consider an adversary who diverts the data flow of the user command. The cloud storage file contains a prompt injection that changes the recipient email address to the attacker\u2019s address",
+   "page": 4,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "4"
+  },
+  {
+   "kind": "figure",
+   "number": "3",
+   "title": "Formalization of the Prompt Injection security game. The adversary A needs to create a state mem\u2217which causes the agent to take an action which is not part of the set of allowed actions \u03a9prompt for the given prompt",
+   "page": 5,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "5"
+  },
+  {
+   "kind": "figure",
+   "number": "4",
+   "title": "CaMeL in the PI-SEC security game. The CaMeL Agent takes as argument some policies",
+   "page": 6,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "6"
+  },
+  {
+   "kind": "figure",
+   "number": "5",
+   "title": "Diagram illustrating how CaMeL processes a user\u2019s query. First, the P-LLM generates",
+   "page": 7,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "7"
+  },
+  {
+   "kind": "figure",
+   "number": "6",
+   "title": "CaMeL\u2019s security policies can be as expressive as Python. Example of security policy",
+   "page": 8,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "8"
+  },
+  {
+   "kind": "figure",
+   "number": "7",
+   "title": "CaMeL generates code to facilitate tracking data dependencies. Example code and",
+   "page": 10,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "10"
+  },
+  {
+   "kind": "figure",
+   "number": "8",
+   "title": "CaMeL (mostly) provides usable performance. With the exception of the travel suite",
+   "page": 12,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "12"
+  },
+  {
+   "kind": "table",
+   "number": "1",
+   "title": "Categorizing Claude\u2019s failures across task suites. Claude exhibited eight failure modes, including query misunderstanding, data requiring action, wrong assumptions, not enough context, overdoing it, ambiguous tasks, underdocumented API, and AgentDojo bugs. The table shows the number of instances of",
+   "page": 13,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "13"
+  },
+  {
+   "kind": "figure",
+   "number": "9",
+   "title": "CaMeL is not vulnerable to the AgentDojo\u2019s attacks and preserves utility better when",
+   "page": 14,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "14"
+  },
+  {
+   "kind": "figure",
+   "number": "10",
+   "title": "When unified authentication is in place, security policies are triggered less often. This figure shows how often security policies are triggered during the benign and adversarial evaluations with CaMeL enabled. The x-axis shows the different models that were evaluated on AgentDojo\u2019s suites, and the",
+   "page": 15,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "15"
+  },
+  {
+   "kind": "figure",
+   "number": "11",
+   "title": "CaMeL\u2019s security guarantees in practice. A comparison between CaMeL and other",
+   "page": 16,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "16"
+  },
+  {
+   "kind": "figure",
+   "number": "12",
+   "title": "Corrupting the data flow can potentially provide arbitrary code execution. An attacker sends a query to the model, instructing it to monitor emails, identify an action within an email, and execute that action. This effectively turns data flow into control flow, as the instructions from the email now",
+   "page": 17,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "17"
+  },
+  {
+   "kind": "figure",
+   "number": "13",
+   "title": "CaMeL requires only 2.82\u00d7 more input and 2.73\u00d7 more output tokens than native",
+   "page": 18,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "18"
+  },
+  {
+   "kind": "figure",
+   "number": "14",
+   "title": "Without CaMeL\u2019s STRICT mode, private data can be leaked via tool calls that do not",
+   "page": 19,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "19"
+  },
+  {
+   "kind": "figure",
+   "number": "15",
+   "title": "Without STRICT mode, an adversary could leak one private bit if they can trigger an",
+   "page": 20,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "20"
+  },
+  {
+   "kind": "figure",
+   "number": "16",
+   "title": "Timing side-channels can reveal private data to an adversary. Example of a timing side-channel that bypasses the constraints on a private variable. CaMeL is not vulnerable to this specific attack as the time module is not available in the interpreter. However, we do not exclude that other timing sid",
+   "page": 21,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "21"
+  },
+  {
+   "kind": "figure",
+   "number": "17",
+   "title": "CaMeL can help beyond prompt injections. Here we present two additional scenarios",
+   "page": 22,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "22"
+  },
+  {
+   "kind": "table",
+   "number": "2",
+   "title": "Utility results on the AgentDojo benchmark, covering different suites",
+   "page": 33,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "33"
+  },
+  {
+   "kind": "table",
+   "number": "3",
+   "title": "Utility results on the AgentDojo benchmark, covering different suites, under attack",
+   "page": 33,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "33"
+  },
+  {
+   "kind": "table",
+   "number": "4",
+   "title": "Number of successful attacks",
+   "page": 34,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "34"
+  },
+  {
+   "kind": "table",
+   "number": "5",
+   "title": "Defenses utility",
+   "page": 34,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "34"
+  },
+  {
+   "kind": "table",
+   "number": "8",
+   "title": "Policy triggering rates in normal and strict modes when not under attack. Overall",
+   "page": 34,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "34"
+  },
+  {
+   "kind": "figure",
+   "number": "18",
+   "title": "Break down by suite of the utility under attack for defenses. Full results in Table 6",
+   "page": 35,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "35"
+  },
+  {
+   "kind": "table",
+   "number": "6",
+   "title": "Defenses utility under attack",
+   "page": 35,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "35"
+  },
+  {
+   "kind": "table",
+   "number": "7",
+   "title": "Defenses: number of successful attacks. Overall",
+   "page": 35,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "35"
+  },
+  {
+   "kind": "figure",
+   "number": "19",
+   "title": "Dependency graph generated by CaMeL for the natural language query \u201cIf my last email is about a meeting tomorrow, forward it to email@example.com\u201d, generated using CaMeL\u2019s NORMAL mode. Notice that, as opposed to the dependency graph in Figure 7b, the call to send_email does not have a dependency on",
+   "page": 36,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "36"
+  },
+  {
+   "kind": "table",
+   "number": "9",
+   "title": "Policy triggering rates in normal and strict modes when under attack. Overall",
+   "page": 36,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "36"
+  },
+  {
+   "kind": "figure",
+   "number": "20",
+   "title": "This figure shows how often security policies are triggered during the benign and adversarial evaluations with CaMeL enabled. The x-axis shows the different models that were evaluated, and the y-axis shows the percentage of tasks for which the security policies were triggered. The proportions are re",
+   "page": 38,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "38"
+  },
+  {
+   "kind": "table",
+   "number": "10",
+   "title": "Token usage increase by multiple defenses. Mean",
+   "page": 38,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "38"
+  },
+  {
+   "kind": "figure",
+   "number": "21",
+   "title": "We measure the increase in tokens usage when using CaMeL compared to native tool calling, not under attack, using Claude 3.5 Sonnet as backbone model, tokenizing using tiktoken",
+   "page": 39,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "39"
+  },
+  {
+   "kind": "table",
+   "number": "11",
+   "title": "Token usage by multiple defenses. Mean",
+   "page": 39,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "39"
+  },
+  {
+   "kind": "table",
+   "number": "12",
+   "title": "Token usage by multiple defenses, under attack. Mean",
+   "page": 40,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "40"
+  },
+  {
+   "kind": "table",
+   "number": "13",
+   "title": "Token usage increase by multiple defenses, under attack. Mean",
+   "page": 40,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "40"
+  },
+  {
+   "kind": "table",
+   "number": "14",
+   "title": "Analysis of Claude\u2019s individual failure modes across Workspace, Banking, Slack, and Travel task suites. Table categorizes the failures based on the nature of the issue, such as query misunderstanding, data requiring action, wrong assumptions, insufficient context, overdone actions, ambiguous tasks,",
+   "page": 41,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "41"
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 2,
+   "label": "2",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 3,
+   "label": "3",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 4,
+   "label": "4",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 5,
+   "label": "5",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 6,
+   "label": "6",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 7,
+   "label": "7",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 8,
+   "label": "8",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 9,
+   "label": "9",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 10,
+   "label": "10",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 11,
+   "label": "11",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 12,
+   "label": "12",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 13,
+   "label": "13",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 14,
+   "label": "14",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 15,
+   "label": "15",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 16,
+   "label": "16",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 17,
+   "label": "17",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 18,
+   "label": "18",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 19,
+   "label": "19",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 20,
+   "label": "20",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 21,
+   "label": "21",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 22,
+   "label": "22",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 23,
+   "label": "23",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 24,
+   "label": "24",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 25,
+   "label": "25",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 26,
+   "label": "26",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 27,
+   "label": "27",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 28,
+   "label": "28",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 29,
+   "label": "29",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 30,
+   "label": "30",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 31,
+   "label": "31",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 32,
+   "label": "32",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 33,
+   "label": "33",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 34,
+   "label": "34",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 35,
+   "label": "35",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 36,
+   "label": "36",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 37,
+   "label": "37",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 38,
+   "label": "38",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 39,
+   "label": "39",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 40,
+   "label": "40",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 41,
+   "label": "41",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 42,
+   "label": "42",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 43,
+   "label": "43",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 44,
+   "label": "44",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 45,
+   "label": "45",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 46,
+   "label": "46",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 47,
+   "label": "47",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 48,
+   "label": "48",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 49,
+   "label": "49",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 50,
+   "label": "50",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 51,
+   "label": "51",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 52,
+   "label": "52",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 53,
+   "label": "53",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 54,
+   "label": "54",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 55,
+   "label": "55",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 56,
+   "label": "56",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 57,
+   "label": "57",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 58,
+   "label": "58",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 59,
+   "label": "59",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 60,
+   "label": "60",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 61,
+   "label": "61",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 62,
+   "label": "62",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 63,
+   "label": "63",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 64,
+   "label": "64",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 65,
+   "label": "65",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 66,
+   "label": "66",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 67,
+   "label": "67",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 68,
+   "label": "68",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 69,
+   "label": "69",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 70,
+   "label": "70",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 71,
+   "label": "71",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 72,
+   "label": "72",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 73,
+   "label": "73",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 74,
+   "label": "74",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 75,
+   "label": "75",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 76,
+   "label": "76",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 77,
+   "label": "77",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 78,
+   "label": "78",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 79,
+   "label": "79",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 80,
+   "label": "80",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 81,
+   "label": "81",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 82,
+   "label": "82",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 83,
+   "label": "83",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 84,
+   "label": "84",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 85,
+   "label": "85",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 86,
+   "label": "86",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 87,
+   "label": "87",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 88,
+   "label": "88",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 89,
+   "label": "89",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 90,
+   "label": "90",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 91,
+   "label": "91",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 92,
+   "label": "92",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 93,
+   "label": "93",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 94,
+   "label": "94",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 95,
+   "label": "95",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 96,
+   "label": "96",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 97,
+   "label": "97",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 98,
+   "label": "98",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 99,
+   "label": "99",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 100,
+   "label": "100",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 101,
+   "label": "101",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 102,
+   "label": "102",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 103,
+   "label": "103",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 104,
+   "label": "104",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 105,
+   "label": "105",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 106,
+   "label": "106",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 107,
+   "label": "107",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 108,
+   "label": "108",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 109,
+   "label": "109",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 110,
+   "label": "110",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 111,
+   "label": "111",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 112,
+   "label": "112",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 113,
+   "label": "113",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 114,
+   "label": "114",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 115,
+   "label": "115",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 116,
+   "label": "116",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 117,
+   "label": "117",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 118,
+   "label": "118",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 119,
+   "label": "119",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 120,
+   "label": "120",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 121,
+   "label": "121",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 122,
+   "label": "122",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 123,
+   "label": "123",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 124,
+   "label": "124",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 125,
+   "label": "125",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 40,
+   "n_words": 5,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-000-defeating-prompt-injections-by-design",
+   "number": null,
+   "title": "Defeating Prompt Injections by Design",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1186,
+   "n_words": 168,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-001-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 4,
+   "n_chars": 12474,
+   "n_words": 1945,
+   "label_start": null,
+   "label_end": "4"
+  },
+  {
+   "id": "sec-002-threat-model",
+   "number": null,
+   "title": "Threat Model",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 1613,
+   "n_words": 275,
+   "label_start": "4",
+   "label_end": "5"
+  },
+  {
+   "id": "sec-003-the-prompt-injection-security-game",
+   "number": null,
+   "title": "The Prompt Injection Security Game",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 677,
+   "n_words": 113,
+   "label_start": "5",
+   "label_end": "5"
+  },
+  {
+   "id": "sec-004-explicit-non-goals-of-camel",
+   "number": null,
+   "title": "Explicit non-goals of CaMeL",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 3179,
+   "n_words": 532,
+   "label_start": "5",
+   "label_end": "6"
+  },
+  {
+   "id": "sec-005-camel-design",
+   "number": null,
+   "title": "CaMeL Design",
+   "level": 1,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 2119,
+   "n_words": 328,
+   "label_start": "6",
+   "label_end": "7"
+  },
+  {
+   "id": "sec-006-security-policies",
+   "number": null,
+   "title": "Security Policies",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 608,
+   "n_words": 91,
+   "label_start": "7",
+   "label_end": "7"
+  },
+  {
+   "id": "sec-007-the-privileged-and-quarantined-llms",
+   "number": null,
+   "title": "The Privileged and Quarantined LLMs",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 9,
+   "n_chars": 6414,
+   "n_words": 1035,
+   "label_start": "7",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-008-capabilities",
+   "number": null,
+   "title": "Capabilities",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 2562,
+   "n_words": 397,
+   "label_start": "9",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-009-camel-interpreter",
+   "number": null,
+   "title": "CaMeL Interpreter",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 11,
+   "n_chars": 4630,
+   "n_words": 757,
+   "label_start": "9",
+   "label_end": "11"
+  },
+  {
+   "id": "sec-010-evaluation",
+   "number": null,
+   "title": "Evaluation",
+   "level": 1,
+   "page_start": 11,
+   "page_end": 11,
+   "n_chars": 401,
+   "n_words": 64,
+   "label_start": "11",
+   "label_end": "11"
+  },
+  {
+   "id": "sec-011-utility-evaluation",
+   "number": null,
+   "title": "Utility evaluation",
+   "level": 2,
+   "page_start": 11,
+   "page_end": 11,
+   "n_chars": 589,
+   "n_words": 66,
+   "label_start": "11",
+   "label_end": "11"
+  },
+  {
+   "id": "sec-012-camel-has-a-small-impact-on-utility",
+   "number": null,
+   "title": "CaMeL has a (small) Impact on Utility",
+   "level": 3,
+   "page_start": 11,
+   "page_end": 11,
+   "n_chars": 668,
+   "n_words": 109,
+   "label_start": "11",
+   "label_end": "11"
+  },
+  {
+   "id": "sec-013-how-does-camel-impact-utility",
+   "number": null,
+   "title": "How does CaMeL impact utility?",
+   "level": 3,
+   "page_start": 11,
+   "page_end": 12,
+   "n_chars": 3725,
+   "n_words": 642,
+   "label_start": "11",
+   "label_end": "12"
+  },
+  {
+   "id": "sec-014-cheaper-q-llm-models-have-little-impact-on-utili",
+   "number": null,
+   "title": "Cheaper Q-LLM Models Have Little Impact on Utility",
+   "level": 3,
+   "page_start": 12,
+   "page_end": 14,
+   "n_chars": 1991,
+   "n_words": 347,
+   "label_start": "12",
+   "label_end": "14"
+  },
+  {
+   "id": "sec-015-security-evaluation",
+   "number": null,
+   "title": "Security evaluation",
+   "level": 2,
+   "page_start": 14,
+   "page_end": 14,
+   "n_chars": 758,
+   "n_words": 117,
+   "label_start": "14",
+   "label_end": "14"
+  },
+  {
+   "id": "sec-016-case-study-without-any-security-policies",
+   "number": null,
+   "title": "Case study: without any Security Policies",
+   "level": 3,
+   "page_start": 14,
+   "page_end": 15,
+   "n_chars": 3090,
+   "n_words": 521,
+   "label_start": "14",
+   "label_end": "15"
+  },
+  {
+   "id": "sec-017-case-study-with-security-policies",
+   "number": null,
+   "title": "Case study: with Security Policies",
+   "level": 3,
+   "page_start": 15,
+   "page_end": 16,
+   "n_chars": 3282,
+   "n_words": 554,
+   "label_start": "15",
+   "label_end": "16"
+  },
+  {
+   "id": "sec-018-baseline-comparisons",
+   "number": null,
+   "title": "Baseline comparisons",
+   "level": 2,
+   "page_start": 16,
+   "page_end": 17,
+   "n_chars": 2902,
+   "n_words": 450,
+   "label_start": "16",
+   "label_end": "17"
+  },
+  {
+   "id": "sec-019-case-study-when-data-flow-becomes-control-flow",
+   "number": null,
+   "title": "Case study: when data flow becomes control flow",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 18,
+   "n_chars": 3699,
+   "n_words": 606,
+   "label_start": "17",
+   "label_end": "18"
+  },
+  {
+   "id": "sec-020-overheads",
+   "number": null,
+   "title": "Overheads",
+   "level": 2,
+   "page_start": 18,
+   "page_end": 19,
+   "n_chars": 2482,
+   "n_words": 397,
+   "label_start": "18",
+   "label_end": "19"
+  },
+  {
+   "id": "sec-021-side-channels-can-be-a-problem",
+   "number": null,
+   "title": "Side Channels Can Be a Problem",
+   "level": 1,
+   "page_start": 19,
+   "page_end": 22,
+   "n_chars": 9908,
+   "n_words": 1538,
+   "label_start": "19",
+   "label_end": "22"
+  },
+  {
+   "id": "sec-022-secondary-attack-scenarios-that-camel-can-help-w",
+   "number": null,
+   "title": "Secondary attack scenarios that CaMeL can help with",
+   "level": 1,
+   "page_start": 22,
+   "page_end": 23,
+   "n_chars": 2921,
+   "n_words": 448,
+   "label_start": "22",
+   "label_end": "23"
+  },
+  {
+   "id": "sec-023-discussion",
+   "number": null,
+   "title": "Discussion",
+   "level": 1,
+   "page_start": 23,
+   "page_end": 23,
+   "n_chars": 398,
+   "n_words": 60,
+   "label_start": "23",
+   "label_end": "23"
+  },
+  {
+   "id": "sec-024-de-classification-and-user-fatigue",
+   "number": null,
+   "title": "De-classification and user fatigue",
+   "level": 2,
+   "page_start": 23,
+   "page_end": 23,
+   "n_chars": 114,
+   "n_words": 18,
+   "label_start": "23",
+   "label_end": "23"
+  },
+  {
+   "id": "sec-025-past-problems-with-adoption-of-capabilities",
+   "number": null,
+   "title": "Past problems with adoption of capabilities",
+   "level": 2,
+   "page_start": 23,
+   "page_end": 24,
+   "n_chars": 3086,
+   "n_words": 459,
+   "label_start": "23",
+   "label_end": "24"
+  },
+  {
+   "id": "sec-026-so-are-prompt-injections-solved-now",
+   "number": null,
+   "title": "So, Are Prompt Injections Solved Now?",
+   "level": 2,
+   "page_start": 24,
+   "page_end": 24,
+   "n_chars": 2197,
+   "n_words": 310,
+   "label_start": "24",
+   "label_end": "24"
+  },
+  {
+   "id": "sec-027-future-work",
+   "number": null,
+   "title": "Future work",
+   "level": 1,
+   "page_start": 24,
+   "page_end": 25,
+   "n_chars": 2139,
+   "n_words": 319,
+   "label_start": "24",
+   "label_end": "25"
+  },
+  {
+   "id": "sec-028-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 25,
+   "page_end": 30,
+   "n_chars": 16799,
+   "n_words": 2293,
+   "label_start": "25",
+   "label_end": "30"
+  },
+  {
+   "id": "sec-029-extended-related-work",
+   "number": null,
+   "title": "Extended Related Work",
+   "level": 1,
+   "page_start": 30,
+   "page_end": 30,
+   "n_chars": 0,
+   "n_words": 0,
+   "label_start": "30",
+   "label_end": "30"
+  },
+  {
+   "id": "sec-030-background-software-security-concepts",
+   "number": null,
+   "title": "Background: Software Security Concepts",
+   "level": 2,
+   "page_start": 30,
+   "page_end": 30,
+   "n_chars": 0,
+   "n_words": 0,
+   "label_start": "30",
+   "label_end": "30"
+  },
+  {
+   "id": "sec-031-computer-security-nomenclature",
+   "number": null,
+   "title": "Computer security nomenclature",
+   "level": 3,
+   "page_start": 30,
+   "page_end": 31,
+   "n_chars": 2380,
+   "n_words": 385,
+   "label_start": "30",
+   "label_end": "31"
+  },
+  {
+   "id": "sec-032-access-and-information-flow-controls",
+   "number": null,
+   "title": "Access and Information Flow Controls",
+   "level": 3,
+   "page_start": 31,
+   "page_end": 31,
+   "n_chars": 1436,
+   "n_words": 194,
+   "label_start": "31",
+   "label_end": "31"
+  },
+  {
+   "id": "sec-033-tool-calling-llm-agents",
+   "number": null,
+   "title": "Tool-calling LLM Agents",
+   "level": 3,
+   "page_start": 31,
+   "page_end": 32,
+   "n_chars": 1222,
+   "n_words": 205,
+   "label_start": "31",
+   "label_end": "32"
+  },
+  {
+   "id": "sec-034-prompt-injection-defenses",
+   "number": null,
+   "title": "Prompt Injection Defenses",
+   "level": 2,
+   "page_start": 32,
+   "page_end": 32,
+   "n_chars": 3710,
+   "n_words": 605,
+   "label_start": "32",
+   "label_end": "32"
+  },
+  {
+   "id": "sec-035-full-results-tables",
+   "number": null,
+   "title": "Full results tables",
+   "level": 1,
+   "page_start": 32,
+   "page_end": 34,
+   "n_chars": 5009,
+   "n_words": 1141,
+   "label_start": "32",
+   "label_end": "34"
+  },
+  {
+   "id": "sec-036-baseline-results",
+   "number": null,
+   "title": "Baseline results",
+   "level": 1,
+   "page_start": 34,
+   "page_end": 34,
+   "n_chars": 0,
+   "n_words": 0,
+   "label_start": "34",
+   "label_end": "34"
+  },
+  {
+   "id": "sec-037-normal-vs-strict-modes",
+   "number": null,
+   "title": "NORMAL vs. STRICT modes",
+   "level": 1,
+   "page_start": 34,
+   "page_end": 36,
+   "n_chars": 2078,
+   "n_words": 387,
+   "label_start": "34",
+   "label_end": "36"
+  },
+  {
+   "id": "sec-038-security-policy-evaluation",
+   "number": null,
+   "title": "Security Policy evaluation",
+   "level": 1,
+   "page_start": 36,
+   "page_end": 38,
+   "n_chars": 3577,
+   "n_words": 573,
+   "label_start": "36",
+   "label_end": "38"
+  },
+  {
+   "id": "sec-039-extended-overheads-results",
+   "number": null,
+   "title": "Extended overheads results",
+   "level": 1,
+   "page_start": 38,
+   "page_end": 40,
+   "n_chars": 2199,
+   "n_words": 385,
+   "label_start": "38",
+   "label_end": "40"
+  },
+  {
+   "id": "sec-040-breakdown-for-individual-failure-modes-for-claud",
+   "number": null,
+   "title": "Breakdown for individual failure modes for Claude 3.5 Sonnet v2",
+   "level": 1,
+   "page_start": 40,
+   "page_end": 40,
+   "n_chars": 0,
+   "n_words": 0,
+   "label_start": "40",
+   "label_end": "40"
+  },
+  {
+   "id": "sec-041-implementation-details",
+   "number": null,
+   "title": "Implementation details",
+   "level": 1,
+   "page_start": 40,
+   "page_end": 40,
+   "n_chars": 0,
+   "n_words": 0,
+   "label_start": "40",
+   "label_end": "40"
+  },
+  {
+   "id": "sec-042-system-prompt",
+   "number": null,
+   "title": "System prompt",
+   "level": 2,
+   "page_start": 40,
+   "page_end": 49,
+   "n_chars": 18168,
+   "n_words": 2894,
+   "label_start": "40",
+   "label_end": "49"
+  },
+  {
+   "id": "sec-043-exceptions-prompt",
+   "number": null,
+   "title": "Exceptions prompt",
+   "level": 2,
+   "page_start": 49,
+   "page_end": 50,
+   "n_chars": 1314,
+   "n_words": 185,
+   "label_start": "49",
+   "label_end": "50"
+  },
+  {
+   "id": "sec-044-case-study-when-control-flow-turns-into-data-flo",
+   "number": null,
+   "title": "Case-study: when control flow turns into data flow from Claude and o3-mini",
+   "level": 2,
+   "page_start": 50,
+   "page_end": 52,
+   "n_chars": 3512,
+   "n_words": 479,
+   "label_start": "50",
+   "label_end": "52"
+  },
+  {
+   "id": "sec-045-examples-of-failed-tasks",
+   "number": null,
+   "title": "Examples of failed tasks",
+   "level": 2,
+   "page_start": 52,
+   "page_end": 52,
+   "n_chars": 0,
+   "n_words": 0,
+   "label_start": "52",
+   "label_end": "52"
+  },
+  {
+   "id": "sec-046-workspace-11-query-misunderstanding",
+   "number": null,
+   "title": "Workspace 11: Query misunderstanding",
+   "level": 3,
+   "page_start": 52,
+   "page_end": 59,
+   "n_chars": 16759,
+   "n_words": 2029,
+   "label_start": "52",
+   "label_end": "59"
+  },
+  {
+   "id": "sec-047-slack-11-data-requires-action",
+   "number": null,
+   "title": "Slack 11: Data Requires action",
+   "level": 3,
+   "page_start": 59,
+   "page_end": 69,
+   "n_chars": 32907,
+   "n_words": 4494,
+   "label_start": "59",
+   "label_end": "69"
+  },
+  {
+   "id": "sec-048-workspace-18-wrong-assumptions-from-p-llm",
+   "number": null,
+   "title": "Workspace 18: Wrong assumptions from P-LLM",
+   "level": 3,
+   "page_start": 69,
+   "page_end": 76,
+   "n_chars": 16663,
+   "n_words": 2009,
+   "label_start": "69",
+   "label_end": "76"
+  },
+  {
+   "id": "sec-049-banking-2-not-enough-context-for-q-llm",
+   "number": null,
+   "title": "Banking 2: Not enough context for Q-LLM",
+   "level": 3,
+   "page_start": 76,
+   "page_end": 83,
+   "n_chars": 18795,
+   "n_words": 2245,
+   "label_start": "76",
+   "label_end": "83"
+  },
+  {
+   "id": "sec-050-workspace-36-q-llm-overdoes-itstrict-eval",
+   "number": null,
+   "title": "Workspace 36: Q-LLM overdoes it/Strict eval",
+   "level": 3,
+   "page_start": 83,
+   "page_end": 87,
+   "n_chars": 10209,
+   "n_words": 1387,
+   "label_start": "83",
+   "label_end": "87"
+  },
+  {
+   "id": "sec-051-banking-14-ambiguous-task",
+   "number": null,
+   "title": "Banking 14: Ambiguous task",
+   "level": 3,
+   "page_start": 87,
+   "page_end": 90,
+   "n_chars": 8703,
+   "n_words": 1151,
+   "label_start": "87",
+   "label_end": "90"
+  },
+  {
+   "id": "sec-052-travel-19-underdocumented-api",
+   "number": null,
+   "title": "Travel 19: Underdocumented API",
+   "level": 3,
+   "page_start": 90,
+   "page_end": 118,
+   "n_chars": 89289,
+   "n_words": 11323,
+   "label_start": "90",
+   "label_end": "118"
+  },
+  {
+   "id": "sec-053-travel-19-agentdojo-bug",
+   "number": null,
+   "title": "Travel 19: AgentDojo Bug",
+   "level": 3,
+   "page_start": 118,
+   "page_end": 124,
+   "n_chars": 19856,
+   "n_words": 2599,
+   "label_start": "118",
+   "label_end": "124"
+  },
+  {
+   "id": "sec-054-more-sophisticated-side-channel",
+   "number": null,
+   "title": "More sophisticated side-channel",
+   "level": 1,
+   "page_start": 124,
+   "page_end": 125,
+   "n_chars": 2808,
+   "n_words": 415,
+   "label_start": "124",
+   "label_end": "125"
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 55,
+  "toc_inferred_entries": 0,
+  "figure_entries": 35,
+  "figure_sequence_gaps": [],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 56,
+  "chars_total": 357245
+ }
+}

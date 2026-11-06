@@ -1,0 +1,44 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "arxiv-2003.08005v1",
+  "summaries": [
+    {
+      "block": "library/arxiv-2003.08005v1/blocks/prose-sec-000",
+      "source": "sections/sec-000-references.md",
+      "source_hash": "4dcdbdfb07369f9f8c50098a8c31ca1e012dd34229b9c0707f778ac3fcdc2f31",
+      "narrative": [
+        {
+          "text": "Lists the 34 bibliographic references for the ScanSSD paper, covering formula retrieval and extraction (Tangent-V, PDFFigures 2.0, Infty, LPGA), the ICDAR 2019 CROHME + TFD competition and U-Net baselines, classical and deep-learning formula identification in PDF documents, general object and text detectors (VGG16, R-CNN, Fast/Faster R-CNN, YOLO, SSD, TextBoxes, Focal Loss, ImageNet), and single-shot detector box fusion strategies.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2003.08005v1/blocks/prose-sec-front-matter",
+      "source": "sections/sec-front-matter.md",
+      "source_hash": "9b9d59533d270c36f3ce85519a6e6b55fe58acaccf39e418821d8d8f1ca2e666",
+      "narrative": [
+        {
+          "text": "Introduces and evaluates ScanSSD (Scanning Single Shot Detector) by Mali et al. (RIT) for detecting both displayed and embedded mathematical formulas in 600 dpi PDF page images using purely visual features without font, layout, or character metadata. Describes the TFD-ICDAR2019v2 dataset (re-aligned GTDB annotations across 569 training and 126 testing pages), the sliding-window SSD512 architecture with wide default box aspect ratios {1, 2, 3, 5, 7, 10} and 1x5 rectangular convolution kernels (MATH512), connected-component cropping postprocessing, and uniform pixel-level voting across overlapping windows, achieving formula detection F-scores of 0.796 (IOU >= 0.5) and 0.733 (IOU >= 0.75) and a character-level F-score of 0.925.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://14246464-17ad-4f47-a927-2fd6196a7c29"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    }
+  ]
+}

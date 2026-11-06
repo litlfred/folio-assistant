@@ -1,0 +1,88 @@
+# Post-merge regeneration check and automated repair PR pipeline — bean `folio-assistant-ey1c`.
+#
+# ## The failure this exists for
+#
+# `.github/workflows/merge-main.yml` runs `bun run cat merge:main` on an opted-in
+# PR branch when `main` moves, resolving declared conflicts and regenerating. But
+# after a PR merges into `main`, nothing regenerates `main`.
+#
+# Any merge changing an enumerated or counted directory can leave `main` red
+# (e.g. `readme:subgraphs:check` step 65 counting files in `uploads/`).
+#
+# The accidental-repair pattern: PR branches that happen to carry regenerated
+# files incidentally repair `main`, creating untrustworthy gate histories
+# (observed 3 times in 2 hours on 2026-10-03).
+#
+# ## Principles
+#
+# 1. Detected and ACTED on: main going stale on a derived artefact is detected
+#    and an automated repair action is generated.
+# 2. Reviewable PR, never direct push to main: the repair is a PR rather than a
+#    push to main, so it is reviewable and cannot bypass CI gates.
+# 3. NEGATIVE CONTROL: a merge that changes nothing counted triggers 0 repairs
+#    and opens NO repair PR, preventing churn.
+# 4. Honest reporting: if a check has no writer or its writer fails, it is
+#    reported as unrepaired/defect (exit 1), not claimed as a repair.
+
+# Since the split (bean 70lx) `post-merge:regen` is a cat-harness-tools script
+# that runs in the composed folio-assistant index, not in this repository on
+# its own: here, `bun run cat` found /usr/bin/cat and every run failed. The
+# job is the harness's reusable `layer-post-merge-regen.yml`, which composes
+# the index with this commit in place, regenerates, and opens the repair PR
+# HERE (owner, 2026-10-15: "a").
+
+name: Post-merge regen check and repair
+
+# AT MOST HOURLY (owner, 2026-11-01, card Q-PIPE-1 A; folio-assistant#2899).
+# Every push to main used to start a ~38-minute regen: 31 in one day, back to
+# back, each holding one of the account's 40 shared runner slots. Now an hourly
+# `tick` asks whether main moved since the last regen and, only then,
+# dispatches this workflow on main; the dispatched run is the regen. Trade-off:
+# a stale derived file is repaired up to an hour later. Dispatch by hand to
+# repair now.
+on:
+  schedule:
+    - cron: '43 * * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (report only, do not create PR)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  # A dispatch with GITHUB_TOKEN does start a run (workflow_dispatch is the
+  # exception to "events from GITHUB_TOKEN start nothing").
+  tick:
+    name: Has main moved since the last regen?
+    if: ${{ github.event_name == 'schedule' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          main=$(gh api "repos/$REPO/commits/main" --jq .sha)
+          # The newest dispatched regen that was not cancelled, running or done.
+          last=$(gh api "repos/$REPO/actions/workflows/post-merge-regen.yml/runs?event=workflow_dispatch&branch=main&per_page=20" \
+            --jq '[.workflow_runs[] | select(.conclusion != "cancelled")][0].head_sha // ""')
+          if [ "$main" = "$last" ]; then
+            echo "main ${main:0:7} already has a regen run: nothing to do."
+            exit 0
+          fi
+          echo "main moved (${last:0:7} -> ${main:0:7}): dispatching a regen."
+          gh workflow run post-merge-regen.yml --repo "$REPO" --ref main
+
+  regen:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    uses: litlfred/cat-harness-tools/.github/workflows/layer-post-merge-regen.yml@main
+    with:
+      dry-run: ${{ inputs.dry_run == true }}
