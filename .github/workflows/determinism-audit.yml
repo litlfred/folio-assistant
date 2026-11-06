@@ -42,17 +42,9 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.4.4
-      - name: Restore remote mounts (cached-step)
-        id: mounts
-        uses: ./.github/actions/cached-step
-        with:
-          step: cat-mount
-          key: ${{ hashFiles('index.lock.json') }}
-          paths: ~/.cache/cat-mount
-          trust: exact
-          verify: bash .github/mount-from-lock.sh --root .
+      # The replayer restores the layers from the layers ref (cached-step
+      # `layers`, refs/cat/layers/<key>) and verifies every tree against the lock.
       - name: Mount the layers from the lock
-        if: steps.mounts.outputs.hit != 'true'
         run: bash .github/mount-from-lock.sh --root .
       - name: Install dependencies
         run: bun install --frozen-lockfile

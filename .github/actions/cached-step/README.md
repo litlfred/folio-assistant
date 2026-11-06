@@ -112,9 +112,9 @@ them cheaply, so CI only verifies.
 `bun run cat cache:publish <step>` for each class-(a) step their change
 moves the key of. None is listed yet. The mounts have their own committer
 path, the layers ref (`refs/cat/layers/<key>`, `layers:publish`), whose
-replayer verifies per layer and reuses every layer that did not move. When
-it lands, the `cat-mount` Actions-cache entry in `jsonld-gen-check.yml` is
-superseded by it and removed.
+replayer verifies per layer and reuses every layer that did not move. It is
+live (cat-harness-tools#1506, folio-assistant#2971) and reports through this
+action as step `layers`, so no workflow ports the mounts onto it separately.
 
 ## Budget
 
