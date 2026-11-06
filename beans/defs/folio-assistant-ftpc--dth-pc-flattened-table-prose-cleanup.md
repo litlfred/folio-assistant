@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T19:30:00Z
-updated_at: 2026-11-02T20:05:00Z
+updated_at: 2026-11-06T08:35:45Z
 parent: folio-assistant-dthl
 tags:
     - dth-pc
@@ -37,3 +37,5 @@ _2026-11-02T19:30Z_ — Step 1 pushed (dth-pc 7-line diff per page), PR #16 draf
 _2026-11-02T19:35Z_ — Before/after PNGs in /mnt/project-files/dth-pc-flattened-tables-2026-11-02/. Card Q-FT-1 posted (A: OK + clean other 12 pages + seeder fix; B: these 4 only; C: hold).
 
 _2026-11-02T20:05Z_ — #16 merged a3330c9 (owner A). 12 pages: draft dth-pc#17 (3e97f27), fragment check script in scratch (every removed run found in the section's table blocks). Re-pin cat-harness 356ca7a + core 3c13890: dth-pc#18 (mechanical, merge on green), stage-local of that branch running. Empty pages 022/027/032/036 keep their blocks (tags, BPMN uses).
+
+_2026-11-06T08:35:45Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
