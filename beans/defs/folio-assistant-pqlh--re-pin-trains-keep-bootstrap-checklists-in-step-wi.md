@@ -14,4 +14,4 @@ Structural fix for cause 1 of the 2026-11-06 train failures: cat-harness commits
 
 ## Done when
 - [x] Owner picks (a) or (b): owner litlfred, 2026-11-06, card in session_01VQDpPfgkavzcfGinEE2Yzi: "1. Cascade (Recommended)" = (a). The train re-pins cat-harness first and never moves bootstrap/-tools past cat-harness's lock. Relayed to session_01VQDpPffYARDQ8juksAZScf (CI pipeline performance analysis), which created repin-train.yml.
-- [ ] Implemented; a train moving bootstrap alone no longer fails bpmn:checklist:check
+- [ ] Implemented in cat-harness-tools#1570 (repin-standing alignToHeldPins; instances below the harness follow the harness's own lock). Then re-pin fa's tools at or after it; a train moving bootstrap alone no longer fails bpmn:checklist:check
