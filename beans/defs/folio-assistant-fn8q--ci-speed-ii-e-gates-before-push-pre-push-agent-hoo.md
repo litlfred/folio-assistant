@@ -8,7 +8,7 @@ priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-06T05:46:09Z
+updated_at: 2026-11-06T05:58:28Z
 parent: folio-assistant-k3vv
 ---
 
@@ -16,7 +16,7 @@ Catch failures before they reach a runner: a pre-push hook, an agent hook, and a
 
 ## Done when
 - [x] the pre-push and agent hooks run the fast gates — the hook is litlfred/cat-harness-tools#1487 (c1c1d53), pinned on main via #2954; the agent hook is folio-assistant#2951 (35d5b4e)
-- [ ] the tree-keyed record is written and read (cat-harness-tools PR cited)
+- [x] ~~the tree-keyed record is written and read~~ — dropped by owner ruling 2026-11-06 (card "Turn on?", option 4: never); the unused record path is being removed
 
 _2026-11-05T08:40:00Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk from the CI-speed analysis of session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.
 
@@ -37,3 +37,5 @@ _2026-11-06T04:59:28Z_ — **Owner ruling (litlfred, card "Record on", option 1)
 The switch is a repository variable, not a file, so a PR cannot turn skipping on for its own run, and clearing it turns skipping off at once. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
 
 _2026-11-06T05:46:09Z_ — The re-check sweep litlfred/folio-assistant#2958 merged (3f2aeaa; owner card "Record on", option 1). Step 1 of the ruling is done. Step 2 is for litlfred: set the repository variable `CQG_HONOUR_LOCAL_RECORDS=true`. The second box closes once a PR run shows a step skipped on a local record, with the sweep re-verifying it. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
+
+_2026-11-06T05:58:28Z_ — **Owner ruling (litlfred, cards "Turn on?" and "Unused code"):** CI will **never** honour agents' local gate records. As built, honouring re-runs every skipped run, so each PR costs about two full runs (#2958's own text). Keep the pre-push hook: it stops red runs before they start. Remove the unused parts: the hook's note-writing (cat-harness-tools), #2957's `cqg_judge.py local-record` and `covered` paths, #2958's sweep step and its `statuses: write` / `issues: write`, and the `CQG_HONOUR_LOCAL_RECORDS` switch. Open as PRs; they merge after the owner says yes. Correction to an earlier note: the repository setting did NOT stop a PR enabling skips for itself, because a PR runs its own copy of the workflow code. Its real value was only the instant off switch. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
