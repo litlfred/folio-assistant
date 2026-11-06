@@ -1,0 +1,3 @@
+import { test } from "bun:test";
+Promise.reject(new Error("unhandled at load"));
+test("b ok", () => {});

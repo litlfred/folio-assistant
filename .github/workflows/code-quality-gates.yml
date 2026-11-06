@@ -201,30 +201,13 @@ jobs:
         shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
-      - name: Mount bootstrap and bootstrap-tools from the lock
-        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
-        run: bash .github/mount-from-lock.sh --root .
-
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-      # The advisories step runs `bun run cat`, whose runner imports @litlfred/cat-harness
-      # through the workspace link; without an install that import does not resolve.
-      - name: Install workspace dependencies
-        run: bun install --frozen-lockfile
-
+      # Bun, the mounts index.lock.json pins, node_modules:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
 
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
@@ -474,28 +457,13 @@ jobs:
         shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
-      - name: Mount bootstrap and bootstrap-tools from the lock
-        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
-        run: bash .github/mount-from-lock.sh --root .
-
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
+      # Bun, the mounts index.lock.json pins, node_modules:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -609,19 +577,14 @@ jobs:
           # Both parents of the merge commit: the second is the PR head whose
           # run is looked up, and a dispatch run's tested tree is read from it.
           fetch-depth: 2
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
       # verdict-reuse.sh is cat-harness's, and cat-harness is a mount.
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
-      - name: Mount the layers from the lock
-        run: bash .github/mount-from-lock.sh --root .
+      # Bun, the mounts index.lock.json pins, node_modules:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
 
       - name: Decide whether this tree's verdict already exists (bean qbco)
         id: decide
@@ -632,7 +595,14 @@ jobs:
           PRODUCER_JOB: QA working copy, built once for this run (not a gate)
           EVENT: ${{ github.event_name }}
         run: |
-          if [ "$EVENT" = "workflow_dispatch" ]; then
+          # A dispatch on MAIN whose HEAD is a two-parent merge (a merge-train
+          # or re-pin-train PR merged with GITHUB_TOKEN, whose merge starts no
+          # push run, so the gates are dispatched instead; bean hd58) is looked
+          # up exactly as a push of that merge would be: by its second parent,
+          # the tested head. The tree rule still decides.
+          if [ "$EVENT" = "workflow_dispatch" ] && [ "$GITHUB_REF" = refs/heads/main ] && git rev-parse -q --verify 'HEAD^2' >/dev/null; then
+            :
+          elif [ "$EVENT" = "workflow_dispatch" ]; then
             # See "PR and dispatch runs too" above: a local commit, tree
             # unchanged, second parent the dispatched head. Never pushed.
             # The first parent is an empty root commit: git drops a repeated
@@ -767,24 +737,13 @@ jobs:
         shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
-      - name: Mount bootstrap and bootstrap-tools from the lock
-        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
-        run: bash "./.github/mount-from-lock.sh" --root "."
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
+      # Bun, the mounts index.lock.json pins, node_modules:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -1078,6 +1037,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: "TypeScript — bun test, shard ${{ matrix.shard }}/4"  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -1113,28 +1073,13 @@ jobs:
         shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
-      - name: Mount bootstrap and bootstrap-tools from the lock
-        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
-        run: bash .github/mount-from-lock.sh --root .
-
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
+      # Bun, the mounts index.lock.json pins, node_modules:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
 
       # The same mount as the gates job, for the same reason one level down:
       # the test files that read the LIVE store (`bean-store-hygiene`,
@@ -1242,12 +1187,57 @@ jobs:
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
+
+      # A pull request runs only the test files its change can affect (CI
+      # speed 7, child of bean folio-assistant-k3vv): the import closure of
+      # every changed file, re-pinned upstream files included, plus each test
+      # that names a changed file. Every other event runs the whole suite, so
+      # what a PR leaves out, the push of its merge to main runs. Selection
+      # never fails: whatever it cannot determine selects everything. Not a
+      # judged step (`CQG_UNJUDGED`): it asks no question about the tree.
+      # A merge-train or repin-train PR runs the whole suite: the train's
+      # verdict is the only CI its members get before landing, and main never
+      # reuses a scoped run (#2963), so a scoped train would make main run
+      # everything again anyway.
+      - name: Select the test files this pull request can affect
+        id: scope
+        if: ${{ github.event_name == 'pull_request' && !startsWith(github.head_ref, 'merge-train/') && !startsWith(github.head_ref, 'repin-train/') }}
+        env:
+          CQG_UNJUDGED: "true"
+          CQG_TEST_SCOPE: ${{ runner.temp }}/test-scope.json
+        run: bash .github/scripts/pr-bun-test.sh --scope
+
+      # Exactly one of the next two steps runs, and each gives the verdict
+      # (`CQG_VERDICT`). This one, on a pull request with a selection, runs
+      # this shard's share of it; an empty share runs nothing and writes
+      # "skipped — not affected" to the summary, never a pass. It comes BEFORE
+      # `bun test` so that one stays the job's last step
+      # (`check:red-gate-is-last`) and its `bun test` line stays the local gate
+      # set's (`gatesFrom`).
+      - name: bun test — the files this pull request can affect
+        if: ${{ steps.scope.outputs.kind == 'some' }}
+        env:
+          BUN_OPTIONS: --reporter=junit --reporter-outfile=${{ runner.temp }}/cqg/bun-junit.xml
+          CQG_TEST_SCOPE: ${{ runner.temp }}/test-scope.json
+          CQG_TESTS: bun
+          CQG_JUNIT: ${{ runner.temp }}/cqg/bun-junit.xml
+          CQG_VERDICT: "true"
+          CQG_TOKEN: ${{ github.token }}
+        run: bash .github/scripts/pr-bun-test.sh ${{ matrix.shard }} 4
 
       # The JUnit report names each failing test, so the verdict compares tests,
       # not the step. It stays the job's last step (`check:red-gate-is-last`),
-      # so it gives the verdict itself (`CQG_VERDICT`).
+      # so it gives the verdict itself (`CQG_VERDICT`). The whole suite: every
+      # push, merge group, dispatch and nightly run, and a pull request whose
+      # change selects everything.
       - name: bun test
+        if: ${{ steps.scope.outputs.kind != 'some' }}
         env:
           BUN_OPTIONS: --shard=${{ matrix.shard }}/4 --reporter=junit --reporter-outfile=${{ runner.temp }}/cqg/bun-junit.xml
           CQG_TESTS: bun
@@ -1407,6 +1397,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — workflows, skills, knowledge graph (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -1442,25 +1433,14 @@ jobs:
         shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
-      - name: Mount bootstrap and bootstrap-tools from the lock
-        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
-        run: bash .github/mount-from-lock.sh --root .
+      # Bun, the mounts index.lock.json pins, node_modules:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
 
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
       # beside its npm one, and a package this repository publishes has to
@@ -1473,9 +1453,6 @@ jobs:
         with:
           python-version: "3.12"
 
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
 
       # EVERY declared tip-keyed graph on disk before any gate reads one —
       # bean `9ofm`, the §4 `gates` row, and the answer to "which gates stop
@@ -1576,7 +1553,29 @@ jobs:
       - name: Java runtime the PlantUML release declares (#2744)
         uses: ./.github/actions/plantuml-java
 
+      # The CI cone (bean 4rbc; CI speed 7): on a pull request a gate whose
+      # strace-derived read set and script are unchanged since main's last
+      # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
+      # a pass); on a push to main each gate is recorded. The records are
+      # restored from main's run on the PR's base sha (nearest older one
+      # otherwise) and saved by this action's post-job step, which saves only
+      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      - name: Restore the CI cone records (bean 4rbc)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-gates-kg-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          restore-keys: |
+            ci-cone-v1-gates-kg-
+      - name: Turn on the CI cone (bean 4rbc)
+        run: bash .github/scripts/ci-cone-prepare.sh
+
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The base workflow processes are strict; a content package may relax a
@@ -2132,6 +2131,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — instances, docs, translations (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -2167,25 +2167,18 @@ jobs:
         shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
+      # Bun, the mounts index.lock.json pins, node_modules:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
+
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
 
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
       # beside its npm one, and a package this repository publishes has to
@@ -2198,9 +2191,6 @@ jobs:
         with:
           python-version: "3.12"
 
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
 
       # EVERY declared tip-keyed graph on disk before any gate reads one —
       # bean `9ofm`, the §4 `gates` row, and the answer to "which gates stop
@@ -2325,7 +2315,29 @@ jobs:
           EXPECTED: ${{ needs.qa-working-copy.outputs.pages_manifest }}
         run: bash cat-harness-tools/scripts/qa-working-copy-bundle.sh restore "$RUNNER_TEMP/publish-pages" "$EXPECTED"
 
+      # The CI cone (bean 4rbc; CI speed 7): on a pull request a gate whose
+      # strace-derived read set and script are unchanged since main's last
+      # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
+      # a pass); on a push to main each gate is recorded. The records are
+      # restored from main's run on the PR's base sha (nearest older one
+      # otherwise) and saved by this action's post-job step, which saves only
+      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      - name: Restore the CI cone records (bean 4rbc)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-gates-docs-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          restore-keys: |
+            ci-cone-v1-gates-docs-
+      - name: Turn on the CI cone (bean 4rbc)
+        run: bash .github/scripts/ci-cone-prepare.sh
+
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The same audit, over EVERY declared instance rather than the root alone.
@@ -3154,6 +3166,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — cat-harness standalone ratchet (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -3189,25 +3202,14 @@ jobs:
         shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
-      - name: Mount bootstrap and bootstrap-tools from the lock
-        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
-        run: bash .github/mount-from-lock.sh --root .
+      # Bun, the mounts index.lock.json pins, node_modules:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
 
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
       # beside its npm one, and a package this repository publishes has to
@@ -3220,9 +3222,6 @@ jobs:
         with:
           python-version: "3.12"
 
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
 
       # EVERY declared tip-keyed graph on disk before any gate reads one —
       # bean `9ofm`, the §4 `gates` row, and the answer to "which gates stop
@@ -3276,6 +3275,11 @@ jobs:
         run: bun run smart:pages
 
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # cat-harness rehearsed the same way (bean `ho66`): its tracked files and
@@ -3328,6 +3332,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: Repository gates — registered, never run elsewhere (hard)  # this job's `name:`, to find its record on main
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
@@ -3363,31 +3368,21 @@ jobs:
         shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
+      # Bun, the mounts index.lock.json pins, node_modules:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
+
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
 
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
           python-version: "3.12"
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
 
       # THE job that runs the nine bean gates — they moved here with the rest
       # of the block when `dlqu` split this job out of `gates`, so this is
@@ -3476,7 +3471,29 @@ jobs:
       - name: Java runtime the PlantUML release declares (#2744)
         uses: ./.github/actions/plantuml-java
 
+      # The CI cone (bean 4rbc; CI speed 7): on a pull request a gate whose
+      # strace-derived read set and script are unchanged since main's last
+      # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
+      # a pass); on a push to main each gate is recorded. The records are
+      # restored from main's run on the PR's base sha (nearest older one
+      # otherwise) and saved by this action's post-job step, which saves only
+      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      - name: Restore the CI cone records (bean 4rbc)
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        with:
+          path: build/ci-cone
+          key: ci-cone-v1-gates-unrun-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          restore-keys: |
+            ci-cone-v1-gates-unrun-
+      - name: Turn on the CI cone (bean 4rbc)
+        run: bash .github/scripts/ci-cone-prepare.sh
+
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       - name: gates that were registered and never run
@@ -4636,6 +4653,7 @@ jobs:
     permissions:
       contents: read
       actions: read  # the verdict reads main's record from main's job log (Q-PIPE-1)
+      statuses: write  # fn8q: the pending gates/verified status a honoured local record needs
     env:
       CQG_JOB_NAME: "End-to-end + accessibility, shard ${{ matrix.shard }}/3"  # this job's `name:`, to find its record on main
     strategy:
@@ -4676,28 +4694,24 @@ jobs:
         shell: bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+      # Bun, the mounts index.lock.json pins, node_modules,
+      # Chromium:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
         with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
-      - name: Mount bootstrap and bootstrap-tools from the lock
-        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
-        run: bash .github/mount-from-lock.sh --root .
+          chromium: browser
 
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
+      # Chromium's system libraries. The browser itself came from the image
+      # (or was downloaded) above, so this installs the apt packages only. It
+      # stays a step of the JOB, not of ci-setup: `bun run cat gates` sorts a
+      # job into the fast set by whether its own steps run `playwright install`
+      # (cat-harness-tools scripts/gates.ts installsBrowser).
+      - name: Chromium's system libraries
+        run: npx --yes playwright install --with-deps chromium
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -4728,28 +4742,12 @@ jobs:
         # still checks clean.
         run: bun run smart:pages
 
-      # Chromium's download, cached across shards and runs — bean `doxj`.
-      # "Install Chromium" measured 22 s in EACH of the three shards (main run
-      # 37253911158). Keyed on the EXACT `@playwright/test` version package.json
-      # pins, because a Playwright release expects one browser build: a key on
-      # anything looser could restore a browser this Playwright does not drive.
-      # The install step below still runs on a hit — `--with-deps` installs the
-      # OS libraries, which no cache holds, and `install` itself skips a browser
-      # already present — so a miss and a hit run the same command.
-      - name: Playwright version, for the browser cache key
-        id: playwright
-        run: echo "version=$(jq -r '.devDependencies["@playwright/test"] // .dependencies["@playwright/test"]' package.json)" >> "$GITHUB_OUTPUT"
-
-      - name: Cache Playwright's Chromium
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-chromium-${{ runner.os }}-${{ steps.playwright.outputs.version }}
-
-      - name: Install Chromium
-        run: npx --yes playwright install --with-deps chromium
-
       - name: Judge each step from here against main's record (Q-PIPE-1)
+        env:
+          # Bean fn8q: honour the PR head's local gate record. Off unless the
+          # repository variable says true (the verification sweep's switch).
+          CQG_HONOUR_LOCAL_RECORDS: ${{ vars.CQG_HONOUR_LOCAL_RECORDS }}
+          CQG_TOKEN: ${{ github.token }}  # sets the pending gates/verified status a honoured record needs
         run: bash .github/scripts/cqg-step.sh --begin
 
       # The suite generates what it needs under _kg/ if absent, so the
@@ -4924,27 +4922,13 @@ jobs:
         shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
-      - name: Mount bootstrap and bootstrap-tools from the lock
-        shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
-        run: bash .github/mount-from-lock.sh --root .
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
+      # Bun, the mounts index.lock.json pins, node_modules:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -5143,28 +5127,17 @@ jobs:
         shell: bash ${{ github.workspace }}/cat-harness-tools/scripts/gate-shell.sh {0}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (bean cis1)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
+      # Bun, the mounts index.lock.json pins, node_modules:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
+
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
-
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-
-      - name: Install dependencies
-        run: bun install --frozen-lockfile
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader

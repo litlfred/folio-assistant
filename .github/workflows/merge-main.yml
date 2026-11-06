@@ -162,6 +162,13 @@ jobs:
             # helps. The merged result is still judged: by the PR run on its
             # next push, and by main's own run after it lands. A label or a
             # dispatch naming one PR is a person asking, so it still merges.
+            # A PR IN THE MERGE TRAIN IS INTEGRATED THERE, ONCE (bean hd58):
+            # `merge-train.yml` stacks it on main, conflicts resolved at train
+            # time. Merging main into it on every push to main is the c × N
+            # re-run the train exists to remove. A named dispatch still merges.
+            if [ -z "$candidates_named" ] && jq -e 'any(.labels[]; .name == "merge-train")' <<<"$pr" >/dev/null; then
+              echo "skip #$n: in the merge train, which integrates it at train time"; continue
+            fi
             if [ -z "$candidates_named" ]; then
               mergeable=$(jq -r '.mergeable' <<<"$pr")
               if [ "$mergeable" = null ]; then
