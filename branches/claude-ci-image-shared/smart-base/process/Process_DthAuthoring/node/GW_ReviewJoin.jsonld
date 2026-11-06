@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/smart-base/process/Process_DthAuthoring/node/GW_ReviewJoin.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewJoin.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-shared",
+    "sha": "35c068eaccb86d343fbf4cf4f20b4999af9c3d38",
+    "pr": "2999/merge",
+    "run": "42197259760"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/GW_ReviewJoin",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "GW_ReviewJoin",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F37",
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F38"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F39"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

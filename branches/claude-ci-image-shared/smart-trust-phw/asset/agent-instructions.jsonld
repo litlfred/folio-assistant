@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/smart-trust-phw/asset/agent-instructions.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-shared",
+    "sha": "35c068eaccb86d343fbf4cf4f20b4999af9c3d38",
+    "pr": "2999/merge",
+    "run": "42197259760"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/smart-trust-phw/asset/agent-instructions",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Asset",
+      "name": "agent-instructions",
+      "path": "AGENTS.md",
+      "assetRole": "agent-instructions",
+      "title": "AGENTS.md — smart-trust-phw",
+      "description": "Cold start for work here, and its one rule: fhir-artifact-index/ and document-kinds/ are generated at publish from the IG's AST, never authored by hand.",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/asset/agent-instructions"
+    }
+  ]
+}

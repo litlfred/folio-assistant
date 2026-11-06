@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_RepoHealth/node/End_Reported.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-shared",
+    "sha": "35c068eaccb86d343fbf4cf4f20b4999af9c3d38",
+    "pr": "2999/merge",
+    "run": "42197259760"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_RepoHealth/node/End_Reported",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Verdict reported",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_RepoHealth",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_RepoHealth#flow/Flow_2"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/End_Reported"
+    }
+  ]
+}

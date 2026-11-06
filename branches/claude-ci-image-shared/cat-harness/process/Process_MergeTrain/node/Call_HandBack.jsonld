@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_MergeTrain/node/Call_HandBack.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-shared",
+    "sha": "35c068eaccb86d343fbf4cf4f20b4999af9c3d38",
+    "pr": "2999/merge",
+    "run": "42197259760"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_MergeTrain/node/Call_HandBack",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Hand it back",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_MergeTrain",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/skill/merge-conflict-patterns"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_MergeRefusal",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_MergeTrain#flow/t5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/process/Process_MergeTrain#flow/t7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_HandBack"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "$ref": "#/definitions/TrustClass",
+  "definitions": {
+    "TrustClass": {
+      "type": "string",
+      "enum": [
+        "a",
+        "a-provenance",
+        "b",
+        "c",
+        "unclassified"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/TrustClassSchema.schema.json",
+  "title": "TrustClassSchema",
+  "description": "Generated from `TrustClassSchema` in schemas/sdlc/cache.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/ci-image-shared",
+    "sha": "35c068eaccb86d343fbf4cf4f20b4999af9c3d38",
+    "pr": "2999/merge",
+    "run": "42197259760"
+  }
+}

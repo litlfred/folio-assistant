@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/skill/content-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-shared",
+    "sha": "35c068eaccb86d343fbf4cf4f20b4999af9c3d38",
+    "pr": "2999/merge",
+    "run": "42197259760"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/skill/content-review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-review",
+      "title": "Content Review",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/content-review.md",
+      "instructionLines": 54,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/skills/content-review/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/skills/content-review/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-review"
+    }
+  ]
+}

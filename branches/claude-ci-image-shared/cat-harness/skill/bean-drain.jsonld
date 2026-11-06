@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/skill/bean-drain.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-shared",
+    "sha": "35c068eaccb86d343fbf4cf4f20b4999af9c3d38",
+    "pr": "2999/merge",
+    "run": "42197259760"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/skill/bean-drain",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "bean-drain",
+      "title": "Bean drain",
+      "description": "Drain open work items (stories, bugs, features) with several agents at once, as part of the SDLC: build the queue, group it by owner, check and claim each work item on every work item copy before any work, open the PR at the first commit, ask the owner through ask-the-person, close, and refill. Use when a thread or agent is asked to drain work items, when a coordinator spawns drain threads, or when an idle agent pulls from a shared queue next to other agents.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/package/work-plan"
+      ],
+      "instructionsPath": "work-plan/skills/work-plan/bean-drain.md",
+      "instructionLines": 191,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/skills/bean-drain/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/skills/bean-drain/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-ci-image-shared/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bean-drain"
+    }
+  ]
+}
