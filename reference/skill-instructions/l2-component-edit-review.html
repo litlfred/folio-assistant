@@ -138,7 +138,7 @@ its own right.</p><h2 id="asking-for-review"><a href="#asking-for-review" class=
   
   
 </h2><p><code class="language-plaintext highlighter-rouge">Task_RequestReview</code> follows <code class="language-plaintext highlighter-rouge">staging-review</code>’s <strong>deep-link rule</strong>:</p><ul><li>the request carries one deep link per changed page, to the anchor
-(<code class="language-plaintext highlighter-rouge">…/STAGING/&lt;slug&gt;/&lt;path&gt;#&lt;anchor&gt;</code>), beside the same page on main as
+(<code class="language-plaintext highlighter-rouge">…/branches/&lt;slug&gt;/&lt;path&gt;#&lt;anchor&gt;</code>), beside the same page on main as
 <em>before</em>;</li><li>the pages come from the change (<code class="language-plaintext highlighter-rouge">rendered-impact</code>), not from judgement;</li><li>if there is no preview yet, the request says so.</li></ul><p>smart-base content reaches staging by a folio-assistant staging re-pin
 (<code class="language-plaintext highlighter-rouge">bun run cat mount:remote --staging</code>). It never goes through <code class="language-plaintext highlighter-rouge">/deploy</code>.</p><p><strong>Send the request where the person will look</strong>: this conversation, the
 issue the work came from, the pull request, or several of them, each with the

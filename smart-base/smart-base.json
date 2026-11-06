@@ -362,10 +362,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-06T05:25:14.100Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/4c1a7b77ec51b32c234b40c1999f73123c68805e",
-  "sourceCommitSha": "4c1a7b77ec51b32c234b40c1999f73123c68805e",
-  "sourceCommitAt": "2026-11-06T05:59:48+01:00",
+  "generatedAt": "2026-11-06T06:16:25.462Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/673a11b9ef8f6ba727f72c6d5b2e25fdf99ef3c8",
+  "sourceCommitSha": "673a11b9ef8f6ba727f72c6d5b2e25fdf99ef3c8",
+  "sourceCommitAt": "2026-11-06T06:52:33+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -6478,7 +6478,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "The import seam: `platform/index.ts` re-exports every platform symbol this instance uses, so re-pointing the platform is a one-file edit. Declared because a remote mount brings declared directories only.",
+      "description": "The import seam: `platform/index.ts` re-exports every platform symbol this instance uses, so re-pointing the platform is an edit in this directory only; `platform/schema.ts` carries the symbols of the files the platform loads by glob (`themes/`, `schemas/`, `pipeline/qa-checkers-*`), so the checks that load them do not pull the IG-site code into their closure. Declared because a remote mount brings declared directories only.",
       "readmePath": "platform/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-platform"

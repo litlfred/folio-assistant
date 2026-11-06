@@ -1156,7 +1156,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Render the component the way its reviewer reads it (column \"renderer and diff\"): the BPMN diagram (render:bpmn) with a visual-diff picture; the DMN decision table (smart-base-transform.py dmn2html) with each rule's L1 citation; the data dictionary's term diff (dak-data-dictionary-diff.ts) and the chosen wireframe of each form; personas, scenarios and requirements as a prose diff. Commit to the feature branch so it is staged as STAGING/<slug>/ on the platform's just-the-docs site (for smart-base, a folio-assistant staging re-pin, never the IG's /deploy), and make the before/after preview here so it exists when review starts."
+          "@value": "Render the component the way its reviewer reads it (column \"renderer and diff\"): the BPMN diagram (render:bpmn) with a visual-diff picture; the DMN decision table (smart-base-transform.py dmn2html) with each rule's L1 citation; the data dictionary's term diff (dak-data-dictionary-diff.ts) and the chosen wireframe of each form; personas, scenarios and requirements as a prose diff. Commit to the feature branch so it is staged as branches/<slug>/ on the platform's just-the-docs site (for smart-base, a folio-assistant staging re-pin, never the IG's /deploy), and make the before/after preview here so it exists when review starts."
         }
       ],
       "skos:notation": "Task_RenderStage",
@@ -1196,7 +1196,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Ask the person in the reviewing role, following staging-review's deep-link rule: one deep link per changed page and anchor on STAGING/<slug>/, each beside the same page on main (or \"new page\"), the pages taken from the change (rendered-impact); say so if there is no preview yet. Lead with what changed in prose, then the links, the before/after and the checker's findings; put the question in interaction-modality's form. Post it where the work is discussed (this conversation, the originating GitHub issue, the pull request), with the same links in each. A comment tagged on the PR becomes a review-comment todo (review-comments)."
+          "@value": "Ask the person in the reviewing role, following staging-review's deep-link rule: one deep link per changed page and anchor on branches/<slug>/, each beside the same page on main (or \"new page\"), the pages taken from the change (rendered-impact); say so if there is no preview yet. Lead with what changed in prose, then the links, the before/after and the checker's findings; put the question in interaction-modality's form. Post it where the work is discussed (this conversation, the originating GitHub issue, the pull request), with the same links in each. A comment tagged on the PR becomes a review-comment todo (review-comments)."
         }
       ],
       "skos:notation": "Task_RequestReview",
