@@ -255,6 +255,7 @@ describe("one whole tick, against a stub GitHub", () => {
     const api = {
       async get<T>(p: string): Promise<T> {
         if (p.startsWith(`/repos/${R}/pulls?state=all`)) return [train] as T;
+        if (p.startsWith(`/repos/${R}/pulls?state=closed`)) return [] as T;
         if (p.startsWith(`/repos/${R}/commits?sha=main`)) return [{ sha: MAIN }] as T;
         if (p.includes("/check-runs")) return green as T;
         if (p === `/repos/${R}/pulls/80`) return train as T;
@@ -311,6 +312,7 @@ describe("pending says why an opted-in PR waits (2026-11-06, #2987)", () => {
     const api = {
       async get<T>(p: string): Promise<T> {
         if (p.startsWith(`/repos/${R}/pulls?state=all`)) return [] as T;
+        if (p.startsWith(`/repos/${R}/pulls?state=closed`)) return [] as T;
         if (p.startsWith(`/repos/${R}/commits?sha=main`)) return [{ sha: "f".repeat(40) }] as T;
         if (p.includes(`/commits/${"f".repeat(40)}/check-runs`)) return { check_runs: [{ id: 1, name: "lint (hard)", status: "completed", conclusion: "success" }] } as T;
         if (p.includes("/check-runs")) return { check_runs: [{ id: 2, name: "lint (hard)", status: "in_progress", conclusion: null }] } as T;
@@ -327,5 +329,42 @@ describe("pending says why an opted-in PR waits (2026-11-06, #2987)", () => {
     const lines: string[] = [];
     expect(await pending(api as never, R, (l) => lines.push(l))).toBeUndefined();
     expect(lines).toEqual(["#33 waits: its own checks are still running (1)"]);
+  });
+});
+
+describe("a labelled PR merged outside the train is reported once (2026-11-06, #2951, #2987)", () => {
+  const now = Date.parse("2026-11-06T09:00:00Z");
+  const closed = (n: number, mergedAt: string | null, labels: string[]) => ({
+    number: n, state: "closed", body: "", merged_at: mergedAt,
+    head: { sha: "a".repeat(40), ref: `b${n}`, repo: { full_name: "o/r" } }, base: { ref: "main" },
+    labels: labels.map((name) => ({ name })),
+  });
+  test("labelled, merged recently, by no train: a stray", async () => {
+    const { strayCandidates } = await import("../../.github/scripts/merge-train.ts");
+    const pulls = [
+      closed(1, "2026-11-06T05:52:00Z", ["merge-train"]),          // a stray
+      closed(2, "2026-11-06T05:52:00Z", []),                       // not opted in
+      closed(3, null, ["merge-train"]),                            // closed, not merged
+      closed(4, "2026-11-03T05:52:00Z", ["merge-train"]),          // too old
+      closed(5, "2026-11-06T08:00:00Z", ["merge-train-batch"]),    // a train PR itself
+      closed(6, "2026-11-06T08:00:00Z", ["merge-train"]),          // carried by train #50
+    ];
+    const trains = [train(50, "closed", [6])].map((t) => ({ ...t, merged: true }));
+    expect(strayCandidates(pulls as never, trains, now).map((p) => p.number)).toEqual([1]);
+  });
+  test("once told (marker comment), it is not reported again", async () => {
+    const { strays, STRAY_MARKER } = await import("../../.github/scripts/merge-train.ts");
+    const pulls = [closed(1, "2026-11-06T05:52:00Z", ["merge-train"]), closed(7, "2026-11-06T06:00:00Z", ["merge-train"])];
+    const api = {
+      async get<T>(p: string): Promise<T> {
+        if (p.includes("/pulls?state=closed")) return pulls as T;
+        if (p.includes("/issues/1/comments")) return [{ body: `x ${STRAY_MARKER} y` }] as T;
+        if (p.includes("/issues/7/comments")) return [{ body: "unrelated" }] as T;
+        throw new Error(`unexpected GET ${p}`);
+      },
+      async send<T>(): Promise<T> { throw new Error("strays must not write"); },
+      async text(): Promise<string> { return ""; },
+    };
+    expect(await strays(api as never, "o/r", [], now)).toEqual([7]);
   });
 });
