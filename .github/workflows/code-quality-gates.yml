@@ -4764,15 +4764,6 @@ jobs:
         if: matrix.shard == 1
         run: bun run cat render:bpmn:check
 
-      # smart-base draws its own processes beside their sources (the drawing is
-      # bootstrap-tools' bpmn-js renderer, through Chromium), and commits them
-      # so its README can show them. Declared and run by no workflow until
-      # 2026-10-14 (owner: "Wire all"); here, beside `render:bpmn:check`, because
-      # this is the job with the browser. Shard 1 only, for the same reason.
-      - name: smart-base's committed process drawings are current
-        if: matrix.shard == 1
-        run: bun run cat smart-base:processes:render:check
-
       # The QA working copy and the publish-time pages, restored AFTER the
       # shard-1 checks above so those read the tree exactly as before, and
       # before playwright, whose global setup then skips `derive:publish`
