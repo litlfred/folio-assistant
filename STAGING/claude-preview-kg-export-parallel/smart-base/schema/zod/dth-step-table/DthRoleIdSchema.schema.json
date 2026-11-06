@@ -1,0 +1,19 @@
+{
+  "$ref": "#/definitions/DthRoleId",
+  "definitions": {
+    "DthRoleId": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/dth-step-table/DthRoleIdSchema.schema.json",
+  "title": "DthRoleIdSchema",
+  "description": "Generated from `DthRoleIdSchema` in schemas/dth-step-table.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/preview-kg-export-parallel",
+    "sha": "e126b22335765c40735b6ff7b3707e57742393c7",
+    "pr": "2967/merge",
+    "run": "42139747432"
+  }
+}

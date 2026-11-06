@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/process/Process_TrackedWatch/node/Task_Close.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-kg-export-parallel",
+    "sha": "e126b22335765c40735b6ff7b3707e57742393c7",
+    "pr": "2967/merge",
+    "run": "42139747432"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/process/Process_TrackedWatch/node/Task_Close",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Close the tracking issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/process/Process_TrackedWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/process/Process_TrackedWatch/lane/Lane_Ci",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/skill/ci-health"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/globalTask/GT_CloseTrackingIssue",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/process/Process_TrackedWatch#flow/Flow_TW_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch/node/Task_Close"
+    }
+  ]
+}

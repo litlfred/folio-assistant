@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/skill/content-validate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/preview-kg-export-parallel",
+    "sha": "e126b22335765c40735b6ff7b3707e57742393c7",
+    "pr": "2967/merge",
+    "run": "42139747432"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/skill/content-validate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-validate",
+      "title": "Content Validation",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/package/content-lifecycle"
+      ],
+      "instructionsPath": "skills/authoring/content-lifecycle/content-validate.md",
+      "instructionLines": 33,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/skills/content-validate/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/skills/content-validate/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-preview-kg-export-parallel/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/content-validate"
+    }
+  ]
+}
