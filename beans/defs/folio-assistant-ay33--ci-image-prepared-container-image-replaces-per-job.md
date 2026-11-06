@@ -13,10 +13,10 @@ parent: folio-assistant-k3vv
 Sibling 'CI speed: prepared image' (launched by session_01VQDpPffYARDQ8juksAZScf). Build ghcr.io/litlfred/folio-assistant-ci once per hash of index.lock.json + bun.lock + tool versions, holding mounted layers, node_modules, Chromium + deps, Java/PlantUML, Ruby/Jekyll. Jobs restore via .github/actions/ci-setup and only verify mounts (mount:lock:check); fall back to today's steps when no image exists. Owns: ci-image workflow, .github/actions/ci-setup, setup steps of code-quality-gates.yml and feature-staging.yml jobs.
 
 ## Done when
-[ ] ci-image workflow builds and pushes on main/dispatch only, minimal perms, pinned actions
-[ ] ci-setup composite restores from the image, falls back cleanly
-[ ] setup seconds measured before/after with run IDs
-[ ] job-collapse proposal written
+[x] ci-image workflow builds and pushes on main/dispatch only, minimal perms, pinned actions
+[x] ci-setup composite restores from the image, falls back cleanly
+[x] setup seconds measured before/after with run IDs
+[x] job-collapse proposal written
 
 ## Progress (2026-11-05)
 
@@ -41,3 +41,10 @@ These need the siblings that own `if:` and work steps (CI speed 2/3/7/10).
 - [ ] After #2961 merges, CI speed 14 copies ci-setup and the ci-image scripts into cat-harness-tools as a shared action and repoints them. This repo's copy then calls the shared one.
 - Done: the image name is derived from the repo, hit/miss/why goes to the step summary, and the workspace-only restore bug is fixed (52670b8).
 - The layers ref (CI speed 13, cat-harness-tools#1506 / #2971) is picked up through mount-from-lock with no edit here.
+
+## Measured after (2026-11-06)
+
+- #2961 merged (3955a14). The first image was published by run 42139743524: key 4d80b37e…, 7 layers, 670 MiB. Pulled from GHCR it restored in 5.6 s and mount:lock:check was OK. The package is public by inheritance (an anonymous manifest fetch returns 200), so the owner did not need to act.
+- On #2964 (run 42139985103) the jobs hit the image. TypeScript lint/types (job 127637605921): setup 40 s → 7 s; the whole job 2:32 → 1:24, which includes state:mount 49 → 17 s from cat-harness-tools#1489. Import hygiene (job 127637605474): restore 3.9 s.
+- The baseline is CQG run 42012108138, job 127193424738.
+- Remaining: #2964 merge; repoint to the shared cat-harness-tools action (CI speed 14, #1552); drop the 4 visible replays once a re-pin carries #1498.
