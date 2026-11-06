@@ -32,7 +32,7 @@ const wf = parse(readFileSync(WORKFLOW, "utf8")) as { jobs: Record<string, Job> 
 const JUDGED = ["typescript-test", "gates-kg", "gates-docs", "gates-standalone", "gates-unrun", "e2e-shard"];
 
 /** A sandbox: a state dir, a stand-in gate-shell that runs the step with `bash -e`, and a `gh` serving `mainLog`. */
-function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string; ghFails?: boolean; refusesEscapes?: boolean } = {}) {
+function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string; ghFails?: boolean; refusesEscapes?: boolean; cwd?: string } = {}) {
   const dir = mkdtempSync(join(tmpdir(), "cqg-"));
   const state = join(dir, "state");
   const bin = join(dir, "bin");
@@ -43,14 +43,16 @@ function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string
   writeFileSync(join(dir, "runs.json"), JSON.stringify({ workflow_runs: [{ id: 7, html_url: "https://example/runs/7" }] }));
   writeFileSync(join(dir, "jobs.json"), JSON.stringify({ jobs: [{ id: 70, name: jobName, conclusion: opts.conclusion ?? "failure" }] }));
   writeFileSync(join(dir, "job.log"), mainLog ?? "no record here\n");
+  // Every variant takes POSTs (statuses, reruns, issues), logs them, and fails them when GH_POST_FAIL is set.
+  const post = `if [ "$2" = "-X" ]; then echo "$*" >> '${dir}/posts.log'; [ -z "$GH_POST_FAIL" ]; exit $?; fi\n`;
   writeFileSync(
     join(bin, "gh"),
     opts.ghFails
       ? "#!/bin/sh\necho denied >&2\nexit 1\n"
       : opts.refusesEscapes
         ? // Newer gh refuses a body with terminal escapes unless it is passed --allow-escape-sequences.
-          `#!/bin/sh\nif [ "$2" = --allow-escape-sequences ]; then shift; elif case "$2" in *"/logs") true ;; *) false ;; esac; then echo "the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway" >&2; exit 1; fi\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`
-        : `#!/bin/sh\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`,
+          `#!/bin/sh\n${post}if [ "$2" = --allow-escape-sequences ]; then shift; elif case "$2" in *"/logs") true ;; *) false ;; esac; then echo "the response contains terminal escape sequences; pass --allow-escape-sequences to output it anyway" >&2; exit 1; fi\ncase "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`
+        : `#!/bin/sh\n${post}case "$2" in\n  *"/runs?"*) cat '${dir}/runs.json' ;;\n  *"/jobs?"*) cat '${dir}/jobs.json' ;;\n  *"/logs") cat '${dir}/job.log' ;;\n  *) exit 1 ;;\nesac\n`,
   );
   chmodSync(join(bin, "gh"), 0o755);
   const summary = join(dir, "summary.md");
@@ -68,12 +70,13 @@ function sandbox(mainLog?: string, opts: { jobName?: string; conclusion?: string
   const step = (script: string, extra: Record<string, string> = {}) => {
     const file = join(dir, `step-${Math.random().toString(36).slice(2)}.sh`);
     writeFileSync(file, script + "\n");
-    return spawnSync("bash", [STEP, file], { env: env(extra), encoding: "utf8" });
+    return spawnSync("bash", [STEP, file], { env: env(extra), encoding: "utf8", cwd: opts.cwd });
   };
-  const begin = () => spawnSync("bash", [STEP, "--begin"], { env: env(), encoding: "utf8" });
+  const begin = (extra: Record<string, string> = {}) => spawnSync("bash", [STEP, "--begin"], { env: env(extra), encoding: "utf8", cwd: opts.cwd });
   const verdict = (event: string, extra: Record<string, string> = {}) =>
-    spawnSync("python3", [JUDGE, "verdict"], { env: env({ GITHUB_EVENT_NAME: event, ...extra }), encoding: "utf8" });
-  return { dir, state, step, begin, verdict, summary: () => readFileSync(summary, "utf8"), env };
+    spawnSync("python3", [JUDGE, "verdict"], { env: env({ GITHUB_EVENT_NAME: event, ...extra }), encoding: "utf8", cwd: opts.cwd });
+  const posts = () => (existsSync(join(dir, "posts.log")) ? readFileSync(join(dir, "posts.log"), "utf8") : "");
+  return { dir, state, step, begin, verdict, summary: () => readFileSync(summary, "utf8"), env, posts };
 }
 
 /** Main's job log holding the record a main run with these steps would print. */
@@ -416,6 +419,116 @@ describe("verdict reuse refuses a run that passed by inheriting main's failures"
   });
 });
 
+describe("a local gate record on the PR head (bean fn8q) stands in for the gates it ran, only on the same tree", () => {
+  /**
+   * A checkout whose `origin` serves `refs/notes/cat-gates`, with a record on
+   * the head, and a stand-in `bun` that reports its version and logs what it ran.
+   */
+  function withRecord(record: (tree: string) => Record<string, unknown>, opts: { bun?: string } = {}) {
+    const work = mkdtempSync(join(tmpdir(), "cqg-rec-"));
+    const repo = join(work, "repo");
+    const origin = join(work, "origin.git");
+    const g = (cwd: string, ...a: string[]) => spawnSync("git", a, { cwd, encoding: "utf8" }).stdout.trim();
+    mkdirSync(repo);
+    g(repo, "init", "-q");
+    g(repo, "config", "user.email", "t@example.invalid");
+    g(repo, "config", "user.name", "t");
+    writeFileSync(join(repo, "a.txt"), "a\n");
+    g(repo, "add", "-A");
+    g(repo, "commit", "-qm", "head");
+    const head = g(repo, "rev-parse", "HEAD");
+    const tree = g(repo, "rev-parse", "HEAD^{tree}");
+    spawnSync("git", ["notes", "--ref=refs/notes/cat-gates", "add", "-m", JSON.stringify(record(tree)), head], { cwd: repo });
+    spawnSync("git", ["clone", "-q", "--bare", repo, origin]);
+    spawnSync("git", ["push", "-q", origin, "refs/notes/cat-gates"], { cwd: repo });
+    spawnSync("git", ["update-ref", "-d", "refs/notes/cat-gates"], { cwd: repo });
+    g(repo, "remote", "add", "origin", origin);
+    const event = join(work, "event.json");
+    writeFileSync(event, JSON.stringify({ pull_request: { head: { sha: head } } }));
+    const sb = sandbox(undefined, { cwd: repo });
+    const ran = join(work, "ran.log");
+    writeFileSync(join(sb.dir, "bin", "bun"), `#!/bin/sh\nif [ "$1" = --version ]; then echo ${opts.bun ?? "1.4.4"}; exit 0; fi\necho "$*" >> '${ran}'\n`);
+    chmodSync(join(sb.dir, "bin", "bun"), 0o755);
+    const on = { CQG_HONOUR_LOCAL_RECORDS: "true", GITHUB_EVENT_NAME: "pull_request", GITHUB_EVENT_PATH: event, CQG_PLATFORM: "linux-x64", GITHUB_RUN_ID: "41" };
+    return { sb, on, head, ran: () => (existsSync(ran) ? readFileSync(ran, "utf8") : ""), steps: () => readFileSync(join(sb.state, "steps.jsonl"), "utf8").trim().split("\n").map((l) => JSON.parse(l)) };
+  }
+  const pass = (extra: Record<string, unknown> = {}) => (tree: string) => ({
+    $schema: "cat-local-gate-record/v1",
+    tree,
+    commit: "c",
+    set: "fast",
+    outcome: "pass",
+    gates: ["bun run cat check:a", "bun run cat check:b"],
+    heldOut: ["bun test"],
+    skipped: [],
+    tools: { bun: "1.4.4", git: "2", platform: "linux-x64" },
+    runBy: "agent",
+    startedAt: "s",
+    finishedAt: "f",
+    ...extra,
+  });
+
+  test("a step every command of which the record ran is SKIPPED, recorded as skipped; any other step runs", () => {
+    const r = withRecord(pass());
+    expect(r.sb.begin(r.on).stdout).toContain("honouring the local gate record");
+    // The pending status the sweep resolves was set first, on the PR head.
+    expect(r.sb.posts()).toContain(`repos/o/r/statuses/${r.head}`);
+    expect(r.sb.posts()).toContain("state=pending");
+    expect(r.sb.posts()).toContain("context=gates/verified");
+    const skipped = r.sb.step("bun run cat check:a", r.on);
+    expect(skipped.status).toBe(0);
+    expect(skipped.stdout).toContain("SKIPPED");
+    expect(r.sb.step("bun run cat check:a\nbun run cat check:c", r.on).status).toBe(0);
+    expect(r.ran()).toBe("run cat check:a\nrun cat check:c\n");
+    const lines = r.steps();
+    expect(lines[0].skipped).toContain("passed locally");
+    expect(lines[1].skipped).toBeUndefined();
+    const v = r.sb.verdict("pull_request", r.on);
+    expect(v.status).toBe(0);
+    expect(r.sb.summary()).toContain("1 step(s) SKIPPED");
+    expect(v.stdout).not.toContain("No failures in the judged steps.\n1 step");
+  });
+
+  test("a held-out gate is never skipped, even when listed as run", () => {
+    const r = withRecord(pass({ gates: ["bun run cat check:a", "bun test"], heldOut: ["bun test"] }));
+    r.sb.begin(r.on);
+    r.sb.step("bun test", r.on);
+    expect(r.ran()).toBe("test\n");
+  });
+
+  for (const [what, rec, env, bun] of [
+    ["the switch is off", pass(), { CQG_HONOUR_LOCAL_RECORDS: "false" }, undefined],
+    ["a push run", pass(), { GITHUB_EVENT_NAME: "push" }, undefined],
+    ["a re-run attempt (the sweep's verification)", pass(), { GITHUB_RUN_ATTEMPT: "2" }, undefined],
+    ["another tree", pass({ tree: "0".repeat(40) }), {}, undefined],
+    ["another bun", pass(), {}, "1.9.9"],
+    ["another platform", pass({ tools: { bun: "1.4.4", git: "2", platform: "darwin-arm64" } }), {}, undefined],
+    ["a record that is not a pass", pass({ outcome: "fail" }), {}, undefined],
+    ["the pending status cannot be set (a fork's token)", pass(), { GH_POST_FAIL: "1" }, undefined],
+  ] as const) {
+    test(`not honoured: ${what}, so every step runs`, () => {
+      const r = withRecord(rec, { bun });
+      const b = r.sb.begin({ ...r.on, ...env });
+      expect(b.status).toBe(0);
+      expect(b.stdout).toContain("not honoured");
+      r.sb.step("bun run cat check:a", { ...r.on, ...env });
+      expect(r.ran()).toBe("run cat check:a\n");
+    });
+  }
+
+  test("a run that skipped a step never stands in for main's own (reuse-check)", () => {
+    const r = withRecord(pass());
+    r.sb.begin(r.on);
+    r.sb.step("bun run cat check:a", r.on);
+    const line = /CQG-REPORT-V1 \S+/.exec(r.sb.verdict("pull_request", r.on).stdout)![0];
+    const sb = sandbox(`2026-11-01T00:00:01.0000000Z ${line}\n`, { jobName: "TypeScript — bun test, shard 1/4", conclusion: "success" });
+    const out = join(sb.dir, "out");
+    writeFileSync(out, "");
+    spawnSync("python3", [JUDGE, "reuse-check"], { env: sb.env({ REPO: "o/r", RUN_ID: "7", GITHUB_OUTPUT: out }), encoding: "utf8" });
+    expect(readFileSync(out, "utf8").trim()).toBe("reuse=false");
+  });
+});
+
 describe("a PR run of only the affected tests (CI speed 7, #2962) is said so, and never reused for main", () => {
   /** A test step that ran a selection of `n` files, recorded as the selection step records it. */
   function scoped(n: number, exit = 0) {
@@ -456,9 +569,13 @@ describe("the workflow wires it as designed", () => {
     for (const id of JUDGED) {
       const job = wf.jobs[id]!;
       expect(job.defaults?.run?.shell).toBe("bash ${{ github.workspace }}/.github/scripts/cqg-step.sh {0}");
-      expect(job.permissions).toEqual({ contents: "read", actions: "read" });
+      // statuses: write is the one widening fn8q needs: a local record is honoured only
+      // after its pending gates/verified status is set, so a skip is never unverified.
+      expect(job.permissions).toEqual({ contents: "read", actions: "read", statuses: "write" });
       expect(job.env?.CQG_JOB_NAME).toBe(job.name!);
-      expect(job.steps.filter((s) => s.run === "bash .github/scripts/cqg-step.sh --begin")).toHaveLength(1);
+      const begin = job.steps.filter((s) => s.run === "bash .github/scripts/cqg-step.sh --begin");
+      expect(begin).toHaveLength(1);
+      expect(begin[0]!.env?.CQG_HONOUR_LOCAL_RECORDS).toBe("${{ vars.CQG_HONOUR_LOCAL_RECORDS }}");
     }
   });
 
