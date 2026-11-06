@@ -42,3 +42,5 @@ Ruling: witnesses carry `reviewed_tree` (HEAD^{tree}) as the address; `reviewed_
 - folio-assistant-sci#181: the three sci writers stamp `reviewed_tree`.
 
 Remaining: the six-layer re-pin after #2954, then a folio-assistant PR adding the `tree-commits` step to `docs-site.yml`; then the "Done when" items below can be measured (a main push reusing a PR's publish-time pages).
+
+_2026-11-06T06:20Z_ (session https://claude.ai/code/session_01VQDpPd7y4nwxjHFm66CMKF): all three follow-ups landed: writers (cat-harness-tools#1509, folio-assistant-sci#181), panel (cat-harness#1056) and the publish step (folio-assistant#2988, `4c1a7b7`, owner's card "1. Merge it now"). docs-site run 42165734476 wrote `assets/qa/tree-commits.json`: 1996 trees from 2000 first-parent commits, now on gh-pages (171,773 bytes). Still open for "Done when": a main push reusing a PR's publish-time pages, which waits on the QA working copy being byte-reproducible (CI speed 14's determinism audit) and on the state key being narrowed (CI speed 14's cached-step port).
