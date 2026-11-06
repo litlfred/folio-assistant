@@ -1,0 +1,280 @@
+# Post-merge regeneration check and repair for a harnessed LAYER, as ONE
+# reusable workflow (bean folio-assistant-ey1c; owner, 2026-10-15: "a").
+#
+# `post-merge:regen` (scripts/post-merge-regen.ts) runs in a composed index:
+# it is a cat-harness-tools script, so a layer's own checkout has no `cat`
+# command to run it with. cat-harness's copy of the old workflow ran
+# `bun run cat post-merge:regen` in cat-harness alone after the split (bean
+# 70lx), where `cat` is /usr/bin/cat, and it failed on every push.
+#
+# A caller is one `uses:` line, on push to main:
+#
+#   on: { push: { branches: [main] }, workflow_dispatch: { inputs: { dry_run: { type: boolean, default: false } } } }
+#   permissions: { contents: write, pull-requests: write }
+#   jobs:
+#     regen:
+#       uses: litlfred/cat-harness-tools/.github/workflows/layer-post-merge-regen.yml@main
+#       with: { dry-run: ${{ inputs.dry_run == true }} }
+#
+# What it does, in the layout `layer-publish-context.yml` uses:
+#   1. Check out the folio-assistant index at `index-ref` and mount every
+#      instance from its lock.
+#   2. Put THE CALLER, at the pushed commit and WITHOUT its `.git`, in place of
+#      its locked mount; keep its git checkout aside in `src`.
+#   3. Take its dependency harness and cat-harness-tools at main.
+#   4. Run `post-merge:regen` there. Its writers repair files in the composed
+#      tree. The script's own PR step is NOT used: the mounts are gitignored in
+#      the index, so it sees no changed file, and the repair belongs in the
+#      CALLER's repository, not folio-assistant.
+#   5. Copy the caller's directory back over `src`.
+#   6. Regenerate the caller's directory READMEs IN `src`, its own git
+#      checkout (`subgraph-readmes.ts --repo`; owner, 2026-10-15). Step 4
+#      cannot: `readme:subgraphs` skips every remote mount, the caller's
+#      swapped-in copy included, and a run over that copy would list no files,
+#      because it has no `.git` and the index ignores its mounts. Run from
+#      `fa`, so the graph typologies are the composed set. The owner's
+#      2026-11-04 ruling ("keep READMEs current automatically", option 3)
+#      restores this writer and reverses the 2026-10-23 ruling (bean `p7mb`,
+#      cat-harness-tools#590) that had made it an advisory check that let the
+#      READMEs lag until the next PR touching the directory.
+#   7. Open the repair PR in the caller's repository with its GITHUB_TOKEN
+#      when, and only when, a file the caller tracks changed (the negative
+#      control). Another layer's changes are that layer's to repair. Where the
+#      repository forbids Actions to open PRs, the branch is still pushed and
+#      the warning names the setting that allows it.
+#   8. Exit with the script's own code, or red when the READMEs could not be
+#      judged or did not reach a fixpoint: an unrepaired or writer-less check
+#      is a red run (principle 4), even when a repair PR was opened.
+
+name: Layer post-merge regen
+
+on:
+  workflow_call:
+    inputs:
+      instance:
+        description: "The instance's directory in the folio-assistant index (its mount path); empty means the calling repository's name."
+        required: false
+        type: string
+        default: ""
+      path-in-repo:
+        description: "Where the instance sits in the calling repository; '.' for the repository root."
+        required: false
+        type: string
+        default: "."
+      index-ref:
+        description: "The folio-assistant ref to check out."
+        required: false
+        type: string
+        default: "main"
+      dry-run:
+        description: "Report only: run the audit, open no PR."
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: layer-post-merge-regen-${{ github.repository }}
+  cancel-in-progress: false
+
+env:
+  INSTANCE: ${{ inputs.instance != '' && inputs.instance || github.event.repository.name }}
+
+jobs:
+  regen:
+    name: Check post-merge derived artefacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Check out the folio-assistant index
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          repository: litlfred/folio-assistant
+          ref: ${{ inputs.index-ref }}
+          path: fa
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.4
+      - name: Mount every instance from the index's lock
+        run: bash fa/.github/mount-from-lock.sh --root fa
+      - name: Check out the caller
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          path: src
+      - name: Put a copy of the caller in place of its locked mount
+        env:
+          SUBDIR: ${{ inputs.path-in-repo }}
+        run: |
+          set -euo pipefail
+          rm -rf "fa/$INSTANCE"
+          mkdir -p "fa/$INSTANCE"
+          rsync -a --exclude .git "src/${SUBDIR}/" "fa/$INSTANCE/"
+          test -f "fa/$INSTANCE/$INSTANCE.json" || { echo "::error::fa/$INSTANCE/$INSTANCE.json is missing: is path-in-repo right?"; exit 2; }
+      - name: Take the dependency harness and cat-harness-tools at main
+        run: |
+          set -euo pipefail
+          git clone -q --depth 1 --filter=blob:none --sparse https://github.com/litlfred/cat-harness-tools ci
+          git -C ci sparse-checkout set .github/scripts/layer-publish-context
+          bun ci/.github/scripts/layer-publish-context/needs-at-main.ts fa "$INSTANCE" --always cat-harness-tools
+      - name: Install
+        working-directory: fa
+        run: bun install
+      - name: Install Chromium, for the checks that draw through a browser
+        # `render:bpmn` and the `*:processes:render:check` gates draw BPMN with
+        # bpmn-js in Chromium, as in layer-pr-checks.yml. Without it both were
+        # asked, failed, and were reported unrepaired on every post-merge run
+        # (cat-harness run 39786173033, 2026-10-22; bean ey1c). The index's own
+        # Playwright installs it, so the build is the one Playwright expects.
+        working-directory: fa
+        run: |
+          if [ -x node_modules/.bin/playwright ]; then
+            node_modules/.bin/playwright install --with-deps chromium
+          else
+            echo "no playwright in the index: no browser installed"
+          fi
+      - name: Mount the subgraphs kept on branches
+        # Through `mountState` directly, as layer-pr-checks.yml does:
+        # `state:mount` also re-lays the remote mounts against the lock, which
+        # refuses the swapped-in caller and the layers taken at main ("no
+        # longer hash to the lock"). A graph that will not mount is a warning:
+        # the regen then judges the gates that read it as they stand.
+        working-directory: fa
+        run: |
+          set -euo pipefail
+          bun -e '
+            import { mountState, report } from "./cat-harness-tools/scripts/state-mount.ts";
+            const r = mountState({});
+            console.log(report(r));
+            if (r.state === "failed" || r.state === "partial")
+              console.log("::warning::state mount " + r.state + ": see the report above");
+          '
+      - name: Run post-merge regen in the composed index
+        id: regen
+        working-directory: fa
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+        run: |
+          # `+e`: Actions runs this as `bash -e`, so a non-zero regen (stale or
+          # unrepaired, which is its verdict, not a crash) ended the step before
+          # `code=$?` and skipped every step after it, the repair PR included:
+          # cat-harness's READMEs went unrepaired on every push (bean ey1c).
+          set +e -uo pipefail
+          args=(--json)
+          [ "$DRY_RUN" = "true" ] && args+=(--dry-run)
+          bun run cat post-merge:regen "${args[@]}" > "$RUNNER_TEMP/regen.json"
+          code=$?
+          cat "$RUNNER_TEMP/regen.json"
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          # The verdict step at the end exits with this code, after the repair
+          # PR has been opened (step 8 above).
+          exit 0
+      - name: Copy the caller's directory back over its checkout
+        env:
+          SUBDIR: ${{ inputs.path-in-repo }}
+        run: rsync -a --delete --exclude .git --exclude node_modules "fa/$INSTANCE/" "src/${SUBDIR}/"
+      - name: Regenerate the caller's directory READMEs in its own checkout
+        # Owner, 2026-11-04: "keep READMEs current automatically" (option 3).
+        # Reverses the 2026-10-23 ruling (bean `folio-assistant-p7mb`,
+        # cat-harness-tools#590) that had made this an advisory check: the
+        # READMEs it writes now ride the repair branch with the rest.
+        id: readmes
+        working-directory: fa
+        env:
+          DRY_RUN: ${{ inputs.dry-run }}
+          OWN: ${{ github.workspace }}/src
+        run: |
+          # `+e`, as above: `--check` exits 1 for a stale README, which is
+          # what this step judges, not a reason to stop it.
+          set +e -uo pipefail
+          script=cat-harness-tools/scripts/subgraph-readmes.ts
+          if [ "$DRY_RUN" = "true" ]; then
+            bun "$script" --check --repo "$OWN"
+            code=$?
+            # A stale README is what a dry run reports, not a defect of the run.
+            [ "$code" = 1 ] && code=0
+          else
+            # To a fixpoint, staging between passes: a README the first pass
+            # CREATES is untracked, and the writer lists only what git tracks,
+            # so its parent's table changes once it is staged (measured on
+            # cat-harness 2026-10-16: 19 written, then docs/README.md stale).
+            # The repair PR commits everything anyway.
+            code=1
+            for pass in 1 2 3; do
+              bun "$script" --repo "$OWN" || { code=2; break; }
+              git -C "$OWN" add -A -- '*README.md'
+              bun "$script" --check --repo "$OWN"
+              code=$?
+              [ "$code" = 1 ] || break
+              echo "pass $pass: staging what it wrote changed a listing; writing again"
+            done
+          fi
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          [ -n "$(git -C "$OWN" status --porcelain -- '*README.md')" ] && echo "changed=true" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Open the repair PR in the caller's repository
+        if: inputs.dry-run == false
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.sha }}
+          BASE: ${{ github.event.repository.default_branch }}
+          READMES_CHANGED: ${{ steps.readmes.outputs.changed }}
+        run: |
+          set -euo pipefail
+          cd src
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Negative control: no file $INSTANCE tracks changed; no repair PR."
+            exit 0
+          fi
+          branch="automation/post-merge-regen-${SHA:0:10}"
+          if [ -n "$(gh pr list --head "$branch" --base "$BASE" --json number --jq '.[].number')" ]; then
+            echo "A repair PR for $branch is already open."
+            exit 0
+          fi
+          checks="$(bun -e 'const r = JSON.parse(require("node:fs").readFileSync(process.argv[1], "utf-8")); console.log([...(r.repairedChecks ?? []), ...(r.staleChecks ?? []), ...(process.env.READMES_CHANGED === "true" ? ["readme:subgraphs --repo (own checkout)"] : [])].filter((v, i, a) => a.indexOf(v) === i).join(", ") || "derived artefacts")' "$RUNNER_TEMP/regen.json" 2>/dev/null || echo "derived artefacts")"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -q -B "$branch"
+          git add -A
+          git commit -q -m "fix(derived): regenerate post-merge derived artefacts ($checks)"
+          git push -q -u origin "$branch"
+          {
+            echo "Automated post-merge repair for \`${SHA:0:10}\`, regenerated in the composed folio-assistant index (\`layer-post-merge-regen.yml\`)."
+            echo
+            echo "Checks: $checks"
+            echo
+            echo "Files:"
+            git diff --name-only "HEAD~1" | sed 's/^/- `/; s/$/`/'
+          } > "$RUNNER_TEMP/body.md"
+          if ! err="$(gh pr create --base "$BASE" --head "$branch" --title "fix(derived): regenerate post-merge derived artefacts" --body-file "$RUNNER_TEMP/body.md" 2>&1)"; then
+            echo "$err"
+            if grep -q "not permitted to create or approve pull requests" <<<"$err"; then
+              # Only the repository's owner can lift this. The branch is
+              # pushed either way; this names the setting and the compare link.
+              echo "::warning title=Repair PR not opened (Actions may not create PRs here)::Repair branch $branch was pushed, but GITHUB_TOKEN is not permitted to create pull requests here. The repository owner can allow it in $GITHUB_REPOSITORY, Settings, Actions, General, under Workflow permissions: tick \"Allow GitHub Actions to create and approve pull requests\" (https://github.com/$GITHUB_REPOSITORY/settings/actions). Until then, open it by hand: https://github.com/$GITHUB_REPOSITORY/compare/$BASE...$branch?expand=1"
+            else
+              exit 1
+            fi
+          fi
+      - name: Report the regen verdict
+        if: always()
+        env:
+          CODE: ${{ steps.regen.outputs.code }}
+          READMES: ${{ steps.readmes.outputs.code }}
+          READMES_CHANGED: ${{ steps.readmes.outputs.changed }}
+        run: |
+          {
+            echo "### post-merge regen: $INSTANCE"
+            echo '```json'
+            cat "$RUNNER_TEMP/regen.json" 2>/dev/null || echo "(no report)"
+            echo '```'
+            echo
+            echo "Directory READMEs in the caller's own checkout: exit ${READMES:-not run}, $([ "${READMES_CHANGED:-}" = true ] && echo changed || echo unchanged)."
+          } >> "$GITHUB_STEP_SUMMARY"
+          [ "${CODE:-1}" = 0 ] || exit "${CODE:-1}"
+          exit "${READMES:-1}"
