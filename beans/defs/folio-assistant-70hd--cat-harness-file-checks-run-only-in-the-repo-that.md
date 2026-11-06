@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-06T05:58:00Z
+updated_at: 2026-11-06T06:00:19Z
 parent: folio-assistant-4j43
 ---
 
@@ -115,3 +115,4 @@ Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
 _2026-11-06T05:45:00Z_ — **Merged** litlfred/folio-assistant-core#651 (d9e0836) on all-green CI (typecheck, 10 shards, No new failures), owner approved on a card. Core check:materialized-fixity now judges only the caller's own records; core pins cat-harness-tools 8205c6a. Session https://claude.ai/code/session_01VQDpPcbpLjEo8EuzFLVq5Z
 
 _2026-11-06T05:58:00Z_ — Re-pin PRs open (all layers to current mains, owner cards "Re-pin how" 2 / "Re-pin OK?" 1): litlfred/smart-immunizations#115 and litlfred/who-iris#185. #115's compare job ("No new failures (tests and gates)") is red at 20bbcef and under analysis; these measure the scoping effect on layer PRs. Session https://claude.ai/code/session_01VQDpPbqnwyoWW5d3Rc1vEk
+- _2026-11-06T06:00:19Z_ — Re-pinned both sites to mains (owner cards "Re-pin how" 2 / "Re-pin OK?" 1): cat-harness 7321322, cat-harness-tools a944727, folio-assistant-core e072ec2, smart-base 5fdcf6c (smart-immunizations), bootstrap 12fa6d5, bootstrap-tools 9f478d4 (who-iris). AFTER: 0 NEW on the 18 scoped gates in both compare jobs (BEFORE ≈10 cross-layer). who-iris#185 green, merged (9929b1f). smart-immunizations#115 open: 1 NEW on an unscoped gate, check:artefact-verification, because caches:viz:check (new in cat-harness-tools a944727) has no verification declaration. The fix is upstream in cat-harness-tools, then re-pin.
