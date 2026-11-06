@@ -15,6 +15,10 @@
 # lock, and `layers:publish` refuses unless every mount reads `current`, so only
 # bytes that already hash to the lock are published. Nothing secret is in it.
 #
+# A lock whose ref already verified in this job's mount is not rebuilt
+# (owner: CI never builds the ref if it exists, it only verifies it); only
+# `main` is moved to it.
+#
 # Retention: the newest 20 lock refs, plus `main`, plus the key of every open
 # PR's lock (so a PR's CI keeps its hit until it merges or closes).
 #
@@ -50,8 +54,9 @@ jobs:
       - name: Mount the lock (bytes only)
         shell: bash
         run: |
+          set -o pipefail
           start=$(date +%s)
-          bash .github/mount-from-lock.sh --root . --no-install
+          bash .github/mount-from-lock.sh --root . --no-install | tee "$RUNNER_TEMP/mount.log"
           echo "mount took $(( $(date +%s) - start ))s"
       - name: Keys of the locks open PRs pin
         id: keep
@@ -72,6 +77,17 @@ jobs:
           s=cat-harness-tools/scripts/mount-from-lock.ts
           if ! grep -q -- '--publish' "$s"; then
             echo "::notice::the pinned cat-harness-tools has no layers:publish yet; nothing to publish until it is re-pinned"
+            exit 0
+          fi
+          # CI never rebuilds a ref that already serves this lock: when the
+          # mount above was an exact, fully verified hit on the lock's own
+          # ref (no layer fell back), only refs/cat/layers/main moves to it.
+          # A ref that is missing, stale or does not verify is rebuilt.
+          key=$(bun -e 'const l=JSON.parse(await Bun.file("index.lock.json").text());console.log(new Bun.CryptoHasher("sha256").update(JSON.stringify(l.instances)).digest("hex"))')
+          if grep -qx "  layers cache: refs/cat/layers/$key" "$RUNNER_TEMP/mount.log"; then
+            sha=$(git ls-remote origin "refs/cat/layers/$key" | cut -f1)
+            git push -q --force origin "$sha:refs/cat/layers/main"
+            echo "refs/cat/layers/$key already verified for this lock: not rebuilt; refs/cat/layers/main -> ${sha:0:12}"
             exit 0
           fi
           start=$(date +%s)
