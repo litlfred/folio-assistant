@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: an instance's code directories</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .page { display: grid; grid-template-columns: 56px 1fr; min-height: 100vh; }
+  .strip { border-right: 1px solid var(--line); background: var(--fill); }
+  .main { min-width: 0; padding: 16px 24px; }
+  .sub { font-size: 0.9rem; }
+  .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+  .item { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; margin: 0 0 10px; }
+  .item h3 { font-size: 1rem; margin: 0 0 4px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+  .tag { font-size: 0.75rem; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+  th, td { border: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; }
+  code { word-break: break-all; }
+  @media (max-width: 799px) { .page { grid-template-columns: 1fr; } .strip { height: 44px; border-right: 0; border-bottom: 1px solid var(--line); } .main { padding: 12px 16px; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="strip" aria-label="site navigation strip"></div>
+  <main class="main">
+    <h1>Code: folio-assistant-core</h1>
+    <p class="sub">folio-assistant-core · 5 declared code directories · Files open on GitHub at the commit this site was built from.</p>
+    <section class="item">
+      <h3><code>pipeline/</code> <span class="tag">core-pipeline</span></h3>
+      <p class="sub">`pipeline/qa-checkers-recommendation.ts`, the automated checker `qa-checkers/recommendation-strength-resolves.json` names …</p>
+      <p class="sub">2 files</p>
+      <ul class="list">
+        <li><a href="#"><code>qa-checkers-recommendation.test.ts</code></a></li>
+        <li><a href="#"><code>qa-checkers-recommendation.ts</code></a></li>
+      </ul>
+    </section>
+    <section class="item">
+      <h3><code>adapters/</code> <span class="tag">core-adapters</span></h3>
+      <p class="sub">The content layer's own ContentAdapters. …</p>
+      <p class="sub">15 files</p>
+      <ul class="list">
+        <li><a href="#"><code>README.md</code></a></li>
+        <li><a href="#"><code>document/content.ts</code></a></li>
+        <li><a href="#"><code>document/server.ts</code></a></li>
+      </ul>
+    </section>
+    <section class="item">
+      <h3><code>scripts/</code> <span class="tag">core-scripts</span></h3>
+      <p class="sub">Showing the first 300 of 412 files.</p>
+    </section>
+  </main>
+</div>
+</body>
+</html>
