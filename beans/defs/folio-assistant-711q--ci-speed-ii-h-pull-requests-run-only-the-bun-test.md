@@ -2,11 +2,11 @@
 # folio-assistant-711q
 $schema: bean/1.0.0
 title: 'CI speed II (j): pull requests run only the bun-test files their change can affect'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-11-05T12:06:06Z
-updated_at: 2026-11-05T12:06:12Z
+updated_at: 2026-11-06T01:48:35Z
 parent: folio-assistant-k3vv
 ---
 
@@ -20,7 +20,7 @@ Depends on: (1) cat-harness-tools#1487 merged and re-pinned (until then the sele
 
 ## Done when
 
-[ ] folio-assistant PR with the scope step + wrapper merged
+[x] folio-assistant PR with the scope step + wrapper merged (#2962)
 [x] cqg_judge reuse-check refuses partial PR records (CI speed 3) — #2963 merged
 [x] affected-tests.ts re-pinned (#2954); before/after on #2962 itself: 4 bun-test shards 27.2 → 4.5 runner-min (runs 42037701198 → 42138687407), 30 of 1,554 test files selected
 [x] gates (gates-kg / gates-docs / gates-unrun) scoped through the CI cone (work item 4rbc); records start on the next main push
