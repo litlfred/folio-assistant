@@ -23,3 +23,4 @@ Owner litlfred 2026-11-06 chose 'One new session': fix the 3 causes failing re-p
 - 2026-11-06 07:45Z: cat-harness-tools#1570 (cascade, work item pqlh) merged df04aaa. Finding: cat-harness PR CI mounts layers in an fa composition at FA MAIN's pins, so its bpmn:checklist:check judges the checklists against fa's bootstrap (c90ef45), not cat-harness's own lock; red on cat-harness main and PRs until fa#2985 moves fa's bootstrap to 12fa6d5. #1097 merged with that red proven main's own (identical checklist blobs ecb5f81d9e / c0d15492f2).
 
 _2026-11-06T08:36:09Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
+- Owner litlfred, 2026-11-06 ~08:35Z, typed in this session: "repin as needed. merge when green and ready for all your PRs within 6hr window" (until ~14:35Z). At that time this session had no open PRs (cat-harness#1097, cat-harness-tools#1570 both merged).
