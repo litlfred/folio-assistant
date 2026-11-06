@@ -81,8 +81,8 @@ unrelated.
 
 ### STABLE — `gh-pages` keeps an append-only render log at `_render-log/`
 
-*What happened to `STAGING/<slug>`?* — `_render-log/<YYYY-MM-DD>.jsonl` at the
-branch ROOT, outside `STAGING/` so `rm -rf "STAGING/$SLUG"` cannot reach it.
+*What happened to `branches/<slug>`?* — `_render-log/<YYYY-MM-DD>.jsonl` at the
+branch ROOT, outside `branches/` so `rm -rf "branches/$SLUG"` cannot reach it.
 
 A full replace does NOT preserve it: `CARRIED_PREFIXES` in
 `restore-staging.ts` carries it across, and `--verify` checks the carry as well
@@ -203,7 +203,7 @@ More: `.claude/agent-memory/ci-health-watcher/detail/pages-deploys-are-not-on-th
 
 **First check for a deployment or 404 question is the publish ref, not a
 fetch.** `git fetch origin gh-pages && git ls-tree -r --name-only FETCH_HEAD |
-grep <thing>`; staging previews are `STAGING/<branch-slug>/`.
+grep <thing>`; staging previews are `branches/<branch-slug>/`.
 
 **A published URL is looked up, never composed** — the `docs/<stub>/` segment
 does not reach the site, so a composed URL 404s on a page that is there.

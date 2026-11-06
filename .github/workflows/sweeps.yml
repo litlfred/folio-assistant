@@ -16,6 +16,8 @@
 #     (`.github/scripts/preview-verify-sweep.sh`): it only dispatches.
 #   - Re-pin train verdict: an open train waits for a verdict
 #     (`repin-train.ts pending`, the same `trainsToJudge` the sweep judges).
+#   - Merge train: an open train waits for a verdict, a bisect batch is
+#     queued, or an opted-in PR is ready (`merge-train.ts pending`, bean hd58).
 #   - Conflicted PR previews (owner, 2026-10-06: "preview can still run, just
 #     not merge ready"): GitHub delivers no `pull_request` event to a PR that
 #     conflicts with its base. Feature Staging's `push` trigger used to start a
@@ -48,6 +50,7 @@ on:
 permissions:
   contents: read
   pull-requests: read
+  issues: read  # the merge-train opt-in: who added the label (bean hd58)
   statuses: read
   checks: read
   actions: write  # list artifacts and runs; dispatch the workflows
@@ -76,7 +79,7 @@ jobs:
         run: |
           set -euo pipefail
           n=$(gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
-            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")))] | length' | awk '{s+=$1} END{print s+0}')
+            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")) and .workflow_run.head_repository_id != null and .workflow_run.head_repository_id == .workflow_run.repository_id)] | length' | awk '{s+=$1} END{print s+0}')
           echo "staging-publish: $n preview artifact(s) waiting"
           [ "$n" -gt 0 ] || exit 0
           # A publisher queued or running drains the whole queue already.
@@ -116,6 +119,27 @@ jobs:
           gh workflow run repin-train-verdict.yml -R "$REPO"
           echo "dispatched repin-train-verdict.yml (judges every open train)"
 
+      - name: Merge train — a train to judge, or a batch ready? (bean hd58)
+        id: train
+        continue-on-error: true
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          # The same off switch merge-train.yml reads, so a workflow PR counts as ready only when the train may carry it.
+          MERGE_TRAIN_CARRIES_WORKFLOWS: ${{ vars.MERGE_TRAIN_CARRIES_WORKFLOWS == 'true' && (vars.HARNESS_BOT_ID != '' || secrets.PUSH_BRANCH_TRIGGERING_CI != '') }}
+        run: |
+          set -euo pipefail
+          why=$(bun .github/scripts/merge-train.ts pending)
+          if [ -z "$why" ]; then echo "merge train: nothing to do"; exit 0; fi
+          echo "merge train: $why"
+          busy=0
+          for st in queued in_progress waiting pending; do
+            k=$(gh api "repos/$REPO/actions/workflows/merge-train.yml/runs?status=$st&per_page=1" --jq '.total_count')
+            busy=$((busy + k))
+          done
+          if [ "$busy" -gt 0 ]; then echo "a merge-train run is already queued or running ($busy)"; exit 0; fi
+          gh workflow run merge-train.yml -R "$REPO"
+          echo "dispatched merge-train.yml"
+
       - name: Conflicted PRs — stage the ones whose head has no preview run
         id: conflicted
         continue-on-error: true
@@ -134,7 +158,7 @@ jobs:
             --jq '.[] | select(.head.repo.full_name == "'"$REPO"'") | [.number, .head.ref, .head.sha] | @tsv')
 
       - name: Any sweep failed?
-        if: steps.publish.outcome == 'failure' || steps.verify.outcome == 'failure' || steps.repin.outcome == 'failure' || steps.conflicted.outcome == 'failure'
+        if: steps.publish.outcome == 'failure' || steps.verify.outcome == 'failure' || steps.repin.outcome == 'failure' || steps.train.outcome == 'failure' || steps.conflicted.outcome == 'failure'
         run: |
-          echo "::error::a sweep failed — publish=${{ steps.publish.outcome }} verify=${{ steps.verify.outcome }} repin=${{ steps.repin.outcome }} conflicted=${{ steps.conflicted.outcome }}"
+          echo "::error::a sweep failed — publish=${{ steps.publish.outcome }} verify=${{ steps.verify.outcome }} repin=${{ steps.repin.outcome }} train=${{ steps.train.outcome }} conflicted=${{ steps.conflicted.outcome }}"
           exit 1
