@@ -2,14 +2,14 @@
 # folio-assistant-bx4c
 $schema: bean/1.0.0
 title: mount:remote re-render writes into mounted instances, breaking mount:lock:check
-status: todo
+status: in-progress
 type: bug
 priority: normal
 tags:
     - mounts
     - cat-harness-tools
 created_at: 2026-11-05T08:53:21Z
-updated_at: 2026-11-05T11:14:31Z
+updated_at: 2026-11-06T05:39:55Z
 parent: folio-assistant-rwmf
 ---
 
@@ -34,3 +34,5 @@ In cat-harness-tools' `mount:remote` / agent-surface renderer:
 _2026-11-05_ — Filed at the owner's request ("yes file the bean") by https://claude.ai/code/session_01XueePufkpx8fwJxavyDS5h, from the #2926 re-pin.
 
 _2026-11-05_: The symptom, cat-harness's stale committed surface, is being fixed upstream by https://github.com/litlfred/cat-harness/pull/1040. That PR regenerates `.claude/commands/pending-show.md` and `session-intent.md` plus the 10 stale agent-memory renders with `skill:commands` and `agent-memory`. `skill:commands:check` and `agent-memory:check` pass for cat-harness with it mounted. This bean stays open: the `mount:remote` write fix above is still a cat-harness-tools task. (https://claude.ai/code/session_01XueePufkpx8fwJxavyDS5h)
+
+_2026-11-06T05:39:55Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
