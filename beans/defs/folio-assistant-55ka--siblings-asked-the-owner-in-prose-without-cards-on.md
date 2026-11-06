@@ -2,13 +2,13 @@
 # folio-assistant-55ka
 $schema: bean/1.0.0
 title: Siblings asked the owner in prose without cards on 2026-11-05; make interaction-modality part of every sibling brief, and check that it's followed
-status: in-progress
+status: completed
 type: task
 priority: high
 tags:
     - interaction
 created_at: 2026-11-05T13:47:16Z
-updated_at: 2026-11-06T05:53:00Z
+updated_at: 2026-11-06T08:38:30Z
 parent: folio-assistant-rwmf
 ---
 
@@ -51,3 +51,5 @@ _2026-11-06T05:53:00Z_ — Subagent `be2fcaa9-49d1-4c10-8af1-c360d751f2b9` (Lane
 - **Done-when 1 (`litlfred/cat-harness#1095`)**: Updated `sdlc/skills/sdlc-core/opening-brief.md` (+ `opening-brief.prov.jsonld`), `sdlc/skills/sdlc-core/swarm-management.md`, `sdlc/skills/sdlc-core/coordinate.md` (+ `coordinate.prov.jsonld`), and `sdlc/skills/sdlc-core/dispatch-agent.md` (+ `dispatch-agent.prov.jsonld`) so every sibling brief and subagent prompt carries `interaction-modality` (and `hand-back-to-discussion`) and passes it on.
 - **Done-when 2 (`litlfred/cat-harness-tools#1567`)**: Added `scripts/check-interaction-modality.ts` and `scripts/tests/check-interaction-modality.test.ts` (9/9 unit tests passing, 35 assertions) auditing both assistant turns (`list_events` / JSONL / Stop hook) for prose questions without a card tool call and child-spawning briefs (`create_session`, `Agent`, `invoke_subagent`, `Task`, `send_message`) for the `interaction-modality` contract.
 - **Done-when 3**: Documented the 9 sessions and 11 cited turns from 2026-11-05 in the table above.
+
+_2026-11-06T08:38:30Z_ — Closed on `origin/main` evidence: `litlfred/cat-harness#1095` merged at `f6d21cc44d6c3448717b9e9d84d1d90bb744ef18` (`2026-11-06T07:49:25Z`) and `litlfred/cat-harness-tools#1567` merged at `c0a12e82ac27ea5e07cc8311843a3da46fcf3e61` (`2026-11-06T07:51:30Z`), both verified ancestors of `origin/main`. — agy (`c3ac6e16-520e-40cf-b6b2-af796ef523d4` under `92bff8c9-777d-458a-a380-8dd5bf5cc0f3`)

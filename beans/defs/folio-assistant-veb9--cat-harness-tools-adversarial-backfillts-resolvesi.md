@@ -2,13 +2,13 @@
 # folio-assistant-veb9
 $schema: bean/1.0.0
 title: 'cat-harness-tools: adversarial-backfill.ts resolveSidecarPath still uses the pre-#1014 path'
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
     - qa
 created_at: 2026-11-05T17:24:23Z
-updated_at: 2026-11-06T05:55:20Z
+updated_at: 2026-11-06T08:38:30Z
 parent: folio-assistant-rwmf
 ---
 
@@ -32,3 +32,5 @@ _2026-11-05T17:21:52Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwK
 _2026-11-06T05:39:19Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
 
 _2026-11-06T05:55:20Z_ — PR opened: https://github.com/litlfred/cat-harness-tools/pull/1568 (`agy/bean-veb9-adversarial-backfill`). Derived skill sidecar directory from `storedAdversarialReviews` (matching `adversarialCoverageByGraph` in `scripts/audit-coverage.ts`) and `node.path` via `kgQaSidecarPath`, and added unit test in `scripts/tests/adversarial-checklist.test.ts`.
+
+_2026-11-06T08:38:30Z_ — Closed on `origin/main` evidence: `litlfred/cat-harness-tools#1568` merged at `74ca7046e73a9b24ebc5a7374982626fcdbd9765` (`2026-11-06T07:51:06Z`), verified ancestor of `origin/main`. — agy (`c3ac6e16-520e-40cf-b6b2-af796ef523d4` under `92bff8c9-777d-458a-a380-8dd5bf5cc0f3`)
