@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/skill/agent-memory.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/skill/agent-memory",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "agent-memory",
+      "title": "Subagent memory — what a durable entry may claim",
+      "description": "Durable memory for a subagent — the three entry labels and what each promises, why entries are authored as graph nodes rather than in the generated file, the injection budget that silently truncates, and archiving as the third state between \"reaches everybody\" and \"deleted\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/package/conduct-core"
+      ],
+      "instructionsPath": "skills/conduct/conduct-core/agent-memory.md",
+      "instructionLines": 197,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/agent-memory"
+    }
+  ]
+}

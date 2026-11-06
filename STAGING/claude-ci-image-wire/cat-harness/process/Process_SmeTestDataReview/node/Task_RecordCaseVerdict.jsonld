@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview/node/Task_RecordCaseVerdict.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview/node/Task_RecordCaseVerdict",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Record the SME's verdict and rationale",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/role/tester",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview/lane/Lane_Record",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/skill/test-data-sets"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview#flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview#flow/Flow_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_RecordCaseVerdict"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_KgSeparation/node/Task_Plan.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_KgSeparation/node/Task_Plan",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "7 · Plan publication",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_KgSeparation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/role/publication-manager",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_KgSeparation/lane/Lane_Publication",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/skill/instance-publication"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_KgSeparation#flow/F10",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_KgSeparation#flow/F12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_KgSeparation#flow/F11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/Task_Plan"
+    }
+  ]
+}

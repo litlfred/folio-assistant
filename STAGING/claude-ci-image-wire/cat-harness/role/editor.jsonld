@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/role/editor.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/role/editor",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Editor",
+      "title": "Editor",
+      "notation": "editor",
+      "description": "Author plus the authority to accept a change into the corpus. The lane that sees QA findings and decides.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/skill/content-validate",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/skill/voice-authoring-guidance"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor"
+    }
+  ]
+}

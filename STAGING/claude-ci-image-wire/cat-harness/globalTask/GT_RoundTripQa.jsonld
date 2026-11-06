@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/globalTask/GT_RoundTripQa.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/globalTask/GT_RoundTripQa",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Task",
+      "name": "Round-trip translation QA",
+      "summary": "Back-translate the target-language .md into the source language and compare the meaning with the original.",
+      "description": "Back-translate the target-language .md into the source language and compare the meaning with the original. It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool.",
+      "bpmnType": "bpmn:GlobalTask",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/skill/translation-manager"
+      ],
+      "sourcePath": "processes/global-tasks.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/global-tasks.bpmn",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/globalTask/GT_RoundTripQa"
+    }
+  ]
+}

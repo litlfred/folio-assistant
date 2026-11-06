@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/End_NotPushed.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/End_NotPushed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Not pushed, or could not tell, and the message says why",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/process/Process_RenderKgToGitHubPages",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/role/site-publisher",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/process/Process_RenderKgToGitHubPages#flow/SF_RG_11"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/directory/bootstrap-tools-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/End_NotPushed"
+    }
+  ]
+}

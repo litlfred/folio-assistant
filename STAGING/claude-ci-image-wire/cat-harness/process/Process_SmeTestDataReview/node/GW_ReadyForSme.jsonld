@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview/node/GW_ReadyForSme.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview/node/GW_ReadyForSme",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Review unit prepared",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/role/clinical-sme",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview/lane/Lane_SME",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview#flow/Flow_2",
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview#flow/Flow_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/process/Process_SmeTestDataReview#flow/Flow_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/GW_ReadyForSme"
+    }
+  ]
+}

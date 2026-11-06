@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/actor/stakeholder.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/actor/stakeholder",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "stakeholder",
+      "actorKind": "person",
+      "title": "Stakeholder",
+      "description": "Signs off that a requirement is met. Holds no capabilities here deliberately: sign-off is a judgement, and a capability would suggest it could be automated.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/role/stakeholder"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/stakeholder"
+    }
+  ]
+}

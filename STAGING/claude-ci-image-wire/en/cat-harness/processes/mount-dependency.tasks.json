@@ -1,0 +1,454 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_MountDependency",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency",
+ "tasks": {
+  "Task_DeclareMount": {
+   "id": "Task_DeclareMount",
+   "name": "Declare the mount: harness, repository, pin",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_DeclareMount",
+   "lane": "Downstream author",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "remote-mount"
+    },
+    {
+     "name": "index-config"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring"
+     },
+     {
+      "name": "content-author"
+     },
+     {
+      "name": "content-plan"
+     },
+     {
+      "name": "content-review"
+     },
+     {
+      "name": "decision-audit"
+     },
+     {
+      "name": "dmn-authoring"
+     },
+     {
+      "name": "evidence-appraisal"
+     },
+     {
+      "name": "kg-affordances"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "voice-authoring-guidance"
+     }
+    ]
+   }
+  },
+  "Task_ResolveClosure": {
+   "id": "Task_ResolveClosure",
+   "name": "Resolve the closure at the pin",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_ResolveClosure",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "remote-mount"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_MountInstances": {
+   "id": "Task_MountInstances",
+   "name": "Mount each instance at its declared path",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_MountInstances",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "remote-mount"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_WriteLock": {
+   "id": "Task_WriteLock",
+   "name": "Write the lock",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_WriteLock",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "remote-mount"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_RenderAgentSurface": {
+   "id": "Task_RenderAgentSurface",
+   "name": "Re-render the agent surface",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_RenderAgentSurface",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "remote-mount"
+    },
+    {
+     "name": "agent-memory"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Task_CheckAgainstLock": {
+   "id": "Task_CheckAgainstLock",
+   "name": "Check disk against lock against declaration",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_CheckAgainstLock",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "remote-mount"
+    },
+    {
+     "name": "ci-health"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  }
+ }
+}

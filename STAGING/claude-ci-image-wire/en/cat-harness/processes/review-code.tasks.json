@@ -1,0 +1,213 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_CodeReview",
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeReview",
+ "tasks": {
+  "Task_RunNodeAudits": {
+   "id": "Task_RunNodeAudits",
+   "name": "Run the node audits",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeReview/node/Task_RunNodeAudits",
+   "lane": "Code reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeReview/lane/Lane_CodeReviewer",
+   "skills": [
+    {
+     "name": "code-node-review"
+    }
+   ],
+   "role": {
+    "name": "code-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/code-reviewer",
+    "title": "Code reviewer",
+    "skills": [
+     {
+      "name": "adversarial-code-review"
+     },
+     {
+      "name": "code-node-review"
+     },
+     {
+      "name": "code-review-process"
+     },
+     {
+      "name": "covered-is-not-reachable"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "site-presentation-assets"
+     },
+     {
+      "name": "skill-voice-review"
+     },
+     {
+      "name": "skills-and-tools"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "test-engineer"
+     }
+    ]
+   }
+  },
+  "Task_ReviewTool": {
+   "id": "Task_ReviewTool",
+   "name": "Review the Tool node",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeReview/node/Task_ReviewTool",
+   "lane": "Code reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeReview/lane/Lane_CodeReviewer",
+   "skills": [
+    {
+     "name": "skills-and-tools"
+    },
+    {
+     "name": "covered-is-not-reachable"
+    }
+   ],
+   "role": {
+    "name": "code-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/code-reviewer",
+    "title": "Code reviewer",
+    "skills": [
+     {
+      "name": "adversarial-code-review"
+     },
+     {
+      "name": "code-node-review"
+     },
+     {
+      "name": "code-review-process"
+     },
+     {
+      "name": "covered-is-not-reachable"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "site-presentation-assets"
+     },
+     {
+      "name": "skill-voice-review"
+     },
+     {
+      "name": "skills-and-tools"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "test-engineer"
+     }
+    ]
+   }
+  },
+  "Task_ReviewSchema": {
+   "id": "Task_ReviewSchema",
+   "name": "Review the schema definition node",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeReview/node/Task_ReviewSchema",
+   "lane": "Code reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeReview/lane/Lane_CodeReviewer",
+   "skills": [
+    {
+     "name": "code-node-review"
+    },
+    {
+     "name": "site-presentation-assets"
+    }
+   ],
+   "role": {
+    "name": "code-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/code-reviewer",
+    "title": "Code reviewer",
+    "skills": [
+     {
+      "name": "adversarial-code-review"
+     },
+     {
+      "name": "code-node-review"
+     },
+     {
+      "name": "code-review-process"
+     },
+     {
+      "name": "covered-is-not-reachable"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "site-presentation-assets"
+     },
+     {
+      "name": "skill-voice-review"
+     },
+     {
+      "name": "skills-and-tools"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "test-engineer"
+     }
+    ]
+   }
+  },
+  "Task_RecordVerdict": {
+   "id": "Task_RecordVerdict",
+   "name": "Record the verdict on the node",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeReview/node/Task_RecordVerdict",
+   "lane": "Code reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeReview/lane/Lane_CodeReviewer",
+   "skills": [
+    {
+     "name": "code-node-review"
+    }
+   ],
+   "role": {
+    "name": "code-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/code-reviewer",
+    "title": "Code reviewer",
+    "skills": [
+     {
+      "name": "adversarial-code-review"
+     },
+     {
+      "name": "code-node-review"
+     },
+     {
+      "name": "code-review-process"
+     },
+     {
+      "name": "covered-is-not-reachable"
+     },
+     {
+      "name": "placement"
+     },
+     {
+      "name": "site-presentation-assets"
+     },
+     {
+      "name": "skill-voice-review"
+     },
+     {
+      "name": "skills-and-tools"
+     },
+     {
+      "name": "staging-review"
+     },
+     {
+      "name": "test-engineer"
+     }
+    ]
+   }
+  }
+ }
+}

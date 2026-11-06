@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/fhir-harness/process/Process_L3Fhir/lane/Lane_PubMgr.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_PubMgr.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_PubMgr",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Publication manager",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/fhir-harness/role/publication-manager",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    }
+  ]
+}

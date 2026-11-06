@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/Citation",
+  "definitions": {
+    "Citation": {
+      "type": "object",
+      "properties": {
+        "section": {
+          "type": "string"
+        },
+        "page": {
+          "type": "string"
+        },
+        "lines": {
+          "type": "string"
+        },
+        "caption": {
+          "type": "string"
+        },
+        "raw": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/folio-assistant-core/schema/zod/public-comment/CitationSchema.schema.json",
+  "title": "CitationSchema",
+  "description": "Generated from `CitationSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/skill/bootstrap-contract-semver.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/skill/bootstrap-contract-semver",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "bootstrap-contract-semver",
+      "title": "Bootstrap contract semver",
+      "description": "What MAJOR, MINOR and PATCH mean for bootstrap's PUBLISHED schemas and graph, and why the bump is computed from a diff of the generated documents rather than asserted. Read before changing any Zod that bootstrap's `schemas/*.schema.json` are generated from, and before publishing one.",
+      "instructionsPath": "skills/bootstrap-contract-semver.md",
+      "instructionLines": 108,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/bootstrap-tools/directory/bootstrap-tools-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/skill/bootstrap-contract-semver"
+    }
+  ]
+}

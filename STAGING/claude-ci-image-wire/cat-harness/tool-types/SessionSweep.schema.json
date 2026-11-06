@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/STAGING/claude-ci-image-wire/cat-harness/tool-types/SessionSweep.schema.json",
+  "title": "SessionSweep",
+  "type": "object",
+  "properties": {
+    "since": {
+      "type": "string"
+    },
+    "commitsScanned": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    },
+    "sessions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "session": {
+            "type": "string"
+          },
+          "commits": {
+            "type": "integer",
+            "minimum": -9007199254740991,
+            "maximum": 9007199254740991
+          },
+          "first": {
+            "type": "string"
+          },
+          "last": {
+            "type": "string"
+          },
+          "branches": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "latestSubject": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "session",
+          "commits",
+          "first",
+          "last",
+          "branches",
+          "latestSubject"
+        ]
+      }
+    },
+    "untrailered": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+    }
+  },
+  "required": [
+    "since",
+    "commitsScanned",
+    "sessions",
+    "untrailered"
+  ],
+  "description": "The sessions that committed in a window, read from Claude-Session trailers.",
+  "staging": {
+    "branch": "claude/ci-image-wire",
+    "sha": "2cbc86004c7330b508fb012dab9218a7300477b2",
+    "pr": "2964/merge",
+    "run": "42141200761"
+  }
+}
