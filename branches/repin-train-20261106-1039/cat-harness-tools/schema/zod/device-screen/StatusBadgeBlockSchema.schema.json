@@ -1,0 +1,86 @@
+{
+  "$ref": "#/definitions/StatusBadgeBlock",
+  "definitions": {
+    "StatusBadgeBlock": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "statusBadge"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "column": {
+          "type": "string",
+          "enum": [
+            "main",
+            "side"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "verified",
+            "unverified",
+            "failed",
+            "emergency",
+            "info"
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "detail": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mono": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "label",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "verdict": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "type",
+        "status",
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/StatusBadgeBlockSchema.schema.json",
+  "title": "StatusBadgeBlockSchema",
+  "description": "Generated from `StatusBadgeBlockSchema` in schemas/process/device-screen.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261106-1039",
+    "sha": "53f5d40b16a25002948411f1d141116773a36d8f",
+    "pr": "repin-train/20261106-1039",
+    "run": "42204511187"
+  }
+}

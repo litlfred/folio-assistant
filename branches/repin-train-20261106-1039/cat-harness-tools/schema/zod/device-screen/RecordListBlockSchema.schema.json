@@ -1,0 +1,365 @@
+{
+  "$ref": "#/definitions/RecordListBlock",
+  "definitions": {
+    "RecordListBlock": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "recordList"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "column": {
+          "type": "string",
+          "enum": [
+            "main",
+            "side"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "icon": {
+          "type": "string",
+          "enum": [
+            "baby",
+            "person",
+            "family",
+            "clinician",
+            "health-worker",
+            "hospital",
+            "clinic",
+            "home",
+            "phone",
+            "tablet",
+            "qr",
+            "paper",
+            "wifi-off",
+            "wifi",
+            "shield-check",
+            "calendar-check",
+            "stethoscope",
+            "link",
+            "transfer",
+            "globe",
+            "key",
+            "lock",
+            "database",
+            "tent",
+            "bus",
+            "plane",
+            "syringe",
+            "pill",
+            "pill-off",
+            "pen",
+            "heart",
+            "eye",
+            "unlock",
+            "check",
+            "cross",
+            "question",
+            "hash",
+            "printer",
+            "camera",
+            "alert",
+            "clock",
+            "user",
+            "users",
+            "building",
+            "scan",
+            "send",
+            "layers",
+            "shield",
+            "shield-alert",
+            "monitor",
+            "kiosk",
+            "scanner",
+            "calendar",
+            "file",
+            "baby-new"
+          ]
+        },
+        "summary": {
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tone": {
+              "default": "neutral",
+              "type": "string",
+              "enum": [
+                "neutral",
+                "info",
+                "success",
+                "warning",
+                "danger"
+              ]
+            },
+            "icon": {
+              "type": "string",
+              "enum": [
+                "baby",
+                "person",
+                "family",
+                "clinician",
+                "health-worker",
+                "hospital",
+                "clinic",
+                "home",
+                "phone",
+                "tablet",
+                "qr",
+                "paper",
+                "wifi-off",
+                "wifi",
+                "shield-check",
+                "calendar-check",
+                "stethoscope",
+                "link",
+                "transfer",
+                "globe",
+                "key",
+                "lock",
+                "database",
+                "tent",
+                "bus",
+                "plane",
+                "syringe",
+                "pill",
+                "pill-off",
+                "pen",
+                "heart",
+                "eye",
+                "unlock",
+                "check",
+                "cross",
+                "question",
+                "hash",
+                "printer",
+                "camera",
+                "alert",
+                "clock",
+                "user",
+                "users",
+                "building",
+                "scan",
+                "send",
+                "layers",
+                "shield",
+                "shield-alert",
+                "monitor",
+                "kiosk",
+                "scanner",
+                "calendar",
+                "file",
+                "baby-new"
+              ]
+            }
+          },
+          "required": [
+            "text"
+          ],
+          "additionalProperties": false
+        },
+        "example": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Za-z]+\\/[A-Za-z0-9.-]+$"
+        },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "icon": {
+                "type": "string",
+                "enum": [
+                  "baby",
+                  "person",
+                  "family",
+                  "clinician",
+                  "health-worker",
+                  "hospital",
+                  "clinic",
+                  "home",
+                  "phone",
+                  "tablet",
+                  "qr",
+                  "paper",
+                  "wifi-off",
+                  "wifi",
+                  "shield-check",
+                  "calendar-check",
+                  "stethoscope",
+                  "link",
+                  "transfer",
+                  "globe",
+                  "key",
+                  "lock",
+                  "database",
+                  "tent",
+                  "bus",
+                  "plane",
+                  "syringe",
+                  "pill",
+                  "pill-off",
+                  "pen",
+                  "heart",
+                  "eye",
+                  "unlock",
+                  "check",
+                  "cross",
+                  "question",
+                  "hash",
+                  "printer",
+                  "camera",
+                  "alert",
+                  "clock",
+                  "user",
+                  "users",
+                  "building",
+                  "scan",
+                  "send",
+                  "layers",
+                  "shield",
+                  "shield-alert",
+                  "monitor",
+                  "kiosk",
+                  "scanner",
+                  "calendar",
+                  "file",
+                  "baby-new"
+                ]
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "code": {
+                "type": "string",
+                "minLength": 1
+              },
+              "detail": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "type": "object",
+                "properties": {
+                  "text": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "tone": {
+                    "default": "neutral",
+                    "type": "string",
+                    "enum": [
+                      "neutral",
+                      "info",
+                      "success",
+                      "warning",
+                      "danger"
+                    ]
+                  },
+                  "icon": {
+                    "type": "string",
+                    "enum": [
+                      "baby",
+                      "person",
+                      "family",
+                      "clinician",
+                      "health-worker",
+                      "hospital",
+                      "clinic",
+                      "home",
+                      "phone",
+                      "tablet",
+                      "qr",
+                      "paper",
+                      "wifi-off",
+                      "wifi",
+                      "shield-check",
+                      "calendar-check",
+                      "stethoscope",
+                      "link",
+                      "transfer",
+                      "globe",
+                      "key",
+                      "lock",
+                      "database",
+                      "tent",
+                      "bus",
+                      "plane",
+                      "syringe",
+                      "pill",
+                      "pill-off",
+                      "pen",
+                      "heart",
+                      "eye",
+                      "unlock",
+                      "check",
+                      "cross",
+                      "question",
+                      "hash",
+                      "printer",
+                      "camera",
+                      "alert",
+                      "clock",
+                      "user",
+                      "users",
+                      "building",
+                      "scan",
+                      "send",
+                      "layers",
+                      "shield",
+                      "shield-alert",
+                      "monitor",
+                      "kiosk",
+                      "scanner",
+                      "calendar",
+                      "file",
+                      "baby-new"
+                    ]
+                  }
+                },
+                "required": [
+                  "text"
+                ],
+                "additionalProperties": false
+              },
+              "struck": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "label"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "footnote": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/RecordListBlockSchema.schema.json",
+  "title": "RecordListBlockSchema",
+  "description": "Generated from `RecordListBlockSchema` in schemas/process/device-screen.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261106-1039",
+    "sha": "53f5d40b16a25002948411f1d141116773a36d8f",
+    "pr": "repin-train/20261106-1039",
+    "run": "42204511187"
+  }
+}

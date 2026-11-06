@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/skill/saturation-meta-merge.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-1039",
+    "sha": "53f5d40b16a25002948411f1d141116773a36d8f",
+    "pr": "repin-train/20261106-1039",
+    "run": "42204511187"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/skill/saturation-meta-merge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "saturation-meta-merge",
+      "title": "Saturation meta-merge — drain the queue when the runners are full",
+      "description": "When the CI runners have been full for a long time, drain a repository's ready PRs in one step: hold the swarm, cancel the queued PR runs, stack every admitted PR onto one meta-merge branch with merge commits, and land that branch on `main` without waiting for CI, on the owner's card that names each PR. Then re-run main's checks and report. Use for \"runners are full\", \"cancel everything and merge what's ready\", \"meta-merge\", \"consolidate the queue\", and when the queue has not moved for an hour or more.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/saturation-meta-merge.md",
+      "instructionLines": 139,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/saturation-meta-merge"
+    }
+  ]
+}

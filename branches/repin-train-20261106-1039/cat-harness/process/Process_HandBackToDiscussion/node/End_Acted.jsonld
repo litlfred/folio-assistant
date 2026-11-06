@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/process/Process_HandBackToDiscussion/node/End_Acted.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-1039",
+    "sha": "53f5d40b16a25002948411f1d141116773a36d8f",
+    "pr": "repin-train/20261106-1039",
+    "run": "42204511187"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/process/Process_HandBackToDiscussion/node/End_Acted",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Answer acted on",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/process/Process_HandBackToDiscussion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/role/sibling-session",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Sibling",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/process/Process_HandBackToDiscussion#flow/SF_HB_14"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/End_Acted"
+    }
+  ]
+}

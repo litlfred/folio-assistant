@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanClosedHow.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-1039",
+    "sha": "53f5d40b16a25002948411f1d141116773a36d8f",
+    "pr": "repin-train/20261106-1039",
+    "run": "42204511187"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanClosedHow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "How did it end?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/folio-assistant-core/process/Process_DsaDocumentLifecycle",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/Flow_GW_BeanClosedHow"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F31",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/folio-assistant-core/process/Process_DsaDocumentLifecycle#flow/F51"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/GW_BeanClosedHow"
+    }
+  ]
+}

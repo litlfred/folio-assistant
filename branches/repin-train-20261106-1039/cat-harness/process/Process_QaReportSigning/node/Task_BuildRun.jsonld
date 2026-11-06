@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/process/Process_QaReportSigning/node/Task_BuildRun.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-1039",
+    "sha": "53f5d40b16a25002948411f1d141116773a36d8f",
+    "pr": "repin-train/20261106-1039",
+    "run": "42204511187"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/process/Process_QaReportSigning/node/Task_BuildRun",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Build the test run",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/process/Process_QaReportSigning",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/role/validation-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/process/Process_QaReportSigning/lane/Lane_Qa",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/skill/qa-report-signing",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/skill/content-test"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/process/Process_QaReportSigning#flow/S01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/process/Process_QaReportSigning#flow/S02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261106-1039/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_BuildRun"
+    }
+  ]
+}
