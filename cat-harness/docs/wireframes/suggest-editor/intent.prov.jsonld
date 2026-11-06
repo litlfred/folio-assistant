@@ -1,0 +1,85 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of intent.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/suggest-editor/intent.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/suggest-editor/intent.md#provenance-1"
+        },
+        {
+          "@id": "docs/wireframes/suggest-editor/intent.md#provenance-2"
+        },
+        {
+          "@id": "docs/wireframes/suggest-editor/intent.md#provenance-3"
+        },
+        {
+          "@id": "docs/wireframes/suggest-editor/intent.md#provenance-4"
+        },
+        {
+          "@id": "docs/wireframes/suggest-editor/intent.md#provenance-5"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/suggest-editor/intent.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Covers",
+      "prov:value": "A folio document, a paper, a library entry and an IG page all use the same dialog, from the tools layer `src/core/edit-links.ts` (`EDIT_LINKS_RUNTIME`, the suggest section) and its published copy `site-chrome/assets/js/edit-links.js`. Bean folio-assistant-4dx7, and dth-hrh tasks #8, #12, #13 and #16.",
+      "cat-harness:refs": [
+        "bean folio-assistant-4dx7",
+        "#12",
+        "#13",
+        "#16"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/suggest-editor/intent.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Who it is for",
+      "prov:value": "The owner has low dexterity. Every control must be a large target, reachable by keyboard, and a choice rather than typing wherever possible."
+    },
+    {
+      "@id": "docs/wireframes/suggest-editor/intent.md#provenance-3",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "What they need to do",
+      "prov:value": "Owner, 2026-10-14, on the first build: *\"i thought there would be a small toolbar (bold, underline, etc.). also would expect it to be resizable. new things in green, underlined. deleted things in red/marktrhough. the github issue has a why... cant we preopulate that with a field \"why\" in the popup?\"*",
+      "cat-harness:refs": [
+        "2026-10-14"
+      ],
+      "dcterms:date": [
+        "2026-10-14"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/suggest-editor/intent.md#provenance-4",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "What it must show",
+      "prov:value": "bold, italic, strikethrough, heading, bullet list, numbered list, link, inline code, undo and redo;\n  - for a paper, also math, plus the raw-LaTeX toggle (owner: *\"both\"*);\n  - the track changes."
+    },
+    {
+      "@id": "docs/wireframes/suggest-editor/intent.md#provenance-5",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "pr",
+      "cat-harness:section": "Drawn as-is from",
+      "prov:value": "The built dth-hrh site with https://github.com/litlfred/cat-harness-tools/pull/218 (`2ed5a90`), served at `/dth-hrh/` and driven in Chromium on 2026-10-14. The screenshot is in the PR that adds this directory.",
+      "cat-harness:refs": [
+        "2026-10-14"
+      ],
+      "dcterms:date": [
+        "2026-10-14"
+      ]
+    }
+  ]
+}

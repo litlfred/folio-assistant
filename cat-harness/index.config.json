@@ -1,0 +1,66 @@
+{
+  "$schema": "folio-index-config/v1",
+  "site": {
+    "landing": "cat-harness"
+  },
+  "instances": [
+    {
+      "name": "cat-harness",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "a83ae82db8a7d03c3febdf367a0a62b46c2eb0ed",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "note": "Replaces the git submodule: the whole repository, at the pin the gitlink held.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-02",
+              "ref": "a83ae82db8a7d03c3febdf367a0a62b46c2eb0ed",
+              "evidence": "Owner litlfred, 2026-11-01 (20:41Z, MVP thread): 'i want to get all functional stuff done, the full repin on harnesses done and stablized as MVP goal.' and 21:41Z card Q-PIN-4 'B. All, including smart-ra' (re-pin every smart-* site)."
+            }
+          }
+        }
+      },
+      "contentType": "document"
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "f22b2490ff8b6930c55d1b6fe9605fc5f9f9a743",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "note": "Replaces the git submodule. Its need bootstrap is the mount above.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-04",
+              "ref": "f22b2490ff8b6930c55d1b6fe9605fc5f9f9a743",
+              "evidence": "Owner leitnerc (litlfred), 2026-11-04, Claude session session_01EucfRpzcq3FD3Z9fyShjoj: 'merge repin window open 4 hrs', then Decision card answer 'A. Do it, merge now' — repin cat-harness's bootstrap-tools pin to the merge of bootstrap-tools#77."
+            }
+          }
+        }
+      }
+    }
+  ]
+}

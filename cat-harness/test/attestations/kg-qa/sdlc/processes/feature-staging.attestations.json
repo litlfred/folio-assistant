@@ -1,0 +1,20 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "process",
+    "id": "Process_FeatureStaging",
+    "path": "sdlc/processes/feature-staging.bpmn"
+  },
+  "pair_attestations": [
+    {
+      "kind": "implements",
+      "prose": "cat-harness/sdlc/processes/feature-staging.bpmn",
+      "code": ".github/workflows/feature-staging.yml",
+      "prose_hash": "16908b97ea23",
+      "code_hash": "839467f13df9",
+      "by": "agent",
+      "reason": "Re-hashed after cat-harness#375's global tasks (owner 2026-10-20, a1 b1 c1): the step that appends a `retained` entry with why it stays became a call activity naming GT_LogRetained, shared with staging-render-log; its documentation moved to the global task unchanged in meaning, and the call keeps its id, lane and name. Nothing the workflow does changed. Lane A, session https://claude.ai/code/session_01Kymnx79TxWvxVoLzcAjBRr."
+    }
+  ]
+}
