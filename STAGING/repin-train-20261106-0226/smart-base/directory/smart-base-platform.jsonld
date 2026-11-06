@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/smart-base/directory/smart-base-platform.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-platform.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0226",
+    "sha": "15e75789a44bfae73b67ff7dd426131f41809f90",
+    "pr": "repin-train/20261106-0226",
+    "run": "42150430677"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-platform",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-platform",
+      "path": "platform/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "The import seam: `platform/index.ts` re-exports every platform symbol this instance uses, so re-pointing the platform is a one-file edit. Declared because a remote mount brings declared directories only.",
+      "readmePath": "platform/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-platform"
+    }
+  ]
+}

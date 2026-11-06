@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/folio-assistant-core/process/Process_BoardPlaceNote/node/End_Placed.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0226",
+    "sha": "15e75789a44bfae73b67ff7dd426131f41809f90",
+    "pr": "repin-train/20261106-0226",
+    "run": "42150430677"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/folio-assistant-core/process/Process_BoardPlaceNote/node/End_Placed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "The board shows it there",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/folio-assistant-core/process/Process_BoardPlaceNote",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/folio-assistant-core/role/corpus",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/folio-assistant-core/process/Process_BoardPlaceNote/lane/Lane_Layer",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/folio-assistant-core/process/Process_BoardPlaceNote#flow/F_3"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/node/End_Placed"
+    }
+  ]
+}

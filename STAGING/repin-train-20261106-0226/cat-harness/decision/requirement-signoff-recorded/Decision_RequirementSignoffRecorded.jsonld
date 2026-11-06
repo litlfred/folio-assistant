@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/decision/requirement-signoff-recorded/Decision_RequirementSignoffRecorded.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0226",
+    "sha": "15e75789a44bfae73b67ff7dd426131f41809f90",
+    "pr": "repin-train/20261106-0226",
+    "run": "42150430677"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/decision/requirement-signoff-recorded/Decision_RequirementSignoffRecorded",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Decision",
+      "name": "Is the sign-off recorded, and does it let the work proceed?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/process/decisions/requirement-signoff-recorded.dmn",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/externalSchema/omg-dmn-1.3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/decision/requirement-signoff-recorded/Decision_RequirementSignoffRecorded"
+    }
+  ]
+}

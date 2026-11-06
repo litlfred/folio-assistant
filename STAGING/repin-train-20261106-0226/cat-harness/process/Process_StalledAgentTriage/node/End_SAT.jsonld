@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_StalledAgentTriage/node/End_SAT.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0226",
+    "sha": "15e75789a44bfae73b67ff7dd426131f41809f90",
+    "pr": "repin-train/20261106-0226",
+    "run": "42150430677"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_StalledAgentTriage/node/End_SAT",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Stalled work has an owner and a place in the plan",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_StalledAgentTriage",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_StalledAgentTriage#flow/SF_Process_StalledAgentTriage_7"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/End_SAT"
+    }
+  ]
+}

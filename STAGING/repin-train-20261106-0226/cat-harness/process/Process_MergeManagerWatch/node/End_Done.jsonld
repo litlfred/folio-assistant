@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_MergeManagerWatch/node/End_Done.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261106-0226",
+    "sha": "15e75789a44bfae73b67ff7dd426131f41809f90",
+    "pr": "repin-train/20261106-0226",
+    "run": "42150430677"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_MergeManagerWatch/node/End_Done",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Wake handled",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_MergeManagerWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_MergeManagerWatch#flow/Flow_7",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_MergeManagerWatch#flow/Flow_8",
+        "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/process/Process_MergeManagerWatch#flow/Flow_9"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/STAGING/repin-train-20261106-0226/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/End_Done"
+    }
+  ]
+}
