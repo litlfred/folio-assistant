@@ -202,7 +202,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:02:05Z",
-      "updatedAt": "2026-11-06T05:58:00Z",
+      "updatedAt": "2026-11-06T06:20:00Z",
       "preview": "**Owner ruling, 2026-11-05 ~13:00Z**, verbatim choice: \"Move the checks (Recommended)\": checks of cat-harness's own files run only in the repo that commits those files, so other layers stop seeing false new failures.\n\n## Evidence\n- `check:schema-nodes` judges the harness's own `schemas/` (cat-harness-tools#1478 left two modules untagged; fixed by #1483 / #1485). Every root that mounts the layer ra",
       "file": "beans/defs/folio-assistant-70hd--cat-harness-file-checks-run-only-in-the-repo-that.md"
     },
@@ -426,7 +426,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T19:10:00Z",
-      "updatedAt": "2026-11-05T14:00:00Z",
+      "updatedAt": "2026-11-06T06:30:00Z",
       "preview": "## How to resume (read this first)\n\nOwner ask 2026-11-02 18:56Z (thread cmsg_017WNUkNK8kdDziPK58Pv6G9PqHijxfA1UbP1sLEYKpWLG): process docs independent of the Beans store Tool (git branch is one Tool; a server/MCP service another); BPMN state machine starts an agent via API with a bean tagged process+task, tracks it, bean evolution over time readable. 18:58Z: write it in the context of the WHO Assu",
       "file": "beans/defs/folio-assistant-bsd1--bean-store-behind-any-tool-and-agent-dispatch.md"
     },
@@ -440,7 +440,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T08:53:21Z",
-      "updatedAt": "2026-11-06T05:39:55Z",
+      "updatedAt": "2026-11-06T06:08:30Z",
       "preview": "## Evidence\nOn 2026-11-05 we re-pinned folio-assistant#2926 (commit e5450ee). We seeded cat-harness at its main (c632a56) and ran `bun run cat mount:remote`. That command re-renders the agent surface, and in doing so it wrote into the **mounted cat-harness instance's own files**. cat-harness is mounted whole, so those files are inside the mount. Afterwards `mount:lock:check` and `mount:remote:chec",
       "file": "beans/defs/folio-assistant-bx4c--mountremote-re-render-writes-into-mounted-instance.md"
     },
@@ -608,7 +608,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T08:26:16Z",
-      "updatedAt": "2026-11-06T05:46:09Z",
+      "updatedAt": "2026-11-06T06:08:19Z",
       "preview": "Catch failures before they reach a runner: a pre-push hook, an agent hook, and a record keyed by the tree hash so CI can see the gates already passed on that exact tree. Sibling \"CI speed 3\", in cat-harness-tools. An agent's record never stands in for the QA verdict; it only lets CI skip a rebuild it will check.\n\n## Done when\n- [x] the pre-push and agent hooks run the fast gates — the hook is litl",
       "file": "beans/defs/folio-assistant-fn8q--ci-speed-ii-e-gates-before-push-pre-push-agent-hoo.md"
     },
@@ -1354,7 +1354,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T17:40:03Z",
-      "updatedAt": "2026-11-06T05:40:18Z",
+      "updatedAt": "2026-11-06T06:01:00Z",
       "preview": "Filed from folio-assistant-rpc6. Owner card (2026-11-05, Q4 \"1. Work items, known\"): each of these is a content decision, so it is recorded here and treated as a KNOWN red on the site re-pins until it is done. Found by the freeze-set survey (cat-harness a2da2ed, cat-harness-tools 78a982e, folio-assistant-core 4f18e66, who-iris 90bb3f5, smart-base 1e111a6, fhir-harness 299de78, bootstrap-tools 9f47",
       "file": "beans/defs/folio-assistant-y4pw--freeze-set-content-calls.md"
     },
