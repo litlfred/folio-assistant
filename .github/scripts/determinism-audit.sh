@@ -37,11 +37,13 @@ set -uo pipefail
 # name | command [| prerequisite]. The producers whose bundles CI caches or
 # means to (beans x35i, tv20). A prerequisite lays down what the producer
 # reads and another producer writes (as the gate jobs hand it over as an
-# artifact); it runs after each reset and BEFORE the marker, so its own
-# writes are never measured as the producer's.
+# artifact, in code-quality-gates.yml's order: ig-index:build, smart:pages,
+# qa:working-copy, then the publish pages; `p2:refusals`, a QA writer, reads
+# fhir-artifact-index/); it runs after each reset and BEFORE the marker, so
+# its own writes are never measured as the producer's.
 PRODUCERS=$(cat <<'EOF'
-qa-working-copy|bun run cat qa:working-copy
-publish-pages|bun run cat derive:publish|bun run cat qa:working-copy
+qa-working-copy|bun run cat qa:working-copy|bun run cat ig-index:build && bun run smart:pages
+publish-pages|bun run cat derive:publish|bun run cat ig-index:build && bun run smart:pages && bun run cat qa:working-copy
 smart-pages|bun run smart:pages|bun run cat ig-index:build
 ig-index|bun run cat ig-index:build
 kg-export|bun run cat kg:export
