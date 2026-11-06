@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 54,
+      "count": 53,
       "unit": "open beans"
     }
   },
@@ -293,14 +293,14 @@
     {
       "id": "folio-assistant-akiq",
       "title": "Each layer draws its own BPMN diagrams; cat-harness stops drawing and hand-listing other layers' (plan, awaiting owner approval)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T11:35:43Z",
-      "updatedAt": "2026-11-05T12:58:12Z",
+      "updatedAt": "2026-11-06T04:50:12Z",
       "preview": "Follows bean folio-assistant-3v2t (a layer commits only what it derives from itself) and bean folio-assistant-tsh9 (red-main cycle). Owner, 2026-11-05: \"i want this cleanup properly. may need to move diagrams to correct layers\"; \"why would source drawings be in another layer? (only exception is if drawing in bootstrap)\". Owner chose \"Plan first\", then said \"then implement\" and chose option 1 (\"Bot",
       "file": "beans/defs/folio-assistant-akiq--derive-builtatpublish-entries-for-foreign-bpmn-dra.md"
     },
@@ -580,8 +580,8 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T08:26:16Z",
-      "updatedAt": "2026-11-05T23:28:34Z",
-      "preview": "Catch failures before they reach a runner: a pre-push hook, an agent hook, and a record keyed by the tree hash so CI can see the gates already passed on that exact tree. Sibling \"CI speed 3\", in cat-harness-tools. An agent's record never stands in for the QA verdict; it only lets CI skip a rebuild it will check.\n\n## Done when\n- [ ] the pre-push and agent hooks run the fast gates\n- [ ] the tree-key",
+      "updatedAt": "2026-11-06T04:59:28Z",
+      "preview": "Catch failures before they reach a runner: a pre-push hook, an agent hook, and a record keyed by the tree hash so CI can see the gates already passed on that exact tree. Sibling \"CI speed 3\", in cat-harness-tools. An agent's record never stands in for the QA verdict; it only lets CI skip a rebuild it will check.\n\n## Done when\n- [x] the pre-push and agent hooks run the fast gates — the hook is litl",
       "file": "beans/defs/folio-assistant-fn8q--ci-speed-ii-e-gates-before-push-pre-push-agent-hoo.md"
     },
     {
@@ -1121,6 +1121,20 @@
       "file": "beans/defs/folio-assistant-uhkv--smart-stack-core-fhir-harness-smart-base-smart-l1.md"
     },
     {
+      "id": "folio-assistant-uldr",
+      "title": "Replace the hand-listed state:visualizer (53) and glossary:page (36) builtAtPublish entries with rules (plan, awaiting owner approval)",
+      "status": "todo",
+      "type": "task",
+      "priority": "normal",
+      "parent": "folio-assistant-k3vv",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-06T04:51:38Z",
+      "updatedAt": "2026-11-06T04:51:38Z",
+      "preview": "Follows bean folio-assistant-akiq (done 2026-11-06), which removed the same pattern for BPMN drawings. Owner chose this follow-up on 2026-11-06 (\"2 3\": retire smart-base's render script, and plan these two lists). **Plan only: no code until the owner approves.**\n\n## Evidence (cat-harness main, 2026-11-06)\ncat-harness.json `builtAtPublish` still hand-lists per-instance files written by two writers:",
+      "file": "beans/defs/folio-assistant-uldr--replace-the-hand-listed-statevisualizer-53-and-glo.md"
+    },
+    {
       "id": "folio-assistant-v29t",
       "title": "CI site publish has no pandoc/LibreOffice, so site:export fails every CI publish of dth-hrh",
       "status": "todo",
@@ -1277,14 +1291,14 @@
     {
       "id": "folio-assistant-yeg4",
       "title": "Shared verified layers cache ref",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "high",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:19:16Z",
-      "updatedAt": "2026-11-06T00:55:57Z",
+      "updatedAt": "2026-11-06T02:30:06Z",
       "preview": "One git ref per lock in the index repo, `refs/cat/layers/<sha256 of the lock's instances>`, plus a moving `refs/cat/layers/main`. Its tree is the composed overlay that mount-from-lock lays down.\n\n- **Reading:** `mount:lock` first tries one shallow fetch of the ref. It verifies every byte against the lock, and falls back to a per-repo fetch for each layer that does not verify. The lock stays the on",
       "file": "beans/defs/folio-assistant-yeg4--shared-verified-layers-cache-ref.md"
     },
@@ -1350,19 +1364,19 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 3,
-        "total": 57,
-        "closed": 17,
-        "open": 40,
-        "inProgress": 22,
-        "todo": 18,
+        "total": 58,
+        "closed": 19,
+        "open": 39,
+        "inProgress": 20,
+        "todo": 19,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.2982456140350877
+        "share": 0.3275862068965517
       }
     ],
     "orphanOpen": 13,
-    "openTotal": 54,
-    "coveredOpen": 40,
+    "openTotal": 53,
+    "coveredOpen": 39,
     "duplicateIds": 0
   }
 }
