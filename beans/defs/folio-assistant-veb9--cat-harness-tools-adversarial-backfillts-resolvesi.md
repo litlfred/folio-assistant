@@ -2,13 +2,13 @@
 # folio-assistant-veb9
 $schema: bean/1.0.0
 title: 'cat-harness-tools: adversarial-backfill.ts resolveSidecarPath still uses the pre-#1014 path'
-status: todo
+status: in-progress
 type: bug
 priority: normal
 tags:
     - qa
 created_at: 2026-11-05T17:24:23Z
-updated_at: 2026-11-05T17:24:23Z
+updated_at: 2026-11-06T05:39:19Z
 parent: folio-assistant-rwmf
 ---
 
@@ -28,3 +28,5 @@ Derive the path from the same source that `adversarialCoverageByGraph` (`scripts
 - [ ] a test fails on the old path and passes on the derived one
 
 _2026-11-05T17:21:52Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk at the request of the CI-speed parent session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.
+
+_2026-11-06T05:39:19Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
