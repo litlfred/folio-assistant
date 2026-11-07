@@ -115,3 +115,7 @@ _2026-11-06T06:25Z_: #2987 was merged by its own session (CI speed 12) under the
 _2026-11-06T08:11Z_: #2991 merged (pending says why each opted-in PR waits). Its bun-test shards ran 39-53 s each with affected-only (#2962), against ~5-7 min for a full shard. Open: the first real train (waits for an eligible PR the owner opts in), the after-measurement, and the follow-up "comment when a labelled PR is merged outside the train".
 
 _2026-11-07T05:35Z_: #2997 merged 2026-11-06 10:30Z. The **first merge-train run** (run 42206640400, 10:58Z) correctly posted the one-time stray comments (#2987 confirmed) and built nothing. But it spent 28 of 30 min on a full-history checkout. Fix in #3002: fetch-depth 1, and unshallow only when building. The owner opened a 12 h re-pin + merge window at about 05:27Z on 2026-11-07.
+
+## Owner ruling, 2026-11-07T06:10Z (card, via the merge manager): "A. Yes, use the train"
+
+When the owner approves a folio-assistant PR that changes no workflow files, the merge manager labels it `merge-train` instead of merging it one by one. The train stacks the approved PRs, runs CI once and lands them together; a red batch is bisected. PRs that change workflows are still merged directly by the merge manager. The train session reports "landed: train #<n> (PRs …)" after each batch, and says when a batch bisects.
