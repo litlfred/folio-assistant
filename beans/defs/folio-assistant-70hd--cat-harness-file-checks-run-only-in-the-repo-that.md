@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-07T16:58:00Z
+updated_at: 2026-11-07T17:33:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -154,3 +154,4 @@ _2026-11-07T08:00:00Z_ — Coordinator (session_01VQDpPfGantMCt7AV4LCCK2, took o
 - 2026-11-07 16:58Z: smart-base#323 is full-tier green at ad261e2 and merges cleanly. The first full run was red on reference-direction because a new comment named smart-immunizations; fixed. "ready" sent to the merge manager, copied to the parent and F. No self-merge.
 - 2026-11-07 17:31Z: smart-immunizations#116 landed via the merge manager. Every site now pins the scoped bootstrap-tools and core. #117 (IRI rewrite) is still waiting on the owner; smart-base#323 (generator fix, other session) is "ready".
 - 2026-11-07 17:32Z: smart-immunizations#117 landed via the merge manager; iri:sync:check is green on smart-immunizations. All of this session's PRs under 70hd have landed. Remaining outside this session: smart-base#323 (generator fix, ready) and smart-base kg/src/l1-library.ts:55.
+- 2026-11-07 17:33Z: smart-base#323 was merged by the merge manager (17:30Z). smart-base's L1 scripts now mint cat-harness/v0/ns/ from the declaration, and kg keeps a literal with a drift test. Downstream IGs pick this up when they re-pin smart-base.
