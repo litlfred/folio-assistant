@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-07T15:40:00Z
+updated_at: 2026-11-07T15:45:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -149,3 +149,4 @@ _2026-11-07T08:00:00Z_ — Coordinator (session_01VQDpPfGantMCt7AV4LCCK2, took o
 - 2026-11-07 10:05Z: Owner card "IRI fix" 1. https://github.com/litlfred/smart-immunizations/pull/117 (draft, eceff1b) rewrites the 29 stale cat-harness/0.1.0/ns IRIs in 7 library JSON-LD to v0/ns. The source is smart-base scripts/l1-specialise.ts:58 and extract-dak-l1-references.ts:89, which hard-code the full-version namespace; their fix belongs in smart-base (no push access here). smart-immunizations#116: "ready" sent at 09:58Z.
 - 2026-11-07 15:40Z: Owner chose "Sibling opens draft PR" for the source of the stale IRIs. https://github.com/litlfred/smart-base/pull/323 (draft, 897c9cf) makes l1-specialise.ts and extract-dak-l1-references.ts derive CAT_HARNESS_NS from cat-harness.json via instanceNamespaceOf, the release-IRI rule, which gives v0/ns. It adds a test. Not covered: smart-base/kg/src/l1-library.ts:55 and its generated kg/generated/l1/l1-library.jsonld still carry 0.1.0/ns (a follow-up). Session https://claude.ai/code/session_01VQDpPefuU428bYWziAFStW
 - 2026-11-07 15:27Z: smart-immunizations#117 marked ready (draft fast tier green); its full tier is running. The source fix is draft https://github.com/litlfred/smart-base/pull/323 (897c9cf, by session_01VQDpPefuU428bYWziAFStW): the L1 scripts take the cat-harness namespace from its release IRI. Not covered there: smart-base kg/src/l1-library.ts:55 and its generated JSON-LD. #116 is still waiting on the merge manager.
+- 2026-11-07 15:45Z: At the parent's request, smart-base#323 (now 523cc3f) also covers kg/src/l1-library.ts. That file keeps a literal (v0/ns), because the kg package builds without the mount, and a bun drift test pins it to instanceNamespaceOf(cat-harness.json). kg/generated/l1/l1-library.jsonld was regenerated with `npm run build`, its only change. Still a draft, with CI queued.
