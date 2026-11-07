@@ -1,0 +1,115 @@
+From 5bccedb9668d24dce7aad851115e6d6443a1d720 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 08:01:30 +0000
+Subject: [PATCH 2/2] Lane holding: heartbeat and stall windows; a stalled
+ session is never elected
+
+Owner, 2026-11-07: any agent may stall, the merge manager included.
+holding gains heartbeatMinutes and stalledAfterMinutes; isStalled() reads
+the stall window; electHolder() drops stalled candidates, so a stalled
+lone session leaves the lane vacant. Tests for each.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ schemas/process/role-graph.test.ts | 20 ++++++++++++++++++++
+ schemas/process/role-graph.ts      | 26 ++++++++++++++++++++++----
+ 2 files changed, 42 insertions(+), 4 deletions(-)
+
+diff --git a/schemas/process/role-graph.test.ts b/schemas/process/role-graph.test.ts
+index bc6a7b3..460141b 100644
+--- a/schemas/process/role-graph.test.ts
++++ b/schemas/process/role-graph.test.ts
+@@ -35,6 +35,7 @@ import {
+   LaneHoldingSchema,
+   laneNeeded,
+   electHolder,
++  isStalled,
+ } from "./role-graph";
+ 
+ import { requireHarnessRoot } from "../harness-root.ts";
+@@ -580,6 +581,8 @@ describe("lane holding: when the lane is needed, and who holds it (owner rulings
+     election: ["owns-p0", "earliest-created"],
+     loneSessionHolds: true,
+     announce: "merge manager: <session id>",
++    heartbeatMinutes: 10,
++    stalledAfterMinutes: 30,
+   });
+   const quiet = { activeSessions: 3, queuedRuns: 2, oldestQueuedMinutes: 5, conflictingPrs: 0 };
+ 
+@@ -634,6 +637,23 @@ describe("lane holding: when the lane is needed, and who holds it (owner rulings
+     expect(electHolder(holding, [])).toBeUndefined();
+   });
+ 
++  test("a stalled session is never elected, even the P0 owner or the earliest", () => {
++    expect(isStalled(holding, 31)).toBe(true);
++    expect(isStalled(holding, 30)).toBe(false);
++    expect(isStalled(holding, undefined)).toBe(false);
++    expect(electHolder(holding, [a, b, { ...c, minutesSinceAnswer: 45 }])).toBe("session_B");
++    expect(electHolder(holding, [a, { ...b, minutesSinceAnswer: 31 }])).toBe("session_A");
++  });
++
++  test("a lone session that has stalled holds nothing: the lane is vacant", () => {
++    expect(electHolder(holding, [{ ...a, minutesSinceAnswer: 90 }])).toBeUndefined();
++  });
++
++  test("the stall and heartbeat windows are required", () => {
++    const { heartbeatMinutes: _h, ...noHeartbeat } = holding;
++    expect(LaneHoldingSchema.safeParse(noHeartbeat).success).toBe(false);
++  });
++
+   test("an unreadable creation time sorts last rather than dropping the candidate", () => {
+     expect(electHolder(holding, [{ ...a, createdAt: "not a date" }, b])).toBe("session_B");
+     expect(electHolder(holding, [{ ...a, createdAt: "x" }, { ...b, createdAt: "y" }])).toBe("session_A");
+diff --git a/schemas/process/role-graph.ts b/schemas/process/role-graph.ts
+index 0bb55cb..4f803e5 100644
+--- a/schemas/process/role-graph.ts
++++ b/schemas/process/role-graph.ts
+@@ -522,6 +522,10 @@ export const LaneHoldingSchema = z
+     loneSessionHolds: z.boolean(),
+     /** What the holder announces to every sibling and the owner, e.g. `merge manager: <session id>`. */
+     announce: z.string().min(1),
++    /** The holder acknowledges each request, and posts a heartbeat, within this many minutes. */
++    heartbeatMinutes: z.number().int().min(1),
++    /** A session silent for longer than this is stalled: not a candidate, and its lane is vacant. */
++    stalledAfterMinutes: z.number().int().min(1),
+   })
+   .strict();
+ export type LaneHolding = z.infer<typeof LaneHoldingSchema>;
+@@ -561,15 +565,29 @@ export interface HolderCandidate {
+   createdAt: string;
+   /** It owns a P0 PR: the fix for a red main, or a link of the re-pin chain. */
+   ownsP0: boolean;
++  /** Minutes since it last answered or posted a heartbeat; unknown counts as live. */
++  minutesSinceAnswer?: number;
++}
++
++/**
++ * Whether a session has stalled: silent for longer than the lane's stall
++ * window. Any agent may stall, the holder included (owner ruling,
++ * 2026-11-07); a sibling whose request goes unacknowledged that long treats
++ * the lane as vacant and re-elects without it.
++ */
++export function isStalled(holding: LaneHolding, minutesSinceAnswer: number | undefined): boolean {
++  return minutesSinceAnswer !== undefined && minutesSinceAnswer > holding.stalledAfterMinutes;
+ }
+ 
+ /**
+  * The session that holds the lane, chosen deterministically from the active
+- * candidates, or `undefined` with none. A lone candidate holds it when
+- * `loneSessionHolds`; otherwise the election rules narrow the field in order
+- * and the session id breaks the last tie.
++ * candidates, or `undefined` with none. Stalled sessions are not
++ * candidates. A lone candidate holds it when `loneSessionHolds`; otherwise
++ * the election rules narrow the field in order and the session id breaks the
++ * last tie.
+  */
+-export function electHolder(holding: LaneHolding, candidates: HolderCandidate[]): string | undefined {
++export function electHolder(holding: LaneHolding, all: HolderCandidate[]): string | undefined {
++  const candidates = all.filter((c) => !isStalled(holding, c.minutesSinceAnswer));
+   if (candidates.length === 0) return undefined;
+   if (candidates.length === 1) return holding.loneSessionHolds ? candidates[0].sessionId : undefined;
+   let field = [...candidates];
+-- 
+2.43.0
+
