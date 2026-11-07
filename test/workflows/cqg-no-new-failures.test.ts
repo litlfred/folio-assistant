@@ -127,7 +127,7 @@ describe("a step marked CQG_UNJUDGED passes its exit status through, even after 
 
 describe("push, merge_group and workflow_dispatch: any failure fails, so main stays red", () => {
   for (const event of ["push", "merge_group", "workflow_dispatch"]) {
-    test(event, () => {
+    test(`anyFailureFails[${event}]`, () => {
       const sb = sandbox();
       sb.begin();
       sb.step("exit 1");
