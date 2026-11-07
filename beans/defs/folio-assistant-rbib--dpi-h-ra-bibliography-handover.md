@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-05T13:45:30Z
+updated_at: 2026-11-07T16:06:00Z
 parent: folio-assistant-4j43
 tags:
     - smart-ra
@@ -43,3 +43,4 @@ _2026-11-02T19:35Z_ — Regression: references/ made smart-base check:ig-citatio
 _2026-11-05T13:35:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
 
 _2026-11-05T13:45:30Z_ — Completed on verified evidence (`gh api repos/litlfred/smart-ra/contents/references?ref=main`): both `litlfred/smart-ra#232` (`140ddd17cb9fe26fcd37d6b16b10faad2e125a46`, `2026-11-02T19:01:34Z`, closing `#231`) and the follow-up `litlfred/smart-ra#233` (`eac7354a275fc12b9424b13cb54476233bf5f73d`, `2026-11-05T06:29:32Z`, answering the `2026-11-02T19:35Z` reopen note) are merged on `smart-ra` `main`, with `9789241548960-eng.json`, `openhie-architecture-specification.json`, and `smart-ig-starter-kit-references.json` present among the 95 entries in `references/`.
+_2026-11-07T16:06Z_ — smart-ra#233 merged 2026-11-05 06:29Z. Done. Only open item: smart-ra site publish (not started, owner's call).
