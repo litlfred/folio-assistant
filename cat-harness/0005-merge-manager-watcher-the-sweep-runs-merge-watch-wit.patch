@@ -1,0 +1,74 @@
+From a5952376f83122494e8840462c1693e6b0a0a2c6 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 08:15:11 +0000
+Subject: [PATCH] merge-manager-watcher: the sweep runs merge:watch with its
+ new flags
+
+Step 1 of the sweep names the upgraded merge:watch (session
+session_01VQDpPg9URqDhr4fxtYeGmr, cat-harness-tools): --repo, --repos,
+--config, --json, --stale-hours, its per-repository readings and route
+flags, report-only relief candidates, and the every-judge verdict.
+"What this does not do yet" now says readings 2-4 wait for that upgrade,
+and --check-request (built on parseMergeRequest) is still to come.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ .../skills/sdlc-core/merge-manager-watcher.md | 37 +++++++++++++++++--
+ 1 file changed, 33 insertions(+), 4 deletions(-)
+
+diff --git a/sdlc/skills/sdlc-core/merge-manager-watcher.md b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+index 5318be96..b8223e9a 100644
+--- a/sdlc/skills/sdlc-core/merge-manager-watcher.md
++++ b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+@@ -204,7 +204,30 @@ event, a merge request or a main run finishing may start a sweep early.
+ **One sweep**, in this order:
+ 
+ 1. Run `merge:watch` over every repository the lane holds. It makes the four
+-   readings above, and judges each PR by every judge (rule 1 below).
++   readings above, and judges each PR by every judge (rule 1 below):
++
++   ```
++   bun run cat merge:watch -- --config merge-watch.json --json
++   ```
++
++   Name the repositories with `--repo <owner/name>` (repeatable), `--repos
++   a,b,c`, or `--config <file.json>` (`{"repos": [...], "staleHours": 2}`).
++   `--stale-hours <n>` sets when a silent PR owner is flagged (default 2).
++   Per repository it prints:
++   - each PR's verdict, with a route flag: workflow changes go to a direct
++     merge, a folio-assistant PR to the merge train, a pin on an excluded
++     layer needs the owner's consent, and `superseded-by #N` marks a
++     duplicate;
++   - the runner queue: queued and in-progress runs, the oldest queued run's
++     age, by event;
++   - main's latest push verdict;
++   - each PR owner's last push or comment, with stale owners flagged;
++   - runner-relief candidates (§"Runner relief"). It only reports them,
++     and never lists a main push run that has started.
++
++   Its verdict is rule 1: every "No new failures" judge passes, each
++   shard's Q-PIPE-1 table lists 0 new failures, and any run queued or in
++   progress on the head blocks.
+ 2. For each green request, post its six lines in this chat.
+ 3. Ask the owner with **one** batch card for all of them, in priority order.
+    Leave off any PR in the pre-approval ledger (below).
+@@ -347,6 +370,12 @@ These come from the role; the watcher is the step that acts on them:
+ 
+ - The timer is each session's own scheduled check-in. No workflow wakes the
+   merge manager yet.
+-- `bun run cat merge:watch -- --repo <owner/name>` (cat-harness-tools#1514)
+-  prints reading 1 with a rule-1 verdict per PR. Readings 2-4 are still
+-  made by hand with `gh api`.
++- `merge:watch` makes all four readings once the upgrade from session
++  session_01VQDpPg9URqDhr4fxtYeGmr lands in cat-harness-tools. Until then,
++  the pinned version (cat-harness-tools#1514) prints reading 1 only, and
++  readings 2-4 are made by hand with `gh api`.
++- Checking a merge request mechanically is still to come:
++  `merge:watch -- --check-request <file|->` will parse the six lines with
++  the tools' `parseMergeRequest`, check that the SHA is the PR's current
++  head, and check that the preview was built for that head. Until then the
++  merge manager checks the six lines by reading them.
+-- 
+2.43.0
+
