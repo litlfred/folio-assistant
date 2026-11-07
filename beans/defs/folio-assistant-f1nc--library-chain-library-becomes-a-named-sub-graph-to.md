@@ -62,3 +62,5 @@ _2026-11-07T08:38Z_ — Owner card "Stack pins" option 1 (stack instruction rela
 _2026-11-07T08:45Z_ — Owner (card in merge manager session ~08:43Z) "A. Allow the exception": core#639 keeps its re-pin with its change (mutually dependent: re-pin alone fails check:tools, change alone double-declares the library topic); PR body updated. #2985 now pins cat-harness ea548f0, tools abc90c2 — stack to be brought onto them when #2985 lands (no pushes meanwhile, runner relief).
 
 _2026-11-07T09:06Z_ — fa#3016 red (.jsonld siblings, 5611 stale) was a tools bug; draft tools#1631 (fd26d26) fixes libraryInstanceOf for library/corpus/. core#639 → dbad175 (3 manifests regenerated). ch#1032 → 1bbce61 (main merged, contains ea548f0). fa#3016 → 9dbcabf (on #2985 4dad168). Local gates pass at those pins. All draft; waiting on #2985.
+
+_2026-11-07T09:54Z_ — tools#1631 merged as c0374a8 (owner card in MM session). fa#3016 .jsonld green after core#639 fb9e15e (2 site nodes). ch#1032 marked ready at 1bbce61 (fast tier green, cat-harness queue 3); full tier judging. Sent "ready:" for #1631 earlier.
