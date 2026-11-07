@@ -594,7 +594,7 @@
       })
       .then(function (d) {
         var band = el("p", "ig-footer-band");
-        if (d.publisher) band.append("IG © ", d.publisherUrl ? link(d.publisherUrl, d.publisher, true) : d.publisher, ". ");
+        if (d.publisher) band.append("IG ©" + (d.copyrightYear ? " " + d.copyrightYear : "") + " ", d.publisherUrl ? link(d.publisherUrl, d.publisher, true) : d.publisher, ". ");
         if (d.packageId) {
           band.append("Package ", el("code", null, d.packageId + (d.version ? "#" + d.version : "")));
           if (d.fhirVersion) band.append(" based on ", d.fhirUrl ? link(d.fhirUrl, "FHIR " + d.fhirVersion, true) : "FHIR " + d.fhirVersion);
@@ -603,8 +603,19 @@
         if (d.generated) band.append("Generated " + d.generated);
         foot.append(band);
         var links = el("p", "ig-footer-links", "Links: ");
-        links.append(link(cfg.toc || cfg.home, "Table of Contents"));
-        if (d.licenseUrl) links.append(" | ", link(d.licenseUrl, "License", true));
+        if (Array.isArray(d.links)) {
+          /* An IG site's footer data carries its "Links:" row already decided (`igSiteFooter`), hrefs relative to the
+             site root: the root is where the data file is, one `assets/` up. */
+          var root = String(cfg.footer).replace(/assets\/ig-footer\.json$/, "");
+          if (!d.links.length) return;
+          d.links.forEach(function (l, i) {
+            if (i) links.append(" | ");
+            links.append(link(l.external ? l.href : root + l.href, l.label, !!l.external));
+          });
+        } else {
+          links.append(link(cfg.toc || cfg.home, "Table of Contents"));
+          if (d.licenseUrl) links.append(" | ", link(d.licenseUrl, "License", true));
+        }
         foot.append(links);
       })
       .catch(function () {})

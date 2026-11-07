@@ -363,25 +363,40 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/987549fbf1c5ea4efbae7d834dfbe317f1feb7b7",
-  "sourceCommitSha": "987549fbf1c5ea4efbae7d834dfbe317f1feb7b7",
-  "sourceTree": "21bea708b13220b3b0b5d1b3ffe61d0750cd3e1d",
-  "sourceCommitAt": "2026-11-07T17:39:40Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e0892b2e1ab210c58778858824d8052b60778d0c",
+  "sourceCommitSha": "e0892b2e1ab210c58778858824d8052b60778d0c",
+  "sourceTree": "c84b72bdb2dcc9844dadea7548e0242b3f6cb637",
+  "sourceCommitAt": "2026-11-07T20:46:47Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 27,
-    "Process": 8,
-    "SequenceFlow": 174,
-    "Lane": 26,
-    "ProcessNode": 159,
+    "Skill": 35,
+    "Process": 10,
+    "SequenceFlow": 192,
+    "Lane": 30,
+    "ProcessNode": 179,
     "GraphTypology": 24,
-    "Role": 1,
+    "Role": 3,
     "Subgraph": 29,
     "Asset": 3,
     "Tool": 14
   },
   "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/extract-questionnaire-response",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "extract-questionnaire-response",
+      "title": "Extract resources from a questionnaire response",
+      "description": "The point-of-care system turns a completed QuestionnaireResponse into the FHIR resources it stands for, by the extraction its SDC Questionnaire declares (StructureMap-based, definition-based or observation-based $extract), and saves them. Input is the response and its Questionnaire; output is a transaction Bundle. Generic for any DAK form.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/extract-questionnaire-response.md",
+      "instructionLines": 59,
+      "inputSchema": "http://smart.who.int/base/schema/skills/extract-questionnaire-response/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/extract-questionnaire-response/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
     {
       "@id": "http://smart.who.int/base/skill/classify-and-code-content",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
@@ -392,6 +407,21 @@
       "instructionLines": 137,
       "inputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/input.schema.json",
       "outputSchema": "http://smart.who.int/base/schema/skills/classify-and-code-content/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/activate-accepted-guidance",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "activate-accepted-guidance",
+      "title": "Activate accepted guidance",
+      "description": "The point-of-care system carries out the health worker's decisions on decision-support guidance: each accepted action's request becomes active (intent plan or order) and joins the client's CarePlan; a declined action is not written. Input is the guidance and the decisions; output is the transaction Bundle saved.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/activate-accepted-guidance.md",
+      "instructionLines": 46,
+      "inputSchema": "http://smart.who.int/base/schema/skills/activate-accepted-guidance/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/activate-accepted-guidance/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true,
       "ambiguous": false,
@@ -480,6 +510,36 @@
       "instructionLines": 94,
       "hasInstructions": true,
       "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/apply-decision-support",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "apply-decision-support",
+      "title": "Apply decision support",
+      "description": "The point-of-care system applies a DAK decision table's PlanDefinition to one client ($apply) and gets the proposed actions back as a RequestGroup (R4; RequestOrchestration in R5), or as CDS Hooks cards when the guidance comes from a CDS service. Input is the PlanDefinition and the client; output is the proposal, every request in it still a proposal.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/apply-decision-support.md",
+      "instructionLines": 54,
+      "inputSchema": "http://smart.who.int/base/schema/skills/apply-decision-support/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/apply-decision-support/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/record-decision-rationale",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "record-decision-rationale",
+      "title": "Record a decision rationale (optional)",
+      "description": "OPTIONAL and never blocking: a health worker who chooses to may note why they accepted or declined decision-support guidance, in one tap plus an optional coded or free-text reason. Input is the decision; output is one FHIR Provenance (or nothing, when skipped, which is the default). The care plan is updated whether or not this is ever done.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/record-decision-rationale.md",
+      "instructionLines": 70,
+      "inputSchema": "http://smart.who.int/base/schema/skills/record-decision-rationale/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/record-decision-rationale/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
     },
@@ -637,6 +697,21 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
     },
     {
+      "@id": "http://smart.who.int/base/skill/review-client-history",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "review-client-history",
+      "title": "Review the client's history",
+      "description": "A health worker reads the client's history as their device shows it (an International Patient Summary, imported records, or a paper card and what the client reports) and takes into account what bears on today's care, weighing each item by where it came from: verified, unverified or reported. Input is the records with their provenance; output is what the health worker relies on.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/review-client-history.md",
+      "instructionLines": 46,
+      "inputSchema": "http://smart.who.int/base/schema/skills/review-client-history/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/review-client-history/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
       "@id": "http://smart.who.int/base/skill/l2-dak-authoring",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "l2-dak-authoring",
@@ -661,6 +736,21 @@
       "instructionLines": 133,
       "hasInstructions": true,
       "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/complete-sdc-questionnaire",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "complete-sdc-questionnaire",
+      "title": "Complete an SDC questionnaire",
+      "description": "A health worker (or a client, on their own device) completes a FHIR R4 Questionnaire conforming to Structured Data Capture as their device renders it, and the result is a QuestionnaireResponse. Generic for any DAK form: a registration, a visit, a referral. Input is the Questionnaire as rendered, with any pre-populated answers; output is the completed QuestionnaireResponse.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/complete-sdc-questionnaire.md",
+      "instructionLines": 80,
+      "inputSchema": "http://smart.who.int/base/schema/skills/complete-sdc-questionnaire/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/complete-sdc-questionnaire/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
     },
@@ -715,6 +805,36 @@
       "instructionLines": 189,
       "hasInstructions": true,
       "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/review-decision-support-guidance",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "review-decision-support-guidance",
+      "title": "Review decision-support guidance",
+      "description": "A health worker sees the decision-support guidance for one client on their device (the proposed actions of a RequestGroup or CDS Hooks cards) and accepts or declines each action; modifies one only where the device offers it. Input is the guidance as rendered; output is the decision per action. At most one tap per action; nothing else is asked.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/review-decision-support-guidance.md",
+      "instructionLines": 56,
+      "inputSchema": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/inform-client",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "inform-client",
+      "title": "Inform the client",
+      "description": "A health worker tells the client (or caregiver) what was decided and what happens next, in words and, where the DAK gives one, on a slip or card: a referral, a return date, a result. Input is what to tell and the client's language; output is that the client was told, and what they were handed. Generic for any DAK step that ends with the client being informed.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/inform-client.md",
+      "instructionLines": 42,
+      "inputSchema": "http://smart.who.int/base/schema/skills/inform-client/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/inform-client/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
       "ambiguous": false,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
     },
@@ -5992,6 +6112,623 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Capture data with an SDC questionnaire",
+      "summary": "A health worker completes one of the DAK's forms, a FHIR R4 Questionnaire conforming to Structured Data Capture, as their device renders it, and the point-of-care system turns the completed QuestionnaireResponse into the resources it stands for by the extract…",
+      "description": "A health worker completes one of the DAK's forms, a FHIR R4 Questionnaire conforming to Structured Data Capture, as their device renders it, and the point-of-care system turns the completed QuestionnaireResponse into the resources it stands for by the extraction the form declares (SDC $extract). Generic for any DAK: registering a client, recording a visit, a referral. A DAK's diagram calls it by call activity; the caller's lanes take on health-worker and point-of-care-system for the duration of the call. Skills: complete-sdc-questionnaire, extract-questionnaire-response (package authoring-who-smart-guidelines).",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/questionnaire-data-capture.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/questionnaire-data-capture.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/questionnaire-data-capture.svg",
+      "startNode": [
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Start_FormDue"
+      ],
+      "nodeCount": 6,
+      "flowCount": 5,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q01",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "from": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Start_FormDue",
+      "to": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Task_Complete",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q02",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "from": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Task_Complete",
+      "to": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Gateway_Extracts",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q03",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "from": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Gateway_Extracts",
+      "to": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Task_Extract",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q04",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "from": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Gateway_Extracts",
+      "to": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/End_Stored",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q05",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "from": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Task_Extract",
+      "to": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/End_Extracted",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_HealthWorker",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Health worker",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "bindsRole": "http://smart.who.int/base/role/health-worker",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_System",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Point-of-care system",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "bindsRole": "http://smart.who.int/base/role/point-of-care-system",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Start_FormDue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "A form is due",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_HealthWorker",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q01"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Task_Complete",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Complete the form",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_HealthWorker",
+      "requires": [
+        "http://smart.who.int/base/skill/complete-sdc-questionnaire"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q01"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q02"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Gateway_Extracts",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Form declares an extraction?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "performedBy": "http://smart.who.int/base/role/point-of-care-system",
+      "inLane": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_System",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q02"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q03",
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q04"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Task_Extract",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Extract and save the resources",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "performedBy": "http://smart.who.int/base/role/point-of-care-system",
+      "inLane": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_System",
+      "requires": [
+        "http://smart.who.int/base/skill/extract-questionnaire-response"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q03"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q05"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/End_Extracted",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Resources saved",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "performedBy": "http://smart.who.int/base/role/point-of-care-system",
+      "inLane": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_System",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q05"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/End_Stored",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Response stored",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "performedBy": "http://smart.who.int/base/role/point-of-care-system",
+      "inLane": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_System",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q04"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Act on decision-support guidance",
+      "summary": "The point-of-care system applies one of the DAK's decision tables, published as a CPG-on-FHIR PlanDefinition, to one client ($apply) and shows the health worker what it proposes (a RequestGroup, or CDS Hooks cards).",
+      "description": "The point-of-care system applies one of the DAK's decision tables, published as a CPG-on-FHIR PlanDefinition, to one client ($apply) and shows the health worker what it proposes (a RequestGroup, or CDS Hooks cards). The health worker accepts or declines each action, one tap each, and the system makes the accepted requests active in the client's CarePlan; a declined action is never written. Recording why is OPTIONAL and never blocks: after the review a parallel split (Gateway_Fork) sends the main path on to the care plan and, separately, to Gateway_AddReason, which reads whether the health worker tapped \"add a reason\" while reviewing (false unless they did, so skipping is the default) and only then reaches the rationale task. The two paths end at their own end events and are never joined, so the care plan never waits for documentation. That is the simplest correct construct the harness executes: a non-interrupting boundary event on the review says the same thing, but the harness's interpreter does not run boundary events; an inclusive gateway would need a join the main path waits at; and a rationale task on the main path would make every run pass through it. The record, when made, is one FHIR Provenance. Skills: apply-decision-support, review-decision-support-guidance, record-decision-rationale, activate-accepted-guidance (package authoring-who-smart-guidelines).",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/act-on-decision-support.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/act-on-decision-support.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/act-on-decision-support.svg",
+      "startNode": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Start_GuidanceDue"
+      ],
+      "nodeCount": 14,
+      "flowCount": 13,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D01",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Start_GuidanceDue",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Apply",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D02",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Apply",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_HasGuidance",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D03",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_HasGuidance",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Review",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D04",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_HasGuidance",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoGuidance",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D05",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Review",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D06",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Activate",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D07",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoChange",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Rationale",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoReason",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D09",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Activate",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_Activated",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Rationale",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_Noted",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_System",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Point-of-care system",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "bindsRole": "http://smart.who.int/base/role/point-of-care-system",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Health worker",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "bindsRole": "http://smart.who.int/base/role/health-worker",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Start_GuidanceDue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Guidance is due",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/point-of-care-system",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_System",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D01"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Apply",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Apply the PlanDefinition",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/point-of-care-system",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_System",
+      "requires": [
+        "http://smart.who.int/base/skill/apply-decision-support"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D01"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D02"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_HasGuidance",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Anything proposed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/point-of-care-system",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_System",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D02"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D03",
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D04"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoGuidance",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Nothing to act on",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/point-of-care-system",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_System",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D04"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Accept or decline the guidance",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "requires": [
+        "http://smart.who.int/base/skill/review-decision-support-guidance"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D03"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D05"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Gateway_Fork",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D05"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11",
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Tapped \"add a reason\"?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08",
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoReason",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "No reason noted",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Any action accepted?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D06",
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D07"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Activate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Update the care plan",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/point-of-care-system",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_System",
+      "requires": [
+        "http://smart.who.int/base/skill/activate-accepted-guidance"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D06"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D09"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_Activated",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Care plan updated",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/point-of-care-system",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_System",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D09"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoChange",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Guidance declined",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D07"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Rationale",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Note the reason (optional)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "requires": [
+        "http://smart.who.int/base/skill/record-decision-rationale"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D10"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_Noted",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Reason recorded",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/typologies",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "typologies",
@@ -6177,6 +6914,42 @@
       ]
     },
     {
+      "@id": "http://smart.who.int/base/role/health-worker",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Health worker",
+      "title": "Health worker",
+      "notation": "health-worker",
+      "description": "The generic DAK persona who delivers care at the point of care and records it on a device: completes the DAK's SDC forms and acts on its decision-support guidance (`questionnaire-data-capture.bpmn`, `act-on-decision-support.bpmn`). A DAK's own health-worker roles (a vaccinator, a community health worker) carry these skills or inherit this role. WHO's DAK personas call this a health worker; the role is a lane, never a person.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "http://smart.who.int/base/skill/complete-sdc-questionnaire",
+        "http://smart.who.int/base/skill/review-decision-support-guidance",
+        "http://smart.who.int/base/skill/record-decision-rationale",
+        "http://smart.who.int/base/skill/inform-client",
+        "http://smart.who.int/base/skill/review-client-history"
+      ]
+    },
+    {
+      "@id": "http://smart.who.int/base/role/point-of-care-system",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Point-of-care system",
+      "title": "Point-of-care system",
+      "notation": "point-of-care-system",
+      "description": "The app or EHR the health worker uses: renders the DAK's forms, extracts their resources, applies the DAK's decision tables (PlanDefinitions) and writes what the health worker accepted. Decides nothing clinical. A DAK's own systems (a CHW app, a clinic EHR) carry these skills or inherit this role.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "http://smart.who.int/base/skill/extract-questionnaire-response",
+        "http://smart.who.int/base/skill/apply-decision-support",
+        "http://smart.who.int/base/skill/activate-accepted-guidance"
+      ]
+    },
+    {
       "@id": "http://smart.who.int/base/directory/smart-base-site-docs",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
       "name": "smart-base-site-docs",
@@ -6341,7 +7114,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/processes"
       ],
-      "description": "The BPMN this layer owns as house processes, under `content/` (as against `methodologies/processes/`, which holds methodologies adopted from the corpus): `l2-dak-authoring.bpmn`, whose tracks each call `l2-component-edit-review.bpmn` (the agent edits, checks, renders and stages one component while a person in its reviewing role reviews it alongside, never as a gate); `smart-guideline-end-to-end.bpmn`, use case to consuming application through the L1 KG, L2 and L3, with adjudication as QA rather than a gate, calling `l2-dak-authoring.bpmn` and `dak-l3-ig.bpmn` for its L2 and L3 stages; `dth-authoring.bpmn`, a Digital Transformation Handbook from sources to publication in seven stages, each ending in a milestone recorded on the work plan; `SGAuthoring.DAKLifecycle.bpmn`; and `classify-and-code-content.bpmn`. Skill refs this layer does not own resolve down through `fhir-harness`. cat-harness-tools' `render:bpmn` draws each beside its source (bean folio-assistant-akiq); folio-assistant's just-the-docs site, which mounts this directory, shows them.",
+      "description": "The BPMN this layer owns as house processes, under `content/` (as against `methodologies/processes/`, which holds methodologies adopted from the corpus): `l2-dak-authoring.bpmn`, whose tracks each call `l2-component-edit-review.bpmn` (the agent edits, checks, renders and stages one component while a person in its reviewing role reviews it alongside, never as a gate); `smart-guideline-end-to-end.bpmn`, use case to consuming application through the L1 KG, L2 and L3, with adjudication as QA rather than a gate, calling `l2-dak-authoring.bpmn` and `dak-l3-ig.bpmn` for its L2 and L3 stages; `dth-authoring.bpmn`, a Digital Transformation Handbook from sources to publication in seven stages, each ending in a milestone recorded on the work plan; `SGAuthoring.DAKLifecycle.bpmn`; `classify-and-code-content.bpmn`; and two point-of-care processes any DAK calls by call activity, `questionnaire-data-capture.bpmn` (a health worker completes an SDC form, the system extracts its resources) and `act-on-decision-support.bpmn` (the system applies a PlanDefinition, the health worker accepts or declines, may note why on a branch nothing waits for, and the care plan is updated). Skill refs this layer does not own resolve down through `fhir-harness`. cat-harness-tools' `render:bpmn` draws each beside its source (bean folio-assistant-akiq); folio-assistant's just-the-docs site, which mounts this directory, shows them.",
       "readmePath": "processes/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
@@ -7442,8 +8215,8 @@
   ],
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "987549fbf1c5ea4efbae7d834dfbe317f1feb7b7",
+    "sha": "e0892b2e1ab210c58778858824d8052b60778d0c",
     "pr": "2985/merge",
-    "run": "42397400810"
+    "run": "42412680585"
   }
 }

@@ -5,9 +5,9 @@
   "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-ig-create.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "987549fbf1c5ea4efbae7d834dfbe317f1feb7b7",
+    "sha": "e0892b2e1ab210c58778858824d8052b60778d0c",
     "pr": "2985/merge",
-    "run": "42397400810"
+    "run": "42412680585"
   },
   "@graph": [
     {
@@ -17,7 +17,7 @@
       "title": "fhir-ig-create",
       "description": "Somebody asked for a new FHIR Implementation Guide. Decide where it lives, in a new repository of its own or as a staged sub-KG inside the harnessed repository the session is already in, by reading three facts and, when they do not settle it, asking ONE numbered question with a default. Then route: a new repository goes to init-folio; an in-repository IG is declared as a staged instance and follows sub-kg-lifecycle, so it can move to its own repository later. FHIR-generic only; a harness built on this one may specialise it. Also holds the two build questions asked whenever an IG repository is adopted: whether its automatic gh-pages builds keep running, and whether to render it as a just-the-docs site. Use whenever a user asks to create, start, set up or stand up an IG, an implementation guide, or a FHIR guide, or an agent adopts an IG repository.",
       "instructionsPath": "skills/fhir-ig-base/fhir-ig-create.md",
-      "instructionLines": 333,
+      "instructionLines": 336,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,

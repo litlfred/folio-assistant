@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/smart-base/process/Process_ActOnDecisionSupport/node/Start_GuidanceDue.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Start_GuidanceDue.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "e0892b2e1ab210c58778858824d8052b60778d0c",
+    "pr": "2985/merge",
+    "run": "42412680585"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Start_GuidanceDue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Guidance is due",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/point-of-care-system",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_System",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D01"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

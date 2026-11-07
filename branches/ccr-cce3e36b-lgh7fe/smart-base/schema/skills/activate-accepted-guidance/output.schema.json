@@ -1,0 +1,34 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Activate Accepted Guidance Output",
+  "description": "What was saved: accepted and modified requests active (intent plan or order) and referenced from the CarePlan; nothing for a declined action.",
+  "type": "object",
+  "required": [
+    "bundle"
+  ],
+  "properties": {
+    "bundle": {
+      "type": "object",
+      "required": [
+        "resourceType"
+      ],
+      "properties": {
+        "resourceType": {
+          "const": "Bundle"
+        },
+        "type": {
+          "const": "transaction"
+        }
+      },
+      "description": "A FHIR R4 transaction Bundle (https://hl7.org/fhir/R4/bundle.html)."
+    }
+  },
+  "additionalProperties": false,
+  "$id": "http://smart.who.int/base/schema/skills/activate-accepted-guidance/output.schema.json",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "e0892b2e1ab210c58778858824d8052b60778d0c",
+    "pr": "2985/merge",
+    "run": "42412680585"
+  }
+}

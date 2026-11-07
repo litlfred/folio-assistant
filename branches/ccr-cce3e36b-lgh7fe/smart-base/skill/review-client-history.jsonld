@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/smart-base/skill/review-client-history.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/review-client-history.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "e0892b2e1ab210c58778858824d8052b60778d0c",
+    "pr": "2985/merge",
+    "run": "42412680585"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/review-client-history",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "review-client-history",
+      "title": "Review the client's history",
+      "description": "A health worker reads the client's history as their device shows it (an International Patient Summary, imported records, or a paper card and what the client reports) and takes into account what bears on today's care, weighing each item by where it came from: verified, unverified or reported. Input is the records with their provenance; output is what the health worker relies on.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/review-client-history.md",
+      "instructionLines": 46,
+      "inputSchema": "http://smart.who.int/base/schema/skills/review-client-history/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/review-client-history/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

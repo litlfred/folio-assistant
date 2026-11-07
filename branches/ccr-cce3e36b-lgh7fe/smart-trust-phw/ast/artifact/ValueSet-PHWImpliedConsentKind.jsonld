@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ValueSet-PHWImpliedConsentKind.jsonld",
+  "@type": "fhir:ValueSet",
+  "dcterms:identifier": "ValueSet/PHWImpliedConsentKind",
+  "schema:name": "PHWImpliedConsentKind",
+  "dcterms:title": "Kinds of implied consent (HL7 ActConsentDirective)",
+  "dcterms:description": "The HL7 v3 ActConsentDirective codes for consent presumed from the holder's behaviour: implied consent, implied consent with opportunity to dissent, and notice of privacy practices. Each code's definition is HL7's (terminology.hl7.org, CodeSystem v3-ActCode).",
+  "schema:version": "0.2.0-litlfred",
+  "dcterms:type": "Terminology: Value Sets",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/trust-phw/ValueSet/PHWImpliedConsentKind"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/ValueSet/PHWImpliedConsentKind--26518376.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "1e44fc31959132396cc39189bbd8310e90009873"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.trust-phw",
+    "schema:version": "0.2.0-litlfred",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/trust-phw"
+    }
+  }
+}

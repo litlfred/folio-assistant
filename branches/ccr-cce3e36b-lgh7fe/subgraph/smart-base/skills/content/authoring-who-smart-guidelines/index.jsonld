@@ -5,6 +5,28 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
+      "@id": "http://smart.who.int/base/skill/activate-accepted-guidance",
+      "@type": "bootstrap:Skill",
+      "name": "activate-accepted-guidance",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/73342270adda5b3fce65ea34d42b115914bf8c6c488bc8776088ebca77bfcc08",
+        "bytes": 2060,
+        "sha256": "73342270adda5b3fce65ea34d42b115914bf8c6c488bc8776088ebca77bfcc08"
+      },
+      "title": "Activate accepted guidance"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/apply-decision-support",
+      "@type": "bootstrap:Skill",
+      "name": "apply-decision-support",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/07633bd65350158e56a305df8c2af90839e63224f21763bf482887e3258cc66a",
+        "bytes": 2584,
+        "sha256": "07633bd65350158e56a305df8c2af90839e63224f21763bf482887e3258cc66a"
+      },
+      "title": "Apply decision support"
+    },
+    {
       "@id": "http://smart.who.int/base/skill/classify-and-code-content",
       "@type": "bootstrap:Skill",
       "name": "classify-and-code-content",
@@ -14,6 +36,17 @@
         "sha256": "039d91d9c32e6143dd71ecb0c2ccff3cda81d747292e78edcbc674072e88e26a"
       },
       "title": "classify-and-code-content"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/complete-sdc-questionnaire",
+      "@type": "bootstrap:Skill",
+      "name": "complete-sdc-questionnaire",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f44f0a99c795b4ea9b1c6cbe69582abf3ae432d75bde8bcc4661ac4d3e009c46",
+        "bytes": 3906,
+        "sha256": "f44f0a99c795b4ea9b1c6cbe69582abf3ae432d75bde8bcc4661ac4d3e009c46"
+      },
+      "title": "Complete an SDC questionnaire"
     },
     {
       "@id": "http://smart.who.int/base/skill/dak-l1-library",
@@ -71,6 +104,17 @@
       "title": "dth-l1-to-l2-ingest"
     },
     {
+      "@id": "http://smart.who.int/base/skill/extract-questionnaire-response",
+      "@type": "bootstrap:Skill",
+      "name": "extract-questionnaire-response",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/acafc28d0b305ae76aa711bbef1560d164843808c44fcb809e916213e24cf13d",
+        "bytes": 2810,
+        "sha256": "acafc28d0b305ae76aa711bbef1560d164843808c44fcb809e916213e24cf13d"
+      },
+      "title": "Extract resources from a questionnaire response"
+    },
+    {
       "@id": "http://smart.who.int/base/skill/grade",
       "@type": "bootstrap:Skill",
       "name": "grade",
@@ -113,6 +157,17 @@
         "sha256": "d06bbd07d39f2669dab633fb24c24c0f2a605e2d02370fe574592473cf1f9a02"
       },
       "title": "indicator-extraction"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/inform-client",
+      "@type": "bootstrap:Skill",
+      "name": "inform-client",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/de929732b4216fc718725cf4e3f667c04e534cedc1156f06eb9f1803f960f445",
+        "bytes": 1747,
+        "sha256": "de929732b4216fc718725cf4e3f667c04e534cedc1156f06eb9f1803f960f445"
+      },
+      "title": "Inform the client"
     },
     {
       "@id": "http://smart.who.int/base/skill/l2-component-edit-review",
@@ -234,6 +289,39 @@
         "sha256": "1d5b3b7c14dbb7836a01534a4f5de7100b897260f28a5cfeaa826d4c517acb51"
       },
       "title": "recommendation-scenarios"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/record-decision-rationale",
+      "@type": "bootstrap:Skill",
+      "name": "record-decision-rationale",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c6212865b5b556d81f82b578c1ad94a2073fd643aa4f0a4b78967db9c04fa8c4",
+        "bytes": 3328,
+        "sha256": "c6212865b5b556d81f82b578c1ad94a2073fd643aa4f0a4b78967db9c04fa8c4"
+      },
+      "title": "Record a decision rationale (optional)"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/review-client-history",
+      "@type": "bootstrap:Skill",
+      "name": "review-client-history",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ce640319263a3af0ff133acf773ae4b287fb9e697062bff2ced35afe28fa212f",
+        "bytes": 2009,
+        "sha256": "ce640319263a3af0ff133acf773ae4b287fb9e697062bff2ced35afe28fa212f"
+      },
+      "title": "Review the client's history"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/review-decision-support-guidance",
+      "@type": "bootstrap:Skill",
+      "name": "review-decision-support-guidance",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2382942b953c593ca75ced1ecdceffb447a00ad803b8d0440b8729bcc052c109",
+        "bytes": 2654,
+        "sha256": "2382942b953c593ca75ced1ecdceffb447a00ad803b8d0440b8729bcc052c109"
+      },
+      "title": "Review decision-support guidance"
     },
     {
       "@id": "http://smart.who.int/base/skill/smart-base-tools",

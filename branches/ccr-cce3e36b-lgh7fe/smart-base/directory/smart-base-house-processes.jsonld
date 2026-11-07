@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/directory/smart-base-house-processes.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "987549fbf1c5ea4efbae7d834dfbe317f1feb7b7",
+    "sha": "e0892b2e1ab210c58778858824d8052b60778d0c",
     "pr": "2985/merge",
-    "run": "42397400810"
+    "run": "42412680585"
   },
   "@graph": [
     {
@@ -22,7 +22,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/processes"
       ],
-      "description": "The BPMN this layer owns as house processes, under `content/` (as against `methodologies/processes/`, which holds methodologies adopted from the corpus): `l2-dak-authoring.bpmn`, whose tracks each call `l2-component-edit-review.bpmn` (the agent edits, checks, renders and stages one component while a person in its reviewing role reviews it alongside, never as a gate); `smart-guideline-end-to-end.bpmn`, use case to consuming application through the L1 KG, L2 and L3, with adjudication as QA rather than a gate, calling `l2-dak-authoring.bpmn` and `dak-l3-ig.bpmn` for its L2 and L3 stages; `dth-authoring.bpmn`, a Digital Transformation Handbook from sources to publication in seven stages, each ending in a milestone recorded on the work plan; `SGAuthoring.DAKLifecycle.bpmn`; and `classify-and-code-content.bpmn`. Skill refs this layer does not own resolve down through `fhir-harness`. cat-harness-tools' `render:bpmn` draws each beside its source (bean folio-assistant-akiq); folio-assistant's just-the-docs site, which mounts this directory, shows them.",
+      "description": "The BPMN this layer owns as house processes, under `content/` (as against `methodologies/processes/`, which holds methodologies adopted from the corpus): `l2-dak-authoring.bpmn`, whose tracks each call `l2-component-edit-review.bpmn` (the agent edits, checks, renders and stages one component while a person in its reviewing role reviews it alongside, never as a gate); `smart-guideline-end-to-end.bpmn`, use case to consuming application through the L1 KG, L2 and L3, with adjudication as QA rather than a gate, calling `l2-dak-authoring.bpmn` and `dak-l3-ig.bpmn` for its L2 and L3 stages; `dth-authoring.bpmn`, a Digital Transformation Handbook from sources to publication in seven stages, each ending in a milestone recorded on the work plan; `SGAuthoring.DAKLifecycle.bpmn`; `classify-and-code-content.bpmn`; and two point-of-care processes any DAK calls by call activity, `questionnaire-data-capture.bpmn` (a health worker completes an SDC form, the system extracts its resources) and `act-on-decision-support.bpmn` (the system applies a PlanDefinition, the health worker accepts or declines, may note why on a branch nothing waits for, and the care plan is updated). Skill refs this layer does not own resolve down through `fhir-harness`. cat-harness-tools' `render:bpmn` draws each beside its source (bean folio-assistant-akiq); folio-assistant's just-the-docs site, which mounts this directory, shows them.",
       "readmePath": "processes/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
