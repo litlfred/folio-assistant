@@ -4451,11 +4451,31 @@
       ],
       "skos:definition": [
         {
-          "@value": "Translation lifecycle management for folio content. Covers gettext PO/POT extraction and injection, TranslationNode manifests as KG nodes, official vs unofficial translations, staleness tracking, sign-off workflow, automatic badge rendering, and the poSources fallback resolution chain."
+          "@value": "Translation lifecycle management for folio content. Covers gettext PO/POT extraction and injection, TranslationNode manifests as KG nodes, official vs unofficial translations, staleness tracking, sign-off workflow, automatic badge rendering, the poSources fallback resolution chain, and translating into several locales as a team: one extraction, a PR per locale to main, FHIR terms as CodeSystem supplements, the untainted round trip as run, and the per-locale QA report."
         }
       ],
       "skos:notation": "translation-manager",
       "dcterms:source": "cat-harness/skills/library/library-core/translation-manager.md",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills/translation-refresh",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "translation-refresh"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The translation watcher: a scheduled fresh session that keeps every locale of every instance current after the source moves. Cold start, then, per instance, detect, refresh the templates, merge them into each locale, translate only the new and fuzzy strings with the fixed terms, run the gates, round-trip the changed strings, write the QA report, open one PR to main, merge it only where the instance declares merge-when-green, and report source mistakes as one issue. Use for \"refresh the translations\", \"a template check failed\", and when scheduling or running the watcher."
+        }
+      ],
+      "skos:notation": "translation-refresh",
+      "dcterms:source": "cat-harness/skills/library/library-core/translation-refresh.md",
       "skos:note": "candidate"
     },
     {

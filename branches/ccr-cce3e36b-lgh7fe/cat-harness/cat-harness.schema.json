@@ -2091,10 +2091,19 @@
                       "report",
                       "covered-by",
                       "no-folio",
-                      "scheduled"
+                      "scheduled",
+                      "pending-baseline"
                     ]
                   },
                   "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "writer": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "followUp": {
                     "type": "string",
                     "minLength": 1
                   }
@@ -2303,8 +2312,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "e696f2074a66d57a28a9bc01d3536277f2747611",
+    "sha": "b63472507726fbb4fe4f5de4ea6e045807b6aece",
     "pr": "2985/merge",
-    "run": "42357297477"
+    "run": "42382830094"
   }
 }

@@ -1,0 +1,54 @@
+{
+  "$ref": "#/definitions/MergeRequestPreview",
+  "definitions": {
+    "MergeRequestPreview": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "url"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri"
+            }
+          },
+          "required": [
+            "kind",
+            "url"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "none"
+            },
+            "reason": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "reason"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/MergeRequestPreviewSchema.schema.json",
+  "title": "MergeRequestPreviewSchema",
+  "description": "Generated from `MergeRequestPreviewSchema` in schemas/sdlc/merge-queue.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "b63472507726fbb4fe4f5de4ea6e045807b6aece",
+    "pr": "2985/merge",
+    "run": "42382830094"
+  }
+}

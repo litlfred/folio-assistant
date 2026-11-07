@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "core-schemas": {
-      "count": 41,
+      "count": 42,
       "unit": "modules"
     }
   },
@@ -2320,6 +2320,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/sdlc/merge-request.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "merge-request.test",
+      "graphNode": "undeclared",
+      "summary": "The six-line merge request a sibling sends the merge manager (owner,",
+      "isTest": true
+    },
+    {
       "module": "cat-harness-tools/schemas/sdlc/merge-review.ts",
       "instance": "cat-harness-tools",
       "name": "merge-review",
@@ -3483,6 +3491,14 @@
       "name": "dublin-core",
       "graphNode": "schema",
       "summary": "Qualified Dublin Core, as a graph node.",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "instance": "folio-assistant-core",
+      "name": "extracted-statement",
+      "graphNode": "schema",
+      "summary": "Statements extracted from library sources, as a list a page can be built from.",
       "isTest": false
     },
     {
@@ -26639,7 +26655,7 @@
         },
         {
           "name": "scripts",
-          "type": "z .array( z .object({ script: z.string().min(1), kind: z.enum([\"report\", \"covered-by\", \"no-folio\", \"scheduled\"]), reaso…",
+          "type": "z .array( z .object({ script: z.string().min(1), kind: z.enum([\"report\", \"covered-by\", \"no-folio\", \"scheduled\", \"pendin…",
           "optional": true,
           "array": true
         },
@@ -47851,6 +47867,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#ElectionRule",
+      "name": "ElectionRule",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/role-graph.ts#FormerName",
       "name": "FormerName",
       "module": "cat-harness-tools/schemas/process/role-graph.ts",
@@ -47907,6 +47936,48 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#HolderCandidate",
+      "name": "HolderCandidate",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "interface",
+      "doc": "One active session that could hold the lane.",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "createdAt",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "ISO 8601 creation time, as `list_sessions` reports it."
+        },
+        {
+          "name": "ownsP0",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "It owns a P0 PR: the fix for a red main, or a link of the re-pin chain."
+        },
+        {
+          "name": "minutesSinceAnswer",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "doc": "Minutes since it last answered or posted a heartbeat; unknown counts as live."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/role-graph.ts#LaneBinding",
       "name": "LaneBinding",
       "module": "cat-harness-tools/schemas/process/role-graph.ts",
@@ -47918,6 +47989,78 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#LaneHolding",
+      "name": "LaneHolding",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema",
+      "name": "LaneHoldingSchema",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "zod-object",
+      "doc": "When a lane held by one session at a time is needed, and who holds it.",
+      "fields": [
+        {
+          "name": "neededWhen",
+          "type": "z .object({ /** At least this many active sessions have ready PRs in the same repositories. */ minActiveSessions: z.num…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "election",
+          "type": "z.array(z.enum(ELECTION_RULES)).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Applied in order by {@link electHolder}."
+        },
+        {
+          "name": "loneSessionHolds",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "A session alone in its coordination group holds the lane for itself."
+        },
+        {
+          "name": "announce",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the holder announces to every sibling and the owner, e.g. `merge manager: <session id>`."
+        },
+        {
+          "name": "heartbeatMinutes",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The holder acknowledges each request, and posts a heartbeat, within this many minutes."
+        },
+        {
+          "name": "stalledAfterMinutes",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "A session silent for longer than this is stalled: not a candidate, and its lane is vacant."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ELECTION_RULES",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -47944,6 +48087,49 @@
           "type": "{ values?: ReadonlyArray<{ $type?: string; ref?: string; variable?: string }> }",
           "optional": true,
           "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#LaneReading",
+      "name": "LaneReading",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "interface",
+      "doc": "The live numbers {@link laneNeeded} reads; never stored.",
+      "fields": [
+        {
+          "name": "activeSessions",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Active sessions with ready PRs in the same repositories."
+        },
+        {
+          "name": "queuedRuns",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "The most queued runs on any one of those repositories."
+        },
+        {
+          "name": "oldestQueuedMinutes",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Age of the oldest queued run, in minutes (0 with none queued)."
+        },
+        {
+          "name": "conflictingPrs",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Open PRs that conflict with or supersede another open PR."
         }
       ],
       "extendsNames": [],
@@ -48287,6 +48473,13 @@
           "optional": true,
           "array": false,
           "doc": "Present when this role is a DATA STORE: a place where things are kept,"
+        },
+        {
+          "name": "holding",
+          "type": "LaneHolding",
+          "optional": true,
+          "array": false,
+          "doc": "For a lane one session holds at a time, such as the merge steward: when"
         }
       ],
       "extendsNames": [],
@@ -48295,6 +48488,7 @@
         "cat-harness-tools/schemas/conduct/model-capabilities.ts#ModelCapabilities",
         "cat-harness-tools/schemas/kg/skill-package.ts#ActorKind",
         "cat-harness-tools/schemas/process/role-graph.ts#FormerName",
+        "cat-harness-tools/schemas/process/role-graph.ts#LaneHolding",
         "cat-harness-tools/schemas/process/role-graph.ts#StoreDef"
       ],
       "unresolved": [],
@@ -48382,6 +48576,12 @@
           "type": "StoreDefSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "holding",
+          "type": "LaneHoldingSchema.optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -48389,6 +48589,7 @@
       "refs": [
         "cat-harness-tools/schemas/conduct/model-capabilities.ts#ModelCapabilitiesSchema",
         "cat-harness-tools/schemas/process/role-graph.ts#FormerNameSchema",
+        "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema",
         "cat-harness-tools/schemas/process/role-graph.ts#StoreDefSchema",
         "cat-harness-tools/schemas/tools/tool-types.ts#SkillNameSchema"
       ],
@@ -56022,6 +56223,113 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequest",
+      "name": "MergeRequest",
+      "module": "cat-harness-tools/schemas/sdlc/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestPreview",
+      "name": "MergeRequestPreview",
+      "module": "cat-harness-tools/schemas/sdlc/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestPreviewSchema",
+      "name": "MergeRequestPreviewSchema",
+      "module": "cat-harness-tools/schemas/sdlc/merge-queue.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "kind",
+        "url",
+        "none"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestSchema",
+      "name": "MergeRequestSchema",
+      "module": "cat-harness-tools/schemas/sdlc/merge-queue.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "prUrl",
+          "type": "z.string().regex(/^https:\\/\\/github\\.com\\/[^/\\s]+\\/[^/\\s]+\\/pull\\/\\d+$/, \"a GitHub pull request URL\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "headSha",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/, \"the full 40-hex head SHA\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sessionUrl",
+          "type": "z.string().regex(/^https:\\/\\/claude\\.ai\\/code\\/session_[A-Za-z0-9]+$/, \"a claude.ai session URL\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "changes",
+          "type": "z .string() .trim() .min(1) .refine((t) => sentenceCount(t) <= MERGE_REQUEST_MAX_SENTENCES, { message: `the changes in …",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "preview",
+          "type": "MergeRequestPreviewSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lookFor",
+          "type": "z.string().trim().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What to look for in the preview. Required when there is one."
+        },
+        {
+          "name": "fullTierGreen",
+          "type": "z.literal(true)",
+          "optional": false,
+          "array": false,
+          "doc": "The sender's statement that the full tier is green as judged (every judge)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestPreviewSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "MERGE_REQUEST_MAX_SENTENCES",
+        "sentenceCount",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -72486,6 +72794,13 @@
           "array": true
         },
         {
+          "name": "planFindings",
+          "type": "z.array(z.object({ id: z.string(), problem: z.string() }).strict()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Work plans filed wrong: an item naming a process that is not an epic or"
+        },
+        {
           "name": "plan",
           "type": "MilestonePlanSchema.optional()",
           "optional": true,
@@ -82531,6 +82846,270 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatement",
+      "name": "ExtractedStatement",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatements",
+      "name": "ExtractedStatements",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema",
+      "name": "ExtractedStatementSchema",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable within the list; the anchor the statement's row is published under."
+        },
+        {
+          "name": "statement",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The statement as captured, verbatim. Never paraphrased here."
+        },
+        {
+          "name": "kind",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The kind the extraction gave it: recommendation, requirement, candidate, …"
+        },
+        {
+          "name": "status",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Its review state, as the extraction records it: published as is."
+        },
+        {
+          "name": "derivedFrom",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The id of the statement this one was derived from, when it was: a"
+        },
+        {
+          "name": "source",
+          "type": "StatementSourceSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementsSchema",
+      "name": "ExtractedStatementsSchema",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "_schema",
+          "type": "z.literal(EXTRACTED_STATEMENTS_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What the list is, in a reader's words: a heading for its part of the page."
+        },
+        {
+          "name": "statements",
+          "type": "z.array(ExtractedStatementSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "EXTRACTED_STATEMENTS_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#StatementPage",
+      "name": "StatementPage",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema",
+      "name": "StatementPageSchema",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "zod-object",
+      "doc": "One generated page, declared in a committed file rather than on a command",
+      "fields": [
+        {
+          "name": "_schema",
+          "type": "z.literal(STATEMENT_PAGE_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "statements",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "The statement lists, in the order their parts appear."
+        },
+        {
+          "name": "out",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The page to write."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "intro",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "entryBase",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "URL prefix of the library viewer: an entry's link is `<entryBase>/<libraryId>/`."
+        },
+        {
+          "name": "sectionBase",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "URL prefix of the sources: a section's link is `<sectionBase>/<repo-relative section file>`."
+        },
+        {
+          "name": "tableAttr",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The content type's look, written after each table (for example a kramdown class)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "STATEMENT_PAGE_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#StatementSource",
+      "name": "StatementSource",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema",
+      "name": "StatementSourceSchema",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The DECLARED NAME of the instance holding the library; absent means this instance."
+        },
+        {
+          "name": "libraryId",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The library entry: `library/<libraryId>/`."
+        },
+        {
+          "name": "sectionId",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The section the statement was read from, when the extraction knows it."
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The page (or slide) the statement was read from, in the source's own numbering."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/figure-data.ts#Cell",
       "name": "Cell",
       "module": "folio-assistant-core/schemas/figure-data.ts",
@@ -83438,6 +84017,13 @@
           "doc": "dcterms:source: what the terms were drawn from."
         },
         {
+          "name": "subject",
+          "type": "SubjectSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The subject area this scheme's translations bind in ({@link SubjectSchema}): `dcterms:subject`."
+        },
+        {
           "name": "license",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -83469,6 +84055,7 @@
       "values": [],
       "refs": [
         "folio-assistant-core/schemas/glossary.ts#Iri",
+        "folio-assistant-core/schemas/glossary.ts#SubjectSchema",
         "folio-assistant-core/schemas/glossary.ts#TermSchema"
       ],
       "unresolved": [],
@@ -83580,6 +84167,20 @@
         "ORG_TYPES",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#SubjectSchema",
+      "name": "SubjectSchema",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "zod-scalar",
+      "doc": "The subject area a scheme's (or a term's) translations BIND in",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -83704,6 +84305,20 @@
           "doc": "The concept's IRI when its defining vocabulary already mints one. The"
         },
         {
+          "name": "subject",
+          "type": "SubjectSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Overrides the scheme's {@link SubjectSchema subject area} for this term."
+        },
+        {
+          "name": "translationStatus",
+          "type": "z.record(z.string().regex(BCP47), z.enum(TRANSLATION_STATUSES)).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Per locale, whether this term's translation is signed off. The"
+        },
+        {
           "name": "focus",
           "type": "FocusSchema.optional()",
           "optional": true,
@@ -83736,12 +84351,15 @@
       "refs": [
         "folio-assistant-core/schemas/glossary.ts#FocusSchema",
         "folio-assistant-core/schemas/glossary.ts#Iri",
-        "folio-assistant-core/schemas/glossary.ts#LangTextSchema"
+        "folio-assistant-core/schemas/glossary.ts#LangTextSchema",
+        "folio-assistant-core/schemas/glossary.ts#SubjectSchema"
       ],
       "unresolved": [],
       "external": [
+        "BCP47",
         "LOCAL_ID",
         "TERM_STATUSES",
+        "TRANSLATION_STATUSES",
         "z"
       ],
       "exported": true
@@ -83749,6 +84367,19 @@
     {
       "id": "folio-assistant-core/schemas/glossary.ts#TermStatus",
       "name": "TermStatus",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#TranslationStatus",
+      "name": "TranslationStatus",
       "module": "folio-assistant-core/schemas/glossary.ts",
       "kind": "type-alias",
       "fields": [],
@@ -97873,6 +98504,14 @@
     },
     {
       "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDef",
+      "to": "cat-harness-tools/schemas/process/role-graph.ts#LaneHolding",
+      "via": "holding",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDef",
       "to": "cat-harness-tools/schemas/process/role-graph.ts#StoreDef",
       "via": "store",
       "kind": "field",
@@ -97902,6 +98541,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDefSchema",
+      "to": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema",
+      "via": "holding",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDefSchema",
@@ -99875,6 +100522,14 @@
       "from": "cat-harness-tools/schemas/sdlc/merge-queue.ts#HoldSchema",
       "to": "cat-harness-tools/schemas/sdlc/merge-queue.ts#NonBlank",
       "via": "waitsOn",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestSchema",
+      "to": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestPreviewSchema",
+      "via": "preview",
       "kind": "field",
       "optional": false,
       "array": false
@@ -103736,6 +104391,22 @@
       "array": true
     },
     {
+      "from": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema",
+      "to": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementsSchema",
+      "to": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema",
+      "via": "statements",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesAdaptationSchema",
       "to": "folio-assistant-core/schemas/figure-data.ts#Resource",
       "via": "resources",
@@ -103945,6 +104616,14 @@
     },
     {
       "from": "folio-assistant-core/schemas/glossary.ts#GlossarySchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#SubjectSchema",
+      "via": "subject",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#GlossarySchema",
       "to": "folio-assistant-core/schemas/glossary.ts#TermSchema",
       "via": "terms",
       "kind": "field",
@@ -104045,6 +104724,14 @@
       "via": "prefLabel",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#SubjectSchema",
+      "via": "subject",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {

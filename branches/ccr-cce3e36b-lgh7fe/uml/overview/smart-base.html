@@ -2058,6 +2058,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       judgementOnly [0..1] boolean
       requiredCapabilities [0..1] object
       store [0..1] object
+      holding [0..1] object
     }
     class smart_base_smart_base_scenarios_Actor["Actor"] {
       &lt;&lt;json: RoleGraphSchema&gt;&gt;
@@ -2119,6 +2120,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       requires [0..*] string[]
       isDefinedBy [0..1] string
       iri [0..1] string
+      subject [0..1] string
+      translationStatus [0..1] map~official | unofficial~
       focus [0..1] object
       source [0..1] string
       status [1] authored | candidate | could-not-extract
@@ -2133,6 +2136,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       hasVersion [0..1] string
       modified [0..1] string
       source [0..1] string
+      subject [0..1] string
       license [0..1] string
       terms [0..*] Term[]
       ordered [0..1] boolean

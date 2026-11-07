@@ -363,28 +363,28 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e696f2074a66d57a28a9bc01d3536277f2747611",
-  "sourceCommitSha": "e696f2074a66d57a28a9bc01d3536277f2747611",
-  "sourceTree": "8972037ddf76f88a28e195e4d3a1818c3c5e447d",
-  "sourceCommitAt": "2026-11-07T08:52:17Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/b63472507726fbb4fe4f5de4ea6e045807b6aece",
+  "sourceCommitSha": "b63472507726fbb4fe4f5de4ea6e045807b6aece",
+  "sourceTree": "00bc7aa451f754374dd64f51dd11c85d5f570af5",
+  "sourceCommitAt": "2026-11-07T14:42:09Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 258,
+    "Skill": 259,
     "Actor": 32,
     "Capability": 18,
     "SkillPackage": 19,
     "Decision": 11,
     "Task": 12,
-    "Process": 83,
-    "SequenceFlow": 1075,
-    "Lane": 180,
-    "ProcessNode": 1037,
+    "Process": 86,
+    "SequenceFlow": 1121,
+    "Lane": 188,
+    "ProcessNode": 1082,
     "Tool": 175,
     "Schema": 190,
     "ExternalSchema": 28,
     "GraphTypology": 53,
-    "Role": 44,
+    "Role": 48,
     "Subgraph": 41,
     "Asset": 5
   },
@@ -2148,12 +2148,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "translation-manager",
       "title": "Translation manager",
-      "description": "Translation lifecycle management for folio content. Covers gettext PO/POT extraction and injection, TranslationNode manifests as KG nodes, official vs unofficial translations, staleness tracking, sign-off workflow, automatic badge rendering, and the poSources fallback resolution chain.",
+      "description": "Translation lifecycle management for folio content. Covers gettext PO/POT extraction and injection, TranslationNode manifests as KG nodes, official vs unofficial translations, staleness tracking, sign-off workflow, automatic badge rendering, the poSources fallback resolution chain, and translating into several locales as a team: one extraction, a PR per locale to main, FHIR terms as CodeSystem supplements, the untainted round trip as run, and the per-locale QA report.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/translation-manager.md",
-      "instructionLines": 766,
+      "instructionLines": 960,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2210,6 +2210,23 @@
       "ambiguous": false,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/skills",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/library-ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-refresh",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "translation-refresh",
+      "title": "Translation refresh — the watcher",
+      "description": "The translation watcher: a scheduled fresh session that keeps every locale of every instance current after the source moves. Cold start, then, per instance, detect, refresh the templates, merge them into each locale, translate only the new and fuzzy strings with the fixed terms, run the gates, round-trip the changed strings, write the QA report, open one PR to main, merge it only where the instance declares merge-when-green, and report source mistakes as one issue. Use for \"refresh the translations\", \"a template check failed\", and when scheduling or running the watcher.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/translation-refresh.md",
+      "instructionLines": 211,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-refresh"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/code-lists",
@@ -3360,7 +3377,7 @@
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "sdlc/skills/sdlc-core/test-engineer.md",
-      "instructionLines": 226,
+      "instructionLines": 243,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4856,12 +4873,14 @@
       "localId": "claude",
       "actorKind": "agent",
       "title": "Claude (agent session)",
-      "description": "The LLM agent that works in this repository's sessions, under the name it writes into workflow history (`actor: \"claude\"` in `beans/workflows/*.json`). Declared so the PROV-O QA/QC report can resolve that name to an actor (owner, 2026-09-24: \"Declare both\"). The id is the name the agent asserts, not a login: history records it as `asserted` and nothing here authenticates it, and which session or account it was is the data store's to know. `roles` are the lanes its history entries occupy and whose role admits an agent: `authoring-agent` (every code-change-review step it recorded, and the CRDM agent steps) `code-reviewer` (`Task_Review` in code-change-review) and `business-analyst` (below). It also recorded one `BA_Submit` in the `business-analyst` lane, and the owner ruled on 2026-09-24 (*\"Allow agents as BA\"*) that the role admits agents, so it is listed. What it may DO is in the ODRL policies, and none grants it anything yet.",
+      "description": "The LLM agent that works in this repository's sessions, under the name it writes into workflow history (`actor: \"claude\"` in `beans/workflows/*.json`). Declared so the PROV-O QA/QC report can resolve that name to an actor (owner, 2026-09-24: \"Declare both\"). The id is the name the agent asserts, not a login: history records it as `asserted` and nothing here authenticates it, and which session or account it was is the data store's to know. `roles` are the lanes its history entries occupy and whose role admits an agent: `authoring-agent` (every code-change-review step it recorded, and the CRDM agent steps) `code-reviewer` (`Task_Review` in code-change-review) and `business-analyst` (below). It also recorded one `BA_Submit` in the `business-analyst` lane, and the owner ruled on 2026-09-24 (*\"Allow agents as BA\"*) that the role admits agents, so it is listed. It also takes on the two agentic lanes of `multi-locale-translation`: `translation-source-lead` (extracting once, merging, keeping the refresh watcher) and `locale-translator` (one locale's catalogues). What it may DO is in the ODRL policies, and none grants it anything yet.",
       "hasCapability": [],
       "mayTakeRole": [
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/authoring-agent",
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/business-analyst",
-        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/code-reviewer"
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/code-reviewer",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/claude"
     },
@@ -4902,7 +4921,8 @@
       "mayTakeRole": [
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/feedback-provider",
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/qc-reviewer",
-        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/untainted-checker"
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/untainted-checker",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/back-translator"
       ],
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/untainted-checker"
     },
@@ -5223,7 +5243,8 @@
       "hasCapability": [],
       "mayTakeRole": [
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/qc-reviewer",
-        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/adjudicator"
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/adjudicator",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/round-trip-adjudicator"
       ],
       "permissionName": [
         "qa-reporting",
@@ -5924,6 +5945,7 @@
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/literature-search",
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/term-disagreement",
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-refresh",
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/upload-naming",
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/upload-routes",
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/uploads-watch"
@@ -16743,6 +16765,1569 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ContentAcquisition/node/End_Acquired"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Translation refresh (watcher)",
+      "summary": "Keep every locale current after the source moves: detect, refresh the templates, merge them into each locale, translate only what is new or fuzzy, check it, and land one PR per instance on main.",
+      "description": "Keep every locale current after the source moves: detect, refresh the templates, merge them into each locale, translate only what is new or fuzzy, check it, and land one PR per instance on main.\n\nYou are in this process when the watcher scheduled by `multi-locale-translation` wakes, or when a template check has failed. It is the loop that process ends with. A fresh session can run it cold: the skill `translation-refresh` gives each step as a command, and each instance's own AGENTS.md names what is particular to it. One run walks every instance in turn, and each instance with something to refresh gets its own PR.\n\nA refresh never re-translates a finished string. Obsolete strings are kept as `#~` entries, new ones arrive empty, and only new and fuzzy strings are translated, with the terms the term base already fixes. The round trip runs on the changed strings only.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/library/translation-refresh.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/library/translation-refresh.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/assets/img/workflows/translation-refresh.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Start_TR"
+      ],
+      "nodeCount": 17,
+      "flowCount": 17,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/externalSchema/w3c-xsd11-structures"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Start_TR",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_ColdStart",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_ColdStart",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Detect",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Detect",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Changed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_Yes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Changed",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Templates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_No",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "No",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Changed",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/End_TR_Current",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Templates",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_MergeLocales",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_MergeLocales",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Translate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Translate",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Gates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Gates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_GatesYes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Call_TR_RoundTrip",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_GatesYes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_GatesNo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "No: fix",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Translate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_GatesNo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Call_TR_RoundTrip",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Report",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Report",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_SourceIssue",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_SourceIssue",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Window",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_WindowYes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Window",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_WindowYes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_WindowNo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "No",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Window",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/End_TR_Waiting",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_WindowNo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Merge",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/End_TR_Merged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Translator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Locale translator",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Translator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Source-language lead (watcher)",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Start_TR",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Scheduled run",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Start_TR"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_ColdStart",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Cold start: mount and attach",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-refresh"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Task_TR_ColdStart"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Detect",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Detect what moved",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-refresh"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Detect"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Changed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Anything to refresh?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_Yes",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_No"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/End_TR_Current",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Current",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_No"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/End_TR_Current"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Templates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Refresh the templates",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-refresh"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_Yes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Templates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_MergeLocales",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Merge into each locale",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-refresh"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Task_TR_MergeLocales"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Translate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Translate new and fuzzy only",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_5",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_GatesNo"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Translate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Gates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Re-run the gates",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Gates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Gates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Gates pass?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Translator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_GatesYes",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_GatesNo"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Gates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Call_TR_RoundTrip",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Round trip on the changed strings",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Translator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_GatesYes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Call_TR_RoundTrip"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Report",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "QA report and one PR to main",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Report"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_SourceIssue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Report source errors as one issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-refresh"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Task_TR_SourceIssue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Window",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Merge-when-green, and all green?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_WindowYes",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_WindowNo"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Window"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Merge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Merge the PR",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-refresh"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_WindowYes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Task_TR_Merge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/End_TR_Merged",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Refreshed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_11"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/End_TR_Merged"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/node/End_TR_Waiting",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "PR left open",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_WindowNo"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/End_TR_Waiting"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Multi-locale translation",
+      "summary": "Translate one or more instances into several locales at once, as a team: one source-language lead, one translator per locale, an untainted round trip, and the owner's merge window.",
+      "description": "Translate one or more instances into several locales at once, as a team: one source-language lead, one translator per locale, an untainted round trip, and the owner's merge window. The result is unofficial, on main, and kept current by a watcher.\n\nYou are in this process when more than one locale is being produced from the same source at the same time. `translation-workflow` is the machine half for one catalogue and `human-translation-workflow` is the path to an official, signed-off translation; this process is the team around them. It extracts ONCE: every locale starts from the same templates, merged to main in one source PR before any locale begins, and no translator re-extracts. Each locale then lands as its own PR to main, never into the source branch, and a source PR's branch receives nothing after it merges.\n\nTwo things are never done in a translation: fixing the source (a source-text error is reported as one issue to the lead), and editing a FHIR resource inline (terms go into one CodeSystem supplement per locale). Officiality is not decided here: every catalogue is written unofficial, and a person makes it official through human-translation-workflow.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/library/multi-locale-translation.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/library/multi-locale-translation.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/assets/img/workflows/multi-locale-translation.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Start_ML"
+      ],
+      "nodeCount": 18,
+      "flowCount": 20,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/externalSchema/w3c-xsd11-structures"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Start_ML",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Scope",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Scope",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Extract",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Extract",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourcePR",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourcePR",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Watcher",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Watcher",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Translate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Translate",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_SourceError",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrYes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_SourceError",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourceIssue",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrYes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrNo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "No",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_SourceError",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Gates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrNo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourceIssue",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Gates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Gates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesYes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Call_ML_RoundTrip",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesYes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesNo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "No: fix, re-run",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Translate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesNo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Call_ML_RoundTrip",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Glossary",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Glossary",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_QAReport",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_QAReport",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_LocalePR",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_LocalePR",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Drift",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftYes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Drift",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_FixDrift",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftYes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftNo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "No",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Drift",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftNo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_FixDrift",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_14",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Merge",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/End_ML",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_14"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Owner",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/user",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Owner"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Source-language lead",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Locale translator (one per locale)",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Start_ML",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Locales requested",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Owner",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Start_ML"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Scope",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Set locales, scope and merge window",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Owner",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Scope"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Extract",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Extract every template once",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/globalTask/GT_ExtractPot",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Extract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourcePR",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Merge the one source PR to main",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourcePR"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Watcher",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Schedule the refresh watcher",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-refresh"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Translate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Translate one locale",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_5",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesNo"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Translate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_SourceError",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Source-text error found?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_6"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrYes",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrNo"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_SourceError"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourceIssue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "File the source errors as one issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrYes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourceIssue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Gates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Run the deterministic gates",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrNo",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_8"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Gates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Gates",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Gates pass?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_8"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesYes",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesNo"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Gates"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Call_ML_RoundTrip",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Untainted round trip on a sample",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesYes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Call_ML_RoundTrip"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Glossary",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Check glossary consistency",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_9"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Glossary"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_QAReport",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Write the locale's QA report",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_QAReport"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_LocalePR",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Open the locale PR to main",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_11"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_12"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_LocalePR"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Drift",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Drift ruled?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftYes",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftNo"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Drift"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_FixDrift",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Fix each drift on the PR",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftYes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_13"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_FixDrift"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Merge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Validate and merge in the window",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftNo",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Merge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/End_ML",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "On main",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_14"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/End_ML"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Translation round trip (untainted)",
+      "summary": "Did the meaning survive the translation? The untainted round trip on a sample of one locale's strings, with the two parties kept apart: a back-translator who sees only the target text, and an adjudicator who sees only the source and the back-translation.",
+      "description": "Did the meaning survive the translation? The untainted round trip on a sample of one locale's strings, with the two parties kept apart: a back-translator who sees only the target text, and an adjudicator who sees only the source and the back-translation.\n\nYou are in this process when `multi-locale-translation` or `translation-refresh` calls it, after the deterministic gates have passed. It is the translation instance of `untainted-verification`: the producer (the locale translator) draws the sample and never writes the verdict; the back-translator renders and rules on nothing; the adjudicator rules. `GT_RoundTripQa` in `translation-workflow` is the same check drawn as one step; this diagram draws its parties, because the separation between them is what makes the result a measurement.\n\nA first run samples every diagram label, the personas and scenarios, and a seeded random fraction of the rest; a refresh samples only the strings it changed. The third state is drawn: when two separate parties cannot be dispatched, the producer records \"could not dispatch\" with a reason, and that is never a pass.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/library/translation-round-trip.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/library/translation-round-trip.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/assets/img/workflows/translation-round-trip.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Start_RT"
+      ],
+      "nodeCount": 10,
+      "flowCount": 9,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/externalSchema/w3c-xsd11-structures"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Start_RT",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Sample",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Sample",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Gateway_RT_Dispatch",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_Yes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Gateway_RT_Dispatch",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_BackTranslate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_No",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "No",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Gateway_RT_Dispatch",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_RecordNA",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_NA",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_RecordNA",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/End_RT_NA",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_NA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_BackTranslate",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_PreScreen",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_PreScreen",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Rule",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Rule",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Record",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Record",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/End_RT_Ruled",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Translator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Locale translator",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Translator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Back",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Back-translator",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/back-translator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Back"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Round-trip adjudicator",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/round-trip-adjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Start_RT",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Strings to check",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Translator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Start_RT"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Sample",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Draw the sample",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Sample"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Gateway_RT_Dispatch",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Two parties available?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Translator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_Yes",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_No"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Gateway_RT_Dispatch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_RecordNA",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Record could not dispatch",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Translator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_No"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_NA"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_RecordNA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/End_RT_NA",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Not verified",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Translator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_NA"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/End_RT_NA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_BackTranslate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Back-translate the target text",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/back-translator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Back",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/untainted-verification"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_Yes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_BackTranslate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_PreScreen",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Pre-screen every pair",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/round-trip-adjudicator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_PreScreen"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Rule",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Read and rule each flagged pair",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/round-trip-adjudicator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/untainted-verification",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Rule"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Record",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Record both witnesses",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/round-trip-adjudicator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/untainted-verification"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_6"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Record"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/node/End_RT_Ruled",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Verdicts recorded",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/round-trip-adjudicator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/End_RT_Ruled"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MethodologyFromSource",
@@ -56133,6 +57718,76 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-adjudicator"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Source-language lead",
+      "title": "Source-language lead",
+      "notation": "translation-source-lead",
+      "description": "Owns the source-language side of a translation into several locales: extracts every template once, in one shared source PR merged to main before any locale starts, validates each locale PR and merges it inside the owner's merge window, files the one issue for source-text errors the translators report, and keeps the refresh watcher that brings every locale up to date when the source moves. Distinct from `translation-coordinator`, who decides what is translated and accepts it: this position does the source-side work, and an agent can do it.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-refresh"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-source-lead"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Locale translator",
+      "title": "Locale translator",
+      "notation": "locale-translator",
+      "description": "Produces one locale's catalogues from the shared templates: the `.po` files, their unofficial translation-node manifests and the locale's terminology supplement, then the gates, the QA report and the locale PR. Never re-extracts and never edits the source; a source-text error is reported, not fixed in the translation. One lane covers every locale, each run once per locale. Distinct from `translator`, a person working in their own tool under human-translation-workflow: this position may be an agent, and what it produces is unofficial until a person signs it off.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent",
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/back-translator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Back-translator",
+      "title": "Back-translator",
+      "notation": "back-translator",
+      "description": "The checker of a translation round trip: renders a sample of the target-language text back into the source language from the target text alone, with no tools and without seeing the source. It rules on nothing. Its rendering is the intermediate the adjudicator reads (`untainted-verification`, rule 1: neither party sees what would let it shortcut).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent",
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/untainted-verification",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/back-translator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/round-trip-adjudicator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Round-trip adjudicator",
+      "title": "Round-trip adjudicator",
+      "notation": "round-trip-adjudicator",
+      "description": "Rules on a translation round trip: given the source strings and the back-translation, and never the target text, it pre-screens every pair mechanically, reads each flagged pair in full, and records drift or not-drift for each with the reason. A specialisation of `adjudicator` for the translation instance of untainted verification; it adds the translation-specific drift definition.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent",
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/round-trip-adjudicator"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/adjudicator",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
       "prefLabel": "Adjudicator",
@@ -57541,8 +59196,8 @@
   ],
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "e696f2074a66d57a28a9bc01d3536277f2747611",
+    "sha": "b63472507726fbb4fe4f5de4ea6e045807b6aece",
     "pr": "2985/merge",
-    "run": "42357297477"
+    "run": "42382830094"
   }
 }

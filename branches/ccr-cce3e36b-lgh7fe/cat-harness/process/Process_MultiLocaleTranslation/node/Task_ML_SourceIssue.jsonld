@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourceIssue.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "b63472507726fbb4fe4f5de4ea6e045807b6aece",
+    "pr": "2985/merge",
+    "run": "42382830094"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourceIssue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "File the source errors as one issue",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrYes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourceIssue"
+    }
+  ]
+}

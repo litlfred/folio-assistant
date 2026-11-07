@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "b63472507726fbb4fe4f5de4ea6e045807b6aece",
+    "pr": "2985/merge",
+    "run": "42382830094"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/locale-translator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Locale translator",
+      "title": "Locale translator",
+      "notation": "locale-translator",
+      "description": "Produces one locale's catalogues from the shared templates: the `.po` files, their unofficial translation-node manifests and the locale's terminology supplement, then the gates, the QA report and the locale PR. Never re-extracts and never edits the source; a source-text error is reported, not fixed in the translation. One lane covers every locale, each run once per locale. Distinct from `translator`, a person working in their own tool under human-translation-workflow: this position may be an agent, and what it produces is unofficial until a person signs it off.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent",
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator"
+    }
+  ]
+}

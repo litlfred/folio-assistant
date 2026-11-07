@@ -176,6 +176,77 @@
                   }
                 },
                 "additionalProperties": false
+              },
+              "holding": {
+                "type": "object",
+                "properties": {
+                  "neededWhen": {
+                    "type": "object",
+                    "properties": {
+                      "minActiveSessions": {
+                        "type": "integer",
+                        "minimum": 2,
+                        "maximum": 9007199254740991
+                      },
+                      "maxQueuedRuns": {
+                        "type": "integer",
+                        "minimum": 0,
+                        "maximum": 9007199254740991
+                      },
+                      "maxOldestQueuedMinutes": {
+                        "type": "number",
+                        "minimum": 0
+                      },
+                      "conflictsCount": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "minActiveSessions",
+                      "maxQueuedRuns",
+                      "maxOldestQueuedMinutes",
+                      "conflictsCount"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "election": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "owns-p0",
+                        "earliest-created"
+                      ]
+                    }
+                  },
+                  "loneSessionHolds": {
+                    "type": "boolean"
+                  },
+                  "announce": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "heartbeatMinutes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "stalledAfterMinutes": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "neededWhen",
+                  "election",
+                  "loneSessionHolds",
+                  "announce",
+                  "heartbeatMinutes",
+                  "stalledAfterMinutes"
+                ],
+                "additionalProperties": false
               }
             },
             "required": [
@@ -264,8 +335,8 @@
   "description": "Generated from `RoleGraphSchema` in schemas/process/role-graph.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "e696f2074a66d57a28a9bc01d3536277f2747611",
+    "sha": "b63472507726fbb4fe4f5de4ea6e045807b6aece",
     "pr": "2985/merge",
-    "run": "42357297477"
+    "run": "42382830094"
   }
 }
