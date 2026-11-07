@@ -1,0 +1,127 @@
+name: Folio site publish
+
+# The agent-run site publish (owner, 2026-10-10; bean n3h9), as ONE reusable
+# workflow. A harnessed repository's site is built and published by
+# `stage-local.ts`, from the steps its instance declares under `site.build`;
+# this runs that same command on a GitHub runner, for a session whose
+# container cannot reach rubygems.org (owner, 2026-10-13: "github egress?").
+#
+# smart-ra and dth-hrh each carried a copy, and dth-hrh's kept the job token
+# in an insteadOf URL rewrite after smart-ra learnt (2026-10-14) that it ends
+# up in `git remote get-url origin` and from there in every page. One copy
+# fixes that once. A caller:
+#
+#   on:
+#     workflow_dispatch:
+#       inputs:
+#         plan: { type: boolean, default: false }
+#   permissions:
+#     contents: write
+#   jobs:
+#     publish:
+#       uses: litlfred/cat-harness-tools/.github/workflows/folio-site-publish.yml@main
+#       with:
+#         plan: ${{ inputs.plan }}
+#
+# On the default branch it publishes the gh-pages root (keeping branches/ and
+# _render-log/); on any other branch, the preview at branches/<branch>/.
+
+on:
+  workflow_call:
+    inputs:
+      plan:
+        description: "Only print what would run (--plan)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: site-publish-${{ github.repository }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          # The job token is set once, globally, in the step below. Two
+          # Authorization headers for github.com make every request fail.
+          persist-credentials: false
+
+      - uses: litlfred/cat-harness-tools/.github/actions/mount-layers@1257da8bbbb8e661391d08b014b16464de19613f # last change to .github/actions/mount-layers
+
+      - uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1.336.0
+        with:
+          ruby-version: "3.3"
+
+      - name: Install the document export tools, when a site step exports
+        # A document folio's site:export step (folio-assistant-core's
+        # document-export.ts) writes the public-comment PDF and .docx with
+        # pandoc, lays the PDF out with LibreOffice and counts its pages and
+        # lines with poppler. The runner has none of them, and document-export
+        # has no fallback, so without this every publish of such a folio fails
+        # at its last step (dth-hrh run 42076453040; bean v29t). Installed only
+        # when the repository's scripts call document-export: LibreOffice is
+        # large, and no other publish needs it. The fonts are the metric-
+        # compatible stand-ins for the .docx's Calibri, Cambria, Aptos, Times New
+        # Roman and Courier New: without them the runner's PDF breaks onto
+        # different pages and lines (169 pages against 143), and a comment's
+        # page-and-line citation would not match an agent-run build.
+        # Bounded: an apt that waits on a prompt or a mirror fails the publish in
+        # minutes instead of holding the gh-pages queue for the job's 6 hours.
+        timeout-minutes: 15
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: |
+          if [ -f package.json ] && grep -q 'document-export' package.json; then
+            # Only what the image lacks (it already ships LibreOffice and
+            # pandoc). `sudo env`: the runner's sudo ignores -E, so a bare
+            # DEBIAN_FRONTEND never reached apt. The lock timeout waits out
+            # the image's own background apt instead of stalling on it.
+            missing=""
+            for p in pandoc libreoffice-writer libreoffice-draw poppler-utils fonts-dejavu-core fonts-crosextra-carlito fonts-crosextra-caladea fonts-liberation2 fonts-inter; do
+              dpkg -s "$p" >/dev/null 2>&1 || missing="$missing $p"
+            done
+            echo "missing:${missing:- none}"
+            if [ -n "$missing" ]; then
+              apt_get() { sudo env DEBIAN_FRONTEND=noninteractive timeout 600 apt-get -o Dpkg::Use-Pty=0 -o DPkg::Lock::Timeout=300 "$@"; }
+              if ! { apt_get update -q && apt_get install -y -q --no-install-recommends $missing; }; then
+                echo "::error::the export tools did not install; apt and dpkg processes still running:"
+                ps -eo pid,etime,args | grep -E 'apt|dpkg|debconf' | grep -v grep || true
+                exit 1
+              fi
+            fi
+            pandoc --version | head -1; soffice --version; pdfinfo -v 2>&1 | head -1; fc-match Cambria; fc-match Calibri
+          else
+            echo "no document-export step: nothing to install"
+          fi
+
+      - name: Identify the publishing commit's author, and let it push
+        # The publisher clones gh-pages into a temporary directory, which does
+        # not inherit the checkout's credentials: the job token goes in the
+        # global config instead -- as a request HEADER, never in a URL.
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          git config --global user.name "Claude"
+          git config --global user.email "noreply@anthropic.com"
+          auth=$(printf 'x-access-token:%s' "$TOKEN" | base64 -w0)
+          echo "::add-mask::$auth"
+          git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic $auth"
+
+      - name: Build and publish with stage-local
+        # The job log is not readable from an agent's container, so a
+        # failure's last lines are also raised as annotations, which the
+        # checks API serves.
+        env:
+          PLAN: ${{ inputs.plan && '--plan' || '' }}
+        run: |
+          set -o pipefail
+          if ! bun run cat-harness-tools/scripts/stage-local.ts --repo . $PLAN 2>&1 | tee "$RUNNER_TEMP/stage-local.log"; then
+            grep -v '^|' "$RUNNER_TEMP/stage-local.log" | grep -E '✗|[Ee]rror|unresolved|failed|Cannot|not found|refus' | grep -v DEPRECATION | tail -n 9 | cut -c1-900 | sed 's/^/::error::/'
+            exit 1
+          fi
