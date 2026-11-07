@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T19:30:00Z
-updated_at: 2026-11-06T08:35:45Z
+updated_at: 2026-11-07T16:20:00Z
 parent: folio-assistant-dthl
 tags:
     - dth-pc
@@ -39,3 +39,5 @@ _2026-11-02T19:35Z_ — Before/after PNGs in /mnt/project-files/dth-pc-flattened
 _2026-11-02T20:05Z_ — #16 merged a3330c9 (owner A). 12 pages: draft dth-pc#17 (3e97f27), fragment check script in scratch (every removed run found in the section's table blocks). Re-pin cat-harness 356ca7a + core 3c13890: dth-pc#18 (mechanical, merge on green), stage-local of that branch running. Empty pages 022/027/032/036 keep their blocks (tags, BPMN uses).
 
 _2026-11-06T08:35:45Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
+
+_2026-11-07T16:20Z_ — Thread paused 11-02 19:34Z (usage limit). #18 merged 11-05 by the owner. Padding: #994's rule did not take effect on the #18 preview; cat-harness has since moved block icons to the right gutter with 1rem panel padding (fe6c98f, 11-06), so the ask now rides the next re-pin. #17 rebased to 69b0a5e and marked ready by the owner 11-06; CI red only on check:corpus-gate (platform crash: 2 mounts have id beans, dpi-h-ra.beans + dth-sc.beans, cat-harness-tools resolveBeanGraphNode) and check:bean-one-home (live stores; passes now). Commented on #17. Cards Q-FT-2, Q-FT-3 still open.
