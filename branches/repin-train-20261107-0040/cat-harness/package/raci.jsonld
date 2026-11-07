@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/package/raci.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-0040",
+    "sha": "60ac254c14d805d847978a17871310fab41e5430",
+    "pr": "repin-train/20261107-0040",
+    "run": "42319724203"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/package/raci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/SkillPackage",
+      "name": "raci",
+      "version": "0.1.0",
+      "description": "RACI — involvement over the processes and roles this repository already declares. Three declared edge kinds (accountable, consulted, informed) over BPMN activities and `roles.json` entries, NOT a new party registry. R is deliberately absent because a lane already declares it. RELOCATED 2026-09-22 from `methodologies/raci/` on the owner's \"dont bury sub-graph assets\", which brought it into skill QA for the first time (bean `lps0`).",
+      "path": "skills/process/raci",
+      "hasManifest": true,
+      "declaresSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/skill/raci"
+      ],
+      "providesCapability": [],
+      "requiresCapability": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/package/raci"
+    }
+  ]
+}

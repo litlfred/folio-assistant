@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/skill/prepare-merge-auto.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-0040",
+    "sha": "60ac254c14d805d847978a17871310fab41e5430",
+    "pr": "repin-train/20261107-0040",
+    "run": "42319724203"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/skill/prepare-merge-auto",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "prepare-merge-auto",
+      "title": "/prepare-merge-auto — Autonomous merge pipeline",
+      "description": "Full prepare-merge → resolve → merge pipeline. Coordinates with sibling PRs, resolves review comments, asks structured questions only when blocked, then hands the merge to the merge-to-main sub-process, which merges only on the owner's authorisation.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/prepare-merge-auto.md",
+      "instructionLines": 184,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto"
+    }
+  ]
+}

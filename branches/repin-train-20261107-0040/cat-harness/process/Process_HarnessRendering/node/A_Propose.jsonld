@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/process/Process_HarnessRendering/node/A_Propose.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-0040",
+    "sha": "60ac254c14d805d847978a17871310fab41e5430",
+    "pr": "repin-train/20261107-0040",
+    "run": "42319724203"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/process/Process_HarnessRendering/node/A_Propose",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Propose the change",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/process/Process_HarnessRendering",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/role/reviewer",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/process/Process_HarnessRendering/lane/Lane_Reviewer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/skill/kg-affordances"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/process/Process_HarnessRendering#flow/SF_HR_7"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/process/Process_HarnessRendering#flow/SF_HR_9"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HarnessRendering/node/A_Propose"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/process/Process_SwotAnalysis/node/End_SituationRecorded.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-0040",
+    "sha": "60ac254c14d805d847978a17871310fab41e5430",
+    "pr": "repin-train/20261107-0040",
+    "run": "42319724203"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/process/Process_SwotAnalysis/node/End_SituationRecorded",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Situation recorded; no decision in play",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/process/Process_SwotAnalysis",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/role/business-analyst",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/process/Process_SwotAnalysis/lane/Lane_BusinessAnalyst",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/process/Process_SwotAnalysis#flow/SF_Process_SwotAnalysis_9"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SwotAnalysis/node/End_SituationRecorded"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/capability/graphviz.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-0040",
+    "sha": "60ac254c14d805d847978a17871310fab41e5430",
+    "pr": "repin-train/20261107-0040",
+    "run": "42319724203"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/cat-harness/capability/graphviz",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "graphviz",
+      "name": "Graphviz",
+      "description": "Graph visualization tool for generating diagrams.",
+      "detection": {
+        "method": "command",
+        "command": "dot -V"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/graphviz"
+    }
+  ]
+}

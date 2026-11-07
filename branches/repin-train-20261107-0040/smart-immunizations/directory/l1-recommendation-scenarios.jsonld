@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/smart-immunizations/smart-immunizations.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/smart-immunizations/directory/l1-recommendation-scenarios.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/smart-immunizations/smart-immunizations.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-0040",
+    "sha": "60ac254c14d805d847978a17871310fab41e5430",
+    "pr": "repin-train/20261107-0040",
+    "run": "42319724203"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/smart-immunizations/directory/l1-recommendation-scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "l1-recommendation-scenarios",
+      "path": "examples/l1-recommendation-scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/l1-extraction"
+      ],
+      "description": "The measles L1 recommendation-scenarios worked example (`measles/`): the 2017 position paper's L1 recommendations, the immunization vocabulary and mapping they resolve against, and the L2 scenario candidates `l1-recommendation-scenarios.ts` derives from them. It is smart-base's `l1-extraction` kind, not a library entry.",
+      "readmePath": "examples/l1-recommendation-scenarios/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-0040/smart-immunizations/directory/l1-recommendation-scenarios",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/l1-recommendation-scenarios"
+    }
+  ]
+}
