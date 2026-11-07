@@ -8,7 +8,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "3b0ab40c15dd24e957132cd41b1d663f687053bf",
+          "ref": "6d76e105ff5512c2488af2424349c621b4773165",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -19,8 +19,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-07",
-              "ref": "3b0ab40c15dd24e957132cd41b1d663f687053bf",
-              "evidence": "Owner litlfred, 2026-11-07, relayed by the coordinating session (session_01VQDpPg6DUZuufuAVwk6MqZ): 'repin + merge open 12 hrs' (extended 12 hours). cat-harness moves from 6eed239a to 3b0ab40c, the merge of cat-harness#1128: the glossary ledger records role/health-worker and role/point-of-care-system live, as smart-base#313 (pinned here) draws them, so glossary:check is current in this composition."
+              "ref": "6d76e105ff5512c2488af2424349c621b4773165",
+              "evidence": "Owner litlfred, 2026-11-07, relayed by the coordinating session (session_01VQDpPg6DUZuufuAVwk6MqZ): 'repin + merge open 12 hrs' (extended 12 hours). cat-harness moves from 3b0ab40c to 6d76e105, the merge of cat-harness#1129: Process_MergeRequest's documentation no longer carries a ruling date, which the process-index 'no work-plan chatter' test refused."
             },
             "standing": {
               "follows": "main",
@@ -46,7 +46,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "11117c4a63880b4234a655f9fe8b2fde18a667fb",
+          "ref": "58afc2513c86b88a9a31e2e40d442c8cb73a9c6e",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -57,12 +57,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-07",
-              "ref": "11117c4a63880b4234a655f9fe8b2fde18a667fb",
-              "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR.",
-              "standing": {
-                "follows": "main",
-                "consentAt": "2026-11-01"
-              }
+              "ref": "58afc2513c86b88a9a31e2e40d442c8cb73a9c6e",
+              "evidence": "Owner litlfred, 2026-11-07, relayed by the coordinating session (session_01VQDpPg6DUZuufuAVwk6MqZ): 'repin + merge open 12 hrs' (extended 12 hours). cat-harness-tools moves from 11117c4a to main 58afc251, which rebases the kind table's description links onto its own page (138c567c), clearing the subgraphs '../ too many' test on docs/cat-harness/kind-table.md; 58afc251 contains 11117c4a."
             },
             "standing": {
               "follows": "main",
@@ -535,6 +531,11 @@
         "script": "translation:glossary:check",
         "kind": "report",
         "reason": "RED WHERE IT LANDED (cat-harness-tools#1599, arriving with this re-pin): it reports zh findings (e.g. «Actor» rendered 参与者 in concepts/skills.po and 行动者 in bootstrap's glossary) that predate the gate. Wiring it now would red every PR on catalogue text no PR here changed; it becomes a gate once the zh catalogues agree with the layered glossary. Owner card 2026-11-07 ~17:10Z, 'A. Allow both'; ported from folio-assistant#2985."
+      },
+      {
+        "script": "merge:request:check",
+        "kind": "report",
+        "reason": "JUDGES A MESSAGE, not this tree: it checks a six-line merge request a sibling sends the merge manager against the live PR over the GitHub API (head SHA, preview built for that head), and takes the request as its argument or on stdin. With no request there is nothing to judge, so it has no place in a PR's CI; the merge manager runs it on each request it receives. Owner card 2026-11-07 ~17:10Z, 'A. Allow both'; ported from folio-assistant#2985."
       }
     ]
   }
