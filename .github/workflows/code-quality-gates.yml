@@ -4261,6 +4261,13 @@ jobs:
           # `--check` says in its own output which of the two it ran.
           # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `iris:covers:check`.
           bun run cat translation:block-qa:check
+          # The catalogues' translation QA (cat-harness-tools#1598, #1630): the
+          # same judge with `--catalogues`, against the catalogue baseline
+          # main's qa:working-copy stores (`translation:page-qa` is its writer).
+          # Wired in a second step (owner, 2026-11-07, "A. Two steps"), once
+          # main had stored that baseline; until then index.config.json
+          # declared it `pending-baseline`.
+          bun run cat translation:page-qa:check
           # The translation STATUS page and its projection, bean `lnur`.
           # Stale-checked rather than merely generated, for the reason every
           # other generated artefact here is: a page carrying numbers nobody
