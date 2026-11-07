@@ -134,3 +134,5 @@ _2026-11-03T00:41:16Z_ — Written by the drain session https://claude.ai/code/s
 - Bean nbp9 is the owner's own; umbrella beans rwmf and yj32 stay open while their children are open.
 
 _2026-11-03T07:13:38Z_ — Re-opened (owner, 2026-11-03, card "1. Re-open 4j43"): it was completed at window close with 5 children still open (drnh, gzgh, fbmk, rbib, sbpn), so `check:bean-rollup` failed in every layer's CI ("completed with 5 open children"). It closes when they do. Session https://claude.ai/code/session_01EucfRp9ycxtZrrBKaipNy5.
+
+_2026-11-07T16:05Z_ — FINAL. Merge window ended 2026-11-03 00:40Z; the 10-minute report chain and its backstop (scheduled task "Harness drain report backstop") are now off. End state: 29 of 35 drained. Still open: tools#1299 (waits on the fa re-pin train / owner's Q-SLASH-8 command), beans pga6 and nbp9 (todo; nbp9 is the owner's), fwtz, and the umbrella beans rwmf and yj32. Open PRs in the three repos now number 18 (12 green, 1 running, 5 red), all opened after the window by other threads; this drain did not touch them. A new drain needs a fresh go-ahead from the owner.
