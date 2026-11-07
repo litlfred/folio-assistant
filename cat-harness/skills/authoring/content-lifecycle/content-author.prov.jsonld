@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of content-author.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "skills/authoring/content-lifecycle/content-author.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "skills/authoring/content-lifecycle/content-author.md#provenance-1"
+        }
+      ]
+    },
+    {
+      "@id": "skills/authoring/content-lifecycle/content-author.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Don't hand off on a workflow nobody ran",
+      "prov:value": "Check when that workflow **last ran**, too. A repo can carry a CI file that\nhas not executed in months: when a verification workflow sits red and\nundispatched on `main`, dozens of modules can stop compiling — some with parse\nerrors, meaning they never compiled at all — and nothing catches it because\nnothing runs."
+    }
+  ]
+}

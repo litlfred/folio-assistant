@@ -1,0 +1,156 @@
+{
+  "$schema": "folio-index-config/v1",
+  "instances": [
+    {
+      "name": "who-iris",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/site-home.md",
+          "sourceSteps": [
+            "site:catalogue",
+            "site:home"
+          ],
+          "keep": [
+            "ns"
+          ]
+        }
+      }
+    },
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "remote": {
+          "repository": "litlfred/folio-assistant-core",
+          "ref": "cf44248605b087debd1d9145ffa588604f9e15b3",
+          "overrides": {
+            "folio-assistant-core": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            },
+            "cat-harness-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "cf44248605b087debd1d9145ffa588604f9e15b3",
+              "evidence": "litlfred, 2026-11-06, Claude Code session session_01VQDpPeA2N8L3orQCPPMAas: 'align pins' and decision card 'Re-pin merges': '1. Merge when green (Recommended)' (re-pin every layer bottom-up; each lower layer at the commit the layer it mounts pins, so every lock in a composition agrees; bean cat-tools-sm8r)."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "43d76484684cbc5b6dfe9b460f116b3fb79c301d",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "43d76484684cbc5b6dfe9b460f116b3fb79c301d",
+              "evidence": "litlfred, 2026-11-06, Claude Code session session_01VQDpPeA2N8L3orQCPPMAas: 'align pins' and decision card 'Re-pin merges': '1. Merge when green (Recommended)' (re-pin every layer bottom-up; each lower layer at the commit the layer it mounts pins, so every lock in a composition agrees; bean cat-tools-sm8r)."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "7e6976d3ecf5b42f9c11a6010958103e99e74cff",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "7e6976d3ecf5b42f9c11a6010958103e99e74cff",
+              "evidence": "litlfred, 2026-11-06, Claude Code session session_01VQDpPeA2N8L3orQCPPMAas: 'align pins' and decision card 'Re-pin merges': '1. Merge when green (Recommended)' (re-pin every layer bottom-up; each lower layer at the commit the layer it mounts pins, so every lock in a composition agrees; bean cat-tools-sm8r)."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+              "evidence": "Owner card \"Re-pin how\" option 2 \"All layers to mains\" and \"Re-pin OK?\" option 1, 2026-11-06 ~01:00Z, session_01VQDpPbqnwyoWW5d3Rc1vEk"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
+              "evidence": "Owner card \"Re-pin how\" option 2 \"All layers to mains\" and \"Re-pin OK?\" option 1, 2026-11-06 ~01:00Z, session_01VQDpPbqnwyoWW5d3Rc1vEk"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "site": {
+    "landing": "who-iris"
+  }
+}
