@@ -1,0 +1,1906 @@
+From a9e5f1d16ac55788e4d2becbb93d7f18026f8341 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 06:36:15 +0000
+Subject: [PATCH 1/2] Merge manager and re-pin rulings, generalised into the
+ skills and the watch loop
+
+Writes the owner's rulings of 2026-11-06/07 into the skills that govern
+them, each citing its ruling:
+
+- remote-mount, index-config: a pin only moves forward ("Pin target", A);
+  a re-pin is a cross-layer set; a re-pin that moves cat-harness-tools
+  refreshes layer health ("Layer health", A; cat-harness-tools#1603).
+- merge-manager-watcher: one merge manager; siblings send
+  "ready: <repo>#<n> <sha>"; the owner approves there, one card per batch
+  ("Approvals", B); P0-P3 order; every judge, shard tables included;
+  approved non-workflow PRs get the merge-train label ("Train", A);
+  workflow PRs merge directly ("Workflow PRs", A); runner relief
+  ("Cancel CI").
+- merge-queue: the sibling's side of the above, and the train ruling.
+- continual-progress, coordinate: one pusher per PR branch; stacked PRs
+  are retargeted, not merged into their base; the manager enforces pacing.
+- merge-manager-watch.bpmn: runner relief before the meta-merge; an owner
+  approval gate with a batch-card step; train or direct merge. SVG,
+  checklist and .pot files regenerated.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ sdlc/processes/merge-manager-watch.bpmn       | 176 ++++++++++++++----
+ .../merge-manager-watch.checklist.md          |  60 +++++-
+ sdlc/processes/merge-manager-watch.svg        |   2 +-
+ sdlc/skills/sdlc-core/continual-progress.md   |  17 ++
+ sdlc/skills/sdlc-core/coordinate.md           |   5 +
+ .../skills/sdlc-core/merge-manager-watcher.md |  78 ++++++--
+ sdlc/skills/sdlc-core/merge-queue.md          |  13 ++
+ skills/kg/kg-core/index-config.md             |   5 +
+ skills/kg/kg-core/remote-mount.md             |  24 +++
+ .../ar/processes/merge-manager-watch.pot      | 118 +++++++++---
+ .../es/processes/merge-manager-watch.pot      | 118 +++++++++---
+ .../fr/processes/merge-manager-watch.pot      | 118 +++++++++---
+ .../ru/processes/merge-manager-watch.pot      | 118 +++++++++---
+ .../zh/processes/merge-manager-watch.pot      | 118 +++++++++---
+ 14 files changed, 767 insertions(+), 203 deletions(-)
+
+diff --git a/sdlc/processes/merge-manager-watch.bpmn b/sdlc/processes/merge-manager-watch.bpmn
+index bf2b8c59..156edb0b 100644
+--- a/sdlc/processes/merge-manager-watch.bpmn
++++ b/sdlc/processes/merge-manager-watch.bpmn
+@@ -13,20 +13,26 @@
+     <bpmn:participant id="Participant_Process_MergeManagerWatch" name="Merge manager watch: wake, read the queue live, route" processRef="Process_MergeManagerWatch"/>
+   </bpmn:collaboration>
+   <bpmn:process id="Process_MergeManagerWatch" name="Merge manager watch: wake, read the queue live, route" isExecutable="false">
+-    <bpmn:documentation>The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK.</bpmn:documentation>
++    <bpmn:documentation>The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK, given in the merge manager's session as one card per batch (owner ruling, 2026-11-07, card Approvals, B).</bpmn:documentation>
+     <bpmn:laneSet id="LaneSet_Process_MergeManagerWatch">
+       <bpmn:lane id="Lane_Steward" name="Merge steward" partitionElementRef="merge-steward">
+         <bpmn:documentation>The merge manager, holding the merge-steward role across one or more repositories. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, then routes to the process the queue needs (merge train, saturation meta-merge, stalled-agent takeover) or stays idle.</bpmn:documentation>
+         <bpmn:flowNodeRef>Start_Wake</bpmn:flowNodeRef>
+         <bpmn:flowNodeRef>Task_Read</bpmn:flowNodeRef>
+         <bpmn:flowNodeRef>Gw_Route</bpmn:flowNodeRef>
++        <bpmn:flowNodeRef>Task_Relieve</bpmn:flowNodeRef>
+         <bpmn:flowNodeRef>Call_Meta</bpmn:flowNodeRef>
+         <bpmn:flowNodeRef>Gw_Green</bpmn:flowNodeRef>
++        <bpmn:flowNodeRef>Gw_Approved</bpmn:flowNodeRef>
++        <bpmn:flowNodeRef>Task_Card</bpmn:flowNodeRef>
++        <bpmn:flowNodeRef>Gw_Train</bpmn:flowNodeRef>
+         <bpmn:flowNodeRef>Call_Train</bpmn:flowNodeRef>
++        <bpmn:flowNodeRef>Task_Direct</bpmn:flowNodeRef>
+         <bpmn:flowNodeRef>Call_Stalled</bpmn:flowNodeRef>
+         <bpmn:flowNodeRef>End_Done</bpmn:flowNodeRef>
+         <bpmn:flowNodeRef>End_Idle</bpmn:flowNodeRef>
+         <bpmn:flowNodeRef>End_NotGreen</bpmn:flowNodeRef>
++        <bpmn:flowNodeRef>End_AwaitOwner</bpmn:flowNodeRef>
+       </bpmn:lane>
+     </bpmn:laneSet>
+     <bpmn:startEvent id="Start_Wake" name="Timer, PR event, main run done, or sibling message">
+@@ -48,23 +54,55 @@
+       <bpmn:outgoing>Flow_5</bpmn:outgoing>
+       <bpmn:outgoing>Flow_6</bpmn:outgoing>
+     </bpmn:exclusiveGateway>
++    <bpmn:task id="Task_Relieve" name="Relieve the runners">
++      <bpmn:documentation>Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft.</bpmn:documentation>
++      <bpmn:extensionElements><bootstrap.processes:skill ref="merge-manager-watcher"/></bpmn:extensionElements>
++      <bpmn:incoming>Flow_3</bpmn:incoming>
++      <bpmn:outgoing>Flow_12</bpmn:outgoing>
++    </bpmn:task>
+     <bpmn:callActivity id="Call_Meta" name="Saturation meta-merge" calledElement="Process_SaturationMetaMerge">
+       <bpmn:documentation>Offer the card and land only on the owner's tap.</bpmn:documentation>
+-      <bpmn:incoming>Flow_3</bpmn:incoming>
++      <bpmn:incoming>Flow_12</bpmn:incoming>
+       <bpmn:outgoing>Flow_7</bpmn:outgoing>
+     </bpmn:callActivity>
+     <bpmn:exclusiveGateway id="Gw_Green" name="All green per rule 1?">
+-      <bpmn:documentation>Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Each check is green as judged: where the No new failures judge exists its success is the verdict, otherwise each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR.</bpmn:documentation>
++      <bpmn:documentation>Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Every judge passes (owner ruling, 2026-11-07): an aggregate job covers only the parts it names, and each test shard's own no-new-failures table lists 0 new failures; with no judge, each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR.</bpmn:documentation>
+       <bpmn:extensionElements><bootstrap.processes:skill ref="merge-manager-watcher"/></bpmn:extensionElements>
+       <bpmn:incoming>Flow_4</bpmn:incoming>
+       <bpmn:outgoing>Flow_10</bpmn:outgoing>
+       <bpmn:outgoing>Flow_11</bpmn:outgoing>
+     </bpmn:exclusiveGateway>
+-    <bpmn:callActivity id="Call_Train" name="Merge train" calledElement="Process_MergeTrain">
+-      <bpmn:documentation>Ready PRs that stack land as a train through merge:guard.</bpmn:documentation>
++    <bpmn:exclusiveGateway id="Gw_Approved" name="Owner approved?">
++      <bpmn:documentation>Yes when the owner tapped this batch's card in the merge manager's session, or said to merge this PR when green. An approval given in a sibling's session does not count (owner ruling, 2026-11-07, card Approvals, B).</bpmn:documentation>
++      <bpmn:extensionElements><bootstrap.processes:skill ref="merge-manager-watcher"/></bpmn:extensionElements>
+       <bpmn:incoming>Flow_10</bpmn:incoming>
++      <bpmn:outgoing>Flow_13</bpmn:outgoing>
++      <bpmn:outgoing>Flow_14</bpmn:outgoing>
++    </bpmn:exclusiveGateway>
++    <bpmn:task id="Task_Card" name="Put it on the owner's batch card">
++      <bpmn:documentation>One card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest.</bpmn:documentation>
++      <bpmn:extensionElements><bootstrap.processes:skill ref="merge-manager-watcher"/></bpmn:extensionElements>
++      <bpmn:incoming>Flow_14</bpmn:incoming>
++      <bpmn:outgoing>Flow_15</bpmn:outgoing>
++    </bpmn:task>
++    <bpmn:exclusiveGateway id="Gw_Train" name="Rides the train?">
++      <bpmn:documentation>Yes for a folio-assistant PR that does not change .github/workflows/. No for a workflow PR, or a PR in a repository with no train (owner ruling, 2026-11-07, card Train, A).</bpmn:documentation>
++      <bpmn:extensionElements><bootstrap.processes:skill ref="merge-manager-watcher"/></bpmn:extensionElements>
++      <bpmn:incoming>Flow_13</bpmn:incoming>
++      <bpmn:outgoing>Flow_16</bpmn:outgoing>
++      <bpmn:outgoing>Flow_17</bpmn:outgoing>
++    </bpmn:exclusiveGateway>
++    <bpmn:callActivity id="Call_Train" name="Merge train" calledElement="Process_MergeTrain">
++      <bpmn:documentation>Add the merge-train label instead of merging; the train lands the batch with one CI run.</bpmn:documentation>
++      <bpmn:incoming>Flow_16</bpmn:incoming>
+       <bpmn:outgoing>Flow_8</bpmn:outgoing>
+     </bpmn:callActivity>
++    <bpmn:task id="Task_Direct" name="Merge it through merge:guard">
++      <bpmn:documentation>A workflow PR, or a PR in a repository with no train, merges directly. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card Workflow PRs, A).</bpmn:documentation>
++      <bpmn:extensionElements><bootstrap.processes:skill ref="merge-manager-watcher"/></bpmn:extensionElements>
++      <bpmn:incoming>Flow_17</bpmn:incoming>
++      <bpmn:outgoing>Flow_18</bpmn:outgoing>
++    </bpmn:task>
+     <bpmn:callActivity id="Call_Stalled" name="Stalled-agent triage" calledElement="Process_StalledAgentTriage">
+       <bpmn:documentation>Tell the owner, then take the stalled PR over.</bpmn:documentation>
+       <bpmn:incoming>Flow_5</bpmn:incoming>
+@@ -74,6 +112,7 @@
+       <bpmn:incoming>Flow_7</bpmn:incoming>
+       <bpmn:incoming>Flow_8</bpmn:incoming>
+       <bpmn:incoming>Flow_9</bpmn:incoming>
++      <bpmn:incoming>Flow_18</bpmn:incoming>
+     </bpmn:endEvent>
+     <bpmn:endEvent id="End_Idle" name="Nothing to do">
+       <bpmn:incoming>Flow_6</bpmn:incoming>
+@@ -82,25 +121,36 @@
+       <bpmn:documentation>Do not merge. The next wake reads the checks again.</bpmn:documentation>
+       <bpmn:incoming>Flow_11</bpmn:incoming>
+     </bpmn:endEvent>
++    <bpmn:endEvent id="End_AwaitOwner" name="Awaiting the owner">
++      <bpmn:documentation>Do not merge. The owner's tap on the card wakes the next pass.</bpmn:documentation>
++      <bpmn:incoming>Flow_15</bpmn:incoming>
++    </bpmn:endEvent>
+     <bpmn:sequenceFlow id="Flow_1" sourceRef="Start_Wake" targetRef="Task_Read"/>
+     <bpmn:sequenceFlow id="Flow_2" sourceRef="Task_Read" targetRef="Gw_Route"/>
+-    <bpmn:sequenceFlow id="Flow_3" name="Saturated" sourceRef="Gw_Route" targetRef="Call_Meta"/>
++    <bpmn:sequenceFlow id="Flow_3" name="Saturated" sourceRef="Gw_Route" targetRef="Task_Relieve"/>
+     <bpmn:sequenceFlow id="Flow_4" name="Ready" sourceRef="Gw_Route" targetRef="Gw_Green"/>
+     <bpmn:sequenceFlow id="Flow_5" name="Stalled" sourceRef="Gw_Route" targetRef="Call_Stalled"/>
+     <bpmn:sequenceFlow id="Flow_6" name="Nothing" sourceRef="Gw_Route" targetRef="End_Idle"/>
+     <bpmn:sequenceFlow id="Flow_7" sourceRef="Call_Meta" targetRef="End_Done"/>
+     <bpmn:sequenceFlow id="Flow_8" sourceRef="Call_Train" targetRef="End_Done"/>
+     <bpmn:sequenceFlow id="Flow_9" sourceRef="Call_Stalled" targetRef="End_Done"/>
+-    <bpmn:sequenceFlow id="Flow_10" name="Yes" sourceRef="Gw_Green" targetRef="Call_Train"/>
++    <bpmn:sequenceFlow id="Flow_10" name="Yes" sourceRef="Gw_Green" targetRef="Gw_Approved"/>
+     <bpmn:sequenceFlow id="Flow_11" name="No" sourceRef="Gw_Green" targetRef="End_NotGreen"/>
++    <bpmn:sequenceFlow id="Flow_12" sourceRef="Task_Relieve" targetRef="Call_Meta"/>
++    <bpmn:sequenceFlow id="Flow_13" name="Yes" sourceRef="Gw_Approved" targetRef="Gw_Train"/>
++    <bpmn:sequenceFlow id="Flow_14" name="No" sourceRef="Gw_Approved" targetRef="Task_Card"/>
++    <bpmn:sequenceFlow id="Flow_15" sourceRef="Task_Card" targetRef="End_AwaitOwner"/>
++    <bpmn:sequenceFlow id="Flow_16" name="Yes" sourceRef="Gw_Train" targetRef="Call_Train"/>
++    <bpmn:sequenceFlow id="Flow_17" name="No" sourceRef="Gw_Train" targetRef="Task_Direct"/>
++    <bpmn:sequenceFlow id="Flow_18" sourceRef="Task_Direct" targetRef="End_Done"/>
+   </bpmn:process>
+   <bpmndi:BPMNDiagram id="Diagram_Process_MergeManagerWatch">
+     <bpmndi:BPMNPlane id="Plane_Process_MergeManagerWatch" bpmnElement="Collaboration_Process_MergeManagerWatch">
+       <bpmndi:BPMNShape id="Shape_Participant_Process_MergeManagerWatch" bpmnElement="Participant_Process_MergeManagerWatch" isHorizontal="true">
+-        <dc:Bounds x="60" y="60" width="1090" height="640"/>
++        <dc:Bounds x="60" y="60" width="1300" height="740"/>
+       </bpmndi:BPMNShape>
+       <bpmndi:BPMNShape id="Shape_Lane_Steward" bpmnElement="Lane_Steward" isHorizontal="true">
+-        <dc:Bounds x="90" y="60" width="1060" height="640"/>
++        <dc:Bounds x="90" y="60" width="1270" height="740"/>
+       </bpmndi:BPMNShape>
+       <bpmndi:BPMNShape id="Shape_Start_Wake" bpmnElement="Start_Wake">
+         <dc:Bounds x="212" y="362" width="36" height="36"/>
+@@ -111,32 +161,53 @@
+       </bpmndi:BPMNShape>
+       <bpmndi:BPMNShape id="Shape_Gw_Route" bpmnElement="Gw_Route" isMarkerVisible="true">
+         <dc:Bounds x="605" y="355" width="50" height="50"/>
+-        <bpmndi:BPMNLabel><dc:Bounds x="508.59" y="302.5" width="120" height="53" /></bpmndi:BPMNLabel>
++        <bpmndi:BPMNLabel><dc:Bounds x="508.59" y="302.5" width="120" height="53"/></bpmndi:BPMNLabel>
+       </bpmndi:BPMNShape>
+-      <bpmndi:BPMNShape id="Shape_Call_Meta" bpmnElement="Call_Meta">
++      <bpmndi:BPMNShape id="Shape_Task_Relieve" bpmnElement="Task_Relieve">
+         <dc:Bounds x="770" y="95" width="120" height="120"/>
+       </bpmndi:BPMNShape>
++      <bpmndi:BPMNShape id="Shape_Call_Meta" bpmnElement="Call_Meta">
++        <dc:Bounds x="950" y="95" width="120" height="120"/>
++      </bpmndi:BPMNShape>
+       <bpmndi:BPMNShape id="Shape_Gw_Green" bpmnElement="Gw_Green" isMarkerVisible="true">
+         <dc:Bounds x="680" y="280" width="50" height="50"/>
+-        <bpmndi:BPMNLabel><dc:Bounds x="662.47" y="334" width="85.06" height="35" /></bpmndi:BPMNLabel>
++        <bpmndi:BPMNLabel><dc:Bounds x="662.47" y="334" width="85.06" height="35"/></bpmndi:BPMNLabel>
++      </bpmndi:BPMNShape>
++      <bpmndi:BPMNShape id="Shape_Gw_Approved" bpmnElement="Gw_Approved" isMarkerVisible="true">
++        <dc:Bounds x="780" y="280" width="50" height="50"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="760" y="238" width="90" height="36"/></bpmndi:BPMNLabel>
++      </bpmndi:BPMNShape>
++      <bpmndi:BPMNShape id="Shape_Task_Card" bpmnElement="Task_Card">
++        <dc:Bounds x="745" y="385" width="120" height="120"/>
++      </bpmndi:BPMNShape>
++      <bpmndi:BPMNShape id="Shape_Gw_Train" bpmnElement="Gw_Train" isMarkerVisible="true">
++        <dc:Bounds x="940" y="280" width="50" height="50"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="920" y="238" width="90" height="36"/></bpmndi:BPMNLabel>
+       </bpmndi:BPMNShape>
+       <bpmndi:BPMNShape id="Shape_Call_Train" bpmnElement="Call_Train">
+-        <dc:Bounds x="810" y="245" width="120" height="120"/>
++        <dc:Bounds x="1040" y="245" width="120" height="120"/>
++      </bpmndi:BPMNShape>
++      <bpmndi:BPMNShape id="Shape_Task_Direct" bpmnElement="Task_Direct">
++        <dc:Bounds x="905" y="385" width="120" height="120"/>
+       </bpmndi:BPMNShape>
+       <bpmndi:BPMNShape id="Shape_Call_Stalled" bpmnElement="Call_Stalled">
+-        <dc:Bounds x="770" y="395" width="120" height="120"/>
++        <dc:Bounds x="770" y="540" width="120" height="120"/>
+       </bpmndi:BPMNShape>
+       <bpmndi:BPMNShape id="Shape_End_Done" bpmnElement="End_Done">
+-        <dc:Bounds x="1012" y="362" width="36" height="36"/>
+-        <bpmndi:BPMNLabel><dc:Bounds x="888" y="371.5" width="120" height="17" /></bpmndi:BPMNLabel>
++        <dc:Bounds x="1262" y="362" width="36" height="36"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="1190" y="362" width="66" height="36"/></bpmndi:BPMNLabel>
+       </bpmndi:BPMNShape>
+       <bpmndi:BPMNShape id="Shape_End_Idle" bpmnElement="End_Idle">
+-        <dc:Bounds x="812" y="587" width="36" height="36"/>
+-        <bpmndi:BPMNLabel><dc:Bounds x="770" y="627" width="120" height="40"/></bpmndi:BPMNLabel>
++        <dc:Bounds x="812" y="702" width="36" height="36"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="770" y="742" width="120" height="40"/></bpmndi:BPMNLabel>
+       </bpmndi:BPMNShape>
+       <bpmndi:BPMNShape id="Shape_End_NotGreen" bpmnElement="End_NotGreen">
+         <dc:Bounds x="687" y="200" width="36" height="36"/>
+-        <bpmndi:BPMNLabel><dc:Bounds x="672.06" y="160" width="65.88" height="36" /></bpmndi:BPMNLabel>
++        <bpmndi:BPMNLabel><dc:Bounds x="672.06" y="160" width="65.88" height="36"/></bpmndi:BPMNLabel>
++      </bpmndi:BPMNShape>
++      <bpmndi:BPMNShape id="Shape_End_AwaitOwner" bpmnElement="End_AwaitOwner">
++        <dc:Bounds x="687" y="427" width="36" height="36"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="650" y="467" width="110" height="36"/></bpmndi:BPMNLabel>
+       </bpmndi:BPMNShape>
+       <bpmndi:BPMNEdge id="Edge_Flow_1" bpmnElement="Flow_1">
+         <di:waypoint x="248" y="380"/>
+@@ -160,41 +231,74 @@
+       </bpmndi:BPMNEdge>
+       <bpmndi:BPMNEdge id="Edge_Flow_5" bpmnElement="Flow_5">
+         <di:waypoint x="630" y="405"/>
+-        <di:waypoint x="630" y="455"/>
+-        <di:waypoint x="770" y="455"/>
+-        <bpmndi:BPMNLabel><dc:Bounds x="640" y="431" width="70" height="20"/></bpmndi:BPMNLabel>
++        <di:waypoint x="630" y="600"/>
++        <di:waypoint x="770" y="600"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="640" y="576" width="70" height="20"/></bpmndi:BPMNLabel>
+       </bpmndi:BPMNEdge>
+       <bpmndi:BPMNEdge id="Edge_Flow_6" bpmnElement="Flow_6">
+         <di:waypoint x="630" y="405"/>
+-        <di:waypoint x="630" y="605"/>
+-        <di:waypoint x="812" y="605"/>
+-        <bpmndi:BPMNLabel><dc:Bounds x="640" y="581" width="70" height="20"/></bpmndi:BPMNLabel>
++        <di:waypoint x="630" y="720"/>
++        <di:waypoint x="812" y="720"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="640" y="696" width="70" height="20"/></bpmndi:BPMNLabel>
+       </bpmndi:BPMNEdge>
+       <bpmndi:BPMNEdge id="Edge_Flow_7" bpmnElement="Flow_7">
+-        <di:waypoint x="890" y="155"/>
+-        <di:waypoint x="1030" y="155"/>
+-        <di:waypoint x="1030" y="362"/>
++        <di:waypoint x="1070" y="155"/>
++        <di:waypoint x="1280" y="155"/>
++        <di:waypoint x="1280" y="362"/>
+       </bpmndi:BPMNEdge>
+       <bpmndi:BPMNEdge id="Edge_Flow_8" bpmnElement="Flow_8">
+-        <di:waypoint x="930" y="305"/>
+-        <di:waypoint x="1030" y="305"/>
+-        <di:waypoint x="1030" y="362"/>
++        <di:waypoint x="1160" y="305"/>
++        <di:waypoint x="1280" y="305"/>
++        <di:waypoint x="1280" y="362"/>
+       </bpmndi:BPMNEdge>
+       <bpmndi:BPMNEdge id="Edge_Flow_9" bpmnElement="Flow_9">
+-        <di:waypoint x="890" y="455"/>
+-        <di:waypoint x="1030" y="455"/>
+-        <di:waypoint x="1030" y="398"/>
++        <di:waypoint x="890" y="600"/>
++        <di:waypoint x="1280" y="600"/>
++        <di:waypoint x="1280" y="398"/>
+       </bpmndi:BPMNEdge>
+       <bpmndi:BPMNEdge id="Edge_Flow_10" bpmnElement="Flow_10">
+         <di:waypoint x="730" y="305"/>
+-        <di:waypoint x="810" y="305"/>
+-        <bpmndi:BPMNLabel><dc:Bounds x="745" y="285" width="30" height="20"/></bpmndi:BPMNLabel>
++        <di:waypoint x="780" y="305"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="737" y="285" width="30" height="20"/></bpmndi:BPMNLabel>
+       </bpmndi:BPMNEdge>
+       <bpmndi:BPMNEdge id="Edge_Flow_11" bpmnElement="Flow_11">
+         <di:waypoint x="705" y="280"/>
+         <di:waypoint x="705" y="236"/>
+         <bpmndi:BPMNLabel><dc:Bounds x="710" y="250" width="30" height="20"/></bpmndi:BPMNLabel>
+       </bpmndi:BPMNEdge>
++      <bpmndi:BPMNEdge id="Edge_Flow_12" bpmnElement="Flow_12">
++        <di:waypoint x="890" y="155"/>
++        <di:waypoint x="950" y="155"/>
++      </bpmndi:BPMNEdge>
++      <bpmndi:BPMNEdge id="Edge_Flow_13" bpmnElement="Flow_13">
++        <di:waypoint x="830" y="305"/>
++        <di:waypoint x="940" y="305"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="845" y="285" width="30" height="20"/></bpmndi:BPMNLabel>
++      </bpmndi:BPMNEdge>
++      <bpmndi:BPMNEdge id="Edge_Flow_14" bpmnElement="Flow_14">
++        <di:waypoint x="805" y="330"/>
++        <di:waypoint x="805" y="385"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="810" y="345" width="30" height="20"/></bpmndi:BPMNLabel>
++      </bpmndi:BPMNEdge>
++      <bpmndi:BPMNEdge id="Edge_Flow_15" bpmnElement="Flow_15">
++        <di:waypoint x="745" y="445"/>
++        <di:waypoint x="723" y="445"/>
++      </bpmndi:BPMNEdge>
++      <bpmndi:BPMNEdge id="Edge_Flow_16" bpmnElement="Flow_16">
++        <di:waypoint x="990" y="305"/>
++        <di:waypoint x="1040" y="305"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="995" y="285" width="30" height="20"/></bpmndi:BPMNLabel>
++      </bpmndi:BPMNEdge>
++      <bpmndi:BPMNEdge id="Edge_Flow_17" bpmnElement="Flow_17">
++        <di:waypoint x="965" y="330"/>
++        <di:waypoint x="965" y="385"/>
++        <bpmndi:BPMNLabel><dc:Bounds x="970" y="345" width="30" height="20"/></bpmndi:BPMNLabel>
++      </bpmndi:BPMNEdge>
++      <bpmndi:BPMNEdge id="Edge_Flow_18" bpmnElement="Flow_18">
++        <di:waypoint x="1025" y="445"/>
++        <di:waypoint x="1280" y="445"/>
++        <di:waypoint x="1280" y="398"/>
++      </bpmndi:BPMNEdge>
+     </bpmndi:BPMNPlane>
+   </bpmndi:BPMNDiagram>
+ </bpmn:definitions>
+diff --git a/sdlc/processes/merge-manager-watch.checklist.md b/sdlc/processes/merge-manager-watch.checklist.md
+index f00f3639..890f6b18 100644
+--- a/sdlc/processes/merge-manager-watch.checklist.md
++++ b/sdlc/processes/merge-manager-watch.checklist.md
+@@ -24,23 +24,24 @@ The loop run by the agent that holds the merge-steward lane (actor merge-manager
+ 
+ - Saturated: queued runs are 60+ minutes old and nothing has landed, or the owner says the runners are full.
+ - Call `workflow_complete` with `node: "Gw_Route"` and `outcome` set to the label that holds:
+-  - «Saturated» → `Call_Meta` (Saturation meta-merge)
++  - «Saturated» → `Task_Relieve` (Relieve the runners)
+   - «Ready» → `Gw_Green` (All green per rule 1?)
+   - «Stalled» → `Call_Stalled` (Stalled-agent triage)
+   - «Nothing» → `End_Idle` (Nothing to do)
+ 
+-### 2. Saturation meta-merge (`Call_Meta`)
++### 2. Relieve the runners (`Task_Relieve`)
+ 
+ - Who: the `Merge steward` lane (role `merge-steward`).
+-- What: Offer the card and land only on the owner's tap.
+-- A subprocess (`Process_SaturationMetaMerge`): `workflow_next` reports its own steps; complete those — this call activity itself is not completable.
+-- next: → `End_Done` (Wake handled)
++- Skill: `merge-manager-watcher`.
++- What: Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask
++- Record it: `workflow_complete` with `node: "Task_Relieve"`.
++- next: → `Call_Meta` (Saturation meta-merge)
+ 
+ ### Decide — All green per rule 1? (`Gw_Green`)
+ 
+ - Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included.
+ - Call `workflow_complete` with `node: "Gw_Green"` and `outcome` set to the label that holds:
+-  - «Yes» → `Call_Train` (Merge train)
++  - «Yes» → `Gw_Approved` (Owner approved?)
+   - «No» → `End_NotGreen` (Not green yet)
+ 
+ ### 3. Stalled-agent triage (`Call_Stalled`)
+@@ -54,17 +55,58 @@ The loop run by the agent that holds the merge-steward lane (actor merge-manager
+ 
+ - The instance completes here. `workflow_next` then reports nothing enabled — that, not this line, is the record of completion.
+ 
++### 4. Saturation meta-merge (`Call_Meta`)
++
++- Who: the `Merge steward` lane (role `merge-steward`).
++- What: Offer the card and land only on the owner's tap.
++- A subprocess (`Process_SaturationMetaMerge`): `workflow_next` reports its own steps; complete those — this call activity itself is not completable.
++- next: → `End_Done` (Wake handled)
++
++### Decide — Owner approved? (`Gw_Approved`)
++
++- Yes when the owner tapped this batch's card in the merge manager's session, or said to merge this PR when green.
++- Call `workflow_complete` with `node: "Gw_Approved"` and `outcome` set to the label that holds:
++  - «Yes» → `Gw_Train` (Rides the train?)
++  - «No» → `Task_Card` (Put it on the owner's batch card)
++
++## Done — Not green yet (`End_NotGreen`)
++
++- The instance completes here: Do not merge. `workflow_next` then reports nothing enabled — that, not this line, is the record of completion.
++
+ ## Done — Wake handled (`End_Done`)
+ 
+ - The instance completes here. `workflow_next` then reports nothing enabled — that, not this line, is the record of completion.
+ 
+-### 4. Merge train (`Call_Train`)
++### Decide — Rides the train? (`Gw_Train`)
++
++- Yes for a folio-assistant PR that does not change .github/workflows/.
++- Call `workflow_complete` with `node: "Gw_Train"` and `outcome` set to the label that holds:
++  - «Yes» → `Call_Train` (Merge train)
++  - «No» → `Task_Direct` (Merge it through merge:guard)
++
++### 5. Put it on the owner's batch card (`Task_Card`)
+ 
+ - Who: the `Merge steward` lane (role `merge-steward`).
+-- What: Ready PRs that stack land as a train through merge:guard.
++- Skill: `merge-manager-watcher`.
++- What: One card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest.
++- Record it: `workflow_complete` with `node: "Task_Card"`.
++- next: → `End_AwaitOwner` (Awaiting the owner)
++
++### 6. Merge train (`Call_Train`)
++
++- Who: the `Merge steward` lane (role `merge-steward`).
++- What: Add the merge-train label instead of merging; the train lands the batch with one CI run.
+ - A subprocess (`Process_MergeTrain`): `workflow_next` reports its own steps; complete those — this call activity itself is not completable.
+ - next: → `End_Done` (Wake handled)
+ 
+-## Done — Not green yet (`End_NotGreen`)
++### 7. Merge it through merge:guard (`Task_Direct`)
++
++- Who: the `Merge steward` lane (role `merge-steward`).
++- Skill: `merge-manager-watcher`.
++- What: A workflow PR, or a PR in a repository with no train, merges directly.
++- Record it: `workflow_complete` with `node: "Task_Direct"`.
++- next: → `End_Done` (Wake handled)
++
++## Done — Awaiting the owner (`End_AwaitOwner`)
+ 
+ - The instance completes here: Do not merge. `workflow_next` then reports nothing enabled — that, not this line, is the record of completion.
+diff --git a/sdlc/processes/merge-manager-watch.svg b/sdlc/processes/merge-manager-watch.svg
+index bb568b33..a577d58c 100644
+--- a/sdlc/processes/merge-manager-watch.svg
++++ b/sdlc/processes/merge-manager-watch.svg
+@@ -2,4 +2,4 @@
+ <!-- Generated by the bootstrap toolset (https://github.com/litlfred/bootstrap-tools, scripts/render-bpmn.ts) from merge-manager-watch.bpmn — do not edit; change merge-manager-watch.bpmn. -->
+ <!-- created with bpmn-js / http://bpmn.io -->
+ <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" style="max-width:100%;height:auto" viewBox="55 55 1100 650" version="1.1"><rect x="55" y="55" width="1100" height="650" fill="#ffffff" /><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Participant_Process_MergeManagerWatch" style="display: block;" transform="matrix(1 0 0 1 60 60)"><g class="djs-visual"><rect x="0" y="0" width="1090" height="640" rx="0" ry="0" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1.5px; fill: white; fill-opacity: 0.95;"/><path style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1.5px;" d="M30,0L30,640"/><text lineHeight="1.05" class="djs-label" transform="matrix(-1.83697e-16 -1 1 -1.83697e-16 0 640)" style="font-family: Arial, sans-serif; font-size: 13px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="159.2138671875" y="18.4125">Merge manager watch: wake, read the queue live, route</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="1090" height="640" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g><g class="djs-children"><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Lane_Steward" style="display: block;" transform="matrix(1 0 0 1 90 60)"><g class="djs-visual"><rect x="0" y="0" width="1060" height="640" rx="0" ry="0" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1.5px; fill: white; fill-opacity: 0.25;"/><text lineHeight="1.05" class="djs-label" transform="matrix(-1.83697e-16 -1 1 -1.83697e-16 0 640)" style="font-family: Arial, sans-serif; font-size: 13px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="277.010498046875" y="18.4125">Merge steward</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="1060" height="640" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Start_Wake" style="display: block;" transform="matrix(1 0 0 1 212 362)"><g class="djs-visual"><circle cx="18" cy="18" r="18" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><circle cx="18" cy="18" r="11" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white;"/><path d="M 18,18 l 2.25,-7.5 m -2.25,7.5 l 5.25,1.5 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px;"/><path transform="rotate(0,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(30,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(60,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(90,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(120,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(150,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(180,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(210,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(240,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(270,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(300,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(330,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="36" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Start_Wake_label" style="display: block;" transform="matrix(1 0 0 1 171 402)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="3.427490234375" y="13.5">Timer, PR event, </tspan><tspan x="8.96826171875" y="31.5">main run done, </tspan><tspan x="28.9853515625" y="49.5">or sibling </tspan><tspan x="28.56787109375" y="67.5">message</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="118" height="54" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Task_Read" style="display: block;" transform="matrix(1 0 0 1 370 320)"><g class="djs-visual"><rect x="0" y="0" width="120" height="120" rx="10" ry="10" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="21.31640625" y="36">Read PRs, </tspan><tspan x="10.18359375" y="55.2">runner queue, </tspan><tspan x="16.875" y="74.4">main verdict </tspan><tspan x="18.640625" y="93.60000000000001">and owners</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="120" height="120" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Route" style="display: block;" transform="matrix(1 0 0 1 605 355)"><g class="djs-visual"><polygon points="25,0 50,25 25,50 0,25" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><path d="m 16,15 7.42857142857143,9.714285714285715 -7.42857142857143,9.714285714285715 3.428571428571429,0 5.714285714285715,-7.464228571428572 5.714285714285715,7.464228571428572 3.428571428571429,0 -7.42857142857143,-9.714285714285715 7.42857142857143,-9.714285714285715 -3.428571428571429,0 -5.714285714285715,7.464228571428572 -5.714285714285715,-7.464228571428572 -3.428571428571429,0 z" style="fill: rgb(34, 36, 42); stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="50" height="50" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Route_label" style="display: block;" transform="matrix(1 0 0 1 520 303)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="12.64794921875" y="13.5">What does </tspan><tspan x="15.134521484375" y="31.5">the queue </tspan><tspan x="27.644287109375" y="49.5">need?</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="97" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><a class="fa-subprocess-link" href="saturation-meta-merge.svg" target="_top"><g class="djs-element djs-shape" data-element-id="Call_Meta" style="display: block;" transform="matrix(1 0 0 1 770 95)"><g class="djs-visual"><rect x="0" y="0" width="120" height="120" rx="10" ry="10" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 5px; fill: white; fill-opacity: 0.95;"/><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="23.53125" y="55.2">Saturation </tspan><tspan x="16.875" y="74.4">meta-merge</tspan></text><rect x="0" y="0" width="14" height="14" rx="0" ry="0" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: white;" transform="matrix(1 0 0 1 52.5 100)"/><path data-marker="sub-process" d="m52.5,100 m 7,2 l 0,10 m -5,-5 l 10,0" style="fill: white; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="120" height="120" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></a></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Green" style="display: block;" transform="matrix(1 0 0 1 680 280)"><g class="djs-visual"><polygon points="25,0 50,25 25,50 0,25" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><path d="m 16,15 7.42857142857143,9.714285714285715 -7.42857142857143,9.714285714285715 3.428571428571429,0 5.714285714285715,-7.464228571428572 5.714285714285715,7.464228571428572 3.428571428571429,0 -7.42857142857143,-9.714285714285715 7.42857142857143,-9.714285714285715 -3.428571428571429,0 -5.714285714285715,7.464228571428572 -5.714285714285715,-7.464228571428572 -3.428571428571429,0 z" style="fill: rgb(34, 36, 42); stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="50" height="50" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Green_label" style="display: block;" transform="matrix(1 0 0 1 662 334)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.4755859375" y="13.5">All green per</tspan><tspan x="20.06787109375" y="31.5">rule 1?</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="86" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><a class="fa-subprocess-link" href="merge-train.svg" target="_top"><g class="djs-element djs-shape" data-element-id="Call_Train" style="display: block;" transform="matrix(1 0 0 1 810 245)"><g class="djs-visual"><rect x="0" y="0" width="120" height="120" rx="10" ry="10" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 5px; fill: white; fill-opacity: 0.95;"/><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="19.5390625" y="64.8">Merge train</tspan></text><rect x="0" y="0" width="14" height="14" rx="0" ry="0" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: white;" transform="matrix(1 0 0 1 52.5 100)"/><path data-marker="sub-process" d="m52.5,100 m 7,2 l 0,10 m -5,-5 l 10,0" style="fill: white; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="120" height="120" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></a></g><g class="djs-group"><a class="fa-subprocess-link" href="stalled-agent-triage.svg" target="_top"><g class="djs-element djs-shape" data-element-id="Call_Stalled" style="display: block;" transform="matrix(1 0 0 1 770 395)"><g class="djs-visual"><rect x="0" y="0" width="120" height="120" rx="10" ry="10" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 5px; fill: white; fill-opacity: 0.95;"/><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="12.85546875" y="55.2">Stalled-agent </tspan><tspan x="39.98828125" y="74.4">triage</tspan></text><rect x="0" y="0" width="14" height="14" rx="0" ry="0" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: white;" transform="matrix(1 0 0 1 52.5 100)"/><path data-marker="sub-process" d="m52.5,100 m 7,2 l 0,10 m -5,-5 l 10,0" style="fill: white; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="120" height="120" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></a></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_Done" style="display: block;" transform="matrix(1 0 0 1 1012 362)"><g class="djs-visual"><circle cx="18" cy="18" r="18" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 4px; fill: white; fill-opacity: 0.95;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="36" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_Done_label" style="display: block;" transform="matrix(1 0 0 1 900 372)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.330322265625" y="13.5">Wake handled</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="96" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_Idle" style="display: block;" transform="matrix(1 0 0 1 812 587)"><g class="djs-visual"><circle cx="18" cy="18" r="18" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 4px; fill: white; fill-opacity: 0.95;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="36" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_Idle_label" style="display: block;" transform="matrix(1 0 0 1 785 627)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.384521484375" y="13.5">Nothing to do</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="90" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_NotGreen" style="display: block;" transform="matrix(1 0 0 1 687 200)"><g class="djs-visual"><circle cx="18" cy="18" r="18" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 4px; fill: white; fill-opacity: 0.95;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="36" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_NotGreen_label" style="display: block;" transform="matrix(1 0 0 1 672 160)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.06298828125" y="13.5">Not green</tspan><tspan x="22.9951171875" y="31.5">yet</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="66" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_1" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-1" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-1');" d="M248,380L370,380"/></g><path d="M248,380L370,380" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_2" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-2" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-2');" d="M490,380L605,380"/></g><path d="M490,380L605,380" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_3" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-3" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-3');" d="M630,355L630,160C630,157.5,632.5,155,635,155L770,155"/></g><path d="M630,355L630,155L770,155" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_3_label" style="display: block;" transform="matrix(1 0 0 1 642 131)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.476806640625" y="13.5">Saturated</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="66" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_4" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-4" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-4');" d="M630,355L630,310C630,307.5,632.5,305,635,305L680,305"/></g><path d="M630,355L630,305L680,305" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_4_label" style="display: block;" transform="matrix(1 0 0 1 636 310)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.3203125" y="13.5">Ready</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="44" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_5" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-5" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-5');" d="M630,405L630,450C630,452.5,632.5,455,635,455L770,455"/></g><path d="M630,405L630,455L770,455" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_5_label" style="display: block;" transform="matrix(1 0 0 1 652 431)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.06787109375" y="13.5">Stalled</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="46" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_6" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-6" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-6');" d="M630,405L630,600C630,602.5,632.5,605,635,605L812,605"/></g><path d="M630,405L630,605L812,605" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_6_label" style="display: block;" transform="matrix(1 0 0 1 649 581)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.149169921875" y="13.5">Nothing</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="52" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_7" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-7" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-7');" d="M890,155L1025,155C1027.5,155,1030,157.5,1030,160L1030,362"/></g><path d="M890,155L1030,155L1030,362" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_8" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-8" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-8');" d="M930,305L1025,305C1027.5,305,1030,307.5,1030,310L1030,362"/></g><path d="M930,305L1030,305L1030,362" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_9" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-9" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-9');" d="M890,455L1025,455C1027.5,455,1030,452.5,1030,450L1030,398"/></g><path d="M890,455L1030,455L1030,398" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_10" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-10" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-10');" d="M730,305L810,305"/></g><path d="M730,305L810,305" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_10_label" style="display: block;" transform="matrix(1 0 0 1 748 285)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.264892578125" y="13.5">Yes</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="25" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_11" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-11" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-11');" d="M705,280L705,236"/></g><path d="M705,280L705,236" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_11_label" style="display: block;" transform="matrix(1 0 0 1 715 250)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.41259765625" y="13.5">No</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="20" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g></g></g></svg>
+\ No newline at end of file
++<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" style="max-width:100%;height:auto" viewBox="55 55 1310 750" version="1.1"><rect x="55" y="55" width="1310" height="750" fill="#ffffff" /><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Participant_Process_MergeManagerWatch" style="display: block;" transform="matrix(1 0 0 1 60 60)"><g class="djs-visual"><rect x="0" y="0" width="1300" height="740" rx="0" ry="0" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1.5px; fill: white; fill-opacity: 0.95;"/><path style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1.5px;" d="M30,0L30,740"/><text lineHeight="1.05" class="djs-label" transform="matrix(-1.83697e-16 -1 1 -1.83697e-16 0 740)" style="font-family: Arial, sans-serif; font-size: 13px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="209.2138671875" y="18.4125">Merge manager watch: wake, read the queue live, route</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="1300" height="740" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g><g class="djs-children"><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Lane_Steward" style="display: block;" transform="matrix(1 0 0 1 90 60)"><g class="djs-visual"><rect x="0" y="0" width="1270" height="740" rx="0" ry="0" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1.5px; fill: white; fill-opacity: 0.25;"/><text lineHeight="1.05" class="djs-label" transform="matrix(-1.83697e-16 -1 1 -1.83697e-16 0 740)" style="font-family: Arial, sans-serif; font-size: 13px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="327.010498046875" y="18.4125">Merge steward</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="1270" height="740" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Start_Wake" style="display: block;" transform="matrix(1 0 0 1 212 362)"><g class="djs-visual"><circle cx="18" cy="18" r="18" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><circle cx="18" cy="18" r="11" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white;"/><path d="M 18,18 l 2.25,-7.5 m -2.25,7.5 l 5.25,1.5 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px;"/><path transform="rotate(0,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(30,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(60,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(90,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(120,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(150,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(180,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(210,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(240,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(270,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(300,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/><path transform="rotate(330,18,18)" d="M 18,18 m 0,7.5 l -0,2.25 " style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="36" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Start_Wake_label" style="display: block;" transform="matrix(1 0 0 1 171 402)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="3.427490234375" y="13.5">Timer, PR event, </tspan><tspan x="8.96826171875" y="31.5">main run done, </tspan><tspan x="28.9853515625" y="49.5">or sibling </tspan><tspan x="28.56787109375" y="67.5">message</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="118" height="54" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Task_Read" style="display: block;" transform="matrix(1 0 0 1 370 320)"><g class="djs-visual"><rect x="0" y="0" width="120" height="120" rx="10" ry="10" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="21.31640625" y="36">Read PRs, </tspan><tspan x="10.18359375" y="55.2">runner queue, </tspan><tspan x="16.875" y="74.4">main verdict </tspan><tspan x="18.640625" y="93.60000000000001">and owners</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="120" height="120" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Route" style="display: block;" transform="matrix(1 0 0 1 605 355)"><g class="djs-visual"><polygon points="25,0 50,25 25,50 0,25" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><path d="m 16,15 7.42857142857143,9.714285714285715 -7.42857142857143,9.714285714285715 3.428571428571429,0 5.714285714285715,-7.464228571428572 5.714285714285715,7.464228571428572 3.428571428571429,0 -7.42857142857143,-9.714285714285715 7.42857142857143,-9.714285714285715 -3.428571428571429,0 -5.714285714285715,7.464228571428572 -5.714285714285715,-7.464228571428572 -3.428571428571429,0 z" style="fill: rgb(34, 36, 42); stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="50" height="50" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Route_label" style="display: block;" transform="matrix(1 0 0 1 520 303)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="12.64794921875" y="13.5">What does </tspan><tspan x="15.134521484375" y="31.5">the queue </tspan><tspan x="27.644287109375" y="49.5">need?</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="97" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Task_Relieve" style="display: block;" transform="matrix(1 0 0 1 770 95)"><g class="djs-visual"><rect x="0" y="0" width="120" height="120" rx="10" ry="10" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="19.9765625" y="55.2">Relieve the </tspan><tspan x="32.875" y="74.4">runners</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="120" height="120" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><a class="fa-subprocess-link" href="saturation-meta-merge.svg" target="_top"><g class="djs-element djs-shape" data-element-id="Call_Meta" style="display: block;" transform="matrix(1 0 0 1 950 95)"><g class="djs-visual"><rect x="0" y="0" width="120" height="120" rx="10" ry="10" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 5px; fill: white; fill-opacity: 0.95;"/><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="23.53125" y="55.2">Saturation </tspan><tspan x="16.875" y="74.4">meta-merge</tspan></text><rect x="0" y="0" width="14" height="14" rx="0" ry="0" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: white;" transform="matrix(1 0 0 1 52.5 100)"/><path data-marker="sub-process" d="m52.5,100 m 7,2 l 0,10 m -5,-5 l 10,0" style="fill: white; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="120" height="120" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></a></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Green" style="display: block;" transform="matrix(1 0 0 1 680 280)"><g class="djs-visual"><polygon points="25,0 50,25 25,50 0,25" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><path d="m 16,15 7.42857142857143,9.714285714285715 -7.42857142857143,9.714285714285715 3.428571428571429,0 5.714285714285715,-7.464228571428572 5.714285714285715,7.464228571428572 3.428571428571429,0 -7.42857142857143,-9.714285714285715 7.42857142857143,-9.714285714285715 -3.428571428571429,0 -5.714285714285715,7.464228571428572 -5.714285714285715,-7.464228571428572 -3.428571428571429,0 z" style="fill: rgb(34, 36, 42); stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="50" height="50" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Green_label" style="display: block;" transform="matrix(1 0 0 1 662 334)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.4755859375" y="13.5">All green per</tspan><tspan x="20.06787109375" y="31.5">rule 1?</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="86" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Approved" style="display: block;" transform="matrix(1 0 0 1 780 280)"><g class="djs-visual"><polygon points="25,0 50,25 25,50 0,25" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><path d="m 16,15 7.42857142857143,9.714285714285715 -7.42857142857143,9.714285714285715 3.428571428571429,0 5.714285714285715,-7.464228571428572 5.714285714285715,7.464228571428572 3.428571428571429,0 -7.42857142857143,-9.714285714285715 7.42857142857143,-9.714285714285715 -3.428571428571429,0 -5.714285714285715,7.464228571428572 -5.714285714285715,-7.464228571428572 -3.428571428571429,0 z" style="fill: rgb(34, 36, 42); stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="50" height="50" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Approved_label" style="display: block;" transform="matrix(1 0 0 1 770 238)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="13.41015625" y="13.5">Owner </tspan><tspan x="0.054443359375" y="31.5">approved?</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="71" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Task_Card" style="display: block;" transform="matrix(1 0 0 1 745 385)"><g class="djs-visual"><rect x="0" y="0" width="120" height="120" rx="10" ry="10" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="17.3046875" y="45.6">Put it on the </tspan><tspan x="10.890625" y="64.8">owner's batch </tspan><tspan x="44.4375" y="84">card</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="120" height="120" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Train" style="display: block;" transform="matrix(1 0 0 1 940 280)"><g class="djs-visual"><polygon points="25,0 50,25 25,50 0,25" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><path d="m 16,15 7.42857142857143,9.714285714285715 -7.42857142857143,9.714285714285715 3.428571428571429,0 5.714285714285715,-7.464228571428572 5.714285714285715,7.464228571428572 3.428571428571429,0 -7.42857142857143,-9.714285714285715 7.42857142857143,-9.714285714285715 -3.428571428571429,0 -5.714285714285715,7.464228571428572 -5.714285714285715,-7.464228571428572 -3.428571428571429,0 z" style="fill: rgb(34, 36, 42); stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="50" height="50" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Gw_Train_label" style="display: block;" transform="matrix(1 0 0 1 933 238)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.3154296875" y="13.5">Rides the</tspan><tspan x="13.239013671875" y="31.5">train?</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="64" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><a class="fa-subprocess-link" href="merge-train.svg" target="_top"><g class="djs-element djs-shape" data-element-id="Call_Train" style="display: block;" transform="matrix(1 0 0 1 1040 245)"><g class="djs-visual"><rect x="0" y="0" width="120" height="120" rx="10" ry="10" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 5px; fill: white; fill-opacity: 0.95;"/><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="19.5390625" y="64.8">Merge train</tspan></text><rect x="0" y="0" width="14" height="14" rx="0" ry="0" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: white;" transform="matrix(1 0 0 1 52.5 100)"/><path data-marker="sub-process" d="m52.5,100 m 7,2 l 0,10 m -5,-5 l 10,0" style="fill: white; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="120" height="120" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></a></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Task_Direct" style="display: block;" transform="matrix(1 0 0 1 905 385)"><g class="djs-visual"><rect x="0" y="0" width="120" height="120" rx="10" ry="10" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; fill: white; fill-opacity: 0.95;"/><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="31.1015625" y="45.6">Merge it </tspan><tspan x="32.8671875" y="64.8">through </tspan><tspan x="14.640625" y="84">merge:guard</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="120" height="120" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><a class="fa-subprocess-link" href="stalled-agent-triage.svg" target="_top"><g class="djs-element djs-shape" data-element-id="Call_Stalled" style="display: block;" transform="matrix(1 0 0 1 770 540)"><g class="djs-visual"><rect x="0" y="0" width="120" height="120" rx="10" ry="10" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 5px; fill: white; fill-opacity: 0.95;"/><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 16px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="12.85546875" y="55.2">Stalled-agent </tspan><tspan x="39.98828125" y="74.4">triage</tspan></text><rect x="0" y="0" width="14" height="14" rx="0" ry="0" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: white;" transform="matrix(1 0 0 1 52.5 100)"/><path data-marker="sub-process" d="m52.5,100 m 7,2 l 0,10 m -5,-5 l 10,0" style="fill: white; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="120" height="120" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></a></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_Done" style="display: block;" transform="matrix(1 0 0 1 1262 362)"><g class="djs-visual"><circle cx="18" cy="18" r="18" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 4px; fill: white; fill-opacity: 0.95;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="36" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_Done_label" style="display: block;" transform="matrix(1 0 0 1 1196 362)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="8.107177734375" y="13.5">Wake </tspan><tspan x="0.306884765625" y="31.5">handled</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="54" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_Idle" style="display: block;" transform="matrix(1 0 0 1 812 702)"><g class="djs-visual"><circle cx="18" cy="18" r="18" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 4px; fill: white; fill-opacity: 0.95;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="36" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_Idle_label" style="display: block;" transform="matrix(1 0 0 1 785 742)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.384521484375" y="13.5">Nothing to do</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="90" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_NotGreen" style="display: block;" transform="matrix(1 0 0 1 687 200)"><g class="djs-visual"><circle cx="18" cy="18" r="18" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 4px; fill: white; fill-opacity: 0.95;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="36" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_NotGreen_label" style="display: block;" transform="matrix(1 0 0 1 672 160)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.06298828125" y="13.5">Not green</tspan><tspan x="22.9951171875" y="31.5">yet</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="66" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_AwaitOwner" style="display: block;" transform="matrix(1 0 0 1 687 427)"><g class="djs-visual"><circle cx="18" cy="18" r="18" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 4px; fill: white; fill-opacity: 0.95;"/></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="36" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="End_AwaitOwner_label" style="display: block;" transform="matrix(1 0 0 1 664 467)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="12.787109375" y="13.5">Awaiting </tspan><tspan x="8.06298828125" y="31.5">the owner</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="82" height="36" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_1" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-1" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-1');" d="M248,380L370,380"/></g><path d="M248,380L370,380" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_2" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-2" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-2');" d="M490,380L605,380"/></g><path d="M490,380L605,380" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_3" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-3" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-3');" d="M630,355L630,160C630,157.5,632.5,155,635,155L770,155"/></g><path d="M630,355L630,155L770,155" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_3_label" style="display: block;" transform="matrix(1 0 0 1 642 131)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.476806640625" y="13.5">Saturated</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="66" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_4" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-4" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-4');" d="M630,355L630,310C630,307.5,632.5,305,635,305L680,305"/></g><path d="M630,355L630,305L680,305" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_4_label" style="display: block;" transform="matrix(1 0 0 1 636 310)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.3203125" y="13.5">Ready</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="44" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_5" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-5" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-5');" d="M630,405L630,595C630,597.5,632.5,600,635,600L770,600"/></g><path d="M630,405L630,600L770,600" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_5_label" style="display: block;" transform="matrix(1 0 0 1 652 576)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.06787109375" y="13.5">Stalled</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="46" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_6" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-6" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-6');" d="M630,405L630,715C630,717.5,632.5,720,635,720L812,720"/></g><path d="M630,405L630,720L812,720" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_6_label" style="display: block;" transform="matrix(1 0 0 1 649 696)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.149169921875" y="13.5">Nothing</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="52" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_7" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-7" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-7');" d="M1070,155L1275,155C1277.5,155,1280,157.5,1280,160L1280,362"/></g><path d="M1070,155L1280,155L1280,362" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_8" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-8" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-8');" d="M1160,305L1275,305C1277.5,305,1280,307.5,1280,310L1280,362"/></g><path d="M1160,305L1280,305L1280,362" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_9" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-9" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-9');" d="M890,600L1275,600C1277.5,600,1280,597.5,1280,595L1280,398"/></g><path d="M890,600L1280,600L1280,398" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_10" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-10" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-10');" d="M730,305L780,305"/></g><path d="M730,305L780,305" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_10_label" style="display: block;" transform="matrix(1 0 0 1 740 285)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.264892578125" y="13.5">Yes</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="25" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_11" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-11" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-11');" d="M705,280L705,236"/></g><path d="M705,280L705,236" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_11_label" style="display: block;" transform="matrix(1 0 0 1 715 250)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.41259765625" y="13.5">No</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="20" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_12" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-12" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-12');" d="M890,155L950,155"/></g><path d="M890,155L950,155" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_13" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-13" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-13');" d="M830,305L940,305"/></g><path d="M830,305L940,305" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_13_label" style="display: block;" transform="matrix(1 0 0 1 848 285)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.264892578125" y="13.5">Yes</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="25" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_14" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-14" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-14');" d="M805,330L805,385"/></g><path d="M805,330L805,385" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_14_label" style="display: block;" transform="matrix(1 0 0 1 815 345)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.41259765625" y="13.5">No</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="20" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_15" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-15" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-15');" d="M745,445L723,445"/></g><path d="M745,445L723,445" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_16" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-16" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-16');" d="M990,305L1040,305"/></g><path d="M990,305L1040,305" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_16_label" style="display: block;" transform="matrix(1 0 0 1 998 285)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.264892578125" y="13.5">Yes</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="25" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_17" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-17" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-17');" d="M965,330L965,385"/></g><path d="M965,330L965,385" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-shape" data-element-id="Flow_17_label" style="display: block;" transform="matrix(1 0 0 1 975 345)"><g class="djs-visual"><text lineHeight="1.2" class="djs-label" style="font-family: Arial, sans-serif; font-size: 15px; font-weight: normal; fill: rgb(34, 36, 42);"><tspan x="0.41259765625" y="13.5">No</tspan></text></g><rect class="djs-hit djs-hit-all" x="0" y="0" width="20" height="18" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g><g class="djs-group"><g class="djs-element djs-connection" data-element-id="Flow_18" style="display: block;"><g class="djs-visual"><defs><marker id="bpmn-marker-18" viewBox="0 0 20 20" refX="11" refY="10" markerWidth="10" markerHeight="10" orient="auto"><path d="M 1 5 L 11 10 L 1 15 Z" style="stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 1px; fill: rgb(34, 36, 42);"/></marker></defs><path data-corner-radius="5" style="fill: none; stroke-linecap: round; stroke-linejoin: round; stroke: rgb(34, 36, 42); stroke-width: 2px; marker-end: url('#bpmn-marker-18');" d="M1025,445L1275,445C1277.5,445,1280,442.5,1280,440L1280,398"/></g><path d="M1025,445L1280,445L1280,398" class="djs-hit djs-hit-stroke" style="fill: none; stroke-opacity: 0; stroke: white; stroke-width: 15px;"/></g></g></g></g></svg>
+\ No newline at end of file
+diff --git a/sdlc/skills/sdlc-core/continual-progress.md b/sdlc/skills/sdlc-core/continual-progress.md
+index 9426f892..f330e964 100644
+--- a/sdlc/skills/sdlc-core/continual-progress.md
++++ b/sdlc/skills/sdlc-core/continual-progress.md
+@@ -225,6 +225,23 @@ number of PRs marked ready at once is what fills the queue:
+ Holding a PR as a draft for pacing is not holding back a green PR: the fast
+ tier is green, and the hand-off above waits for the full tier.
+ 
++The merge manager enforces this rule (owner ruling, 2026-11-07, card "Cancel
++CI"). When the runners are saturated, it closes superseded PRs, cancels stale
++queued runs that never started, and asks the owners of the lowest-priority PRs
++to return them to draft: [`merge-manager-watcher`](merge-manager-watcher.md)
++§"Runner relief".
++
++### One pusher per PR branch
++
++Only the session that owns a PR pushes to its branch (owner ruling,
++2026-11-07). Anyone else sends the owner the change, on the PR's thread or
++by message. Every push restarts the full CI run: on 2026-11-07, three
++sessions pushed to folio-assistant#2985 within 10 minutes, and each push
++restarted it.
++
++A stacked PR waits for its base to land, and is then retargeted onto the new
++base. Do not merge the stacked PR into its base branch.
++
+ ### Two green PRs can merge into a red main, and the answer is to fix forward
+ 
+ A PR is tested against the main it last merged, not the main it lands on.
+diff --git a/sdlc/skills/sdlc-core/coordinate.md b/sdlc/skills/sdlc-core/coordinate.md
+index aa876df9..9fb7439e 100644
+--- a/sdlc/skills/sdlc-core/coordinate.md
++++ b/sdlc/skills/sdlc-core/coordinate.md
+@@ -336,6 +336,11 @@ not verify.
+ **2. Crossing is permitted; colliding silently is not.** Cross freely, but the
+ crossing is what triggers this skill rather than what excuses skipping it.
+ 
++**3. Crossing never means pushing to a sibling's branch.** Only the PR's
++owner pushes to its branch. Send the owner the change instead
++([`continual-progress`](continual-progress.md) §"One pusher per PR branch",
++owner ruling, 2026-11-07).
++
+ ### The collision surface is FILES, and it is predictable before you touch one
+ 
+ A work item scan finds sessions working the same *subject*. It does not find two
+diff --git a/sdlc/skills/sdlc-core/merge-manager-watcher.md b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+index 266b42ef..3de6bbce 100644
+--- a/sdlc/skills/sdlc-core/merge-manager-watcher.md
++++ b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+@@ -38,6 +38,26 @@ cannot tell whether a merge manager is active asks the owner (`merge-queue`,
+ §"When no Merge Manager is active"). A memory that one existed yesterday
+ does not count, either way.
+ 
++**Siblings send merge requests here, and the owner approves here** (owner
++ruling, 2026-11-07, card "Approvals", B: "all siblings should communicate
++merge requests to you. i will approve here. you queue/prioritize", and "all
++my approval is here, not in siblings"):
++
++- There is one merge manager session.
++- A sibling never merges its own PR. When the PR is ready, the sibling sends
++  the merge manager `ready: <repo>#<n> <full 40-hex sha>` and one line saying
++  what the PR does.
++- The owner approves in the merge manager's session, with one card per batch
++  that names each PR. An approval the owner gives in a sibling's session does
++  not authorise a merge.
++- A pre-approved PR, one the owner said to "merge when green", needs no
++  second card.
++- The merge manager queues the PRs in priority order:
++  - **P0**: fixes for a red main, and the links of the re-pin chain;
++  - **P1**: work those unblock;
++  - **P2**: CI speed;
++  - **P3**: everything else.
++
+ ## What wakes it
+ 
+ - **A timer, every 10 minutes** while the merge window is open, and hourly
+@@ -64,8 +84,10 @@ it.
+ 
+ | Reading | Process |
+ |---|---|
+-| A ready PR that stacks, and is all green (rule 1 below) | `merge-train` (Process_MergeTrain) |
+-| Queued runs 60+ minutes old with nothing landed, or the owner says runners are full | `saturation-meta-merge`: offer the card, never run without the owner's tap |
++| A ready PR that is all green (rule 1 below) but not yet approved | Put it on the owner's next batch card (§"Am I the active merge manager?") |
++| An approved, all-green folio-assistant PR with no `.github/workflows/` change | `merge-train` (Process_MergeTrain): add the `merge-train` label instead of merging it (rule 8 below) |
++| An approved, all-green PR that changes `.github/workflows/`, or is in a repository with no train | Merge it directly through `merge:guard`. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card "Workflow PRs", A) |
++| Queued runs 60+ minutes old with nothing landed, or the owner says runners are full | First relieve the runners (§"Runner relief"). Then `saturation-meta-merge`: offer the card, never run without the owner's tap |
+ | A PR whose owner has not pushed or answered for 2+ hours | `stalled-agent-triage`: tell the owner and take it over |
+ | main red | The fix goes to main as its own PR first; when a dispatched `post-merge-regen` verify run says main is stale, a regen dispatched for the next PR commits the fix and that PR lands with priority (`merge-queue` §"Merge steward procedure: post-merge verification"). Trains wait for main to be green |
+ | Nothing to do | End the turn with no message |
+@@ -78,10 +100,16 @@ it.
+      made before the last tier finished broke main (folio-assistant#2955).
+    - **Full tier.** The "No new failures" judge, or every full test shard,
+      ran. A draft or fast-tier-only pass never counts.
+-   - **Green as judged.** Where a "No new failures" judge exists, its
+-     success is the verdict. A red shard whose failures are all main's known
+-     failures is fine when the judge passes. With no judge, each check must
+-     have concluded success, skipped or neutral.
++   - **Green as judged, by every judge** (owner ruling, 2026-11-07). Where a
++     "No new failures" judge exists, its success is part of the verdict, but
++     an aggregate job covers only the parts it names. folio-assistant's
++     "Repository gates (hard)" is one such job. Each bun test shard carries
++     its own Q-PIPE-1 "no new failures" table, and each table must list 0
++     new failures. On 2026-11-06, folio-assistant#2985's aggregate was green
++     while 4 shards each reported a new failure. A red shard whose failures
++     are all main's known failures is fine when its table lists 0 new ones.
++     With no judge, each check must have concluded success, skipped or
++     neutral.
+ 
+    A cancelled job counts only when a later run of the same workflow on the
+    same head SHA passed the matching job (concurrency supersession). Merge
+@@ -96,10 +124,14 @@ it.
+    later PR closes it, after checking that the diffs are identical. While
+    main is red, one session owns the re-pin that fixes it, and says so to the
+    merge-planning session.
+-4. **A main-red fix spans layers.** Find every layer the fix needs and pin
+-   them together in one re-pin. Verify on a fresh mount
++4. **A re-pin is a cross-layer set.** Find every layer the change needs, a
++   main-red fix or any other, and pin them together in one re-pin, to the
++   current mains. Pins move only forward. Verify on a fresh mount
+    (`mount:remote --fresh`). A stale container mount gives false local
+-   passes.
++   passes. The rules and an example are in
++   [`remote-mount`](../../../skills/kg/kg-core/remote-mount.md)
++   §"Re-pinning" (owner rulings, 2026-11-06, card "Pin target", A, and
++   2026-11-07).
+ 5. **Hand back private caches.** A PR that adds its own cache scheme instead
+    of the shared `cached-step` is held, not merged, and goes back to its
+    author. Cache-first CI, rule 1: every cache goes through `cached-step`.
+@@ -112,6 +144,26 @@ it.
+    does; every other PR that meets rule 1 merges as before. A sweep that
+    merges a labelled PR one at a time starves the train (owner ruling,
+    2026-11-06: "1. The train").
++8. **Approved PRs go through the train** (owner ruling, 2026-11-07, card
++   "Train", A). When the owner approves a folio-assistant PR that does not
++   change `.github/workflows/`, the merge manager adds the `merge-train`
++   label instead of merging it. The train lands a batch with one CI run.
++   Merging one PR at a time cost about 6.7 runs per merged PR. A PR that
++   changes workflows, and a PR in a repository with no train, merges
++   directly.
++
++## Runner relief
++
++The merge manager enforces the pacing rule of
++[`continual-progress`](continual-progress.md) §"Pace the ready marking"
++(owner ruling, 2026-11-07, card "Cancel CI"). When the runners are
++saturated, it:
++
++- closes superseded or duplicate PRs, such as a re-pin whose commits another
++  open PR already carries, and cancels their runs;
++- cancels stale queued runs that never started, but never a main push run
++  that has started;
++- asks the owners of P3 PRs to return them to draft.
+ 
+ ## Keeping the swarm in step
+ 
+@@ -131,9 +183,11 @@ it.
+ 
+ These come from the role; the watcher is the step that acts on them:
+ 
+-- Merges happen only on the owner's explicit OK. A card tap counts, and it
+-  names each PR. A standing OK counts for the PRs it covers (rule 2). A
+-  sibling's or coordinator's request does not count.
++- Merges happen only on the owner's explicit OK, given in the merge
++  manager's session. A tap on the batch card counts, and the card names each
++  PR. A standing OK counts for the PRs it covers (rule 2). A sibling's or
++  coordinator's request does not count, and neither does an approval the
++  owner gave in a sibling's session.
+ - Never merge committee content, change sets (CS-), or held
+   `subscriptions/` trees. Never touch WHO or `smart-*` upstream repositories.
+ - Never push `.github/workflows/` changes without the workflows permission.
+diff --git a/sdlc/skills/sdlc-core/merge-queue.md b/sdlc/skills/sdlc-core/merge-queue.md
+index b9b22bd5..8654611c 100644
+--- a/sdlc/skills/sdlc-core/merge-queue.md
++++ b/sdlc/skills/sdlc-core/merge-queue.md
+@@ -50,6 +50,17 @@ steward's, and not on an issue.
+ 
+ **When you finish your work and are ready to merge, ask the user before submitting to the merge queue.** Do not apply `ready-to-merge` or post the `ready:` marker autonomously without asking the user if you should submit. Submitting to the queue requests landing the code on `main`; the user or owner confirms the submission.
+ 
++### While a merge manager is active, tell it, and never merge yourself
++
++Owner ruling, 2026-11-07, card "Approvals", B: siblings send merge requests to
++the merge manager, and the owner approves only in the merge manager's
++session. So, besides the steps below, send the merge manager
++`ready: <repo>#<n> <full 40-hex sha>` and one line saying what the PR does.
++Never merge your own PR. An approval the owner gives in your session does not
++authorise a merge. The merge manager asks the owner on its batch card and
++orders the queue: [`merge-manager-watcher`](merge-manager-watcher.md)
++§"Am I the active merge manager?".
++
+ ### Submitting to the queue
+ 
+ To submit, do all of these on YOUR PR:
+@@ -391,6 +402,8 @@ Where a repository runs `merge-train.yml`, as it does in folio-assistant, the st
+ 
+ `merge-main.yml` skips PRs labelled `merge-train`: they are integrated once, at train time, never on each push to main.
+ 
++**Owner ruling, 2026-11-07, card "Train", A.** When the owner approves a folio-assistant PR that does not change `.github/workflows/`, the merge manager adds the `merge-train` label instead of merging it, so the train lands it in a batch with one CI run. Merging one PR at a time cost about 6.7 runs per merged PR. Workflow PRs, and repositories with no train, merge directly, and a workflow PR needs no approval beyond the batch card (card "Workflow PRs", A).
++
+ ## Regenerate on a clean tree, and check it
+ 
+ **`git status --porcelain` is empty before a member is merged and the tree
+diff --git a/skills/kg/kg-core/index-config.md b/skills/kg/kg-core/index-config.md
+index 970fb801..c54f221e 100644
+--- a/skills/kg/kg-core/index-config.md
++++ b/skills/kg/kg-core/index-config.md
+@@ -235,6 +235,11 @@ The lock records what the declared mounts resolved to. It is generated by
+ `mount-from-lock.ts` imports only `node:*`, so it restates the rule inline
+ and its test holds it to `lockFilesIn`.
+ 
++**A re-pin ends with one commit per layer, and moves pins only forward**
++(owner ruling, 2026-11-06, card "Pin target", A). Every layer the change
++needs is pinned in the same re-pin. The rules are in
++[`remote-mount`](remote-mount.md) §"Re-pinning".
++
+ ## The reserved `index` stem
+ 
+ `index.config.json` ends in `.config.json`, so a scan that treats "each root
+diff --git a/skills/kg/kg-core/remote-mount.md b/skills/kg/kg-core/remote-mount.md
+index 8c810a7a..035dd8d6 100644
+--- a/skills/kg/kg-core/remote-mount.md
++++ b/skills/kg/kg-core/remote-mount.md
+@@ -317,6 +317,28 @@ old layer. `--seed` refuses while a mount it moves has such edits, and
+ `mount:check` reports an instance entry behind its pin as `missing`. After the re-pin, check that
+ the moved instance's `sha` in `index.lock.json` is the new pin.
+ 
++**A pin only moves forward** (owner ruling, 2026-11-06, card "Pin target",
++A). When layers pin different commits of a shared layer, align them forward,
++bottom-up: start at the lowest layer, and move each shared layer to the
++newest commit that any layer needs. Stop when every lock names one commit per
++layer. Never move a pin back to an older commit so that two layers agree.
++
++**A re-pin is a cross-layer set** (owner ruling, 2026-11-07). Pin together
++every layer the change needs, re-pinned to the current mains, and verify on a
++fresh mount (`mount:remote --fresh`). A layer can need another layer's newer
++commit. For example, cat-harness#1100 removed routes that were listed by hand,
++because folio-assistant-core#654 now derives them (`builtOnHostSite`). So
++cat-harness at 6dd3746 or later needs folio-assistant-core at 41d9da9 or
++later, and cat-harness-tools at #1564 or later. An asset that a layer commits
++must also match the tools recipe that generates it, such as cat-harness's
++`edit-links.js`.
++
++**The re-pin refreshes layer health** (owner ruling, 2026-11-07, card "Layer
++health", A). When a re-pin moves cat-harness-tools, it regenerates the
++checkout's layer health report at the new pins and publishes it. The health
++check fails a re-pin once the report is more than 26 hours old and the checker
++has moved. The implementation is cat-harness-tools#1603.
++
+ **The committer re-pins, locally, and CI only verifies.** The person or agent
+ who moves a pin does the whole re-pin in their own checkout: `--seed`, a
+ fresh `mount:remote`, the regenerated agent surface (`skill:commands`,
+@@ -444,6 +466,8 @@ A worked example is in
+ 
+ - **Never add a submodule** to get a dependency, and never clone into `.deps/`.
+ - **Never pin a branch or an abbreviated SHA.** The schema refuses both.
++- **Never move a pin back.** Align layers forward to the newest commit any
++  of them needs (§"Re-pinning").
+ - **Never edit a mounted directory and expect a re-mount to keep the edit, or
+   to throw it away.** A re-mount leaves edited bytes untouched and reports them
+   as missing. Move the edit upstream, or delete the directory and re-mount.
+diff --git a/translations/ar/processes/merge-manager-watch.pot b/translations/ar/processes/merge-manager-watch.pot
+index 901004ee..4a3abdf8 100644
+--- a/translations/ar/processes/merge-manager-watch.pot
++++ b/translations/ar/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-06T08:54:00.760Z\n"
++"POT-Creation-Date: 2026-11-07T06:21:24.212Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: ar\n"
+@@ -14,24 +14,54 @@ msgstr ""
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:56
++#: sdlc/processes/merge-manager-watch.bpmn:101
++#. Diagram element documentation
++msgid "A workflow PR, or a PR in a repository with no train, merges directly. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card Workflow PRs, A)."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:96
++#. Diagram element documentation
++msgid "Add the merge-train label instead of merging; the train lands the batch with one CI run."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:68
+ #. Diagram label
+ msgid "All green per rule 1?"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:82
++#: sdlc/processes/merge-manager-watch.bpmn:124
++#. Diagram label
++msgid "Awaiting the owner"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:121
+ #. Diagram element documentation
+ msgid "Do not merge. The next wake reads the checks again."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:33
++#: sdlc/processes/merge-manager-watch.bpmn:125
++#. Diagram element documentation
++msgid "Do not merge. The owner's tap on the card wakes the next pass."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:58
++#. Diagram element documentation
++msgid "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:39
+ #. Diagram element documentation
+ msgid "Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:57
++#: sdlc/processes/merge-manager-watch.bpmn:69
+ #. Diagram element documentation
+-msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Each check is green as judged: where the No new failures judge exists its success is the verdict, otherwise each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
++msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Every judge passes (owner ruling, 2026-11-07): an aggregate job covers only the parts it names, and each test shard's own no-new-failures table lists 0 new failures; with no judge, each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:100
++#. Diagram label
++msgid "Merge it through merge:guard"
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:13
+@@ -44,89 +74,109 @@ msgstr ""
+ msgid "Merge steward"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:63
++#: sdlc/processes/merge-manager-watch.bpmn:95
+ #. Diagram label
+ msgid "Merge train"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:95
++#: sdlc/processes/merge-manager-watch.bpmn:138
+ #. Diagram label
+ msgid "No"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:81
++#: sdlc/processes/merge-manager-watch.bpmn:120
+ #. Diagram label
+ msgid "Not green yet"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:90
++#: sdlc/processes/merge-manager-watch.bpmn:133
+ #. Diagram label
+ msgid "Nothing"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:78
++#: sdlc/processes/merge-manager-watch.bpmn:117
+ #. Diagram label
+ msgid "Nothing to do"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:52
++#: sdlc/processes/merge-manager-watch.bpmn:64
+ #. Diagram element documentation
+ msgid "Offer the card and land only on the owner's tap."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:38
++#: sdlc/processes/merge-manager-watch.bpmn:83
++#. Diagram element documentation
++msgid "One card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:75
++#. Diagram label
++msgid "Owner approved?"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:82
++#. Diagram label
++msgid "Put it on the owner's batch card"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:44
+ #. Diagram element documentation
+ msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:37
++#: sdlc/processes/merge-manager-watch.bpmn:43
+ #. Diagram label
+ msgid "Read PRs, runner queue, main verdict and owners"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:88
++#: sdlc/processes/merge-manager-watch.bpmn:131
+ #. Diagram label
+ msgid "Ready"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:64
+-#. Diagram element documentation
+-msgid "Ready PRs that stack land as a train through merge:guard."
++#: sdlc/processes/merge-manager-watch.bpmn:57
++#. Diagram label
++msgid "Relieve the runners"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:87
++#: sdlc/processes/merge-manager-watch.bpmn:88
++#. Diagram label
++msgid "Rides the train?"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:130
+ #. Diagram label
+ msgid "Saturated"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:44
++#: sdlc/processes/merge-manager-watch.bpmn:50
+ #. Diagram element documentation
+ msgid "Saturated: queued runs are 60+ minutes old and nothing has landed, or the owner says the runners are full. Stalled: a PR owner has been silent for 2+ hours. Ready: a PR stacks with green owed CI. Otherwise nothing."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:51
++#: sdlc/processes/merge-manager-watch.bpmn:63
+ #. Diagram label
+ msgid "Saturation meta-merge"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:89
++#: sdlc/processes/merge-manager-watch.bpmn:132
+ #. Diagram label
+ msgid "Stalled"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:68
++#: sdlc/processes/merge-manager-watch.bpmn:106
+ #. Diagram label
+ msgid "Stalled-agent triage"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:69
++#: sdlc/processes/merge-manager-watch.bpmn:107
+ #. Diagram element documentation
+ msgid "Tell the owner, then take the stalled PR over."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:16
+ #. Diagram element documentation
+-msgid "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK."
++msgid "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK, given in the merge manager's session as one card per batch (owner ruling, 2026-11-07, card Approvals, B)."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:19
+@@ -134,22 +184,32 @@ msgstr ""
+ msgid "The merge manager, holding the merge-steward role across one or more repositories. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, then routes to the process the queue needs (merge train, saturation meta-merge, stalled-agent takeover) or stays idle."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:32
++#: sdlc/processes/merge-manager-watch.bpmn:38
+ #. Diagram label
+ msgid "Timer, PR event, main run done, or sibling message"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:73
++#: sdlc/processes/merge-manager-watch.bpmn:111
+ #. Diagram label
+ msgid "Wake handled"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:43
++#: sdlc/processes/merge-manager-watch.bpmn:49
+ #. Diagram label
+ msgid "What does the queue need?"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:94
++#: sdlc/processes/merge-manager-watch.bpmn:137
+ #. Diagram label
+ msgid "Yes"
+ msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:89
++#. Diagram element documentation
++msgid "Yes for a folio-assistant PR that does not change .github/workflows/. No for a workflow PR, or a PR in a repository with no train (owner ruling, 2026-11-07, card Train, A)."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:76
++#. Diagram element documentation
++msgid "Yes when the owner tapped this batch's card in the merge manager's session, or said to merge this PR when green. An approval given in a sibling's session does not count (owner ruling, 2026-11-07, card Approvals, B)."
++msgstr ""
+diff --git a/translations/es/processes/merge-manager-watch.pot b/translations/es/processes/merge-manager-watch.pot
+index 203a5cce..3a8e6c10 100644
+--- a/translations/es/processes/merge-manager-watch.pot
++++ b/translations/es/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-06T08:54:00.761Z\n"
++"POT-Creation-Date: 2026-11-07T06:21:24.212Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: es\n"
+@@ -14,24 +14,54 @@ msgstr ""
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:56
++#: sdlc/processes/merge-manager-watch.bpmn:101
++#. Diagram element documentation
++msgid "A workflow PR, or a PR in a repository with no train, merges directly. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card Workflow PRs, A)."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:96
++#. Diagram element documentation
++msgid "Add the merge-train label instead of merging; the train lands the batch with one CI run."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:68
+ #. Diagram label
+ msgid "All green per rule 1?"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:82
++#: sdlc/processes/merge-manager-watch.bpmn:124
++#. Diagram label
++msgid "Awaiting the owner"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:121
+ #. Diagram element documentation
+ msgid "Do not merge. The next wake reads the checks again."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:33
++#: sdlc/processes/merge-manager-watch.bpmn:125
++#. Diagram element documentation
++msgid "Do not merge. The owner's tap on the card wakes the next pass."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:58
++#. Diagram element documentation
++msgid "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:39
+ #. Diagram element documentation
+ msgid "Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:57
++#: sdlc/processes/merge-manager-watch.bpmn:69
+ #. Diagram element documentation
+-msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Each check is green as judged: where the No new failures judge exists its success is the verdict, otherwise each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
++msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Every judge passes (owner ruling, 2026-11-07): an aggregate job covers only the parts it names, and each test shard's own no-new-failures table lists 0 new failures; with no judge, each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:100
++#. Diagram label
++msgid "Merge it through merge:guard"
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:13
+@@ -44,89 +74,109 @@ msgstr ""
+ msgid "Merge steward"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:63
++#: sdlc/processes/merge-manager-watch.bpmn:95
+ #. Diagram label
+ msgid "Merge train"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:95
++#: sdlc/processes/merge-manager-watch.bpmn:138
+ #. Diagram label
+ msgid "No"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:81
++#: sdlc/processes/merge-manager-watch.bpmn:120
+ #. Diagram label
+ msgid "Not green yet"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:90
++#: sdlc/processes/merge-manager-watch.bpmn:133
+ #. Diagram label
+ msgid "Nothing"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:78
++#: sdlc/processes/merge-manager-watch.bpmn:117
+ #. Diagram label
+ msgid "Nothing to do"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:52
++#: sdlc/processes/merge-manager-watch.bpmn:64
+ #. Diagram element documentation
+ msgid "Offer the card and land only on the owner's tap."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:38
++#: sdlc/processes/merge-manager-watch.bpmn:83
++#. Diagram element documentation
++msgid "One card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:75
++#. Diagram label
++msgid "Owner approved?"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:82
++#. Diagram label
++msgid "Put it on the owner's batch card"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:44
+ #. Diagram element documentation
+ msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:37
++#: sdlc/processes/merge-manager-watch.bpmn:43
+ #. Diagram label
+ msgid "Read PRs, runner queue, main verdict and owners"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:88
++#: sdlc/processes/merge-manager-watch.bpmn:131
+ #. Diagram label
+ msgid "Ready"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:64
+-#. Diagram element documentation
+-msgid "Ready PRs that stack land as a train through merge:guard."
++#: sdlc/processes/merge-manager-watch.bpmn:57
++#. Diagram label
++msgid "Relieve the runners"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:87
++#: sdlc/processes/merge-manager-watch.bpmn:88
++#. Diagram label
++msgid "Rides the train?"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:130
+ #. Diagram label
+ msgid "Saturated"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:44
++#: sdlc/processes/merge-manager-watch.bpmn:50
+ #. Diagram element documentation
+ msgid "Saturated: queued runs are 60+ minutes old and nothing has landed, or the owner says the runners are full. Stalled: a PR owner has been silent for 2+ hours. Ready: a PR stacks with green owed CI. Otherwise nothing."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:51
++#: sdlc/processes/merge-manager-watch.bpmn:63
+ #. Diagram label
+ msgid "Saturation meta-merge"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:89
++#: sdlc/processes/merge-manager-watch.bpmn:132
+ #. Diagram label
+ msgid "Stalled"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:68
++#: sdlc/processes/merge-manager-watch.bpmn:106
+ #. Diagram label
+ msgid "Stalled-agent triage"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:69
++#: sdlc/processes/merge-manager-watch.bpmn:107
+ #. Diagram element documentation
+ msgid "Tell the owner, then take the stalled PR over."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:16
+ #. Diagram element documentation
+-msgid "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK."
++msgid "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK, given in the merge manager's session as one card per batch (owner ruling, 2026-11-07, card Approvals, B)."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:19
+@@ -134,22 +184,32 @@ msgstr ""
+ msgid "The merge manager, holding the merge-steward role across one or more repositories. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, then routes to the process the queue needs (merge train, saturation meta-merge, stalled-agent takeover) or stays idle."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:32
++#: sdlc/processes/merge-manager-watch.bpmn:38
+ #. Diagram label
+ msgid "Timer, PR event, main run done, or sibling message"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:73
++#: sdlc/processes/merge-manager-watch.bpmn:111
+ #. Diagram label
+ msgid "Wake handled"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:43
++#: sdlc/processes/merge-manager-watch.bpmn:49
+ #. Diagram label
+ msgid "What does the queue need?"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:94
++#: sdlc/processes/merge-manager-watch.bpmn:137
+ #. Diagram label
+ msgid "Yes"
+ msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:89
++#. Diagram element documentation
++msgid "Yes for a folio-assistant PR that does not change .github/workflows/. No for a workflow PR, or a PR in a repository with no train (owner ruling, 2026-11-07, card Train, A)."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:76
++#. Diagram element documentation
++msgid "Yes when the owner tapped this batch's card in the merge manager's session, or said to merge this PR when green. An approval given in a sibling's session does not count (owner ruling, 2026-11-07, card Approvals, B)."
++msgstr ""
+diff --git a/translations/fr/processes/merge-manager-watch.pot b/translations/fr/processes/merge-manager-watch.pot
+index 4192abd0..74328394 100644
+--- a/translations/fr/processes/merge-manager-watch.pot
++++ b/translations/fr/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-06T08:54:00.761Z\n"
++"POT-Creation-Date: 2026-11-07T06:21:24.213Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: fr\n"
+@@ -14,24 +14,54 @@ msgstr ""
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:56
++#: sdlc/processes/merge-manager-watch.bpmn:101
++#. Diagram element documentation
++msgid "A workflow PR, or a PR in a repository with no train, merges directly. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card Workflow PRs, A)."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:96
++#. Diagram element documentation
++msgid "Add the merge-train label instead of merging; the train lands the batch with one CI run."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:68
+ #. Diagram label
+ msgid "All green per rule 1?"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:82
++#: sdlc/processes/merge-manager-watch.bpmn:124
++#. Diagram label
++msgid "Awaiting the owner"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:121
+ #. Diagram element documentation
+ msgid "Do not merge. The next wake reads the checks again."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:33
++#: sdlc/processes/merge-manager-watch.bpmn:125
++#. Diagram element documentation
++msgid "Do not merge. The owner's tap on the card wakes the next pass."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:58
++#. Diagram element documentation
++msgid "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:39
+ #. Diagram element documentation
+ msgid "Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:57
++#: sdlc/processes/merge-manager-watch.bpmn:69
+ #. Diagram element documentation
+-msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Each check is green as judged: where the No new failures judge exists its success is the verdict, otherwise each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
++msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Every judge passes (owner ruling, 2026-11-07): an aggregate job covers only the parts it names, and each test shard's own no-new-failures table lists 0 new failures; with no judge, each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:100
++#. Diagram label
++msgid "Merge it through merge:guard"
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:13
+@@ -44,89 +74,109 @@ msgstr ""
+ msgid "Merge steward"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:63
++#: sdlc/processes/merge-manager-watch.bpmn:95
+ #. Diagram label
+ msgid "Merge train"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:95
++#: sdlc/processes/merge-manager-watch.bpmn:138
+ #. Diagram label
+ msgid "No"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:81
++#: sdlc/processes/merge-manager-watch.bpmn:120
+ #. Diagram label
+ msgid "Not green yet"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:90
++#: sdlc/processes/merge-manager-watch.bpmn:133
+ #. Diagram label
+ msgid "Nothing"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:78
++#: sdlc/processes/merge-manager-watch.bpmn:117
+ #. Diagram label
+ msgid "Nothing to do"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:52
++#: sdlc/processes/merge-manager-watch.bpmn:64
+ #. Diagram element documentation
+ msgid "Offer the card and land only on the owner's tap."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:38
++#: sdlc/processes/merge-manager-watch.bpmn:83
++#. Diagram element documentation
++msgid "One card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:75
++#. Diagram label
++msgid "Owner approved?"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:82
++#. Diagram label
++msgid "Put it on the owner's batch card"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:44
+ #. Diagram element documentation
+ msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:37
++#: sdlc/processes/merge-manager-watch.bpmn:43
+ #. Diagram label
+ msgid "Read PRs, runner queue, main verdict and owners"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:88
++#: sdlc/processes/merge-manager-watch.bpmn:131
+ #. Diagram label
+ msgid "Ready"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:64
+-#. Diagram element documentation
+-msgid "Ready PRs that stack land as a train through merge:guard."
++#: sdlc/processes/merge-manager-watch.bpmn:57
++#. Diagram label
++msgid "Relieve the runners"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:87
++#: sdlc/processes/merge-manager-watch.bpmn:88
++#. Diagram label
++msgid "Rides the train?"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:130
+ #. Diagram label
+ msgid "Saturated"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:44
++#: sdlc/processes/merge-manager-watch.bpmn:50
+ #. Diagram element documentation
+ msgid "Saturated: queued runs are 60+ minutes old and nothing has landed, or the owner says the runners are full. Stalled: a PR owner has been silent for 2+ hours. Ready: a PR stacks with green owed CI. Otherwise nothing."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:51
++#: sdlc/processes/merge-manager-watch.bpmn:63
+ #. Diagram label
+ msgid "Saturation meta-merge"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:89
++#: sdlc/processes/merge-manager-watch.bpmn:132
+ #. Diagram label
+ msgid "Stalled"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:68
++#: sdlc/processes/merge-manager-watch.bpmn:106
+ #. Diagram label
+ msgid "Stalled-agent triage"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:69
++#: sdlc/processes/merge-manager-watch.bpmn:107
+ #. Diagram element documentation
+ msgid "Tell the owner, then take the stalled PR over."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:16
+ #. Diagram element documentation
+-msgid "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK."
++msgid "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK, given in the merge manager's session as one card per batch (owner ruling, 2026-11-07, card Approvals, B)."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:19
+@@ -134,22 +184,32 @@ msgstr ""
+ msgid "The merge manager, holding the merge-steward role across one or more repositories. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, then routes to the process the queue needs (merge train, saturation meta-merge, stalled-agent takeover) or stays idle."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:32
++#: sdlc/processes/merge-manager-watch.bpmn:38
+ #. Diagram label
+ msgid "Timer, PR event, main run done, or sibling message"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:73
++#: sdlc/processes/merge-manager-watch.bpmn:111
+ #. Diagram label
+ msgid "Wake handled"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:43
++#: sdlc/processes/merge-manager-watch.bpmn:49
+ #. Diagram label
+ msgid "What does the queue need?"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:94
++#: sdlc/processes/merge-manager-watch.bpmn:137
+ #. Diagram label
+ msgid "Yes"
+ msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:89
++#. Diagram element documentation
++msgid "Yes for a folio-assistant PR that does not change .github/workflows/. No for a workflow PR, or a PR in a repository with no train (owner ruling, 2026-11-07, card Train, A)."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:76
++#. Diagram element documentation
++msgid "Yes when the owner tapped this batch's card in the merge manager's session, or said to merge this PR when green. An approval given in a sibling's session does not count (owner ruling, 2026-11-07, card Approvals, B)."
++msgstr ""
+diff --git a/translations/ru/processes/merge-manager-watch.pot b/translations/ru/processes/merge-manager-watch.pot
+index 4b73517a..90bc38cc 100644
+--- a/translations/ru/processes/merge-manager-watch.pot
++++ b/translations/ru/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-06T08:54:00.761Z\n"
++"POT-Creation-Date: 2026-11-07T06:21:24.213Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: ru\n"
+@@ -14,24 +14,54 @@ msgstr ""
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:56
++#: sdlc/processes/merge-manager-watch.bpmn:101
++#. Diagram element documentation
++msgid "A workflow PR, or a PR in a repository with no train, merges directly. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card Workflow PRs, A)."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:96
++#. Diagram element documentation
++msgid "Add the merge-train label instead of merging; the train lands the batch with one CI run."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:68
+ #. Diagram label
+ msgid "All green per rule 1?"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:82
++#: sdlc/processes/merge-manager-watch.bpmn:124
++#. Diagram label
++msgid "Awaiting the owner"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:121
+ #. Diagram element documentation
+ msgid "Do not merge. The next wake reads the checks again."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:33
++#: sdlc/processes/merge-manager-watch.bpmn:125
++#. Diagram element documentation
++msgid "Do not merge. The owner's tap on the card wakes the next pass."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:58
++#. Diagram element documentation
++msgid "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:39
+ #. Diagram element documentation
+ msgid "Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:57
++#: sdlc/processes/merge-manager-watch.bpmn:69
+ #. Diagram element documentation
+-msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Each check is green as judged: where the No new failures judge exists its success is the verdict, otherwise each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
++msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Every judge passes (owner ruling, 2026-11-07): an aggregate job covers only the parts it names, and each test shard's own no-new-failures table lists 0 new failures; with no judge, each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:100
++#. Diagram label
++msgid "Merge it through merge:guard"
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:13
+@@ -44,89 +74,109 @@ msgstr ""
+ msgid "Merge steward"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:63
++#: sdlc/processes/merge-manager-watch.bpmn:95
+ #. Diagram label
+ msgid "Merge train"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:95
++#: sdlc/processes/merge-manager-watch.bpmn:138
+ #. Diagram label
+ msgid "No"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:81
++#: sdlc/processes/merge-manager-watch.bpmn:120
+ #. Diagram label
+ msgid "Not green yet"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:90
++#: sdlc/processes/merge-manager-watch.bpmn:133
+ #. Diagram label
+ msgid "Nothing"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:78
++#: sdlc/processes/merge-manager-watch.bpmn:117
+ #. Diagram label
+ msgid "Nothing to do"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:52
++#: sdlc/processes/merge-manager-watch.bpmn:64
+ #. Diagram element documentation
+ msgid "Offer the card and land only on the owner's tap."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:38
++#: sdlc/processes/merge-manager-watch.bpmn:83
++#. Diagram element documentation
++msgid "One card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:75
++#. Diagram label
++msgid "Owner approved?"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:82
++#. Diagram label
++msgid "Put it on the owner's batch card"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:44
+ #. Diagram element documentation
+ msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:37
++#: sdlc/processes/merge-manager-watch.bpmn:43
+ #. Diagram label
+ msgid "Read PRs, runner queue, main verdict and owners"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:88
++#: sdlc/processes/merge-manager-watch.bpmn:131
+ #. Diagram label
+ msgid "Ready"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:64
+-#. Diagram element documentation
+-msgid "Ready PRs that stack land as a train through merge:guard."
++#: sdlc/processes/merge-manager-watch.bpmn:57
++#. Diagram label
++msgid "Relieve the runners"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:87
++#: sdlc/processes/merge-manager-watch.bpmn:88
++#. Diagram label
++msgid "Rides the train?"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:130
+ #. Diagram label
+ msgid "Saturated"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:44
++#: sdlc/processes/merge-manager-watch.bpmn:50
+ #. Diagram element documentation
+ msgid "Saturated: queued runs are 60+ minutes old and nothing has landed, or the owner says the runners are full. Stalled: a PR owner has been silent for 2+ hours. Ready: a PR stacks with green owed CI. Otherwise nothing."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:51
++#: sdlc/processes/merge-manager-watch.bpmn:63
+ #. Diagram label
+ msgid "Saturation meta-merge"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:89
++#: sdlc/processes/merge-manager-watch.bpmn:132
+ #. Diagram label
+ msgid "Stalled"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:68
++#: sdlc/processes/merge-manager-watch.bpmn:106
+ #. Diagram label
+ msgid "Stalled-agent triage"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:69
++#: sdlc/processes/merge-manager-watch.bpmn:107
+ #. Diagram element documentation
+ msgid "Tell the owner, then take the stalled PR over."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:16
+ #. Diagram element documentation
+-msgid "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK."
++msgid "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK, given in the merge manager's session as one card per batch (owner ruling, 2026-11-07, card Approvals, B)."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:19
+@@ -134,22 +184,32 @@ msgstr ""
+ msgid "The merge manager, holding the merge-steward role across one or more repositories. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, then routes to the process the queue needs (merge train, saturation meta-merge, stalled-agent takeover) or stays idle."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:32
++#: sdlc/processes/merge-manager-watch.bpmn:38
+ #. Diagram label
+ msgid "Timer, PR event, main run done, or sibling message"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:73
++#: sdlc/processes/merge-manager-watch.bpmn:111
+ #. Diagram label
+ msgid "Wake handled"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:43
++#: sdlc/processes/merge-manager-watch.bpmn:49
+ #. Diagram label
+ msgid "What does the queue need?"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:94
++#: sdlc/processes/merge-manager-watch.bpmn:137
+ #. Diagram label
+ msgid "Yes"
+ msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:89
++#. Diagram element documentation
++msgid "Yes for a folio-assistant PR that does not change .github/workflows/. No for a workflow PR, or a PR in a repository with no train (owner ruling, 2026-11-07, card Train, A)."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:76
++#. Diagram element documentation
++msgid "Yes when the owner tapped this batch's card in the merge manager's session, or said to merge this PR when green. An approval given in a sibling's session does not count (owner ruling, 2026-11-07, card Approvals, B)."
++msgstr ""
+diff --git a/translations/zh/processes/merge-manager-watch.pot b/translations/zh/processes/merge-manager-watch.pot
+index e2712a72..c7e4b035 100644
+--- a/translations/zh/processes/merge-manager-watch.pot
++++ b/translations/zh/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-06T08:54:00.761Z\n"
++"POT-Creation-Date: 2026-11-07T06:21:24.213Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: zh\n"
+@@ -14,24 +14,54 @@ msgstr ""
+ "Content-Type: text/plain; charset=UTF-8\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:56
++#: sdlc/processes/merge-manager-watch.bpmn:101
++#. Diagram element documentation
++msgid "A workflow PR, or a PR in a repository with no train, merges directly. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card Workflow PRs, A)."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:96
++#. Diagram element documentation
++msgid "Add the merge-train label instead of merging; the train lands the batch with one CI run."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:68
+ #. Diagram label
+ msgid "All green per rule 1?"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:82
++#: sdlc/processes/merge-manager-watch.bpmn:124
++#. Diagram label
++msgid "Awaiting the owner"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:121
+ #. Diagram element documentation
+ msgid "Do not merge. The next wake reads the checks again."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:33
++#: sdlc/processes/merge-manager-watch.bpmn:125
++#. Diagram element documentation
++msgid "Do not merge. The owner's tap on the card wakes the next pass."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:58
++#. Diagram element documentation
++msgid "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:39
+ #. Diagram element documentation
+ msgid "Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:57
++#: sdlc/processes/merge-manager-watch.bpmn:69
+ #. Diagram element documentation
+-msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Each check is green as judged: where the No new failures judge exists its success is the verdict, otherwise each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
++msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Every judge passes (owner ruling, 2026-11-07): an aggregate job covers only the parts it names, and each test shard's own no-new-failures table lists 0 new failures; with no judge, each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:100
++#. Diagram label
++msgid "Merge it through merge:guard"
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:13
+@@ -44,89 +74,109 @@ msgstr ""
+ msgid "Merge steward"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:63
++#: sdlc/processes/merge-manager-watch.bpmn:95
+ #. Diagram label
+ msgid "Merge train"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:95
++#: sdlc/processes/merge-manager-watch.bpmn:138
+ #. Diagram label
+ msgid "No"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:81
++#: sdlc/processes/merge-manager-watch.bpmn:120
+ #. Diagram label
+ msgid "Not green yet"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:90
++#: sdlc/processes/merge-manager-watch.bpmn:133
+ #. Diagram label
+ msgid "Nothing"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:78
++#: sdlc/processes/merge-manager-watch.bpmn:117
+ #. Diagram label
+ msgid "Nothing to do"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:52
++#: sdlc/processes/merge-manager-watch.bpmn:64
+ #. Diagram element documentation
+ msgid "Offer the card and land only on the owner's tap."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:38
++#: sdlc/processes/merge-manager-watch.bpmn:83
++#. Diagram element documentation
++msgid "One card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:75
++#. Diagram label
++msgid "Owner approved?"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:82
++#. Diagram label
++msgid "Put it on the owner's batch card"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:44
+ #. Diagram element documentation
+ msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:37
++#: sdlc/processes/merge-manager-watch.bpmn:43
+ #. Diagram label
+ msgid "Read PRs, runner queue, main verdict and owners"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:88
++#: sdlc/processes/merge-manager-watch.bpmn:131
+ #. Diagram label
+ msgid "Ready"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:64
+-#. Diagram element documentation
+-msgid "Ready PRs that stack land as a train through merge:guard."
++#: sdlc/processes/merge-manager-watch.bpmn:57
++#. Diagram label
++msgid "Relieve the runners"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:87
++#: sdlc/processes/merge-manager-watch.bpmn:88
++#. Diagram label
++msgid "Rides the train?"
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:130
+ #. Diagram label
+ msgid "Saturated"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:44
++#: sdlc/processes/merge-manager-watch.bpmn:50
+ #. Diagram element documentation
+ msgid "Saturated: queued runs are 60+ minutes old and nothing has landed, or the owner says the runners are full. Stalled: a PR owner has been silent for 2+ hours. Ready: a PR stacks with green owed CI. Otherwise nothing."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:51
++#: sdlc/processes/merge-manager-watch.bpmn:63
+ #. Diagram label
+ msgid "Saturation meta-merge"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:89
++#: sdlc/processes/merge-manager-watch.bpmn:132
+ #. Diagram label
+ msgid "Stalled"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:68
++#: sdlc/processes/merge-manager-watch.bpmn:106
+ #. Diagram label
+ msgid "Stalled-agent triage"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:69
++#: sdlc/processes/merge-manager-watch.bpmn:107
+ #. Diagram element documentation
+ msgid "Tell the owner, then take the stalled PR over."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:16
+ #. Diagram element documentation
+-msgid "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK."
++msgid "The loop run by the agent that holds the merge-steward lane (actor merge-manager, skill merge-manager-watcher), which coordinates with the swarm siblings whenever a batch lands. Each wake reads the open PRs, the runner queue, main's verdict and the PR owners live, and routes to one sub-process. A wake with nothing to do ends with no message. Every merge on any route waits for the owner's own OK, given in the merge manager's session as one card per batch (owner ruling, 2026-11-07, card Approvals, B)."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:19
+@@ -134,22 +184,32 @@ msgstr ""
+ msgid "The merge manager, holding the merge-steward role across one or more repositories. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, then routes to the process the queue needs (merge train, saturation meta-merge, stalled-agent takeover) or stays idle."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:32
++#: sdlc/processes/merge-manager-watch.bpmn:38
+ #. Diagram label
+ msgid "Timer, PR event, main run done, or sibling message"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:73
++#: sdlc/processes/merge-manager-watch.bpmn:111
+ #. Diagram label
+ msgid "Wake handled"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:43
++#: sdlc/processes/merge-manager-watch.bpmn:49
+ #. Diagram label
+ msgid "What does the queue need?"
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:94
++#: sdlc/processes/merge-manager-watch.bpmn:137
+ #. Diagram label
+ msgid "Yes"
+ msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:89
++#. Diagram element documentation
++msgid "Yes for a folio-assistant PR that does not change .github/workflows/. No for a workflow PR, or a PR in a repository with no train (owner ruling, 2026-11-07, card Train, A)."
++msgstr ""
++
++#: sdlc/processes/merge-manager-watch.bpmn:76
++#. Diagram element documentation
++msgid "Yes when the owner tapped this batch's card in the merge manager's session, or said to merge this PR when green. An approval given in a sibling's session does not count (owner ruling, 2026-11-07, card Approvals, B)."
++msgstr ""
+-- 
+2.43.0
+

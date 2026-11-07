@@ -1,0 +1,434 @@
+From e44935ed82febab6ffa2e7722485aad404bdde33 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 07:13:58 +0000
+Subject: [PATCH] Schemas for the merge manager rulings: lane holding on a
+ role, and the six-line merge request
+
+Owner rulings, 2026-11-07 ("make sure to update schemas"):
+- role-graph.ts: optional strict holding on a role (neededWhen, election,
+  loneSessionHolds, announce), with laneNeeded() reading the measured
+  condition and electHolder() choosing the holder deterministically
+  (P0 owner, else earliest-created, then session id).
+- merge-queue.ts: MergeRequestSchema, formatMergeRequest and
+  parseMergeRequest for the six-line request (PR URL and head SHA, session
+  URL, 1-3 sentences, rendered preview or a reason, what to look for, full
+  tier green as judged).
+- Tests for both.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ schemas/process/role-graph.test.ts |  70 +++++++++++++++++
+ schemas/process/role-graph.ts      | 117 +++++++++++++++++++++++++++++
+ schemas/sdlc/merge-queue.ts        | 104 +++++++++++++++++++++++++
+ schemas/sdlc/merge-request.test.ts |  59 +++++++++++++++
+ 4 files changed, 350 insertions(+)
+ create mode 100644 schemas/sdlc/merge-request.test.ts
+
+diff --git a/schemas/process/role-graph.test.ts b/schemas/process/role-graph.test.ts
+index 8c50a8c..bc6a7b3 100644
+--- a/schemas/process/role-graph.test.ts
++++ b/schemas/process/role-graph.test.ts
+@@ -31,6 +31,10 @@ import {
+   MECHANICAL_KINDS,
+   fulfilmentKindsForBpmnType,
+   type RoleGraph,
++  RoleDefSchema,
++  LaneHoldingSchema,
++  laneNeeded,
++  electHolder,
+ } from "./role-graph";
+ 
+ import { requireHarnessRoot } from "../harness-root.ts";
+@@ -569,3 +573,69 @@ describe("readRoleGraph — a role inherits a role of an instance it needs", ()
+     }
+   });
+ });
++
++describe("lane holding: when the lane is needed, and who holds it (owner rulings, 2026-11-07)", () => {
++  const holding = LaneHoldingSchema.parse({
++    neededWhen: { minActiveSessions: 2, maxQueuedRuns: 10, maxOldestQueuedMinutes: 30, conflictsCount: true },
++    election: ["owns-p0", "earliest-created"],
++    loneSessionHolds: true,
++    announce: "merge manager: <session id>",
++  });
++  const quiet = { activeSessions: 3, queuedRuns: 2, oldestQueuedMinutes: 5, conflictingPrs: 0 };
++
++  test("a role may declare it, and the strict schema refuses an unknown key inside it", () => {
++    const role = { id: "merge-steward", title: "Merge steward", description: "d", actorKinds: ["agent"], holding };
++    expect(RoleDefSchema.safeParse(role).success).toBe(true);
++    const bad = { ...role, holding: { ...holding, appointedBy: "owner" } };
++    expect(RoleDefSchema.safeParse(bad).success).toBe(false);
++  });
++
++  test("not needed with one active session, however busy the runners", () => {
++    expect(laneNeeded(holding, { ...quiet, activeSessions: 1, queuedRuns: 50 })).toBe(false);
++  });
++
++  test("not needed when several sessions are active but nothing is contended", () => {
++    expect(laneNeeded(holding, quiet)).toBe(false);
++  });
++
++  test("needed when runners are contended by queue length, by age, or when PRs conflict", () => {
++    expect(laneNeeded(holding, { ...quiet, queuedRuns: 11 })).toBe(true);
++    expect(laneNeeded(holding, { ...quiet, oldestQueuedMinutes: 31 })).toBe(true);
++    expect(laneNeeded(holding, { ...quiet, conflictingPrs: 1 })).toBe(true);
++    expect(laneNeeded({ ...holding, neededWhen: { ...holding.neededWhen, conflictsCount: false } }, { ...quiet, conflictingPrs: 1 })).toBe(false);
++  });
++
++  const a = { sessionId: "session_A", createdAt: "2026-11-07T05:00:00Z", ownsP0: false };
++  const b = { sessionId: "session_B", createdAt: "2026-11-07T04:00:00Z", ownsP0: false };
++  const c = { sessionId: "session_C", createdAt: "2026-11-07T06:00:00Z", ownsP0: true };
++
++  test("the owner of the P0 PR is elected over an earlier session", () => {
++    expect(electHolder(holding, [a, b, c])).toBe("session_C");
++  });
++
++  test("with no P0 owner, the earliest-created session is elected", () => {
++    expect(electHolder(holding, [a, b])).toBe("session_B");
++  });
++
++  test("two P0 owners: the earlier-created; an exact tie: the lower session id", () => {
++    const d = { ...b, ownsP0: true };
++    expect(electHolder(holding, [c, d])).toBe("session_B");
++    const e = { ...c, sessionId: "session_0" };
++    expect(electHolder(holding, [c, e])).toBe("session_0");
++  });
++
++  test("the result does not depend on the order of the listing", () => {
++    expect(electHolder(holding, [c, b, a])).toBe(electHolder(holding, [a, b, c]));
++  });
++
++  test("a lone session holds the lane for itself only when the role allows it", () => {
++    expect(electHolder(holding, [a])).toBe("session_A");
++    expect(electHolder({ ...holding, loneSessionHolds: false }, [a])).toBeUndefined();
++    expect(electHolder(holding, [])).toBeUndefined();
++  });
++
++  test("an unreadable creation time sorts last rather than dropping the candidate", () => {
++    expect(electHolder(holding, [{ ...a, createdAt: "not a date" }, b])).toBe("session_B");
++    expect(electHolder(holding, [{ ...a, createdAt: "x" }, { ...b, createdAt: "y" }])).toBe("session_A");
++  });
++});
+diff --git a/schemas/process/role-graph.ts b/schemas/process/role-graph.ts
+index 3a8eb10..0bb55cb 100644
+--- a/schemas/process/role-graph.ts
++++ b/schemas/process/role-graph.ts
+@@ -333,6 +333,13 @@ export interface RoleDef {
+    * (Q-DS-3 A). See {@link StoreDef}.
+    */
+   store?: StoreDef;
++  /**
++   * For a lane one session holds at a time, such as the merge steward: when
++   * the lane is needed at all, how sibling sessions choose its holder, and
++   * whether a lone session holds it for itself (owner rulings, 2026-11-07).
++   * See {@link LaneHolding}, {@link laneNeeded} and {@link electHolder}.
++   */
++  holding?: LaneHolding;
+ }
+ 
+ /**
+@@ -474,6 +481,115 @@ export const FormerNameSchema = z
+   })
+   .strict();
+ 
++/**
++ * The election rules, applied in order: each narrows the candidates, and
++ * the last tie is broken by session id, so two sessions reading the same
++ * listing always choose the same holder.
++ *
++ * - `owns-p0`: keep the sessions that own a P0 PR (the fix for a red main,
++ *   or the re-pin chain), when any does.
++ * - `earliest-created`: keep the earliest-created session.
++ */
++export const ELECTION_RULES = ["owns-p0", "earliest-created"] as const;
++export type ElectionRule = (typeof ELECTION_RULES)[number];
++
++/**
++ * When a lane held by one session at a time is needed, and who holds it.
++ *
++ * Owner rulings, 2026-11-07: "merge manager needed if lots of conflicting CI
++ * runners causing merge slowdown"; "if no merge manager, siblings
++ * self-determine which will play that role"; "if single, can merge manage
++ * self". The condition is measured, never asserted: {@link laneNeeded}
++ * reads it from live numbers.
++ */
++export const LaneHoldingSchema = z
++  .object({
++    neededWhen: z
++      .object({
++        /** At least this many active sessions have ready PRs in the same repositories. */
++        minActiveSessions: z.number().int().min(2),
++        /** Contention: more queued runs than this on a repository... */
++        maxQueuedRuns: z.number().int().min(0),
++        /** ...or the oldest queued run older than this many minutes... */
++        maxOldestQueuedMinutes: z.number().min(0),
++        /** ...or, when true, PRs that conflict with or supersede each other. */
++        conflictsCount: z.boolean(),
++      })
++      .strict(),
++    /** Applied in order by {@link electHolder}. */
++    election: z.array(z.enum(ELECTION_RULES)).min(1),
++    /** A session alone in its coordination group holds the lane for itself. */
++    loneSessionHolds: z.boolean(),
++    /** What the holder announces to every sibling and the owner, e.g. `merge manager: <session id>`. */
++    announce: z.string().min(1),
++  })
++  .strict();
++export type LaneHolding = z.infer<typeof LaneHoldingSchema>;
++
++/** The live numbers {@link laneNeeded} reads; never stored. */
++export interface LaneReading {
++  /** Active sessions with ready PRs in the same repositories. */
++  activeSessions: number;
++  /** The most queued runs on any one of those repositories. */
++  queuedRuns: number;
++  /** Age of the oldest queued run, in minutes (0 with none queued). */
++  oldestQueuedMinutes: number;
++  /** Open PRs that conflict with or supersede another open PR. */
++  conflictingPrs: number;
++}
++
++/**
++ * Whether the lane is needed now: enough active sessions AND contention,
++ * where contention is either runner bound crossed or, if counted,
++ * conflicting PRs. When it is false the lane lapses and each session merges
++ * its own green PRs with the owner's approval.
++ */
++export function laneNeeded(holding: LaneHolding, r: LaneReading): boolean {
++  const w = holding.neededWhen;
++  if (r.activeSessions < w.minActiveSessions) return false;
++  return (
++    r.queuedRuns > w.maxQueuedRuns ||
++    r.oldestQueuedMinutes > w.maxOldestQueuedMinutes ||
++    (w.conflictsCount && r.conflictingPrs > 0)
++  );
++}
++
++/** One active session that could hold the lane. */
++export interface HolderCandidate {
++  sessionId: string;
++  /** ISO 8601 creation time, as `list_sessions` reports it. */
++  createdAt: string;
++  /** It owns a P0 PR: the fix for a red main, or a link of the re-pin chain. */
++  ownsP0: boolean;
++}
++
++/**
++ * The session that holds the lane, chosen deterministically from the active
++ * candidates, or `undefined` with none. A lone candidate holds it when
++ * `loneSessionHolds`; otherwise the election rules narrow the field in order
++ * and the session id breaks the last tie.
++ */
++export function electHolder(holding: LaneHolding, candidates: HolderCandidate[]): string | undefined {
++  if (candidates.length === 0) return undefined;
++  if (candidates.length === 1) return holding.loneSessionHolds ? candidates[0].sessionId : undefined;
++  let field = [...candidates];
++  for (const rule of holding.election) {
++    if (rule === "owns-p0") {
++      const p0 = field.filter((c) => c.ownsP0);
++      if (p0.length > 0) field = p0;
++    } else {
++      // An unreadable time sorts last rather than dropping the candidate.
++      const at = (c: HolderCandidate) => {
++        const t = Date.parse(c.createdAt);
++        return Number.isNaN(t) ? Infinity : t;
++      };
++      const first = Math.min(...field.map(at));
++      field = field.filter((c) => at(c) === first);
++    }
++  }
++  return field.map((c) => c.sessionId).sort()[0];
++}
++
+ export const RoleDefSchema = z.object({
+   // Declared in the Zod shape as well as the interface: a field TypeScript
+   // accepts and Zod strips is written by an author, type-checks, and vanishes
+@@ -507,6 +623,7 @@ export const RoleDefSchema = z.object({
+   judgementOnly: z.boolean().optional(),
+   requiredCapabilities: ModelCapabilitiesSchema.optional(),
+   store: StoreDefSchema.optional(),
++  holding: LaneHoldingSchema.optional(),
+   // STRICT: an unknown key is an ERROR, not something to drop quietly.
+   //
+   // `readRoleGraph` already refuses a bad `actorKinds` and a dangling
+diff --git a/schemas/sdlc/merge-queue.ts b/schemas/sdlc/merge-queue.ts
+index 741b186..fe3d4a8 100644
+--- a/schemas/sdlc/merge-queue.ts
++++ b/schemas/sdlc/merge-queue.ts
+@@ -768,3 +768,107 @@ export function evaluateAgenticPromotion(
+   };
+ }
+ 
++
++// ---------------------------------------------------------------------------
++// The merge request a sibling sends the merge manager
++// ---------------------------------------------------------------------------
++
++/**
++ * The six-line merge request (owner, 2026-11-07: "anything that indicated to
++ * merge should have link to PR, claude session, explanation of changes,
++ * preview URL"; "put that in chat then ask to merge by card"). A sibling
++ * sends it; the merge manager posts it in its chat, then asks the owner by
++ * card, and sends back a request with no rendered preview and no reason.
++ *
++ * It is a MESSAGE, not a queue entry: it carries the head SHA it was green
++ * at, which {@link MergeQueueEntrySchema} must never store.
++ *
++ * The text form, one labelled line each, in this order:
++ *
++ * ```
++ * ready: https://github.com/<owner>/<repo>/pull/<n> <40-hex head sha>
++ * session: https://claude.ai/code/session_<id>
++ * changes: <1-3 sentences>
++ * preview: <rendered URL>          (or)   no preview: <reason>
++ * look for: <what to check in the preview>
++ * full tier green as judged
++ * ```
++ */
++export const MERGE_REQUEST_GREEN_LINE = "full tier green as judged";
++
++/** At most this many sentences in `changes`. */
++export const MERGE_REQUEST_MAX_SENTENCES = 3;
++
++const sentenceCount = (text: string): number =>
++  text.split(/(?<=[.!?])\s+(?=\S)/).filter((s) => s.trim().length > 0).length;
++
++export const MergeRequestPreviewSchema = z.discriminatedUnion("kind", [
++  z.object({ kind: z.literal("url"), url: z.string().url() }).strict(),
++  z.object({ kind: z.literal("none"), reason: z.string().trim().min(1) }).strict(),
++]);
++export type MergeRequestPreview = z.infer<typeof MergeRequestPreviewSchema>;
++
++export const MergeRequestSchema = z
++  .object({
++    prUrl: z.string().regex(/^https:\/\/github\.com\/[^/\s]+\/[^/\s]+\/pull\/\d+$/, "a GitHub pull request URL"),
++    headSha: z.string().regex(/^[0-9a-f]{40}$/, "the full 40-hex head SHA"),
++    sessionUrl: z.string().regex(/^https:\/\/claude\.ai\/code\/session_[A-Za-z0-9]+$/, "a claude.ai session URL"),
++    changes: z
++      .string()
++      .trim()
++      .min(1)
++      .refine((t) => sentenceCount(t) <= MERGE_REQUEST_MAX_SENTENCES, {
++        message: `the changes in at most ${MERGE_REQUEST_MAX_SENTENCES} sentences`,
++      }),
++    preview: MergeRequestPreviewSchema,
++    /** What to look for in the preview. Required when there is one. */
++    lookFor: z.string().trim().min(1).optional(),
++    /** The sender's statement that the full tier is green as judged (every judge). */
++    fullTierGreen: z.literal(true),
++  })
++  .strict()
++  .superRefine((r, ctx) => {
++    if (r.preview.kind === "url" && !r.lookFor) {
++      ctx.addIssue({ code: "custom", path: ["lookFor"], message: "say what to look for in the preview" });
++    }
++  });
++export type MergeRequest = z.infer<typeof MergeRequestSchema>;
++
++/** The six lines of a {@link MergeRequest}, in order. */
++export function formatMergeRequest(r: MergeRequest): string {
++  return [
++    `ready: ${r.prUrl} ${r.headSha}`,
++    `session: ${r.sessionUrl}`,
++    `changes: ${r.changes}`,
++    r.preview.kind === "url" ? `preview: ${r.preview.url}` : `no preview: ${r.preview.reason}`,
++    `look for: ${r.lookFor ?? "-"}`,
++    MERGE_REQUEST_GREEN_LINE,
++  ].join("\n");
++}
++
++/**
++ * Read a merge request from a message. Lines may come in any order and
++ * other lines are ignored; what is missing or malformed is reported by
++ * {@link MergeRequestSchema}, so the merge manager can send it back with
++ * the reason.
++ */
++export function parseMergeRequest(text: string): ReturnType<typeof MergeRequestSchema.safeParse> {
++  const lines = text.split(/\r?\n/).map((l) => l.trim());
++  const after = (label: string): string | undefined => {
++    const line = lines.find((l) => l.toLowerCase().startsWith(`${label}:`));
++    return line === undefined ? undefined : line.slice(label.length + 1).trim();
++  };
++  const ready = after("ready")?.split(/\s+/) ?? [];
++  const url = after("preview");
++  const none = after("no preview");
++  const lookFor = after("look for");
++  return MergeRequestSchema.safeParse({
++    prUrl: ready[0],
++    headSha: ready[1],
++    sessionUrl: after("session"),
++    changes: after("changes"),
++    preview: url !== undefined ? { kind: "url", url } : none !== undefined ? { kind: "none", reason: none } : undefined,
++    ...(lookFor !== undefined && lookFor !== "-" ? { lookFor } : {}),
++    fullTierGreen: lines.some((l) => l.toLowerCase() === MERGE_REQUEST_GREEN_LINE) ? true : undefined,
++  });
++}
+diff --git a/schemas/sdlc/merge-request.test.ts b/schemas/sdlc/merge-request.test.ts
+new file mode 100644
+index 0000000..3271a8d
+--- /dev/null
++++ b/schemas/sdlc/merge-request.test.ts
+@@ -0,0 +1,59 @@
++/**
++ * The six-line merge request a sibling sends the merge manager (owner,
++ * 2026-11-07). One test per line it must carry, plus the round trip.
++ */
++import { describe, expect, test } from "bun:test";
++import { formatMergeRequest, MergeRequestSchema, parseMergeRequest, type MergeRequest } from "./merge-queue";
++
++const sha = "4fcd153bb4c870366d340da07738f358bde031a3";
++const good: MergeRequest = {
++  prUrl: "https://github.com/litlfred/cat-harness/pull/1113",
++  headSha: sha,
++  sessionUrl: "https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz",
++  changes: "Writes the merge manager rulings into the skills. Adds a gateway to the watch loop.",
++  preview: { kind: "url", url: "https://litlfred.github.io/folio-assistant/branches/x/" },
++  lookFor: "the new gateway on the merge-manager-watch diagram",
++  fullTierGreen: true,
++};
++
++describe("merge request", () => {
++  test("a complete request round-trips through its six lines", () => {
++    const text = formatMergeRequest(good);
++    expect(text.split("\n")).toHaveLength(6);
++    const parsed = parseMergeRequest(text);
++    expect(parsed.success).toBe(true);
++    expect(parsed.data).toEqual(good);
++  });
++
++  test("no preview is accepted only with a reason", () => {
++    const none = { ...good, preview: { kind: "none" as const, reason: "docs-only change in a layer with no site" }, lookFor: undefined };
++    expect(parseMergeRequest(formatMergeRequest(none)).success).toBe(true);
++    expect(parseMergeRequest(formatMergeRequest(none).replace(/no preview: .*/, "no preview: ")).success).toBe(false);
++  });
++
++  test("a request with neither a preview nor a reason goes back", () => {
++    const text = formatMergeRequest(good).split("\n").filter((l) => !l.startsWith("preview:")).join("\n");
++    const r = parseMergeRequest(text);
++    expect(r.success).toBe(false);
++    expect(JSON.stringify(r.error?.issues)).toContain("preview");
++  });
++
++  test("a preview with nothing to look for is refused", () => {
++    expect(MergeRequestSchema.safeParse({ ...good, lookFor: undefined }).success).toBe(false);
++  });
++
++  test("a short SHA, a non-PR URL or a non-session URL is refused", () => {
++    expect(MergeRequestSchema.safeParse({ ...good, headSha: sha.slice(0, 7) }).success).toBe(false);
++    expect(MergeRequestSchema.safeParse({ ...good, prUrl: "https://github.com/litlfred/cat-harness" }).success).toBe(false);
++    expect(MergeRequestSchema.safeParse({ ...good, sessionUrl: "https://claude.ai/chat/abc" }).success).toBe(false);
++  });
++
++  test("more than three sentences of changes is refused", () => {
++    expect(MergeRequestSchema.safeParse({ ...good, changes: "One. Two. Three. Four." }).success).toBe(false);
++  });
++
++  test("without the green line the request is not ready", () => {
++    const text = formatMergeRequest(good).replace("full tier green as judged", "");
++    expect(parseMergeRequest(text).success).toBe(false);
++  });
++});
+-- 
+2.43.0
+
