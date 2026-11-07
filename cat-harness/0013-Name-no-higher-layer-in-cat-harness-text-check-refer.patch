@@ -1,0 +1,124 @@
+From 71358dff7b8cc2282bfa6d618b135c2c9e65115c Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 15:21:17 +0000
+Subject: [PATCH] Name no higher layer in cat-harness text
+ (check:reference-direction)
+
+cat-harness#1116's full tier at aafb457 had one new failure,
+cat-harness-tools:check:reference-direction:check: the new text named
+layers above cat-harness. Reworded generically, keeping each rule:
+- remote-mount: the cross-layer example says "a content layer" and "the
+  tools layer"; the mutual-dependence example describes the case without
+  the content layer's PR number; layer health says "the tools layer".
+- merge-manager-watcher: the exception's example, and "What this does not
+  do yet", name no tools PR numbers.
+- prepare-merge: "two such checks in the tools layer".
+The evidence stays in the earlier commit messages (folio-assistant-core
+#654 and #639; cat-harness-tools #1514, #1564, #1603, #1610, #1616,
+#1624 and #1625). check:reference-direction passes on the composed checkout.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ .../skills/sdlc-core/merge-manager-watcher.md | 19 +++++++++---------
+ sdlc/skills/sdlc-core/prepare-merge.md        |  2 +-
+ skills/kg/kg-core/remote-mount.md             | 20 +++++++++----------
+ 3 files changed, 20 insertions(+), 21 deletions(-)
+
+diff --git a/sdlc/skills/sdlc-core/merge-manager-watcher.md b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+index 0267d89d..b8ceeb9c 100644
+--- a/sdlc/skills/sdlc-core/merge-manager-watcher.md
++++ b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+@@ -354,8 +354,9 @@ ledger entry.
+     `caches:viz` gate line inside its re-pin. **Exception** (owner ruling,
+     2026-11-07, card "A. Allow the exception"): a change mutually dependent
+     with the re-pin, where neither passes alone, may share the PR when its
+-    body says why (as folio-assistant-core#639 does). The merge manager
+-    checks the reason; a change that only needs the new pins still stacks.
++    body says why (as a content layer's re-pin did on 2026-11-07). The
++    merge manager checks the reason; a change that only needs the new pins
++    still stacks.
+ 
+ ## Runner relief
+ 
+@@ -403,11 +404,9 @@ These come from the role; the watcher is the step that acts on them:
+ 
+ - The timer is each session's own scheduled check-in. No workflow wakes the
+   merge manager yet.
+-- `merge:watch` makes all four readings once the upgrade from session
+-  session_01VQDpPg9URqDhr4fxtYeGmr lands in cat-harness-tools. Until then,
+-  the pinned version (cat-harness-tools#1514) prints reading 1 only, and
+-  readings 2-4 are made by hand with `gh api`.
+-- `merge:request:check` (step 2 of the sweep) arrives with
+-  cat-harness-tools#1625, which builds on the `parseMergeRequest` of
+-  cat-harness-tools#1624. Until both land and are re-pinned, the merge
+-  manager checks the six lines by reading them.
++- `merge:watch` makes all four readings once its upgrade lands in the tools
++  layer and is re-pinned. Until then, the pinned version prints reading 1
++  only, and readings 2-4 are made by hand with `gh api`.
++- `merge:request:check` (step 2 of the sweep) arrives with the tools layer's
++  request check, which builds on its `parseMergeRequest`. Until it lands
++  and is re-pinned, the merge manager checks the six lines by reading them.
+diff --git a/sdlc/skills/sdlc-core/prepare-merge.md b/sdlc/skills/sdlc-core/prepare-merge.md
+index b25c1f0e..66667f1d 100644
+--- a/sdlc/skills/sdlc-core/prepare-merge.md
++++ b/sdlc/skills/sdlc-core/prepare-merge.md
+@@ -287,7 +287,7 @@ lower layer's main broke every downstream re-pin. New check scripts that no
+ downstream workflow ran failed `no check script is unrun`
+ (`check:test-gherkin`, and `translation:page-qa:check`, which also had a
+ flag mismatch). Checks that walked the file tree without skipping declared
+-build outputs failed too (cat-harness-tools#1610, #1616). Each time, the
++build outputs failed too (two such checks in the tools layer). Each time, the
+ re-pin became the P0.
+ 
+ So, in the same PR that adds the gate:
+diff --git a/skills/kg/kg-core/remote-mount.md b/skills/kg/kg-core/remote-mount.md
+index 053a3e12..f8b3caee 100644
+--- a/skills/kg/kg-core/remote-mount.md
++++ b/skills/kg/kg-core/remote-mount.md
+@@ -327,11 +327,11 @@ layer. Never move a pin back to an older commit so that two layers agree.
+ every layer the change needs, re-pinned to the current mains, and verify on a
+ fresh mount (`mount:remote --fresh`). A layer can need another layer's newer
+ commit. For example, cat-harness#1100 removed routes that were listed by hand,
+-because folio-assistant-core#654 now derives them (`builtOnHostSite`). So
+-cat-harness at 6dd3746 or later needs folio-assistant-core at 41d9da9 or
+-later, and cat-harness-tools at #1564 or later. An asset that a layer commits
+-must also match the tools recipe that generates it, such as cat-harness's
+-`edit-links.js`.
++because a content layer above it now derives them (`builtOnHostSite`). So
++cat-harness at 6dd3746 or later needs that content layer's change, and the
++tools layer's matching one, in the same re-pin. An asset that a layer
++commits must also match the tools recipe that generates it, such as
++cat-harness's `edit-links.js`.
+ 
+ **A re-pin is its own PR** (owner ruling, 2026-11-07: "keep repins on own
+ PR so easier to stack dependencies"). A re-pin PR changes the pins and
+@@ -348,9 +348,9 @@ workflow logic and no fix.
+ - **The one exception: mutual dependence** (owner ruling, 2026-11-07, card,
+   about 08:43Z, "A. Allow the exception"). A re-pin may share a PR with a
+   change only when neither can pass on its own. The PR body must say why.
+-  Example: folio-assistant-core#639. Core re-pinned to cat-harness#1032
+-  fails `check:tools` without #639's `library` topic, and #639 alone
+-  declares the `library` topic twice against the old pin. A change that
++  Example: a content layer re-pinned to cat-harness#1032 failed
++  `check:tools` without its own PR's `library` topic, and that PR alone
++  declared the `library` topic twice against the old pin. A change that
+   merely needs the new pins is not mutual: it stacks.
+ 
+ **A lower layer's new gate must not break the next re-pin.** A gate or
+@@ -371,10 +371,10 @@ commit on main. That move goes forward, so "a pin only moves forward" holds
+ throughout.
+ 
+ **The re-pin refreshes layer health** (owner ruling, 2026-11-07, card "Layer
+-health", A). When a re-pin moves cat-harness-tools, it regenerates the
++health", A). When a re-pin moves the tools layer, it regenerates the
+ checkout's layer health report at the new pins and publishes it. The health
+ check fails a re-pin once the report is more than 26 hours old and the checker
+-has moved. The implementation is cat-harness-tools#1603.
++has moved. The tools layer implements it.
+ 
+ **The committer re-pins, locally, and CI only verifies.** The person or agent
+ who moves a pin does the whole re-pin in their own checkout: `--seed`, a
+-- 
+2.43.0
+
