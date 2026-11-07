@@ -1,0 +1,36 @@
+From ffed416eab9cd9cef35e667bee5e3e97b32ce81a Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 13:12:57 +0000
+Subject: [PATCH] merge-manager-watcher: merge:watch's excluded layers default
+ to smart-*
+
+From the merge:watch upgrade (session session_01VQDpPg9URqDhr4fxtYeGmr):
+check:reference-direction refused naming a higher layer in the default, so
+the layers whose re-pins need the owner's consent now default to the
+pattern smart-* (an entry ending in * matches a prefix); --exclude-layer
+<name> or a config's excludedLayers replaces it.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ sdlc/skills/sdlc-core/merge-manager-watcher.md | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/sdlc/skills/sdlc-core/merge-manager-watcher.md b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+index 8a40090a..0267d89d 100644
+--- a/sdlc/skills/sdlc-core/merge-manager-watcher.md
++++ b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+@@ -217,6 +217,10 @@ event, a merge request or a main run finishing may start a sweep early.
+    Name the repositories with `--repo <owner/name>` (repeatable), `--repos
+    a,b,c`, or `--config <file.json>` (`{"repos": [...], "staleHours": 2}`).
+    `--stale-hours <n>` sets when a silent PR owner is flagged (default 2).
++   The layers whose re-pins need the owner's consent default to `smart-*`
++   (the WHO SMART upstream layers; an entry ending in `*` matches a
++   prefix). `--exclude-layer <name>` (repeatable) or a config's
++   `excludedLayers` replaces the default.
+    Per repository it prints:
+    - each PR's verdict, with a route flag: workflow changes go to a direct
+      merge, a folio-assistant PR to the merge train, a pin on an excluded
+-- 
+2.43.0
+
