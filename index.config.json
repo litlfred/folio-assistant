@@ -8,7 +8,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "6eed239af4a5a97ba8307cb0ef72a8c899f8eeb4",
+          "ref": "c36b85ce480280d0a2564d293f882c668a3388fe",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -19,7 +19,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-07",
-              "ref": "6eed239af4a5a97ba8307cb0ef72a8c899f8eeb4",
+              "ref": "c36b85ce480280d0a2564d293f882c668a3388fe",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR."
             },
             "standing": {
@@ -46,7 +46,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness-tools",
-          "ref": "e057991e8c4302c8e0064cc2182b06332d4d69d5",
+          "ref": "e5a047b8d4cca622e7c53cd78fadcfc43e621a65",
           "overrides": {
             "cat-harness-tools": {
               "whole": true
@@ -57,7 +57,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-07",
-              "ref": "e057991e8c4302c8e0064cc2182b06332d4d69d5",
+              "ref": "e5a047b8d4cca622e7c53cd78fadcfc43e621a65",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR."
             },
             "standing": {
@@ -75,7 +75,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/folio-assistant-core",
-          "ref": "067e4f7a3ce364940ae25dea3f50bdf8d98ae2f9",
+          "ref": "7e00ff66455f2eec234f718822b1ad61e7ea65f8",
           "overrides": {
             "folio-assistant-core": {
               "whole": true
@@ -86,7 +86,7 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-07",
-              "ref": "067e4f7a3ce364940ae25dea3f50bdf8d98ae2f9",
+              "ref": "7e00ff66455f2eec234f718822b1ad61e7ea65f8",
               "evidence": "standing consent by litlfred given 2026-11-01: follow `main` — Owner litlfred tapped card Q-TRAIN-1 'A. All except smart-base' on 2026-11-01 11:26:02Z in the project thread 'Run re-pins as a 2-hour train' (cmsg_017WNUkNK8kdDziPK58Pv6G9RghqtQeZR4QPwyKsTCohv3), after card Q-SPD-3 B: re-pins run as a 2-hour train (repin-train.yml, issue #2873); a person still merges each train PR."
             },
             "standing": {
@@ -506,12 +506,12 @@
       {
         "script": "merge:request:check",
         "kind": "report",
-        "reason": "JUDGES A MESSAGE, not this tree: it checks a six-line merge request a sibling sends the merge manager against the live PR over the GitHub API (head SHA, preview built for that head), and takes the request as its argument or on stdin. With no request there is nothing to judge, so it has no place in a PR's CI; the merge manager runs it on each request it receives."
+        "reason": "JUDGES A MESSAGE, not this tree: it checks a six-line merge request a sibling sends the merge manager against the live PR over the GitHub API (head SHA, preview built for that head), and takes the request as its argument or on stdin. With no request there is nothing to judge, so it has no place in a PR's CI; the merge manager runs it on each request it receives. Owner card 2026-11-07 ~17:10Z, 'A. Allow both'."
       },
       {
         "script": "translation:glossary:check",
         "kind": "report",
-        "reason": "RED WHERE IT LANDED (cat-harness-tools#1599, arriving with the re-pin in folio-assistant#2985): measured 2026-11-07 on this tree it reports 3 zh findings (e.g. «Actor» rendered 参与者 in concepts/skills.po and 行动者 in bootstrap's glossary) that predate the gate. Wiring it now would red every PR on catalogue text no PR here changed; it becomes a gate once the zh catalogues agree with the layered glossary."
+        "reason": "RED WHERE IT LANDED (cat-harness-tools#1599, arriving with the re-pin in folio-assistant#2985): measured 2026-11-07 on this tree it reports 3 zh findings (e.g. «Actor» rendered 参与者 in concepts/skills.po and 行动者 in bootstrap's glossary) that predate the gate. Wiring it now would red every PR on catalogue text no PR here changed; it becomes a gate once the zh catalogues agree with the layered glossary. Owner card 2026-11-07 ~17:10Z, 'A. Allow both'."
       }
     ]
   }
