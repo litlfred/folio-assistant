@@ -15,3 +15,5 @@ Reproduced on a fresh worktree mounted from the lock. The merge steward is drivi
 - "Repository gates (hard)": runs nothing itself. Red only because gates-docs was red on audit:coverage.
 - gates-workflows "no check script is unrun": smart-base:processes:render:check. The steward holds this.
 - stage: check:escaped-markup on reference/skill-instructions/journey-maps.html. A soft-wrapped line in cat-harness skills/ui/ui-core/journey-maps.md began with `<owner> sees")`, and kramdown read it as the start of an HTML block, so the rest of the page came out raw. Fix: cat-harness#1111.
+
+_2026-11-07T05:44:16Z_ — Correction: the stage fix that lands is litlfred/cat-harness#1110 (the merge-planning session). The duplicate #1111 is closed as superseded. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
