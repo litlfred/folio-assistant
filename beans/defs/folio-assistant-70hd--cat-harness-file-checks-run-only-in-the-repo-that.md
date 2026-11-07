@@ -128,3 +128,14 @@ _2026-11-06T08:25:00Z_ — **Merged** litlfred/folio-assistant-core#657 (344abb2
 
 _2026-11-07T05:27:00Z_ — **Merged** litlfred/folio-assistant-core#659 (ecccd22) on all-green CI under the owner's merge-on-green window: core dc:render:check skips another layer's catalogue instance in layer PR checks (F's patch, applied by session_01VQDpPcbpLjEo8EuzFLVq5Z). All core items under this bean are on core main: materialized-fixity (#651), kg:materialize + glossary:pot (#657), dc:render (#659). Session https://claude.ai/code/session_01VQDpPcbpLjEo8EuzFLVq5Z
 - 2026-11-07 05:35Z: Owner, first-hand: "repin + merge open 12 hrs" (until ~17:25Z). core#659 (dc:render scoped) merged (ecccd22) by session_01VQDpPcbpLjEo8EuzFLVq5Z. bootstrap-tools#80 was red on its own NEW: check:reference-direction flagged gate-own.ts for naming cat-harness-tools (a lower layer naming a higher one). Fixed in 240f0e1 (no layer named; pin unchanged); verified locally with the check. Next: merge #80 on green, then re-pin smart-immunizations and who-iris to bootstrap-tools and core mains.
+
+_2026-11-07T06:05:00Z_ — Re-count 3 (owner, this session: "re-count smart-ra/base"):
+- smart-ra: main acaf6ce still pins cat-harness-tools 42cc850, which predates ee88ead. Not measurable until it re-pins.
+- smart-base: main took cat-harness-tools 64f0aa0 (≥ ee88ead) only at 2026-11-07T05:36Z (#309 merged, f9fc15d). Its core pin is still f0b3ccb, before #651/#657/#659.
+- AFTER sample = 1 run, #309's compare job 127807509685 (head pinned 64f0aa0):
+  - 0 own NEW, 0 cross-layer NEW from the tools-scoped gates.
+  - 1 unclassified NEW: check:artefact-verification, "stale declaration … smart-base:processes:render:check". Per #309's commit message this is cat-harness-tools' baseline, dropped by tools#1579, so probably cross-layer.
+  - Core gates: materialized-fixity and kg:materialize "failing on main too" (core not re-pinned); glossary:pot and who-iris dc:render pass.
+  - BEFORE in smart-base was ≈6 cross-layer NEW (16:45Z note).
+- Too small a sample to call. Next measurable run: smart-base#315 (branched after the re-pin).
+Bean stays open: bootstrap-tools#80 (iri:sync, F's) is still open. Session https://claude.ai/code/session_01VQDpPcbpLjEo8EuzFLVq5Z
