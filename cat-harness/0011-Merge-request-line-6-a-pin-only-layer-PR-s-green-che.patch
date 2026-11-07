@@ -1,0 +1,37 @@
+From f513a35a5feca1e2fccc6db73524a79ca16d03db Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 09:23:15 +0000
+Subject: [PATCH] Merge request line 6: a pin-only layer PR's green check
+ judged nothing
+
+Owner rule, 2026-11-07 (six-line merge request), and a finding the same day:
+who-iris#190's "No new failures" job 128355317559 passed but ran nothing,
+because layer CI mounts the root's lock, not the caller's. A pin-only layer
+PR's line 6 now says so, and the evidence for its pins is the root's re-pin.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPfGantMCt7AV4LCCK2
+---
+ sdlc/skills/sdlc-core/merge-manager-watcher.md | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/sdlc/skills/sdlc-core/merge-manager-watcher.md b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+index f5e4300..8a40090 100644
+--- a/sdlc/skills/sdlc-core/merge-manager-watcher.md
++++ b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+@@ -163,7 +163,11 @@ chat then ask to merge by card". A sibling's `ready:` message carries:
+    preview, or the layer's equivalent), confirmed rendered, or
+    `no preview: <reason>`;
+ 5. what to look for in the preview;
+-6. `full tier green as judged` (rule 1 below).
++6. `full tier green as judged` (rule 1 below). For a pin-only PR in a layer
++   repository, line 6 reads `pin-only: layer CI judges nothing (it mounts the
++   root's lock)`, because its "No new failures" job runs no tests or gates and
++   passes without judging anything. The evidence for those pins is the root's
++   own re-pin PR, not the layer's green check.
+ 
+ The merge manager posts all six lines in its chat, then asks the owner by
+ card. A request with no rendered preview and no reason goes back to the
+-- 
+2.43.0
+
