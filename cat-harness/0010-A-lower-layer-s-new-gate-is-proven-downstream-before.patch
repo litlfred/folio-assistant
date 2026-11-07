@@ -1,0 +1,108 @@
+From ea6d81a47206479292aff2f2f8f567f442c17091 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 08:51:22 +0000
+Subject: [PATCH] A lower layer's new gate is proven downstream before it lands
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Owner ruling, 2026-11-07 (card "Rule 13": add it to cat-harness#1116), on
+the merge manager's proposal from that day's evidence: twice a lower
+layer's main broke every downstream re-pin (check:test-gherkin and
+translation:page-qa:check unrun downstream, the latter with a flag
+mismatch; tree-walking checks without the declared build outputs skipped,
+cat-harness-tools#1610 and #1616).
+
+- prepare-merge §"A new gate in a lower layer must pass downstream": in
+  the PR that adds the gate, it passes on its own main, says how
+  downstream layers run it (shared reusable workflow, or opt-in with an
+  exemption row), and shows a downstream dry run over a fresh
+  folio-assistant mount.
+- continual-progress: the same, in short.
+- remote-mount §"Re-pinning": a re-pin moves pins only; a failure on a
+  gate a lower layer just added is fixed in that layer.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ sdlc/skills/sdlc-core/continual-progress.md |  8 +++++++
+ sdlc/skills/sdlc-core/prepare-merge.md      | 24 +++++++++++++++++++++
+ skills/kg/kg-core/remote-mount.md           |  8 +++++++
+ 3 files changed, 40 insertions(+)
+
+diff --git a/sdlc/skills/sdlc-core/continual-progress.md b/sdlc/skills/sdlc-core/continual-progress.md
+index 2f83c613..4d06496c 100644
+--- a/sdlc/skills/sdlc-core/continual-progress.md
++++ b/sdlc/skills/sdlc-core/continual-progress.md
+@@ -246,6 +246,14 @@ queued runs that never started, and asks the owners of the lowest-priority PRs
+ to return them to draft: [`merge-manager-watcher`](merge-manager-watcher.md)
+ §"Runner relief".
+ 
++### A new gate is proven downstream before it lands
++
++A PR that adds a gate or `check:*` script to a lower layer passes on its own
++main, says how downstream layers run it, and shows a dry run over a fresh
++folio-assistant mount. Otherwise the next re-pin inherits the breakage
++([`prepare-merge`](prepare-merge.md) §"A new gate in a lower layer must
++pass downstream").
++
+ ### One pusher per PR branch
+ 
+ Only the session that owns a PR pushes to its branch (owner ruling,
+diff --git a/sdlc/skills/sdlc-core/prepare-merge.md b/sdlc/skills/sdlc-core/prepare-merge.md
+index 89ce8fcc..b25c1f0e 100644
+--- a/sdlc/skills/sdlc-core/prepare-merge.md
++++ b/sdlc/skills/sdlc-core/prepare-merge.md
+@@ -279,6 +279,30 @@ tree, and install dependencies rather than borrowing them: a symlinked root
+ location this repository does not contain. Confirming the symlink is
+ git-ignored is not enough; path resolution is a separate confound.
+ 
++## A new gate in a lower layer must pass downstream (STRICT)
++
++A layer that adds a gate or a `check:*` script takes on its downstream
++layers too (owner ruling, 2026-11-07, card "Rule 13": add it): the next re-pin of each one runs it. Twice on 2026-11-07 a
++lower layer's main broke every downstream re-pin. New check scripts that no
++downstream workflow ran failed `no check script is unrun`
++(`check:test-gherkin`, and `translation:page-qa:check`, which also had a
++flag mismatch). Checks that walked the file tree without skipping declared
++build outputs failed too (cat-harness-tools#1610, #1616). Each time, the
++re-pin became the P0.
++
++So, in the same PR that adds the gate:
++
++1. **It passes on the layer's own main.**
++2. **It says how downstream layers run it**: either wired through the
++   shared reusable workflow, or declared opt-in per layer with an exemption
++   row each downstream layer can carry.
++3. **A downstream dry run proves it**: lay the branch over a fresh mount of
++   folio-assistant main, and run the gate set there. Say in the PR what ran
++   and its result.
++
++Without all three, the gate waits. It never lands for the next re-pin to
++discover.
++
+ ## A clean merge can produce a wrong artefact (STRICT)
+ 
+ **`bun run cat regen` after every base merge.** Not only after a conflicted one —
+diff --git a/skills/kg/kg-core/remote-mount.md b/skills/kg/kg-core/remote-mount.md
+index 83eccaa5..053a3e12 100644
+--- a/skills/kg/kg-core/remote-mount.md
++++ b/skills/kg/kg-core/remote-mount.md
+@@ -353,6 +353,14 @@ workflow logic and no fix.
+   declares the `library` topic twice against the old pin. A change that
+   merely needs the new pins is not mutual: it stacks.
+ 
++**A lower layer's new gate must not break the next re-pin.** A gate or
++check script added to a lower layer has passed a downstream dry run before
++it lands, so a re-pin moves pins and nothing else. When a re-pin
++nonetheless fails on a gate a lower layer just added, the fix goes into
++that layer, not into the re-pin
++([`prepare-merge`](../../../sdlc/skills/sdlc-core/prepare-merge.md)
++§"A new gate in a lower layer must pass downstream").
++
+ **Stacking across layers** (owner ruling, 2026-11-07). Work that needs an
+ unmerged PR in a lower layer does not wait for it. Develop against that
+ PR's branch laid over a fresh mount. A draft PR may pin the dependency
+-- 
+2.43.0
+
