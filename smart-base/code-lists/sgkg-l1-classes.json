@@ -1,0 +1,108 @@
+{
+  "$schema": "folio-code-list/v1",
+  "id": "sgkg-l1-classes",
+  "title": "SMART Guidelines KG L1 classes",
+  "description": "The classes an L1 knowledge-graph node can be: a WHO publication, its sections, recommendations and the evidence they rest on. smart-base document kinds and the L1 extraction name these as `sgkg-l1#<code>`. Taken on 2026-10-23 from litlfred/smart-kg at 66a9b1393fd7, which had been pinned since 2026-10-02 (bean pebe). smart-kg is deprecated (owner, 2026-10-16), so smart-base owns this list now: edit it here, not upstream.",
+  "source": {
+    "href": "https://github.com/litlfred/smart-kg/blob/66a9b1393fd7f315eb4eb0dab001db5e3eb0c5ef/ontology/l1/l1.json",
+    "note": "litlfred/smart-kg ontology/l1/l1.json at 66a9b1393fd7, the `classes` array: id, name, note and iri."
+  },
+  "codes": [
+    {
+      "code": "publication",
+      "label": "Publication",
+      "definition": "A WHO normative publication: a guideline, guidance, recommendation summary, or classification. Metadata follows Dublin Core, which HealthInterventions already uses.",
+      "value": "http://smart.who.int/kg/publication"
+    },
+    {
+      "code": "publication-section",
+      "label": "Publication section",
+      "definition": "A chapter, annex or numbered section. Recommendations are located by section and page, which is what makes an extraction checkable.",
+      "value": "http://smart.who.int/kg/publication-section"
+    },
+    {
+      "code": "recommendation",
+      "label": "Recommendation",
+      "definition": "The atomic normative statement. This is the node nothing in the WHO estate currently makes addressable.",
+      "value": "http://smart.who.int/kg/recommendation"
+    },
+    {
+      "code": "remark",
+      "label": "Remark",
+      "definition": "An implementation consideration attached to a recommendation. Grounded: the BCG table's first annotationEntry carries exactly this — \"Neonates born to women of unknown HIV status should be vaccinated as the benefits…\" — clinical nuance that shapes the decision logic but is not the recommendation itself.",
+      "value": "http://smart.who.int/kg/remark"
+    },
+    {
+      "code": "evidence",
+      "label": "Evidence",
+      "definition": "The body of evidence behind a recommendation, with its GRADE certainty rating.",
+      "value": "http://smart.who.int/kg/evidence"
+    },
+    {
+      "code": "population",
+      "label": "Population",
+      "definition": "PICO P (population).",
+      "value": "http://smart.who.int/kg/population"
+    },
+    {
+      "code": "intervention",
+      "label": "Intervention",
+      "definition": "PICO I. The clinical or public-health action, distinct from health-intervention, which is the DAK-facing component.",
+      "value": "http://smart.who.int/kg/intervention"
+    },
+    {
+      "code": "comparator",
+      "label": "Comparator",
+      "definition": "PICO C. Frequently absent in WHO recommendations; absence is recorded rather than invented.",
+      "value": "http://smart.who.int/kg/comparator"
+    },
+    {
+      "code": "outcome",
+      "label": "Outcome",
+      "definition": "PICO O (outcome).",
+      "value": "http://smart.who.int/kg/outcome"
+    },
+    {
+      "code": "health-intervention",
+      "label": "Health intervention",
+      "definition": "What a recommendation is about, and the hinge to L2. Corresponds to the DAK component smart-base defines as HealthInterventions — today `id`, `description[x]` and `reference 1..* DublinCore`, i.e. a bibliographic citation with no recommendation behind it. This class is what that citation should resolve to.",
+      "value": "http://smart.who.int/kg/health-intervention"
+    },
+    {
+      "code": "schedule",
+      "label": "Schedule",
+      "definition": "A normative delivery schedule. Grounded: the BCG table cites \"WHO recommendations for routine immunization – summary tables\", which IS a schedule publication — the single most-cited L1 source in the immunization DAK.",
+      "value": "http://smart.who.int/kg/schedule"
+    },
+    {
+      "code": "schedule-entry",
+      "label": "Schedule entry",
+      "definition": "One row of a schedule: which intervention, for whom, when, how many doses. This is the granularity a decision table actually consumes — the BCG rules turn on dose count, age and interval since a live vaccine.",
+      "value": "http://smart.who.int/kg/schedule-entry"
+    },
+    {
+      "code": "indicator",
+      "label": "Indicator",
+      "definition": "A programme indicator defined normatively at L1. Distinct from the DAK's ProgramIndicator component, which is its L2 expression; that model already carries `references 0..* id` pointing at health intervention ids.",
+      "value": "http://smart.who.int/kg/indicator"
+    },
+    {
+      "code": "terminology-code",
+      "label": "Terminology code",
+      "definition": "A code in an external terminology — ICD-10, ICD-11, SNOMED CT, ATC, or a WHO classification such as CDHI. CROSS-REFERENCE ONLY. It records system, code and display, and asserts NOTHING about the terminology: no hierarchy, no subsumption, no synonyms, no post-coordination. The terminology has its own authority, its own release cycle and its own tooling, and a partial copy here would be wrong within one release. Resolve meaning against the terminology server, not against this graph.",
+      "value": "http://smart.who.int/kg/terminology-code"
+    },
+    {
+      "code": "citation",
+      "label": "Citation",
+      "definition": "A citation string exactly as it appears in an L2 or L3 artefact, together with what it was resolved to. Grounded directly in the BCG table, where every rule's annotationEntry[1] reads \"WHO recommendations for routine immunization – summary tables (March 2023) (1)\" — a citation that no tool can currently follow. This class is where that string becomes a link, and where the fact that resolving it was a judgement gets recorded.",
+      "value": "http://smart.who.int/kg/citation"
+    },
+    {
+      "code": "external-artifact",
+      "label": "External artefact",
+      "definition": "An L2 or L3 artefact addressed by canonical URL — a BPMN process, a DMN decision table, a FHIR PlanDefinition. Deliberately opaque: it carries an IRI and a free-text kind, and this graph asserts nothing about its internal structure. That opacity is the boundary. The L2 and L3 subgraphs model those artefacts properly; L1 only needs to point.",
+      "value": "http://smart.who.int/kg/external-artifact"
+    }
+  ]
+}

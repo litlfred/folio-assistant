@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of integration-audit.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "skills/authoring/authoring-core/integration-audit.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "skills/authoring/authoring-core/integration-audit.md#provenance-1"
+        }
+      ]
+    },
+    {
+      "@id": "skills/authoring/authoring-core/integration-audit.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "When to invoke",
+      "prov:value": "- **After a checker bug fix.** Example: a regex was missing the `u`\n  flag. Once fixed, every block previously audited under the buggy\n  checker has the wrong `result` cached in its sidecar. Re-audit by\n  invalidating the affected criterion's entries."
+    }
+  ]
+}
