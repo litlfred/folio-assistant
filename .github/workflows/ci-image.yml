@@ -2,17 +2,19 @@
 # (bean folio-assistant-ay33).
 #
 # ghcr.io/<owner>/<repo>-ci:<key> (here ghcr.io/litlfred/folio-assistant-ci) holds the remote mounts
-# index.lock.json pins, node_modules and Playwright's Chromium, keyed by
-# .github/ci-image/key.sh. `.github/actions/ci-setup` streams it onto a job's
-# runner in place of mounting and installing; with no image for its key a job
-# falls back to those steps, so this workflow only ever saves time.
+# index.lock.json pins, node_modules and Playwright's Chromium. The recipe —
+# key, build and restore — is cat-harness-tools' shared `ci-image` action, and
+# jobs restore with its shared `ci-setup` action, both called at the commit
+# index.lock.json pins (check:workflow-pins). With no image for its key a job
+# falls back to mounting and installing, so this workflow only ever saves time.
+# A re-pin of cat-harness-tools changes the recipe, and with it the key.
 #
 # Triggers:
 #   - a push to main that changes what the image holds or how it is built:
 #     build and push the new key's image, unless it already exists;
 #   - workflow_dispatch: the same, from any ref, for a first build or a
 #     forced rebuild;
-#   - a pull request touching the image's recipe: build it, push it to a
+#   - a pull request touching the lock or this workflow: build it, push it to a
 #     throwaway registry INSIDE the job, restore it the way ci-setup does and
 #     verify the mounts. Nothing leaves the runner, and this job has no
 #     package permission.
@@ -31,13 +33,10 @@ on:
       - index.lock.json
       - bun.lock
       - package.json
-      - .github/ci-image/**
-      - .github/actions/ci-setup/**
       - .github/workflows/ci-image.yml
   pull_request:
     paths:
-      - .github/ci-image/**
-      - .github/actions/ci-setup/**
+      - index.lock.json
       - .github/workflows/ci-image.yml
   workflow_dispatch:
     inputs:
@@ -70,19 +69,40 @@ jobs:
         with:
           bun-version: 1.4.4
       - name: Build and push to the local registry
-        run: bash .github/ci-image/build.sh localhost:5000/folio-assistant-ci:test insecure
-      - name: Restore into a fresh checkout, as ci-setup does, and verify it
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@8e7ad1121a9400c101724786dbd80f8912b77706 # index.lock.json
+        with:
+          op: build
+          ref: localhost:5000/folio-assistant-ci:test
+          insecure: "true"
+      # A job without a browser restores the workspace layers only, and the
+      # skipped layers must still pass the digest check.
+      - name: Restore the workspace layers only
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@8e7ad1121a9400c101724786dbd80f8912b77706 # index.lock.json
+        with:
+          op: fetch
+          scheme: http
+          image: localhost:5000/folio-assistant-ci
+          key: test
+          workspace: ${{ runner.temp }}/ws-only/ws
+          browsers: ${{ runner.temp }}/ws-only/pw
+          roles: ws
+      - name: Prepare a fresh checkout
         run: |
-          # A job without a browser restores the workspace layers only, and the
-          # skipped layers must still pass the digest check.
-          ws_only="$RUNNER_TEMP/ws-only"
-          mkdir -p "$ws_only/ws" "$ws_only/pw"
-          CI_IMAGE_SCHEME=http bash .github/ci-image/fetch.sh localhost:5000/folio-assistant-ci test "$ws_only/ws" "$ws_only/pw" "ws"
-          [ -z "$(ls -A "$ws_only/pw")" ] || { echo "a workspace-only restore wrote browsers"; exit 1; }
-          fresh="$RUNNER_TEMP/fresh"
-          git worktree add -q --detach "$fresh" HEAD
-          CI_IMAGE_SCHEME=http bash .github/ci-image/fetch.sh localhost:5000/folio-assistant-ci test "$fresh" "$RUNNER_TEMP/pw-fresh" "ws pw"
-          cd "$fresh"
+          [ -z "$(ls -A "$RUNNER_TEMP/ws-only/pw" 2>/dev/null)" ] || { echo "a workspace-only restore wrote browsers"; exit 1; }
+          git worktree add -q --detach "$RUNNER_TEMP/fresh" HEAD
+      - name: Restore into the fresh checkout, as ci-setup does
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@8e7ad1121a9400c101724786dbd80f8912b77706 # index.lock.json
+        with:
+          op: fetch
+          scheme: http
+          image: localhost:5000/folio-assistant-ci
+          key: test
+          workspace: ${{ runner.temp }}/fresh
+          browsers: ${{ runner.temp }}/pw-fresh
+          roles: ws pw
+      - name: Verify the restored checkout
+        run: |
+          cd "$RUNNER_TEMP/fresh"
           bun run cat mount:lock:check
           bun install --frozen-lockfile
           PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/pw-fresh" bun -e '
@@ -106,15 +126,21 @@ jobs:
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
           bun-version: 1.4.4
-      - name: Image key, and whether it is already built
+      - name: Image key
+        id: recipe
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@8e7ad1121a9400c101724786dbd80f8912b77706 # index.lock.json
+        with:
+          op: key
+      - name: Whether it is already built
         id: key
         env:
           GH_TOKEN: ${{ github.token }}
           ACTOR: ${{ github.actor }}
           FORCE: ${{ inputs.force }}
+          KEY: ${{ steps.recipe.outputs.key }}
+          IMAGE: ${{ steps.recipe.outputs.image }}
         run: |
-          key="$(bash .github/ci-image/key.sh .)"
-          image="ghcr.io/${GITHUB_REPOSITORY,,}-ci"
+          key="$KEY"; image="$IMAGE"
           echo "key=$key" >> "$GITHUB_OUTPUT"
           echo "image=$image" >> "$GITHUB_OUTPUT"
           echo "$GH_TOKEN" | docker login ghcr.io -u "$ACTOR" --password-stdin
@@ -126,22 +152,22 @@ jobs:
           fi
       - name: Build and push
         if: steps.key.outputs.exists != 'true'
-        env:
-          KEY: ${{ steps.key.outputs.key }}
-          IMAGE: ${{ steps.key.outputs.image }}
-        run: bash .github/ci-image/build.sh "$IMAGE:$KEY"
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@8e7ad1121a9400c101724786dbd80f8912b77706 # index.lock.json
+        with:
+          op: build
+          ref: ${{ steps.key.outputs.image }}:${{ steps.key.outputs.key }}
+      - name: A fresh checkout to restore into
+        run: git worktree add -q --detach "$RUNNER_TEMP/fresh" HEAD
+      # Anonymously, as every job pulls it: a package that is not public fails
+      # here rather than silently in every job's fallback.
       - name: Restore it the way a job will, and time it
-        env:
-          KEY: ${{ steps.key.outputs.key }}
-          IMAGE: ${{ steps.key.outputs.image }}
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          fresh="$RUNNER_TEMP/fresh"
-          git worktree add -q --detach "$fresh" HEAD
-          status=0
-          bash .github/ci-image/fetch.sh "$IMAGE" "$KEY" "$fresh" "$RUNNER_TEMP/pw-fresh" "ws pw" || status=$?
-          if [ "$status" -eq 3 ]; then
-            echo "::warning title=CI image::anonymous pull refused — the package is not public yet, so jobs will need packages:read (or the owner sets it public); timing with the job token"
-            REGISTRY_TOKEN="$GH_TOKEN" bash .github/ci-image/fetch.sh "$IMAGE" "$KEY" "$fresh" "$RUNNER_TEMP/pw-fresh" "ws pw"
-          elif [ "$status" -ne 0 ]; then exit "$status"; fi
-          cd "$fresh" && bun run cat mount:lock:check
+        uses: litlfred/cat-harness-tools/.github/actions/ci-image@8e7ad1121a9400c101724786dbd80f8912b77706 # index.lock.json
+        with:
+          op: fetch
+          image: ${{ steps.key.outputs.image }}
+          key: ${{ steps.key.outputs.key }}
+          workspace: ${{ runner.temp }}/fresh
+          browsers: ${{ runner.temp }}/pw-fresh
+          roles: ws pw
+      - name: Verify the restored checkout
+        run: cd "$RUNNER_TEMP/fresh" && bun run cat mount:lock:check
