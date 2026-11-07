@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-06T06:20:00Z
+updated_at: 2026-11-07T08:00:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -141,3 +141,5 @@ _2026-11-07T06:05:00Z_ — Re-count 3 (owner, this session: "re-count smart-ra/b
 Bean stays open: bootstrap-tools#80 (iri:sync, F's) is still open. Session https://claude.ai/code/session_01VQDpPcbpLjEo8EuzFLVq5Z
 - 2026-11-07 06:45Z: Owner rules relayed by the parent: NO SELF-MERGES; the merge manager is session_01VQDpPffYARDQ8juksAZScf; a 6-line "ready"; pacing. bootstrap-tools#80 at 240f0e1 is full-tier green and mergeable clean. Marked ready, and the 6-line "ready" was sent to the merge manager and the parent. Next, after it lands: re-pin smart-immunizations and who-iris to the bootstrap-tools and core mains (a re-pin link), then send "ready".
 - 2026-11-07 07:58Z: bootstrap-tools#80 landed via the merge manager (main 1dc08c9). Re-pins opened as drafts: smart-immunizations#116 (de0dd90) and who-iris#190 (9db5b21). Both move bootstrap-tools to 1dc08c9 and folio-assistant-core to 49496b4 (carrying #659); there are no workflow changes. When each is green, send the 6-line "ready" to the merge manager; no self-merge.
+
+_2026-11-07T08:00:00Z_ — Coordinator (session_01VQDpPfGantMCt7AV4LCCK2, took over the bean from H). bootstrap-tools#80 landed (1dc08c9), so all code PRs for this bean are merged: tools#1508/#1521/#1529/#1533/#1534/#1575, core#651/#657/#659, bootstrap-tools#80. NOT closed yet, because the second Done-when box is still unmet: no downstream root has yet been shown to skip or scope these gates for other layers' files. Close it when the first full-tier compare job on a root pinned past these merges shows zero cross-layer NEW from the scoped gates. Candidates: smart-immunizations#116 and who-iris#190 (F's drafts, carrying core 49496b4 and bootstrap-tools 1dc08c9), smart-base#315, or smart-ra after it re-pins past tools ee88ead. Early sample: smart-base#309 had 0 cross-layer NEW from the scoped gates (before: ≈6).
