@@ -8,7 +8,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/cat-harness",
-          "ref": "ea548f0006ad0e5c40656f0fbb499ca7a19dc43e",
+          "ref": "af123f4c581d9cccfe94c954e00dac9fa8c88e83",
           "overrides": {
             "cat-harness": {
               "whole": true
@@ -19,8 +19,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-07",
-              "ref": "ea548f0006ad0e5c40656f0fbb499ca7a19dc43e",
-              "evidence": "Owner litlfred, 2026-11-07, relayed by the coordinating session (session_01VQDpPg6DUZuufuAVwk6MqZ): 'do it in the schema..... do the repin' and 'repin + merge open 12 hrs'. cat-harness moves to main with the bootstrap pin, because its committed checklists of bootstrap's diagrams match the newer bootstrap only at main; main also carries cat-harness#1112 (the translation term-base skill)."
+              "ref": "af123f4c581d9cccfe94c954e00dac9fa8c88e83",
+              "evidence": "Owner litlfred, 2026-11-07, relayed by the coordinating session (session_01VQDpPg6DUZuufuAVwk6MqZ): 'do it in the schema..... do the repin' and 'repin + merge open 12 hrs'. cat-harness moves to main (af123f4c) with the bootstrap pin, because its committed checklists of bootstrap's diagrams match the newer bootstrap only at main; main also carries cat-harness#1112 (the translation term-base skill), and #1114 and #1115 (the glossary ledger's new roles, without which every layer that mounts this lock fails glossary:check, e.g. smart-base#313)."
             },
             "standing": {
               "follows": "main",
@@ -105,7 +105,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-base",
-          "ref": "5fdcf6c60cf75c79d69a0bff3e1f3889c6e37dc6",
+          "ref": "520cd52597935984b58cb0fe4e00b2e3375c518b",
           "overrides": {
             "smart-base": {
               "path": "smart-base",
@@ -141,9 +141,9 @@
           "trust": {
             "consent": {
               "by": "litlfred",
-              "on": "2026-11-06",
-              "ref": "5fdcf6c60cf75c79d69a0bff3e1f3889c6e37dc6",
-              "evidence": "decision card in Claude Code session session_01VQDpPcmKbHBhi451nVa8Wr, 2026-11-06: owner chose 1. Update now"
+              "on": "2026-11-07",
+              "ref": "520cd52597935984b58cb0fe4e00b2e3375c518b",
+              "evidence": "Owner litlfred, 2026-11-07, relayed by the coordinating session (session_01VQDpPg6DUZuufuAVwk6MqZ): 'do it in the schema..... do the repin' and 'repin + merge open 12 hrs'. smart-base is pinned to smart-base#313's head, the commit that draws the glossary ledger's new roles (role/health-worker, role/point-of-care-system) that cat-harness af123f4c adds; at the old pin glossary:check reports them newly retired. A follow-up re-pin moves it to #313's merge commit."
             }
           }
         }
