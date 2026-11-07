@@ -1,0 +1,3843 @@
+{
+  "$schema": "folio-vector-labels/v1",
+  "doc_id": "arxiv-2607.00053v1",
+  "pages": [
+    {
+      "page": 2,
+      "rotation": 0,
+      "drawings": 38,
+      "rasterImagesOnPage": 2,
+      "captionCandidates": [
+        "Figure 1. SWE-Router overview. A weak (cheap) model m1 runs for several exploratory turns; a learned value head reads the resulting"
+      ],
+      "labels": [
+        {
+          "text": "SWE-Router",
+          "bbox": [
+            273.54,
+            47.23,
+            323.34,
+            56.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Conventional LLM Routing",
+          "bbox": [
+            65.07,
+            80.14,
+            174.82,
+            90.21
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Bold"
+          ],
+          "sizes": [
+            10.08
+          ]
+        },
+        {
+          "text": "SWE-ROUTER (proposed)",
+          "bbox": [
+            227.74,
+            82.34,
+            332.22,
+            92.42
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Bold"
+          ],
+          "sizes": [
+            10.08
+          ]
+        },
+        {
+          "text": "Task  𝒒",
+          "bbox": [
+            121.53,
+            98.55,
+            146.95,
+            107.75
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Bold",
+            "CambriaMath"
+          ],
+          "sizes": [
+            8.93
+          ]
+        },
+        {
+          "text": "𝑲 exploration steps of code base using cheap 𝒎𝟏",
+          "bbox": [
+            265.28,
+            99.22,
+            447.21,
+            109.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Bold",
+            "CambriaMath"
+          ],
+          "sizes": [
+            6.52,
+            8.93
+          ]
+        },
+        {
+          "text": "Turn 1",
+          "bbox": [
+            301.12,
+            116.56,
+            318.78,
+            123.29
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Bold"
+          ],
+          "sizes": [
+            6.73
+          ]
+        },
+        {
+          "text": "Turn K",
+          "bbox": [
+            388.25,
+            116.56,
+            406.18,
+            123.29
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Bold"
+          ],
+          "sizes": [
+            6.73
+          ]
+        },
+        {
+          "text": "Task",
+          "bbox": [
+            244.16,
+            122.37,
+            260.19,
+            131.31
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Bold"
+          ],
+          "sizes": [
+            8.93
+          ]
+        },
+        {
+          "text": "⋯",
+          "bbox": [
+            347.17,
+            124.43,
+            360.57,
+            140.1
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "CambriaMath"
+          ],
+          "sizes": [
+            15.65
+          ]
+        },
+        {
+          "text": "Though",
+          "bbox": [
+            299.58,
+            124.64,
+            320.23,
+            131.36
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri"
+          ],
+          "sizes": [
+            6.72
+          ]
+        },
+        {
+          "text": "Though",
+          "bbox": [
+            386.97,
+            124.64,
+            407.62,
+            131.36
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri"
+          ],
+          "sizes": [
+            6.72
+          ]
+        },
+        {
+          "text": "Value head ො𝒓(𝒯≤𝑲)",
+          "bbox": [
+            447.4,
+            127.19,
+            518.47,
+            137.55
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Bold",
+            "CambriaMath"
+          ],
+          "sizes": [
+            6.53,
+            8.95
+          ]
+        },
+        {
+          "text": "Conventional Router ො𝒓(𝒒)",
+          "bbox": [
+            92.29,
+            128.02,
+            176.31,
+            136.24
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Bold",
+            "CambriaMath"
+          ],
+          "sizes": [
+            7.86
+          ]
+        },
+        {
+          "text": "Action",
+          "bbox": [
+            301.12,
+            132.7,
+            318.73,
+            139.42
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri"
+          ],
+          "sizes": [
+            6.72
+          ]
+        },
+        {
+          "text": "Action",
+          "bbox": [
+            386.97,
+            132.7,
+            404.61,
+            139.42
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri"
+          ],
+          "sizes": [
+            6.72
+          ]
+        },
+        {
+          "text": "𝒒",
+          "bbox": [
+            249.47,
+            132.86,
+            254.87,
+            141.8
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "CambriaMath"
+          ],
+          "sizes": [
+            8.93
+          ]
+        },
+        {
+          "text": "Observation",
+          "bbox": [
+            293.2,
+            140.76,
+            326.61,
+            147.48
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri"
+          ],
+          "sizes": [
+            6.72
+          ]
+        },
+        {
+          "text": "Observation",
+          "bbox": [
+            380.52,
+            140.76,
+            413.97,
+            147.48
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri"
+          ],
+          "sizes": [
+            6.72
+          ]
+        },
+        {
+          "text": "Weaker, cheaper",
+          "bbox": [
+            70.89,
+            156.78,
+            125.87,
+            164.66
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri"
+          ],
+          "sizes": [
+            7.87
+          ]
+        },
+        {
+          "text": "Stronger, expensive",
+          "bbox": [
+            140.38,
+            156.78,
+            202.4,
+            164.66
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri"
+          ],
+          "sizes": [
+            7.87
+          ]
+        },
+        {
+          "text": "Predict 𝑃𝑚1 success",
+          "bbox": [
+            445.62,
+            159.55,
+            515.11,
+            169.03
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri",
+            "CambriaMath"
+          ],
+          "sizes": [
+            5.71,
+            7.86
+          ]
+        },
+        {
+          "text": "Partial trajectory 𝒯≤𝑲from weak model m₁",
+          "bbox": [
+            281.42,
+            162.4,
+            400.35,
+            170.06
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-BoldItalic",
+            "CambriaMath"
+          ],
+          "sizes": [
+            4.9,
+            6.72
+          ]
+        },
+        {
+          "text": "LLM 𝑚1",
+          "bbox": [
+            85.0,
+            166.05,
+            109.74,
+            175.05
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri",
+            "CambriaMath"
+          ],
+          "sizes": [
+            5.71,
+            7.86
+          ]
+        },
+        {
+          "text": "LLM 𝑚2",
+          "bbox": [
+            158.78,
+            166.05,
+            183.73,
+            175.05
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri",
+            "CambriaMath"
+          ],
+          "sizes": [
+            5.71,
+            7.86
+          ]
+        },
+        {
+          "text": "High",
+          "bbox": [
+            408.41,
+            170.14,
+            424.96,
+            179.07
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri"
+          ],
+          "sizes": [
+            8.93
+          ]
+        },
+        {
+          "text": "Low",
+          "bbox": [
+            489.61,
+            176.77,
+            504.4,
+            185.71
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri"
+          ],
+          "sizes": [
+            8.93
+          ]
+        },
+        {
+          "text": "Not enough information in 𝑞",
+          "bbox": [
+            78.4,
+            187.06,
+            194.55,
+            197.44
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Italic",
+            "CambriaMath"
+          ],
+          "sizes": [
+            10.09
+          ]
+        },
+        {
+          "text": "Well-informed",
+          "bbox": [
+            261.15,
+            188.21,
+            321.54,
+            198.3
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Italic"
+          ],
+          "sizes": [
+            10.09
+          ]
+        },
+        {
+          "text": "Switch to 𝑚2",
+          "bbox": [
+            461.29,
+            197.27,
+            502.28,
+            206.28
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri",
+            "CambriaMath"
+          ],
+          "sizes": [
+            5.71,
+            7.86
+          ]
+        },
+        {
+          "text": "Continue with 𝑚1",
+          "bbox": [
+            369.6,
+            197.6,
+            428.15,
+            206.62
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri",
+            "Calibri-Italic",
+            "CambriaMath"
+          ],
+          "sizes": [
+            5.72,
+            7.87
+          ]
+        },
+        {
+          "text": "→ Large Bayes error",
+          "bbox": [
+            94.03,
+            198.03,
+            178.58,
+            209.61
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Italic",
+            "Wingdings-Regular"
+          ],
+          "sizes": [
+            10.08
+          ]
+        },
+        {
+          "text": "accurate routing",
+          "bbox": [
+            256.52,
+            200.33,
+            323.97,
+            210.4
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "Calibri-Italic"
+          ],
+          "sizes": [
+            10.08
+          ]
+        },
+        {
+          "text": "Figure 1. SWE-Router overview. A weak (cheap) model m1 runs for several exploratory turns; a learned value head reads the resulting",
+          "bbox": [
+            54.89,
+            236.03,
+            541.44,
+            246.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI9",
+            "CMR6",
+            "NimbusRomNo9L-Medi",
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            5.98,
+            8.94,
+            8.97
+          ]
+        },
+        {
+          "text": "partial trajectory and predicts whether m1 will eventually solve the task. If the predicted probability exceeds a cost-adjusted threshold,",
+          "bbox": [
+            55.44,
+            245.99,
+            542.56,
+            256.17
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI9",
+            "CMR6",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            5.98,
+            8.97,
+            9.01
+          ]
+        },
+        {
+          "text": "m1 continues; otherwise the strong (expensive) model m2 is invoked from the original prompt q. Conditioning on the partial trajectory —",
+          "bbox": [
+            55.44,
+            255.95,
+            543.23,
+            266.1
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI9",
+            "CMR6",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            5.98,
+            8.89,
+            8.97
+          ]
+        },
+        {
+          "text": "rather than on q alone — breaks the information-theoretic ceiling that prompt-only routers face (Theorem 4.1).",
+          "bbox": [
+            55.44,
+            265.91,
+            452.47,
+            275.09
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI9",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "2. Preliminary",
+          "bbox": [
+            55.44,
+            296.62,
+            128.94,
+            308.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            11.96
+          ]
+        },
+        {
+          "text": "In agentic settings q often does not pin down task difficulty:",
+          "bbox": [
+            307.44,
+            298.01,
+            542.83,
+            308.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.89,
+            9.96
+          ]
+        },
+        {
+          "text": "early turns reveal feedback (file structure, error patterns,",
+          "bbox": [
+            307.44,
+            310.12,
+            542.69,
+            320.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "2.1. Multi-turn Trajectories in Agentic Tasks",
+          "bbox": [
+            55.44,
+            317.53,
+            244.85,
+            327.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "search depth) that the issue text lacks. The decision in",
+          "bbox": [
+            307.44,
+            322.08,
+            541.44,
+            332.14
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "Equation (2) therefore frequently inherits large Bayes error,",
+          "bbox": [
+            307.44,
+            334.15,
+            542.68,
+            344.06
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.91
+          ]
+        },
+        {
+          "text": "In agentic systems, the LLM autonomously interacts with",
+          "bbox": [
+            55.44,
+            336.02,
+            289.44,
+            346.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "motivating a router that can read the partial trajectory.",
+          "bbox": [
+            307.44,
+            346.06,
+            521.83,
+            356.03
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "an environment before producing a final outcome, such as",
+          "bbox": [
+            55.44,
+            348.16,
+            289.44,
+            358.21
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.04
+          ]
+        },
+        {
+          "text": "the ReAct framework (Yao et al., 2023) producing a thought",
+          "bbox": [
+            55.44,
+            360.26,
+            289.44,
+            370.12
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "zt, an action at, and an observation ot each turn (Yang",
+          "bbox": [
+            55.44,
+            371.9,
+            289.44,
+            383.62
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "3. Value-Based Temporal Routing",
+          "bbox": [
+            307.44,
+            373.01,
+            479.26,
+            384.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            11.96
+          ]
+        },
+        {
+          "text": "et al., 2024a;b). Given a problem description q, a complete",
+          "bbox": [
+            55.44,
+            383.86,
+            289.44,
+            394.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.95,
+            9.96
+          ]
+        },
+        {
+          "text": "T≤K,1",
+          "bbox": [
+            493.96,
+            393.64,
+            518.71,
+            404.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI7",
+            "CMR7",
+            "CMSY10",
+            "CMSY7"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "m1",
+          "bbox": [
+            351.47,
+            393.77,
+            364.19,
+            404.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "K",
+          "bbox": [
+            394.18,
+            393.77,
+            402.64,
+            403.73
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "=",
+          "bbox": [
+            533.69,
+            393.77,
+            541.44,
+            403.73
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMR10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "We",
+          "bbox": [
+            306.97,
+            393.93,
+            320.28,
+            403.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "run",
+          "bbox": [
+            329.1,
+            393.93,
+            342.65,
+            403.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "for",
+          "bbox": [
+            373.51,
+            393.93,
+            385.36,
+            403.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "turns",
+          "bbox": [
+            412.17,
+            393.93,
+            432.5,
+            403.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "to",
+          "bbox": [
+            441.32,
+            393.93,
+            449.22,
+            403.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "collect",
+          "bbox": [
+            458.04,
+            393.93,
+            485.14,
+            403.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "SWE-agent trajectory T takes the form",
+          "bbox": [
+            55.44,
+            395.68,
+            211.87,
+            406.01
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMSY10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "[q, (z1, a1, o1), . . . , (zK, aK, oK)] and train a value func-",
+          "bbox": [
+            307.44,
+            405.73,
+            543.09,
+            416.53
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "T (m) = [q,",
+          "bbox": [
+            66.03,
+            416.36,
+            114.12,
+            426.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMSY10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "(z1, a1, o1),",
+          "bbox": [
+            125.73,
+            416.49,
+            173.24,
+            427.29
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMR7"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": ". . . ,",
+          "bbox": [
+            184.87,
+            416.49,
+            200.93,
+            426.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "(zT , aT , oT )],",
+          "bbox": [
+            212.54,
+            416.49,
+            268.24,
+            427.95
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "(1)",
+          "bbox": [
+            278.5,
+            416.72,
+            290.11,
+            426.68
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "tion ˆr1(T≤K,1) as a pretrained LLM with a small classifi-",
+          "bbox": [
+            307.44,
+            417.55,
+            543.1,
+            428.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMR7",
+            "CMSY10",
+            "CMSY7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "cation head, supervised by the binary reward r via cross-",
+          "bbox": [
+            307.44,
+            429.64,
+            543.09,
+            439.85
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "where m denotes the LLM that generated the trajectory.",
+          "bbox": [
+            55.08,
+            437.17,
+            291.18,
+            447.38
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "entropy. On escalation, m2 restarts from q: continuation",
+          "bbox": [
+            307.44,
+            441.57,
+            541.44,
+            453.13
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "The final action aT is submit, whose observation oT is a",
+          "bbox": [
+            55.13,
+            448.84,
+            289.44,
+            460.82
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "NimbusMonL-Regu",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.01
+          ]
+        },
+        {
+          "text": "rules need expensive online m2 inference, and conditioning",
+          "bbox": [
+            307.44,
+            453.55,
+            541.44,
+            465.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.88,
+            9.96
+          ]
+        },
+        {
+          "text": "git patch. The patch is checked against the repository’s unit",
+          "bbox": [
+            55.44,
+            461.36,
+            289.44,
+            471.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.9
+          ]
+        },
+        {
+          "text": "m2 on m1’s reasoning has been seen to bias m2 toward",
+          "bbox": [
+            307.44,
+            465.5,
+            541.44,
+            477.21
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "tests and assigned a verifiable binary reward r ∈{0, 1}.",
+          "bbox": [
+            55.44,
+            472.9,
+            277.75,
+            483.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMSY10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "m1’s mistakes. The K weak-model turns are paid up-front",
+          "bbox": [
+            307.44,
+            477.46,
+            541.44,
+            488.26
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            9.98
+          ]
+        },
+        {
+          "text": "and counted in any escalated run’s cost. With per-turn weak",
+          "bbox": [
+            307.44,
+            489.72,
+            541.69,
+            499.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.87
+          ]
+        },
+        {
+          "text": "2.2. LLM Routing",
+          "bbox": [
+            55.44,
+            498.3,
+            132.38,
+            508.27
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "cost c < c1, the rule is",
+          "bbox": [
+            307.44,
+            501.37,
+            396.63,
+            512.17
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "An LLM router improves the cost–performance Pareto fron-",
+          "bbox": [
+            55.08,
+            517.12,
+            291.09,
+            526.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.87
+          ]
+        },
+        {
+          "text": "(",
+          "bbox": [
+            319.81,
+            528.2,
+            327.84,
+            538.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "tier by invoking a minimum-cost model with sufficient ca-",
+          "bbox": [
+            55.44,
+            528.94,
+            291.09,
+            538.98
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.04
+          ]
+        },
+        {
+          "text": "y1 ≥y2",
+          "bbox": [
+            485.27,
+            531.15,
+            516.76,
+            542.6
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "CMSY10"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "Continue with m1",
+          "bbox": [
+            327.83,
+            531.27,
+            399.78,
+            542.08
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "if",
+          "bbox": [
+            469.22,
+            531.51,
+            475.3,
+            541.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "(3)",
+          "bbox": [
+            530.49,
+            538.3,
+            542.11,
+            548.26
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "pability. In the binary setting it picks between a weak model",
+          "bbox": [
+            55.44,
+            540.86,
+            289.44,
+            550.9
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "Switch to m2 from the K-th step",
+          "bbox": [
+            327.83,
+            545.62,
+            459.25,
+            557.31
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "otherwise,",
+          "bbox": [
+            469.21,
+            545.62,
+            510.71,
+            555.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "m1 and a strong model m2 given q (“weak/strong” refers to",
+          "bbox": [
+            55.44,
+            552.68,
+            289.44,
+            564.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            6.97,
+            9.86,
+            9.96
+          ]
+        },
+        {
+          "text": "cost–capability rather than parameter count); model-indexed",
+          "bbox": [
+            55.44,
+            564.94,
+            289.44,
+            574.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "where y1 = ˆr1(T≤K,1)−λ(c1 −Kc) and y2 = ˆr2(q)−λc2.",
+          "bbox": [
+            307.08,
+            575.64,
+            543.18,
+            587.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMR7",
+            "CMSY10",
+            "CMSY7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.86,
+            9.96
+          ]
+        },
+        {
+          "text": "quantities are subscripted 1, 2. The router invokes m1 when",
+          "bbox": [
+            55.44,
+            576.59,
+            289.44,
+            588.26
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.86,
+            9.96
+          ]
+        },
+        {
+          "text": "SWE agents typically spend their early turns locating",
+          "bbox": [
+            307.44,
+            587.88,
+            541.44,
+            597.94
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "its cost-adjusted expected success rate exceeds m2’s:",
+          "bbox": [
+            55.44,
+            588.55,
+            266.45,
+            599.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "files and isolating failures — exploration cheaper than",
+          "bbox": [
+            307.44,
+            599.83,
+            541.44,
+            609.9
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "(",
+          "bbox": [
+            111.34,
+            607.98,
+            119.37,
+            617.95
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMEX10"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "m1 if ˆr1(q) −λc1 > ˆr2(q) −λc2",
+          "bbox": [
+            119.36,
+            610.93,
+            253.01,
+            622.75
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMR7",
+            "CMSY10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "patch synthesis, so delegating it to m1 is a useful division",
+          "bbox": [
+            307.44,
+            611.63,
+            541.44,
+            623.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "Invoke",
+          "bbox": [
+            80.22,
+            618.09,
+            107.19,
+            628.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "(2)",
+          "bbox": [
+            278.49,
+            618.09,
+            290.11,
+            628.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "of labor.",
+          "bbox": [
+            307.44,
+            623.74,
+            343.2,
+            633.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "Two simplifications turn Equation (3) into a",
+          "bbox": [
+            352.08,
+            623.74,
+            541.44,
+            633.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "m2 otherwise,",
+          "bbox": [
+            119.36,
+            625.41,
+            176.3,
+            637.1
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96
+          ]
+        },
+        {
+          "text": "one-hyperparameter rule: (i) Threshold reduction: absorb",
+          "bbox": [
+            307.44,
+            635.52,
+            541.44,
+            645.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "λ(c1−c2−Kc) into a single scalar λ′ tuned on validation,",
+          "bbox": [
+            307.44,
+            644.04,
+            542.68,
+            658.3
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMR7",
+            "CMSY10",
+            "CMSY7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "where ˆri(q) ∈[0, 1] is the estimated probability mi resolves",
+          "bbox": [
+            55.08,
+            647.37,
+            289.44,
+            659.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "CMSY10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.86,
+            9.96
+          ]
+        },
+        {
+          "text": "so “continue iff ˆr1 −ˆr2(q) ≥λ′”; (ii) One-sided routing:",
+          "bbox": [
+            307.44,
+            658.08,
+            543.09,
+            670.78
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMR7",
+            "CMSY10",
+            "CMSY7",
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "q, ci > 0 is its expected inference cost (USD; on long",
+          "bbox": [
+            55.44,
+            659.45,
+            289.44,
+            670.91
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "CMR10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "treat ˆr2 as an unknown trajectory-independent constant,",
+          "bbox": [
+            307.44,
+            671.41,
+            542.68,
+            683.12
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "agentic trajectories cost is model-dominated, so we treat",
+          "bbox": [
+            55.44,
+            671.56,
+            289.44,
+            681.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "giving “continue iff ˆr1 ≥λ′′”. We use one-sided routing",
+          "bbox": [
+            307.44,
+            681.99,
+            541.44,
+            694.69
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMR7",
+            "CMSY10",
+            "CMSY7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "ci as q-independent). Costs are converted into success-",
+          "bbox": [
+            55.44,
+            683.36,
+            291.1,
+            695.08
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMMI7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "probability units by λ > 0; tuning λ traces the cost–quality",
+          "bbox": [
+            55.44,
+            695.32,
+            289.79,
+            705.51
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.94,
+            9.96
+          ]
+        },
+        {
+          "text": "for all reported experiments. Algorithm 1 summarizes the",
+          "bbox": [
+            307.44,
+            695.48,
+            541.44,
+            705.53
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.05
+          ]
+        },
+        {
+          "text": "Pareto curve (Ong et al., 2025; Jitkrittum et al., 2025).",
+          "bbox": [
+            55.44,
+            707.51,
+            271.53,
+            717.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "deployment-time decision procedure.",
+          "bbox": [
+            307.44,
+            707.51,
+            455.92,
+            717.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "2",
+          "bbox": [
+            295.95,
+            732.41,
+            300.93,
+            742.37
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        }
+      ]
+    },
+    {
+      "page": 4,
+      "rotation": 0,
+      "drawings": 75,
+      "rasterImagesOnPage": 0,
+      "captionCandidates": [
+        "Figure 2. Cost-vs.-resolved routing curves on the held-out SWE-Bench Verified for the two (weak, strong) pairs. Each colored curve is the"
+      ],
+      "labels": [
+        {
+          "text": "SWE-Router",
+          "bbox": [
+            273.54,
+            47.23,
+            323.34,
+            56.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "gpt-5-mini",
+          "bbox": [
+            139.78,
+            68.02,
+            183.0,
+            81.34
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.85
+          ]
+        },
+        {
+          "text": "gemini-3-pro",
+          "bbox": [
+            189.67,
+            68.02,
+            242.5,
+            81.34
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.85
+          ]
+        },
+        {
+          "text": "deepseek-v3.2",
+          "bbox": [
+            376.5,
+            68.02,
+            436.7,
+            81.34
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.85
+          ]
+        },
+        {
+          "text": "gemini-3-pro",
+          "bbox": [
+            443.42,
+            68.02,
+            496.25,
+            81.34
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.85
+          ]
+        },
+        {
+          "text": "0.70",
+          "bbox": [
+            69.67,
+            97.35,
+            86.32,
+            110.04
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "0.70",
+          "bbox": [
+            314.88,
+            104.78,
+            331.53,
+            117.46
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "Resolved rate",
+          "bbox": [
+            56.39,
+            107.39,
+            69.08,
+            158.76
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "Resolved rate",
+          "bbox": [
+            301.6,
+            107.39,
+            314.29,
+            158.76
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "0.65",
+          "bbox": [
+            69.67,
+            126.67,
+            86.32,
+            139.36
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "0.65",
+          "bbox": [
+            314.88,
+            136.05,
+            331.53,
+            148.74
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "0.60",
+          "bbox": [
+            69.67,
+            155.99,
+            86.32,
+            168.68
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "0.60",
+          "bbox": [
+            314.88,
+            167.33,
+            331.53,
+            180.02
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "$0.00",
+          "bbox": [
+            79.98,
+            185.48,
+            101.39,
+            198.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "$0.20",
+          "bbox": [
+            127.28,
+            185.48,
+            148.69,
+            198.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "$0.40",
+          "bbox": [
+            174.59,
+            185.48,
+            196.0,
+            198.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "$0.60",
+          "bbox": [
+            221.89,
+            185.48,
+            243.3,
+            198.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "$0.80",
+          "bbox": [
+            269.19,
+            185.48,
+            290.6,
+            198.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "$0.00",
+          "bbox": [
+            325.19,
+            185.48,
+            346.6,
+            198.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "$0.20",
+          "bbox": [
+            372.5,
+            185.48,
+            393.9,
+            198.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "$0.40",
+          "bbox": [
+            419.8,
+            185.48,
+            441.21,
+            198.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "$0.60",
+          "bbox": [
+            467.1,
+            185.48,
+            488.51,
+            198.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "$0.80",
+          "bbox": [
+            514.4,
+            185.48,
+            535.81,
+            198.17
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "Avg. cost per instance (USD)",
+          "bbox": [
+            137.62,
+            195.22,
+            244.83,
+            207.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "Avg. cost per instance (USD)",
+          "bbox": [
+            382.83,
+            195.22,
+            490.04,
+            207.91
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            7.48
+          ]
+        },
+        {
+          "text": "SWE-Router (K = 3)",
+          "bbox": [
+            88.66,
+            213.77,
+            149.94,
+            224.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans",
+            "DejaVuSans-Oblique"
+          ],
+          "sizes": [
+            6.36
+          ]
+        },
+        {
+          "text": "random assignment (±1 )",
+          "bbox": [
+            384.86,
+            213.77,
+            469.31,
+            224.56
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            6.36
+          ]
+        },
+        {
+          "text": "Embed+Logistic",
+          "bbox": [
+            185.23,
+            214.03,
+            236.96,
+            224.81
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            6.36
+          ]
+        },
+        {
+          "text": "Embed+XGB",
+          "bbox": [
+            266.48,
+            214.03,
+            307.65,
+            224.81
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            6.36
+          ]
+        },
+        {
+          "text": "all-strong",
+          "bbox": [
+            498.88,
+            214.03,
+            528.85,
+            224.81
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            6.36
+          ]
+        },
+        {
+          "text": "Non-temporal (K = 0)",
+          "bbox": [
+            88.66,
+            223.23,
+            155.75,
+            234.02
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans",
+            "DejaVuSans-Oblique"
+          ],
+          "sizes": [
+            6.36
+          ]
+        },
+        {
+          "text": "Embed+kNN",
+          "bbox": [
+            185.23,
+            223.23,
+            225.95,
+            234.02
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            6.36
+          ]
+        },
+        {
+          "text": "random assignment (mean)",
+          "bbox": [
+            266.48,
+            223.23,
+            355.17,
+            234.02
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            6.36
+          ]
+        },
+        {
+          "text": "all-weak",
+          "bbox": [
+            384.86,
+            223.81,
+            411.28,
+            234.59
+          ],
+          "intersectsDrawing": true,
+          "fonts": [
+            "DejaVuSans"
+          ],
+          "sizes": [
+            6.36
+          ]
+        },
+        {
+          "text": "Figure 2. Cost-vs.-resolved routing curves on the held-out SWE-Bench Verified for the two (weak, strong) pairs. Each colored curve is the",
+          "bbox": [
+            54.89,
+            247.51,
+            541.44,
+            256.55
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "threshold sweep of the corresponding router; the gray band is the random-assignment reference, computed as the per-cost-level mean",
+          "bbox": [
+            55.44,
+            257.34,
+            541.44,
+            266.55
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            9.05
+          ]
+        },
+        {
+          "text": "(±1σ) over 400 Monte-Carlo permutations of the per-instance routing decision; × and ⋆mark the all-weak and all-strong endpoints. The",
+          "bbox": [
+            55.14,
+            265.36,
+            541.44,
+            276.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI9",
+            "CMR9",
+            "CMSY9",
+            "MSAM10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "curves of SWE-Router (K=3, green) are above the gray bands, and even exceed the strong-model marker for some thresholds, indicating",
+          "bbox": [
+            55.44,
+            277.28,
+            541.44,
+            286.44
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI9",
+            "CMR9",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            8.89,
+            8.97
+          ]
+        },
+        {
+          "text": "the synergistic effect of using the weak model for resolving tasks that the strong model could not.",
+          "bbox": [
+            55.44,
+            287.45,
+            404.95,
+            296.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "6. Related Work",
+          "bbox": [
+            307.44,
+            317.95,
+            390.55,
+            329.91
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            11.96
+          ]
+        },
+        {
+          "text": "Does conditioning on the partial trajectory improve",
+          "bbox": [
+            55.44,
+            319.41,
+            289.44,
+            329.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "over prompt-only baselines?",
+          "bbox": [
+            55.44,
+            331.44,
+            175.65,
+            341.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "The cost–resolved routing",
+          "bbox": [
+            185.61,
+            331.53,
+            289.44,
+            341.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "Building on agentic frameworks like ReAct (Yao et al.,",
+          "bbox": [
+            307.44,
+            338.87,
+            542.69,
+            348.93
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "curves in Figure 2 gives a clear summary of the advantage of",
+          "bbox": [
+            55.44,
+            343.56,
+            289.44,
+            353.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "2023), recent work equips LLMs to operate on real",
+          "bbox": [
+            307.44,
+            350.83,
+            541.44,
+            360.89
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "using partial trajectory for temporal routing. SWE-Router",
+          "bbox": [
+            55.44,
+            355.38,
+            289.61,
+            365.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.05
+          ]
+        },
+        {
+          "text": "repositories. SWE-agent (Yang et al., 2024a;b) introduces",
+          "bbox": [
+            307.44,
+            362.8,
+            541.44,
+            372.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.04
+          ]
+        },
+        {
+          "text": "(green) sits above the random-assignment band in both",
+          "bbox": [
+            55.11,
+            367.32,
+            289.44,
+            377.38
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "an agent–computer interface for browsing, editing, and",
+          "bbox": [
+            307.44,
+            374.74,
+            541.44,
+            384.8
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "pairs and traces a Pareto frontier that strictly dominates the",
+          "bbox": [
+            55.44,
+            379.37,
+            289.44,
+            389.31
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.94
+          ]
+        },
+        {
+          "text": "executing code.",
+          "bbox": [
+            307.44,
+            386.69,
+            373.49,
+            396.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "Code benchmarks have moved from",
+          "bbox": [
+            384.47,
+            386.69,
+            541.44,
+            396.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "embedding-baseline curves over most of the cost range. The",
+          "bbox": [
+            55.44,
+            391.38,
+            289.44,
+            401.24
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "self-contained problems (Chen et al., 2021; Austin et al.,",
+          "bbox": [
+            307.44,
+            398.65,
+            542.69,
+            408.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "picture also holds qualitatively for deepseek-v3.2 →",
+          "bbox": [
+            55.44,
+            402.75,
+            289.44,
+            413.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMSY10",
+            "NimbusMonL-Regu",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "2021; Hendrycks et al., 2021) to repository-level evaluation.",
+          "bbox": [
+            307.44,
+            410.75,
+            543.19,
+            420.62
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.87
+          ]
+        },
+        {
+          "text": "gemini-3-pro-preview, where the green curve again",
+          "bbox": [
+            55.44,
+            414.71,
+            289.44,
+            425.15
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusMonL-Regu",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86,
+            9.96
+          ]
+        },
+        {
+          "text": "SWE-bench (Jimenez et al., 2024) pioneered repository-",
+          "bbox": [
+            307.44,
+            422.56,
+            543.09,
+            432.62
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "passes above the random band at intermediate cost. We also",
+          "bbox": [
+            55.44,
+            427.25,
+            289.44,
+            437.11
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "scale issue resolution against hidden tests with a curated",
+          "bbox": [
+            307.44,
+            434.51,
+            541.44,
+            444.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "present the computed ROC-AUC and Route-AUC values",
+          "bbox": [
+            55.44,
+            439.05,
+            289.44,
+            449.11
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "subset (OpenAI, 2024). FrugalGPT (Chen et al., 2024a)",
+          "bbox": [
+            307.44,
+            446.47,
+            542.11,
+            456.53
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "of each method in Table 2. In the test split of SWE-Bench",
+          "bbox": [
+            55.44,
+            451.03,
+            289.44,
+            461.06
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.03
+          ]
+        },
+        {
+          "text": "introduced cost-aware cascades, and RouteLLM (Ong",
+          "bbox": [
+            307.44,
+            458.42,
+            541.44,
+            468.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "Verified, both pairs show significant improvement in",
+          "bbox": [
+            55.08,
+            462.96,
+            289.44,
+            473.02
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "et al., 2025) formalized binary routing from preference",
+          "bbox": [
+            307.44,
+            470.38,
+            541.44,
+            480.44
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "Route-AUC over the baselines. When deepseek-v3.2",
+          "bbox": [
+            55.44,
+            474.48,
+            289.44,
+            484.98
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusMonL-Regu",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "data for Pareto cost–quality gains. All the existing methods",
+          "bbox": [
+            307.44,
+            482.45,
+            541.44,
+            492.36
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.91
+          ]
+        },
+        {
+          "text": "is used as m1, SWE-Router shows Route-AUC of 0.780,",
+          "bbox": [
+            55.44,
+            486.72,
+            290.69,
+            497.52
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "condition on the prompt alone; SWE-Router differs by",
+          "bbox": [
+            307.44,
+            494.29,
+            541.79,
+            504.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "which is a +15.3 pp improvement over the non-temporal",
+          "bbox": [
+            55.08,
+            498.67,
+            289.44,
+            508.89
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "conditioning on the partial agent trajectory. We provide",
+          "bbox": [
+            307.44,
+            506.24,
+            541.44,
+            516.31
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "routing baseline (K = 0). While the router trained with",
+          "bbox": [
+            55.44,
+            510.63,
+            289.44,
+            520.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "more related works in Section D.",
+          "bbox": [
+            307.44,
+            518.28,
+            439.05,
+            528.24
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "gpt-5-mini’s trajectories for m1 also exhibits +12 pp",
+          "bbox": [
+            55.44,
+            522.3,
+            289.44,
+            534.29
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR10",
+            "CMR7",
+            "NimbusMonL-Regu",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "improvement over the strongest baseline. AUROC eval-",
+          "bbox": [
+            55.44,
+            534.69,
+            291.09,
+            544.75
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "7. Conclusion",
+          "bbox": [
+            307.44,
+            545.22,
+            376.53,
+            557.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi"
+          ],
+          "sizes": [
+            11.96
+          ]
+        },
+        {
+          "text": "uations in the test split of SWE-Bench Verified show that",
+          "bbox": [
+            55.44,
+            546.65,
+            289.44,
+            556.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "the accuracy of value functions are not strongly correlated",
+          "bbox": [
+            55.44,
+            558.63,
+            289.44,
+            568.65
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.02
+          ]
+        },
+        {
+          "text": "We introduced SWE-Router,",
+          "bbox": [
+            306.97,
+            566.05,
+            436.89,
+            576.2
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Medi",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "a value-based routing",
+          "bbox": [
+            445.12,
+            566.14,
+            541.44,
+            576.2
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "to actual routing performances, as can be shown from the",
+          "bbox": [
+            55.44,
+            570.56,
+            289.44,
+            580.62
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "framework that conditions on a short partial trajectory of a",
+          "bbox": [
+            307.44,
+            578.15,
+            541.44,
+            588.14
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.99
+          ]
+        },
+        {
+          "text": "AUROC of non-temporal router in the deepseek-v3.2",
+          "bbox": [
+            55.08,
+            582.08,
+            289.44,
+            592.57
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusMonL-Regu",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96,
+            10.04
+          ]
+        },
+        {
+          "text": "cheap weak model rather than on the task description alone.",
+          "bbox": [
+            307.44,
+            590.17,
+            543.19,
+            600.07
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.9
+          ]
+        },
+        {
+          "text": "→gemini-3-pro-preview pair.",
+          "bbox": [
+            55.44,
+            594.03,
+            212.07,
+            604.53
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMSY10",
+            "NimbusMonL-Regu",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "We further note",
+          "bbox": [
+            221.66,
+            594.47,
+            289.44,
+            604.53
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "A simple Bayes-optimality result (Theorem 4.1) shows",
+          "bbox": [
+            307.08,
+            602.0,
+            541.44,
+            612.07
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "that on both pairs the SWE-Router curve briefly passes",
+          "bbox": [
+            55.44,
+            606.42,
+            289.44,
+            616.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "that this conditioning never harms routing and is strictly",
+          "bbox": [
+            307.44,
+            613.96,
+            541.79,
+            624.02
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "above the all-strong ⋆. This synergy is feasible because",
+          "bbox": [
+            55.44,
+            616.05,
+            289.44,
+            628.44
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "MSAM10",
+            "NimbusRomNo9L-Regu",
+            "NimbusRomNo9L-ReguItal"
+          ],
+          "sizes": [
+            9.96,
+            10.06
+          ]
+        },
+        {
+          "text": "better when exploration is informative. We evaluated our",
+          "bbox": [
+            307.44,
+            625.91,
+            541.61,
+            635.98
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "weak and strong solve non-identical instance subsets, so",
+          "bbox": [
+            55.08,
+            630.33,
+            289.44,
+            640.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "approach using two pairs of popular LLMs, and showed",
+          "bbox": [
+            307.44,
+            637.87,
+            541.44,
+            647.93
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "correctly routing the easy instances to m1 resolves cases on",
+          "bbox": [
+            55.44,
+            642.13,
+            289.44,
+            653.8
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMMI10",
+            "CMR7",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            6.97,
+            9.88,
+            9.96
+          ]
+        },
+        {
+          "text": "that SWE-Router improves Route-AUC by at least +12 pp",
+          "bbox": [
+            307.44,
+            649.67,
+            541.44,
+            659.86
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "CMR10",
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96,
+            9.97
+          ]
+        },
+        {
+          "text": "which always-strong fails. The overall shape of the routing",
+          "bbox": [
+            55.08,
+            654.33,
+            289.44,
+            664.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.95
+          ]
+        },
+        {
+          "text": "on the test split of SWE-Bench Verified over the strongest",
+          "bbox": [
+            307.44,
+            661.79,
+            541.44,
+            671.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.04
+          ]
+        },
+        {
+          "text": "curves, also measured through AUC metrics in Table 2,",
+          "bbox": [
+            55.44,
+            666.2,
+            290.69,
+            676.26
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "baseline, also presenting the routing curve of methods where",
+          "bbox": [
+            307.44,
+            673.89,
+            541.44,
+            683.75
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.86
+          ]
+        },
+        {
+          "text": "is evidence that the value-head ranking captures a useful",
+          "bbox": [
+            55.44,
+            678.15,
+            289.44,
+            688.22
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            10.06
+          ]
+        },
+        {
+          "text": "SWE-Router achieves the greatest overall performance.",
+          "bbox": [
+            307.44,
+            685.76,
+            528.62,
+            695.73
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "complementarity signal for efficient temporal routing.",
+          "bbox": [
+            55.44,
+            690.18,
+            269.91,
+            700.15
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        },
+        {
+          "text": "4",
+          "bbox": [
+            295.77,
+            732.41,
+            300.76,
+            742.37
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "NimbusRomNo9L-Regu"
+          ],
+          "sizes": [
+            9.96
+          ]
+        }
+      ]
+    }
+  ]
+}

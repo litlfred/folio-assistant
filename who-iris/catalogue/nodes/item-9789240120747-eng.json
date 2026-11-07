@@ -1,0 +1,70 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/187cabc7-3e82-412e-8cbb-1502a9da36ad",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Digital transformation handbook for reporting substandard and falsified medical products",
+  "parents": [
+    [
+      "community/5bff2c18-6c2b-4658-9087-93811d2399c0",
+      "collection/hq-publications"
+    ]
+  ],
+  "handle": "10665/386358",
+  "libraryId": "9789240120747-eng",
+  "bitstreams": [
+    {
+      "name": "9789240120747-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 1585035,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/items/187cabc7-3e82-412e-8cbb-1502a9da36ad"
+        },
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "c710f7cf4a432221b30d7db9272f10e17250c59b14ed33c5405e86695b2edec8"
+        },
+        "note": "The original bytes are not held: the intake records the file, and the bytes go to the IRIS CDN (Cloudflare R2) once it is set up (who-iris#104). Size and sha256 are from uploads/9789240120747-eng/intake.json, verified equal to library/9789240120747-eng/structure.json#source."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "materialized",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/187cabc7-3e82-412e-8cbb-1502a9da36ad"
+    },
+    "localPath": "library/9789240120747-eng",
+    "purpose": "working",
+    "gates": {
+      "size": {
+        "verdict": "permitted",
+        "basis": "1,613,223 bytes of derived sections, of a 361.55 GiB catalogue"
+      },
+      "restrictions": {
+        "verdict": "permitted",
+        "basis": "owner chose the full move of IRIS items into who-iris on 2026-10-30 (option B, \"part of the fuller pre-CDN preview\"; who-iris#107); WHO logo omitted, as for the three worked examples",
+        "decidedAt": "2026-10-30",
+        "decidedBy": "litlfred"
+      },
+      "retention": {
+        "verdict": "unknown",
+        "basis": "no lifetime agreed for the derived sections"
+      },
+      "sourceLoss": {
+        "verdict": "unknown",
+        "basis": "derived sections are not the publication; the archival bitstream answers this, not this node"
+      },
+      "copyright": {
+        "verdict": "permitted",
+        "basis": "owner chose the full move of IRIS items into who-iris on 2026-10-30 (option B, \"part of the fuller pre-CDN preview\"; who-iris#107)",
+        "decidedAt": "2026-10-30",
+        "decidedBy": "litlfred"
+      }
+    },
+    "note": "Moved in on 2026-10-30 from https://github.com/litlfred/smart-base smart-base/library/9789240120747-eng (who-iris#107). IRIS UUID, Handle, intake and Dublin Core record fetched from https://iris.who.int/handle/10665/386358 on 2026-10-30 (bean folio-assistant-5bkm)."
+  },
+  "metadataRef": "catalogue/records/9789240120747-eng.dc.json"
+}

@@ -1,0 +1,451 @@
+{
+  "$schema": "folio-document-images/v1",
+  "doc_id": "arxiv-2512.09874v3",
+  "images": [
+    {
+      "id": "img-p005-1",
+      "file": "images/img-p005-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "at": "2026-10-11",
+        "saw": "Flowchart panel headed '3. Evaluation Pipeline'; lower part of Figure 1 (continues from img-p005-2).",
+        "page": 5
+      },
+      "narrative": [
+        {
+          "text": "Figure 1, part 3 'Evaluation Pipeline': a PDF-Parser produces Parsed Text (TXT); together with Ground Truth (JSON list of text, inline-formula and display-formula items) it feeds 'LLM-Based Matching (+ Rule-Based Post-Verification)', which outputs Formula Pairs (JSON of gt_formula/parsed_formula, e.g. $a+1$ vs $a+I$) and then 'Evaluation for all formula pairs'.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5-5"
+          },
+          "drafted_at": "2026-10-11",
+          "lang": "en"
+        },
+        {
+          "text": "Figure 1, partie 3 « Evaluation Pipeline » : un analyseur PDF (PDF-Parser) produit du texte analysé (Parsed Text, TXT) ; associé à la vérité terrain (Ground Truth, liste JSON d'éléments de texte, de formules en ligne et de formules hors texte), il alimente « LLM-Based Matching (+ Rule-Based Post-Verification) », qui génère des paires de formules (Formula Pairs, JSON de gt_formula/parsed_formula, p. ex. $a+1$ contre $a+I$) puis l'« Evaluation for all formula pairs ».",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "fr"
+        },
+        {
+          "text": "Figura 1, parte 3 «Evaluation Pipeline»: un analizador de PDF (PDF-Parser) produce texto analizado (Parsed Text, TXT); junto con la verdad fundamental (Ground Truth, lista JSON de elementos de texto, fórmulas en línea y fórmulas en bloque) alimenta «LLM-Based Matching (+ Rule-Based Post-Verification)», que genera pares de fórmulas (Formula Pairs, JSON de gt_formula/parsed_formula, p. ej., $a+1$ frente a $a+I$) y luego «Evaluation for all formula pairs».",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "es"
+        },
+        {
+          "text": "الشكل 1، الجزء 3 'Evaluation Pipeline': يُنتج محلل PDF (PDF-Parser) نصاً محللاً (Parsed Text بصيغة TXT)؛ ومع بيانات الحقيقة المرجعية (Ground Truth، وهي قائمة JSON تضم عناصر نصية وصيغاً مضمّنة وصيغاً معروضة) يغذّي مرحلة 'LLM-Based Matching (+ Rule-Based Post-Verification)'، التي تُخرج أزواج الصيغ (Formula Pairs بصيغة JSON لـ gt_formula/parsed_formula، مثل $a+1$ مقابل $a+I$) ثم مرحلة 'Evaluation for all formula pairs'.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "ar"
+        },
+        {
+          "text": "Рисунок 1, часть 3 «Evaluation Pipeline»: PDF-парсер (PDF-Parser) создаёт распознанный текст (Parsed Text, TXT); вместе с эталонными данными (Ground Truth, JSON-список текстовых фрагментов, строчных и выносных формул) он подаётся в блок «LLM-Based Matching (+ Rule-Based Post-Verification)», который формирует пары формул (Formula Pairs, JSON с полями gt_formula/parsed_formula, например $a+1$ против $a+I$), а затем в блок «Evaluation for all formula pairs».",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "ru"
+        },
+        {
+          "text": "图 1 第 3 部分“Evaluation Pipeline”：PDF 解析器（PDF-Parser）生成解析文本（Parsed Text，TXT）；它与真值数据（Ground Truth，包含文本、行内公式和行间公式项的 JSON 列表）一起输入“LLM-Based Matching (+ Rule-Based Post-Verification)”，输出公式对（Formula Pairs，包含 gt_formula/parsed_formula 的 JSON，例如 $a+1$ 对 $a+I$），随后进入“Evaluation for all formula pairs”。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p005-2",
+      "file": "images/img-p005-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "at": "2026-10-11",
+        "saw": "Flowchart panels '1. Formula Dataset' and '2. Benchmark Dataset'; upper part of Figure 1.",
+        "page": 5
+      },
+      "narrative": [
+        {
+          "text": "Figure 1, parts 1-2: Formula Dataset (Wikipedia → Formula Extraction → Filtering + Deduplication → wikipedia-latex-formulas-319k, with a Hugging Face emoji logo), then Benchmark Dataset: randomized building blocks (Display Formulas, Text Segments, Text + Inline Formulas Mixed) form a Ground Truth JSON, combined with a randomized Layout/Style LaTeX template into an assembled TEX file, compiled by pdflatex into the PDF to be parsed.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5-5"
+          },
+          "drafted_at": "2026-10-11",
+          "lang": "en"
+        },
+        {
+          "text": "Figure 1, parties 1 et 2 : Formula Dataset (Wikipedia → Formula Extraction → Filtering + Deduplication → wikipedia-latex-formulas-319k, avec un logo émoji Hugging Face), puis Benchmark Dataset : des blocs de construction aléatoires (Display Formulas, Text Segments, Text + Inline Formulas Mixed) forment un JSON de vérité terrain (Ground Truth), combiné à un modèle LaTeX de mise en page/style aléatoire (Layout/Style) en un fichier TEX assemblé, compilé par pdflatex dans le PDF à analyser.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "fr"
+        },
+        {
+          "text": "Figura 1, partes 1 y 2: Formula Dataset (Wikipedia → Formula Extraction → Filtering + Deduplication → wikipedia-latex-formulas-319k, con un logotipo de emoji de Hugging Face), seguido de Benchmark Dataset: bloques de construcción aleatorizados (Display Formulas, Text Segments, Text + Inline Formulas Mixed) forman un JSON de verdad fundamental (Ground Truth), combinado con una plantilla LaTeX de diseño/estilo aleatorizada (Layout/Style) en un archivo TEX ensamblado y compilado mediante pdflatex en el PDF que se va a analizar.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "es"
+        },
+        {
+          "text": "الشكل 1، الجزءان 1–2: مجموعة بيانات الصيغ Formula Dataset (Wikipedia → Formula Extraction → Filtering + Deduplication → wikipedia-latex-formulas-319k، مع شعار تعبيري لـ Hugging Face)، ثم مجموعة بيانات المعيار Benchmark Dataset: وحدات بناء عشوائية (Display Formulas وText Segments وText + Inline Formulas Mixed) تشكّل ملف JSON للحقيقة المرجعية (Ground Truth)، يُدمج مع قالب LaTeX عشوائي للتخطيط/النمط (Layout/Style) في ملف TEX مُجمَّع يُصرَّف بواسطة pdflatex إلى ملف PDF المراد تحليله.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "ar"
+        },
+        {
+          "text": "Рисунок 1, части 1–2: набор данных формул Formula Dataset (Wikipedia → Formula Extraction → Filtering + Deduplication → wikipedia-latex-formulas-319k, с логотипом-эмодзи Hugging Face), затем эталонный набор Benchmark Dataset: рандомизированные строительные блоки (Display Formulas, Text Segments, Text + Inline Formulas Mixed) образуют эталонный JSON (Ground Truth), который объединяется с рандомизированным LaTeX-шаблоном разметки и стиля (Layout/Style) в собранный TEX-файл, компилируемый через pdflatex в анализируемый PDF-документ.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "ru"
+        },
+        {
+          "text": "图 1 第 1–2 部分：公式数据集 Formula Dataset（Wikipedia → Formula Extraction → Filtering + Deduplication → wikipedia-latex-formulas-319k，带有 Hugging Face 表情图标），随后是基准数据集 Benchmark Dataset：随机化的构建块（Display Formulas、Text Segments、Text + Inline Formulas Mixed）构成真值 JSON（Ground Truth），再与随机化的排版/样式（Layout/Style）LaTeX 模板组合成完整的 TEX 文件，由 pdflatex 编译成待解析的 PDF。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p008-1",
+      "file": "images/img-p008-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "at": "2026-10-11",
+        "saw": "Two CDM symbol-matching comparisons with score tables (illustrating rater disagreement).",
+        "page": 8
+      },
+      "narrative": [
+        {
+          "text": "Two formula comparisons rendered by the CDM tool (green boxes = matched symbols, red = errors), each with a score table. Left: 778320/2598960 vs 778120/2598960 (one digit red): LLM-Judge 3, CDM 0.929, human scores 1, 3, 9. Right: (1 + r/n)^n vs (1 + r/a)^n (denominator red): LLM-Judge 2, CDM 0.875, human scores 1, 4, 7.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5-5"
+          },
+          "drafted_at": "2026-10-11",
+          "lang": "en"
+        },
+        {
+          "text": "Deux comparaisons de formules rendues par l'outil CDM (cadres verts = symboles appariés, rouges = erreurs), chacune accompagnée d'un tableau de scores. À gauche : 778320/2598960 contre 778120/2598960 (un chiffre en rouge) : LLM-Judge 3, CDM 0,929, scores humains 1, 3, 9. À droite : (1 + r/n)^n contre (1 + r/a)^n (dénominateur en rouge) : LLM-Judge 2, CDM 0,875, scores humains 1, 4, 7.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "fr"
+        },
+        {
+          "text": "Dos comparaciones de fórmulas generadas por la herramienta CDM (recuadros verdes = símbolos emparejados, rojos = errores), cada una con una tabla de puntuaciones. Izquierda: 778320/2598960 frente a 778120/2598960 (un dígito en rojo): LLM-Judge 3, CDM 0.929, puntuaciones humanas 1, 3, 9. Derecha: (1 + r/n)^n frente a (1 + r/a)^n (denominador en rojo): LLM-Judge 2, CDM 0.875, puntuaciones humanas 1, 4, 7.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "es"
+        },
+        {
+          "text": "مقارنتان لصيغتين عُرضتا بواسطة أداة CDM (المربعات الخضراء = رموز متطابقة، والحمراء = أخطاء)، مع جدول درجات لكل منهما. في اليسار: 778320/2598960 مقابل 778120/2598960 (رقم واحد بالأحمر): درجة LLM-Judge هي 3، وCDM هي 0.929، ودرجات المقيّمين البشريين 1 و3 و9. في اليمين: (1 + r/n)^n مقابل (1 + r/a)^n (المقام بالأحمر): درجة LLM-Judge هي 2، وCDM هي 0.875، ودرجات المقيّمين البشريين 1 و4 و7.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "ar"
+        },
+        {
+          "text": "Два сравнения формул, визуализированные инструментом CDM (зелёные рамки — совпавшие символы, красные — ошибки), каждое с таблицей оценок. Слева: 778320/2598960 против 778120/2598960 (одна цифра выделена красным): LLM-Judge — 3, CDM — 0,929, оценки экспертов — 1, 3, 9. Справа: (1 + r/n)^n против (1 + r/a)^n (знаменатель выделен красным): LLM-Judge — 2, CDM — 0,875, оценки экспертов — 1, 4, 7.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "ru"
+        },
+        {
+          "text": "由 CDM 工具渲染的两组公式对比（绿框表示匹配符号，红框表示错误），每组均附有评分表。左图：778320/2598960 对 778120/2598960（一个数字标红）：LLM-Judge 为 3，CDM 为 0.929，人工评分为 1、3、9。右图：(1 + r/n)^n 对 (1 + r/a)^n（分母标红）：LLM-Judge 为 2，CDM 为 0.875，人工评分为 1、4、7。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p010-1",
+      "file": "images/img-p010-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "at": "2026-10-11",
+        "saw": "Four CDM comparison panels with all-green boxes; illustrates CDM false positives (text p.10).",
+        "page": 10
+      },
+      "narrative": [
+        {
+          "text": "Four ground-truth/parsed formula pairs separated by a blue line, all symbols boxed green: 7^2 vs 72, 10^{-1} vs 10 − 1, x_{(i−1)} vs x(i − 1), and blackboard ℕ ⊂ ℝ vs italic N ⊂ R. These are the examples of CDM giving matches despite positional or symbol differences.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5-5"
+          },
+          "drafted_at": "2026-10-11",
+          "lang": "en"
+        },
+        {
+          "text": "Quatre paires de formules vérité terrain / analysée séparées par une ligne bleue, tous les symboles étant encadrés en vert : 7^2 contre 72, 10^{-1} contre 10 − 1, x_{(i−1)} contre x(i − 1), et ℕ ⊂ ℝ ajouré contre N ⊂ R en italique. Ce sont des exemples où CDM indique des correspondances malgré des différences de position ou de symbole.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "fr"
+        },
+        {
+          "text": "Cuatro pares de fórmulas de verdad fundamental / analizadas separados por una línea azul, con todos los símbolos enmarcados en verde: 7^2 frente a 72, 10^{-1} frente a 10 − 1, x_{(i−1)} frente a x(i − 1), y ℕ ⊂ ℝ en negrita de pizarra frente a N ⊂ R en cursiva. Son ejemplos en los que CDM asigna coincidencias a pesar de diferencias posicionales o de símbolos.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "es"
+        },
+        {
+          "text": "أربعة أزواج من صيغ الحقيقة المرجعية والصيغ المحللة يفصل بينها خط أزرق، وجميع رموزها محاطة بمربعات خضراء: 7^2 مقابل 72، و10^{-1} مقابل 10 − 1، وx_{(i−1)} مقابل x(i − 1)، وℕ ⊂ ℝ بخط السبورة العريض مقابل N ⊂ R المائل. وتُمثّل هذه الحالات أمثلة يمنح فيها CDM تطابقاً رغم اختلافات الموضع أو الرموز.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "ar"
+        },
+        {
+          "text": "Четыре пары эталонных и распознанных формул, разделённых синей линией, где все символы обведены зелёными рамками: 7^2 против 72, 10^{-1} против 10 − 1, x_{(i−1)} против x(i − 1), а также ажурное ℕ ⊂ ℝ против курсивного N ⊂ R. Это примеры ложноположительных срабатываний, когда CDM фиксирует совпадение несмотря на различия в позиции или начертании символов.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "ru"
+        },
+        {
+          "text": "由蓝线分隔的四组真值/解析公式对，所有符号均用绿框标出：7^2 对 72、10^{-1} 对 10 − 1、x_{(i−1)} 对 x(i − 1)，以及黑板粗体 ℕ ⊂ ℝ 对斜体 N ⊂ R。这些示例展示了尽管存在位置或符号差异，CDM 仍将其判定为匹配的情况。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p010-2",
+      "file": "images/img-p010-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "claude-opus-5-5"
+        },
+        "at": "2026-10-11",
+        "saw": "Four CDM comparison panels with red-boxed operator symbols; illustrates CDM false negatives.",
+        "page": 10
+      },
+      "narrative": [
+        {
+          "text": "Four formula pairs that look equivalent but where CDM boxes the middle symbol in red: A ∧ B, A \\ B = 0, x → y, and x ≠ y, each shown above and below a blue line with the operands boxed green.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "claude-opus-5-5"
+          },
+          "drafted_at": "2026-10-11",
+          "lang": "en"
+        },
+        {
+          "text": "Quatre paires de formules d'apparence équivalente mais où CDM encadre le symbole central en rouge : A ∧ B, A \\ B = 0, x → y et x ≠ y, chacune représentée au-dessus et au-dessous d'une ligne bleue avec les opérandes encadrés en vert.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "fr"
+        },
+        {
+          "text": "Cuatro pares de fórmulas de apariencia equivalente pero en los que CDM enmarca el símbolo central en rojo: A ∧ B, A \\ B = 0, x → y y x ≠ y, mostrados cada uno encima y debajo de una línea azul con los operandos enmarcados en verde.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "es"
+        },
+        {
+          "text": "أربعة أزواج من الصيغ المتكافئة ظاهرياً غير أن أداة CDM تحيط فيها الرمز الأوسط بمربع أحمر: A ∧ B، وA \\ B = 0، وx → y، وx ≠ y، حيث يُعرض كل زوج أعلى الخط الأزرق وأسفله مع إحاطة المعاملات بمربعات خضراء.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "ar"
+        },
+        {
+          "text": "Четыре пары визуально эквивалентных формул, в которых CDM выделяет центральный символ оператора красной рамкой: A ∧ B, A \\ B = 0, x → y и x ≠ y; каждая пара показана над и под синей разделительной линией, а операнды обведены зелёными рамками.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "ru"
+        },
+        {
+          "text": "四组外观等价但被 CDM 将中间运算符标为红框的公式对：A ∧ B、A \\ B = 0、x → y 和 x ≠ y，每组分别显示在蓝线上方和下方，两侧运算数均用绿框标出。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://8772c82d-f59e-4bd6-ac09-719b38967fbc"
+          },
+          "drafted_at": "2026-10-28",
+          "lang": "zh"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "$schema": "folio-index-config/v1",
+  "instances": [
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "43d76484684cbc5b6dfe9b460f116b3fb79c301d",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "43d76484684cbc5b6dfe9b460f116b3fb79c301d",
+              "evidence": "litlfred, 2026-11-06, Claude Code session session_01VQDpPeA2N8L3orQCPPMAas: 'align pins' (re-pin every layer bottom-up to the current mains of the layers below it, after cat-harness#1097 aligned cat-harness's own pins; bean cat-tools-sm8r)."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "7e6976d3ecf5b42f9c11a6010958103e99e74cff",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "7e6976d3ecf5b42f9c11a6010958103e99e74cff",
+              "evidence": "litlfred, 2026-11-06, Claude Code session session_01VQDpPeA2N8L3orQCPPMAas: 'align pins' (re-pin every layer bottom-up to the current mains of the layers below it, after cat-harness#1097 aligned cat-harness's own pins; bean cat-tools-sm8r)."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+              "evidence": "litlfred, 2026-11-06, Claude Code session session_01VQDpPeA2N8L3orQCPPMAas: 'align pins' (re-pin every layer bottom-up to the current mains of the layers below it, after cat-harness#1097 aligned cat-harness's own pins; bean cat-tools-sm8r)."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
+              "evidence": "litlfred, 2026-11-06, Claude Code session session_01VQDpPeA2N8L3orQCPPMAas: 'align pins' (re-pin every layer bottom-up to the current mains of the layers below it, after cat-harness#1097 aligned cat-harness's own pins; bean cat-tools-sm8r)."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "site": {
+    "landing": "folio-assistant-core"
+  }
+}
