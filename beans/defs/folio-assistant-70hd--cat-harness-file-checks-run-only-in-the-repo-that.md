@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-07T15:45:00Z
+updated_at: 2026-11-07T16:58:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -151,3 +151,4 @@ _2026-11-07T08:00:00Z_ — Coordinator (session_01VQDpPfGantMCt7AV4LCCK2, took o
 - 2026-11-07 15:27Z: smart-immunizations#117 marked ready (draft fast tier green); its full tier is running. The source fix is draft https://github.com/litlfred/smart-base/pull/323 (897c9cf, by session_01VQDpPefuU428bYWziAFStW): the L1 scripts take the cat-harness namespace from its release IRI. Not covered there: smart-base kg/src/l1-library.ts:55 and its generated JSON-LD. #116 is still waiting on the merge manager.
 - 2026-11-07 15:45Z: At the parent's request, smart-base#323 (now 523cc3f) also covers kg/src/l1-library.ts. That file keeps a literal (v0/ns), because the kg package builds without the mount, and a bun drift test pins it to instanceNamespaceOf(cat-harness.json). kg/generated/l1/l1-library.jsonld was regenerated with `npm run build`, its only change. Still a draft, with CI queued.
 - 2026-11-07 15:53Z: smart-immunizations#117 is full-tier green with main recomputed (attempt 2). iri:sync:check goes from 1 to 0, fixed by this PR. "ready" sent to the merge manager and the parent. Waiting for owner approval: #116 (ready since 09:58Z) and #117.
+- 2026-11-07 16:58Z: smart-base#323 is full-tier green at ad261e2 and merges cleanly. The first full run was red on reference-direction because a new comment named smart-immunizations; fixed. "ready" sent to the merge manager, copied to the parent and F. No self-merge.
