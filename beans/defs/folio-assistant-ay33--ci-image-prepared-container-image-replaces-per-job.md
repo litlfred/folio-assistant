@@ -56,3 +56,6 @@ These need the siblings that own `if:` and work steps (CI speed 2/3/7/10).
 - #2964 fix 04aed59: browser jobs keep a visible `playwright install --with-deps` (gates.ts installsBrowser reads job steps); ci-setup uses `chromium: browser`.
 - #2999 (draft, stacked on #2985): repoints the jobs to the shared ci-setup/ci-image at the lock sha and deletes the local copies. The 3 visible mount-from-lock steps stay until a tools re-pin carries cat-harness-tools#1594 (check:workflow-submodules reads a remote action from the whole mount at the lock sha).
 - [ ] After a re-pin carrying #1594: drop the 3 mount-from-lock steps (gates-docs, gates-unrun, qa-publish).
+- 2026-11-07: #2999 was merged by the owner into #2985's branch (2f4e9a1), so it lands with #2985. The coordinator was asked to run `workflow-pins --write` there (the lock is at tools 9a4ccd9; the calls named 8e7ad11).
+- [ ] After #2985 lands: verify the ci-image publish on main makes the new tag (new key) and that jobs hit it.
+- [ ] After a re-pin carrying cat-harness-tools#1594: drop the 3 visible mount-from-lock steps.
