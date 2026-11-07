@@ -432,7 +432,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@abc90c28383d6f4ef6ce85e09a26e38be2ba0ac6 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@e3f62f5bbb5c1ccea684c2909963ec0ec46fd314 # index.lock.json
         with:
           chromium: browser
 
