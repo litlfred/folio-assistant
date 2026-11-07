@@ -87,6 +87,13 @@ and which skips a gate only when every recorded input still matches.
 `pull_request_target` never saves (it runs base code over a PR's inputs).
 A save is only ever called after a green step (`if: success()`).
 
+The one exception is the CI cone (owner ruling 2026-11-07, card "A. Per
+passed check"). Its entry is saved with `if: !cancelled()`, before the job's
+verdict, so a job with one red gate still keeps the records of the gates that
+passed. That is sound because `ci-cone.ts` records only a check that passed:
+a red check leaves no record, so it runs again on the next push, and nothing
+red is ever skipped.
+
 ### The three classes of entry (owner, 2026-11-05)
 
 Committers — people and agents — produce entries locally where CI can verify
