@@ -53,6 +53,8 @@ SKIPPABLE = re.compile(
     r"|Repository gates — cat-harness standalone ratchet \(hard\))$"
 )
 RUNS_SCANNED = 30
+# The step that runs a PR's affected tests (CI speed 7, #2962); its first command is its label.
+SCOPED_STEP = "bash .github/scripts/pr-bun-test.sh"
 ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
 
 
@@ -137,7 +139,20 @@ def judge_tests(kind, junit, log, exit_code):
         unhandled, fail_n, err_n = bun_log(log)
         if fail_n is None:
             return None, f"exit {exit_code} and no `N fail` summary in bun's output"
-        if fail_n != len(failing) + len(unhandled) or err_n != len(unhandled):
+        # bun 1.4.4's account, captured as fixtures in
+        # test/workflows/fixtures/bun-1.4.4-*: the JUnit report lists the
+        # failing test cases and no unhandled error; each `# Unhandled error
+        # between tests` is counted on the `N error` line. Whether it is ALSO
+        # counted in `N fail` depends on its kind, and bun's output does not
+        # say which: an unhandled rejection while a file loads is not
+        # (bun-1.4.4-unhandled, b.test.ts), a throw that stops a file loading
+        # is (bun-1.4.4-load-failure, c.test.ts; and CI, kg-export.test.ts's
+        # top-level await). So `N fail` is the JUnit failures plus between 0
+        # and every unhandled error, and nothing else; outside that, or with
+        # `N error` not the unhandled errors, could-not-determine. Every
+        # unhandled error is judged as a failure below, so neither count is
+        # ever a pass.
+        if err_n != len(unhandled) or not len(failing) <= fail_n <= len(failing) + len(unhandled):
             return None, (f"bun reported {fail_n} fail / {err_n} error, the JUnit report names "
                           f"{len(failing)} failing test(s) and the output {len(unhandled)} unhandled error(s)")
         failing += unhandled
@@ -172,11 +187,30 @@ def cmd_record(args):
             entry["undetermined"] = why
         else:
             entry["tests"] = tests
+    scoped = test_scope()
+    if kind and scoped is not None:
+        # CI speed 7 (#2962): this test step ran only the PR's affected files.
+        entry["scoped"] = scoped
     if exit_code != 0:
         entry["tail"] = tail_of(log_path)
     with open(os.path.join(state_dir(), "steps.jsonl"), "a", encoding="utf-8") as f:
         f.write(json.dumps(entry) + "\n")
     return 0
+
+
+def test_scope():
+    """The number of affected test files when CQG_TEST_SCOPE names a selection (`kind: some`), else None."""
+    path = os.environ.get("CQG_TEST_SCOPE")
+    if not path:
+        return None
+    try:
+        with open(path, encoding="utf-8") as f:
+            scope = json.load(f)
+    except (OSError, ValueError):
+        return None
+    if not isinstance(scope, dict) or scope.get("kind") != "some":
+        return None
+    return len(scope.get("files") or [])
 
 
 def tail_of(path, lines=15):
@@ -191,7 +225,7 @@ def build_report():
     d = state_dir()
     begun = os.path.isfile(os.path.join(d, "phase"))
     status = os.environ.get("CQG_JOB_STATUS", "success")
-    report = {"complete": begun and status == "success", "items": {}, "undetermined": []}
+    report = {"complete": begun and status == "success", "items": {}, "undetermined": [], "scoped": None}
     if not begun:
         report["undetermined"].append({"label": "(job)", "why": "the judged steps never began; an earlier step failed"})
     elif status != "success":
@@ -199,6 +233,8 @@ def build_report():
     path = os.path.join(d, "steps.jsonl")
     for line in open(path, encoding="utf-8") if os.path.isfile(path) else []:
         e = json.loads(line)
+        if e.get("scoped") is not None:
+            report["scoped"] = e["scoped"]
         if e.get("undetermined"):
             report["undetermined"].append({"label": e["label"], "why": e["undetermined"]})
         elif e.get("tests") is not None and e["exit"] != 0:
@@ -213,7 +249,7 @@ def build_report():
 
 
 def encode(report):
-    slim = {"complete": report["complete"], "undetermined": report["undetermined"],
+    slim = {"complete": report["complete"], "undetermined": report["undetermined"], "scoped": report.get("scoped"),
             "items": {k: {"label": v["label"], "exit": v["exit"]} for k, v in report["items"].items()}}
     return MARKER + base64.b64encode(zlib.compress(json.dumps(slim, sort_keys=True).encode(), 9)).decode()
 
@@ -312,8 +348,11 @@ def cmd_verdict(_args):
                  *[f"- `{u['label']}`: {u['why']}" for u in head["undetermined"]],
                  "", *([f"Also failing: {len(fails)}."] if fails else [])])
         return 1
+    scope_note = ([f"Only the {head['scoped']} affected test file(s) were judged; the rest are skipped — not "
+                   "affected (not judged, and not a pass). The push of the merge to main runs the whole suite."]
+                  if head.get("scoped") is not None else [])
     if not fails:
-        summary([title, "", "No failures in the judged steps."])
+        summary([title, "", "No failures in the judged steps.", *([""] + scope_note if scope_note else [])])
         return 0
     event = os.environ.get("GITHUB_EVENT_NAME", "")
     if event != "pull_request":
@@ -341,6 +380,8 @@ def cmd_verdict(_args):
     if inherited:
         out += [f"{len(inherited)} failure(s) failing on main too — main's to fix, not counted here:", "",
                 "| failing on main too |", "| --- |", *rows(head, inherited)]
+    if scope_note:
+        out += ["", *scope_note]
     summary(out)
     return 1 if new else 0
 
@@ -365,6 +406,10 @@ def cmd_reuse_check(_args):
             rec = record_from_log(gh(f"repos/{repo}/actions/jobs/{j['id']}/logs", raw=True))
             if rec is None or not rec.get("complete") or rec.get("undetermined"):
                 return answer("false", f"`{j['name']}` in run {run_id} left no complete record, so every job runs.")
+            if rec.get("scoped") is not None or any(
+                    v.get("label", "").startswith(SCOPED_STEP) for v in rec["items"].values()):
+                return answer("false", f"`{j['name']}` in run {run_id} ran only the PR's affected tests, "
+                                       "so main runs the whole suite.")
             if failing(rec):
                 return answer("false", f"`{j['name']}` in run {run_id} passed only because its "
                                        f"{len(failing(rec))} failure(s) were main's too, so main runs it again.")

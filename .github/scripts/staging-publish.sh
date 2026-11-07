@@ -37,6 +37,8 @@
 set -euo pipefail
 
 : "${REPO:?}" "${RUN_URL:?}"
+# Where previews go on gh-pages (cat-harness-tools scripts/lib/preview-prefix.ts).
+PREVIEW_DIR="${PREVIEW_DIR:-branches}"
 T="${RUNNER_TEMP:-/tmp}/staging-publish"
 mkdir -p "$T"
 PUBLISHED="$RUNNER_TEMP/published.json"
@@ -52,9 +54,15 @@ safe_slug() {
 
 # The waiting previews: one line per slug, newest artifact first, then the ids
 # of every artifact of that slug (all are deleted once the newest is live).
+#
+# ONLY artifacts uploaded by a run of THIS repository's own branches. A
+# `pull_request` run from a fork also uploads into this repository's artifact
+# list, under any name its workflow chooses, and this script publishes with a
+# write token. So the run's head repository must be this repository, and (in
+# the loop below) the artifact's meta.json must name the run that uploaded it.
 list_queue() {
   gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
-    --jq '.artifacts[] | select(.expired == false and (.name | startswith("staging-site-"))) | [.name, .id, .created_at, .archive_download_url] | @tsv' \
+    --jq '.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")) and .workflow_run.head_repository_id != null and .workflow_run.head_repository_id == .workflow_run.repository_id) | [.name, .id, .created_at, .archive_download_url, (.workflow_run.id | tostring)] | @tsv' \
     2>/dev/null | sort -t$'\t' -k1,1 -k3,3r
 }
 
@@ -91,7 +99,7 @@ while [ "$attempt" -le 3 ]; do
   : > "$T/drop.txt"    # artifact ids to delete without publishing
   : > "$T/rotated.txt"
   declare -A seen=()
-  while IFS=$'\t' read -r name id created url <&3; do
+  while IFS=$'\t' read -r name id created url wrun <&3; do
     slug="${name#staging-site-}"
     if [ -n "${seen[$slug]:-}" ]; then
       # An older build of a slug already in the batch: superseded.
@@ -111,11 +119,16 @@ while [ "$attempt" -le 3 ]; do
     if [ "$(jq -r .slug "$d/meta.json" 2>/dev/null)" != "$slug" ]; then
       echo "::warning::$slug: meta.json names another slug; dropped"; echo "$id" >> "$T/drop.txt"; continue
     fi
+    # The record must name the run that uploaded it (see list_queue).
+    case "$(jq -r '.run // ""' "$d/meta.json" 2>/dev/null)" in
+      */actions/runs/"$wrun") ;;
+      *) echo "::warning::$slug: meta.json does not name run $wrun, which uploaded it; dropped"; echo "$id" >> "$T/drop.txt"; continue ;;
+    esac
     if ! still_wanted "$d/meta.json"; then
       echo "$slug: its PR is closed or its branch is gone; dropped, not published"; echo "$id" >> "$T/drop.txt"; continue
     fi
     if [ -z "$(ls -A "$d/site" 2>/dev/null || true)" ]; then
-      echo "::warning::$slug: the built site is empty; dropped, STAGING/$slug keeps its last preview"; echo "$id" >> "$T/drop.txt"; continue
+      echo "::warning::$slug: the built site is empty; dropped, $PREVIEW_DIR/$slug keeps its last preview"; echo "$id" >> "$T/drop.txt"; continue
     fi
     printf '%s\t%s\t%s\n' "$slug" "$id" "$d" >> "$T/batch.tsv"
   done 3<<< "$queue"
@@ -130,14 +143,14 @@ while [ "$attempt" -le 3 ]; do
   # fd 3, so a tool that reads stdin cannot eat the rest of the batch.
   while IFS=$'\t' read -r slug id d <&3; do
     branch=$(jq -r .branch "$d/meta.json"); sha=$(jq -r .sha "$d/meta.json"); run=$(jq -r .run "$d/meta.json")
-    rm -rf "pages/STAGING/$slug"
-    mkdir -p "pages/STAGING/$slug"
-    cp -R "$d/site/." "pages/STAGING/$slug/"
+    rm -rf "pages/$PREVIEW_DIR/$slug"
+    mkdir -p "pages/$PREVIEW_DIR/$slug"
+    cp -R "$d/site/." "pages/$PREVIEW_DIR/$slug/"
     if [ -f "$TOOLS/staging-share.ts" ]; then
-      bun run "$TOOLS/staging-share.ts" apply --root pages --preview "pages/STAGING/$slug" --slug "$slug"
+      bun run "$TOOLS/staging-share.ts" apply --root pages --preview "pages/$PREVIEW_DIR/$slug" --slug "$slug"
     fi
     jq -n --arg s 'staging preview published' '{summary:$s}' | bun run "$TOOLS/render-log.ts" --dir pages \
-      --event rendered --kind staging-preview --path "STAGING/$slug" --slug "$slug" \
+      --event rendered --kind staging-preview --path "$PREVIEW_DIR/$slug" --slug "$slug" \
       --branch "$branch" --commit "$sha" --run "$run"
     bun run "$TOOLS/staging-rotate.ts" --dir pages --current "$slug" --run "$RUN_URL" --summary-out "$T/rot-$slug.txt"
     cat "$T/rot-$slug.txt" >> "$T/rotated.txt" 2>/dev/null || true
@@ -145,7 +158,7 @@ while [ "$attempt" -le 3 ]; do
     n=$((n + 1))
   done 3< "$T/batch.tsv"
 
-  git -C pages add -A STAGING
+  git -C pages add -A "$PREVIEW_DIR"
   if [ -d pages/_render-log ]; then git -C pages add -A _render-log; fi
   if [ "$n" = 1 ]; then
     first=$(head -1 "$T/batch.tsv" | cut -f1)

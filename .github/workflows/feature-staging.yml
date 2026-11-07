@@ -1,29 +1,29 @@
 # bpmn: cat-harness/sdlc/processes/feature-staging.bpmn
 name: Feature Staging (GitHub Pages)
 
-# Deploy feature-branch rendered content to gh-pages under STAGING/<branch>/
+# Deploy feature-branch rendered content to gh-pages under branches/<branch>/
 # so reviewers can preview changes at:
-#   https://<user>.github.io/<repo>/STAGING/<branch-slug>/
+#   https://<user>.github.io/<repo>/branches/<branch-slug>/
 #
 # This is the "before/after" comparison surface for publication review:
 # - main renders at the Pages root (via docs-site.yml)
-# - feature branches render under STAGING/<slug>/ (this workflow)
+# - feature branches render under branches/<slug>/ (this workflow)
 # - each deployment is stamped with the commit SHA, timestamp, and
 #   source branch so it is always clear what is deployed
 #
 # Example scenario (from issue #215):
 #   Author changes the immunization schedule → agent opens a feature branch →
 #   agent renders the changed content → guidance review committee compares
-#   STAGING/update-immunization-schedule/ against the main site → approves →
-#   merge to main → STAGING/<slug>/ is cleaned up automatically.
+#   branches/update-immunization-schedule/ against the main site → approves →
+#   merge to main → branches/<slug>/ is cleaned up automatically.
 #
-# Cleanup: when a PR is merged or closed, the STAGING/<slug>/ directory
+# Cleanup: when a PR is merged or closed, the branches/<slug>/ directory
 # is removed from gh-pages so stale previews don't accumulate.
 #
 # **This workflow is folio-generic.** It builds the docs site (Jekyll +
 # TypeDoc), not the TeX paper PDF. A folio that also needs a staged PDF
 # build should call publish.yml with publish_branch: gh-pages and the
-# STAGING prefix — that is handled by the publish workflow's
+# branches/ prefix — that is handled by the publish workflow's
 # `publish_branch` input.
 
 on:
@@ -156,7 +156,7 @@ on:
       # preview; and the removal is preflighted against the same liveness
       # signals the health sweep uses, at removal time.
       cleanup_slug:
-        description: 'DELETION: the STAGING/<slug> to remove. Leave blank to stage a branch instead.'
+        description: 'DELETION: the branches/<slug> (or legacy STAGING/<slug>) to remove. Leave blank to stage a branch instead.'
         required: false
         default: ''
         type: string
@@ -175,6 +175,13 @@ on:
         required: false
         default: ''
         type: string
+
+# Where previews are published on gh-pages: `branches/<slug>/` (owner,
+# 2026-11-05; cat-harness-tools `scripts/lib/preview-prefix.ts`). Previews
+# published before that under `branches/` are left in place: readers and the
+# cleanup accept both, writers write this one only.
+env:
+  PREVIEW_DIR: branches
 
 permissions:
   contents: write
@@ -246,20 +253,20 @@ jobs:
           # The slug, by the rule of `Determine staging slug` in `stage`.
           SLUG=$(echo "$HEAD_REF" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
           case "$SLUG" in ""|.|..|_retired) echo "deferred=false" >> "$GITHUB_OUTPUT"; exit 0 ;; esac
-          rec=$(gh api "repos/$REPO/contents/STAGING/$SLUG/_build-record.json?ref=gh-pages" -H 'Accept: application/vnd.github.raw' 2>/dev/null || true)
+          rec=$(gh api "repos/$REPO/contents/$PREVIEW_DIR/$SLUG/_build-record.json?ref=gh-pages" -H 'Accept: application/vnd.github.raw' 2>/dev/null || true)
           builder=$(printf '%s' "$rec" | jq -r '.builder // empty' 2>/dev/null || true)
           rtree=$(printf '%s' "$rec" | jq -r '.tree // empty' 2>/dev/null || true)
           tree=$(gh api "repos/$REPO/git/commits/$MERGE_SHA" --jq .tree.sha)
           if [ "$builder" != "agent" ] || [ -z "$rtree" ] || [ "$rtree" != "$tree" ]; then
-            echo "no agent build of tree ${tree:0:12} at STAGING/$SLUG (record: ${builder:-none} ${rtree:0:12}): CI builds the preview"
+            echo "no agent build of tree ${tree:0:12} at $PREVIEW_DIR/$SLUG (record: ${builder:-none} ${rtree:0:12}): CI builds the preview"
             echo "deferred=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
-          echo "an agent build of tree ${tree:0:12} is live at STAGING/$SLUG: deferring the CI build to the verify sweep"
+          echo "an agent build of tree ${tree:0:12} is live at $PREVIEW_DIR/$SLUG: deferring the CI build to the verify sweep"
           gh api "repos/$REPO/statuses/$HEAD_SHA" -f state=pending -f context=preview/agent-build \
             -f description="Agent-built preview is live; CI full rebuild queued (low priority)" \
             -f target_url="https://github.com/$REPO/actions/workflows/preview-verify-sweep.yml" >/dev/null
           owner="${REPO%%/*}"; name="${REPO#*/}"
-          body=$(printf '<!-- preview-build-verify -->\n**Preview built by an agent:** https://%s.github.io/%s/STAGING/%s/ (tree `%s`).\n\nCI will rebuild the same tree in full, off the critical path, and replace the preview if any file differs. The `preview/agent-build` status on this commit says when that is done.\n' "$owner" "$name" "$SLUG" "${tree:0:12}")
+          body=$(printf '<!-- preview-build-verify -->\n**Preview built by an agent:** https://%s.github.io/%s/%s/%s/ (tree `%s`).\n\nCI will rebuild the same tree in full, off the critical path, and replace the preview if any file differs. The `preview/agent-build` status on this commit says when that is done.\n' "$owner" "$name" "$PREVIEW_DIR" "$SLUG" "${tree:0:12}")
           gh api "repos/$REPO/issues/$PR/comments" -f body="$body" >/dev/null || true
           echo "deferred=true" >> "$GITHUB_OUTPUT"
 
@@ -310,18 +317,18 @@ jobs:
           [ "$ACTION" = "synchronize" ] || { echo "$ACTION: the preview always builds"; exit 0; }
           SLUG=$(echo "$HEAD_REF" | sed 's|[^a-zA-Z0-9._-]|-|g' | sed 's|--*|-|g' | sed 's|^-||;s|-$||')
           case "$SLUG" in ""|.|..|_retired) exit 0 ;; esac
-          raw() { gh api "repos/$REPO/contents/STAGING/$SLUG/$1?ref=gh-pages" -H 'Accept: application/vnd.github.raw' 2>/dev/null || true; }
+          raw() { gh api "repos/$REPO/contents/$PREVIEW_DIR/$SLUG/$1?ref=gh-pages" -H 'Accept: application/vnd.github.raw' 2>/dev/null || true; }
           live=$(raw _build-patch.json | jq -r '.patch_id // empty' 2>/dev/null || true)
           builder=$(raw _build-record.json | jq -r '.builder // empty' 2>/dev/null || true)
           if [ "$builder" != "ci" ] || [ "$live" != "$pid" ]; then
-            echo "live preview at STAGING/$SLUG: builder ${builder:-none}, patch id ${live:0:12}: the preview builds"; exit 0
+            echo "live preview at $PREVIEW_DIR/$SLUG: builder ${builder:-none}, patch id ${live:0:12}: the preview builds"; exit 0
           fi
           echo "unchanged=true" >> "$GITHUB_OUTPUT"
-          echo "### Preview not rebuilt: the PR's own change is unchanged (patch id \`${pid:0:12}\`) since the live CI preview at \`STAGING/$SLUG\`; only its base moved." >> "$GITHUB_STEP_SUMMARY"
+          echo "### Preview not rebuilt: the PR's own change is unchanged (patch id \`${pid:0:12}\`) since the live CI preview at \`$PREVIEW_DIR/$SLUG\`; only its base moved." >> "$GITHUB_STEP_SUMMARY"
           gh api "repos/$REPO/statuses/$HEAD_SHA" -f state=success -f context=preview/own-diff-unchanged \
             -f description="PR's own change unchanged since the live preview; not rebuilt (dispatch to rebuild)" >/dev/null || true
 
-  # ── Deploy feature branch to STAGING/ ─────────────────────────
+  # ── Deploy feature branch to branches/ ─────────────────────────
   stage:
     needs: conflict-gate
     # bpmn-node: Start_PR
@@ -334,7 +341,7 @@ jobs:
     # the reviewers of a pull request; a queue entry has none, and it lives for
     # minutes. Without this clause every guard above passes on a `merge_group`
     # run — `github.event.action` is empty and the event is not a dispatch — so
-    # the job would deploy `STAGING/<slug>/` named after the ephemeral
+    # the job would deploy `branches/<slug>/` named after the ephemeral
     # `gh-readonly-queue/...` ref. Nothing would ever remove it: `cleanup`
     # fires on `pull_request_target: closed`, and a queue branch is never a
     # pull request that closes. That is the `plj1` shape — previews
@@ -400,7 +407,7 @@ jobs:
     #
     # The retry below is the mechanism that actually works here, and it is safe
     # for the same reason it is in `discoverability-docs`: each branch writes
-    # its own `STAGING/<slug>/` with `keep_files: true`, so a re-clone picks up
+    # its own `branches/<slug>/` with `keep_files: true`, so a re-clone picks up
     # whoever won and adds this branch's directory beside it.
     steps:
       # On `pull_request` the steps below come from the PR's test MERGE
@@ -418,28 +425,28 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: ${{ github.event_name == 'pull_request' && github.sha || (inputs.verify_pr != '' && format('refs/pull/{0}/merge', inputs.verify_pr)) || inputs.branch || github.ref }}
-      # bootstrap/ and bootstrap-tools/ arrive by remote mount, not as submodules (bean nn8e, #2462):
-      # the committed lock pins each to a SHA; .github/mount-from-lock.sh fetches the pinned cat-harness replayer and runs it.
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+      # Bun, the mounts index.lock.json pins, node_modules,
+      # Chromium:
+      # from the prepared image when one exists for this key, else mounted
+      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # own:
+      # the state branches move with every write, so no image holds them.
+      - name: Set up from the prepared CI image (bean ay33)
+        uses: ./.github/actions/ci-setup
         with:
-          bun-version: 1.4.4
-      - name: Cache remote mounts (beans cis1, cis4)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
-        with:
-          path: ~/.cache/cat-mount
-          key: cat-mount-v1-${{ hashFiles('index.lock.json') }}
-          restore-keys: |
-            cat-mount-v1-
+          chromium: browser
+
+      # Chromium's system libraries. The browser itself came from the image
+      # (or was downloaded) above, so this installs the apt packages only. It
+      # stays a step of the JOB, not of ci-setup: `bun run cat gates` sorts a
+      # job into the fast set by whether its own steps run `playwright install`
+      # (cat-harness-tools scripts/gates.ts installsBrowser).
+      - name: Chromium's system libraries
+        run: npx --yes playwright install --with-deps chromium
+
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
         run: bash .github/mount-from-lock.sh --root .
-
-      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
-        with:
-          bun-version: 1.4.4
-
-      - name: Install deps
-        run: bun install --frozen-lockfile
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -478,9 +485,6 @@ jobs:
       # tool-release declaration, so a later bump moves it too.
       - name: Java runtime the PlantUML release declares (#2744)
         uses: ./.github/actions/plantuml-java
-
-      - name: Install Chromium for the publish-time BPMN drawings (B1)
-        run: npx --yes playwright install --with-deps chromium
 
       # BEAN fwtz: a preview skips each derive:publish writer whose recorded
       # reads all still match, and puts back the outputs main's newest
@@ -536,7 +540,7 @@ jobs:
         # check:derived-from names them; this runs each one's declared writer
         # against the mount above, sources before consumers.
         # Each writer's skip-or-run line goes to a file the preview publishes
-        # (STAGING/<slug>/writer-skip.txt): job logs cannot be read from
+        # (branches/<slug>/writer-skip.txt): job logs cannot be read from
         # where the cone is measured (bean fwtz).
         #
         # A preview has no stamped QA working copy, so `uml:overview` builds one
@@ -578,7 +582,7 @@ jobs:
           #
           # `.` is in the permitted class above and `sed` REPLACES rather than
           # deletes, so two adjacent input dots survive: input `..` gives output
-          # `..`, measured. A slug of `..` makes `STAGING/$SLUG` the checkout
+          # `..`, measured. A slug of `..` makes `branches/$SLUG` the checkout
           # root.
           #
           # Two guards already stand between that and harm, and BOTH were found
@@ -587,9 +591,9 @@ jobs:
           #      `../..`, `feat/../x`, `...`, `.git` all refused by
           #      `git check-ref-format`. A ref-derived slug cannot be `..`.
           #   2. `rm` refuses `.` and `..` operands outright: `rm -rf
-          #      "STAGING/.."` skips and exits 1, deleting nothing.
+          #      "branches/.."` skips and exits 1, deleting nothing.
           #
-          # What neither covers is `git add -A "STAGING/.."`, which does NOT
+          # What neither covers is `git add -A "branches/.."`, which does NOT
           # refuse — it stages the whole tree above, so the job would commit
           # unrelated changes. That is the residual, and it is why the check is
           # on the VALUE: guard 1 holds only while the slug comes from a ref,
@@ -934,7 +938,7 @@ jobs:
           } > cat-harness/docs/_data/build.yml
           cat cat-harness/docs/_data/build.yml
 
-      # Set baseurl so Jekyll generates links relative to the STAGING subdir.
+      # Set baseurl so Jekyll generates links relative to the branches/ subdir.
       #
       # THE REPOSITORY NAME IS READ, NEVER SPELLED (bean `kuxk`). Jekyll builds
       # every internal link from `baseurl`, so a literal here means that in any
@@ -967,7 +971,7 @@ jobs:
           # a second `baseurl:` is a duplicate map key, which Jekyll forgives
           # (last wins) but compose-docs' strict YAML parse rejects.
           CFG=cat-harness/docs/_config.yml
-          LINE="baseurl: \"/${REPO}/STAGING/${SLUG}\"  # set by feature-staging.yml"
+          LINE="baseurl: \"/${REPO}/${PREVIEW_DIR}/${SLUG}\"  # set by feature-staging.yml"
           if grep -q '^baseurl:' "$CFG"; then
             awk -v line="$LINE" '/^baseurl:/ { print line; next } { print }' "$CFG" > "$CFG.tmp" && mv "$CFG.tmp" "$CFG"
           else
@@ -1011,7 +1015,7 @@ jobs:
       # them with the full theme. MEASURED on `origin/gh-pages` 2026-09-23:
       # 3.2 MB of markdown in, **111.6 MB of HTML out** across 681 pages at
       # ~164 KiB each, and **776.6 MB summed over the 13 live previews — 37 %
-      # of a 2.10 GB `STAGING/` tree** against a 1 GB Pages limit the main site
+      # of a 2.10 GB `branches/` tree** against a 1 GB Pages limit the main site
       # shares. That is larger than the `reference/` lever `tebu` already
       # pulled (464.7 MB), and nothing conditioned it: a branch that never
       # mentions the instance still published a full themed copy of the IG.
@@ -1052,7 +1056,7 @@ jobs:
           STAGING_SLUG: ${{ steps.slug.outputs.slug }}
           REPO_NAME: ${{ github.event.repository.name }}
         run: |
-          BASE="/${REPO_NAME}/STAGING/${STAGING_SLUG}"
+          BASE="/${REPO_NAME}/${PREVIEW_DIR}/${STAGING_SLUG}"
           # Retried: Maven Central answers 429 under load, and one unretried
           # 429 failed a whole preview build on 2026-10-05 (#2238).
           curl -sSfL --retry 5 --retry-delay 15 --retry-all-errors -o /tmp/plantuml.jar \
@@ -1276,9 +1280,9 @@ jobs:
       # `jekyll-seo-tag` is in the gem set the Jekyll build runs
       # (.github/pages-jekyll/Gemfile), so every page gets three assertions
       # about its own identity, composed from `site.url + baseurl + page.url` —
-      # and under this job's appended `baseurl` that address is the STAGING one:
+      # and under this job's appended `baseurl` that address is the branches/ one:
       #
-      #   <link rel="canonical" href="https://…/STAGING/<slug>/x.html">
+      #   <link rel="canonical" href="https://…/branches/<slug>/x.html">
       #   <meta property="og:url" content="…">
       #   <script type="application/ld+json">{… "@type":"WebPage","url":"…"}
       #
@@ -1372,7 +1376,7 @@ jobs:
       # regress that way in either mode.
       # The graph's viewer page, emitted BEFORE the banner injection below so
       # the `find ./_site -name "*.html"` picks it up like every other page. It
-      # is a page, not data: a reviewer opening it under STAGING/ should get
+      # is a page, not data: a reviewer opening it under branches/ should get
       # the same way back to the branch and the PR that every other page gives
       # them. The export itself runs later and stays unbannered, correctly —
       # injecting HTML into a JSON-LD document would corrupt it.
@@ -1407,7 +1411,7 @@ jobs:
       # re-inline them here: the property this step buys is that the injected
       # bytes do not depend on the build, and it is pinned by
       # `staging-banner-constant.test.ts`.
-      # THE CHANGES PAGE, `STAGING/<slug>/changes/` (owner, 2026-10-14): every
+      # THE CHANGES PAGE, `branches/<slug>/changes/` (owner, 2026-10-14): every
       # changed source asset (a re-pinned mount in index.lock.json expanded
       # into the files its repository changed between the pins), the rendered
       # files the docs renderer's dependency cone predicts from them, and a QA
@@ -1416,7 +1420,7 @@ jobs:
       #
       # BEFORE the banner: the banner names the commit on every page, and the
       # diff must see the build as main's publish would have made it. The root
-      # side is a blobless sparse clone without STAGING/ and _render-log/.
+      # side is a blobless sparse clone without branches/ and _render-log/.
       #
       # Best effort: a failure here never blocks the preview. No file list (a
       # dispatch, or an API failure) writes no page, rather than a page that
@@ -1450,18 +1454,22 @@ jobs:
           PRED=()
           [ -s "$W/rendered-impact.json" ] && PRED=(--predicted "$W/rendered-impact.json")
           ROOT="$W/pages-root"
+          # The live root is read from git objects (`--before-git`,
+          # cat-harness-tools#1496), with no checkout: byte-identical files and
+          # binaries are compared by blob id, and only live HTML and differing
+          # text are fetched. It skips the same paths the old sparse checkout
+          # left out (every preview prefix, `_render-log`), so the page is the
+          # one `--before <dir>` gives.
           if git clone -q --depth 1 --filter=blob:none --no-checkout --branch gh-pages \
-               "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "$ROOT" \
-             && git -C "$ROOT" sparse-checkout set --no-cone '/*' '!/STAGING/' '!/_render-log/' \
-             && git -C "$ROOT" checkout -q; then
-            QA=(--before "$ROOT" --after ./_site --staging-base "/$REPO_NAME/STAGING/$STAGING_SLUG" --site-base "/$REPO_NAME" --base "$BASE_SHA")
+               "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "$ROOT"; then
+            QA=(--before-git "$ROOT" --after ./_site --staging-base "/$REPO_NAME/$PREVIEW_DIR/$STAGING_SLUG" --site-base "/$REPO_NAME" --base "$BASE_SHA")
           else
             echo "could not read the gh-pages root — the page will say 'not measured'"
             QA=()
           fi
           bun run cat-harness-tools/scripts/staging-changes.ts render --sources "$W/sources.json" "${PRED[@]}" "${QA[@]}" \
             --site-url "https://$OWNER.github.io/$REPO_NAME/" \
-            --staging-url "https://$OWNER.github.io/$REPO_NAME/STAGING/$STAGING_SLUG/" \
+            --staging-url "https://$OWNER.github.io/$REPO_NAME/$PREVIEW_DIR/$STAGING_SLUG/" \
             --repo "$GITHUB_REPOSITORY" --branch "$STAGING_BRANCH" --slug "$STAGING_SLUG" --pr "$PR" \
             --out ./_site/changes
           rm -rf "$ROOT"
@@ -1508,7 +1516,7 @@ jobs:
           # same rule `readme-sections.ts` follows for PDF cells.
           #
           # `gh-pages` is not in this checkout (checkout@v4, depth 1), so fetch
-          # a shallow copy of just that ref. Paths under STAGING/ are other
+          # a shallow copy of just that ref. Paths under branches/ are other
           # branches' previews, not the main site, and are excluded.
           #
           # ABSENT and EMPTY are different answers, which is why the file is
@@ -1517,7 +1525,7 @@ jobs:
           MAIN_PAGES_ARG=""
           if git fetch --depth=1 origin gh-pages >/dev/null 2>&1; then
             git ls-tree -r --name-only FETCH_HEAD 2>/dev/null \
-              | grep -v '^STAGING/' > /tmp/main-pages.txt || true
+              | grep -Ev '^(branches|STAGING)/' > /tmp/main-pages.txt || true
             if [ -s /tmp/main-pages.txt ]; then
               MAIN_PAGES_ARG="--main-pages /tmp/main-pages.txt"
               echo "Read $(wc -l < /tmp/main-pages.txt) page(s) from the publish ref"
@@ -1554,7 +1562,7 @@ jobs:
           # The preview's own record — bean `6pfo`, owner's option A (2026-09-30):
           # written at DEPLOY time, the only moment that knows the PR and the
           # issue, onto the publish branch beside the preview, so it lands at
-          # STAGING/<slug>/staging-preview.json. `staging-record.ts` holds the
+          # branches/<slug>/staging-preview.json. `staging-record.ts` holds the
           # rules (`schemas/staging-preview.ts`); this is a thin caller.
           #
           # The record already published for this preview is copied in FIRST,
@@ -1569,7 +1577,7 @@ jobs:
           # What changed, which writer wrote it, and what ran again because of it (tools#1217).
           cp build/writer-cone/churn.json ./_site/writer-churn.json 2>/dev/null || true
           RECORD=./_site/staging-preview.json
-          git show "FETCH_HEAD:STAGING/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
+          git show "FETCH_HEAD:${PREVIEW_DIR}/${STAGING_SLUG}/staging-preview.json" > "$RECORD" 2>/dev/null \
             || rm -f "$RECORD"
           PR_ARG=""
           if [ "$PR" != "n/a" ]; then PR_ARG="--pr $PR"; fi
@@ -1582,7 +1590,7 @@ jobs:
             $PR_ARG \
             ${ISSUE:+--issue "$ISSUE"} \
             --host "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}" \
-            || echo "::error title=staging-preview record::not written for STAGING/${STAGING_SLUG} — see the log above; any published record was kept as it was"
+            || echo "::error title=staging-preview record::not written for ${PREVIEW_DIR}/${STAGING_SLUG} — see the log above; any published record was kept as it was"
 
       # The branch's KG, published beside the branch's site, so the graph a
       # reviewer inspects is the one this PR produces rather than main's. The
@@ -1598,7 +1606,7 @@ jobs:
           KG_BRANCH: ${{ steps.slug.outputs.branch }}
           SLUG: ${{ steps.slug.outputs.slug }}
         run: |
-          BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/STAGING/${SLUG}"
+          BASE="https://${GITHUB_REPOSITORY_OWNER}.github.io/${GITHUB_REPOSITORY#*/}/${PREVIEW_DIR}/${SLUG}"
           STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./cat-harness)
           # Both exporters stamp their own output with the build identity, from
           # the one `stagingStamp()` in scripts/staging-stamp.ts. It was an
@@ -1607,194 +1615,225 @@ jobs:
           # command writes went out with no build identity at all (bean `lx2s`).
           # The stamp reads KG_BRANCH above plus the GITHUB_* variables the runner
           # sets for every step.
-          bun run cat-harness-tools/scripts/kg-export.ts             --base-url "$BASE" --scope instance --out "./_site/${STUB}/${STUB}.jsonld"
-          bun run cat-harness-tools/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
-          # The `.json` alias is copied AFTER the export, so the two documents
-          # cannot disagree about which build they came from.
-          cp "./_site/${STUB}/${STUB}.jsonld" "./_site/${STUB}/${STUB}.json"
-          # The host's document sits under its own directory, like every layer's
-          # (owner, 2026-10-23, litlfred/cat-harness-tools#603 decision 1b). The old
-          # root `<stub>.jsonld` is the one-release tombstone the export writes there.
+          # PARALLEL GROUPS (preview-speed front, 2026-11-05). This step ran its
+          # ~20 generators one after another: 66 s on job 127218440011, of which
+          # instance-exports 19 s, the slices 14 s, kg-export 11 s. They write
+          # separate files, so they run as five groups at once and the two that
+          # read what the others wrote, the rail and the root index, run after
+          # all have finished, as before. Inside a group the original order is
+          # kept: each slice rewrites `assets/slices/index.json`, so the four
+          # stay in sequence, and bootstrap's `ns` copy stays before
+          # `publish-instance-files`, which checks that address for collisions.
+          # Each group's output goes to its own log, printed in a fixed order,
+          # and any group's failure fails the step.
+          L="$RUNNER_TEMP/kg-export-logs"; mkdir -p "$L"; PIDS=(); NAMES=()
+          {
+            bun run cat-harness-tools/scripts/kg-export.ts             --base-url "$BASE" --scope instance --out "./_site/${STUB}/${STUB}.jsonld"
+            # The `.json` alias is copied AFTER the export, so the two documents
+            # cannot disagree about which build they came from.
+            cp "./_site/${STUB}/${STUB}.jsonld" "./_site/${STUB}/${STUB}.json"
+            # The host's document sits under its own directory, like every layer's
+            # (owner, 2026-10-23, litlfred/cat-harness-tools#603 decision 1b). The old
+            # root `<stub>.jsonld` is the one-release tombstone the export writes there.
+            # The swimlane glossaries, on the preview too -- `check:invocation-parity`
+            # refused this change until they were here, which is the gate doing
+            # exactly its job. Each concept's `inScheme` names the glossary
+            # document's own URL, so a preview that published the graph and not
+            # the glossary would serve a scheme IRI that 404s on every concept --
+            # `3jhq` again, one document over. `--base-url` so the preview's
+            # copies point at the preview rather than at production.
+            bun run cat-harness-tools/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}/${STUB}-glossary.jsonld"
+            cp "./_site/${STUB}/${STUB}-glossary.jsonld" "./_site/${STUB}/${STUB}-glossary.json"
+            # The graph once per locale -- bean `jmpb`, on the owner's ruling.
+            # Writes NOTHING today and says so: measured 2026-09-22, no locale
+            # carries a catalogue applying to either graph. It is wired now
+            # rather than later so the first diagram `.po` to land publishes its
+            # locale with no workflow edit, and so the gates and the deploy run
+            # the same command. Each document's node `@id`s are the core's --
+            # a translation is not a new term.
+            # `--core`: the document kg-export wrote above, read rather than built a
+            # second time (bean fwtz: 19 s of this step on main). An older tools
+            # pin ignores the flag and builds it, as before.
+            bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --core "./_site/${STUB}/${STUB}.jsonld" --out-dir "./_site/${STUB}"
+            # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
+            # processes are not otherwise published, so it is copied from source.
+            mkdir -p "./_site/${STUB}/processes"
+            for f in ns ns.jsonld ns.json; do cp ./cat-harness/processes/ns.jsonld "./_site/${STUB}/processes/$f"; done
+          } > "$L/core.log" 2>&1 &
+          PIDS+=($!); NAMES+=(core)
+          {
+            bun run cat-harness-tools/scripts/harness-schema-export.ts --base-url "$BASE" --out-dir ./_site
 
-          # EVERY OTHER declared instance's graph, one document each — bean
-          # `4ak5` item 1. The set is derived from the declarations by the
-          # script, never listed here; the two instances above keep their
-          # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
-          # `check:published-instance-exports` runs the same plan, and fails if
-          # any declared instance is published by neither.
-          bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site --base-url "$BASE"
+            # EVERY OTHER declared instance's graph, one document each — bean
+            # `4ak5` item 1. The set is derived from the declarations by the
+            # script, never listed here; the two instances above keep their
+            # own steps and are named, with why, in its PUBLISHED_ELSEWHERE.
+            # `check:published-instance-exports` runs the same plan, and fails if
+            # any declared instance is published by neither.
+            bun run cat-harness-tools/scripts/instance-exports.ts --out-dir ./_site --base-url "$BASE"
+          } > "$L/instances.log" 2>&1 &
+          PIDS+=($!); NAMES+=(instances)
+          {
+            # Content-addressed payloads (bean `f233`): `<BASE_URL>/payload/sha256/<hex>`
+            # plus each `<hex>.json` sidecar. Copied VERBATIM, never through Jekyll
+            # (excluded in _config.yml): a rendered body would not hash to its name.
+            mkdir -p "./_site/payload"
+            cp -R ./cat-harness/docs/payload/. "./_site/payload/"
+            # The SQLite slices (bean `q8ar`), one line each, built from the tree
+            # being deployed rather than committed, because their sources move
+            # on most merges (every session writes `beans/`). The deploy payloads
+            # (bean files, todo files, published library entries) are
+            # content-addressed in the same `payload/sha256/` namespace, added
+            # here and never to the committed `docs/payload/`, whose orphan audit
+            # admits KG nodes only. The `kg` slice writes none: it points at the
+            # committed KG payloads copied just above. Each run also rewrites
+            # `assets/slices/index.json`, which lists every slice built so far.
+            # Searched at `slices/search.html?slice=<name>`.
+            # The database is CONTENT-ADDRESSED, `<slice>.<sha256>.sqlite3`, and
+            # the fixed `<slice>.sqlite3.json` manifest names it (bean `wixl`), so
+            # a CDN cannot pair a fresh manifest with stale bytes. Old builds do
+            # not pile up: each run writes only the current file, the deploy step `rm -rf`s
+            # `branches/<slug>/` before copying `_site` in, and `staging-rotate.ts`
+            # caps how many previews exist at all.
+            # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
+            # manifest and the older file it names -- a self-consistent pair --
+            # or a stale manifest whose file is gone, which the page reports.
+            bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
+            bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
+            bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
+            bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
+          } > "$L/slices.log" 2>&1 &
+          PIDS+=($!); NAMES+=(slices)
+          {
+            # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
+            #
+            # Staging published NONE of these while the live site published all
+            # of them. That is not a missing file, it is a preview that cannot
+            # show the artefact it exists to review: the export above stamps every
+            # node with an `@id` under `$BASE`, and the vocabulary those nodes
+            # reference then dereferenced to 404. A reviewer opening a staged
+            # knowledge-graph change got a graph whose own terms resolved to
+            # nothing.
+            #
+            # The namespace documents are deployment-INDEPENDENT on purpose — a
+            # vocabulary's IRIs are the vocabulary, and they are the same document
+            # at any base — so these are copied from the live build's step
+            # unchanged.
+            mkdir -p "./_site/ns/content"
+            cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
+            # The named-subgraph context (bean `c1m4`): every
+            # `docs/subgraph/**/index*.jsonld` names it by URL rather than inlining it.
+            mkdir -p "./_site/ns/subgraph"
+            cp ./cat-harness/ns/subgraph/v1.jsonld "./_site/ns/subgraph/v1.jsonld"
+            # Each harness's setup position and health (bean `supn`; owner, 2026-10-24,
+            # "Work out at publish time"): bootstrap's setup check, offline and
+            # dry-run, one `<harness>.json` per harness plus `index.json`. Built
+            # from the tree being deployed and never committed.
+            bun run cat harness:state --out ./_site/assets/harnesses
+            for pair in "harness:cat-harness" "core:folio-assistant-core"; do
+              LAYER="${pair%%:*}"; DIR="${pair##*:}"
+              mkdir -p "./_site/${DIR}"
+              bun run cat-harness-tools/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
+              cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
+            done
+          } > "$L/namespaces.log" 2>&1 &
+          PIDS+=($!); NAMES+=(namespaces)
+          {
+            # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
+            # each term is defined by its layer's own document, below, and the
+            # Glossary publishes SKOS for every scheme. bootstrap's document is
+            # bootstrap's own, written by bootstrap-tools and committed, so it is
+            # copied rather than rebuilt by a harness exporter. No extensionless
+            # `<stub>/ns` (owner, 2026-10-15): the term IRIs live at each
+            # instance's own iriBase, and `<stub>/ns/` is a directory here — see
+            # the same step in docs-site.yml.
+            mkdir -p "./_site/bootstrap"
+            for ext in "ns.jsonld" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
 
-          # THE NAMESPACE DOCUMENTS AND THE BOOTSTRAP GRAPH — bean `35kc`.
-          #
-          # Staging published NONE of these while the live site published all
-          # of them. That is not a missing file, it is a preview that cannot
-          # show the artefact it exists to review: the export above stamps every
-          # node with an `@id` under `$BASE`, and the vocabulary those nodes
-          # reference then dereferenced to 404. A reviewer opening a staged
-          # knowledge-graph change got a graph whose own terms resolved to
-          # nothing.
-          #
-          # The namespace documents are deployment-INDEPENDENT on purpose — a
-          # vocabulary's IRIs are the vocabulary, and they are the same document
-          # at any base — so these are copied from the live build's step
-          # unchanged.
-          mkdir -p "./_site/ns/content"
-          cp ./cat-harness/ns/content/v1.jsonld "./_site/ns/content/v1.jsonld"
-          # The named-subgraph context (bean `c1m4`): every
-          # `docs/subgraph/**/index*.jsonld` names it by URL rather than inlining it.
-          mkdir -p "./_site/ns/subgraph"
-          cp ./cat-harness/ns/subgraph/v1.jsonld "./_site/ns/subgraph/v1.jsonld"
-          # Content-addressed payloads (bean `f233`): `<BASE_URL>/payload/sha256/<hex>`
-          # plus each `<hex>.json` sidecar. Copied VERBATIM, never through Jekyll
-          # (excluded in _config.yml): a rendered body would not hash to its name.
-          mkdir -p "./_site/payload"
-          cp -R ./cat-harness/docs/payload/. "./_site/payload/"
-          # The SQLite slices (bean `q8ar`), one line each, built from the tree
-          # being deployed rather than committed, because their sources move
-          # on most merges (every session writes `beans/`). The deploy payloads
-          # (bean files, todo files, published library entries) are
-          # content-addressed in the same `payload/sha256/` namespace, added
-          # here and never to the committed `docs/payload/`, whose orphan audit
-          # admits KG nodes only. The `kg` slice writes none: it points at the
-          # committed KG payloads copied just above. Each run also rewrites
-          # `assets/slices/index.json`, which lists every slice built so far.
-          # Searched at `slices/search.html?slice=<name>`.
-          # The database is CONTENT-ADDRESSED, `<slice>.<sha256>.sqlite3`, and
-          # the fixed `<slice>.sqlite3.json` manifest names it (bean `wixl`), so
-          # a CDN cannot pair a fresh manifest with stale bytes. Old builds do
-          # not pile up: each run writes only the current file, the deploy step `rm -rf`s
-          # `STAGING/<slug>/` before copying `_site` in, and `staging-rotate.ts`
-          # caps how many previews exist at all.
-          # A CDN may still hold, for one TTL (Pages: max-age=600), a stale
-          # manifest and the older file it names -- a self-consistent pair --
-          # or a stale manifest whose file is gone, which the page reports.
-          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice beans
-          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice todos
-          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice library
-          bun run cat-harness-tools/scripts/gen-slice-sqlite.ts --out ./_site/assets/slices --payload-out ./_site/payload/sha256 --slice kg
-          # Each harness's setup position and health (bean `supn`; owner, 2026-10-24,
-          # "Work out at publish time"): bootstrap's setup check, offline and
-          # dry-run, one `<harness>.json` per harness plus `index.json`. Built
-          # from the tree being deployed and never committed.
-          bun run cat harness:state --out ./_site/assets/harnesses
-          # No all-layers union here any more (owner, 2026-09-30: "Retire it"):
-          # each term is defined by its layer's own document, below, and the
-          # Glossary publishes SKOS for every scheme. bootstrap's document is
-          # bootstrap's own, written by bootstrap-tools and committed, so it is
-          # copied rather than rebuilt by a harness exporter. No extensionless
-          # `<stub>/ns` (owner, 2026-10-15): the term IRIs live at each
-          # instance's own iriBase, and `<stub>/ns/` is a directory here — see
-          # the same step in docs-site.yml.
-          mkdir -p "./_site/bootstrap"
-          for ext in "ns.jsonld" "ns.json"; do cp ./bootstrap/ns.jsonld "./_site/bootstrap/${ext}"; done
+            # THE BOOTSTRAP GRAPH — ONE publisher, at the path its `@id` names.
+            #
+            # `--base-url` so the staged copy names ITSELF rather than the live
+            # document: a staged copy minting the canonical `@id` would claim to
+            # BE the live document, which is worse than a 404, because a reader
+            # following it lands somewhere that looks right.
+            #
+            # This workflow did not write this document at all until `3jhq` — the
+            # omission that bean was opened to measure. THIS INSTANCE'S OWN GRAPH
+            # LINKS INTO IT: `skillHome` mints a foreign skill against the
+            # exporting document's base, so a graph staged at `$BASE` carries
+            #
+            #   $BASE/bootstrap/bootstrap.jsonld#skill/discussion
+            #   $BASE/bootstrap/bootstrap.jsonld#skill/log-message
+            #
+            # — measured by building the export with a staged `--base-url` and
+            # reading the link targets out of it, not inferred. Without this
+            # step both 404 on every preview, which is `blv9` exactly: a
+            # link-shaped value that does not resolve, on the artefact whose
+            # purpose is being resolved.
+            #
+            # `gen-bootstrap-graph.ts` published a SECOND bootstrap graph here,
+            # at `bootstrap/bootstrap.jsonld` — bean `dyd3`. Measured 2026-09-21:
+            # 88 nodes each, 85 of them doc-relative, so 85 subjects existed
+            # under two identities that no consumer will ever merge; only the 3
+            # absolute namespace IRIs were shared.
+            #
+            # Collapsing the PATHS alone would not have settled it. With both at
+            # one URL the documents still disagree — 74 of the 88 nodes differ in
+            # content, and the top level differs on six fields — so the site would
+            # publish whichever step ran last. One publisher is the fix; the other
+            # stays as a generator and a test subject.
+            #
+            # The surviving export moved to `<stub>/<stub>.jsonld`, which is where
+            # that instance's other rendered documents (`ns.jsonld`) already sit.
+            # Written by bootstrap-tools since 2026-09-30 — see docs-site.yml.
+            BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)
+            # The instance's directory comes from the one resolver, `publishedPath`
+            # (bean `sthf`): `<name>/`, the NAME naming the directory and the stub
+            # naming the document in it. Exit 3 is `"enabled": false`, declared not
+            # published; anything else non-zero fails the step.
+            if BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap); then
+              BOOT_DIR=${BOOT_DIR%/}
+            else
+              rc=$?; [ "$rc" -eq 3 ] || exit "$rc"
+              BOOT_DIR=""
+            fi
+            if [ -n "$BOOT_DIR" ]; then
+              bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${BASE}/${BOOT_DIR}/" --provenance --out "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld"
+              cp "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}.json"
+            fi
 
-          for pair in "harness:cat-harness" "core:folio-assistant-core"; do
-            LAYER="${pair%%:*}"; DIR="${pair##*:}"
-            mkdir -p "./_site/${DIR}"
-            bun run cat-harness-tools/scripts/ns-export.ts --layer "$LAYER" --exact --out "./_site/${DIR}/ns.jsonld"
-            cp "./_site/${DIR}/ns.jsonld" "./_site/${DIR}/ns.json"
+            if [ -n "$BOOT_DIR" ]; then
+              bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
+            fi
+
+            if [ -n "$BOOT_DIR" ]; then
+              bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_DIR}"
+              cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
+            fi
+
+            # bootstrap's OWN files, as the deploy publishes them (bean `iwtn`):
+            # LAST, and it never overwrites the graph's `.json` copy above.
+            # `--allow-collision bootstrap.json`: the graph's `.json` copy and bootstrap's
+            # declaration share that address, and the graph keeps it (bootstrap-graph-publication).
+            # Any OTHER different file at a taken address fails this step.
+            if [ -n "$BOOT_DIR" ]; then
+              bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}" --allow-collision bootstrap.json
+            fi
+            # bootstrap's diagram vocabulary at its extensionless address, which is
+            # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
+            # `.json` copy every rendering here carries for Pages.
+            if [ -n "$BOOT_DIR" ]; then
+              cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns"
+              cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns.json"
+            fi
+          } > "$L/bootstrap.log" 2>&1 &
+          PIDS+=($!); NAMES+=(bootstrap)
+          rc=0
+          for i in "${!PIDS[@]}"; do
+            if wait "${PIDS[$i]}"; then st=ok; else st=FAILED; rc=1; fi
+            echo "::group::${NAMES[$i]} ($st)"; cat "$L/${NAMES[$i]}.log"; echo "::endgroup::"
           done
-
-          # THE BOOTSTRAP GRAPH — ONE publisher, at the path its `@id` names.
-          #
-          # `--base-url` so the staged copy names ITSELF rather than the live
-          # document: a staged copy minting the canonical `@id` would claim to
-          # BE the live document, which is worse than a 404, because a reader
-          # following it lands somewhere that looks right.
-          #
-          # This workflow did not write this document at all until `3jhq` — the
-          # omission that bean was opened to measure. THIS INSTANCE'S OWN GRAPH
-          # LINKS INTO IT: `skillHome` mints a foreign skill against the
-          # exporting document's base, so a graph staged at `$BASE` carries
-          #
-          #   $BASE/bootstrap/bootstrap.jsonld#skill/discussion
-          #   $BASE/bootstrap/bootstrap.jsonld#skill/log-message
-          #
-          # — measured by building the export with a staged `--base-url` and
-          # reading the link targets out of it, not inferred. Without this
-          # step both 404 on every preview, which is `blv9` exactly: a
-          # link-shaped value that does not resolve, on the artefact whose
-          # purpose is being resolved.
-          #
-          # `gen-bootstrap-graph.ts` published a SECOND bootstrap graph here,
-          # at `bootstrap/bootstrap.jsonld` — bean `dyd3`. Measured 2026-09-21:
-          # 88 nodes each, 85 of them doc-relative, so 85 subjects existed
-          # under two identities that no consumer will ever merge; only the 3
-          # absolute namespace IRIs were shared.
-          #
-          # Collapsing the PATHS alone would not have settled it. With both at
-          # one URL the documents still disagree — 74 of the 88 nodes differ in
-          # content, and the top level differs on six fields — so the site would
-          # publish whichever step ran last. One publisher is the fix; the other
-          # stays as a generator and a test subject.
-          #
-          # The surviving export moved to `<stub>/<stub>.jsonld`, which is where
-          # that instance's other rendered documents (`ns.jsonld`) already sit.
-          # Written by bootstrap-tools since 2026-09-30 — see docs-site.yml.
-          BOOT_STUB=$(bun run cat-harness-tools/scripts/print-stub.ts ./bootstrap)
-          # The instance's directory comes from the one resolver, `publishedPath`
-          # (bean `sthf`): `<name>/`, the NAME naming the directory and the stub
-          # naming the document in it. Exit 3 is `"enabled": false`, declared not
-          # published; anything else non-zero fails the step.
-          if BOOT_DIR=$(bun run cat-harness-tools/scripts/print-published-path.ts ./bootstrap); then
-            BOOT_DIR=${BOOT_DIR%/}
-          else
-            rc=$?; [ "$rc" -eq 3 ] || exit "$rc"
-            BOOT_DIR=""
-          fi
-          if [ -n "$BOOT_DIR" ]; then
-            bun run bootstrap-tools/scripts/export-graph.ts --root ./bootstrap --base-url "${BASE}/${BOOT_DIR}/" --provenance --out "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld"
-            cp "./_site/${BOOT_DIR}/${BOOT_STUB}.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}.json"
-          fi
-
-          # The swimlane glossaries, on the preview too -- `check:invocation-parity`
-          # refused this change until they were here, which is the gate doing
-          # exactly its job. Each concept's `inScheme` names the glossary
-          # document's own URL, so a preview that published the graph and not
-          # the glossary would serve a scheme IRI that 404s on every concept --
-          # `3jhq` again, one document over. `--base-url` so the preview's
-          # copies point at the preview rather than at production.
-          bun run cat-harness-tools/scripts/glossary-export.ts --base-url "$BASE" --out "./_site/${STUB}/${STUB}-glossary.jsonld"
-          cp "./_site/${STUB}/${STUB}-glossary.jsonld" "./_site/${STUB}/${STUB}-glossary.json"
-          if [ -n "$BOOT_DIR" ]; then
-            bun run cat-harness-tools/scripts/glossary-export.ts --instance ./bootstrap --base-url "$BASE" --out "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld"
-          fi
-
-          # The graph once per locale -- bean `jmpb`, on the owner's ruling.
-          # Writes NOTHING today and says so: measured 2026-09-22, no locale
-          # carries a catalogue applying to either graph. It is wired now
-          # rather than later so the first diagram `.po` to land publishes its
-          # locale with no workflow edit, and so the gates and the deploy run
-          # the same command. Each document's node `@id`s are the core's --
-          # a translation is not a new term.
-          # `--core`: the document kg-export wrote above, read rather than built a
-          # second time (bean fwtz: 19 s of this step on main). An older tools
-          # pin ignores the flag and builds it, as before.
-          bun run cat-harness-tools/scripts/kg-locale-export.ts --base-url "$BASE" --core "./_site/${STUB}/${STUB}.jsonld" --out-dir "./_site/${STUB}"
-          if [ -n "$BOOT_DIR" ]; then
-            bun run cat-harness-tools/scripts/kg-locale-export.ts --instance ./bootstrap --base-url "$BASE" --out-dir "./_site/${BOOT_DIR}"
-            cp "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.jsonld" "./_site/${BOOT_DIR}/${BOOT_STUB}-glossary.json"
-          fi
-
-          # bootstrap's OWN files, as the deploy publishes them (bean `iwtn`):
-          # LAST, and it never overwrites the graph's `.json` copy above.
-          # `--allow-collision bootstrap.json`: the graph's `.json` copy and bootstrap's
-          # declaration share that address, and the graph keeps it (bootstrap-graph-publication).
-          # Any OTHER different file at a taken address fails this step.
-          if [ -n "$BOOT_DIR" ]; then
-            bun run cat-harness-tools/scripts/publish-instance-files.ts --instance ./bootstrap --out "./_site/${BOOT_DIR}" --allow-collision bootstrap.json
-          fi
-          # bootstrap's diagram vocabulary at its extensionless address, which is
-          # the XML namespace its diagrams bind (bean `12s9` stage 2), plus the
-          # `.json` copy every rendering here carries for Pages.
-          if [ -n "$BOOT_DIR" ]; then
-            cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns"
-            cp "./_site/${BOOT_DIR}/processes/ns.jsonld" "./_site/${BOOT_DIR}/processes/ns.json"
-          fi
-          # cat-harness's diagram vocabulary likewise (bean `12s9` stage 3). Its
-          # processes are not otherwise published, so it is copied from source.
-          mkdir -p "./_site/${STUB}/processes"
-          for f in ns ns.jsonld ns.json; do cp ./cat-harness/processes/ns.jsonld "./_site/${STUB}/processes/$f"; done
+          [ "$rc" = 0 ] || { echo "::error::a knowledge-graph export group failed; see its log above"; exit 1; }
 
           # The harness rail on every standalone page — bean `oi1y`. LAST, after
           # every generator that writes one, for the reason stated at the same
@@ -1924,7 +1963,7 @@ jobs:
         run: |
           set -o pipefail
           bun run cat-harness-tools/scripts/site-dead-links.ts --site ./_site --root . --fix \
-            --base-path "/${{ github.event.repository.name }}/STAGING/${STAGING_SLUG}" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
+            --base-path "/${{ github.event.repository.name }}/${PREVIEW_DIR}/${STAGING_SLUG}" --repo "$GITHUB_REPOSITORY" --sha "$GITHUB_SHA" \
             | tee -a "$GITHUB_STEP_SUMMARY"
 
       # MINIFY LAST — the deploy's pass, mirrored here because
@@ -1936,7 +1975,7 @@ jobs:
       #
       # It matters more on a preview than on the deploy: every preview is a
       # FULL copy of the site, so this is ~42 MiB off each one (measured on
-      # the published `STAGING/agy-wnhh-sushi-publisher-local`: 417.5 MiB of
+      # the published `branches/agy-wnhh-sushi-publisher-local`: 417.5 MiB of
       # HTML, 10.0% of it comments and unrendered whitespace).
       #
       # The pass is asserted IDEMPOTENT (`minify-site.test.ts`) rather than
@@ -2010,11 +2049,11 @@ jobs:
       # The split had a real reason, recorded here so it is not reintroduced:
       # the log CANNOT ride in `_site`, because the old deploy wrote into
       # `destination_dir`, which would put the entry at
-      # `STAGING/<slug>/_render-log/` — inside the very directory a cleanup
+      # `branches/<slug>/_render-log/` — inside the very directory a cleanup
       # removes, the one place a record of the removal must not be.
       #
       # Checking the branch out and committing by hand removes that
-      # constraint: the payload goes to `STAGING/<slug>/` and the entry to
+      # constraint: the payload goes to `branches/<slug>/` and the entry to
       # `_render-log/` at the root, in one `git add` and one commit. The
       # cleanup job below already does exactly this — "The record rides in the
       # SAME commit as the removal" — so this is the proven pattern in this
@@ -2046,7 +2085,7 @@ jobs:
           # job has no gh-pages checkout. Read just before the hand-off, so a
           # newer preview that landed while this run built is seen and kept.
           AGENT="$RUNNER_TEMP/agent-record.json"
-          gh api "repos/$REPO/contents/STAGING/$STAGING_SLUG/_build-record.json?ref=gh-pages" \
+          gh api "repos/$REPO/contents/$PREVIEW_DIR/$STAGING_SLUG/_build-record.json?ref=gh-pages" \
             -H 'Accept: application/vnd.github.raw' > "$AGENT" 2>/dev/null || rm -f "$AGENT"
           OUT="$RUNNER_TEMP/verify-comment.md"
           if [ ! -f "$RUNNER_TEMP/ci-record.json" ]; then
@@ -2054,7 +2093,7 @@ jobs:
             echo "same=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
           if [ ! -f "$AGENT" ] || [ "$(jq -r '.builder // empty' "$AGENT")" != "agent" ]; then
-            echo "no agent record at STAGING/$STAGING_SLUG any more: nothing to verify, nothing replaced"
+            echo "no agent record at $PREVIEW_DIR/$STAGING_SLUG any more: nothing to verify, nothing replaced"
             echo "same=gone" >> "$GITHUB_OUTPUT"; exit 0
           fi
           echo "agent_tree=$(jq -r .tree "$AGENT")" >> "$GITHUB_OUTPUT"
@@ -2092,7 +2131,7 @@ jobs:
         run: |
           set -eu
           waiting=$(gh api --paginate "repos/$REPO/actions/artifacts?per_page=100" \
-            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")))] | length' | awk '{s+=$1} END{print s+0}')
+            --jq '[.artifacts[] | select(.expired == false and (.name | startswith("staging-site-")) and .workflow_run.head_repository_id != null and .workflow_run.head_repository_id == .workflow_run.repository_id)] | length' | awk '{s+=$1} END{print s+0}')
           busy=$(gh api "repos/$REPO/actions/workflows/staging-publish.yml/runs?per_page=10" \
             --jq '[.workflow_runs[] | select(.status != "completed")] | length' 2>/dev/null || echo 1)
           tip=$(gh api "repos/$REPO/commits/gh-pages" --jq '"\(.commit.committer.date)\t\(.commit.message | split("\n")[0])"')
@@ -2132,7 +2171,7 @@ jobs:
           jq -n --arg slug "$STAGING_SLUG" --arg branch "$STAGING_BRANCH" --arg sha "$GITHUB_SHA" \
             --arg pr "$PR" --arg run "$RUN_URL" \
             '{slug: $slug, branch: $branch, sha: $sha, pr: (if $pr == "" then null else ($pr | tonumber) end), run: $run}' > "$H/meta.json"
-          echo "packed $(du -h "$H/site.tar" | cut -f1) for STAGING/$STAGING_SLUG"
+          echo "packed $(du -h "$H/site.tar" | cut -f1) for $PREVIEW_DIR/$STAGING_SLUG"
 
       - name: Queue the preview for the batched publisher (Q-SPD-5c)
         id: handoff_upload
@@ -2160,7 +2199,7 @@ jobs:
           ARTIFACT_ID: ${{ steps.handoff_upload.outputs.artifact-id }}
         run: |
           if gh workflow run staging-publish.yml --repo "$REPO" --ref main; then
-            echo "handed STAGING/$SLUG to the batched publisher"
+            echo "handed $PREVIEW_DIR/$SLUG to the batched publisher"
             exit 0
           fi
           # No publisher to take it: deploy in this job, and take the artifact
@@ -2170,12 +2209,30 @@ jobs:
 
       - name: Check out the publish branch
         # Only for the in-job deploy, when the hand-off above did not happen.
+        #
+        # SPARSE AND BLOBLESS (preview-speed front, 2026-11-06). The deploy
+        # writes only `<PREVIEW_DIR>/<slug>/` and `_render-log/`, and retires
+        # into `<PREVIEW_DIR>/_retired/`, so only those are checked out: the
+        # full branch took 38 s (job 127218440011), this 3 s (measured on a
+        # sparse blobless clone of gh-pages). `staging-share` and
+        # `staging-rotate` read everything outside the cone from git objects
+        # since cat-harness-tools#1496, fetching only the blobs they need, with
+        # the answers a full checkout gives; legacy `STAGING/` previews are
+        # read the same way. The deploy's fetch and reset keep the blobless
+        # filter (partial-clone config). The slug is the value the `slug` step
+        # validated; `with:` is not a shell.
         if: steps.handoff_dispatch.outcome != 'success'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: gh-pages
           path: pages
           persist-credentials: true
+          filter: blob:none
+          sparse-checkout-cone-mode: true
+          sparse-checkout: |
+            ${{ env.PREVIEW_DIR }}/${{ steps.slug.outputs.slug }}
+            ${{ env.PREVIEW_DIR }}/_retired
+            _render-log
 
       # THE PREVIEW IS STAGED BEFORE IT IS PUSHED — issue #1956. The deploy
       # below may wait for the rate-limit window, so the reviewer is told now
@@ -2212,7 +2269,7 @@ jobs:
             // The changes page, when the build wrote one: sources, the cone,
             // and what changed against the root that the cone did not name.
             if (require('fs').existsSync('_site/changes/index.html')) {
-              const url = `https://${owner}.github.io/${repo}/STAGING/${process.env.SLUG}/changes/`;
+              const url = `https://${owner}.github.io/${repo}/${process.env.PREVIEW_DIR}/${process.env.SLUG}/changes/`;
               body += `\n\n**What this branch changes:** ${url} — the changed sources, the rendered files in their dependency cone, and a QA list of files that differ from the published root but were not in the cone.\n`;
             }
             // Ours by the marker; by the old heading for a comment written before
@@ -2249,7 +2306,7 @@ jobs:
           # but it has crossed a job boundary as an output since — and this
           # file's own rule is "checked by VALUE, never trusted because of
           # where it came from" (bean `fuzm`). The next line deletes a
-          # directory; an empty slug would make it `pages/STAGING/`, which is
+          # directory; an empty slug would make it `pages/branches/`, which is
           # EVERY open PR's preview. That is `plj1` exactly, and it is worth
           # four lines to make it unreachable rather than merely unlikely.
           case "$STAGING_SLUG" in
@@ -2312,7 +2369,7 @@ jobs:
           # least N pages") would need calibration this has no basis for, which
           # is the same argument that stopped `6xaz` from inventing one.
           if [ -z "$(ls -A _site 2>/dev/null || true)" ]; then
-            echo "::error::the build produced an empty ./_site — refusing to deploy, so STAGING/$STAGING_SLUG keeps its last working preview"
+            echo "::error::the build produced an empty ./_site — refusing to deploy, so $PREVIEW_DIR/$STAGING_SLUG keeps its last working preview"
             exit 1
           fi
           # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
@@ -2379,16 +2436,16 @@ jobs:
             # push may have put a newer preview there while this run built;
             # that one is not this run's to replace (folio-assistant#2881).
             if [ -n "${VERIFY_TREE:-}" ]; then
-              now=$(jq -r '.tree // empty' "pages/STAGING/$STAGING_SLUG/_build-record.json" 2>/dev/null || true)
+              now=$(jq -r '.tree // empty' "pages/$PREVIEW_DIR/$STAGING_SLUG/_build-record.json" 2>/dev/null || true)
               if [ "$now" != "$VERIFY_TREE" ]; then
-                echo "STAGING/$STAGING_SLUG now holds tree ${now:-none}, not the checked ${VERIFY_TREE}: a newer preview, left alone"
+                echo "$PREVIEW_DIR/$STAGING_SLUG now holds tree ${now:-none}, not the checked ${VERIFY_TREE}: a newer preview, left alone"
                 exit 0
               fi
             fi
             BASE=$(git -C pages rev-parse HEAD)
-            rm -rf "pages/STAGING/$STAGING_SLUG"
-            mkdir -p "pages/STAGING/$STAGING_SLUG"
-            cp -R _site/. "pages/STAGING/$STAGING_SLUG/"
+            rm -rf "pages/$PREVIEW_DIR/$STAGING_SLUG"
+            mkdir -p "pages/$PREVIEW_DIR/$STAGING_SLUG"
+            cp -R _site/. "pages/$PREVIEW_DIR/$STAGING_SLUG/"
             # Store only what differs from the live site (owner, 2026-10-31:
             # "if asset not changed in staging then link to main asset").
             # Compared against the gh-pages tip just fetched, so the live
@@ -2397,7 +2454,7 @@ jobs:
             # the live site and puts the banner back on its pages.
             if [ -f cat-harness-tools/scripts/staging-share.ts ]; then
               bun run cat-harness-tools/scripts/staging-share.ts apply \
-                --root pages --preview "pages/STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG"
+                --root pages --preview "pages/$PREVIEW_DIR/$STAGING_SLUG" --slug "$STAGING_SLUG"
             fi
             # Writes into the directory and never pushes: this step already
             # holds the checkout and the retry loop, and a second pusher racing
@@ -2408,7 +2465,7 @@ jobs:
             # would hide this step from the gate set and orphan its exemption.
             bun run cat-harness-tools/scripts/render-log.ts --dir pages \
               --event rendered --kind staging-preview \
-              --path "STAGING/$STAGING_SLUG" --slug "$STAGING_SLUG" \
+              --path "$PREVIEW_DIR/$STAGING_SLUG" --slug "$STAGING_SLUG" \
               --branch "$STAGING_BRANCH" --commit "$GITHUB_SHA" --run "$RUN_URL" <<<"$PROSE"
             # THE PREVIEW CAP — owner ruling 2026-10-02, issue #1868: "cap the
             # maximum number of previews (<= 10) and rotate old ones off",
@@ -2416,18 +2473,18 @@ jobs:
             # ONCE, as `MAX_PREVIEW_BYTES` in `staging-rotate.ts`. It stamps
             # this preview's `.staged-at`, keeps it plus the most recently
             # updated others while the total fits, and for each one removed
-            # retires its record into `STAGING/_retired/`, appends a `removed`
+            # retires its record into `branches/_retired/`, appends a `removed`
             # render-log entry, and prints slug, age and size — the record
             # `deletion-requires-confirmation` asks of every removal. It never
             # touches `_retired/` or anything that is not a preview. Inside the
             # loop so each attempt decides against the tree it will push onto.
             bun run cat-harness-tools/scripts/staging-rotate.ts --dir pages \
               --current "$STAGING_SLUG" --run "$RUN_URL" --summary-out "$ROTATED"
-            git -C pages add -A "STAGING/$STAGING_SLUG" _render-log
-            MSG=(-m "staging($STAGING_SLUG): from $GITHUB_SHA" -m "render-log: rendered STAGING/$STAGING_SLUG")
+            git -C pages add -A "$PREVIEW_DIR/$STAGING_SLUG" _render-log
+            MSG=(-m "staging($STAGING_SLUG): from $GITHUB_SHA" -m "render-log: rendered $PREVIEW_DIR/$STAGING_SLUG")
             if [ -s "$ROTATED" ]; then
               # The rotated previews' removals and their retired records.
-              git -C pages add -A STAGING
+              git -C pages add -A "$PREVIEW_DIR"
               # `-m` and `-F` are mutually exclusive in `git commit`, so the
               # list is read into one paragraph rather than passed as a file.
               MSG+=(-m "rotated off (preview size budget, owner ruling 2026-10-02 amended 2026-10-04, #1868):"$'\n'"$(cat "$ROTATED")")
@@ -2503,7 +2560,7 @@ jobs:
             // The changes page, when the build wrote one: sources, the cone,
             // and what changed against the root that the cone did not name.
             if (require('fs').existsSync('_site/changes/index.html')) {
-              const url = `https://${owner}.github.io/${repo}/STAGING/${process.env.SLUG}/changes/`;
+              const url = `https://${owner}.github.io/${repo}/${process.env.PREVIEW_DIR}/${process.env.SLUG}/changes/`;
               body += `\n\n**What this branch changes:** ${url} — the changed sources, the rendered files in their dependency cone, and a QA list of files that differ from the published root but were not in the cone.\n`;
             }
             // Ours by the marker; by the old heading for a comment written before
@@ -2591,7 +2648,7 @@ jobs:
           fi
           echo "preview/agent-build: $state ($desc)"
 
-  # ── Cleanup: remove STAGING/<slug>/ when PR is closed ─────────
+  # ── Cleanup: remove branches/<slug>/ when PR is closed ─────────
   # MERGED closes the question; CLOSED-UNMERGED does not.
   #
   # Owner, 2026-09-20: "change policy, if merged to main, then staging goes
@@ -2791,23 +2848,26 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           SLUG="$STAGING_SLUG"
-          if [ -d "pages/STAGING/$SLUG" ]; then
+          # The preview is under $PREVIEW_DIR, or under the legacy STAGING/ when it
+          # was published before 2026-11-05 (scripts/lib/preview-prefix.ts).
+          PD="$PREVIEW_DIR"; [ ! -d "pages/$PD/$SLUG" ] && [ -d "pages/STAGING/$SLUG" ] && PD=STAGING
+          if [ -d "pages/$PD/$SLUG" ]; then
             # Retire the preview's record BEFORE the preview goes (bean `6pfo`,
             # piece 2): the record outlives the preview as a RETIRED state in
-            # STAGING/_retired/, never deleted with it. Retiring twice keeps the
+            # branches/_retired/, never deleted with it. Retiring twice keeps the
             # first retirement (`staging-record.ts`). A missing live record is
             # a preview staged before 6pfo — nothing to retire, said so.
-            REC="pages/STAGING/$SLUG/staging-preview.json"
+            REC="pages/$PD/$SLUG/staging-preview.json"
             if [ -f "$REC" ]; then
-              mkdir -p pages/STAGING/_retired
-              [ -f "pages/STAGING/_retired/$SLUG.json" ] || cp "$REC" "pages/STAGING/_retired/$SLUG.json"
+              mkdir -p pages/$PREVIEW_DIR/_retired
+              [ -f "pages/$PREVIEW_DIR/_retired/$SLUG.json" ] || cp "$REC" "pages/$PREVIEW_DIR/_retired/$SLUG.json"
               bun run source/cat-harness-tools/scripts/staging-record.ts retire \
-                --out "pages/STAGING/_retired/$SLUG.json" --reason "removed on PR #${{ github.event.pull_request.number }} close; confirmed by: $CLEANUP_REASON" \
-                || echo "::error title=staging-preview record::could not retire STAGING/$SLUG — the preview is removed, its record copy kept as it was"
+                --out "pages/$PREVIEW_DIR/_retired/$SLUG.json" --reason "removed on PR #${{ github.event.pull_request.number }} close; confirmed by: $CLEANUP_REASON" \
+                || echo "::error title=staging-preview record::could not retire $PD/$SLUG — the preview is removed, its record copy kept as it was"
             else
-              echo "No staging-preview record in STAGING/$SLUG (staged before bean 6pfo) — nothing to retire."
+              echo "No staging-preview record in $PD/$SLUG (staged before bean 6pfo) — nothing to retire."
             fi
-            rm -rf "pages/STAGING/$SLUG"
+            rm -rf "pages/$PD/$SLUG"
             # ONE COMMIT for the removal and its record, deliberately. A
             # separate log push can fail on its own and leave a preview that
             # vanished with nothing saying why — which is the exact state bean
@@ -2838,18 +2898,18 @@ jobs:
                         '{summary:$s, reason:$r}')
             bun run source/cat-harness-tools/scripts/render-log.ts --dir pages \
               --event removed --kind staging-preview \
-              --path "STAGING/$SLUG" --slug "$SLUG" \
+              --path "$PD/$SLUG" --slug "$SLUG" \
               --run "$RUN_URL" <<<"$PROSE"
             git -C pages config user.name 'github-actions[bot]'
             git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-            git -C pages add -A "STAGING/$SLUG" _render-log
+            git -C pages add -A "$PD/$SLUG" _render-log
             # Only when it exists: a pathspec that matches nothing fails `git add`.
-            if [ -d pages/STAGING/_retired ]; then git -C pages add -A STAGING/_retired; fi
-            git -C pages commit -m "staging(cleanup): remove STAGING/$SLUG (PR #${{ github.event.pull_request.number }} closed)" || true
+            if [ -d pages/$PREVIEW_DIR/_retired ]; then git -C pages add -A $PREVIEW_DIR/_retired; fi
+            git -C pages commit -m "staging(cleanup): remove $PD/$SLUG (PR #${{ github.event.pull_request.number }} closed)" || true
             # Same race as the deploy above, and the same reason a queue is not
             # enough: five other workflows push to `gh-pages` without joining
             # it. Rebase and retry rather than losing the cleanup — our commit
-            # only removes one STAGING/ directory, so it rebases onto whatever
+            # only removes one branches/ directory, so it rebases onto whatever
             # landed first without touching it.
             for attempt in 1 2 3; do
               if git -C pages push origin gh-pages; then
@@ -2873,7 +2933,7 @@ jobs:
               # sessions it says contend on it.
               bun run source/cat-harness-tools/scripts/backoff-sleep.ts --attempt "$attempt"
             done
-            echo "Cleaned up STAGING/$SLUG"
+            echo "Cleaned up $PD/$SLUG"
           else
             echo "No staging directory found for $SLUG (already cleaned up)"
           fi
@@ -2895,8 +2955,11 @@ jobs:
         run: |
           set -eu
           SLUG="$STAGING_SLUG"
-          if [ ! -d "pages/STAGING/$SLUG" ]; then
-            echo "No STAGING/$SLUG on gh-pages — nothing was retained, so there is nothing to record."
+          # The preview is under $PREVIEW_DIR, or under the legacy STAGING/ when it
+          # was published before 2026-11-05 (scripts/lib/preview-prefix.ts).
+          PD="$PREVIEW_DIR"; [ ! -d "pages/$PD/$SLUG" ] && [ -d "pages/STAGING/$SLUG" ] && PD=STAGING
+          if [ ! -d "pages/$PD/$SLUG" ]; then
+            echo "No $PD/$SLUG on gh-pages — nothing was retained, so there is nothing to record."
             exit 0
           fi
           # Prose on STDIN via a herestring, built with `jq -n --arg` — bean
@@ -2913,12 +2976,12 @@ jobs:
                       '{summary:$s, reason:$r}')
           bun run source/cat-harness-tools/scripts/render-log.ts --dir pages \
             --event retained --kind staging-preview \
-            --path "STAGING/$SLUG" --slug "$SLUG" \
+            --path "$PD/$SLUG" --slug "$SLUG" \
             --run "$RUN_URL" <<<"$PROSE"
           git -C pages config user.name 'github-actions[bot]'
           git -C pages config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git -C pages add -A _render-log
-          git -C pages commit -m "render-log: retained STAGING/$SLUG" || exit 0
+          git -C pages commit -m "render-log: retained $PD/$SLUG" || exit 0
           for attempt in 1 2 3; do
             if git -C pages push origin gh-pages; then
               echo "pushed on attempt $attempt"
@@ -2956,7 +3019,7 @@ jobs:
           script: |
             const { owner, repo } = context.repo;
             const slug = process.env.SLUG;
-            const pagesUrl = `https://${owner}.github.io/${repo}/STAGING/${slug}/`;
+            const pagesUrl = `https://${owner}.github.io/${repo}/${process.env.PREVIEW_DIR}/${slug}/`;
             const body = [
               '### 📌 Staging preview retained',
               '',
@@ -3035,7 +3098,7 @@ jobs:
           # neither names a preview, so they are refused by name.
           case "$SLUG" in
             ""|.|..|_retired)
-              echo "::error::cleanup_slug must name one STAGING/<slug> directory, not a path."
+              echo "::error::cleanup_slug must name one $PREVIEW_DIR/<slug> (or legacy STAGING/<slug>) directory, not a path."
               exit 1
               ;;
             *[!A-Za-z0-9._-]*)
@@ -3051,7 +3114,7 @@ jobs:
             exit 1
           fi
           echo "slug=$SLUG" >> "$GITHUB_OUTPUT"
-          echo "Confirmed target: STAGING/$SLUG"
+          echo "Confirmed target: $PREVIEW_DIR/$SLUG"
 
       - name: Check out the platform, for the liveness preflight
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
@@ -3125,32 +3188,35 @@ jobs:
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           set -eu
-          if [ ! -d "STAGING/$CLEANUP_SLUG" ]; then
-            echo "No STAGING/$CLEANUP_SLUG on gh-pages — nothing to remove."
+          # The preview is under $PREVIEW_DIR, or under the legacy STAGING/ when it
+          # was published before 2026-11-05 (scripts/lib/preview-prefix.ts).
+          PD="$PREVIEW_DIR"; [ ! -d "$PD/$CLEANUP_SLUG" ] && [ -d "STAGING/$CLEANUP_SLUG" ] && PD=STAGING
+          if [ ! -d "$PD/$CLEANUP_SLUG" ]; then
+            echo "No $PD/$CLEANUP_SLUG on gh-pages — nothing to remove."
             exit 0
           fi
           # Say what is going, with its size and file count, BEFORE it goes:
           # a deletion that leaves no record of what it removed is the first
           # property `deletion-requires-confirmation` warns about.
-          echo "Removing STAGING/$CLEANUP_SLUG"
-          du -sh "STAGING/$CLEANUP_SLUG" || true
-          find "STAGING/$CLEANUP_SLUG" -type f | wc -l
+          echo "Removing $PD/$CLEANUP_SLUG"
+          du -sh "$PD/$CLEANUP_SLUG" || true
+          find "$PD/$CLEANUP_SLUG" -type f | wc -l
           # Retire the preview's record BEFORE the preview goes (bean `6pfo`,
           # piece 2): the record outlives the preview as a RETIRED state in
-          # STAGING/_retired/, never deleted with it. Retiring twice keeps the
+          # branches/_retired/, never deleted with it. Retiring twice keeps the
           # first retirement (`staging-record.ts`). A missing live record is
           # a preview staged before 6pfo — nothing to retire, said so.
-          REC="STAGING/$CLEANUP_SLUG/staging-preview.json"
+          REC="$PD/$CLEANUP_SLUG/staging-preview.json"
           if [ -f "$REC" ]; then
-            mkdir -p STAGING/_retired
-            [ -f "STAGING/_retired/$CLEANUP_SLUG.json" ] || cp "$REC" "STAGING/_retired/$CLEANUP_SLUG.json"
+            mkdir -p $PREVIEW_DIR/_retired
+            [ -f "$PREVIEW_DIR/_retired/$CLEANUP_SLUG.json" ] || cp "$REC" "$PREVIEW_DIR/_retired/$CLEANUP_SLUG.json"
             bun run ../source/cat-harness-tools/scripts/staging-record.ts retire \
-              --out "STAGING/_retired/$CLEANUP_SLUG.json" --reason "removed by dispatch from $DISPATCHED_BY" \
-              || echo "::error title=staging-preview record::could not retire STAGING/$CLEANUP_SLUG — the preview is removed, its record copy kept as it was"
+              --out "$PREVIEW_DIR/_retired/$CLEANUP_SLUG.json" --reason "removed by dispatch from $DISPATCHED_BY" \
+              || echo "::error title=staging-preview record::could not retire $PD/$CLEANUP_SLUG — the preview is removed, its record copy kept as it was"
           else
-            echo "No staging-preview record in STAGING/$CLEANUP_SLUG (staged before bean 6pfo) — nothing to retire."
+            echo "No staging-preview record in $PD/$CLEANUP_SLUG (staged before bean 6pfo) — nothing to retire."
           fi
-          rm -rf -- "STAGING/$CLEANUP_SLUG"
+          rm -rf -- "$PD/$CLEANUP_SLUG"
           # The record rides in the SAME commit as the removal, so a preview
           # cannot vanish without an entry saying who dispatched it and why.
           # `--path` is re-checked by VALUE inside the tool rather than trusted
@@ -3171,15 +3237,15 @@ jobs:
                       '{summary:$s, reason:$r}')
           bun run ../source/cat-harness-tools/scripts/render-log.ts --dir . \
             --event removed --kind staging-preview \
-            --path "STAGING/$CLEANUP_SLUG" --slug "$CLEANUP_SLUG" \
+            --path "$PD/$CLEANUP_SLUG" --slug "$CLEANUP_SLUG" \
             --run "$RUN_URL" <<<"$PROSE"
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add -A "STAGING/$CLEANUP_SLUG" _render-log
+          git add -A "$PD/$CLEANUP_SLUG" _render-log
           # Only when it exists: a pathspec that matches nothing fails `git add`.
-          if [ -d STAGING/_retired ]; then git add -A STAGING/_retired; fi
+          if [ -d $PREVIEW_DIR/_retired ]; then git add -A $PREVIEW_DIR/_retired; fi
           git commit \
-            -m "staging(cleanup): remove STAGING/$CLEANUP_SLUG (dispatched)" \
+            -m "staging(cleanup): remove $PD/$CLEANUP_SLUG (dispatched)" \
             -m "Dispatched by $DISPATCHED_BY, confirmed by repeating the slug, and preflighted against the liveness signals in cat-harness-tools/scripts/staging-cleanup-preflight.ts." \
             -m "$RUN_URL" || true
           # Same race as every other writer of this ref, and the same reason a
@@ -3208,4 +3274,4 @@ jobs:
             # sessions it says contend on it.
             bun run ../source/cat-harness-tools/scripts/backoff-sleep.ts --attempt "$attempt"
           done
-          echo "Removed STAGING/$CLEANUP_SLUG"
+          echo "Removed $PD/$CLEANUP_SLUG"

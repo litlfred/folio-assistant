@@ -288,10 +288,69 @@ describe("bun test is judged per test", () => {
   test("an unhandled error between tests is named by its file and is new", () => {
     const sb = sandbox(mainLog);
     sb.begin();
-    const out = "b.test.ts:\n\n# Unhandled error between tests\n-----\nerror: boom\n" + summaryOut(2, 1);
+    // bun 1.4.4 counts the unhandled error on the error line only (fixtures above).
+    const out = "b.test.ts:\n\n# Unhandled error between tests\n-----\nerror: boom\n" + summaryOut(1, 1);
     testStep(sb, "bun", BUN_JUNIT(FAIL("old")), out, 1);
     expect(sb.verdict("pull_request").status).toBe(1);
     expect(sb.summary()).toContain("b.test.ts > (unhandled error between tests)");
+  });
+
+  /** Real bun 1.4.4 output (console and JUnit), captured into test/workflows/fixtures/. */
+  const real = (name: string) => {
+    const dir = join(ROOT, "test", "workflows", "fixtures", name);
+    return { junit: readFileSync(join(dir, "junit.xml"), "utf8"), out: readFileSync(join(dir, "console.txt"), "utf8") };
+  };
+
+  test("real bun 1.4.4, failures only: `N fail` is the JUnit failures, and each is judged", () => {
+    const sb = sandbox(mainLog);
+    sb.begin();
+    const { junit, out } = real("bun-1.4.4-failures");
+    testStep(sb, "bun", junit, out, 1);
+    expect(sb.verdict("pull_request").status).toBe(1);
+    expect(sb.summary()).not.toContain("Could not determine");
+    expect(sb.summary()).toContain("a.test.ts > bad2");
+  });
+
+  test("real bun 1.4.4, with an unhandled error: it is on the error line only, never in `N fail` or the JUnit", () => {
+    const sb = sandbox(mainLog);
+    sb.begin();
+    const { junit, out } = real("bun-1.4.4-unhandled");
+    testStep(sb, "bun", junit, out, 1);
+    expect(sb.verdict("pull_request").status).toBe(1);
+    expect(sb.summary()).not.toContain("Could not determine");
+    expect(sb.summary()).toContain("b.test.ts > (unhandled error between tests)");
+    expect(sb.summary()).toContain("a.test.ts > after");
+  });
+
+  test("real bun 1.4.4, a file that fails to load: its error is counted in `N fail` too, and still judged", () => {
+    const sb = sandbox(mainLog);
+    sb.begin();
+    const { junit, out } = real("bun-1.4.4-load-failure");
+    // 4 fail = the 3 JUnit failures + c.test.ts's load failure; 2 errors = b's rejection and c's throw.
+    expect(out).toContain(" 4 fail");
+    expect(out).toContain(" 2 errors");
+    testStep(sb, "bun", junit, out, 1);
+    expect(sb.verdict("pull_request").status).toBe(1);
+    expect(sb.summary()).not.toContain("Could not determine");
+    expect(sb.summary()).toContain("c.test.ts > (unhandled error between tests)");
+    expect(sb.summary()).toContain("b.test.ts > (unhandled error between tests)");
+  });
+
+  test("`N fail` beyond the JUnit failures plus every unhandled error is could-not-determine", () => {
+    const sb = sandbox(mainLog);
+    sb.begin();
+    const out = "b.test.ts:\n\n# Unhandled error between tests\n-----\nerror: boom\n" + summaryOut(3, 1);
+    testStep(sb, "bun", BUN_JUNIT(FAIL("old")), out, 1);
+    expect(sb.verdict("pull_request").status).toBe(1);
+    expect(sb.summary()).toContain("Could not determine");
+  });
+
+  test("`N fail` below the JUnit failures is could-not-determine", () => {
+    const sb = sandbox(mainLog);
+    sb.begin();
+    testStep(sb, "bun", BUN_JUNIT(FAIL("old") + FAIL("other")), summaryOut(1), 1);
+    expect(sb.verdict("pull_request").status).toBe(1);
+    expect(sb.summary()).toContain("Could not determine");
   });
 
   test("counts that do not add up are could-not-determine", () => {
@@ -354,6 +413,41 @@ describe("verdict reuse refuses a run that passed by inheriting main's failures"
   test("no record, or no API, refuses it", () => {
     expect(reuse("nothing\n")).toBe("reuse=false");
     expect(reuse(null)).toBe("reuse=false");
+  });
+});
+
+describe("a PR run of only the affected tests (CI speed 7, #2962) is said so, and never reused for main", () => {
+  /** A test step that ran a selection of `n` files, recorded as the selection step records it. */
+  function scoped(n: number, exit = 0) {
+    const sb = sandbox(undefined, { jobName: "TypeScript — bun test, shard 1/4", conclusion: "success" });
+    const scope = join(sb.dir, "scope.json");
+    writeFileSync(scope, JSON.stringify({ kind: "some", files: Array.from({ length: n }, (_, i) => `t${i}.test.ts`) }));
+    sb.begin();
+    sb.step(`bash .github/scripts/pr-bun-test.sh 1 4 || exit ${exit}`, { CQG_TESTS: "bun", CQG_TEST_SCOPE: scope, CQG_JUNIT: join(sb.dir, "none.xml") });
+    return sb;
+  }
+  test("the verdict says only the affected files were judged, never a plain pass", () => {
+    const sb = scoped(3);
+    expect(sb.verdict("pull_request").status).toBe(0);
+    expect(sb.summary()).toContain("Only the 3 affected test file(s) were judged");
+  });
+  test("reuse-check refuses a run that judged only a selection", () => {
+    const line = /CQG-REPORT-V1 \S+/.exec(scoped(2).verdict("pull_request").stdout)![0];
+    const sb = sandbox(`2026-11-01T00:00:01.0000000Z ${line}\n`, { jobName: "TypeScript — bun test, shard 1/4", conclusion: "success" });
+    const out = join(sb.dir, "out");
+    writeFileSync(out, "");
+    spawnSync("python3", [JUDGE, "reuse-check"], { env: sb.env({ REPO: "o/r", RUN_ID: "7", GITHUB_OUTPUT: out }), encoding: "utf8" });
+    expect(readFileSync(out, "utf8").trim()).toBe("reuse=false");
+    expect(sb.summary()).toContain("ran only the PR's affected tests");
+  });
+  test("a whole-suite run (kind all) is not scoped", () => {
+    const sb = sandbox();
+    const scope = join(sb.dir, "scope.json");
+    writeFileSync(scope, JSON.stringify({ kind: "all", why: "bun.lock changed" }));
+    sb.begin();
+    sb.step("true", { CQG_TESTS: "bun", CQG_TEST_SCOPE: scope });
+    sb.verdict("pull_request");
+    expect(sb.summary()).not.toContain("affected test file");
   });
 });
 

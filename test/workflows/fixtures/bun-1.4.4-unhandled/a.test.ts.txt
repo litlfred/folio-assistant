@@ -1,0 +1,6 @@
+import { test, expect } from "bun:test";
+test("ok", () => expect(1).toBe(1));
+test("bad1", () => expect(1).toBe(2));
+test("bad2", () => expect(1).toBe(3));
+test("schedules a late throw", () => { setTimeout(() => { throw new Error("late boom"); }, 0); });
+test("after", async () => { await new Promise((r) => setTimeout(r, 20)); });

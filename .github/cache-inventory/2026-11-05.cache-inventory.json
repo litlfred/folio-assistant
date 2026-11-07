@@ -1,0 +1,860 @@
+{
+  "$schema": "cache-inventory/1.0.0",
+  "takenAt": "2026-11-05",
+  "method": "Anonymous shallow clones of each repository's default branch at the time, searched for actions/cache, artifact reuse by name, GHCR images, git refs and branch stores, on-disk caches and setup-* caches (cache-first CI, CI speed 14). A snapshot, never a declaration: each harness declares its own caches as `cache/1.0.0` nodes.",
+  "repositories": [
+    "bootstrap",
+    "bootstrap-tools",
+    "cat-harness",
+    "cat-harness-tools",
+    "fhir-harness",
+    "folio-assistant",
+    "folio-assistant-core",
+    "folio-assistant-sci",
+    "smart-base",
+    "smart-immunizations",
+    "smart-trust",
+    "smart-trust-phw",
+    "who-iris"
+  ],
+  "entries": [
+    {
+      "repo": "folio-assistant",
+      "id": "cat-mount",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/code-quality-gates.yml:210",
+        ".github/workflows/code-quality-gates.yml:483",
+        ".github/workflows/code-quality-gates.yml:617",
+        ".github/workflows/code-quality-gates.yml:730",
+        ".github/workflows/code-quality-gates.yml:900",
+        ".github/workflows/code-quality-gates.yml:1069",
+        ".github/workflows/code-quality-gates.yml:1398",
+        ".github/workflows/code-quality-gates.yml:2123",
+        ".github/workflows/code-quality-gates.yml:3145",
+        ".github/workflows/code-quality-gates.yml:3319",
+        ".github/workflows/code-quality-gates.yml:4632",
+        ".github/workflows/code-quality-gates.yml:4881",
+        ".github/workflows/code-quality-gates.yml:5100",
+        ".github/workflows/feature-staging.yml:427",
+        ".github/workflows/feature-staging.yml:2672",
+        ".github/workflows/feature-staging.yml:3050",
+        ".github/workflows/post-merge-regen.yml:117",
+        ".github/workflows/repin-train.yml:67",
+        ".github/workflows/staging-publish.yml:61"
+      ],
+      "key": "cat-mount-v1-${{ hashFiles('index.lock.json') }}  (feature-staging.yml:2672,3050 use hashFiles('source/index.lock.json'))",
+      "restoreKeys": "cat-mount-v1-",
+      "holds": "~/.cache/cat-mount — remote layer trees mounted from index.lock.json (mount-from-lock.sh)",
+      "producer": "the same step (actions/cache post-step) in every job that mounts layers",
+      "consumers": "the same 19 steps: code-quality-gates jobs hygiene, typescript-static, verdict-reuse, qa-working-copy, publish-pages, typescript-test, gates-kg, gates-docs, gates-standalone, gates-unrun, e2e-shard, skill-registration-chain, qa-publish; feature-staging stage/cleanup/cleanup-dispatch; post-merge-regen regen; repin-train train; staging-publish publish",
+      "savePolicy": "plain actions/cache: saves on every run whose exact key missed — push to main, PR (PR-ref scoped), merge_group, schedule, dispatch; feature-staging cleanup jobs run on pull_request_target, so they save into the BASE (main) scope (content from main's lock: default checkout is base)",
+      "keyDerivation": "derived: hashFiles of the lock that pins every mounted tree; 'v1' hand-bumped",
+      "notes": "19 duplicate steps of one key in 6 workflows (13 in code-quality-gates alone). Prefix restore of any older lock is safe only because the mount step re-verifies trees against the lock digests. No tool (bun/git) version in key."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "cached-step-cat-mount",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/determinism-audit.yml:47",
+        ".github/workflows/jsonld-gen-check.yml:147",
+        ".github/workflows/jsonld-gen-check.yml:160",
+        ".github/actions/cached-step/action.yml:94",
+        ".github/actions/cached-step/action.yml:145"
+      ],
+      "key": "cs1-cat-mount-<hashFiles('index.lock.json')> (namespaced by cached-step.sh key)",
+      "restoreKeys": "prefix cs1-cat-mount- (trust: exact only)",
+      "holds": "~/.cache/cat-mount",
+      "producer": "jsonld-gen-check drift-check (save phase, :160); determinism-audit has restore only",
+      "consumers": "determinism-audit audit, jsonld-gen-check drift-check",
+      "savePolicy": "cached-step policy (cached-step.sh:125): main push saves; trust=exact may save from PR (ref-scoped); main-only saves only from main; pull_request_target never; undetermined key never",
+      "keyDerivation": "derived: hashFiles('index.lock.json'); verify: mount-from-lock.sh",
+      "notes": "Same content as cat-mount but a DIFFERENT key namespace (cs1-), so the two caches never share entries. determinism-audit restores but never saves."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "cached-step-hit-records",
+      "kind": "artifact-reuse",
+      "locations": [
+        ".github/actions/cached-step/action.yml:154",
+        ".github/scripts/cache-report.sh:43"
+      ],
+      "key": "artifact name cached-step--<step>--<hit|miss>--<unique>",
+      "restoreKeys": "n/a",
+      "holds": "one-line hit/miss record (retention 8 d)",
+      "producer": "every cached-step restore",
+      "consumers": "cache-report.sh lists artifact NAMES via repos/{repo}/actions/artifacts",
+      "savePolicy": "every restore, any event",
+      "keyDerivation": "n/a",
+      "notes": "Metric store, not a content cache."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "cached-step-committer-refs",
+      "kind": "git-ref",
+      "locations": [
+        ".github/actions/cached-step/action.yml:102",
+        ".github/actions/cached-step/cached-step.sh:67"
+      ],
+      "key": "refs/cache/cs1-<step>-<key>",
+      "restoreKeys": "n/a",
+      "holds": "git tree of a step's output published by a committer",
+      "producer": "`bun run cat cache:publish` (documented)",
+      "consumers": "cached-step fetch-ref phase, when committer-refs: true and not on main",
+      "savePolicy": "written outside CI by committers",
+      "keyDerivation": "as cached-step key; accepted only through verify",
+      "notes": "DORMANT: no workflow sets committer-refs: true, and no `cache:publish`/`cache:key` script exists in any of the 13 repos."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "playwright-chromium",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/code-quality-gates.yml:4691"
+      ],
+      "key": "playwright-chromium-${{ runner.os }}-${{ steps.playwright.outputs.version }}",
+      "restoreKeys": "none",
+      "holds": "~/.cache/ms-playwright",
+      "producer": "e2e-shard (matrix)",
+      "consumers": "e2e-shard",
+      "savePolicy": "plain actions/cache: any run that missed (PR too, ref-scoped)",
+      "keyDerivation": "derived: @playwright/test version read from package.json by jq (a range like ^1.x would not be exact)",
+      "notes": ""
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "writer-cone",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/writer-records.yml:90",
+        ".github/workflows/writer-records.yml:151",
+        ".github/workflows/feature-staging.yml:492"
+      ],
+      "key": "writer-cone-${{ github.event.workflow_run.head_sha || github.sha }}  (feature-staging: writer-cone-${{ github.sha }})",
+      "restoreKeys": "writer-cone-",
+      "holds": "build/writer-cone (strace-derived records of what each derive:publish writer read/wrote, plus outputs)",
+      "producer": "writer-records.yml record (workflow_run after Docs site on main; dispatch)",
+      "consumers": "feature-staging stage (PR previews skip unchanged writers)",
+      "savePolicy": "actions/cache/save explicit: main only in practice (workflow_run on branches [main]; or a dispatch from any branch)",
+      "keyDerivation": "derived: commit sha; validity is per-path state recorded inside",
+      "notes": "PR exact key (merge sha) never exists, so PRs always take the newest main entry by prefix."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "writer-records-artifact",
+      "kind": "artifact-reuse",
+      "locations": [
+        ".github/workflows/writer-records.yml:157",
+        ".github/workflows/docs-site.yml:354"
+      ],
+      "key": "artifact name writer-records (newest non-expired via ?name=writer-records&per_page=1)",
+      "restoreKeys": "n/a",
+      "holds": "build/writer-cone/records.json, qa-records.json (14 d)",
+      "producer": "writer-records.yml record",
+      "consumers": "docs-site build-and-deploy dry-run verify (writer-cone-verify.ts)",
+      "savePolicy": "every writer-records run",
+      "keyDerivation": "n/a — newest by name",
+      "notes": "Newest artifact by name regardless of which commit produced it."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "tested-tree-record",
+      "kind": "artifact-reuse",
+      "locations": [
+        ".github/workflows/code-quality-gates.yml:797",
+        ".github/workflows/code-quality-gates.yml:543",
+        "cat-harness-tools/scripts/verdict-reuse.sh:117",
+        ".github/scripts/qa-copy-reuse.sh:79",
+        ".github/scripts/publish-pages-reuse.sh:92"
+      ],
+      "key": "artifact name tested-tree-<HEAD^{tree} sha>",
+      "restoreKeys": "n/a",
+      "holds": "a one-line record of the tree a code-quality-gates run tested (3 d)",
+      "producer": "code-quality-gates qa-working-copy job (every PR/push run)",
+      "consumers": "code-quality-gates verdict-reuse job (a main push skips all gates if the merged PR's green run tested the same tree); qa-copy-reuse.sh and publish-pages-reuse.sh in docs-site",
+      "savePolicy": "every run incl. PR",
+      "keyDerivation": "derived: git tree sha",
+      "notes": "PR-run verdict becomes main's verdict. Inputs NOT pinned by the tree: state branches (state:mount) and qa-reports at the time the PR ran (scripts say so)."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "qa-working-copy-reuse",
+      "kind": "artifact-reuse",
+      "locations": [
+        ".github/workflows/code-quality-gates.yml:841",
+        ".github/scripts/qa-copy-reuse.sh"
+      ],
+      "key": "artifact qa-working-copy of the merged PR's run whose tested-tree equals the pushed tree",
+      "restoreKeys": "n/a",
+      "holds": "qa-working-copy.tar + sha256 manifest",
+      "producer": "code-quality-gates qa-working-copy (PR run)",
+      "consumers": "within run: 7 jobs download it (lines 937,1134,1490,2237,3386,4744,4936,5133); across runs: docs-site on main via qa-copy-reuse.sh",
+      "savePolicy": "every run",
+      "keyDerivation": "derived: tree equality + manifest verify",
+      "notes": "PR-built bytes deployed on main after verify against manifest."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "publish-pages-reuse",
+      "kind": "artifact-reuse",
+      "locations": [
+        ".github/workflows/code-quality-gates.yml:971",
+        ".github/scripts/publish-pages-reuse.sh"
+      ],
+      "key": "artifact publish-pages of the merged PR's run (4 conditions: tree, job success, QA copy verify, no PR identity stamped)",
+      "restoreKeys": "n/a",
+      "holds": "derive:publish output tar + manifest",
+      "producer": "code-quality-gates publish-pages (PR run)",
+      "consumers": "within run: 6 jobs (1178,1513,2265,3413,4756,4959); across runs: docs-site main deploy",
+      "savePolicy": "every run",
+      "keyDerivation": "derived: tree equality + manifest",
+      "notes": ""
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "jekyll-source-handoff",
+      "kind": "artifact-reuse",
+      "locations": [
+        ".github/workflows/docs-site.yml:600",
+        ".github/workflows/feature-staging.yml:1084",
+        ".github/workflows/liquid-undefined.yml:129",
+        ".github/workflows/liquid-undefined.yml:138"
+      ],
+      "key": "artifact jekyll-source, fetched by run-id: github.event.workflow_run.id",
+      "restoreKeys": "n/a",
+      "holds": "./_docs Jekyll source (3 d)",
+      "producer": "docs-site, feature-staging",
+      "consumers": "liquid-undefined (workflow_run after Docs site; or workflow_call)",
+      "savePolicy": "every producing run",
+      "keyDerivation": "n/a — by run id",
+      "notes": "Cross-workflow handoff, exact run."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "staging-site-queue",
+      "kind": "artifact-reuse",
+      "locations": [
+        ".github/workflows/feature-staging.yml:2109",
+        ".github/workflows/staging-publish.yml:48",
+        ".github/workflows/sweeps.yml:78",
+        ".github/scripts/staging-publish.sh:56"
+      ],
+      "key": "artifact name prefix staging-site-<slug>; newest per slug",
+      "restoreKeys": "n/a",
+      "holds": "site.tar + meta.json of a PR/branch preview (1 d)",
+      "producer": "feature-staging stage (pull_request, any PR incl. forks — stage has no fork guard)",
+      "consumers": "staging-publish.sh (dispatch; contents: write) pushes to gh-pages STAGING/<slug>",
+      "savePolicy": "every stage run",
+      "keyDerivation": "n/a — selected by name prefix only",
+      "notes": "UNSAFE?: publisher checks only meta.json (artifact-authored) slug and that the named PR is open; it does not check the producing run's head repository/workflow. A fork PR's run can upload a staging-site-* artifact."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "gh-pages-build-record",
+      "kind": "branch-store",
+      "locations": [
+        ".github/workflows/feature-staging.yml:249",
+        ".github/workflows/feature-staging.yml:313",
+        ".github/workflows/feature-staging.yml:2017"
+      ],
+      "key": "gh-pages:STAGING/<slug>/_build-record.json {builder,tree}",
+      "restoreKeys": "n/a",
+      "holds": "agent-built preview + record of the tree it was built from",
+      "producer": "agents / staging publisher",
+      "consumers": "feature-staging defer step: if builder=agent and tree==merge tree, defers CI build to preview-verify-sweep",
+      "savePolicy": "n/a",
+      "keyDerivation": "derived: tree sha",
+      "notes": "gh-pages read as a cache of previews; also restore-staging.ts in cat-harness-tools reads gh-pages."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "qa-reports-branch",
+      "kind": "branch-store",
+      "locations": [
+        ".github/workflows/code-quality-gates.yml:4995",
+        ".github/workflows/code-quality-gates.yml:5194",
+        ".github/workflows/docs-site.yml:377",
+        ".github/workflows/feature-staging.yml:586",
+        ".github/workflows/folio-staging.yml:411",
+        ".github/workflows/qa-reports-prune.yml"
+      ],
+      "key": "orphan branch qa-reports, path main/<sha>/ or pr/<n>/<head-sha>/",
+      "restoreKeys": "docs-site: --fallback main",
+      "holds": "QA result manifests per run",
+      "producer": "code-quality-gates qa-publish (always(), push and same-repo PR) via `bun run cat qa:publish`",
+      "consumers": "docs-site (main/<sha>), feature-staging/folio-staging (pr/<n>)",
+      "savePolicy": "push and same-repo PR; prune on schedule",
+      "keyDerivation": "derived: commit sha",
+      "notes": "Also read as an unpinned input by verdict/QA-copy reuse."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "state-branches",
+      "kind": "branch-store",
+      "locations": [
+        "cat-harness-tools/scripts/state-mount.ts",
+        ".github/workflows/code-quality-gates.yml:504 (+~10 more `bun run cat state:mount` steps)"
+      ],
+      "key": "cat/<instance>/<graph> branches (e.g. cat/cat-harness/todos, cat/x/beans), tip",
+      "restoreKeys": "n/a",
+      "holds": "beans/todos work-plan graphs kept off main",
+      "producer": "agents/beans tooling",
+      "consumers": "state:mount in most gate jobs; layer-pr-checks pins their tips via ls-remote into state.json",
+      "savePolicy": "n/a",
+      "keyDerivation": "tip at run time (unpinned in folio-assistant; pinned via state.json in layer-pr-checks)",
+      "notes": ""
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "lean-mcp-buildcache",
+      "kind": "ghcr-image",
+      "locations": [
+        ".github/workflows/build-lean-mcp.yml:83"
+      ],
+      "key": "ghcr.io/${{ github.repository }}/paper-assistant:buildcache",
+      "restoreKeys": "cache-from same ref",
+      "holds": "Docker BuildKit layer cache (mode=max) + the paper-assistant image",
+      "producer": "build-lean-mcp build (workflow_dispatch)",
+      "consumers": "same",
+      "savePolicy": "dispatch only",
+      "keyDerivation": "registry ref, BuildKit content-addressed",
+      "notes": ""
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "lake-cache-orphan-branches",
+      "kind": "branch-store",
+      "locations": [
+        ".github/workflows/lake-cache-refresh.yml:133",
+        ".github/actions/lake-cache-restore/action.yml:69",
+        "folio-assistant-sci/scripts/lake-cache.sh"
+      ],
+      "key": "cat/folio-assistant-sci/lake-cache/<package>-<toolchain-slug> (legacy cat-lake-cache/, lake-cache/)",
+      "restoreKeys": "n/a",
+      "holds": ".lake/ build oleans per Lean package",
+      "producer": "lake-cache-refresh (workflow_dispatch, contents: write, force-push via lake-cache.sh seed --push)",
+      "consumers": "lake-cache-restore tier 2; agents (lean-cache-restore skill)",
+      "savePolicy": "dispatch only; prune keeps newest 2 per package by hand-review",
+      "keyDerivation": "PARTLY hand-derived: package + toolchain slug only — lake-manifest (Mathlib rev) NOT in the branch key",
+      "notes": "Tier 2 of lake-cache-restore; Mathlib itself via `lake exe cache get` (Mathlib's own cache)."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "lake-cache-tier1",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/actions/lake-cache-restore/action.yml:94"
+      ],
+      "key": "lake-cache-${PACKAGE}-<toolchain-slug>-<sha256(manifest files)[:16]>",
+      "restoreKeys": "lake-cache-${PACKAGE}-<slug>-",
+      "holds": ".lake/",
+      "producer": "the action (plain actions/cache)",
+      "consumers": "none in folio-assistant: no workflow uses ./.github/actions/lake-cache-restore (dead copy); live copy is folio-assistant-sci/templates/paper (actions/cache@v4 unpinned)",
+      "savePolicy": "any missed run",
+      "keyDerivation": "derived: toolchain + manifest hashes",
+      "notes": ""
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "pip-content-pipeline",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/publish.yml:172"
+      ],
+      "key": "pip-${{ runner.os }}-pypdf5-numpy2.1-sympy1.13-scipy1.14-mpmath1.3",
+      "restoreKeys": "pip-${{ runner.os }}-",
+      "holds": "~/.cache/pip",
+      "producer": "publish.yml content-pipeline (workflow_call/dispatch)",
+      "consumers": "same",
+      "savePolicy": "any missed run",
+      "keyDerivation": "HAND-LISTED versions in the key string, not hashFiles(requirements)",
+      "notes": ""
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "bun-content-pipeline",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/publish.yml:185"
+      ],
+      "key": "bun-${{ runner.os }}-${{ hashFiles('folio/bun.lock') }}",
+      "restoreKeys": "bun-${{ runner.os }}-",
+      "holds": "~/.bun/install/cache",
+      "producer": "publish.yml content-pipeline",
+      "consumers": "same",
+      "savePolicy": "any missed run",
+      "keyDerivation": "derived from folio/bun.lock — absent in folio-assistant; if the caller lacks it the key degrades to constant 'bun-Linux-'",
+      "notes": ""
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "witness-cache",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/publish.yml:198"
+      ],
+      "key": "witness-cache-${{ runner.os }}-${{ hashFiles('folio-assistant/computations/*.py') }}",
+      "restoreKeys": "witness-cache-${{ runner.os }}-",
+      "holds": "computations/hecke_startup_cache.json, computations/.cache, computations/.hoefsmit_cache",
+      "producer": "publish.yml content-pipeline",
+      "consumers": "same; results uploaded in content-pipeline artifact",
+      "savePolicy": "any missed run",
+      "keyDerivation": "partial: *.py only (no data, no Python/dep versions); prefix restore deliberately reuses stale entries",
+      "notes": "Computed witnesses could come from older code."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "snappea-wasm-deps",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/snappea_wasm.yml:34"
+      ],
+      "key": "wasm-deps-gmp6.2.1-pari2.13.2-${{ runner.os }}",
+      "restoreKeys": "none",
+      "holds": "folio-assistant/snappea-wasm/build/local (GMP/PARI builds)",
+      "producer": "snappea_wasm build (dispatch)",
+      "consumers": "same",
+      "savePolicy": "any missed run",
+      "keyDerivation": "HAND-LISTED versions; emsdk image version and build script not in key",
+      "notes": ""
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "rust-cache",
+      "kind": "setup-action-cache",
+      "locations": [
+        ".github/workflows/hecke-engine-wasm.yml:28",
+        ".github/workflows/hecke-engine-wasm.yml:55",
+        ".github/workflows/hecke-engine-wasm.yml:123",
+        ".github/workflows/wrapper-tests.yml:39",
+        ".github/workflows/wrapper-tests.yml:198",
+        ".github/workflows/wrapper-tests.yml:220",
+        ".github/workflows/wrapper-tests.yml:274",
+        ".github/workflows/wrapper-tests.yml:296",
+        ".github/workflows/wrapper-tests.yml:318",
+        ".github/workflows/discoverability-docs.yml:53"
+      ],
+      "key": "Swatinem/rust-cache default (job id + rustc + Cargo.lock/toml hashes), workspaces e.g. 'tools/hecke-engine -> target'",
+      "restoreKeys": "action default prefix",
+      "holds": "~/.cargo registry + target dirs",
+      "producer": "each job",
+      "consumers": "same",
+      "savePolicy": "save-if default (any branch); all are workflow_dispatch workflows",
+      "keyDerivation": "derived by action",
+      "notes": "10 uses."
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "bundler-cache",
+      "kind": "setup-action-cache",
+      "locations": [
+        ".github/workflows/docs-site.yml:616",
+        ".github/workflows/feature-staging.yml:1105",
+        ".github/workflows/liquid-undefined.yml:166"
+      ],
+      "key": "ruby/setup-ruby bundler-cache: true (ruby version + Gemfile.lock)",
+      "restoreKeys": "action default",
+      "holds": "vendor/bundle",
+      "producer": "docs-site, feature-staging stage, liquid-undefined",
+      "consumers": "same",
+      "savePolicy": "any missed run (feature-staging: PR-scoped)",
+      "keyDerivation": "derived by action",
+      "notes": ""
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "regen-derive-cones-on-disk",
+      "kind": "on-disk",
+      "locations": [
+        "cat-harness-tools/scripts/input-hash.ts:93",
+        "cat-harness-tools/scripts/derive-cache.ts:49",
+        "cat-harness-tools/scripts/ci-cone.ts",
+        "cat-harness-tools/scripts/qa-working-copy.ts:17"
+      ],
+      "key": "build/regen-cache/input-hashes.json (script closure+bun/git versions+bun.lock+declared inputs); build/derive-cache (CAT_DERIVE_CACHE_DIR); build/ci-cone/records.json",
+      "restoreKeys": "n/a",
+      "holds": "local skip records for regen pairs/checks, derive writers, CI cone",
+      "producer": "bun run cat regen / derive:publish / gates",
+      "consumers": "same, locally; in folio-assistant CI none is restored (ci-cone not wired: no build/ci-cone cache step; regen-cache disabled under CI)",
+      "savePolicy": "local",
+      "keyDerivation": "derived (fingerprints incl. tool versions)",
+      "notes": ""
+    },
+    {
+      "repo": "folio-assistant",
+      "id": "tool-releases-cache",
+      "kind": "on-disk",
+      "locations": [
+        "cat-harness-tools/scripts/tool-releases.ts:130"
+      ],
+      "key": "$CAT_HARNESS_TOOLS_CACHE > $XDG_CACHE_HOME/cat-harness/tools > ~/.cache/cat-harness/tools",
+      "restoreKeys": "n/a",
+      "holds": "downloaded pinned tool releases (e.g. ghcr texlive OCI by @sha256)",
+      "producer": "tool-releases.ts",
+      "consumers": "tool installers",
+      "savePolicy": "local",
+      "keyDerivation": "derived: declared release digests",
+      "notes": "Not cached by actions/cache in any workflow."
+    },
+    {
+      "repo": "cat-harness-tools",
+      "id": "lpc-cat-mount",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/layer-pr-checks.yml:694 (&mount-cache)",
+        ".github/workflows/layer-pr-checks.yml:1404",
+        ".github/workflows/layer-pr-checks.yml:1455",
+        ".github/workflows/layer-pr-checks.yml:1530",
+        ".github/workflows/pr-tests.yml:176"
+      ],
+      "key": "cat-mount-v1-${{ hashFiles('fa/index.lock.json') }}",
+      "restoreKeys": "cat-mount-v1-",
+      "holds": "/home/runner/.cache/cat-mount",
+      "producer": "each job (actions/cache)",
+      "consumers": "prepare-head, prepare-base, record-writers, run (matrix, both sides × gate-shards)",
+      "savePolicy": "any missed run",
+      "keyDerivation": "derived: index lock of the folio-assistant checkout",
+      "notes": "called by 11 repos: bootstrap, bootstrap-tools, cat-harness, cat-harness-tools, fhir-harness, folio-assistant-core, folio-assistant-sci, smart-base, smart-immunizations, smart-trust, smart-trust-phw, who-iris (12 incl. self); same key string as folio-assistant cat-mount but caches are per-repository."
+    },
+    {
+      "repo": "cat-harness-tools",
+      "id": "lpc-pin",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/layer-pr-checks.yml:435",
+        ".github/workflows/layer-pr-checks.yml:508",
+        ".github/workflows/layer-pr-checks.yml:514",
+        ".github/workflows/layer-pr-checks.yml:1216-1220",
+        ".github/workflows/layer-pr-checks.yml:1444-1448",
+        ".github/workflows/layer-pr-checks.yml:1895"
+      ],
+      "key": "layer-pr-checks-pin-${{ github.run_id }}-${{ github.run_attempt }}",
+      "restoreKeys": "none",
+      "holds": "pin/at, layers-at, state.json (ls-remote of refs/heads/cat/* tips)",
+      "producer": "first prepare job to reach it (continue-on-error race)",
+      "consumers": "the other prepare jobs and compare in the same run attempt",
+      "savePolicy": "every run",
+      "keyDerivation": "run-scoped",
+      "notes": "Cache used as an intra-run rendezvous; 3 alias copies."
+    },
+    {
+      "repo": "cat-harness-tools",
+      "id": "lpc-cone",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/layer-pr-checks.yml:446 (&pin-record)",
+        ".github/workflows/layer-pr-checks.yml:1312",
+        ".github/workflows/layer-pr-checks.yml:1556",
+        ".github/workflows/layer-pr-checks.yml:1923"
+      ],
+      "key": "save: layer-pr-checks-cone-v1-${repo}-<hash of base-key raw>; restore: layer-pr-checks-cone-v1-${repo}-none-${run_id}",
+      "restoreKeys": "layer-pr-checks-cone-v1-${{ github.repository }}-",
+      "holds": "CI cone records.json + pin of main sha",
+      "producer": "compare (push only, steps.cone.outputs.kept)",
+      "consumers": "prepare-head pin-record (PR attempt 1), run shards (skip unchanged gates)",
+      "savePolicy": "push only",
+      "keyDerivation": "derived: same raw as base-key",
+      "notes": "Restore uses a never-existing exact key to force 'newest by prefix'."
+    },
+    {
+      "repo": "cat-harness-tools",
+      "id": "lpc-main-answer",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/layer-pr-checks.yml:1238",
+        ".github/workflows/layer-pr-checks.yml:1305",
+        ".github/workflows/layer-pr-checks.yml:1329",
+        ".github/workflows/layer-pr-checks.yml:1884",
+        ".github/workflows/layer-pr-checks.yml:1942"
+      ],
+      "key": "layer-pr-checks-main-v5-${repo}-${scripts:0:16}-<own_tree>-sha256(v5|mode|instance|root_tree|src_tree|lower layer shas|scripts|test_path|readers|state.json)",
+      "restoreKeys": "prefix-own: layer-pr-checks-main-v5-${repo}-${scripts16}-<own_tree>-",
+      "holds": "base-results junit.xml, gates.json, from.json (main side's answer)",
+      "producer": "compare job",
+      "consumers": "prepare-base (skip main side), compare",
+      "savePolicy": "compare saves when join succeeded and not cached — on PRs too (PR-scoped, so only that PR re-reads)",
+      "keyDerivation": "derived: trees, lower-layer shas, judging-scripts dir hash, state tips; NO bun/runner tool versions in key",
+      "notes": ""
+    },
+    {
+      "repo": "cat-harness-tools",
+      "id": "lpc-derive-cache",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/layer-pr-checks.yml:904",
+        ".github/workflows/layer-pr-checks.yml:1414"
+      ],
+      "key": "derive-cache-v1-${{ github.repository }}-${{ env.SIDE }}-${{ github.run_id }}-${{ github.run_attempt }}",
+      "restoreKeys": "derive-cache-v1-${repo}-${SIDE}- / derive-cache-v1-${repo}-",
+      "holds": "fa/build/derive-cache (per-writer results)",
+      "producer": "prepare-head, prepare-base",
+      "consumers": "same",
+      "savePolicy": "plain actions/cache with run_id key: always misses, so EVERY run saves a new entry (PR too)",
+      "keyDerivation": "derived per writer inside the store; outer key is run-scoped",
+      "notes": "Churn: one entry per side per run; per-entry validity rests on derive-cache.ts keys (0/41 reused per comment)."
+    },
+    {
+      "repo": "cat-harness-tools",
+      "id": "lpc-writer-cone",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/layer-pr-checks.yml:921",
+        ".github/workflows/layer-pr-checks.yml:1052",
+        ".github/workflows/layer-pr-checks.yml:1415",
+        ".github/workflows/layer-pr-checks.yml:1418",
+        ".github/workflows/layer-pr-checks.yml:1466"
+      ],
+      "key": "writer-cone-v1-${{ github.repository }}-${{ github.event.pull_request.base.sha }} (restore) / -${{ github.sha }} (save)",
+      "restoreKeys": "writer-cone-v1-${{ github.repository }}-",
+      "holds": "fa/build/writer-cone",
+      "producer": "record-writers (push, RECORD_WRITERS)",
+      "consumers": "prepare-head/prepare-base on PRs",
+      "savePolicy": "push only (RECORD_WRITERS env set only in record-writers)",
+      "keyDerivation": "derived: sha",
+      "notes": ""
+    },
+    {
+      "repo": "cat-harness-tools",
+      "id": "lpc-writer-stamp",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/layer-pr-checks.yml:1198",
+        ".github/workflows/layer-pr-checks.yml:1475"
+      ],
+      "key": "writer-record-stamp-v1-${repo}-<bucket = epoch/(3600*writer-record-hours) or GITHUB_SHA>",
+      "restoreKeys": "none (lookup-only)",
+      "holds": "stamp file",
+      "producer": "record-writers",
+      "consumers": "prepare-base (decides whether to record)",
+      "savePolicy": "push only",
+      "keyDerivation": "time-bucket",
+      "notes": "Rate limiter, not content."
+    },
+    {
+      "repo": "cat-harness-tools",
+      "id": "lpc-timings",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/layer-pr-checks.yml:1112",
+        ".github/workflows/layer-pr-checks.yml:1419",
+        ".github/workflows/layer-pr-checks.yml:1930"
+      ],
+      "key": "layer-pr-checks-timings-v1-${repo}-${run_id}(-${run_attempt} on save)",
+      "restoreKeys": "layer-pr-checks-timings-v1-${repo}-",
+      "holds": "gate seconds for shard balancing",
+      "producer": "compare",
+      "consumers": "prepare jobs",
+      "savePolicy": "every successful join incl. PR",
+      "keyDerivation": "run-scoped",
+      "notes": "Every run saves."
+    },
+    {
+      "repo": "cat-harness-tools",
+      "id": "lpc-prepared-artifacts",
+      "kind": "artifact-reuse",
+      "locations": [
+        ".github/workflows/layer-pr-checks.yml:1134",
+        ".github/workflows/layer-pr-checks.yml:1342",
+        ".github/workflows/layer-pr-checks.yml:1533",
+        ".github/workflows/layer-pr-checks.yml:1790"
+      ],
+      "key": "prepared-<side>, base-answer, results-<side>-<shard>",
+      "restoreKeys": "n/a",
+      "holds": "prepared root snapshot, main answer",
+      "producer": "prepare jobs",
+      "consumers": "run shards, compare",
+      "savePolicy": "every run (1 d)",
+      "keyDerivation": "n/a",
+      "notes": "Within-run handoff only."
+    },
+    {
+      "repo": "cat-harness-tools",
+      "id": "pr-tests-main-answer",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/pr-tests.yml:259",
+        ".github/workflows/pr-tests.yml:282",
+        ".github/workflows/pr-tests.yml:628"
+      ],
+      "key": "pr-tests-main-v1-$judge-$base-$MAINS_KEY-$INDEX",
+      "restoreKeys": "attempt 1 only: pr-tests-main-v1-$judge-$base- then pr-tests-main-v1-$judge-",
+      "holds": "main-answer (junit, standalone)",
+      "producer": "record job",
+      "consumers": "main-answer job",
+      "savePolicy": "main push/dispatch only (if github.ref == refs/heads/main && event != pull_request)",
+      "keyDerivation": "MIXED: judge = sha256 of a HAND-LISTED 5 files (run-root-gates.py, root-gates.json, index-gates.json, gate_diagnostics.py, scripts/check-standalone.ts); base/mains/index from ls-remote",
+      "notes": "Prefix fallback can serve another main's answer on attempt 1."
+    },
+    {
+      "repo": "cat-harness-tools",
+      "id": "cat-gates-notes",
+      "kind": "git-ref",
+      "locations": [
+        "cat-harness-tools/scripts/gate-record.ts:40"
+      ],
+      "key": "refs/notes/cat-gates",
+      "restoreKeys": "n/a",
+      "holds": "gate run records as git notes on commits",
+      "producer": "gate-record.ts",
+      "consumers": "—",
+      "savePolicy": "not wired in any workflow",
+      "keyDerivation": "n/a",
+      "notes": "Dormant in CI."
+    },
+    {
+      "repo": "fhir-harness",
+      "id": "fhir-cat-mount",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/ig-ast-refresh.yml:117"
+      ],
+      "key": "cat-mount-v1-${{ hashFiles('index.lock.json') }}",
+      "restoreKeys": "cat-mount-v1-",
+      "holds": "/home/runner/.cache/cat-mount",
+      "producer": "ig-ast-refresh refresh (reusable)",
+      "consumers": "same",
+      "savePolicy": "any missed run",
+      "keyDerivation": "derived",
+      "notes": "Reusable; called by smart-base(1), smart-trust(2), smart-trust-phw(2), smart-immunizations(2)."
+    },
+    {
+      "repo": "fhir-harness",
+      "id": "fhir-ig-tooling",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/ig-ast-refresh.yml:175"
+      ],
+      "key": "fhir-ig-tooling-v1-${{ inputs.ast-export-ref }}-${{ hashFiles('sushi-config.yaml', 'ig.ini') }}",
+      "restoreKeys": "fhir-ig-tooling-v1-${{ inputs.ast-export-ref }}- / fhir-ig-tooling-v1-",
+      "holds": "~/.fhir/packages, ~/.m2/repository, ~/.npm-global",
+      "producer": "ig-ast-refresh (only when rebuild)",
+      "consumers": "same",
+      "savePolicy": "any missed run",
+      "keyDerivation": "partly derived: Java 17/SUSHI/Node versions not in key",
+      "notes": ""
+    },
+    {
+      "repo": "fhir-harness",
+      "id": "fhir-ast-branches",
+      "kind": "branch-store",
+      "locations": [
+        ".github/workflows/ig-ast-refresh.yml:358",
+        "scripts/ig-cache.sh:147",
+        "scripts/stage-ast-sites.ts:98"
+      ],
+      "key": "cat/fhir-harness/fhir-ast/<package id> (or folio-declared family)",
+      "restoreKeys": "n/a",
+      "holds": "IG Publisher AST output (output-ast)",
+      "producer": "ig-ast-refresh 'Seed the AST cache' (ig-cache.sh seed --push), only when HEAD is on default branch with same inputs",
+      "consumers": "site-publish in IG repos, ig-cache.sh restore, stage-ast-sites, build-ig-indexes",
+      "savePolicy": "default-branch only (checked in script)",
+      "keyDerivation": "validity = ig-ast.ts validity over inputs; ig-ast.lock.json can pin by commit",
+      "notes": ""
+    },
+    {
+      "repo": "fhir-harness",
+      "id": "ig-site-mount-template",
+      "kind": "actions-cache",
+      "locations": [
+        "templates/ig-repo-site/site-publish.yml:118"
+      ],
+      "key": "ig-site-mount-v1-${{ hashFiles('index.lock.json', 'sushi-config.yaml') }}",
+      "restoreKeys": "ig-site-mount-v1-",
+      "holds": "/home/runner/.cache/cat-mount, ~/.fhir/packages",
+      "producer": "template site-publish",
+      "consumers": "same",
+      "savePolicy": "any missed run",
+      "keyDerivation": "derived",
+      "notes": "TEMPLATE DRIFT: smart-base/smart-trust/smart-trust-phw/smart-immunizations site-publish.yml copies lack this cache step."
+    },
+    {
+      "repo": "folio-assistant-sci",
+      "id": "clarabel-mpfr-cargo",
+      "kind": "actions-cache",
+      "locations": [
+        ".github/workflows/build-clarabel-mpfr.yml:45"
+      ],
+      "key": "clarabel-mpfr-${{ runner.os }}-${{ hashFiles(format('{0}/Cargo.toml', inputs.crate), format('{0}/Cargo.lock', inputs.crate)) }}",
+      "restoreKeys": "clarabel-mpfr-${{ runner.os }}-",
+      "holds": "<crate>/target (+ cargo dirs)",
+      "producer": "build (reusable)",
+      "consumers": "same",
+      "savePolicy": "any missed run",
+      "keyDerivation": "derived from Cargo.toml/lock; no rustc version",
+      "notes": ""
+    },
+    {
+      "repo": "folio-assistant-sci",
+      "id": "paper-template-lean-caches",
+      "kind": "actions-cache",
+      "locations": [
+        "templates/paper/github/workflows/lean-build.yml:139",
+        "templates/paper/github/workflows/blueprint.yml:185",
+        "templates/paper/github/actions/lake-cache-restore/action.yml:98",
+        "templates/paper/github/workflows/lean_ci.yml:182,291,371",
+        "templates/paper/github/workflows/lean-build-sidecar.yml:126"
+      ],
+      "key": "lean-ci-${{ runner.os }}-<paper>-hashFiles(lean-toolchain, lake-manifest...) ; lake-cache-<pkg>-<slug>-<manifest hash>",
+      "restoreKeys": "lean-ci-${{ runner.os }}-<paper>- ; lake-cache-<pkg>-<slug>-",
+      "holds": ".lake",
+      "producer": "generated paper repos",
+      "consumers": "same",
+      "savePolicy": "any missed run",
+      "keyDerivation": "derived",
+      "notes": "Templates only (not this repo's CI); use actions/cache@v4 by tag, not pinned sha."
+    },
+    {
+      "repo": "smart-base",
+      "id": "setup-python-pip",
+      "kind": "setup-action-cache",
+      "locations": [
+        ".github/workflows/generate_translation_report.yml:32",
+        ".github/workflows/generate_weblate_yaml.yml:32",
+        ".github/workflows/pull_translations.yml:97",
+        ".github/workflows/register_translation_project.yml:50"
+      ],
+      "key": "setup-python cache: pip, cache-dependency-path: input/scripts/requirements.txt",
+      "restoreKeys": "action default",
+      "holds": "pip cache",
+      "producer": "each",
+      "consumers": "same",
+      "savePolicy": "any missed run",
+      "keyDerivation": "derived",
+      "notes": "4 uses."
+    },
+    {
+      "repo": "smart-base",
+      "id": "setup-node-npm",
+      "kind": "setup-action-cache",
+      "locations": [
+        ".github/workflows/kg.yml:29"
+      ],
+      "key": "setup-node cache: npm, cache-dependency-path: smart-base/kg/package-lock.json",
+      "restoreKeys": "action default",
+      "holds": "npm cache",
+      "producer": "check",
+      "consumers": "same",
+      "savePolicy": "any missed run",
+      "keyDerivation": "derived",
+      "notes": ""
+    },
+    {
+      "repo": "smart-base",
+      "id": "pot-files",
+      "kind": "artifact-reuse",
+      "locations": [
+        ".github/workflows/ghbuild.yml:611",
+        ".github/workflows/commit-pot.yml:132"
+      ],
+      "key": "artifact pot-files",
+      "restoreKeys": "n/a",
+      "holds": "translation .pot files",
+      "producer": "ghbuild build",
+      "consumers": "commit-pot (workflow_call from same run chain)",
+      "savePolicy": "every build",
+      "keyDerivation": "n/a",
+      "notes": "Handoff between reusable workflows."
+    }
+  ]
+}

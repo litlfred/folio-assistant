@@ -121,7 +121,7 @@ describe("the guard", () => {
 
   it("removes with `rm -rf --` and a quoted variable, never an interpolated one", () => {
     const remove = stepNamed("Remove the preview");
-    expect(remove?.run).toContain('rm -rf -- "STAGING/$CLEANUP_SLUG"');
+    expect(remove?.run).toContain('rm -rf -- "$PD/$CLEANUP_SLUG"');
     expect(remove?.env?.CLEANUP_SLUG).toBe("${{ steps.guard.outputs.slug }}");
   });
 });
