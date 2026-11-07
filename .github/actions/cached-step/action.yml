@@ -58,6 +58,15 @@ inputs:
       `exact` only: a command run after a restore; non-zero turns the hit into
       a miss and removes what was restored. Required for `exact`.
     default: ""
+  warm:
+    description: >-
+      `main-only` only: `true` also restores an older entry by prefix when this
+      key has none, as a WARM start (never a hit). Sound because a main-only
+      entry is saved only from main, so every entry the prefix can find is
+      main's. For a step that re-checks what it restored against this tree
+      itself (the CI cone's records). Refused for `exact` (which warms
+      already) and `verdict` (exact key only).
+    default: "false"
   committer-refs:
     description: >-
       `exact` only: `true` also looks for an entry a committer published with
@@ -95,6 +104,7 @@ runs:
         PHASE: ${{ inputs.phase }}
         PATHS: ${{ inputs.paths }}
         VERIFY: ${{ inputs.verify }}
+        WARM: ${{ inputs.warm }}
       run: bash "$GITHUB_ACTION_PATH/cached-step.sh" key
 
     - name: cached-step — restore (exact key)
@@ -104,7 +114,7 @@ runs:
       with:
         path: ${{ steps.ns.outputs.paths }}
         key: ${{ steps.ns.outputs.key }}
-        restore-keys: ${{ inputs.trust == 'exact' && steps.ns.outputs.prefix || '' }}
+        restore-keys: ${{ (inputs.trust == 'exact' || (inputs.trust == 'main-only' && inputs.warm == 'true')) && steps.ns.outputs.prefix || '' }}
 
     - name: cached-step — committer-published entry
       id: ref
