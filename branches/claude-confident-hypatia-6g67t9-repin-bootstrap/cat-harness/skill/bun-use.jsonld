@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/skill/bun-use.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/skill/bun-use",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "bun-use",
+      "title": "Bun Runtime, Toolchain, and Multi-Repo Conventions",
+      "description": "How Bun is used as the JavaScript/TypeScript execution runtime, test runner, package manager, and tarball packager across separated repositories: standalone subgraph configuration (bunfig.toml, package.json, tsconfig.json), test preloads, dependency resolution without rootDir pitfalls, packaging with bun pm pack, and coordinator vs standalone execution models.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/bun-use.md",
+      "instructionLines": 134,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/bun-use"
+    }
+  ]
+}

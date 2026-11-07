@@ -1,0 +1,669 @@
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><link rel="stylesheet" href="../../assets/css/just-the-docs-default.css"><link rel="stylesheet" href="../../assets/css/just-the-docs-head-nav.css" id="jtd-head-nav-stylesheet"><script src="../../assets/js/vendor/lunr.min.js"></script><script src="../../assets/js/just-the-docs.js"></script><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bean Coordination | folio-assistant</title><meta name="generator" content="Jekyll v4.4.1" /><meta property="og:title" content="Bean Coordination" /><meta property="og:locale" content="en_US" /><meta name="description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:description" content="Content-agnostic agent skills framework — author scientific papers, WHO SMART Guidelines, and FHIR Implementation Guides with an LLM, an MCP server, and a typed content-object model." /><meta property="og:site_name" content="folio-assistant" /><meta property="og:type" content="website" /><meta name="twitter:card" content="summary" /><meta property="twitter:title" content="Bean Coordination" /><script type="application/json" id="fa-site-scheme">{"scheme": "dark"}</script><!-- fa-first-paint:begin --><script>(function(){var d=document.documentElement,s=null,c="dark";try{s=localStorage.getItem("fa-color-scheme")}catch(e){}if(s!=="light"&&s!=="dark"){s="light";try{if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches)s="dark"}catch(e){}}try{var n=document.getElementById("fa-site-scheme");if(n)c=JSON.parse(n.textContent).scheme==="light"?"light":"dark"}catch(e){}d.setAttribute("data-fa-scheme",s);var j=window.jtd;if(s!==c&&j&&typeof j.setTheme==="function"){try{j.setTheme(s)}catch(e){}}})();</script><style>html{background-color:#27262b}html[data-fa-scheme="light"]{background-color:#ffffff}</style><!-- fa-first-paint:end --><meta name="fa-render-regions" content="1"><script>document.documentElement.setAttribute("data-fa-render","pending");</script><style>
+  .bpmn-figure {
+    overflow-x: auto;
+    background: #fff;
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 6px;
+    margin: 1em 0 0.4em;
+  }
+  .bpmn-figure img {
+    display: block;
+    width: 100%;
+    min-width: 1200px;
+    max-width: none;
+  }
+  .bpmn-source {
+    margin-top: 0;
+    font-size: 0.75rem;
+  }
+</style><script type="application/json" id="fa-translation-meta">{
+  "lang": "en",
+  "translationStatus": "",
+  "translationSource": "",
+  "supportedLocales": ["ar","zh","en","fr","ru","es"],
+  "availableLocales": null,
+  "translationQa":{
+    "key": "page.translation",
+    "slug": "reference-skill-instructions-bean-coordination",
+    "src": "../../assets/qa/reference-skill-instructions-bean-coordination/page.translation.json",
+    "index": "../../assets/qa/reference-skill-instructions-bean-coordination/qa-index.json",
+    "list": "../../assets/qa/translation-qa-pages.json"
+  },
+  "sweep":{
+    "absent": null,
+    "run": true,
+    "sweptAt": "2026-10-04T09:01:48.552Z",
+    "totalPages": 689,
+    "pagesWithTranslations": 49,
+    "complete": true
+  },
+  "statusSrc":"../../assets/translation-status/index.json"
+}</script><script type="application/json" id="fa-navbar-row" data-fa-row-src="harness-data"></script><script type="application/json" id="fa-site-links">{"kg":"../../folio-assistant-core/","jsonld":"../../folio-assistant-core/folio-assistant-core.jsonld","source":"https://github.com/litlfred/folio-assistant"}</script><meta name="fa-site-index-src" content="../../assets/harness/site.json"><meta name="fa-todo-src" content="../../assets/todos/index.json"><meta name="fa-todo-graph" content="../../todos.jsonld"><meta name="fa-zoom-src" content="../../assets/semantic-zoom.json"><meta name="fa-tiles" content="" data-fa-src="harness-data"><meta name="fa-glass-strip" content="[&quot;glass-todos&quot;,&quot;glass-settings&quot;,&quot;core-library&quot;,&quot;core-processes&quot;,&quot;core-tools&quot;,&quot;core-skills&quot;]"><meta name="fa-baseurl" content="../.."><meta name="fa-staging" content="preview"><meta name="fa-search-index" content="published"><meta name="fa-beans-src" content="../../assets/beans/index.json"><meta name="fa-processes-src" content="../../subgraph/index.jsonld"><meta name="fa-build-src" content="../../build.json"><meta name="fa-fsh-guts-src" content="../../fsh-guts.json"><link rel="stylesheet" href="../../assets/css/navbar-row.css?v=7d7d00921e0f"><link rel="stylesheet" href="../../assets/css/docs-ui.css?v=34ea92e5aa62"><link rel="stylesheet" href="../../assets/css/narrow-viewport.css?v=173ef819dbf2"><link rel="stylesheet" href="../../assets/css/work-plan.css?v=bd8c73337b01"><link rel="stylesheet" href="../../assets/css/themes.css?v=37c8ab192a5f"><link rel="stylesheet" href="../../assets/css/uml.css?v=e677f91cbf66"><link rel="stylesheet" href="../../assets/css/avatars.css?v=1553b2dc199e"><script type="application/json" id="fa-declared-kinds">["beans","block-kinds","cat-harness","code","code-list","content-adapters","docs","folio","fsh-guts","glossary","health","issue-marks","library","memory","merge-reviews","methodology","pipeline-plugins","processes","qa","qa-checkers","scenarios","schemas","skills","software-library","todos","tools","translation-sources","typologies","uploads","validators"]</script><script src="../../assets/js/harness-data.js" defer></script><script src="../../assets/js/vendor/qrcode.js" defer></script><script src="../../assets/js/vendor/qrcode_UTF8.js" defer></script><script src="../../assets/js/kg-render.js" defer></script><script src="../../assets/js/navbar-row.js?v=6bb19e1d17a5" defer></script><script src="../../assets/js/docs-ui.js?v=cb9e7e1bb264" defer></script><script src="../../assets/js/edit-links.js?v=04eadbe3cd70" defer></script><script src="../../assets/js/work-plan.js" defer></script><script src="../../assets/js/process-index.js" defer></script><style>
+  .folio-landing { position: relative; margin: 0 0 2rem; }
+
+  /* WHAT IS LEFT HERE, AND WHY IT IS SO LITTLE.
+     `landing.html` emits exactly one folio-landing class —
+     `folio-landing folio-landing--plain` — the no-stickies fallback, which
+     renders the description and no art. The art path moved to the sticky
+     board (`fa-sticky--backdrop` in docs-ui.css), which composites text into
+     the picture through a declared `textRegion` and a scrim.
+
+     So this block used to carry fourteen selectors of which ELEVEN matched
+     nothing: every rule reaching for `folio-landing__art`,
+     `folio-landing__text` or `folio-landing--no-region`. Measured before they
+     were cut — those three classes appear in no markup in this repository and
+     on none of the 331 published pages that were inlining the CSS for them.
+     CSS has no error for a selector that matches nothing, which is the same
+     silence that let `.fa-sticky--backdrop > .fa-sticky-art` ship wrong.
+
+     The reasoning did not go with them. The blend-direction argument for the
+     fade is now at `.fa-sticky--backdrop::before`, where a scrim replaces it;
+     the region, overflow and breakpoint-parity lessons were already
+     re-derived and better stated on `.fa-landing-sticky--fixed`. What is NOT
+     carried over is the `cqw` container-query sizing: the successor scales
+     through `--fa-text-scale` rather than container queries, so a note about
+     `container-type` not being its own query container would be advice about
+     a mechanism nothing here uses. Bean `alox`, issue #873. */
+  .folio-landing--plain {
+    position: static; width: auto; height: auto; color: inherit;
+  }
+  .folio-landing--plain p { font-size: inherit; font-weight: inherit; }
+</style><style id="fa-page-ground" data-instance="cat-harness">
+  /* Grumpy cyborg agents, the theme of cat-harness. */
+  :root { --fa-page-scrim: rgba(39, 38, 43, 0.85); --fa-text-scrim: rgba(39, 38, 43, 0.96); }
+  :root[data-fa-scheme="light"] { --fa-page-scrim: rgba(255, 255, 255, 0.85); --fa-text-scrim: rgba(255, 255, 255, 0.96); }
+  /* The root carries the art, so it covers the whole viewport however short
+     the page; the body is made see-through so the art is not painted over. */
+  html:root body { background-color: transparent; }
+  html body .main-content { background-color: var(--fa-text-scrim); border-radius: 6px; }
+  html:root {
+    background-image:
+      linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+      url("../../assets/img/harness/landing-grumpy-cyborg-agents-laptop.webp");
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  @media (max-width: 48rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-card.webp");
+    }
+  }
+  @media (max-width: 30rem) {
+    html:root {
+      background-image:
+        linear-gradient(var(--fa-page-scrim), var(--fa-page-scrim)),
+        url("../../assets/img/harness/landing-grumpy-cyborg-agents-mobile.webp");
+    }
+  }
+  /* Print and forced colours get the plain page: art is decoration. */
+  @media print, (forced-colors: active) {
+    html:root { background-image: none; }
+  }
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/bean-coordination.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#a-bean-is-never-deleted","label":"A bean is never deleted","children":[{"href":"#archiving-is-a-view-not-a-third-way-out","label":"Archiving is a VIEW, not a third way out","depth":1}],"fold":"1 sub-section"},{"href":"#claims-are-global-via-the-branch-store","label":"Claims are global via the branch store","children":[{"href":"#linking-prs-to-beans-with-closes-bean-and-recording-closure-evidence","label":"Linking PRs to beans with Closes-bean: and recording closure evidence","depth":1},{"href":"#a-decision-bean-you-will-not-land-soon--put-the-question-where-a-person-reads","label":"A DECISION bean you will not land soon — put the question where a person reads","depth":1},{"href":"#the-trigger-is-starting-work-not-claiming","label":"The trigger is STARTING WORK, not claiming","depth":1},{"href":"#and-ask-again-before-you-open-the-pr--looking-once-is-not-enough","label":"And ASK AGAIN before you open the PR — looking once is not enough","depth":1},{"href":"#bun-run-cat-beansclaim-id--how-it-behaves","label":"bun run cat beans:claim \u003cid> — how it behaves","depth":1}],"fold":"5 sub-sections"},{"href":"#lifecycle-of-a-coordinated-work-item","label":"Lifecycle of a coordinated work item","children":[{"href":"#complete-it-in-the-prs-own-last-commit","label":"Complete it in the PR’s own last commit","depth":1}],"fold":"1 sub-section"},{"href":"#adding-to-a-bean--a-note-not-an-append","label":"Adding to a bean — a note, not an append"},{"href":"#closing-a-bean-whose-work-has-already-landed-strict","label":"Closing a bean whose work has already landed (STRICT)","children":[{"href":"#reconciling-closes-in-bulk--and-an-owners-reopen-outranks-your-evidence","label":"Reconciling closes in bulk — and an owner’s reopen outranks your evidence","depth":1},{"href":"#re-derive-from-the-remote-never-from-your-checkout-strict","label":"Re-derive from the REMOTE, never from your checkout (STRICT)","depth":1},{"href":"#when-you-cannot-re-derive-it-yourself--ready-to-close","label":"When you cannot re-derive it yourself — ready-to-close","depth":1}],"fold":"3 sub-sections"},{"href":"#where-a-sibling-session-is-visible-from-strict","label":"Where a sibling session is visible from (STRICT)","children":[{"href":"#a-siblings-state-is-inferred-and-the-inference-has-a-boundary","label":"A sibling’s state is INFERRED, and the inference has a boundary","depth":1},{"href":"#one-command-not-a-procedure","label":"One command, not a procedure","depth":1},{"href":"#before-creating-or-claiming-look","label":"Before creating or claiming, look","depth":1}],"fold":"3 sub-sections"},{"href":"#a-quiet-claim--what-in-progress-does-not-tell-you","label":"A quiet claim — what in-progress does NOT tell you","children":[{"href":"#the-signal-is-liveness-not-elapsed-time","label":"The signal is liveness, not elapsed time","depth":1},{"href":"#who-may-act","label":"Who may act","depth":1},{"href":"#a-stale-claim-is-reset-to-todo-and-the-reset-keeps-the-record","label":"A stale claim is reset to todo, and the reset keeps the record","depth":1}],"fold":"3 sub-sections"},{"href":"#the-branch-store-is-the-one-every-sibling-reads-strict","label":"The branch store is the one every sibling reads (STRICT)"},{"href":"#each-bean-has-one-home-strict","label":"Each bean has one home (STRICT)"},{"href":"#which-copy-is-canonical--work-planskillswork-plan","label":"Which copy is canonical — work-plan/skills/work-plan/"},{"href":"#issues-are-a-third-todo-source--queryable-issue-link","label":"Issues are a third todo source — queryable issue: link","children":[{"href":"#when-an-issue-is-owed","label":"When an issue is owed","depth":1}],"fold":"1 sub-section"},{"href":"#disambiguation-do-not-conflate","label":"Disambiguation (do not conflate)"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
+function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
+function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
+function sep(){return document.createTextNode(' \u00b7 ');}
+function root(){var m=location.pathname.match(/^(.*\/(?:branches|STAGING)\/[^/]+\/)/);return m?m[1]:null;}
+// Release or preview (owner, 2026-11-05): a full build is a release and is
+// drawn purple, a preview green. Set here from staging.json, not in the
+// fragment, so the fragment stays byte-identical on every build.
+function kind(f){if(f.buildType!=='full')return;var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;b.style.background="#6B3FA0";b.setAttribute('data-fa-build-type','full');var t=b.querySelector('b');if(t)t.textContent='RELEASE BUILD';}
+function measure(){var b=document.querySelector('[data-fa-staging-banner]');if(!b)return;document.documentElement.style.setProperty('--fa-staging-offset',b.getBoundingClientRect().height+'px');}
+function fill(d,f,r){
+  kind(f);
+  while(d.firstChild)d.removeChild(d.firstChild);
+  d.appendChild(document.createTextNode('\u2014 '));
+  var b=link(f.branchUrl,'');b.appendChild(chip(f.branch));d.appendChild(b);
+  var rv=el('span',{'data-fa-staging-review':''});d.appendChild(rv);
+  d.appendChild(sep());d.appendChild(document.createTextNode('commit '));d.appendChild(chip(f.sha));
+  d.appendChild(sep());d.appendChild(document.createTextNode('built '+f.built));
+  d.appendChild(sep());d.appendChild(link(f.prUrl,f.pr&&f.pr!=='n/a'?'PR #'+f.pr:'no open PR found'));
+  if(f.issue){d.appendChild(sep());d.appendChild(link(f.issueUrl,'issue #'+f.issue));}
+  d.appendChild(sep());
+  var rel=location.pathname.slice(r.length);
+  if(rel===''||rel.charAt(rel.length-1)==='/')rel+='index.html';
+  if(!f.mainPagesKnown){
+    d.appendChild(link(f.mainSite+'/','compare with '+(f.beforeRef||'main')+' \u2197'));
+  }else if(f.newPages.indexOf(rel)>=0){
+    d.appendChild(link(f.mainSite+'/',(f.beforeRef||'main')+' \u2197'));
+    d.appendChild(document.createTextNode(' '));
+    d.appendChild(el('span',{style:'opacity:.85'},'(new page)'));
+  }else{
+    d.appendChild(link(f.mainSite+'/'+rel,'compare with '+(f.beforeRef||'main')+' \u2197'));
+  }
+  d.appendChild(sep());d.appendChild(link(f.runUrl,'build log'));
+  if(f.checksUrl){d.appendChild(sep());d.appendChild(link(f.checksUrl,'CI results'));}
+  stamp(f);
+  measure();
+  fresh(d,f);
+  review(rv,r,rel);
+}
+// The preview's review page (owner, 2026-11-01, Q-REV-1): reviewers could not
+// find it from a staging page. A folio writes it at <root>/<locale>/review/,
+// an IG at <root>/review/. Asked with HEAD, which the staging worker passes
+// through, so a 404 here is not answered with the live site's page. No review
+// page, no link.
+function review(s,r,rel){
+  if(typeof fetch!=='function')return;
+  var c=[],m=rel.match(/^([a-z]{2,3}(?:-[A-Za-z0-9]+)?)\//);
+  if(m)c.push(r+m[1]+'/review/');
+  c.push(r+'review/');
+  (function next(i){
+    if(i>=c.length)return;
+    fetch(c[i]+'index.html',{method:'HEAD',cache:'no-store'}).then(function(x){
+      if(!x.ok)return next(i+1);
+      s.appendChild(sep());
+      s.appendChild(link(c[i],'\ud83d\udd0d Review changes','font-weight:bold'));
+      measure();
+    }).catch(function(){next(i+1);});
+  })(0);
+}
+// Live staleness (owner, 2026-10-31, option C): ask GitHub for the branch's
+// head now and say so when it has moved past the commit this preview was
+// built from. Unauthenticated, one request per page view; on any failure
+// (rate limit, offline, a deleted branch) it says nothing rather than guess.
+function fresh(d,f){
+  var m=String(f.branchUrl||'').match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\//);
+  if(!m||!f.branch||!f.sha||typeof fetch!=='function')return;
+  fetch('https://api.github.com/repos/'+m[1]+'/'+m[2]+'/commits/'+encodeURIComponent(f.branch),
+    {headers:{Accept:'application/vnd.github.sha'},cache:'no-store'})
+    .then(function(x){if(!x.ok)throw 0;return x.text();})
+    .then(function(head){
+      head=String(head).trim();
+      if(!/^[0-9a-f]{7,40}$/.test(head)||head.indexOf(f.sha)===0)return;
+      d.appendChild(sep());
+      var w=el('strong',{'data-fa-staging-stale':'',style:'background:#b00020;padding:0 .4em;border-radius:3px'},'\u26a0 stale: the branch is now at ');
+      w.appendChild(chip(head.slice(0,7)));
+      w.appendChild(document.createTextNode(', newer than this preview'));
+      d.appendChild(w);measure();
+    }).catch(function(){});
+}
+function stamp(f){
+  var p=document.querySelector('.fa-build-stamp');if(!p)return;
+  while(p.firstChild)p.removeChild(p.firstChild);
+  p.appendChild(document.createTextNode('deployed '));
+  var a=link(f.runUrl,'');a.appendChild(el('code',null,f.sha));p.appendChild(a);
+  p.appendChild(document.createTextNode(' · '+f.built));
+}
+function go(){
+  measure();
+  var d=document.querySelector('[data-fa-staging-detail]');if(!d)return;
+  var r=root();
+  if(!r){d.textContent='\u2014 build details unavailable (not served from a preview path)';return;}
+  fetch(r+'staging.json',{cache:'no-store'}).then(function(x){if(!x.ok)throw 0;return x.json();})
+    .then(function(f){fill(d,f,r);})
+    .catch(function(){d.textContent='\u2014 build details unavailable';measure();});
+}
+// First visit to a preview: the shared stylesheets 404 until the worker is
+// in control, so the page would paint unstyled (a page-wide search icon) for
+// the moment before the reload. Hide it until then, only when a stylesheet
+// in the head actually failed, and show it again if no reload comes.
+function unstyled(){var l=document.querySelectorAll('link[rel="stylesheet"]');for(var i=0;i<l.length;i++){if(l[i].disabled)continue;try{if(!l[i].sheet||!l[i].sheet.cssRules.length)return true;}catch(e){}}return false;}
+function share(){
+  var r=root();if(!r||!('serviceWorker' in navigator))return;
+  var k='fa-share:'+r,s=document.documentElement.style;
+  var hide=!navigator.serviceWorker.controller&&!sessionStorage.getItem(k)&&unstyled();
+  function show(){if(hide){hide=false;s.removeProperty('visibility');}}
+  if(hide){s.setProperty('visibility','hidden');setTimeout(show,4000);}
+  navigator.serviceWorker.register(r+'staging-sw.js',{scope:r}).then(function(){
+    if(navigator.serviceWorker.controller||sessionStorage.getItem(k))return show();
+    return navigator.serviceWorker.ready.then(function(){sessionStorage.setItem(k,'1');location.reload();});
+  }).catch(show);
+}
+measure();share();
+if(document.readyState!=='loading')go();else document.addEventListener('DOMContentLoaded',go);
+window.addEventListener('resize',measure);window.addEventListener('load',measure);
+})();</script><a class="skip-to-main" href="#main-content">Skip to main content</a> <svg xmlns="http://www.w3.org/2000/svg" class="d-none"><symbol id="svg-link" viewBox="0 0 24 24"><title>Link</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg></symbol><symbol id="svg-menu" viewBox="0 0 24 24"><title>Menu</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></symbol><symbol id="svg-arrow-right" viewBox="0 0 24 24"><title>Expand</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right"><polyline points="9 18 15 12 9 6"></polyline></svg></symbol><!-- Feather. MIT License: https://github.com/feathericons/feather/blob/master/LICENSE --><symbol id="svg-external-link" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><title id="svg-external-link-title">(external link)</title><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></symbol><symbol id="svg-doc" viewBox="0 0 24 24"><title>Document</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path><polyline points="13 2 13 9 20 9"></polyline></svg></symbol><symbol id="svg-search" viewBox="0 0 24 24"><title>Search</title><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></symbol><!-- Bootstrap Icons. MIT License: https://github.com/twbs/icons/blob/main/LICENSE.md --><symbol id="svg-copy" viewBox="0 0 16 16"><title>Copy</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16"><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/><path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/></svg></symbol><symbol id="svg-copied" viewBox="0 0 16 16"><title>Copied</title><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-check-fill" viewBox="0 0 16 16"><path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3Zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Z"/><path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm6.854 7.354-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L7.5 10.793l2.646-2.647a.5.5 0 0 1 .708.708Z"/></svg></symbol></svg><div class="main" id="top"><div id="main-header" class="main-header fa-site-bar fa-page-bar"><a class="fa-page-bar-home" href="../../">Folio Assistant Core</a><div class="search" role="search"><div class="search-input-wrap"><input type="text" id="search-input" class="search-input" tabindex="0" placeholder="Search folio-assistant" autocomplete="off"> <label for="search-input" class="search-label"> <span class="sr-only">Search folio-assistant</span> <svg viewBox="0 0 24 24" class="search-icon" aria-hidden="true"><use xlink:href="#svg-search"></use></svg> </label></div><div id="search-results" class="search-results"></div></div><span class="fa-page-bar-locale" data-fa-slot="locale"></span></div><div class="main-content-wrap"><nav aria-label="Breadcrumb" class="breadcrumb-nav"><ol class="breadcrumb-nav-list"><li class="breadcrumb-nav-list-item"><a href="../../reference/">Reference</a></li><li class="breadcrumb-nav-list-item"><a href="../../reference/skill-instructions/">Skill instructions</a></li><li class="breadcrumb-nav-list-item"><span>Bean Coordination</span></li></ol></nav><div id="main-content" class="main-content"><main><blockquote class="note"><p>Generated from <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/work-plan/skills/work-plan/bean-coordination.md"><code class="language-plaintext highlighter-rouge">cat-harness/work-plan/skills/work-plan/bean-coordination.md</code></a> — do not edit here.</p><p><a href="https://github.com/litlfred/folio-assistant/edit/main/cat-harness/work-plan/skills/work-plan/bean-coordination.md" class="fa-edit-source" data-fa-link="edit" data-src="cat-harness/work-plan/skills/work-plan/bean-coordination.md" data-repo="litlfred/folio-assistant">✎ Edit this page’s source</a></p></blockquote><blockquote><p><strong>This is the skill <code class="language-plaintext highlighter-rouge">skill_fetch</code> serves.</strong> A stub of the same name
+lives at <code class="language-plaintext highlighter-rouge">.claude/skills/local</code> and is published as
+<a href="local-bean-coordination.html">bean-coordination (local stub)</a>; it only points here.
+Edit this page’s source, never the stub.</p></blockquote><h1 id="bean-coordination"><a href="#bean-coordination" class="anchor-heading" aria-labelledby="bean-coordination"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Bean Coordination
+  
+  
+</h1><p>The <strong>bean-based work-plan system</strong> — the <a href="https://github.com/hmans/beans"><code class="language-plaintext highlighter-rouge">beans</code></a>
+CLI, a flat-file issue tracker storing issues as markdown under <code class="language-plaintext highlighter-rouge">beans/</code> — is
+how every session tracks its work-plan and how agents hand off across sessions.</p><h2 id="a-bean-is-never-deleted"><a href="#a-bean-is-never-deleted" class="anchor-heading" aria-labelledby="a-bean-is-never-deleted"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A bean is never deleted
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">beans delete</code> exists in the CLI. <strong>Do not use it — not on a sibling’s work item,
+and not on your own.</strong></p><p>Work that turns out not to be wanted is <strong>scrapped</strong>: <code class="language-plaintext highlighter-rouge">status: scrapped</code>, with
+a section saying why. That is also what “disable” means here; the CLI’s status
+vocabulary is <code class="language-plaintext highlighter-rouge">draft</code>, <code class="language-plaintext highlighter-rouge">todo</code>, <code class="language-plaintext highlighter-rouge">in-progress</code>, <code class="language-plaintext highlighter-rouge">completed</code>, <code class="language-plaintext highlighter-rouge">scrapped</code>, and
+there is no disabled state.</p><p>A scrapped work item records that something was considered and rejected, and on
+what grounds, which stops the next agent re-entering the same dead end. A
+deleted work item leaves a sibling session unable to tell abandonment from
+accident.</p><h3 id="archiving-is-a-view-not-a-third-way-out"><a href="#archiving-is-a-view-not-a-third-way-out" class="anchor-heading" aria-labelledby="archiving-is-a-view-not-a-third-way-out"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Archiving is a VIEW, not a third way out
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">beans/defs/archive/</code> is <strong>not</strong> a terminal state. An archived work item <strong>keeps its
+status</strong> and is still part of the store, moved aside rather than closed.
+Archiving is a file move, not a status change, so it records no reason and is
+not a way to make unwanted work go quiet.</p><p><strong><code class="language-plaintext highlighter-rouge">bun run cat check:bean-archive</code></strong> holds the rule: the <code class="language-plaintext highlighter-rouge">archive</code> node must be
+declared in <code class="language-plaintext highlighter-rouge">beans/beans.json</code> — <code class="language-plaintext highlighter-rouge">check:declared-dirs</code> and
+<code class="language-plaintext highlighter-rouge">check:harness-dirs</code> compare declarations against disk, not the reverse, so
+they cannot see an undeclared directory — and every work item in it must be
+<code class="language-plaintext highlighter-rouge">completed</code> or <code class="language-plaintext highlighter-rouge">scrapped</code>. If you want a work item out of the way, scrap it <em>with its reasons</em>
+first, then archive if you like.</p><p><code class="language-plaintext highlighter-rouge">readBeans</code> reads the <strong>active</strong> store and <code class="language-plaintext highlighter-rouge">readArchivedBeans</code> the archive.
+They share the graph typology <code class="language-plaintext highlighter-rouge">bean-defs</code>, so anything resolving by KIND gets
+whichever is declared first; resolve the archive by its <strong>id</strong>. A work item count
+that reads only the active store does not fall when work is archived.</p><p><strong>Claiming and closing are separately scoped.</strong> Claim before you work, so two
+sessions do not pick the same item (§”Claims are global via the branch store”).
+<strong>Closing is governed by evidence, not by authorship</strong>: read §”Closing a bean
+whose work has already landed” before you close anything — it carries the three
+obligations, and the <code class="language-plaintext highlighter-rouge">ready-to-close</code> tag for the case where you cannot
+re-derive the measurement yourself. What stays off limits is a work item a sibling
+is <strong>mid-flight</strong> on: a claim naming a branch, a recent note, an open PR.
+Closing that loses work the sibling had not finished reporting.</p><p>Full cycle, as a diagram: <a href="https://litlfred.github.io/folio-assistant/docs/cat-harness/guides/beans-and-todos.html">Work items and todos</a>.</p><p><strong>Operational spec (read these):</strong></p><ul><li><a href="../../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager.md</code></a> — work item lifecycle: <code class="language-plaintext highlighter-rouge">beans create</code> /
+<code class="language-plaintext highlighter-rouge">update</code> / <code class="language-plaintext highlighter-rouge">list</code>, parent/child epics, status transitions. This is the
+authoritative <em>local</em> usage spec.</li><li><a href="../../reference/skill-instructions/session-intent.html"><code class="language-plaintext highlighter-rouge">session-intent.md</code></a> — session-start intent + session-end
+results protocol against the master ledger and the work item queue.</li><li><a href="../../reference/skill-instructions/pending-show.html"><code class="language-plaintext highlighter-rouge">pending-show.md</code></a> — read-only “what is this session
+working on?” display.</li><li><a href="../../reference/skill-instructions/idle-backlog.html"><code class="language-plaintext highlighter-rouge">idle-backlog.md</code></a> — pull right-scoped work items while idle.</li></ul><p><strong>Install the CLI:</strong> <code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/install-beans.sh</code>
+(idempotent; <code class="language-plaintext highlighter-rouge">go install github.com/hmans/beans@latest</code>).</p><h2 id="claims-are-global-via-the-branch-store"><a href="#claims-are-global-via-the-branch-store" class="anchor-heading" aria-labelledby="claims-are-global-via-the-branch-store"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Claims are global via the branch store
+  
+  
+</h2><p><strong>Claims are written immediately to the work-plan store</strong> (<a href="../../reference/skill-instructions/work-plan-store.html"><code class="language-plaintext highlighter-rouge">work-plan-store</code></a>)
+by <code class="language-plaintext highlighter-rouge">bun run cat beans:claim &lt;id&gt;</code>. The claim (<code class="language-plaintext highlighter-rouge">update(id, { status: "in-progress" })</code>) and its
+holder note (<code class="language-plaintext highlighter-rouge">note(id, ...)</code>) are persisted directly to the shared store, so:</p><ul><li><strong>Immediate global visibility</strong>: sibling sessions see your claim as soon as
+<code class="language-plaintext highlighter-rouge">beans:claim</code> finishes.</li><li><strong>Atomic write with collision detection</strong>: if two sessions race to claim the
+same work item, the store Tool detects the conflict and rejects the second
+claim (<code class="language-plaintext highlighter-rouge">state: "conflict"</code>).</li></ul><p>Always claim with <code class="language-plaintext highlighter-rouge">bun run cat beans:claim &lt;id&gt;</code>. Do not use <code class="language-plaintext highlighter-rouge">beans update
+--status in-progress</code>, which writes no holder note and does not persist to the
+shared store.</p><p>A claim is not gated by the code pre-push hook (<code class="language-plaintext highlighter-rouge">prepare-merge</code> step 6), which
+judges only the checked-out code commit. How the git state-branch Tool pushes
+claims and state commits to <code class="language-plaintext highlighter-rouge">refs/heads/cat/...</code> is in
+<a href="../../reference/skill-instructions/work-plan-store-git-branch.html"><code class="language-plaintext highlighter-rouge">work-plan-store-git-branch</code></a>. If a claim is ever
+refused as a gate failure, that is a bug in the hook — report it, and do not
+bypass the claim.</p><p><strong>When several agents drain at once, or the store has more than one copy</strong>, the
+claim is <a href="../../reference/skill-instructions/bean-drain.html"><code class="language-plaintext highlighter-rouge">bean-drain</code></a> step 2 instead: check recent history and
+open PRs first, then claim across every store copy (the <code class="language-plaintext highlighter-rouge">bean-claim-check</code>
+Tool). <code class="language-plaintext highlighter-rouge">beans:claim</code> writes one copy and reads status only.</p><h3 id="linking-prs-to-beans-with-closes-bean-and-recording-closure-evidence"><a href="#linking-prs-to-beans-with-closes-bean-and-recording-closure-evidence" class="anchor-heading" aria-labelledby="linking-prs-to-beans-with-closes-bean-and-recording-closure-evidence"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Linking PRs to beans with <code class="language-plaintext highlighter-rouge">Closes-bean:</code> and recording closure evidence
+  
+  
+</h3><p>Code changes on <code class="language-plaintext highlighter-rouge">main</code> and work-plan state in the work-plan store
+(<a href="../../reference/skill-instructions/work-plan-store.html"><code class="language-plaintext highlighter-rouge">work-plan-store</code></a>) are separate. To link them:</p><ol><li><strong>In your PR body</strong>, include:
+    <div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Closes-bean: <span class="nt">&lt;bean-id&gt;</span>
+</code></pre></div></div></li><li><strong>On closure</strong>, record the landed merge commit SHA from <code class="language-plaintext highlighter-rouge">main</code>, the branch,
+and verifiable evidence in the work item body (<code class="language-plaintext highlighter-rouge">update</code> / <code class="language-plaintext highlighter-rouge">note</code> in
+<a href="../../reference/skill-instructions/work-plan-store.html"><code class="language-plaintext highlighter-rouge">work-plan-store</code></a>; when the store is on a git state
+branch, push with <code class="language-plaintext highlighter-rouge">bun run cat state:push</code> per
+<a href="../../reference/skill-instructions/work-plan-store-git-branch.html"><code class="language-plaintext highlighter-rouge">work-plan-store-git-branch</code></a>).</li></ol><h3 id="a-decision-bean-you-will-not-land-soon--put-the-question-where-a-person-reads"><a href="#a-decision-bean-you-will-not-land-soon--put-the-question-where-a-person-reads" class="anchor-heading" aria-labelledby="a-decision-bean-you-will-not-land-soon--put-the-question-where-a-person-reads"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A DECISION bean you will not land soon — put the question where a person reads
+  
+  
+</h3><p>A <strong>decision</strong> work item exists to get a ruling, and its value is that somebody
+with the authority to rule sees it. A work item left on a branch merely gets
+duplicated; a decision left there sits unanswered while every branch
+downstream of it waits.</p><p><strong>If you open a decision work item on a branch you will not land soon: set <code class="language-plaintext highlighter-rouge">status:
+draft</code> in front matter (or <code class="language-plaintext highlighter-rouge">beans create "&lt;title&gt;" --status draft</code>), post the
+question where the owner already reads — the issue — and say ON THE WORK ITEM where
+you posted it.</strong> All three parts. The comment is what reaches a person; the
+line on the work item stops the next session re-asking and tells them where the
+answer will appear; and <code class="language-plaintext highlighter-rouge">status: draft</code> lets automated checks find an
+unanswered ruling request. <code class="language-plaintext highlighter-rouge">draft</code> is already in the status enum and otherwise
+unused, so it needs no new vocabulary. A decision work item stays <code class="language-plaintext highlighter-rouge">status: draft</code>
+until ruled on or landed.</p><div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">status</span><span class="pi">:</span> <span class="s">draft</span>
+<span class="nn">...</span>
+<span class="nn">---</span>
+</code></pre></div></div><p><strong>Prose is not a signal.</strong> Recognisers over work item prose (<code class="language-plaintext highlighter-rouge">Recommendation</code>,
+<code class="language-plaintext highlighter-rouge">Options</code>, <code class="language-plaintext highlighter-rouge">safe default</code>, <code class="language-plaintext highlighter-rouge">ruling</code>, an unticked box) disagree by two orders of
+magnitude, and also match work items that <em>record</em> a ruling. So a check reads the
+STATUS, never the prose. <code class="language-plaintext highlighter-rouge">bun run cat check:draft-beans</code>
+(<code class="language-plaintext highlighter-rouge">scripts/check-draft-beans.ts</code>) finds any ruling request that never landed,
+reporting with a denominator.</p><h3 id="the-trigger-is-starting-work-not-claiming"><a href="#the-trigger-is-starting-work-not-claiming" class="anchor-heading" aria-labelledby="the-trigger-is-starting-work-not-claiming"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The trigger is STARTING WORK, not claiming
+  
+  
+</h3><blockquote><p><strong>Run the open-PR check before you start work on a topic — not only before
+you claim a work item.</strong> A cause inside a work item you already hold, a fix an owner
+just asked for, a gate you are about to unbreak: each is a unit of work a
+sibling can already have a PR up for, and none of them involves claiming
+anything.</p></blockquote><p><strong>Search the subject as well as the id</strong>: the file you are about to edit, the
+gate you are about to turn green, the symbol you are about to add. A search
+keyed on a work item id finds nothing when the sibling’s work has no work item of its
+own, or its work item is only on an unpushed branch.</p><p>A duplicate-detecting test punishes <strong>whoever merges second</strong>, not whoever
+duplicated. Merging first does not mean you were first.</p><p><strong>Starting any new unit of work runs the collision review in
+<a href="../../reference/skill-instructions/coordinate.html"><code class="language-plaintext highlighter-rouge">coordinate</code></a> §”Starting new work”</strong>, scaled to its blast
+radius and recorded in the workplan work item before the first edit.</p><h3 id="and-ask-again-before-you-open-the-pr--looking-once-is-not-enough"><a href="#and-ask-again-before-you-open-the-pr--looking-once-is-not-enough" class="anchor-heading" aria-labelledby="and-ask-again-before-you-open-the-pr--looking-once-is-not-enough"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> And ASK AGAIN before you open the PR — looking once is not enough
+  
+  
+</h3><blockquote><p><strong>Re-run the open-PR search immediately before you open your PR, not only
+before you start.</strong></p></blockquote><p>A search at the start finds nothing when the sibling’s PR does not exist yet,
+and no relation between work items can fix that: the second session to arrive
+cannot know it is second. Only asking again later finds it. These do not
+replace the second check:</p><div class="table-wrapper"><table><thead><tr><th>alternative</th><th>why it fails</th></tr></thead><tbody><tr><td>a <code class="language-plaintext highlighter-rouge">describes:</code> edge between work items</td><td>the second session to arrive cannot know it is second, so nobody is in a position to write the edge</td></tr><tr><td>a label or line on the PR carrying work item ids</td><td>only helps once a PR exists, which is exactly the window these collisions open in</td></tr></tbody></table></div><p>Same commands, same widened search terms — the subject as well as the id. The
+cost is one call at a moment you are already stopping to write a PR body.</p><blockquote><p><strong>Two independent implementations of one fix produce two sets of observations,
+and the weaker implementation’s observations look like findings about the
+subject</strong> — and you cannot tell which set you hold until the other lands.</p></blockquote><p>So the second check also stops a measurement taken against your own artefact
+from being reported as a property of the system.</p><h3 id="bun-run-cat-beansclaim-id--how-it-behaves"><a href="#bun-run-cat-beansclaim-id--how-it-behaves" class="anchor-heading" aria-labelledby="bun-run-cat-beansclaim-id--how-it-behaves"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> <code class="language-plaintext highlighter-rouge">bun run cat beans:claim &lt;id&gt;</code> — how it behaves
+  
+  
+</h3><p><code class="language-plaintext highlighter-rouge">scripts/claim-bean.ts</code> builds the status change as a commit of its OWN and
+pushes it, so a sibling sees the claim immediately instead of when your PR
+opens.</p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>beans:claim &lt;bean-id&gt;              <span class="c"># store defaults to the CURRENT directory's checkout</span>
+bun run <span class="nb">cat </span>beans:claim &lt;bean-id&gt; <span class="nt">--dry-run</span>    <span class="c"># say what would happen</span>
+</code></pre></div></div><p><strong>Run it from the checkout doing the work.</strong> The command resolves the
+checkout’s top level, prints <code class="language-plaintext highlighter-rouge">claiming from &lt;tree&gt; (branch &lt;b&gt;)</code>, and <strong>refuses
+with exit 5</strong> when that checkout is on the default branch or detached — the
+signature of the wrong tree — naming the tree it was about to write to. Pass
+<code class="language-plaintext highlighter-rouge">--repo &lt;worktree&gt;</code> from elsewhere; <code class="language-plaintext highlighter-rouge">--any-branch</code> overrides for a claim that
+really is made from there.</p><p>It is a <strong>claim only</strong> — never your work: a claim bundled with work cannot be
+pushed until the work is ready. It also writes the same status into <strong>your</strong>
+copy of the work item, so a branch still carrying <code class="language-plaintext highlighter-rouge">todo</code> does not revert the claim
+at merge time; it does not commit that. It builds the commit in a detached <code class="language-plaintext highlighter-rouge">git
+worktree</code>, so a session mid-edit is not asked to accept a checkout, and removes
+it on every path including failure.</p><p><strong>Read the outcome, because three of the seven are refusals:</strong></p><div class="table-wrapper"><table><thead><tr><th>outcome</th><th>exit</th><th>what it means</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">pushed</code></td><td>0</td><td>claimed; every session sees it</td></tr><tr><td><code class="language-plaintext highlighter-rouge">already-claimed</code></td><td>0</td><td>a sibling holds it, and is <strong>named</strong>. Nothing written — pick another item</td></tr><tr><td><code class="language-plaintext highlighter-rouge">held-unknown</code></td><td><strong>4</strong></td><td><code class="language-plaintext highlighter-rouge">in-progress</code> there, and <strong>nobody recorded a holder</strong>. Nothing written. It cannot tell a live sibling from a claim abandoned days ago, so it refuses and says so — read the work item and the open PR list before taking it</td></tr><tr><td><code class="language-plaintext highlighter-rouge">already-closed</code></td><td>0</td><td>it is <code class="language-plaintext highlighter-rouge">completed</code> or <code class="language-plaintext highlighter-rouge">scrapped</code> there. <strong>Not claimed, deliberately</strong> — reviving finished work, and especially a <code class="language-plaintext highlighter-rouge">scrapped</code> work item whose purpose is recording a rejected approach, is a decision rather than a side effect of asking to claim</td></tr><tr><td><code class="language-plaintext highlighter-rouge">new-on-branch</code></td><td>0</td><td>the work item is not in the shared store yet, so nobody can see it and there is nothing to race over. Claim locally and open the PR early</td></tr><tr><td><code class="language-plaintext highlighter-rouge">fell-back</code></td><td><strong>3</strong></td><td>the push was REJECTED. The work item is <strong>not</strong> claimed anywhere a sibling can see — claim on your branch and open the PR at your first commit</td></tr><tr><td><code class="language-plaintext highlighter-rouge">unknown</code></td><td><strong>2</strong></td><td>the store could not be read. <strong>Never</strong> “the bean is free”</td></tr></tbody></table></div><p><strong><code class="language-plaintext highlighter-rouge">held-unknown</code> is common</strong>: any work item set <code class="language-plaintext highlighter-rouge">in-progress</code> with <code class="language-plaintext highlighter-rouge">beans update</code>
+instead of <code class="language-plaintext highlighter-rouge">beans:claim</code>, or hand-edited, carries no holder. Its exit code is
+<strong>4</strong>, distinct from <code class="language-plaintext highlighter-rouge">0</code> (which <code class="language-plaintext highlighter-rouge">already-claimed</code> uses to say <em>pick another
+item</em>) and from <code class="language-plaintext highlighter-rouge">2</code> (the store was read perfectly well).</p><p><strong><code class="language-plaintext highlighter-rouge">fell-back</code> is to be expected.</strong> Whether a direct push is accepted cannot be
+determined from inside an agent session (<code class="language-plaintext highlighter-rouge">GET /branches/main/protection</code>
+answers 403, and <code class="language-plaintext highlighter-rouge">git push --dry-run</code> does not run receive hooks), so the tool
+attempts and handles the rejection, loudly. A non-fast-forward is <strong>retried</strong> —
+another claim landed first, and the retry may discover the work item is now theirs,
+which is the correct answer rather than a conflict to force past.</p><p>Two sessions choosing the same work is a different failure from two concurrent
+PRs going green alone and red together; the latter is about merging concurrent
+work.</p><h2 id="lifecycle-of-a-coordinated-work-item"><a href="#lifecycle-of-a-coordinated-work-item" class="anchor-heading" aria-labelledby="lifecycle-of-a-coordinated-work-item"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lifecycle of a coordinated work item
+  
+  
+</h2><p>Several agent sessions run in parallel against the same repo, each in its own
+<code class="language-plaintext highlighter-rouge">claude/*</code> branch and ephemeral container. Without discipline they duplicate
+work, clobber each other’s queues, or resolve items a sibling is mid-flight on.
+Work items are the shared substrate.</p><ol><li><strong>Prime</strong> — at session start read the current work-plan (<code class="language-plaintext highlighter-rouge">beans prime</code> +
+<code class="language-plaintext highlighter-rouge">beans list</code>, or the CLI-independent fallback that parses <code class="language-plaintext highlighter-rouge">beans/</code> directly).
+Know what is open and what siblings are touching.</li><li><strong>Declare intent + claim</strong> — before starting, claim the work item via
+<code class="language-plaintext highlighter-rouge">bun run cat beans:claim &lt;id&gt;</code>, which records your holder note and updates
+the work-plan store (<a href="../../reference/skill-instructions/work-plan-store.html"><code class="language-plaintext highlighter-rouge">work-plan-store</code></a>) immediately so
+siblings see it globally. When the work item
+is for a process step (<code class="language-plaintext highlighter-rouge">code-change-review</code>, <code class="language-plaintext highlighter-rouge">merge-train</code>, <code class="language-plaintext highlighter-rouge">crdm-requirements</code>,
+etc.), start or resume its workflow instance with <code class="language-plaintext highlighter-rouge">workflow_start</code> (<code class="language-plaintext highlighter-rouge">--bean &lt;id&gt;</code>)
+so the work item is placed on its current BPMN step
+(<a href="../../reference/skill-instructions/process-state.html"><code class="language-plaintext highlighter-rouge">process-state.md</code></a>).</li><li><strong>Work</strong> — keep the work item current; advance the workflow instance with
+<code class="language-plaintext highlighter-rouge">workflow_complete</code> as each step finishes; append status notes as you go <strong>to a work item
+only your branch is changing</strong>. When other open pull requests are adding
+to the same work item, write a note instead — §”Adding to a bean — a note, not
+an append” below. Do not fork it into a parallel <code class="language-plaintext highlighter-rouge">todos/*.json</code> queue —
+link to any bulk queue from the work item instead.</li><li><strong>Hand off or finish</strong> — on landing, close the work item, complete its workflow
+instance (or run <code class="language-plaintext highlighter-rouge">bun run cat workflow:instances --sweep</code> to close stale
+instances on closed work items), and update any cross-repo ownership note.
+<strong>If you stop mid-flight, leave the work item <code class="language-plaintext highlighter-rouge">in-progress</code> with a
+note saying where you got to</strong>, so the next session resumes instead of
+re-deriving. A work item abandoned silently is indistinguishable from one nobody
+started.</li></ol><p>An <strong>unclaimed</strong> work item is fair game for any session; a claimed one is not.
+Respect sibling claims. Agents create and set <code class="language-plaintext highlighter-rouge">in-progress</code>; they do not take
+over the work another session is mid-flight on.</p><h3 id="complete-it-in-the-prs-own-last-commit"><a href="#complete-it-in-the-prs-own-last-commit" class="anchor-heading" aria-labelledby="complete-it-in-the-prs-own-last-commit"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Complete it in the PR’s own last commit
+  
+  
+</h3><p><strong>Mark the work item <code class="language-plaintext highlighter-rouge">completed</code> in the last commit of the PR that does its work.</strong>
+Do not wait for the merge: a completion committed after the merge, on a branch
+then re-created from the new <code class="language-plaintext highlighter-rouge">main</code>, is in no PR and is orphaned, so the work item
+still reads open and the next session is offered finished work. If the PR is
+abandoned, the work item reads done only on a branch that never lands.</p><ul><li>The <code class="language-plaintext highlighter-rouge">## Done when</code> items are ticked in that same commit, with the evidence,
+so the work item shows <em>why</em> it is complete, not just that it is. When the work item
+delivers requirement statements, those items ARE their success criteria,
+copied when the work item was made (<code class="language-plaintext highlighter-rouge">todo-manager</code> §”Working with Beans” 4), and
+the work item is in its requirement set’s <code class="language-plaintext highlighter-rouge">workPlan</code> — so ticking them is judging
+the criteria, and closing the last work item of a set is what moves the set
+toward <code class="language-plaintext highlighter-rouge">delivered</code>.</li><li>A work item whose Done-when is not yet all met <strong>stays open</strong> in that commit, with
+a note saying what is left; completing it to avoid an orphan would be the
+opposite error.</li></ul><p><code class="language-plaintext highlighter-rouge">bun run cat beans:landed</code> reports what slipped through: open, non-epic work items named
+in a merged PR’s title on <code class="language-plaintext highlighter-rouge">main</code>, those with every Done-when item ticked listed
+first. It reports and never closes; closing is still on evidence, per the next
+section.</p><h2 id="adding-to-a-bean--a-note-not-an-append"><a href="#adding-to-a-bean--a-note-not-an-append" class="anchor-heading" aria-labelledby="adding-to-a-bean--a-note-not-an-append"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Adding to a bean — a note, not an append
+  
+  
+</h2><p><strong>When more than one open pull request has something to add to the same work item,
+each writes a NOTE, never an append to the work item.</strong></p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>beans:note &lt;bean-id&gt; <span class="nt">--title</span> <span class="s2">"Finding 3: ruling and after state"</span> <span class="nt">--body</span> <span class="s2">"…"</span>
+git add beans/notes/      <span class="c"># the note AND the regenerated index</span>
+</code></pre></div></div><p>That writes <code class="language-plaintext highlighter-rouge">&lt;bean-id&gt;--&lt;YYYY-MM-DD&gt;--&lt;branch&gt;.md</code> in the declared <code class="language-plaintext highlighter-rouge">notes</code>
+directory of <code class="language-plaintext highlighter-rouge">beans/beans.json</code>, and rewrites the generated index beside it
+(<code class="language-plaintext highlighter-rouge">README.md</code>). The work item itself is not touched. Appending from several PRs puts
+every other open PR in conflict on that one file, and the merge-main bot
+refuses a work item conflict on purpose: two sessions editing one work item is a
+coordination question, not a regeneration, so the shared write is what has to
+go.</p><p><strong>The branch is the key, and that is the rule that must not drift.</strong> Two open
+pull requests never share a branch, and the branch is known at the first
+commit, which a pull request number is not. A second note from the same branch
+is a new <code class="language-plaintext highlighter-rouge">##</code> section in that branch’s own file — found by its front matter,
+not by today’s date — so only that branch ever writes it. A date-plus-finding
+name would collide when two sessions work the same finding on the same day.
+Reasoning in full:
+<code class="language-plaintext highlighter-rouge">cat-harness/schemas/sdlc/bean-note.ts</code>.</p><p><strong>What still conflicts, and why that is acceptable.</strong> The index is rewritten
+by every pull request that adds a note, so two of them conflict on it. Its rows
+all sit inside one <code class="language-plaintext highlighter-rouge">&lt;!-- bean-notes:begin --&gt;</code> region, so the declared
+<code class="language-plaintext highlighter-rouge">readme-generated-regions</code> pattern resolves it without a person and <code class="language-plaintext highlighter-rouge">regen</code>
+rewrites it from the merged notes. The notes themselves never conflict.
+<code class="language-plaintext highlighter-rouge">cat-harness-tools/scripts/tests/bean-notes.test.ts</code> merges two real branches to
+show both halves, and fails when the branch is dropped from the name.</p><p><strong>What <code class="language-plaintext highlighter-rouge">beans:notes:check</code> judges</strong> (in CI): every file in the directory is a
+<code class="language-plaintext highlighter-rouge">folio-bean-note/v1</code> note naming a work item that exists, under exactly the name its
+own front matter derives (a hand-named note is the first step back to two
+pull requests writing one path), and the index is current.</p><ul><li><strong>The work item’s own body stays the owner’s.</strong> Re-scoping it, ticking its
+<code class="language-plaintext highlighter-rouge">## Done when</code>, or closing it are still edits to the work item, made by whoever
+holds it.</li><li><strong>A note does not move the work item’s <code class="language-plaintext highlighter-rouge">updated_at</code></strong>, because bumping it from
+every pull request is the one-line conflict notes remove. A reader asking “is anyone
+working on this?” reads the index’s dates as well as the work item’s.</li><li><strong>Sections appended before the convention stay where they are.</strong> Moving them
+would rewrite the region every still-open pull request is appending to.</li></ul><h2 id="closing-a-bean-whose-work-has-already-landed-strict"><a href="#closing-a-bean-whose-work-has-already-landed-strict" class="anchor-heading" aria-labelledby="closing-a-bean-whose-work-has-already-landed-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Closing a bean whose work has already landed (STRICT)
+  
+  
+</h2><p>A work item verified done and left open is as misleading as one abandoned silently:
+an agent that picks it up re-derives work already on <code class="language-plaintext highlighter-rouge">main</code>. A rule that says
+only who may <strong>not</strong> close a work item leaves nobody able to discharge it. <strong>So: a
+work item closes on EVIDENCE, not on authorship.</strong></p><blockquote><p><strong>You may close any work item — whoever opened it — when you have re-run the
+measurement yourself and it passes.</strong> You may not close one because a note in
+it says somebody else measured it.</p></blockquote><p>Three obligations come with that:</p><ol><li><strong>Re-derive, never quote.</strong> The note claiming resolution is the thing under
+suspicion; reading it is not verification. Run the check, then record the
+command and its result in the work item, because notes claiming resolution do
+fail re-verification. Where a note gives a line number or a count, verify
+the <em>fact</em> — line numbers rot.</li><li><strong>A Done-when only a person can satisfy is not yours to discharge</strong> — for
+example “the issue can be closed by its author”; an agent never closes an
+issue on its own say-so.</li><li><strong>Mid-flight is still off limits.</strong> This governs work that has <em>landed</em>. A
+work item a sibling is actively working — a claim naming a branch, a recent note,
+an open PR — is theirs, finished or not.</li></ol><p><strong>Verified-done and still not closable? Say why, with an expiry</strong>, in the
+shape <a href="../../reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking.md</code></a> requires of a block: an exception
+that carries no way to re-derive it is indistinguishable from an oversight.</p><p>Stopping because you are <em>blocked</em> is a different state with its own
+requirements — what it waits on, since when, an expiry and a handoff:
+<a href="../../reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking.md</code></a>.</p><h3 id="reconciling-closes-in-bulk--and-an-owners-reopen-outranks-your-evidence"><a href="#reconciling-closes-in-bulk--and-an-owners-reopen-outranks-your-evidence" class="anchor-heading" aria-labelledby="reconciling-closes-in-bulk--and-an-owners-reopen-outranks-your-evidence"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Reconciling closes in bulk — and an owner’s reopen outranks your evidence
+  
+  
+</h3><p>A sweep that closes many work items on evidence (patch-ids on main from
+<a href="../../reference/skill-instructions/branch-archaeology.html"><code class="language-plaintext highlighter-rouge">branch-archaeology</code></a>, a gate that now passes, commits
+naming the work item) is these same three obligations applied per row. It adds one
+of its own: the owner may have moved work items from <code class="language-plaintext highlighter-rouge">completed</code> back to <code class="language-plaintext highlighter-rouge">todo</code> or
+<code class="language-plaintext highlighter-rouge">in-progress</code> because the earlier close was not good enough, and those work items
+can still carry a <code class="language-plaintext highlighter-rouge">close(&lt;id&gt;)</code> commit on main.</p><blockquote><p><strong>Before closing, read the work item’s own status history</strong>
+(<code class="language-plaintext highlighter-rouge">history(id)</code> in <a href="../../reference/skill-instructions/work-plan-store.html"><code class="language-plaintext highlighter-rouge">work-plan-store</code></a>, plus the archive;
+see <a href="../../reference/skill-instructions/work-plan-store-git-branch.html"><code class="language-plaintext highlighter-rouge">work-plan-store-git-branch</code></a> for the git
+state-branch form). <strong>If it was
+closed and later reopened, it is not closable on any evidence that predates
+the reopen.</strong> Read the reopen note. Close it only with evidence that answers
+that note’s reason and is newer than it. If there is no such evidence, list
+it as “reopened by the owner — evidence does not answer the reopen” and
+leave it.</p></blockquote><p>The same holds in reverse: evidence that a <code class="language-plaintext highlighter-rouge">completed</code> work item did not land (its
+commits absent from main under every test in <code class="language-plaintext highlighter-rouge">branch-archaeology</code> §1) is a
+finding to report, not a licence to reopen it on the agent’s own say-so,
+unless the owner has asked for that sweep.</p><h3 id="re-derive-from-the-remote-never-from-your-checkout-strict"><a href="#re-derive-from-the-remote-never-from-your-checkout-strict" class="anchor-heading" aria-labelledby="re-derive-from-the-remote-never-from-your-checkout-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Re-derive from the REMOTE, never from your checkout (STRICT)
+  
+  
+</h3><p><strong>Where you read the evidence from is part of the evidence.</strong> Getting it wrong
+produces a finding that is confident, specific and false — for example “this
+file has no such code” read from a checkout branched before the commit that
+added it.</p><p><strong>A branch older than the claim.</strong> Grepping the working tree answers <em>“is this
+in MY base”</em>, which is a different question from <em>“does this exist”</em>.</p><blockquote><p>Ask the remote: <code class="language-plaintext highlighter-rouge">git show origin/main:&lt;path&gt;</code>, <code class="language-plaintext highlighter-rouge">git log origin/main -- &lt;path&gt;</code>.
+Never <code class="language-plaintext highlighter-rouge">grep</code> over the checkout to prove an absence.</p></blockquote><p><strong>A fetch in the same compound command is not a barrier.</strong> <code class="language-plaintext highlighter-rouge">git fetch -q origin
+main &amp;&amp; git cat-file -e origin/main:&lt;path&gt;</code> looks airtight and is not: sibling
+sessions merge every few minutes, so the ref can be stale when read.</p><blockquote><p>Fetch, then read in a <strong>separate</strong> command, and re-read before publishing.</p></blockquote><p><strong>A file that exists only on an open PR’s head.</strong> When the claim is <em>“nobody
+has built this”</em>, check the open branches too, with the
+<a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/tools/open-work-lookup/open-work-lookup.json"><code class="language-plaintext highlighter-rouge">open-work-lookup</code></a>
+Tool: a path, a prefix or a work item id, against <code class="language-plaintext highlighter-rouge">main</code> and every open PR head
+(see also <a href="../../reference/skill-instructions/bean-drain.html"><code class="language-plaintext highlighter-rouge">bean-drain</code></a>).</p><p><strong>The cost is asymmetric, which is why this is STRICT.</strong> A missed finding is a
+work item that stays open one more day. A false one about a sibling’s work is a
+correction, a retraction, and a reader who now trusts the next finding less.</p><h3 id="when-you-cannot-re-derive-it-yourself--ready-to-close"><a href="#when-you-cannot-re-derive-it-yourself--ready-to-close" class="anchor-heading" aria-labelledby="when-you-cannot-re-derive-it-yourself--ready-to-close"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When you cannot re-derive it yourself — <code class="language-plaintext highlighter-rouge">ready-to-close</code></h3><p>Re-derivation is not always available: the measurement may need a running
+deployment, a branch this container does not have, or a judgement the owner
+reserved. Without an exit, <em>leave it open</em> is what an agent picks every time,
+and the work item costs a session of confusion on every sweep.</p><blockquote><p><strong>The third state: tag the work item <code class="language-plaintext highlighter-rouge">ready-to-close</code>, quote under a <code class="language-plaintext highlighter-rouge">## Evidence</code>
+heading what you DID verify, and say in one line what you could not re-derive
+and why. The owner confirms the batch.</strong></p></blockquote><p>It is a <strong>tag, not a status</strong>, because the status vocabulary belongs to the
+third-party CLI:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ beans update &lt;id&gt; --status ready-to-close
+Error: invalid status: ready-to-close (must be in-progress, todo, draft, completed, scrapped)
+$ beans update &lt;id&gt; --tag ready-to-close
+Updated &lt;id&gt;
+</code></pre></div></div><p>and <code class="language-plaintext highlighter-rouge">BeanStatusSchema</code> in <code class="language-plaintext highlighter-rouge">schemas/tools/tool-types.ts</code> is defined as <em>“exactly what
+<code class="language-plaintext highlighter-rouge">beans update --status</code> accepts”</em>, so a sixth status here would desync the
+schema from the tool it documents.</p><p><code class="language-plaintext highlighter-rouge">bun run cat check:ready-to-close</code> lists every tagged work item with its evidence, so the
+confirmation is one read. <strong>It reports and never acts</strong> —
+<a href="../../reference/skill-instructions/deletion-requires-confirmation.html"><code class="language-plaintext highlighter-rouge">deletion-requires-confirmation.md</code></a> — unless
+the owner has waived the <code class="language-plaintext highlighter-rouge">bean-close</code> gate for this session or process run, in
+which case the batch closes under that waiver and the turn report names it:
+<a href="../../reference/skill-instructions/confirmation-waiver.html"><code class="language-plaintext highlighter-rouge">confirmation-waiver.md</code></a>.</p><p><strong>It is not a parking space.</strong> <code class="language-plaintext highlighter-rouge">ready-to-close</code> says <em>re-derivation is beyond
+this session</em>; it never says <em>I would rather not</em>. Where you can run the check,
+run it and close the work item.</p><h2 id="where-a-sibling-session-is-visible-from-strict"><a href="#where-a-sibling-session-is-visible-from-strict" class="anchor-heading" aria-labelledby="where-a-sibling-session-is-visible-from-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Where a sibling session is visible from (STRICT)
+  
+  
+</h2><p>Sibling sessions can be <strong>listed</strong> (<code class="language-plaintext highlighter-rouge">list_sessions</code> gives each one’s id,
+title, branch and a task summary), which is enough to see WHO overlaps you
+before you write anything. They cannot reliably be <strong>reached</strong>: each sibling
+is its own cloud container, and messaging one may be refused. Seeing a sibling
+is not reaching one; what you commit is the only thing that arrives.</p><blockquote><p><strong>A session is an ephemeral container, and nothing about it survives the
+container except what it committed. The <code class="language-plaintext highlighter-rouge">Claude-Session:</code> trailer on a commit
+is therefore the ONLY durable session identity this repository has, and a
+branch tip is the only durable statement of where a session got to.</strong></p></blockquote><h3 id="a-siblings-state-is-inferred-and-the-inference-has-a-boundary"><a href="#a-siblings-state-is-inferred-and-the-inference-has-a-boundary" class="anchor-heading" aria-labelledby="a-siblings-state-is-inferred-and-the-inference-has-a-boundary"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A sibling’s state is INFERRED, and the inference has a boundary
+  
+  
+</h3><div class="table-wrapper"><table><thead><tr><th>what the trailer and the branches DO tell you</th><th>what they do NOT</th></tr></thead><tbody><tr><td>which commits a session authored</td><td>whether it is running now</td></tr><tr><td>when it started and stopped committing</td><td>whether it is blocked, thinking, or gone</td></tr><tr><td>which branches carry its work, and its latest subject</td><td>what it intends to do next</td></tr></tbody></table></div><p><strong>“Stopped committing” is not “finished”, and it is not “abandoned”.</strong> Treat a
+recent tip as a live claim, treat silence as a question, and ask — never as
+licence.</p><h3 id="one-command-not-a-procedure"><a href="#one-command-not-a-procedure" class="anchor-heading" aria-labelledby="one-command-not-a-procedure"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> One command, not a procedure
+  
+  
+</h3><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>sessions <span class="nt">--since</span> 4h
+</code></pre></div></div><p>The <code class="language-plaintext highlighter-rouge">sibling-sessions</code> <strong>Tool node</strong> (<code class="language-plaintext highlighter-rouge">tools/sibling-sessions/</code>) does this, so
+every session counts the same way. It reads <strong>all</strong> branches, because a
+sibling’s work is on ITS branch. A window with no commits <strong>exits non-zero</strong>
+rather than reporting “no siblings”: a sweep over nothing has not found
+anything.</p><h3 id="before-creating-or-claiming-look"><a href="#before-creating-or-claiming-look" class="anchor-heading" aria-labelledby="before-creating-or-claiming-look"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Before creating or claiming, look
+  
+  
+</h3><ul><li><strong>The checkout is a snapshot.</strong> A container fetched <code class="language-plaintext highlighter-rouge">main</code> when it started,
+and everything merged since is invisible until it fetches again.</li><li><strong><code class="language-plaintext highlighter-rouge">beans create</code> is not idempotent and dedupes on nothing.</strong> The existence
+check in <a href="../../reference/skill-instructions/todo-manager.html"><code class="language-plaintext highlighter-rouge">todo-manager</code></a> §”Check before you create” reads
+the LOCAL store, so it cannot catch a duplicate a sibling created since, and
+the cost of not looking is duplicates somebody scraps one at a time.</li></ul><p><strong>So before creating a work item for a decision, or claiming one, do both:</strong></p><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch origin main
+bun run <span class="nb">cat </span>sessions <span class="nt">--since</span> 4h
+</code></pre></div></div><p>The second is the one that gets skipped, and it answers <em>who else is on this
+right now</em>.</p><h2 id="a-quiet-claim--what-in-progress-does-not-tell-you"><a href="#a-quiet-claim--what-in-progress-does-not-tell-you" class="anchor-heading" aria-labelledby="a-quiet-claim--what-in-progress-does-not-tell-you"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A quiet claim — what <code class="language-plaintext highlighter-rouge">in-progress</code> does NOT tell you
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">blocked</code> has an expiry (<a href="../../reference/skill-instructions/bean-blocking.html"><code class="language-plaintext highlighter-rouge">bean-blocking.md</code></a>); <code class="language-plaintext highlighter-rouge">in-progress</code>
+has nothing, so it carries <strong>no information about activity</strong>, and a reader
+cannot tell a stalled agent from a claim nobody has thought about since a bulk
+edit.</p><h3 id="the-signal-is-liveness-not-elapsed-time"><a href="#the-signal-is-liveness-not-elapsed-time" class="anchor-heading" aria-labelledby="the-signal-is-liveness-not-elapsed-time"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The signal is liveness, not elapsed time
+  
+  
+</h3><blockquote><p><strong>A claim is LIVE when something outside the work item says so: an open PR naming
+it, an unmerged branch touching it, or a note since. A claim with none of
+those has announced nothing to anybody — and a claim that announces nothing
+does not reserve anything.</strong></p></blockquote><p><strong>Elapsed time is the fallback, not the rule</strong>, because it is what a tool can
+compute offline. <code class="language-plaintext highlighter-rouge">bun run cat health</code> reports <code class="language-plaintext highlighter-rouge">bean-quiet-claims</code> at <strong>72 hours</strong>
+since <code class="language-plaintext highlighter-rouge">updated_at</code>, alongside <code class="language-plaintext highlighter-rouge">bean-claimed</code> as the denominator. Its count is
+an <strong>upper bound</strong>: a work item it lists may have an open PR the sweep cannot see.
+Read it as “check these”, never as “take these”.</p><h3 id="who-may-act"><a href="#who-may-act" class="anchor-heading" aria-labelledby="who-may-act"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Who may act
+  
+  
+</h3><ul><li><strong>Any session may TAKE a quiet claim</strong> — check for a liveness signal first;
+if there is none, work it, and say in the work item that you took it and what you
+found. This is the unclaimed case, reached by a different route.</li><li><strong>Nothing re-statuses it automatically.</strong> The check reports; a person or the
+session taking the work acts. A tool that flipped <code class="language-plaintext highlighter-rouge">in-progress</code> back to
+<code class="language-plaintext highlighter-rouge">todo</code> would destroy the one record of who was where.</li><li><strong>Quiet is not evidence of completion.</strong> Closing is governed by §”Closing a
+bean whose work has already landed”, and staleness is not evidence. A quiet
+claim on unfinished work goes back to the pool; it does not get closed.</li></ul><h3 id="a-stale-claim-is-reset-to-todo-and-the-reset-keeps-the-record"><a href="#a-stale-claim-is-reset-to-todo-and-the-reset-keeps-the-record" class="anchor-heading" aria-labelledby="a-stale-claim-is-reset-to-todo-and-the-reset-keeps-the-record"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> A stale claim is reset to <code class="language-plaintext highlighter-rouge">todo</code>, and the reset keeps the record
+  
+  
+</h3><p>A claim untouched for weeks is not one anybody is honouring, but it still
+tells every sibling “taken”.</p><blockquote><p><strong>A claim with no liveness signal (§”The signal is liveness”) AND no commit
+naming the work item or touching its branch in 14 days may be reset to <code class="language-plaintext highlighter-rouge">todo</code> by
+a sweep, provided the sweep appends a note recording what it reset.</strong></p></blockquote><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>beans update &lt;<span class="nb">id</span><span class="o">&gt;</span> <span class="nt">--status</span> todo <span class="nt">--body-append</span> - <span class="o">&lt;&lt;</span><span class="sh">'</span><span class="no">NOTE</span><span class="sh">'
+_&lt;UTC timestamp&gt;_ — claim reset by stale-claim sweep: was `in-progress` since &lt;date&gt;,
+held by &lt;branch / session from the holder note, or "no holder recorded"&gt;; no open PR,
+no unmerged branch naming it, no commit in 14 d. Re-claim with `bun run cat beans:claim`.
+</span><span class="no">NOTE
+</span></code></pre></div></div><p>This does not contradict “nothing re-statuses it automatically”: the note
+keeps the record. The sweep is run by a session or the owner who has checked
+the network half (<code class="language-plaintext highlighter-rouge">bun run cat check:quiet-claims</code>), never by an unattended
+job. <strong>14 days is the <code class="language-plaintext highlighter-rouge">bean-stale-in-progress</code> threshold in <code class="language-plaintext highlighter-rouge">bun run cat
+health</code></strong>, so the two never drift apart. The reset never moves a work item to
+<code class="language-plaintext highlighter-rouge">completed</code> or <code class="language-plaintext highlighter-rouge">scrapped</code>, never touches an epic whose children are moving,
+and runs as one batch with a summary, under
+<a href="../../reference/skill-instructions/work-plan-restructure.html"><code class="language-plaintext highlighter-rouge">work-plan-restructure</code></a> when it is more than a
+handful.</p><h2 id="the-branch-store-is-the-one-every-sibling-reads-strict"><a href="#the-branch-store-is-the-one-every-sibling-reads-strict" class="anchor-heading" aria-labelledby="the-branch-store-is-the-one-every-sibling-reads-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The branch store is the one every sibling reads (STRICT)
+  
+  
+</h2><p>Work items live in the shared work-plan store (<a href="../../reference/skill-instructions/work-plan-store.html"><code class="language-plaintext highlighter-rouge">work-plan-store</code></a>;
+on git, the dedicated state branch in <a href="../../reference/skill-instructions/work-plan-store-git-branch.html"><code class="language-plaintext highlighter-rouge">work-plan-store-git-branch</code></a>), not
+committed to <code class="language-plaintext highlighter-rouge">main</code> or held on unmerged feature branches, where a review of the
+store sees none of them.</p><ol><li><strong>Write work items directly to the work-plan store.</strong> Newly created work items, epics and
+Done-whens are written (<code class="language-plaintext highlighter-rouge">create</code> / <code class="language-plaintext highlighter-rouge">update</code> in <a href="../../reference/skill-instructions/work-plan-store.html"><code class="language-plaintext highlighter-rouge">work-plan-store</code></a>;
+<code class="language-plaintext highlighter-rouge">bun run cat state:push</code> on the git state-branch Tool) as soon as the plan exists, so the work plan is immediately
+visible to all agents.</li><li><strong>A sweep reads the work-plan store</strong>, and also sweeps open branches that still
+carry work item files from before the shared store, so no session is blind to
+current goals and claims.</li></ol><h2 id="each-bean-has-one-home-strict"><a href="#each-bean-has-one-home-strict" class="anchor-heading" aria-labelledby="each-bean-has-one-home-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Each bean has one home (STRICT)
+  
+  
+</h2><p>Each work item lives in exactly one store, because copies of one work item written
+separately drift apart:</p><div class="table-wrapper"><table><thead><tr><th>Work item</th><th>Its one home</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">cat-tools-*</code>, and the work items the tools layer took when it split off</td><td><code class="language-plaintext highlighter-rouge">beans/defs</code> on <code class="language-plaintext highlighter-rouge">main</code> of https://github.com/litlfred/cat-harness-tools</td></tr><tr><td><code class="language-plaintext highlighter-rouge">folio-core-*</code>, and the work items the core content layer took</td><td><code class="language-plaintext highlighter-rouge">beans/defs</code> on <code class="language-plaintext highlighter-rouge">main</code> of https://github.com/litlfred/folio-assistant-core</td></tr><tr><td>every other work item</td><td><code class="language-plaintext highlighter-rouge">litlfred/folio-assistant</code>, branch <code class="language-plaintext highlighter-rouge">cat/cat-harness/beans</code></td></tr></tbody></table></div><p><code class="language-plaintext highlighter-rouge">litlfred/cat-harness</code>’s own <code class="language-plaintext highlighter-rouge">cat/cat-harness/beans</code> branch keeps its notes,
+queue, surveys and workflows, but <strong>no work item files</strong>. Write a work item change once,
+to its home, and nowhere else. From a cat-harness checkout that means fetching
+the folio-assistant branch, not this repository’s.</p><p>The tools hold the rule too: <code class="language-plaintext highlighter-rouge">state:push</code> refuses to write a work item file to the
+retired branch (deleting one is allowed), <code class="language-plaintext highlighter-rouge">beans:claim</code> there names the home
+instead of reporting the work item missing, and <code class="language-plaintext highlighter-rouge">bun run cat check:bean-one-home</code>
+fails when any work item id is in two stores or in the retired one. Run it after
+editing work items by hand. The table it reads is
+https://github.com/litlfred/cat-harness-tools/blob/main/scripts/lib/bean-homes.ts.</p><h2 id="which-copy-is-canonical--work-planskillswork-plan"><a href="#which-copy-is-canonical--work-planskillswork-plan" class="anchor-heading" aria-labelledby="which-copy-is-canonical--work-planskillswork-plan"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Which copy is canonical — <code class="language-plaintext highlighter-rouge">work-plan/skills/work-plan/</code></h2><p><strong>This file.</strong> <code class="language-plaintext highlighter-rouge">LOCAL_PACKAGES</code> (built in <code class="language-plaintext highlighter-rouge">scripts/skill-packages.ts</code>) is the
+table <code class="language-plaintext highlighter-rouge">skill_fetch</code> serves from, so an agent asking for this skill by name
+receives this file. When this skill or the installer changes,
+<strong><code class="language-plaintext highlighter-rouge">work-plan/skills/work-plan/</code> is what a downstream repo syncs from</strong>, and the
+generated mirror under the docs site follows it automatically. On landing a
+coordination change that affects a downstream repo, update that repo’s
+ownership note and close the tracking work items.</p><h2 id="issues-are-a-third-todo-source--queryable-issue-link"><a href="#issues-are-a-third-todo-source--queryable-issue-link" class="anchor-heading" aria-labelledby="issues-are-a-third-todo-source--queryable-issue-link"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Issues are a third todo source — queryable <code class="language-plaintext highlighter-rouge">issue:</code> link
+  
+  
+</h2><p><code class="language-plaintext highlighter-rouge">beans/</code> (agent work plan) and <code class="language-plaintext highlighter-rouge">todos/</code> (human items and feedback) are the two
+stores declared in the repository. <strong>GitHub issues are a third source</strong>,
+carrying external tracking, stakeholder adjudication, cross-repo visibility,
+and human decisions.</p><p>A work item can link directly to its corresponding GitHub issue via the front-matter
+<code class="language-plaintext highlighter-rouge">issue:</code> field:</p><div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s1">'</span><span class="s">ISSUES</span><span class="nv"> </span><span class="s">ARE</span><span class="nv"> </span><span class="s">A</span><span class="nv"> </span><span class="s">THIRD</span><span class="nv"> </span><span class="s">TODO</span><span class="nv"> </span><span class="s">SOURCE:</span><span class="nv"> </span><span class="s">queryable</span><span class="nv"> </span><span class="s">bean-issue</span><span class="nv"> </span><span class="s">link'</span>
+<span class="na">status</span><span class="pi">:</span> <span class="s">in-progress</span>
+<span class="na">type</span><span class="pi">:</span> <span class="s">feature</span>
+<span class="na">issue</span><span class="pi">:</span> <span class="m">730</span>
+<span class="nn">---</span>
+</code></pre></div></div><p>The <code class="language-plaintext highlighter-rouge">issue:</code> field is typed as <code class="language-plaintext highlighter-rouge">z.union([z.number().int().positive(), z.string().min(1)]).optional()</code>,
+supporting numeric issue numbers (<code class="language-plaintext highlighter-rouge">issue: 730</code>), issue shorthand (<code class="language-plaintext highlighter-rouge">issue: "#730"</code>),
+or fully-qualified issue URLs (<code class="language-plaintext highlighter-rouge">issue: "https://github.com/&lt;owner&gt;/&lt;repo&gt;/issues/730"</code>).</p><h3 id="when-an-issue-is-owed"><a href="#when-an-issue-is-owed" class="anchor-heading" aria-labelledby="when-an-issue-is-owed"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When an issue is owed
+  
+  
+</h3><p>Work items representing substantive roadmap scope or human adjudication <strong>owe an
+issue</strong>:</p><ol><li><strong>Features (<code class="language-plaintext highlighter-rouge">type: feature</code>)</strong>: features deliver user-facing capabilities or
+major roadmap changes, so they require an external tracking issue for
+stakeholder visibility and acceptance.</li><li><strong>Stakeholder adjudication</strong>: any work item requiring human adjudication,
+policy rulings, or cross-team consensus (flagged via <code class="language-plaintext highlighter-rouge">issue-required</code> or
+<code class="language-plaintext highlighter-rouge">needs-issue</code> tags, or explicit adjudication requirements in the body) owes
+an issue link so the discussion and ruling remain discoverable.</li></ol><p>The check <strong><code class="language-plaintext highlighter-rouge">bun run cat check:bean-issues</code></strong> audits the work item store to verify
+that work items owing an issue provide either an <code class="language-plaintext highlighter-rouge">issue:</code> front-matter link or an
+issue reference in the work item body (<code class="language-plaintext highlighter-rouge">#&lt;number&gt;</code>, <code class="language-plaintext highlighter-rouge">issue #&lt;number&gt;</code>, or issue URL).
+It reports compliant work items alongside findings for unlinked items under 3-state
+reporting (0 = pass, 1 = finding, 2 = could not determine).</p><h2 id="disambiguation-do-not-conflate"><a href="#disambiguation-do-not-conflate" class="anchor-heading" aria-labelledby="disambiguation-do-not-conflate"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Disambiguation (do not conflate)
+  
+  
+</h2><ul><li><strong>work items</strong> = the agent’s <em>session work-plan</em> (<code class="language-plaintext highlighter-rouge">beans/</code>, this skill).</li><li><strong>todos</strong> = the human <em>work-plan items</em> (<code class="language-plaintext highlighter-rouge">todos/</code>).</li><li><strong>issues</strong> = the <em>third todo source</em> (<code class="language-plaintext highlighter-rouge">issue:</code> front-matter field), carrying
+human/stakeholder adjudication and external tracking.</li><li><strong>sidecars</strong> (<code class="language-plaintext highlighter-rouge">*.qa.json</code>, <code class="language-plaintext highlighter-rouge">*.witness.json</code>) = <em>content state tracking</em>.
+Work items ≠ sidecars. Do <strong>not</strong> convert QA / witness queue items into individual
+work items (see todo-manager.md disambiguation block).</li><li><strong>A sibling session</strong> sharing this store (this skill) ≠ <strong>an agent in another
+environment</strong> you hand ONE task to, which you cannot see and which a person
+may relay to: <a href="../../reference/skill-instructions/agent-handoff.html"><code class="language-plaintext highlighter-rouge">agent-handoff</code></a>. That covers who writes
+which work item, where the receiver reports, the one line the person pastes, and
+why the receiver’s own measurement is evidence rather than the close.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/bean-close.html">Close the bean</a></td><td>Record the blocker and hand back</td></tr><tr><td><a href="../../en/cat-harness/processes/bean-drain.html">Drain the beans</a></td><td>Build the queue, grouped by owner; Take the next bean; Open the bean (calls a sub-process); Mark it skip on the queue</td></tr><tr><td><a href="../../en/cat-harness/processes/bean-lifecycle.html">Agent bean lifecycle</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/bean-open.html">Open the bean</a></td><td>Leave it alone (coordinate instead); Claim it (status: in-progress)</td></tr><tr><td><a href="../../en/cat-harness/processes/code-change-review.html">Code change and review</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/merge-refusal.html">A refused merge-train member</a></td><td>Record the merge commit as evidence; Scrap the bean, with the reason; Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/merge-train.html">A merge train</a></td><td>Fix the PR, then re-signal ready</td></tr><tr><td><a href="../../en/cat-harness/processes/stalled-agent-triage.html">Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route</a></td><td>Record the triage and claim the picked-up work</td></tr><tr><td><a href="../../en/cat-harness/processes/test-data-curation.html">Test Data Curation — Fixed Sets and Generated Recipes</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/test-plan-execution.html">Test-plan execution</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/upstream-pin-watch.html">Watching a pinned upstream dependency</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/upstream-version-adoption.html">Adopting an upstream version bump</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/getting-started.html">Getting started</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/authoring-a-document.html">Authoring a document</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/content-change-review.html">Content Change and Review</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/content-lifecycle.html">Content lifecycle</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/draft-to-publication.html">Draft, review and publish</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/dsa-document-lifecycle.html">Data sharing agreement document life cycle</a></td><td>Open the bean (calls a sub-process); Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/editing-hci-validation.html">Editing and HCI validation</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/l1-document-ingestion.html">L1 document ingestion — a document to the L1 source knowledge graph</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/authoring-a-paper.html">Authoring a paper</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/diig-investment-path.html">DIIG — from a health system bottleneck to a costed implementation plan</a></td><td>Open the bean (calls a sub-process)</td></tr><tr><td><a href="../../en/cat-harness/processes/l2-dak-authoring.html">L2 DAK authoring</a></td><td>Open the bean (calls a sub-process)</td></tr></tbody></table></div></main><hr><footer><details class="fa-provenance" id="fa-provenance" data-fa-provenance-count="50"><summary class="fa-provenance-summary">Provenance (50)</summary><p class="fa-provenance-lead">Who decided, when, and under which work item. This record was moved out of the text of the page.</p><h3 class="fa-provenance-section">Archiving is a VIEW, not a third way out</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean e8m3</code> <code>owner</code> <code>2026-09-26</code></span><div class="fa-provenance-text">The owner ruled it 2026-09-26 (bean <code>e8m3</code>): an archived bean <strong>keeps its status</strong> and is still part of the store, moved aside rather than closed.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text"><strong>Closing is governed by evidence, not by authorship</strong>, and this paragraph used to say the opposite.</div></li></ul><h3 class="fa-provenance-section">Claims are global via the state branch store (formerly branch-local)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text">Historically, claims were commits to <code>beans/defs/&lt;bean&gt;.md</code> on feature branches, meaning a claim only announced rather than reserved until a PR opened.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="proposal"><span class="fa-provenance-kind">proposal</span> <span class="fa-provenance-refs"><code>proposal </code> <code>2026-10-02</code></span><div class="fa-provenance-text">Under the state branch architecture (proposal <code>state-branch-2026-10-02.md</code>), <strong>claims are pushed immediately to the branch store</strong></div></li><li class="fa-provenance-entry" data-fa-provenance-kind="date"><span class="fa-provenance-kind">date</span> <span class="fa-provenance-refs"><code>2026-10-24</code></span><div class="fa-provenance-text"><code>beans:claim</code> writes one copy and reads status only, and on 2026-10-24 that let two agents start f1e1 minutes apart.</div></li></ul><h3 class="fa-provenance-section">A DECISION bean you will not land soon — put the question where a person reads</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>Bean r0tm</code> <code>#1558</code> <code>issues/1558</code> <code>#1581</code> <code>PR #1581</code></span><div class="fa-provenance-text">Bean <code>r0tm</code> carried a recommendation and a safe default on a branch with no PR, which is exactly the shape that goes unseen. It was answered, and it was answered because the question had been posted to [issue #1558](https://github.com/litlfred/folio-assistant/issues/1558) and PR #1581 — not because anyone found the bean.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>owner&#39;s</code> <code>2026-10-01</code></span><div class="fa-provenance-text">- **<code>status: draft</code> in front matter is the marker — claimed 2026-10-01, on the owner&#39;s ruling.**</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean vq8g</code> <code>owner&#39;s</code></span><div class="fa-provenance-text">Six recognisers over the open beans give between <strong>1 and 190</strong> candidates depending which form you match (<code>Recommendation</code> heading 1, <code>Options</code> heading 20, <code>safe default</code> 1, <code>ruling</code> 63, <code>owner&#39;s call</code> 48, an unticked box 190) — bean <code>vq8g</code> as a number rather than a worry.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>dh4f</code></span><div class="fa-provenance-text">The comment and the line are what reach a human; the front-matter status is what lets <code>bun run cat check:draft-beans</code> (<code>scripts/check-draft-beans.ts</code>) find any ruling request that never landed, reporting with a denominator (<code>dh4f</code>).</div></li></ul><h3 class="fa-provenance-section">The trigger is STARTING WORK, not claiming — and that distinction cost a merge</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean tuvg</code> <code>2026-09-26</code></span><div class="fa-provenance-text">**Measured 2026-09-26, bean <code>tuvg</code>.**</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>tuvg</code> <code>owner</code> <code>#1381</code></span><div class="fa-provenance-text">A session already held <code>tuvg</code> and was executing an owner instruction on one cause inside it. Sibling PR <strong>#1381 was open and doing the identical work</strong> — 25 <code>UNCATALOGED</code> records — and a <code>--search</code> for it would have returned it in one call.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>0xfe</code> <code>tuvg</code> <code>#1381</code></span><div class="fa-provenance-text">Keyed on a bean id it finds nothing when the work has no bean of its own, which was this case — the sibling&#39;s bean (<code>0xfe</code>) existed only on an unpushed branch. <strong>Search the subject as well as the id</strong>: the file you are about to edit, the gate you are about to turn green, the symbol you are about to add. #1381&#39;s title said <em>&quot;Record the 25 uncatalogued translations&quot;</em>; nothing about <code>tuvg</code> would have matched it, and <code>UNCATALOGED</code> would have.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>owner</code> <code>#1885</code> <code>2026-10-02</code></span><div class="fa-provenance-text">**Starting any new unit of work runs the collision review in [<code>coordinate</code>](../../../sdlc/skills/sdlc-core/coordinate.md) §&quot;Starting new work&quot;**, scaled to its blast radius and recorded in the workplan bean before the first edit (owner, 2026-10-02, #1885).</div></li></ul><h3 class="fa-provenance-section">And ASK AGAIN before you open the PR — looking once is not enough</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean dx5j</code> <code>Owner</code> <code>2026-09-26</code></span><div class="fa-provenance-text">**Owner decision, 2026-09-26, bean <code>dx5j</code>.** That is the wrong and only moment they cover, and the gap it leaves was measured: <strong>four duplicate-work collisions in one working window.</strong></div></li><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>owner</code></span><div class="fa-provenance-text">The owner was offered three structural alternatives and rejected each for a stated reason, recorded here so nobody re-proposes one as new:</div></li></ul><h3 class="fa-provenance-section"><code>bun run cat beans:claim &lt;id&gt;</code> closes it — when the remote lets it</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>owner</code></span><div class="fa-provenance-text">Chosen by the owner over the PR-list check above, on the stated cost: a session writes to the default branch for claims, which this repository otherwise routes through pull requests.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean ssfp</code></span><div class="fa-provenance-text">A bean store exists at every checkout, so a claim run from the wrong one used to succeed silently, record that tree&#39;s branch as the holder, and leave the status edit there as stray dirt (bean <code>ssfp</code>, measured on a delegated agent whose worktree held the work while the claim landed in the main checkout).</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean c3d7</code></span><div class="fa-provenance-text">**<code>held-unknown</code> is the case the store is mostly made of, and it used to be silent.** That arm returned <code>pushed</code> until bean <code>c3d7</code> — <code>heldBy === branch || heldBy === undefined</code>, on the reading that both mean &quot;ours, idempotent&quot;.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="date"><span class="fa-provenance-kind">date</span> <span class="fa-provenance-refs"><code>2026-09-25</code></span><div class="fa-provenance-text">Measured on <code>origin/main</code> 2026-09-25: of the <strong>100</strong> non-epic beans marked <code>in-progress</code>, <strong>97 record no holder</strong> — because <code>todo-manager.md</code> and <code>session-intent.md</code> told an agent to claim with <code>beans update &lt;id&gt; --status in-progress</code>, which writes no note.</div></li></ul><h3 class="fa-provenance-section">The measurement</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean plj1</code> <code>#377</code> <code>#379</code> <code>2026-09-19</code></span><div class="fa-provenance-text">2026-09-19, bean <code>plj1</code> (<code>docs-site.yml</code>&#39;s full-replace publish deleting every open PR&#39;s <code>branches/</code> preview). Two sessions set it <code>in-progress</code> <strong>61 seconds apart</strong> — 09:28:18Z and 09:29:19Z — and opened two PRs for it, #377 and #379, at ~09:36 and 09:37. Same diagnosis, same design choice, two implementations; #379 was withdrawn.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean nytj</code></span><div class="fa-provenance-text">(bean <code>nytj</code>, via a sidecar&#39;s recorded auditor hash).</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>Bean 35nj</code></span><div class="fa-provenance-text">Bean <code>35nj</code> records the options for narrowing the window — a wording fix, a direct claim push to the default branch, a PR-list check at claim time, or accepting it — none implemented.</div></li></ul><h3 class="fa-provenance-section">Complete it in the PR&#39;s own last commit (bean <code>4d22</code>)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>ebvl</code> <code>7ofc</code> <code>2026-09-22</code></span><div class="fa-provenance-text">Measured twice on 2026-09-22 (<code>ebvl</code>, <code>7ofc</code>), each caught only because somebody noticed.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="date"><span class="fa-provenance-kind">date</span> <span class="fa-provenance-refs"><code>2026-09-23</code></span><div class="fa-provenance-text">Practised on 2026-09-23 for eight beans in a row with no orphan.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="issue"><span class="fa-provenance-kind">issue</span> <span class="fa-provenance-refs"><code>#2405</code> <code>FR-007</code> <code>FR-010</code></span><div class="fa-provenance-text">When the bean delivers requirement statements, those items ARE their success criteria, copied when the bean was made (<code>todo-manager</code> §&quot;Working with Beans&quot; 4), and the bean is in its requirement set&#39;s <code>workPlan</code> — so ticking them is judging the criteria, and closing the last bean of a set is what moves the set toward <code>delivered</code> (issue #2405, FR-007/FR-010).</div></li></ul><h3 class="fa-provenance-section">Adding to a bean — a note, not an append</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>ob3m</code> <code>bean m61r</code> <code>#1798</code> <code>#1805</code> <code>#1807</code> <code>#1808</code> <code>#1819</code> <code>#1853</code> <code>2026-10-02</code></span><div class="fa-provenance-text"><code>ob3m</code> (the navbar findings) was appended to by one pull request per finding. On 2026-10-02 that cost hand-merges of #1798, #1805, #1807, #1808 and #1819 within a few hours (bean <code>m61r</code>, issue #1853).</div></li></ul><h3 class="fa-provenance-section">Closing a bean whose work has already landed (STRICT)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text">The sentence above used to end <em>&quot;they do not resolve another session&#39;s items&quot;</em>, full stop, and it produced the opposite of the care it intended.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean 0pes</code> <code>2026-09-20</code></span><div class="fa-provenance-text">**Measured 2026-09-20, bean <code>0pes</code>.**</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>1dfh</code> <code>ckpe</code> <code>dzl3</code> <code>g4dv</code> <code>lx2s</code></span><div class="fa-provenance-text"><code>1dfh</code>, <code>ckpe</code>, <code>dzl3</code>, <code>g4dv</code>, <code>lx2s</code>, <code>xd1s</code>.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>r1lz</code></span><div class="fa-provenance-text">Paid twice in one session, on <code>r1lz</code> and again while sweeping for others.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>xd1s</code> <code>lx2s</code> <code>#215</code></span><div class="fa-provenance-text"><code>xd1s</code>&#39;s note said &quot;seven workflows&quot; and named six; four files actually carry the group, and the invariant holds by <em>group <strong>or</strong> retry</em>, which is what its gate asserts. <code>lx2s</code>&#39;s is <em>&quot;Issue #215 can be closed by its author&quot;</em>, and an agent never closes an issue on its own say-so.</div></li></ul><h3 class="fa-provenance-section">Reconciling closes in bulk — and an owner&#39;s reopen outranks your evidence</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean yr93</code> <code>7vm4</code> <code>8xb1</code> <code>ftuv</code> <code>s2gm</code> <code>owner&#39;s</code> <code>owner</code> <code>2026-10-04</code> <code>2026-09-08</code></span><div class="fa-provenance-text">It adds one of its own, because a store can carry an <strong>owner&#39;s reopen sweep</strong>: the owner moved beans from <code>completed</code> back to <code>todo</code> or <code>in-progress</code> because the earlier close was not good enough. **Measured in <code>qou</code> 2026-10-04 (bean <code>yr93</code>).** The owner&#39;s 2026-09-08 sweep (<code>qou-7sin</code>, commit <code>a61496d</code>, <em>&quot;reopen 18 beans whose own body says they are open&quot;</em>) had reopened beans that still carried a <code>close(&lt;id&gt;)</code> commit on main. Four of those (<code>7vm4</code>, <code>8xb1</code>, <code>ftuv</code>, <code>s2gm</code>) would have been re-closed by any reconciler that matched closing commits to status, on the very evidence the owner had rejected.</div></li></ul><h3 class="fa-provenance-section">Re-derive from the REMOTE, never from your checkout (STRICT)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean pomp</code> <code>2026-09-21</code></span><div class="fa-provenance-text">**Two occurrences in one session, 2026-09-21, bean <code>pomp</code>.**</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>ankg</code> <code>s8nu</code> <code>bean pomp</code> <code>2026-10-24</code></span><div class="fa-provenance-text">When the claim is <em>&quot;nobody has built this&quot;</em>, check the open branches too; this session started building <code>ankg</code>, <code>s8nu</code> and a <code>viewer-prune</code> module that siblings had already landed or had in flight, <strong>five times</strong>, and the check that would have prevented each is one <code>git diff --name-only origin/main...&lt;branch&gt;</code>. Tool: a path, a prefix or a bean id, against <code>main</code> and every open PR head (bean <code>pomp</code>, reopened 2026-10-24 after the f1e1 duplicate in [<code>bean-drain</code>](bean-drain.md) §&quot;The measured case&quot;).</div></li></ul><h3 class="fa-provenance-section">When you cannot re-derive it yourself — <code>ready-to-close</code></h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean bbbl</code> <code>7uff</code> <code>t0i3</code> <code>y8as</code> <code>d1r6</code> <code>owner</code> <code>2026-09-20</code></span><div class="fa-provenance-text">**Measured 2026-09-20, bean <code>bbbl</code>.** Four beans read as finished in their own bodies and sat <code>in-progress</code>: <code>7uff</code> (<em>&quot;Everything on this bean is now done … Ready to resolve once the owner confirms; not resolving unilaterally&quot;</em>, 0 of 7 boxes ticked), <code>t0i3</code> (its one open box done in the body at commit <code>8d1c8f27</code>), <code>y8as</code> (both halves merged, the platform copy sha256-verified and deleted), <code>d1r6</code> (a full <code>## Implemented</code> section, 0 of 5 ticked).</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>owner</code></span><div class="fa-provenance-text">The measurement may need a running deployment, a branch this container does not have, or a judgement the owner reserved.</div></li></ul><h3 class="fa-provenance-section">Where a sibling session is visible from (STRICT)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean ab3n</code> <code>2026-09-20</code></span><div class="fa-provenance-text">**Measured 2026-09-20, bean <code>ab3n</code>.**</div></li></ul><h3 class="fa-provenance-section">RE-MEASURED 2026-09-21: the listing works now, the messaging still does not</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="date"><span class="fa-provenance-kind">date</span> <span class="fa-provenance-refs"><code>2026-09-20</code> <code>2026-09-21</code></span><div class="fa-provenance-text">| | 2026-09-20 | 2026-09-21 | |---|---|---| | listing siblings | only self | <strong>eleven, with branch and task</strong></div></li></ul><h3 class="fa-provenance-section">One command, not a procedure</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>ab3n</code></span><div class="fa-provenance-text">(<code>tools/sessions.ts</code>), which is what <code>ab3n</code> asked for and for a reason: prose describing how to grep a trailer is a procedure every session re-derives slightly differently, the counts then disagree, and nobody can tell which sweep was wrong.</div></li></ul><h3 class="fa-provenance-section">Worked example — the session that built this tool, tripping over it</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>ab3n</code> <code>owner&#39;s</code> <code>2026-09-20</code></span><div class="fa-provenance-text">**2026-09-20, an hour after <code>ab3n</code> was written.** This session created three <code>milestone</code> beans for the owner&#39;s three goals, each carrying the <code>goal-review</code> sweep&#39;s <strong>paraphrase</strong>, because the verbatim words were not written down anywhere it could see — it searched the issue, its comments, the pull request and the whole store.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>owner&#39;s</code></span><div class="fa-provenance-text">A sibling session had created the same three milestones <strong>with the owner&#39;s verbatim words</strong> and merged them to <code>main</code> at 18:50, about an hour earlier.</div></li></ul><h3 class="fa-provenance-section">A quiet claim — what <code>in-progress</code> does NOT tell you</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean fgnw</code> <code>2026-09-20</code></span><div class="fa-provenance-text">**Measured 2026-09-20, bean <code>fgnw</code>.** 60 beans were <code>in-progress</code>; <strong>43 had no change in a four-hour window</strong>, and 38 of those were last touched by a single bulk move at 09:37.</div></li></ul><h3 class="fa-provenance-section">A stale claim is reset to <code>todo</code>, and the reset keeps the record</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean yr93</code> <code>#2106</code> <code>2026-10-04</code></span><div class="fa-provenance-text">**Measured in <code>qou</code> 2026-10-04: 567 of 584 <code>in-progress</code> beans had not been touched in more than 14 days** (bean <code>yr93</code>, issue #2106).</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean qml5</code> <code>thux</code></span><div class="fa-provenance-text">**14 days is the <code>bean-stale-in-progress</code> threshold in <code>bun run cat health</code>, and deliberately so:** two thresholds for one question drift apart, and bean <code>qml5</code> measured the cost of a third (7 days) that could never fire. It never touches an epic whose children are moving (<code>thux</code>).</div></li></ul><h3 class="fa-provenance-section">The branch store is the one every sibling reads (STRICT)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean cvab</code> <code>kupb</code> <code>#477</code> <code>PR #477</code> <code>2026-09-20</code></span><div class="fa-provenance-text">**Measured 2026-09-20, bean <code>cvab</code>.** Before the state branch, branch <code>claude/sleepy-rubin-mr6kdu</code> (PR #477, 65 commits ahead, 1,937 files) carried the <code>kupb</code> epic and <strong>12 of its 13 children</strong>. A review of the store on <code>main</code> therefore saw <strong>0 %</strong> of the IRIS work plan, and a whole goal&#39;s workstream was invisible until somebody swept the branch by hand.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="issue"><span class="fa-provenance-kind">issue</span> <span class="fa-provenance-refs"><code>#477</code></span><div class="fa-provenance-text">(1) prevents the blindness; (2) catches the branches that were already open when (1) landed — including #477, whose 12 beans are still branch-only today.</div></li></ul><h3 class="fa-provenance-section">Each bean has one home (STRICT)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>Owner</code> <code>cat-harness-tools#459</code> <code>issues/459</code> <code>2026-10-30</code> <code>2026-10-20</code></span><div class="fa-provenance-text"><strong>Owner, 2026-10-30 ([cat-harness-tools#459](https://github.com/litlfred/cat-harness-tools/issues/459)).</strong> Until then the same bean was kept in up to four stores, and sessions wrote each change to two of them seconds apart; on 2026-10-20 only 50 of 1,707 shared copies still matched.</div></li></ul><h3 class="fa-provenance-section">Which copy is canonical — <code>sdlc/skills/sdlc-core/</code></h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>Bean tdmg</code> <code>2026-09-19</code></span><div class="fa-provenance-text">A <code>.claude/skills/local/bean-coordination.md</code> existed until 2026-09-19 and described <em>itself</em> as &quot;the generic source of truth&quot; from which downstream repos sync. Bean <code>tdmg</code>.</div></li></ul><h3 class="fa-provenance-section">folio-assistant-xeer</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="issue"><span class="fa-provenance-kind">issue</span> <span class="fa-provenance-refs"><code>#730</code> <code>issues/730</code></span><div class="fa-provenance-text">The <code>issue:</code> field is typed as <code>z.union([z.number().int().positive(), z.string().min(1)]).optional()</code>, supporting numeric issue numbers (<code>issue: 730</code>), issue shorthand (<code>issue: &quot;#730&quot;</code>), or fully-qualified issue URLs (<code>issue: &quot;https://github.com/litlfred/folio-assistant/issues/730&quot;</code>).</div></li></ul><h3 class="fa-provenance-section">Disambiguation (do not conflate)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean mac1</code> <code>2026-10-02</code></span><div class="fa-provenance-text">That covers who writes which bean, where the receiver reports, the one line the person pastes, and why the receiver&#39;s own measurement is evidence rather than the close (bean <code>mac1</code>, 2026-10-02).</div></li></ul></details><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+  deployed
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

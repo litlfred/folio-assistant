@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/process/Process_IrisCdnNightly/node/End_Done.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/process/Process_IrisCdnNightly/node/End_Done",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Night published and reviewed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/process/Process_IrisCdnNightly",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/role/iris-cdn-exporter",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/process/Process_IrisCdnNightly#flow/N12"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/End_Done"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-sci/skill/content-validation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-sci/skill/content-validation",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-validation",
+      "title": "Content Validation Skill",
+      "instructionsPath": "skills/content/folio-paper-adapter/content-validation.md",
+      "instructionLines": 288,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/content-validation"
+    }
+  ]
+}

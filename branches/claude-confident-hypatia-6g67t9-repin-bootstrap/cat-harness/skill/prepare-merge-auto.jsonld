@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/skill/prepare-merge-auto.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/skill/prepare-merge-auto",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "prepare-merge-auto",
+      "title": "/prepare-merge-auto — Autonomous merge pipeline",
+      "description": "Full prepare-merge → resolve → merge pipeline. Coordinates with sibling PRs, resolves review comments, asks structured questions only when blocked, then hands the merge to the merge-to-main sub-process, which merges only on the owner's authorisation.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/prepare-merge-auto.md",
+      "instructionLines": 184,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge-auto"
+    }
+  ]
+}

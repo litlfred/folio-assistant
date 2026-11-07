@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/smart-trust/schema/smart-trust.schema.json",
+  "title": "smart-trust schemas",
+  "description": "The schemas instance `smart-trust` publishes: its declaration, which is a CatHarness declaration and is validated by the shared schema this `$ref`s, and its skills' I/O contracts and its public Zod schemas — every exported Zod `*Schema` const (owner ruling 2026-10-05) — listed in `$defs` by `$id`.",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness.schema.json"
+    }
+  ],
+  "$defs": {},
+  "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/smart-trust/smart-trust.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  }
+}

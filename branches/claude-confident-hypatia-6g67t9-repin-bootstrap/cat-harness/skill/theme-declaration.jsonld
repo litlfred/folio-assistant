@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/skill/theme-declaration.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/skill/theme-declaration",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "theme-declaration",
+      "title": "Declaring a theme",
+      "description": "What a theme IS as data — the palette, the three required layouts, and the per-image regions (`textRegion`, `avatarRegion`). The PRODUCER stage: this is where a number is written down, and the rule is that geometry over art is declared rather than derived, because no amount of arithmetic on an aspect ratio can see where a picture is quiet.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/package/theming"
+      ],
+      "instructionsPath": "skills/ui/theming/theme-declaration.md",
+      "instructionLines": 99,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-declaration"
+    }
+  ]
+}

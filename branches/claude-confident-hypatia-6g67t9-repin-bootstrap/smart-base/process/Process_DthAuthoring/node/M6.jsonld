@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/smart-base/process/Process_DthAuthoring/node/M6.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DthAuthoring/node/M6.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/M6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Record milestone M6 · Comments dispositioned",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "http://smart.who.int/base/role/editor",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Editor",
+      "requires": [
+        "http://smart.who.int/base/skill/todo-manager"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F49"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F50"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

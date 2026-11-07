@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/dsa-catalogue-status.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/dsa-catalogue-status",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "dsa-catalogue-status",
+      "title": "`dsa-catalogue-status` — Set the catalogue status when an agreement changes or ends (P14.5)",
+      "description": "Set the life-cycle status (`adms:status`, W3C DCAT 3 §6.4.30) on a Data Sharing Agreement's DCAT 3 catalogue record when the agreement is amended, renewed, terminated, or expires, while keeping all published versions readable at their immutable URLs (DSA building block B3, process step P14.5 `Task_SetStatus`).",
+      "instructionsPath": "skills/content/folio-document-adapter/dsa-catalogue-status.md",
+      "instructionLines": 54,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/dsa-catalogue-status"
+    }
+  ]
+}

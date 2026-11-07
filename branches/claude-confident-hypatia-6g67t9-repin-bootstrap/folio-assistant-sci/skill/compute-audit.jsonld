@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-sci/skill/compute-audit.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-sci/skill/compute-audit",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "compute-audit",
+      "title": "Compute Audit Skill",
+      "description": "Audit compute scripts for a catalogue of correctness and performance antipatterns. Distinguishes CORRECTNESS antipatterns from PERFORMANCE antipatterns. Produces a ranked workplan citing concrete files+lines.",
+      "instructionsPath": "skills/content/folio-paper-adapter/compute-audit.md",
+      "instructionLines": 186,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/compute-audit"
+    }
+  ]
+}

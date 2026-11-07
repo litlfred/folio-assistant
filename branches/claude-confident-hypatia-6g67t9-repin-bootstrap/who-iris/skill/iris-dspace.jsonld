@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/skill/iris-dspace.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/skill/iris-dspace",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "iris-dspace",
+      "title": "IRIS, DSpace and Dublin Core",
+      "description": "How WHO IRIS uses DSpace and qualified Dublin Core — the three identifier systems, MeSH as a controlled vocabulary, bundles, and the containment path — and the requirements a tool reading a record must meet.",
+      "instructionsPath": "skills/iris-dspace.md",
+      "instructionLines": 211,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/who-iris/directory/who-iris-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/skill/iris-dspace"
+    }
+  ]
+}

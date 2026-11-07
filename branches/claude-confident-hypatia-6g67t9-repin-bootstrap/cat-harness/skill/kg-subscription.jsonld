@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/skill/kg-subscription.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/skill/kg-subscription",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "kg-subscription",
+      "title": "Subscribing to a knowledge graph",
+      "description": "Subscribing a folio or harness to an external knowledge graph — a substrate — and walking its parts from referenced to materialised, one at a time and only through the shared materialisation gates. When to subscribe, what makes a repository a substrate, choosing subgraphs, assets and harnesses, the five gates, instantiating a harness so it reaches the navbar, moving the pin, and what never to do.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/package/large-datasets"
+      ],
+      "instructionsPath": "skills/library/large-datasets/kg-subscription.md",
+      "instructionLines": 232,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-subscription"
+    }
+  ]
+}

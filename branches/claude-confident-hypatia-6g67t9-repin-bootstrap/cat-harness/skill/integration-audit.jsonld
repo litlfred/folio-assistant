@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/skill/integration-audit.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
+    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "pr": "3012/merge",
+    "run": "42355050584"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/skill/integration-audit",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "integration-audit",
+      "title": "/integration-audit — invalidate + re-audit the sidecar pipeline",
+      "description": "Sidecar-invalidation utility for the integration-watcher pipeline. Adds mechanical QA fields (script-reviewer entries) to per-block `.qa.json` sidecars and marks the existing entries stale so the next `qa-sweep` re-evaluates them. Use when a checker bug is fixed in a QA checker module (downstream \"fresh\" entries are now incorrect) or when a registry update adds a criterion the block hasn't been audited under.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/package/authoring-core"
+      ],
+      "instructionsPath": "skills/authoring/authoring-core/integration-audit.md",
+      "instructionLines": 149,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/integration-audit"
+    }
+  ]
+}
