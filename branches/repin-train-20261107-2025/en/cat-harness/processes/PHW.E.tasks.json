@@ -1,0 +1,239 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "PHW.E",
+ "markers": [
+  {
+   "id": "PHW.E.1",
+   "name": "E1. Request token with authorization_details naming the agreement, plus DPoP proof or mTLS",
+   "left": 17.76,
+   "top": 7.41,
+   "box": {
+    "left": 14,
+    "top": 17.59,
+    "width": 0.93,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "PHW.E.2",
+   "name": "E2. Authenticate client (private_key_jwt or mTLS) and check DPoP proof",
+   "left": 25.68,
+   "top": 42.59,
+   "box": {
+    "left": 21.91,
+    "top": 52.78,
+    "width": 0.93,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "PHW.E.3",
+   "name": "E3. Decide access under the agreement (process F)",
+   "left": 33.59,
+   "top": 42.59,
+   "box": {
+    "left": 29.83,
+    "top": 52.78,
+    "width": 0.93,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "PHW.E.4",
+   "name": "E4. Issue short-lived key-bound token with granted details",
+   "left": 49.42,
+   "top": 31.48,
+   "box": {
+    "left": 45.66,
+    "top": 41.67,
+    "width": 0.93,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "PHW.E.5",
+   "name": "E5. Refuse token request (deny or unknown)",
+   "left": 49.42,
+   "top": 53.7,
+   "box": {
+    "left": 45.66,
+    "top": 63.89,
+    "width": 0.93,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "PHW.E.6",
+   "name": "E6. Call the API with token and DPoP proof",
+   "left": 57.34,
+   "top": 7.41,
+   "box": {
+    "left": 53.57,
+    "top": 17.59,
+    "width": 0.93,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "PHW.E.7",
+   "name": "E7. Validate token, key binding and granted details on every call",
+   "left": 65.25,
+   "top": 77.78,
+   "box": {
+    "left": 61.49,
+    "top": 87.96,
+    "width": 0.93,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "PHW.E.8",
+   "name": "E8. Record audit and provenance (process G)",
+   "left": 73.17,
+   "top": 77.78,
+   "box": {
+    "left": 69.4,
+    "top": 87.96,
+    "width": 0.93,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "PHW.E.9",
+   "name": "E9. Return data or refusal",
+   "left": 81.08,
+   "top": 77.78,
+   "box": {
+    "left": 77.32,
+    "top": 87.96,
+    "width": 0.93,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "PHW.E.10",
+   "name": "E10. Process response",
+   "left": 89,
+   "top": 7.41,
+   "box": {
+    "left": 85.23,
+    "top": 17.59,
+    "width": 0.93,
+    "height": 4.44
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E",
+ "tasks": {
+  "PHW.E.1": {
+   "id": "PHW.E.1",
+   "name": "E1. Request token with authorization_details naming the agreement, plus DPoP proof or mTLS",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/node/PHW.E.1",
+   "lane": "Data Recipient System (OAuth client)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/lane/PHW.Lane.DataRecipient",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.E.2": {
+   "id": "PHW.E.2",
+   "name": "E2. Authenticate client (private_key_jwt or mTLS) and check DPoP proof",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/node/PHW.E.2",
+   "lane": "Provider Authorization Server (administrator + decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/lane/PHW.Lane.AuthorizationServer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.E.3": {
+   "id": "PHW.E.3",
+   "name": "E3. Decide access under the agreement (process F)",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/node/PHW.E.3",
+   "lane": "Provider Authorization Server (administrator + decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/lane/PHW.Lane.AuthorizationServer",
+   "skills": [],
+   "calls": {
+    "name": "F. Access Decision under a Data Sharing Agreement (DSA P11)",
+    "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F",
+    "diagram": "PHW.F.html"
+   },
+   "binding": "unbound"
+  },
+  "PHW.E.4": {
+   "id": "PHW.E.4",
+   "name": "E4. Issue short-lived key-bound token with granted details",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/node/PHW.E.4",
+   "lane": "Provider Authorization Server (administrator + decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/lane/PHW.Lane.AuthorizationServer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.E.5": {
+   "id": "PHW.E.5",
+   "name": "E5. Refuse token request (deny or unknown)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/node/PHW.E.5",
+   "lane": "Provider Authorization Server (administrator + decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/lane/PHW.Lane.AuthorizationServer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.E.6": {
+   "id": "PHW.E.6",
+   "name": "E6. Call the API with token and DPoP proof",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/node/PHW.E.6",
+   "lane": "Data Recipient System (OAuth client)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/lane/PHW.Lane.DataRecipient",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.E.7": {
+   "id": "PHW.E.7",
+   "name": "E7. Validate token, key binding and granted details on every call",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/node/PHW.E.7",
+   "lane": "Data Provider Resource Server (enforcement point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/lane/PHW.Lane.ResourceServer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.E.8": {
+   "id": "PHW.E.8",
+   "name": "E8. Record audit and provenance (process G)",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/node/PHW.E.8",
+   "lane": "Data Provider Resource Server (enforcement point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/lane/PHW.Lane.ResourceServer",
+   "skills": [],
+   "calls": {
+    "name": "G. Audit, Provenance and Duty Checks under a Data Sharing Agreement (DSA P12)",
+    "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.G",
+    "diagram": "PHW.G.html"
+   },
+   "binding": "unbound"
+  },
+  "PHW.E.9": {
+   "id": "PHW.E.9",
+   "name": "E9. Return data or refusal",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/node/PHW.E.9",
+   "lane": "Data Provider Resource Server (enforcement point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/lane/PHW.Lane.ResourceServer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.E.10": {
+   "id": "PHW.E.10",
+   "name": "E10. Process response",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/node/PHW.E.10",
+   "lane": "Data Recipient System (OAuth client)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.E/lane/PHW.Lane.DataRecipient",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

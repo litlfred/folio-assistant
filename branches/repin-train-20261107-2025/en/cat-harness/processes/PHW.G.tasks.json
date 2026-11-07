@@ -1,0 +1,97 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "PHW.G",
+ "markers": [
+  {
+   "id": "PHW.G.1",
+   "name": "G1. Write PROV-O record citing the agreement",
+   "left": 29.39,
+   "top": 7.14,
+   "box": {
+    "left": 23.16,
+    "top": 16.96,
+    "width": 1.53,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "PHW.G.3",
+   "name": "G3. Send ATNA audit event citing the agreement [ITI-20] Record Audit Event",
+   "left": 42.49,
+   "top": 7.14,
+   "box": {
+    "left": 36.26,
+    "top": 16.96,
+    "width": 1.53,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "PHW.G.5",
+   "name": "G5. Record duty fulfilment with evidence hash",
+   "left": 55.59,
+   "top": 51.79,
+   "box": {
+    "left": 49.36,
+    "top": 61.61,
+    "width": 1.53,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "PHW.G.7",
+   "name": "G7. Periodic human review and report to the provider",
+   "left": 81.79,
+   "top": 78.57,
+   "box": {
+    "left": 75.56,
+    "top": 88.39,
+    "width": 1.53,
+    "height": 4.29
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.G",
+ "tasks": {
+  "PHW.G.1": {
+   "id": "PHW.G.1",
+   "name": "G1. Write PROV-O record citing the agreement",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.G/node/PHW.G.1",
+   "lane": "Enforcement and Decision Points (audit writers)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.G/lane/PHW.Lane.AuditWriter",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.G.3": {
+   "id": "PHW.G.3",
+   "name": "G3. Send ATNA audit event citing the agreement [ITI-20] Record Audit Event",
+   "type": "bpmn:SendTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.G/node/PHW.G.3",
+   "lane": "Enforcement and Decision Points (audit writers)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.G/lane/PHW.Lane.AuditWriter",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.G.5": {
+   "id": "PHW.G.5",
+   "name": "G5. Record duty fulfilment with evidence hash",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.G/node/PHW.G.5",
+   "lane": "Data Recipient (duty performer)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.G/lane/PHW.Lane.DataRecipient",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.G.7": {
+   "id": "PHW.G.7",
+   "name": "G7. Periodic human review and report to the provider",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.G/node/PHW.G.7",
+   "lane": "Auditor (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.G/lane/PHW.Lane.Auditor",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

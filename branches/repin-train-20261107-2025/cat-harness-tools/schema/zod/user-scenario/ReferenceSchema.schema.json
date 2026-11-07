@@ -1,0 +1,36 @@
+{
+  "$ref": "#/definitions/Reference",
+  "definitions": {
+    "Reference": {
+      "type": "object",
+      "properties": {
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "href": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rel": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "label",
+        "href"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/ReferenceSchema.schema.json",
+  "title": "ReferenceSchema",
+  "description": "Generated from `ReferenceSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261107-2025",
+    "sha": "19b2306ebfc378d0e71317450441ec2925585c93",
+    "pr": "repin-train/20261107-2025",
+    "run": "42411006168"
+  }
+}

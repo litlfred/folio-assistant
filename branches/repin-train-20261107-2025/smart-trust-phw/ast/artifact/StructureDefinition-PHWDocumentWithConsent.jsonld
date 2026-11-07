@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "StructureDefinition-PHWDocumentWithConsent.jsonld",
+  "@type": "fhir:StructureDefinition",
+  "dcterms:identifier": "StructureDefinition/PHWDocumentWithConsent",
+  "schema:name": "PHWDocumentWithConsent",
+  "dcterms:title": "IPS document that carries its consent directives",
+  "dcterms:description": "An International Patient Summary document a Personal Health Wallet shares or an issuer issues, carrying the consent directives it is shared under, explicit or implied. Carrying them is optional (0..*); when they are carried, the Composition's Advance Directives section (LOINC 42348-3) lists them. The copy in the document is evidence for the receiver; the copy in the sharer's Consent Registry is the one enforced.",
+  "schema:version": "0.2.0-litlfred",
+  "dcterms:type": "Structures: Resource Profiles",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/trust-phw/StructureDefinition/PHWDocumentWithConsent"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/StructureDefinition/PHWDocumentWithConsent--48488735.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "1e44fc31959132396cc39189bbd8310e90009873"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.trust-phw",
+    "schema:version": "0.2.0-litlfred",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/trust-phw"
+    }
+  }
+}

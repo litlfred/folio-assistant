@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2025/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2025/cat-harness/capability/node-runtime.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2025/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2025",
+    "sha": "19b2306ebfc378d0e71317450441ec2925585c93",
+    "pr": "repin-train/20261107-2025",
+    "run": "42411006168"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2025/cat-harness/capability/node-runtime",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "node-runtime",
+      "name": "Node.js Runtime",
+      "description": "Node.js runtime with npm package manager.",
+      "detection": {
+        "method": "command",
+        "command": "node --version"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/node-runtime"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2025/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2025/smart-trust-phw/role/holder.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2025/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2025",
+    "sha": "19b2306ebfc378d0e71317450441ec2925585c93",
+    "pr": "repin-train/20261107-2025",
+    "run": "42411006168"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2025/smart-trust-phw/role/holder",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Holder",
+      "title": "Holder",
+      "notation": "holder",
+      "description": "The person who holds a Personal Health Wallet, records consent, and presents verifiable health links and certificates. Specializes the ActorDefinition Holder (input/fsh/actors/actors.fsh).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/holder"
+    }
+  ]
+}

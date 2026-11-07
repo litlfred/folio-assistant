@@ -1,0 +1,63 @@
+{
+  "$ref": "#/definitions/MemoryEntry",
+  "definitions": {
+    "MemoryEntry": {
+      "type": "object",
+      "properties": {
+        "at": {
+          "type": "string",
+          "minLength": 1
+        },
+        "by": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "note",
+            "checkpoint",
+            "taken-up",
+            "step-done",
+            "closed"
+          ]
+        },
+        "text": {
+          "type": "string"
+        },
+        "process": {
+          "type": "string",
+          "minLength": 1
+        },
+        "step": {
+          "type": "string",
+          "minLength": 1
+        },
+        "instance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "at",
+        "by",
+        "kind",
+        "text"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/memory-record/MemoryEntrySchema.schema.json",
+  "title": "MemoryEntrySchema",
+  "description": "Generated from `MemoryEntrySchema` in schemas/kg/memory-record.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261107-2025",
+    "sha": "19b2306ebfc378d0e71317450441ec2925585c93",
+    "pr": "repin-train/20261107-2025",
+    "run": "42411006168"
+  }
+}
