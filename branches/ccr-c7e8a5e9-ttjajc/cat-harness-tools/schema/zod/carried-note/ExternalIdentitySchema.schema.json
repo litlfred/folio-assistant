@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/ExternalIdentity",
+  "definitions": {
+    "ExternalIdentity": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "actor": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "provider",
+        "id"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/carried-note/ExternalIdentitySchema.schema.json",
+  "title": "ExternalIdentitySchema",
+  "description": "Generated from `ExternalIdentitySchema` in schemas/kg/carried-note.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  }
+}

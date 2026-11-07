@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/skill/deterministic-and-agentic.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/skill/deterministic-and-agentic",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "deterministic-and-agentic",
+      "title": "The deterministic-to-agentic spectrum",
+      "description": "Workflow processing is a SPECTRUM, not a switch. The four mechanisms this repository uses to sit at different points on it, the four axes an answer has to name, what is measured today, and the three research questions — which are open, and marked as open.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/deterministic-and-agentic.md",
+      "instructionLines": 262,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deterministic-and-agentic"
+    }
+  ]
+}

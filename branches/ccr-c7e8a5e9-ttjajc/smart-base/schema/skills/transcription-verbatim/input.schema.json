@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Transcription Verbatim Input",
+  "description": "Authored L1 for a source with no usable text layer (a poster, a slide deck), to check against the image narratives and transcriptions it names. A step of recommendation-extraction, run when recommendation-candidates found no normative sentence in the entry's text layer.",
+  "type": "object",
+  "required": [
+    "dir"
+  ],
+  "properties": {
+    "dir": {
+      "type": "string",
+      "description": "The directory of authored *.l1.yaml; each names its library entry in graph.source.entry."
+    }
+  },
+  "additionalProperties": false,
+  "$id": "http://smart.who.int/base/schema/skills/transcription-verbatim/input.schema.json",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  }
+}

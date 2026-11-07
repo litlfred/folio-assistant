@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/End_Pipeline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/End_Pipeline",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Deployment complete",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/process/Process_ContentChangeReviewPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Pipeline",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/process/Process_ContentChangeReviewPublish#flow/p7b"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/End_Pipeline"
+    }
+  ]
+}

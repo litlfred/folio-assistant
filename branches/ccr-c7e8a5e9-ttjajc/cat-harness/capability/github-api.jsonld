@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/capability/github-api.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/capability/github-api",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "github-api",
+      "name": "GitHub API (token or OAuth)",
+      "description": "Ability to write to the forge over its HTTP API — create or update a file, open a pull request, comment — authenticated by a token or an OAuth grant rather than by holding a checkout. DISTINCT FROM git-push: this writes with no working tree, so it is the path available to a process that has a credential and no clone, and its reach is whatever the credential was granted rather than whatever the filesystem allows. Probed by CONFIGURATION, not by calling the API: a probe that issued a request would be indistinguishable from an outage or a rate limit, and would touch an external host to answer a question about local setup — the same reading deploy-access and signing-api take. Declared 2026-09-20 on the owner's answer that the write path is several tools chosen by capability and permission, not one design.",
+      "detection": {
+        "method": "env-var",
+        "variable": "GITHUB_TOKEN"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/github-api"
+    }
+  ]
+}

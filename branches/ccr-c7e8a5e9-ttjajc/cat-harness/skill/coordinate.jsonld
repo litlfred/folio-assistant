@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/skill/coordinate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/skill/coordinate",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "coordinate",
+      "title": "/coordinate — multi-agent / multi-PR coordination",
+      "description": "Coordinate work across multiple in-flight Claude PRs working toward a shared goal. Post intent + asks on related PRs, identify cherry-pickable work, respond to code-review comments on your own PR, periodically triage sibling PR activity (new comments, CI status, new commits), watch main + newly created branches/PRs, escalate inconsistent findings to the author, and keep a coordination ledger up to date.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/coordinate.md",
+      "instructionLines": 513,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/coordinate"
+    }
+  ]
+}

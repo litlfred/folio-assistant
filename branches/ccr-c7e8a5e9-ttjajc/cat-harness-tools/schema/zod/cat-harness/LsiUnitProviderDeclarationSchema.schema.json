@@ -1,0 +1,37 @@
+{
+  "$ref": "#/definitions/LsiUnitProviderDeclaration",
+  "definitions": {
+    "LsiUnitProviderDeclaration": {
+      "type": "object",
+      "properties": {
+        "graphKind": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "module": {
+          "type": "string",
+          "minLength": 1
+        },
+        "export": {
+          "type": "string",
+          "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$"
+        }
+      },
+      "required": [
+        "graphKind",
+        "module",
+        "export"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cat-harness/LsiUnitProviderDeclarationSchema.schema.json",
+  "title": "LsiUnitProviderDeclarationSchema",
+  "description": "Generated from `LsiUnitProviderDeclarationSchema` in schemas/kg/cat-harness.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  }
+}

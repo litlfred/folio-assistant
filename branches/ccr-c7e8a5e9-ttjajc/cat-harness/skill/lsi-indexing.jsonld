@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/skill/lsi-indexing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/skill/lsi-indexing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "lsi-indexing",
+      "title": "LSI indexing — the platform's application of `methodologies/lsi.md`",
+      "description": "Build, read and audit a Latent Semantic Indexing index over a declared prose graph — a library, the skills, the work items, docs — to find units that discuss the same thing in different words, near-duplicates, outlier clusters, and a proposed home for unfiled work. Every output is a proposal; LSI never writes a relation.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/package/graph-management"
+      ],
+      "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
+      "instructionLines": 268,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/lsi-indexing"
+    }
+  ]
+}

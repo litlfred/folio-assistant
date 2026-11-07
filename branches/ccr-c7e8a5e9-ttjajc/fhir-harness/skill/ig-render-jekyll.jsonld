@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/fhir-harness/skill/ig-render-jekyll.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-render-jekyll.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-render-jekyll",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "ig-render-jekyll",
+      "title": "ig-render-jekyll",
+      "description": "Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail. Read before adding a representation, a menu entry, or a page kind.",
+      "instructionsPath": "skills/fhir-ig-base/ig-render-jekyll.md",
+      "instructionLines": 222,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    }
+  ]
+}

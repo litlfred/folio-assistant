@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/fhir-harness/skill/fhir-validation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "fhir-validation",
+      "title": "fhir-validation",
+      "instructionsPath": "skills/content/fhir-ig-authoring/fhir-validation.md",
+      "instructionLines": 108,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/fhir-validation/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    }
+  ]
+}

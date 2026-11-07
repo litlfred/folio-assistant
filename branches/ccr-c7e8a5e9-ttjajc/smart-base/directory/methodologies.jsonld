@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/smart-base/directory/methodologies.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/methodologies.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/methodologies",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "methodologies",
+      "path": "methodologies/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/methodology"
+      ],
+      "description": "Methodologies adopted whole from the WHO digital-health corpus, each rendered from its source, never a house process with a citation added. `diig.md` is the first. `skip`: a downstream instance inherits the method by depending on this layer, not by copying the directory.",
+      "readmePath": "methodologies/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/methodologies"
+    }
+  ]
+}

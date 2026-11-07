@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/skill/adopt-methodology-from-source.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/skill/adopt-methodology-from-source",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "adopt-methodology-from-source",
+      "title": "Adopt a methodology from a source document",
+      "description": "The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related work items and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/library/methodology-from-source.bpmn.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/adopt-methodology-from-source.md",
+      "instructionLines": 42,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adopt-methodology-from-source"
+    }
+  ]
+}

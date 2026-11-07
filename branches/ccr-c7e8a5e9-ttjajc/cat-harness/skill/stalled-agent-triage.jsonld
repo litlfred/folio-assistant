@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/skill/stalled-agent-triage.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/skill/stalled-agent-triage",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "stalled-agent-triage",
+      "title": "Stalled-agent triage",
+      "description": "Triage incoming work from stalled agents. Given named agents or sessions, or a time window, find what they left (handover reports, open PRs, branches, work items, issue and PR discussions, workflow instances), collect as many handover reports as exist, reconstruct the rest, consolidate the workstreams into 2–4 themes, recommend how to fold them into the current or a new work plan, and coordinate open PRs with their owners (the merge steward above all). Use when a session or a swarm has stalled, timed out or lost its container, or when the owner says \"pick up what X was doing\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/stalled-agent-triage.md",
+      "instructionLines": 116,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/stalled-agent-triage"
+    }
+  ]
+}

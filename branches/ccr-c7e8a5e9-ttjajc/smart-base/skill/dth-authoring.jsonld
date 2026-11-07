@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/smart-base/skill/dth-authoring.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/dth-authoring.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/dth-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "dth-authoring",
+      "title": "dth-authoring",
+      "description": "How a WHO Digital Transformation Handbook (DTH) is produced, from sources to publication, in the seven stages and milestones of dth-authoring.bpmn — and the rules the diagram cannot carry: which review sheet each stage uses, the DAK kinds every DTH is written in, and how a term is deprecated. Read before starting a new DTH, before moving one to its next stage, and before setting up its feedback or public-comment sheet.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/dth-authoring.md",
+      "instructionLines": 87,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

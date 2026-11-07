@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/bootstrap/process/Process_InitializeHarness/node/A_DetermineHarness.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/bootstrap/process/Process_InitializeHarness/node/A_DetermineHarness",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Determine which harness, and where",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/bootstrap/process/Process_InitializeHarness",
+      "requires": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/bootstrap/skill/confirm-harness",
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/bootstrap/process/Process_Discussion"
+    }
+  ]
+}

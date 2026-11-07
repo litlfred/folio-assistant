@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Plan.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Plan",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Plan the paper",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Author",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/skill/content-plan"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/process/Process_PaperAuthoring#flow/A01"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/process/Process_PaperAuthoring#flow/A02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Plan"
+    }
+  ]
+}

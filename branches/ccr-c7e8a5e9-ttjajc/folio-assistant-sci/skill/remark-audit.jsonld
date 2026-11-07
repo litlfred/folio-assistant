@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/skill/remark-audit.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/skill/remark-audit",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "remark-audit",
+      "title": "Remark Audit Skill",
+      "description": "Audit remarks for provable content. Every remark must interpret a mathematical statement that can be formalized in Lean. Detects dangling remarks (no `interprets` link), ambiguous domain terms, and missing formalization.",
+      "instructionsPath": "skills/content/folio-paper-adapter/remark-audit.md",
+      "instructionLines": 181,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-sci/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/remark-audit"
+    }
+  ]
+}

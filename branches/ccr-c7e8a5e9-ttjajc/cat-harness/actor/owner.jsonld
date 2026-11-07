@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/actor/owner.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/cat-harness/actor/owner",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "owner",
+      "actorKind": "person",
+      "title": "Owner (gateway session)",
+      "description": "The repository owner signed in through the auth-gateway's GitHub OAuth. The gateway's `owner` tier as an actor (issue #1207). Over HTTP it holds exactly what `collaborator` holds, because no route distinguishes them; `commit to main` is GitHub's branch protection, not a route. Its grants are cat-harness/policies/http-gateway.jsonld. Workflow history names this actor, never the login (owner, 2026-09-24): the repository owner's steps are recorded as `owner`, and the login-to-`owner` mapping is the data store's alone. Without a login the same person is a reader/browser (`cat-harness:anyone`: visualize and render only).",
+      "hasCapability": [],
+      "mayTakeRole": [],
+      "permissionName": [
+        "content-authoring",
+        "review-comments",
+        "adjudication",
+        "perform-task"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/owner"
+    }
+  ]
+}

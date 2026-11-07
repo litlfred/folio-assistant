@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/smart-base/directory/tools.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/tools.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/tools",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "tools",
+      "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/tools"
+      ],
+      "description": "smart-base's Tool nodes: DAK-shaped capabilities such as DMN to FHIR Questionnaire. A Tool node is a declaration (what it consumes, what it produces, which skill it satisfies), not a copy of upstream Python; execution stays upstream until it moves too. Capabilities that are not DAK-shaped, such as the two Library strippers, belong to `fhir-harness` by `smart-stack-layering`.",
+      "readmePath": "tools/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/tools"
+    }
+  ]
+}

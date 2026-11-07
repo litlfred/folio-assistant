@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/process/Process_BoardOpenClose/node/A_Close.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "ccr-c7e8a5e9-ttjajc",
+    "sha": "32c0fa2330c911dac2e3dab4f13491c17da6c616",
+    "pr": "3026/merge",
+    "run": "42397285124"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/process/Process_BoardOpenClose/node/A_Close",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Close the window back to its avatar",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/process/Process_BoardOpenClose",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/role/board-renderer",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/process/Process_BoardOpenClose/lane/Lane_Renderer",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/skill/board-windows"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/process/Process_BoardOpenClose#flow/F_DoClose"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/process/Process_BoardOpenClose#flow/F_Closed"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-c7e8a5e9-ttjajc/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose/node/A_Close"
+    }
+  ]
+}
