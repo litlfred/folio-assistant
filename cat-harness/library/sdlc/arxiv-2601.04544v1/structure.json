@@ -1,0 +1,732 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2601.04544v1",
+ "source": {
+  "file": "arxiv-2601.04544v1.pdf",
+  "sha256": "5472dcd690fe1c8958cd9a22f07a763720a03b6b45fa57c5d1d304977acd5db9",
+  "bytes": 534187,
+  "pages": 16,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-09T16:59:54Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2601.04544",
+   "version": "1",
+   "primary_class": "cs.AI",
+   "stamp_date": "8 Jan 2026"
+  },
+  "doi": null,
+  "title": "TCAndon-Router: Adaptive Reasoning Router for Multi-Agent Collaboration",
+  "authors_raw": "Multi-Agent Collaboration",
+  "title_lines": [
+   "TCAndon-Router",
+   "TCAndon-Router: Adaptive Reasoning Router for"
+  ],
+  "abstract": "Multi-Agent Systems(MAS) have become a powerful paradigm for building high performance intelli- gent applications. Within these systems, the router responsible for determining which expert agents should handle a given query plays a crucial role in overall performance. Existing routing strategies generally fall into two categories: performance routing, which balances latency and cost across mod- els of different sizes, and task routing, which assigns queries to domain-specific experts to improve accuracy. In real-world enterprise applications, task routing is more suitable; however, most existing approaches rely on static single-label decisions, which introduce two major limitations: (i) di\ufb00iculty in seamlessly integrating new agents as business domains expand, and (ii) routing conflicts caused by overlapping agent capabilities, ultimately degrading accuracy and robustness.To address these challenges, we propose TCAndon-Router(TCAR): an adaptive reasoning router for multi-agent col- laboration. Unlike traditional routers, TCAR supports dynamic agent onboarding and first generates a natural-language reasoning chain before predicting a set of candidate agents capable of handling the query. In addition, we design a collaborative execution pipeline in which selected agents indepen- dently produce responses, which are then aggregated and refined into a single high-quality response by a dedicated Refining Agent.Experiments on public datasets and real enterprise data demonstrate that TCAR significantly improves routing accuracy, reduces routing conflicts, and remains robust in am- biguous scenarios. We have released TCAR at https://huggingface.co/tencent/TCAndon-Router to support future research on explainable and collaborative multi-agent routing.",
+  "docinfo": {
+   "Title": "TCAndon-Router: Adaptive Reasoning Router for Multi-Agent Collaboration",
+   "Author": "Jiuzhou Zhao; Chunrong Chen; Chenqi Qiao; Lebin Zheng; Minqi Han; Yanchi Liu Yongzhou Xu Xiaochuan Xu Min Zhang",
+   "Producer": "pikepdf 8.15.1",
+   "Creator": "arXiv GenPDF (tex2pdf:57610bf)"
+  },
+  "title_raw": "TCAndon-Router TCAndon-Router: Adaptive Reasoning Router for",
+  "title_source": "metadata",
+  "title_verified": true,
+  "title_evidence": {
+   "metadata": "TCAndon-Router: Adaptive Reasoning Router for Multi-Agent Collaboration",
+   "heading": "TCAndon-Router: Adaptive Reasoning Router for Multi-Agent Collaboration",
+   "outline": "Introduction",
+   "text": "TCAndon-Router TCAndon-Router: Adaptive Reasoning Router for",
+   "corroborated_by": [
+    "heading",
+    "page"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "1"
+  },
+  {
+   "level": 1,
+   "title": "Related Work",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "2"
+  },
+  {
+   "level": 1,
+   "title": "Method",
+   "page": 3,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "3"
+  },
+  {
+   "level": 2,
+   "title": "Problem Formulation",
+   "page": 3,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "3"
+  },
+  {
+   "level": 2,
+   "title": "Dynamic Agent Addition",
+   "page": 3,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "3"
+  },
+  {
+   "level": 2,
+   "title": "Multi-Agent Conflicts",
+   "page": 3,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "3"
+  },
+  {
+   "level": 2,
+   "title": "Training TCAR",
+   "page": 4,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "4"
+  },
+  {
+   "level": 1,
+   "title": "Experiments",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "6"
+  },
+  {
+   "level": 2,
+   "title": "Experimental Setup",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "6"
+  },
+  {
+   "level": 2,
+   "title": "Main Results",
+   "page": 7,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "7"
+  },
+  {
+   "level": 2,
+   "title": "Ablation Studies",
+   "page": 7,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "7"
+  },
+  {
+   "level": 1,
+   "title": "Analysis",
+   "page": 9,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "9"
+  },
+  {
+   "level": 2,
+   "title": "Error Analysis",
+   "page": 9,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "9"
+  },
+  {
+   "level": 2,
+   "title": "Multi-Agent Collaboration Analysis",
+   "page": 10,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "10"
+  },
+  {
+   "level": 2,
+   "title": "Efficiency and Cost Analysis",
+   "page": 10,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "10"
+  },
+  {
+   "level": 1,
+   "title": "Limitations",
+   "page": 10,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "10"
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 10,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "10"
+  },
+  {
+   "level": 1,
+   "title": "prompt",
+   "page": 15,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "15"
+  },
+  {
+   "level": 1,
+   "title": "Badcase",
+   "page": 15,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": "15"
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "figure",
+   "number": "1",
+   "title": "(a) performance router, which balances latency and cost across models of different sizes. (b) task router, which assigns queries to domain-specific experts to improve accuracy",
+   "page": 2,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "2"
+  },
+  {
+   "kind": "figure",
+   "number": "2",
+   "title": "(a) Solo Agent: the router outputs a single agent, and that agent directly responds to the user\u2019s query.(b) Refining Agent: the router outputs a set of candidate agents, and the refining agent integrates their outputs into a final answer",
+   "page": 5,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "5"
+  },
+  {
+   "kind": "table",
+   "number": "1",
+   "title": "Comparison of model performance across datasets",
+   "page": 7,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "7"
+  },
+  {
+   "kind": "figure",
+   "number": "3",
+   "title": "In scenarios where consultation-type and troubleshooting-type queries create conflicts among candidate agents, we compare two strategies: randomly selecting a single agent to respond versus allowing multiple agents to answer followed by aggregation by the Refining Agent. The results show that the Re",
+   "page": 8,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "8"
+  },
+  {
+   "kind": "table",
+   "number": "2",
+   "title": "Comparison of the performance with and without reasoning output",
+   "page": 8,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "8"
+  },
+  {
+   "kind": "table",
+   "number": "3",
+   "title": "Comparison between SFT-only training and SFT followed by RL",
+   "page": 8,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": "8"
+  },
+  {
+   "kind": "figure",
+   "number": "4",
+   "title": "Comparing RL initialized from the SFT model and from the Slerp-merged model, we observe that both approaches achieve almost the same reward throughout training",
+   "page": 9,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": "9"
+  },
+  {
+   "kind": "table",
+   "number": "4",
+   "title": "Comparison between initializing the RL stage with the SFT model and initializing it with the Slerp-merged model",
+   "page": 9,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": "9"
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": "1",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 2,
+   "label": "2",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 3,
+   "label": "3",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 4,
+   "label": "4",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 5,
+   "label": "5",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 6,
+   "label": "6",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 7,
+   "label": "7",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 8,
+   "label": "8",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 9,
+   "label": "9",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 10,
+   "label": "10",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 11,
+   "label": "11",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 12,
+   "label": "12",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 13,
+   "label": "13",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 14,
+   "label": "14",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 15,
+   "label": "15",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  },
+  {
+   "physical": 16,
+   "label": "16",
+   "source": "printed",
+   "confidence": 0.7,
+   "evidence": [
+    "printed"
+   ]
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 2130,
+   "n_words": 268,
+   "label_start": "1",
+   "label_end": "1"
+  },
+  {
+   "id": "sec-000-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 5022,
+   "n_words": 680,
+   "label_start": "1",
+   "label_end": "2"
+  },
+  {
+   "id": "sec-001-related-work",
+   "number": null,
+   "title": "Related Work",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 2,
+   "n_chars": 477,
+   "n_words": 77,
+   "label_start": "2",
+   "label_end": "2"
+  },
+  {
+   "id": "sec-002-method",
+   "number": null,
+   "title": "Method",
+   "level": 1,
+   "page_start": 2,
+   "page_end": 3,
+   "n_chars": 2249,
+   "n_words": 313,
+   "label_start": "2",
+   "label_end": "3"
+  },
+  {
+   "id": "sec-003-problem-formulation",
+   "number": null,
+   "title": "Problem Formulation",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 1046,
+   "n_words": 176,
+   "label_start": "3",
+   "label_end": "3"
+  },
+  {
+   "id": "sec-004-dynamic-agent-addition",
+   "number": null,
+   "title": "Dynamic Agent Addition",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 3,
+   "n_chars": 533,
+   "n_words": 92,
+   "label_start": "3",
+   "label_end": "3"
+  },
+  {
+   "id": "sec-005-multi-agent-conflicts",
+   "number": null,
+   "title": "Multi-Agent Conflicts",
+   "level": 2,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 4132,
+   "n_words": 581,
+   "label_start": "3",
+   "label_end": "4"
+  },
+  {
+   "id": "sec-006-training-tcar",
+   "number": null,
+   "title": "Training TCAR",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 6,
+   "n_chars": 4148,
+   "n_words": 657,
+   "label_start": "4",
+   "label_end": "6"
+  },
+  {
+   "id": "sec-007-experiments",
+   "number": null,
+   "title": "Experiments",
+   "level": 1,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 53,
+   "n_words": 8,
+   "label_start": "6",
+   "label_end": "6"
+  },
+  {
+   "id": "sec-008-experimental-setup",
+   "number": null,
+   "title": "Experimental Setup",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 3950,
+   "n_words": 559,
+   "label_start": "6",
+   "label_end": "7"
+  },
+  {
+   "id": "sec-009-main-results",
+   "number": null,
+   "title": "Main Results",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 7,
+   "n_chars": 2047,
+   "n_words": 280,
+   "label_start": "7",
+   "label_end": "7"
+  },
+  {
+   "id": "sec-010-ablation-studies",
+   "number": null,
+   "title": "Ablation Studies",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 9,
+   "n_chars": 4591,
+   "n_words": 686,
+   "label_start": "7",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-011-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 337,
+   "n_words": 51,
+   "label_start": "9",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-012-analysis",
+   "number": null,
+   "title": "Analysis",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 410,
+   "n_words": 53,
+   "label_start": "9",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-013-limitations",
+   "number": null,
+   "title": "Limitations",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 3,
+   "n_words": 1,
+   "label_start": "9",
+   "label_end": "9"
+  },
+  {
+   "id": "sec-014-error-analysis",
+   "number": null,
+   "title": "Error Analysis",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 10,
+   "n_chars": 957,
+   "n_words": 138,
+   "label_start": "9",
+   "label_end": "10"
+  },
+  {
+   "id": "sec-015-multi-agent-collaboration-analysis",
+   "number": null,
+   "title": "Multi-Agent Collaboration Analysis",
+   "level": 2,
+   "page_start": 10,
+   "page_end": 15,
+   "n_chars": 13558,
+   "n_words": 1776,
+   "label_start": "10",
+   "label_end": "15"
+  },
+  {
+   "id": "sec-016-prompt",
+   "number": null,
+   "title": "prompt",
+   "level": 1,
+   "page_start": 15,
+   "page_end": 15,
+   "n_chars": 1785,
+   "n_words": 295,
+   "label_start": "15",
+   "label_end": "15"
+  },
+  {
+   "id": "sec-017-badcase",
+   "number": null,
+   "title": "Badcase",
+   "level": 1,
+   "page_start": 15,
+   "page_end": 16,
+   "n_chars": 1436,
+   "n_words": 177,
+   "label_start": "15",
+   "label_end": "16"
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 19,
+  "toc_inferred_entries": 0,
+  "figure_entries": 8,
+  "figure_sequence_gaps": [],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 19,
+  "chars_total": 48864
+ }
+}

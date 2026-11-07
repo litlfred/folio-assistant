@@ -1,0 +1,2 @@
+- [Content types — WHO SMART IGs]({{ '/smart-base/concepts/who-smart-content-types.html#who-smart-implementation-guides-l3' | relative_url }})
+- [Authoring a WHO SMART DAK (L2)](who-smart-dak.html) — the upstream L2 layer

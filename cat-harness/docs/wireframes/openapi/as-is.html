@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: openapi — the OpenAPI documents an instance holds</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .wrap { max-width: 68rem; margin: 0 auto; padding: 8px 16px 48px; }
+  h1 { font-size: 26px; margin: 16px 0 4px; }
+  h2 { font-size: 20px; margin: 24px 0 8px; }
+  .sub { color: var(--mute); font-size: 14px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { background: var(--fill); }
+  code { overflow-wrap: anywhere; }
+  .clip { width: 100%; overflow-x: auto; }
+  .m { display: inline-block; border: 1px solid var(--ink); padding: 0 6px; font-size: 12px; font-weight: 700; margin-right: 6px; }
+  .frame { border: 1px solid var(--line); padding: 8px 14px; margin: 16px 0; }
+</style>
+</head>
+<body>
+<div class="wf-meta">As-is wireframe · openapi · covers: cat-harness/openapi. Drawn top to bottom: the hub at en/cat-harness/openapi/, then the page of the one declaring instance (an IG layer above this one, drawn as &lt;ig&gt; so this layer names no layer above it), then one document page and one operation page, as gen-openapi-viewer writes them</div>
+<div class="wrap">
+<h1>OpenAPI documents</h1>
+<p>The API descriptions each instance holds, ingested verbatim with their provenance. Each one has a page, and so does each of its operations. The documents are copies, and the authority is the source each one names.</p>
+<div class="clip">
+<table aria-label="Instances holding OpenAPI documents">
+<thead><tr><th>instance</th><th>directory</th><th>documents</th></tr></thead>
+<tbody><tr><td><a href="#ig">&lt;ig&gt;</a></td><td><code>&lt;ig&gt;/openapi</code></td><td><a href="#doc">Trust Network Gateway API</a></td></tr></tbody>
+</table>
+</div>
+
+<div class="frame" id="ig">
+<h1>API documents</h1>
+<ul><li><a href="#doc">Trust Network Gateway API</a> 1.10.0 — 22 operation(s)</li></ul>
+<p class="sub">A Swagger-style deep link (<code>#/&lt;tag&gt;/&lt;operationId&gt;</code>) to this page forwards to that operation's own page.</p>
+</div>
+
+<div class="frame" id="doc">
+<h1>Trust Network Gateway API</h1>
+<p class="sub">1.10.0 · OpenAPI 3 · source: the repository, path and commit its provenance node names</p>
+<h2>Operations</h2>
+<div class="clip">
+<table aria-label="Operations of the document">
+<thead><tr><th>operation</th><th>summary</th></tr></thead>
+<tbody>
+<tr><td><a href="#op"><span class="m">GET</span><code>/trustList</code></a></td><td>Download the trust list</td></tr>
+<tr><td><span class="m">POST</span><code>/trustedCertificate</code></td><td>Upload a trusted certificate</td></tr>
+<tr><td><span class="m">DELETE</span><code>/trustedReference/{uuid}</code></td><td>Delete a trusted reference</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="frame" id="op">
+<p><a href="#doc">← Trust Network Gateway API</a></p>
+<h1><span class="m">GET</span><code>/trustList</code></h1>
+<p>Download the trust list</p>
+<h2>Parameters</h2>
+<p class="sub">Drawn by the loader from the document copied beside the page: name, where it goes, whether it is required, its schema.</p>
+<h2>Responses</h2>
+<p class="sub">One row per status code, with its media type and schema.</p>
+</div>
+</div>
+</body>
+</html>
