@@ -368,3 +368,14 @@ describe("a labelled PR merged outside the train is reported once (2026-11-06, #
     expect(await strays(api as never, "o/r", [], now)).toEqual([7]);
   });
 });
+
+describe("the train's checkout is shallow; only a build fetches history (2026-11-06: 28 min)", () => {
+  test("fetch-depth 1, and the build step unshallows before it stacks", () => {
+    const s = readFileSync(join(ROOT, ".github/workflows/merge-train.yml"), "utf-8");
+    expect(s).toContain("fetch-depth: 1");
+    expect(s).not.toContain("fetch-depth: 0");
+    const build = s.slice(s.indexOf("id: build"));
+    expect(build.indexOf("--unshallow")).toBeGreaterThan(-1);
+    expect(build.indexOf("--unshallow")).toBeLessThan(build.indexOf("bun run cat merge:train"));
+  });
+});

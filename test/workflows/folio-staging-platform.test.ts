@@ -49,7 +49,7 @@ for (const job of ["stage", "publish-main"]) {
     const locate = step(job, "Locate the platform");
     const link = step(job, "Link the platform where the folio names it");
 
-    test("a sibling path is checked out inside the workspace, then linked where the folio names it", () => {
+    test(`siblingPathCheckedOutThenLinked[${job}]`, () => {
       const ws = join(realpathSync(mkdtempSync(join(tmpdir(), "runner-"))), "repo");
       mkdirSync(ws);
       const loc = run(locate.run!, ws, { PLATFORM_DIR: "../platform" });
@@ -66,13 +66,13 @@ for (const job of ["stage", "publish-main"]) {
       expect(readFileSync(join(ws, "../platform/marker"), "utf8")).toBe("platform");
     });
 
-    test("a path inside the workspace is checked out where it is named, and not linked", () => {
+    test(`insidePathCheckedOutNotLinked[${job}]`, () => {
       const ws = realpathSync(mkdtempSync(join(tmpdir(), "runner-")));
       const loc = run(locate.run!, ws, { PLATFORM_DIR: "folio-assistant" });
       expect(loc.out).toMatchObject({ outside: "false", checkout: "folio-assistant" });
     });
 
-    test("the link step refuses to replace something already at the named path", () => {
+    test(`linkRefusesToReplace[${job}]`, () => {
       const ws = join(realpathSync(mkdtempSync(join(tmpdir(), "runner-"))), "repo");
       mkdirSync(ws);
       mkdirSync(join(ws, "../platform"));

@@ -18,7 +18,7 @@ const read = (f: string) => Bun.YAML.parse(readFileSync(join(DIR, f), "utf-8")) 
 
 describe("read-only default token", () => {
   for (const f of ["deploy-folio.yml", "pyhecke.yml", "pyodide-smoke.yml", "pyhecke-native-wheels.yml"]) {
-    test(`${f} declares permissions: contents: read at the top`, () => {
+    test(`declaresReadOnlyContents[${f}]`, () => {
       expect(read(f).permissions).toEqual({ contents: "read" });
     });
   }
