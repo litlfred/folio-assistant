@@ -31,10 +31,10 @@
         "url" : "http://smart.who.int/trust-phw/StructureDefinition/SelectiveDisclosure",
         "valueCode" : "disclose-icvp"
       }],
-      "identifier" : [{
+      "identifier" : {
         "system" : "urn:oid:2.16.724.4.8.10.200.10",
         "value" : "d348b02a-3ab8-4cec-bbec-5186abca8c7d"
-      }],
+      },
       "status" : "final",
       "type" : {
         "coding" : [{
@@ -43,9 +43,9 @@
           "display" : "Immunization summary report"
         }]
       },
-      "subject" : [{
+      "subject" : {
         "reference" : "urn:uuid:157863f7-fdea-4d11-92ff-f33345a560e4"
-      }],
+      },
       "date" : "2017-12-11T14:30:00+01:00",
       "author" : [{
         "reference" : "urn:uuid:1c616b24-3895-48c4-9a02-9a64110351ef"
@@ -201,11 +201,11 @@
           "code" : "XM0N24"
         }]
       },
-      "lotNumber" : "67890",
       "patient" : {
         "reference" : "urn:uuid:157863f7-fdea-4d11-92ff-f33345a560e4"
       },
       "occurrenceDateTime" : "2024-05-23",
+      "lotNumber" : "67890",
       "performer" : [{
         "extension" : [{
           "url" : "http://smart.who.int/trust-phw/StructureDefinition/SelectiveDisclosure",

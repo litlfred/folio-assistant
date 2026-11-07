@@ -248,7 +248,12 @@ fit is shortened (<code class="language-plaintext highlighter-rouge">TASK_SIZE</
 or across a lane line</strong>: a gateway’s question above the diamond, its answers beside
 their flows, every label inside one lane;</li><li>have <strong>right-angled flows</strong> and <strong>every name inside its box</strong>, pool and
 lane names inside their strips;</li><li>have <strong>no crossing flows</strong>, and the <strong>lane order that keeps flows between
-lanes shortest</strong>.</li></ul><p><code class="language-plaintext highlighter-rouge">bun run cat bpmn:detangle &lt;file&gt;</code> reports all of it, and <code class="language-plaintext highlighter-rouge">--write</code> fixes
+lanes shortest</strong>: each lane sits next to the lanes it exchanges flows
+with, so <strong>no flow crosses a lane it does not stop in</strong>. A lane that talks
+to only one other lane, such as an owner who only approves the merge
+steward’s card, goes on the outside, next to that lane (owner,
+2026-11-07: <em>“swap owner lane down to reduce arrows across non
+interacting actor lanes”</em>).</li></ul><p><code class="language-plaintext highlighter-rouge">bun run cat bpmn:detangle &lt;file&gt;</code> reports all of it, and <code class="language-plaintext highlighter-rouge">--write</code> fixes
 what it can (lane order, right angles, box and lane sizes, label places).
 Run it before and after, and put both counts in the PR.</p><p><strong>Zero findings on every diagram you touch, or it does not merge</strong> (owner,
 2026-11-02, after 63 of 80 harness diagrams were found with findings: <em>“improve

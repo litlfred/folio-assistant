@@ -1,0 +1,39 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "ValueSet-PHWExplicitConsentKind.jsonld",
+  "@type": "fhir:ValueSet",
+  "dcterms:identifier": "ValueSet/PHWExplicitConsentKind",
+  "schema:name": "PHWExplicitConsentKind",
+  "dcterms:title": "Kinds of explicit consent (HL7 ActConsentDirective)",
+  "dcterms:description": "The HL7 v3 ActConsentDirective codes for consent the holder gives by their own act: opt-in, opt-in with restrictions, opt-out, opt-out with exceptions. Each code's definition is HL7's (terminology.hl7.org, CodeSystem v3-ActCode).",
+  "schema:version": "0.2.0-litlfred",
+  "dcterms:type": "Terminology: Value Sets",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/trust-phw/ValueSet/PHWExplicitConsentKind"
+  },
+  "schema:creativeWorkStatus": "referenced",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWExplicitConsentKind.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "upstream"
+    }
+  ],
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.trust-phw",
+    "schema:version": "0.2.0-litlfred",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/trust-phw"
+    }
+  }
+}
