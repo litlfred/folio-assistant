@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/skill/code-node-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "4f17d27b7a02fb849bd803aa5eac6059e338f803",
+    "pr": "3016/merge",
+    "run": "42359533187"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/skill/code-node-review",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "code-node-review",
+      "title": "Code node review",
+      "description": "Review the knowledge graph's CODE nodes — Tool definitions in the `tools` graph and schema definition nodes under `schemas/` — for the joins a reader cannot see: that a node declares what it is, that what it names resolves, and that the mechanism it describes is the one that actually runs.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/code-node-review.md",
+      "instructionLines": 110,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/code-node-review"
+    }
+  ]
+}

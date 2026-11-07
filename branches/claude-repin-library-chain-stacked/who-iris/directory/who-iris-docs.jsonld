@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/who-iris/directory/who-iris-docs.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "4f17d27b7a02fb849bd803aa5eac6059e338f803",
+    "pr": "3016/merge",
+    "run": "42359533187"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/who-iris/directory/who-iris-docs",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "who-iris-docs",
+      "path": "docs/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/docs"
+      ],
+      "description": "This instance's docs, with a viewer built by cat-harness. Declared in this instance's own file rather than in `cat-harness.json`, because `compose-docs.docsLayers` treats every docs-kind entry there as a composition layer and would overlay this instance's `index.md` onto the site's own. The directory is also mounted verbatim at `/docs/who-iris/`: the mount is a copy of the directory, the viewer an index of it, and the rail links to the viewer (`visualiserHref`).",
+      "readmePath": "docs/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/who-iris/directory/who-iris-docs",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/directory/who-iris-docs"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Lean Formalization Output",
+  "description": "Output schema for the lean-formalization skill.",
+  "type": "object",
+  "required": [
+    "leanFiles",
+    "buildStatus"
+  ],
+  "properties": {
+    "leanFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "module"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "module": {
+            "type": "string"
+          },
+          "sorryCount": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "buildStatus": {
+      "type": "string",
+      "enum": [
+        "success",
+        "warnings",
+        "errors"
+      ]
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "integer"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "error",
+              "warning",
+              "info"
+            ]
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/schema/skills/lean-formalization/output.schema.json",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "4f17d27b7a02fb849bd803aa5eac6059e338f803",
+    "pr": "3016/merge",
+    "run": "42359533187"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/skill/workflow-state.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "4f17d27b7a02fb849bd803aa5eac6059e338f803",
+    "pr": "3016/merge",
+    "run": "42359533187"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/skill/workflow-state",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "workflow-state",
+      "title": "State in a running process",
+      "description": "Where a running process keeps what it knows, and which store answers which question. The three records a step may touch, the one it may not, what `<cat-harness.processes:bean op>` actually performs, and why an instance and a work item must be one answer rather than two.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/workflow-state.md",
+      "instructionLines": 140,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/workflow-state"
+    }
+  ]
+}

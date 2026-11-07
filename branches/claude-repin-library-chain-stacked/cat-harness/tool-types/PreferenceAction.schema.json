@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/tool-types/PreferenceAction.schema.json",
+  "title": "PreferenceAction",
+  "type": "string",
+  "enum": [
+    "get",
+    "set",
+    "reset"
+  ],
+  "description": "Read, write or clear the stored preferences.",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "4f17d27b7a02fb849bd803aa5eac6059e338f803",
+    "pr": "3016/merge",
+    "run": "42359533187"
+  }
+}

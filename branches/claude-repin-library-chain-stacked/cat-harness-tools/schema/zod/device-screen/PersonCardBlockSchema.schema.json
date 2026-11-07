@@ -1,0 +1,165 @@
+{
+  "$ref": "#/definitions/PersonCardBlock",
+  "definitions": {
+    "PersonCardBlock": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "personCard"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "column": {
+          "type": "string",
+          "enum": [
+            "main",
+            "side"
+          ]
+        },
+        "actor": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subtitle": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "value": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mono": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "label",
+              "value"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "chips": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string",
+                "minLength": 1
+              },
+              "tone": {
+                "default": "neutral",
+                "type": "string",
+                "enum": [
+                  "neutral",
+                  "info",
+                  "success",
+                  "warning",
+                  "danger"
+                ]
+              },
+              "icon": {
+                "type": "string",
+                "enum": [
+                  "baby",
+                  "person",
+                  "family",
+                  "clinician",
+                  "health-worker",
+                  "hospital",
+                  "clinic",
+                  "home",
+                  "phone",
+                  "tablet",
+                  "qr",
+                  "paper",
+                  "wifi-off",
+                  "wifi",
+                  "shield-check",
+                  "calendar-check",
+                  "stethoscope",
+                  "link",
+                  "transfer",
+                  "globe",
+                  "key",
+                  "lock",
+                  "database",
+                  "tent",
+                  "bus",
+                  "plane",
+                  "syringe",
+                  "pill",
+                  "pill-off",
+                  "pen",
+                  "heart",
+                  "eye",
+                  "unlock",
+                  "check",
+                  "cross",
+                  "question",
+                  "hash",
+                  "printer",
+                  "camera",
+                  "alert",
+                  "clock",
+                  "user",
+                  "users",
+                  "building",
+                  "scan",
+                  "send",
+                  "layers",
+                  "shield",
+                  "shield-alert",
+                  "monitor",
+                  "kiosk",
+                  "scanner",
+                  "calendar",
+                  "file",
+                  "baby-new"
+                ]
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "banner": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "actor"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/PersonCardBlockSchema.schema.json",
+  "title": "PersonCardBlockSchema",
+  "description": "Generated from `PersonCardBlockSchema` in schemas/process/device-screen.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "4f17d27b7a02fb849bd803aa5eac6059e338f803",
+    "pr": "3016/merge",
+    "run": "42359533187"
+  }
+}

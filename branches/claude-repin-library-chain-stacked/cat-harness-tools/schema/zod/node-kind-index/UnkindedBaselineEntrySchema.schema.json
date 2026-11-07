@@ -1,0 +1,31 @@
+{
+  "$ref": "#/definitions/UnkindedBaselineEntry",
+  "definitions": {
+    "UnkindedBaselineEntry": {
+      "type": "object",
+      "properties": {
+        "typology": {
+          "type": "string",
+          "minLength": 1
+        },
+        "family": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "typology"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/node-kind-index/UnkindedBaselineEntrySchema.schema.json",
+  "title": "UnkindedBaselineEntrySchema",
+  "description": "Generated from `UnkindedBaselineEntrySchema` in schemas/kg/node-kind-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "4f17d27b7a02fb849bd803aa5eac6059e338f803",
+    "pr": "3016/merge",
+    "run": "42359533187"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/tool-types/ReviewThreadId.schema.json",
+  "title": "ReviewThreadId",
+  "type": "string",
+  "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{6,127}$",
+  "description": "A review thread id — a GitHub review-thread node id or a GitLab discussion id",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "4f17d27b7a02fb849bd803aa5eac6059e338f803",
+    "pr": "3016/merge",
+    "run": "42359533187"
+  }
+}
