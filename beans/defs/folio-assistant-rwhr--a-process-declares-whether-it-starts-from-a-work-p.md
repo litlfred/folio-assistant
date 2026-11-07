@@ -5,6 +5,7 @@ title: 'A process declares whether it starts from a work plan; workflow_start sa
 status: completed
 type: feature
 parent: folio-assistant-rwmf
+issue: litlfred/cat-harness-tools#1586
 priority: normal
 created_at: 2026-11-05T20:10:15Z
 updated_at: 2026-11-06T09:53:20Z

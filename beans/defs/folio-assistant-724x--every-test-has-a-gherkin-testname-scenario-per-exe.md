@@ -8,6 +8,7 @@ priority: normal
 created_at: 2026-11-06T09:22:02Z
 updated_at: 2026-11-06T09:57:23Z
 parent: folio-assistant-4j43
+issue: 3006
 ---
 
 Owner rule (litlfred, 2026-11-06): "A test should always have a Gherkin." Harness half: skill text in sdlc-core/test-engineer + test-plan-execution. Tools half (cat-harness-tools): test-plan/v1 feature required (minor), test-has-gherkin in qa-criteria-registry depends_on feature, check:test-gherkin with language adapters. Holder: claude session_01VQDpPfzC5nMP7YvwEJa2XR (2026-11-06).
