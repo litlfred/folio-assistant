@@ -1,0 +1,253 @@
+From 90cf8eff54b72c6bb3daca11ab52f9402a6a2736 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 08:34:25 +0000
+Subject: [PATCH] A re-pin is its own PR, holding only pins
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Owner ruling, 2026-11-07 (about 08:28Z): "Keep repins on own PR so easier
+to stack dependencies".
+
+- remote-mount §"Re-pinning": a re-pin PR changes the pins and what
+  regenerates from them, nothing else; features that need the new pins
+  stack on it; a fix the re-pin needs lands in its owning layer. Counter-
+  example: folio-assistant#2985 carried #2999 and a caches:viz gate line.
+- index-config: the same, in its re-pin paragraph.
+- merge-manager-watcher sweep rule 10: a re-pin PR carrying other changes
+  is sent back to be split onto a stacked PR or into the owning layer.
+- continual-progress, coordinate: the sibling's side.
+- merge-request.bpmn: the stacking step says so; .pot regenerated.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ sdlc/processes/merge-request.bpmn              |  2 +-
+ sdlc/skills/sdlc-core/continual-progress.md    |  5 +++++
+ sdlc/skills/sdlc-core/coordinate.md            |  3 ++-
+ sdlc/skills/sdlc-core/merge-manager-watcher.md |  8 ++++++++
+ skills/kg/kg-core/index-config.md              |  6 ++++--
+ skills/kg/kg-core/remote-mount.md              | 13 +++++++++++++
+ translations/ar/processes/merge-request.pot    |  4 ++--
+ translations/es/processes/merge-request.pot    |  4 ++--
+ translations/fr/processes/merge-request.pot    |  4 ++--
+ translations/ru/processes/merge-request.pot    |  4 ++--
+ translations/zh/processes/merge-request.pot    |  4 ++--
+ 11 files changed, 43 insertions(+), 14 deletions(-)
+
+diff --git a/sdlc/processes/merge-request.bpmn b/sdlc/processes/merge-request.bpmn
+index 70485c35..6d5356ea 100644
+--- a/sdlc/processes/merge-request.bpmn
++++ b/sdlc/processes/merge-request.bpmn
+@@ -121,7 +121,7 @@
+       <bpmn:outgoing>Flow_S17</bpmn:outgoing>
+     </bpmn:exclusiveGateway>
+     <bpmn:task id="Sib_Stack" name="Stack on it and keep working">
+-      <bpmn:documentation>Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write "stacked on &lt;repo&gt;#&lt;n&gt;" in the PR body.</bpmn:documentation>
++      <bpmn:documentation>Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write "stacked on &lt;repo&gt;#&lt;n&gt;" in the PR body. A re-pin is its own PR holding only pins; work that needs the new pins stacks on it, and a fix the re-pin needs lands in its owning layer (owner ruling, 2026-11-07).</bpmn:documentation>
+       <bpmn:extensionElements><bootstrap.processes:skill ref="continual-progress"/></bpmn:extensionElements>
+       <bpmn:incoming>Flow_S16</bpmn:incoming>
+       <bpmn:outgoing>Flow_S18</bpmn:outgoing>
+diff --git a/sdlc/skills/sdlc-core/continual-progress.md b/sdlc/skills/sdlc-core/continual-progress.md
+index 2e0cdcd2..2f83c613 100644
+--- a/sdlc/skills/sdlc-core/continual-progress.md
++++ b/sdlc/skills/sdlc-core/continual-progress.md
+@@ -271,6 +271,11 @@ stack"). The process is the first row of
+   branch) so that CI sees it
+   ([`remote-mount`](../../../skills/kg/kg-core/remote-mount.md)
+   §"Stacking across layers").
++- **A re-pin is its own PR.** Put the pins, and nothing else, in one PR, and
++  stack the work that needs them on it. A fix the re-pin needs lands in
++  its owning layer first (owner ruling, 2026-11-07;
++  [`remote-mount`](../../../skills/kg/kg-core/remote-mount.md)
++  §"Re-pinning").
+ - **Say so:** write `stacked on <repo>#<n>` in the PR body, and list the
+   order in the merge request.
+ - **When the base lands:** retarget the PR onto main, merge main in (across
+diff --git a/sdlc/skills/sdlc-core/coordinate.md b/sdlc/skills/sdlc-core/coordinate.md
+index 2046ac0b..50a1dec8 100644
+--- a/sdlc/skills/sdlc-core/coordinate.md
++++ b/sdlc/skills/sdlc-core/coordinate.md
+@@ -357,7 +357,8 @@ find the merge manager first" and §"Liveness and stalls" (owner rulings,
+ **5. Stack rather than wait.** Work that needs a sibling's unmerged PR
+ starts now, stacked on that PR's branch (or, across layers, on its head
+ SHA), with `stacked on <repo>#<n>` in the body. Pull the sibling's changes
+-in by merging. Never push to its branch: see
++in by merging. A re-pin is its own PR, holding only pins: work that needs
++the new pins stacks on it. Never push to its branch: see
+ [`continual-progress`](continual-progress.md) §"Stack instead of waiting"
+ (owner ruling, 2026-11-07).
+ 
+diff --git a/sdlc/skills/sdlc-core/merge-manager-watcher.md b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+index ac2034e2..8dc2ced1 100644
+--- a/sdlc/skills/sdlc-core/merge-manager-watcher.md
++++ b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+@@ -336,6 +336,14 @@ ledger entry.
+    retargeted to main. A cross-layer stack waits until its pin names the
+    dependency's merge commit on main. The merge request lists the order,
+    and the batch card keeps it.
++10. **A re-pin PR holds only pins** (owner ruling, 2026-11-07: "keep repins
++    on own PR so easier to stack dependencies"). When the sweep finds a
++    re-pin PR (one that changes `index.config.json` or `index.lock.json`)
++    that also carries a feature, workflow logic or a fix, the merge manager
++    does not land it. It sends it back, and asks for the extra change to
++    be split onto a PR stacked on the re-pin, or into the layer that owns
++    the fix. Counter-example: folio-assistant#2985 carried #2999 and a
++    `caches:viz` gate line inside its re-pin.
+ 
+ ## Runner relief
+ 
+diff --git a/skills/kg/kg-core/index-config.md b/skills/kg/kg-core/index-config.md
+index c54f221e..90ede6ac 100644
+--- a/skills/kg/kg-core/index-config.md
++++ b/skills/kg/kg-core/index-config.md
+@@ -237,8 +237,10 @@ and its test holds it to `lockFilesIn`.
+ 
+ **A re-pin ends with one commit per layer, and moves pins only forward**
+ (owner ruling, 2026-11-06, card "Pin target", A). Every layer the change
+-needs is pinned in the same re-pin. The rules are in
+-[`remote-mount`](remote-mount.md) §"Re-pinning".
++needs is pinned in the same re-pin, and the re-pin PR holds the pins and
++nothing else: a change that needs the new pins stacks on it (owner ruling,
++2026-11-07). The rules are in [`remote-mount`](remote-mount.md)
++§"Re-pinning".
+ 
+ ## The reserved `index` stem
+ 
+diff --git a/skills/kg/kg-core/remote-mount.md b/skills/kg/kg-core/remote-mount.md
+index 4820076a..0e3980cb 100644
+--- a/skills/kg/kg-core/remote-mount.md
++++ b/skills/kg/kg-core/remote-mount.md
+@@ -333,6 +333,19 @@ later, and cat-harness-tools at #1564 or later. An asset that a layer commits
+ must also match the tools recipe that generates it, such as cat-harness's
+ `edit-links.js`.
+ 
++**A re-pin is its own PR** (owner ruling, 2026-11-07: "keep repins on own
++PR so easier to stack dependencies"). A re-pin PR changes the pins and
++nothing else: `index.config.json`, `index.lock.json`, the generated `uses:`
++pins, and what regenerates from them. It carries no feature change, no
++workflow logic and no fix.
++
++- A feature that needs the new pins is stacked on the re-pin PR (below)
++  rather than riding inside it.
++- A fix that the re-pin needs lands in the layer that owns it, and the
++  re-pin then only moves the pin.
++- Counter-example: folio-assistant#2985 carried #2999 (the shared ci-setup
++  move) and its own `caches:viz` gate line inside the re-pin.
++
+ **Stacking across layers** (owner ruling, 2026-11-07). Work that needs an
+ unmerged PR in a lower layer does not wait for it. Develop against that
+ PR's branch laid over a fresh mount. A draft PR may pin the dependency
+diff --git a/translations/ar/processes/merge-request.pot b/translations/ar/processes/merge-request.pot
+index 0836f771..4f2680f1 100644
+--- a/translations/ar/processes/merge-request.pot
++++ b/translations/ar/processes/merge-request.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-request\n"
+-"POT-Creation-Date: 2026-11-07T08:26:58.645Z\n"
++"POT-Creation-Date: 2026-11-07T08:31:18.140Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: ar\n"
+@@ -116,7 +116,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-request.bpmn:124
+ #. Diagram element documentation
+-msgid "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body."
++msgid "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body. A re-pin is its own PR holding only pins; work that needs the new pins stacks on it, and a fix the re-pin needs lands in its owning layer (owner ruling, 2026-11-07)."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-request.bpmn:77
+diff --git a/translations/es/processes/merge-request.pot b/translations/es/processes/merge-request.pot
+index 88d2df00..3d1103b0 100644
+--- a/translations/es/processes/merge-request.pot
++++ b/translations/es/processes/merge-request.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-request\n"
+-"POT-Creation-Date: 2026-11-07T08:26:58.645Z\n"
++"POT-Creation-Date: 2026-11-07T08:31:18.140Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: es\n"
+@@ -116,7 +116,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-request.bpmn:124
+ #. Diagram element documentation
+-msgid "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body."
++msgid "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body. A re-pin is its own PR holding only pins; work that needs the new pins stacks on it, and a fix the re-pin needs lands in its owning layer (owner ruling, 2026-11-07)."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-request.bpmn:77
+diff --git a/translations/fr/processes/merge-request.pot b/translations/fr/processes/merge-request.pot
+index 7b1eaa20..97c275d9 100644
+--- a/translations/fr/processes/merge-request.pot
++++ b/translations/fr/processes/merge-request.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-request\n"
+-"POT-Creation-Date: 2026-11-07T08:26:58.646Z\n"
++"POT-Creation-Date: 2026-11-07T08:31:18.140Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: fr\n"
+@@ -116,7 +116,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-request.bpmn:124
+ #. Diagram element documentation
+-msgid "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body."
++msgid "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body. A re-pin is its own PR holding only pins; work that needs the new pins stacks on it, and a fix the re-pin needs lands in its owning layer (owner ruling, 2026-11-07)."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-request.bpmn:77
+diff --git a/translations/ru/processes/merge-request.pot b/translations/ru/processes/merge-request.pot
+index 548098df..dda7bea1 100644
+--- a/translations/ru/processes/merge-request.pot
++++ b/translations/ru/processes/merge-request.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-request\n"
+-"POT-Creation-Date: 2026-11-07T08:26:58.646Z\n"
++"POT-Creation-Date: 2026-11-07T08:31:18.140Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: ru\n"
+@@ -116,7 +116,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-request.bpmn:124
+ #. Diagram element documentation
+-msgid "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body."
++msgid "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body. A re-pin is its own PR holding only pins; work that needs the new pins stacks on it, and a fix the re-pin needs lands in its owning layer (owner ruling, 2026-11-07)."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-request.bpmn:77
+diff --git a/translations/zh/processes/merge-request.pot b/translations/zh/processes/merge-request.pot
+index 3bcdecdf..68b28d25 100644
+--- a/translations/zh/processes/merge-request.pot
++++ b/translations/zh/processes/merge-request.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-request\n"
+-"POT-Creation-Date: 2026-11-07T08:26:58.646Z\n"
++"POT-Creation-Date: 2026-11-07T08:31:18.140Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: zh\n"
+@@ -116,7 +116,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-request.bpmn:124
+ #. Diagram element documentation
+-msgid "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body."
++msgid "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body. A re-pin is its own PR holding only pins; work that needs the new pins stacks on it, and a fix the re-pin needs lands in its owning layer (owner ruling, 2026-11-07)."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-request.bpmn:77
+-- 
+2.43.0
+
