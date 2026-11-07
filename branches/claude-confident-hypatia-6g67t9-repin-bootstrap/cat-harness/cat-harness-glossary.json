@@ -2560,6 +2560,24 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/health-worker",
+      "@type": "skos:Concept",
+      "prefLabel": "Health worker",
+      "title": "Health worker",
+      "notation": "health-worker",
+      "definition": "The generic DAK persona who delivers care at the point of care and records it on a device: completes the DAK's SDC forms and acts on its decision-support guidance (`questionnaire-data-capture.bpmn`, `act-on-decision-support.bpmn`). A DAK's own health-worker roles (a vaccinator, a community health worker) carry these skills or inherit this role. WHO's DAK personas call this a health worker; the role is a lane, never a person.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/point-of-care-system",
+      "@type": "skos:Concept",
+      "prefLabel": "Point-of-care system",
+      "title": "Point-of-care system",
+      "notation": "point-of-care-system",
+      "definition": "The app or EHR the health worker uses: renders the DAK's forms, extracts their resources, applies the DAK's decision tables (PlanDefinitions) and writes what the health worker accepted. Decides nothing clinical. A DAK's own systems (a CHW app, a clinic EHR) carry these skills or inherit this role.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/archimate",
       "@type": "skos:Concept",
       "prefLabel": "Archimate",
@@ -2680,6 +2698,15 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cache",
+      "@type": "skos:Concept",
+      "prefLabel": "CI caches",
+      "title": "CI caches",
+      "notation": "kind/cache",
+      "definition": "CI caches -- one `cache/1.0.0` node per cache a layer declares: key recipe, trust class, location, producer, consumers, save policy, verify and budget. Never the entries; the stored key, size and hit rate come from the daily cache report, so staleness is computed, never claimed.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness",
       "@type": "skos:Concept",
       "prefLabel": "Harness graph",
@@ -2722,6 +2749,15 @@
       "title": "Content adapters",
       "notation": "kind/content-adapters",
       "definition": "The block vocabularies a harness owns, one node per vocabulary carrying its companion roles and whether the platform's code types it. Discovered across the instances; no module lists them.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/device-screen",
+      "@type": "skos:Concept",
+      "prefLabel": "Device screens",
+      "title": "Device screens",
+      "notation": "kind/device-screen",
+      "definition": "Device screens -- what one person sees on one device at a journey step, as typed data-only blocks (QR code, passcode, verdict, record list, consent), drawn as a device mock.",
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld"
     },
     {
@@ -3135,7 +3171,7 @@
       "prefLabel": "User scenarios",
       "title": "User scenarios",
       "notation": "kind/user-scenario",
-      "definition": "User scenarios as journey maps -- one file per journey: ordered steps, per actor what they do and feel, pain points, enablers, the record's trust state, and edges to user stories, BPMN tasks, requirements, FHIR examples and the building blocks each step uses.",
+      "definition": "User scenarios as journey maps -- one file per journey: ordered steps, per actor what they do and feel, pain points, enablers, the record's trust state, and edges to user stories, BPMN tasks, requirements, FHIR examples, the building blocks each step uses and its DAK assets; a DAK user scenario, composed of other journeys in order.",
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld"
     },
     {
@@ -3439,15 +3475,6 @@
         "cat-harness"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/device-screen",
-      "@type": "skos:Concept",
-      "prefLabel": "Device screens",
-      "notation": "device-screen",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-07: this instance no longer declares this graph kind."
     }
   ]
 }

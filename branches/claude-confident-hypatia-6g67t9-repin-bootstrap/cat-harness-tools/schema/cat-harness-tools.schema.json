@@ -1263,6 +1263,48 @@
     "zod/deployment-description/PlacementSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/deployment-description/PlacementSchema.schema.json"
     },
+    "zod/device-screen/ActionsBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/ActionsBlockSchema.schema.json"
+    },
+    "zod/device-screen/AlertBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/AlertBlockSchema.schema.json"
+    },
+    "zod/device-screen/ConsentBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/ConsentBlockSchema.schema.json"
+    },
+    "zod/device-screen/DeviceScreenSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/DeviceScreenSchema.schema.json"
+    },
+    "zod/device-screen/FieldsBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/FieldsBlockSchema.schema.json"
+    },
+    "zod/device-screen/HeaderBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/HeaderBlockSchema.schema.json"
+    },
+    "zod/device-screen/NoteBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/NoteBlockSchema.schema.json"
+    },
+    "zod/device-screen/PasscodeBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/PasscodeBlockSchema.schema.json"
+    },
+    "zod/device-screen/PersonCardBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/PersonCardBlockSchema.schema.json"
+    },
+    "zod/device-screen/QrBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/QrBlockSchema.schema.json"
+    },
+    "zod/device-screen/RecordListBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/RecordListBlockSchema.schema.json"
+    },
+    "zod/device-screen/ScreenBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/ScreenBlockSchema.schema.json"
+    },
+    "zod/device-screen/ScreenGlyphSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/ScreenGlyphSchema.schema.json"
+    },
+    "zod/device-screen/StatusBadgeBlockSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/device-screen/StatusBadgeBlockSchema.schema.json"
+    },
     "zod/methodology/MethodologyFrontMatterSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/methodology/MethodologyFrontMatterSchema.schema.json"
     },
@@ -1308,6 +1350,12 @@
     "zod/user-scenario/BuildingBlocksSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/BuildingBlocksSchema.schema.json"
     },
+    "zod/user-scenario/DakLinkSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/DakLinkSchema.schema.json"
+    },
+    "zod/user-scenario/DakRelSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/DakRelSchema.schema.json"
+    },
     "zod/user-scenario/ExperienceSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/ExperienceSchema.schema.json"
     },
@@ -1325,6 +1373,9 @@
     },
     "zod/user-scenario/JourneyPersonaSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/JourneyPersonaSchema.schema.json"
+    },
+    "zod/user-scenario/PartSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/PartSchema.schema.json"
     },
     "zod/user-scenario/RealisedBySchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/RealisedBySchema.schema.json"
@@ -1424,6 +1475,24 @@
     },
     "zod/binary-release/ReleaseOriginSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/binary-release/ReleaseOriginSchema.schema.json"
+    },
+    "zod/cache/CacheInventoryEntrySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheInventoryEntrySchema.schema.json"
+    },
+    "zod/cache/CacheInventorySchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheInventorySchema.schema.json"
+    },
+    "zod/cache/CacheKindSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheKindSchema.schema.json"
+    },
+    "zod/cache/CacheSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheSchema.schema.json"
+    },
+    "zod/cache/KeyRecipeSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/KeyRecipeSchema.schema.json"
+    },
+    "zod/cache/TrustClassSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/TrustClassSchema.schema.json"
     },
     "zod/change-size/ChangeSizeThresholdSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/change-size/ChangeSizeThresholdSchema.schema.json"
@@ -2575,8 +2644,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
   "staging": {
     "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
-    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "sha": "227ecd6802b69de5833d7ec8ada04898a14288f5",
     "pr": "3012/merge",
-    "run": "42355050584"
+    "run": "42365004948"
   }
 }

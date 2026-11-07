@@ -34,6 +34,7 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/sourceTreeDirty",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
+    "sourceTree": "https://litlfred.github.io/cat-harness/v0/ns/sourceTree",
     "sourceCommitUnavailable": "https://litlfred.github.io/cat-harness/v0/ns/sourceCommitUnavailable",
     "dependsOn": "https://litlfred.github.io/cat-harness/v0/ns/dependsOn",
     "packageId": "https://litlfred.github.io/cat-harness/v0/ns/packageId",
@@ -362,10 +363,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "generatedAt": "2026-11-07T09:12:15.938Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/90f61d713a1e28402072be87d6738fd5ccaef553",
-  "sourceCommitSha": "90f61d713a1e28402072be87d6738fd5ccaef553",
-  "sourceCommitAt": "2026-11-07T08:20:18Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/227ecd6802b69de5833d7ec8ada04898a14288f5",
+  "sourceCommitSha": "227ecd6802b69de5833d7ec8ada04898a14288f5",
+  "sourceTree": "f53ca35107b53132b04974c4ca06022f2ee355a5",
+  "sourceCommitAt": "2026-11-07T10:41:18Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -380,7 +381,7 @@
     "Lane": 180,
     "ProcessNode": 1037,
     "Tool": 175,
-    "Schema": 188,
+    "Schema": 190,
     "ExternalSchema": 28,
     "GraphTypology": 53,
     "Role": 44,
@@ -3359,7 +3360,7 @@
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "sdlc/skills/sdlc-core/test-engineer.md",
-      "instructionLines": 226,
+      "instructionLines": 240,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -54181,6 +54182,16 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-resolver"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/schema/device-screen",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "device-screen",
+      "title": "device-screen",
+      "summary": "Device screens: what one person sees on one device at a moment of a",
+      "module": "schemas/process/device-screen.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/device-screen"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/schema/methodology",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
       "name": "methodology",
@@ -54309,6 +54320,16 @@
       "module": "schemas/sdlc/block-qa.ts",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/directory/schemas",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/block-qa"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/schema/cache",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "cache",
+      "title": "cache",
+      "summary": "Caches — one node per CI cache a layer DECLARES: its key recipe, where its",
+      "module": "schemas/sdlc/cache.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/cache"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/schema/change-size",
@@ -57520,8 +57541,8 @@
   ],
   "staging": {
     "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
-    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "sha": "227ecd6802b69de5833d7ec8ada04898a14288f5",
     "pr": "3012/merge",
-    "run": "42355050584"
+    "run": "42365004948"
   }
 }

@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/directory/smart-base-scripts.jsonld",
   "staging": {
     "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
-    "sha": "90f61d713a1e28402072be87d6738fd5ccaef553",
+    "sha": "227ecd6802b69de5833d7ec8ada04898a14288f5",
     "pr": "3012/merge",
-    "run": "42355050584"
+    "run": "42365004948"
   },
   "@graph": [
     {
@@ -22,7 +22,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "This layer's own scripts and their tests: document kinds, the DAK components figure, the DTH term findings, the smart-kg L1 extraction, the fhir-harness exclusions check, the L1 recommendation scenario candidates with the vocabulary reader they resolve against (fixtures and the measles run under `scripts/fixtures/`), the process renderer, and `dth-init.ts`, which writes a new DTH repository's wiring. Declared so a remote mount brings them.",
+      "description": "This layer's own scripts and their tests: document kinds, the DAK components figure, the DTH term findings, the smart-kg L1 extraction, the fhir-harness exclusions check, the L1 recommendation scenario candidates with the vocabulary reader they resolve against (fixtures and the measles run under `scripts/fixtures/`), and `dth-init.ts`, which writes a new DTH repository's wiring. Declared so a remote mount brings them.",
       "readmePath": "scripts/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-scripts"
