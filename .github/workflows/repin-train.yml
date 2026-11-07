@@ -81,7 +81,19 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          cp index.config.json "$RUNNER_TEMP/index.config.before.json"
           bun run cat mount:repin:standing --summary-file "$RUNNER_TEMP/repin.md"
+          # Step 4a, from the tools the move brought (owner 2026-11-07, option 1):
+          # the step above ran main's pinned tools, which may predate 4a, so a
+          # layer's newly declared directory would never join its explicit
+          # mount list and the pin that brings 4a could never move. Run only
+          # when the mounted tools know `--extend-from`: an older script would
+          # read the flag as nothing and re-plan the whole re-pin. Report-only:
+          # what it cannot add, the train's own checks report.
+          if grep -q -- '--extend-from' cat-harness-tools/scripts/repin-standing.ts; then
+            bun run cat mount:repin:standing --extend-from "$RUNNER_TEMP/index.config.before.json" --summary-file "$RUNNER_TEMP/repin.md" \
+              || echo "::warning::newly declared directories could not all be added; the train's checks say which are missing"
+          fi
           # A moved layer can change its workspace package.json, and every CI
           # job installs with --frozen-lockfile, so the train carries the
           # refreshed bun.lock with its pins (train #2876 failed without it).

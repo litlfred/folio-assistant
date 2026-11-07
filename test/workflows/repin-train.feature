@@ -195,6 +195,13 @@ Feature: The re-pin train's decisions, and the workflows that call them
     Then its cron runs at a fixed minute every 2 hours
     And its concurrency group is repin-train, with cancel-in-progress false
 
+  @test:test/workflows/repin-train.test.ts::the_workflows::after_the_pins_move,_the_moved_tools_add_newly_declared_directories,_and_only_when_they_know_how
+  Scenario: After the pins move, the moved tools add newly declared directories, and only when they know how
+    Given repin-train.yml
+    Then it saves index.config.json before "mount:repin:standing --summary-file"
+    And after it, guarded by "grep -q -- '--extend-from'", it runs "mount:repin:standing --extend-from" with the saved config
+    And that runs before "git add -u"
+
   @test:test/workflows/repin-train.test.ts::the_workflows::the_train_moves_pins_only_through_standing_consent,_and_never_merges_while_it_cuts_the_next_train
   Scenario: The train moves pins only through standing consent, and never merges while it cuts the next train
     Given repin-train.yml
