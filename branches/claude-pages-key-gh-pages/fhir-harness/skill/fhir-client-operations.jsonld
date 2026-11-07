@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/fhir-harness/skill/fhir-client-operations.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-client-operations.jsonld",
+  "staging": {
+    "branch": "claude/pages-key-gh-pages",
+    "sha": "dc25aa397e36a085e98f217bae47be8665eb6bbf",
+    "pr": "3004/merge",
+    "run": "42355441510"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-client-operations",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "fhir-client-operations",
+      "title": "fhir-client-operations",
+      "description": "Reading, searching and writing FHIR R4 resources through the SMARTerFHIR client (`BaseClient` and its vendor subclasses): the launch-context reads, `requestResource`, `create` with its automatic subject/encounter/context hydration, the per-vendor differences, how errors surface, and the operations the library does not have. Written against a pinned upstream commit; read before calling a FHIR server from a SMART app built on it.",
+      "instructionsPath": "skills/fhir-client/fhir-client-operations.md",
+      "instructionLines": 150,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    }
+  ]
+}

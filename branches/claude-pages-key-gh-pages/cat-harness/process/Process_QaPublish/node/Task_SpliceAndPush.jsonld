@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_QaPublish/node/Task_SpliceAndPush.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/pages-key-gh-pages",
+    "sha": "dc25aa397e36a085e98f217bae47be8665eb6bbf",
+    "pr": "3004/merge",
+    "run": "42355441510"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_QaPublish/node/Task_SpliceAndPush",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Splice onto the tip and push (never -f)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_QaPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_QaPublish/lane/Lane_Ci",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_QaPublish#flow/P05",
+        "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_QaPublish#flow/P09"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_QaPublish#flow/P06"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/node/Task_SpliceAndPush"
+    }
+  ]
+}

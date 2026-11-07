@@ -1,0 +1,188 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_RepoHealth",
+ "markers": [
+  {
+   "id": "Task_Check",
+   "name": "Run the health checks, keeping the report either way",
+   "left": 46.38,
+   "top": 22.97,
+   "box": {
+    "left": 34.98,
+    "top": 48.65,
+    "width": 3.77,
+    "height": 6.49
+   }
+  },
+  {
+   "id": "Call_Watch",
+   "name": "Report the verdict on the tracking issue",
+   "left": 74.69,
+   "top": 22.97,
+   "box": {
+    "left": 63.29,
+    "top": 48.65,
+    "width": 3.77,
+    "height": 6.49
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth",
+ "tasks": {
+  "Task_Check": {
+   "id": "Task_Check",
+   "name": "Run the health checks, keeping the report either way",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Check",
+   "lane": "Scheduled log sweep",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
+   "skills": [
+    {
+     "name": "deletion-requires-confirmation"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  },
+  "Call_Watch": {
+   "id": "Call_Watch",
+   "name": "Report the verdict on the tracking issue",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Call_Watch",
+   "lane": "Scheduled log sweep",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
+   "skills": [],
+   "calls": {
+    "name": "Report a verdict on one tracking issue",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TrackedWatch",
+    "diagram": "tracked-watch.html"
+   },
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health"
+     },
+     {
+      "name": "compiled-artefact-cache"
+     },
+     {
+      "name": "content-publish"
+     },
+     {
+      "name": "content-test"
+     },
+     {
+      "name": "content-validate"
+     },
+     {
+      "name": "feature-staging"
+     },
+     {
+      "name": "harness-projections"
+     },
+     {
+      "name": "kg-separation"
+     },
+     {
+      "name": "platform-gates"
+     },
+     {
+      "name": "prepare-merge"
+     },
+     {
+      "name": "publish-verification"
+     },
+     {
+      "name": "qa-reports"
+     },
+     {
+      "name": "remote-mount"
+     },
+     {
+      "name": "render-kg-to-cdn"
+     },
+     {
+      "name": "sub-kg-lifecycle"
+     },
+     {
+      "name": "todo-manager"
+     },
+     {
+      "name": "translation-manager"
+     },
+     {
+      "name": "upstream-version-adoption"
+     },
+     {
+      "name": "watch"
+     }
+    ]
+   }
+  }
+ }
+}

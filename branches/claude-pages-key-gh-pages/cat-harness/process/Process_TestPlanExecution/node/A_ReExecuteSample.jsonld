@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_TestPlanExecution/node/A_ReExecuteSample.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/pages-key-gh-pages",
+    "sha": "dc25aa397e36a085e98f217bae47be8665eb6bbf",
+    "pr": "3004/merge",
+    "run": "42355441510"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_TestPlanExecution/node/A_ReExecuteSample",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Re-execute a sample, blind to the tester's verdicts",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/role/untainted-checker",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_TestPlanExecution/lane/Lane_Checker",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/skill/untainted-verification",
+        "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/skill/test-plan-execution"
+      ],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_TestPlanExecution#flow/F06"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/process/Process_TestPlanExecution#flow/F07"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-pages-key-gh-pages/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_ReExecuteSample"
+    }
+  ]
+}

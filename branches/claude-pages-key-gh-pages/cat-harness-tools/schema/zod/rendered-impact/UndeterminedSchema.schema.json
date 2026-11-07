@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/Undetermined",
+  "definitions": {
+    "Undetermined": {
+      "type": "object",
+      "properties": {
+        "input": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "scope": {
+          "default": "unknown",
+          "type": "string",
+          "enum": [
+            "unknown",
+            "all"
+          ]
+        },
+        "hash": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "input",
+        "reason"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/rendered-impact/UndeterminedSchema.schema.json",
+  "title": "UndeterminedSchema",
+  "description": "Generated from `UndeterminedSchema` in schemas/ui/rendered-impact.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/pages-key-gh-pages",
+    "sha": "dc25aa397e36a085e98f217bae47be8665eb6bbf",
+    "pr": "3004/merge",
+    "run": "42355441510"
+  }
+}
