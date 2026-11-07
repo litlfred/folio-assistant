@@ -43,6 +43,9 @@ case "${1:-}" in
       if [[ "$KEY" =~ ^[A-Za-z0-9._-]{1,200}$ ]]; then k="$KEY"; else k=$(printf '%s' "$KEY" | sha256sum | cut -d' ' -f1); fi
       out determined true; out key "$NS-$STEP-$k"; exit 0
     fi
+    if [ "${WARM:-false}" = true ] && [ "$TRUST" != main-only ]; then
+      die "warm is for main-only steps: exact warms already, and a verdict matches its exact key only"
+    fi
     if [ "$TRUST" = exact ] && [ "$PHASE" = restore ] && [ -z "${VERIFY:-}" ]; then
       die "an exact step needs a verify command: a restore nothing checks is not exact"
     fi

@@ -77,6 +77,13 @@ readable only by that PR's own runs. The policy is built on that:
 | `verdict` | exact key only | main; a PR into its own scope | no — see below |
 | `main-only` | exact key only | main only | no |
 
+`warm: true` lets a `main-only` step also restore an older entry by prefix
+when its own key has none, as a WARM start, never a hit. That is sound because
+a main-only entry is saved only from main, so the prefix can only find main's.
+It is for a step that re-checks what it restored against this tree itself:
+the CI cone (`ci-cone-<job>`), whose records are main's per-check read sets
+and which skips a gate only when every recorded input still matches.
+
 `pull_request_target` never saves (it runs base code over a PR's inputs).
 A save is only ever called after a green step (`if: success()`).
 
