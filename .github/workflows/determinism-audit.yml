@@ -55,11 +55,16 @@ jobs:
         with:
           python-version: "3.12"
 
+      # The branch-kept graphs (work item 9c7h), mounted ONCE, before the
+      # snapshot: the audit's reset puts these same bytes back before each run,
+      # so both runs read one input. Re-mounting before each run read the live
+      # tips, and a branch that moved between the runs showed up as a producer
+      # difference (unlinked-beans' cosine, run 42190970994).
+      - name: Mount the branch-kept graphs at one tip for both runs
+        run: bun run cat state:mount
       - name: Build each producer twice and diff the bytes
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          # What the reset removes and the producers read: the branch-kept graphs (work item 9c7h).
-          PREPARE: bun run cat state:mount
           PRODUCERS: ${{ github.event.inputs.producers }}
         run: |
           # Exit 1 is the finding (a producer differs), reported, not a red run;
