@@ -1,0 +1,116 @@
+{
+  "$schema": "folio-index-config/v1",
+  "instances": [
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "b606cb72bcacb2c6076fec2c9903cd3a55db0b4e",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-07",
+              "ref": "b606cb72bcacb2c6076fec2c9903cd3a55db0b4e",
+              "evidence": "litlfred, 2026-11-07, via the merge manager (session_01VQDpPffYARDQ8juksAZScf): card 'Pin target' 'A. Never move back', and 'repin + merge open 12 hrs'; earlier in this session: 'align pins'. Align against folio-assistant#2985's pins, never moving a pin back; bean cat-tools-sm8r."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-07",
+              "ref": "9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2",
+              "evidence": "litlfred, 2026-11-07, via the merge manager (session_01VQDpPffYARDQ8juksAZScf): card 'Pin target' 'A. Never move back', and 'repin + merge open 12 hrs'; earlier in this session: 'align pins'. Align against folio-assistant#2985's pins, never moving a pin back; bean cat-tools-sm8r."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+              "evidence": "this session's user (litlfred), 2026-11-06 ~08:40Z: \"repin as needed. merge when green and ready for all your PRs within 6hr window\" — re-pin to mains for folio-assistant-core#654, which needs cat-harness-tools#1564 (https://claude.ai/code/session_01VQDpPfJKxVERPVKKWBTY8z)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
+              "evidence": "this session's user (litlfred), 2026-11-06 ~08:40Z: \"repin as needed. merge when green and ready for all your PRs within 6hr window\" — re-pin to mains for folio-assistant-core#654, which needs cat-harness-tools#1564 (https://claude.ai/code/session_01VQDpPfJKxVERPVKKWBTY8z)"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "site": {
+    "landing": "folio-assistant-core"
+  }
+}
