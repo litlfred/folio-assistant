@@ -103,7 +103,7 @@
   @media print, (forced-colors: active) {
     html:root { background-image: none; }
   }
-</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/coordinate.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#workflow-rule-reminder","label":"Workflow rule reminder"},{"href":"#when-to-invoke","label":"When to invoke"},{"href":"#inputs","label":"Inputs"},{"href":"#where-each-section-lives","label":"Where each section lives"},{"href":"#output","label":"Output"},{"href":"#anti-patterns","label":"Anti-patterns"},{"href":"#11-statusmd--master-ledger-pattern","label":"§11 STATUS.md + master ledger pattern"},{"href":"#12-multi-agent-same-goal-coordination","label":"§12 Multi-agent same-goal coordination","children":[{"href":"#when-you-detect-a-sibling-agent-on-your-task","label":"When you detect a sibling agent on your task","depth":1},{"href":"#watching-for-sibling-pr-contradictions","label":"Watching for sibling-PR contradictions","depth":1}],"fold":"2 sub-sections"},{"href":"#what-actually-reaches-a-sibling","label":"What actually reaches a sibling","children":[{"href":"#a-spawned-helper-is-reachable-and-the-owners-authority-is-not-relayed","label":"A spawned helper is reachable, and the owner’s authority is not relayed","depth":1},{"href":"#eleven-sessions-is-the-normal-case-not-the-exception","label":"Eleven sessions is the normal case, not the exception","depth":1},{"href":"#the-worked-example-a-voice-landing-in-a-directory-being-deleted","label":"The worked example: a voice landing in a directory being deleted","depth":1}],"fold":"3 sub-sections"},{"href":"#crossing-into-a-siblings-subject--permitted-and-what-it-costs","label":"Crossing into a sibling’s subject — permitted, and what it costs","children":[{"href":"#the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one","label":"The collision surface is FILES, and it is predictable before you touch one","depth":1},{"href":"#duplicated-work-is-measured-in-what-was-already-pushed-not-in-what-is-open","label":"Duplicated work is measured in what was already pushed, not in what is open","depth":1}],"fold":"2 sub-sections"},{"href":"#starting-new-work--a-collision-review-recorded-before-the-first-edit-strict","label":"Starting new work — a collision review, recorded before the first edit (STRICT)","children":[{"href":"#when-it-runs--the-start-of-any-new-unit-of-work","label":"When it runs — the start of any new unit of work","depth":1},{"href":"#how-deep--scale-the-review-to-the-blast-radius","label":"How deep — scale the review to the blast radius","depth":1},{"href":"#the-five-steps-in-order-before-any-file-is-edited","label":"The five steps, in order, before any file is edited","depth":1},{"href":"#worked-example-a-platform-refactor","label":"Worked example: a platform refactor","depth":1}],"fold":"4 sub-sections"},{"href":"#related-skills","label":"Related skills"},{"href":"#flag-bearer-reflections","label":"Flag-bearer reflections"},{"href":"#sdlc-multi-agent-landscape--coverage","label":"SDLC multi-agent landscape & coverage"},{"href":"#protocol","label":"Protocol","children":[{"href":"#1--read-sibling-prs-first","label":"Read sibling PRs first","icon":"1","depth":1},{"href":"#2--identify-three-relationships-per-sibling","label":"Identify three relationships per sibling","icon":"2","depth":1},{"href":"#3--post-intent-before-working","label":"Post intent before working","icon":"3","depth":1},{"href":"#4--post-progress-at-task-boundaries","label":"Post progress at task boundaries","icon":"4","depth":1},{"href":"#5--responding-to-review-comments-on-your-own-pr","label":"Responding to review comments on your own PR","icon":"5","depth":1},{"href":"#6--inconsistent-findings--escalate-do-not-paper-over","label":"Inconsistent findings → escalate, do not paper over","icon":"6","depth":1},{"href":"#7--periodic-sibling-pr-triage","label":"Periodic sibling-PR triage","icon":"7","depth":1},{"href":"#8--watching-main-and-newly-created-branches","label":"Watching main and newly-created branches","icon":"8","depth":1},{"href":"#9--coordination-ledger","label":"Coordination ledger","icon":"9","depth":1},{"href":"#10--cherry-picking","label":"Cherry-picking","icon":"10","depth":1},{"href":"#11--asks-and-responses","label":"Asks and responses","icon":"11","depth":1}],"fold":"11 sub-sections"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/coordinate.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#workflow-rule-reminder","label":"Workflow rule reminder"},{"href":"#when-to-invoke","label":"When to invoke"},{"href":"#inputs","label":"Inputs"},{"href":"#where-each-section-lives","label":"Where each section lives"},{"href":"#output","label":"Output"},{"href":"#anti-patterns","label":"Anti-patterns"},{"href":"#11-statusmd--master-ledger-pattern","label":"§11 STATUS.md + master ledger pattern"},{"href":"#12-multi-agent-same-goal-coordination","label":"§12 Multi-agent same-goal coordination","children":[{"href":"#when-you-detect-a-sibling-agent-on-your-task","label":"When you detect a sibling agent on your task","depth":1},{"href":"#watching-for-sibling-pr-contradictions","label":"Watching for sibling-PR contradictions","depth":1}],"fold":"2 sub-sections"},{"href":"#what-actually-reaches-a-sibling","label":"What actually reaches a sibling","children":[{"href":"#a-spawned-helper-is-reachable-and-the-owners-authority-is-not-relayed","label":"A spawned helper is reachable, and the owner’s authority is not relayed","depth":1},{"href":"#eleven-sessions-is-the-normal-case-not-the-exception","label":"Eleven sessions is the normal case, not the exception","depth":1},{"href":"#the-worked-example-a-voice-landing-in-a-directory-being-deleted","label":"The worked example: a voice landing in a directory being deleted","depth":1}],"fold":"3 sub-sections"},{"href":"#crossing-into-a-siblings-subject--permitted-and-what-it-costs","label":"Crossing into a sibling’s subject — permitted, and what it costs"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
 function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
 function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
@@ -424,408 +424,687 @@ surface may. So the line is <strong>checker vs. session</strong>, not owner vs. 
 A session repairing somebody’s milestone re-measures every line it rewrites,
 in a fresh container, by running the thing — and says which clause it could
 not verify.</p><p><strong>2. Crossing is permitted; colliding silently is not.</strong> Cross freely, but the
-crossing is what triggers this skill rather than what excuses skipping it.</p><h3 id="the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one"><a href="#the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one" class="anchor-heading" aria-labelledby="the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The collision surface is FILES, and it is predictable before you touch one
-  
-  
-</h3><p>A work item scan finds sessions working the same <em>subject</em>. It does not find two
-sessions about to edit the same <em>file</em> from different subjects:</p><div class="table-wrapper"><table><thead><tr><th>file</th><th>why two sessions want it</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">scripts/stale-paths-baseline.json</code></td><td><strong>two lines long.</strong> Every milestone repair removes its own entry. Two repairs in flight = a conflict whose wrong resolution silently empties a file whose stated property is that it <em>shrinks rather than fossilises</em> — and an empty baseline fails every finding, “which is the safe direction” only if somebody notices.</td></tr><tr><td>a shared work item</td><td>every stream appends its own outcome. <strong>“An append cannot collide” is false when two sessions append</strong>, because both land at EOF.</td></tr><tr><td>generated dirs (<code class="language-plaintext highlighter-rouge">auto-docs/</code>, <code class="language-plaintext highlighter-rouge">skill-instructions/</code>, kg-qa sidecars)</td><td>nobody edits them, everybody regenerates them. Take <code class="language-plaintext highlighter-rouge">main</code>’s copy and re-run the generator — never hand-merge. For <code class="language-plaintext highlighter-rouge">test/results/**</code>, <code class="language-plaintext highlighter-rouge">bun run cat qa:resolve-conflicts</code>: those are derived QA results whose record is on the <code class="language-plaintext highlighter-rouge">qa-reports</code> branch.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">test/attestations/**</code></td><td>judgements, not generated — no generator can reproduce one. Read both sides and keep both unless they are the same judgement; see <a href="../../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a> §”Conflicts in <code class="language-plaintext highlighter-rouge">test/results/</code> and <code class="language-plaintext highlighter-rouge">test/attestations/</code>”.</td></tr></tbody></table></div><p><strong>Name the files you will touch, not just the work items</strong>, when you post intent.
-A sibling can dodge a file; it cannot dodge a subject it cannot see.</p><h3 id="duplicated-work-is-measured-in-what-was-already-pushed-not-in-what-is-open"><a href="#duplicated-work-is-measured-in-what-was-already-pushed-not-in-what-is-open" class="anchor-heading" aria-labelledby="duplicated-work-is-measured-in-what-was-already-pushed-not-in-what-is-open"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Duplicated work is measured in what was already pushed, not in what is open
-  
-  
-</h3><p>Before re-deriving a measurement, check whether a sibling’s <strong>pushed commit</strong> already carries it:
-an open PR’s diff is a fact, and reading it costs one call against a session’s
-worth of re-measurement.</p><h2 id="starting-new-work--a-collision-review-recorded-before-the-first-edit-strict"><a href="#starting-new-work--a-collision-review-recorded-before-the-first-edit-strict" class="anchor-heading" aria-labelledby="starting-new-work--a-collision-review-recorded-before-the-first-edit-strict"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Starting new work — a collision review, recorded before the first edit (STRICT)
-  
-  
-</h2><p><strong>This section is the rule’s only home.</strong> <code class="language-plaintext highlighter-rouge">bean-coordination</code>,
-<code class="language-plaintext highlighter-rouge">session-intent</code>, <code class="language-plaintext highlighter-rouge">continual-progress</code>, <code class="language-plaintext highlighter-rouge">opening-brief</code>, <code class="language-plaintext highlighter-rouge">issue-working</code> and
-<code class="language-plaintext highlighter-rouge">crdm-requirements-workflow</code> point here. They do not restate it.</p><h3 id="when-it-runs--the-start-of-any-new-unit-of-work"><a href="#when-it-runs--the-start-of-any-new-unit-of-work" class="anchor-heading" aria-labelledby="when-it-runs--the-start-of-any-new-unit-of-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> When it runs — the start of any new unit of work
-  
-  
-</h3><p>Run the review once, before the first edit, whenever you start:</p><ul><li>a new story, epic, feature or task work item;</li><li>work on an issue, before you announce the branch;</li><li>CRDM Phase 6, implementation;</li><li>a new tranche of a workplan;</li><li>a pickup of someone else’s work from a handover.</li></ul><p>A pickup runs its own review. The previous session’s review is dated, and PRs
-may have opened since it was written.</p><h3 id="how-deep--scale-the-review-to-the-blast-radius"><a href="#how-deep--scale-the-review-to-the-blast-radius" class="anchor-heading" aria-labelledby="how-deep--scale-the-review-to-the-blast-radius"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How deep — scale the review to the blast radius
-  
-  
-</h3><p>The review is proportional. The question is how much other work your change
-can collide with, not how big your diff is.</p><ul><li><strong>A platform refactor gets the full review: all five steps, with messages
-to the owners.</strong> A platform refactor is a change to something that many
-pages, generators or open PRs depend on:
-    <ul><li>shared layout and includes: <code class="language-plaintext highlighter-rouge">_includes/</code>, <code class="language-plaintext highlighter-rouge">docs-ui.css</code>, <code class="language-plaintext highlighter-rouge">docs-ui.js</code>,
-the navbar;</li><li>a generator whose output is committed or published, such as
-<code class="language-plaintext highlighter-rouge">gen-ig-pages.ts</code> or <code class="language-plaintext highlighter-rouge">gen-navbar-include.ts</code>;</li><li>a schema, a BPMN process, a workflow or a gate that other work is
-checked against.</li></ul><p>A ten-line change to a shared include collides with every PR that
-regenerates it.</p></li><li><strong>A small, local story still runs steps 1 and 2, quickly.</strong> When they find
-nothing, record “no overlap found” in the work item, together with what you
-checked: the PR search, the work item search, and the terms you used. That takes
-about two minutes and one work item note.</li><li><strong>Only an overlap triggers steps 3 and 4.</strong> If steps 1 and 2 find a
-sibling on your files or your subject, name its owner and message it,
-whatever the size of your change.</li></ul><p>“No overlap found” with no record of what was checked is not a review. The
-next session cannot tell it from a review that was skipped.</p><p>The work item trigger above catches a sibling working on the same <strong>subject</strong>.
-§”The collision surface is FILES” catches two sessions editing the same
-<strong>file</strong> from different subjects. A refactor causes both kinds at once, which
-is why it gets the full review and does not rely on either trigger.</p><h3 id="the-five-steps-in-order-before-any-file-is-edited"><a href="#the-five-steps-in-order-before-any-file-is-edited" class="anchor-heading" aria-labelledby="the-five-steps-in-order-before-any-file-is-edited"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The five steps, in order, before any file is edited
-  
-  
-</h3><ol><li><strong>List the open PRs and the files they change.</strong> Use the
-<em>list change proposals</em> <a href="../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each">forge-operation Tool</a>, then <em>list changed files</em> for each PR. Intersect the
-result with the files your work will touch. A PR that changes only
-<strong>generated</strong> files you will also regenerate is not a collision; say so
-and move on.</li><li><strong>Scan the <code class="language-plaintext highlighter-rouge">in-progress</code> work items for overlapping scope.</strong> Use
-<code class="language-plaintext highlighter-rouge">beans list --status in-progress --search &lt;term&gt;</code>, and search the subject
-as well as the ids: the file names, the generator, the page type. A work item id finds nothing
-when the overlapping work has no work item of its own; see
-<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”The trigger is STARTING WORK”.</li><li><strong>Name the owning sessions.</strong> Use <code class="language-plaintext highlighter-rouge">list_sessions</code>, the <code class="language-plaintext highlighter-rouge">Claude-Session:</code>
-trailers on each PR’s commits, and <code class="language-plaintext highlighter-rouge">bun run cat sessions --since &lt;window&gt;</code>.
-<a href="../../reference/skill-instructions/bean-coordination.html"><code class="language-plaintext highlighter-rouge">bean-coordination</code></a> §”Where a sibling session is
-visible from” says how far that inference goes.</li><li><strong>Message each owner with your intent and your asks.</strong> State what you will
-change, phase by phase, and the files each phase touches. Then ask two
-things: which order do we land in, and who owns each overlapping file.
-Send it through a channel that actually reaches them; §”What actually
-reaches a sibling” says which ones do. A PR comment also leaves a durable
-copy.</li><li><strong>Record the review in the workplan work item before editing.</strong> Write down each
-overlapping session, its PRs and work items, the files you share, and the phases
-affected; or “no overlap found” and what you checked. A review that exists
-only in the chat is gone when the container goes, and the next session has
-to run it again.</li></ol><p><strong>Phases that overlap a sibling wait.</strong> They wait until the sibling has agreed
+crossing is what triggers this skill rather than what excuses skipping it.</p><p><strong>3. Crossing never means pushing to a sibling’s branch.</strong> Only the PR’s
+owner pushes to its branch. Send the owner the change instead
+(<a href="../../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a> §”One pusher per PR branch”,
+owner ruling, 2026-11-07).</p><p><strong>4. Merging goes through one session.</strong> While a merge manager is needed,
+siblings never merge their own PRs. Each sends the merge manager a six-line
+merge request (PR and head SHA, session URL, what changed, rendered preview,
+what to look for, <code class="language-plaintext highlighter-rouge">full tier green as judged</code>), and the owner approves only
+in the merge manager’s session. Find it first: the latest `merge manager:</p><session>` announcement, noted on the coordination work item, names a
+live session. With none active, the siblings elect one by a fixed rule, and
+a lone session is its own. A merge manager that does not acknowledge within
+the stall window has stalled, and the siblings re-elect without it: see
+[`merge-manager-watcher`](../../reference/skill-instructions/merge-manager-watcher.html) §"The sibling's side:
+find the merge manager first" and §"Liveness and stalls" (owner rulings,
+2026-11-07).
+
+**5. Stack rather than wait.** Work that needs a sibling's unmerged PR
+starts now, stacked on that PR's branch (or, across layers, on its head
+SHA), with `stacked on <repo>#<n>` in the body. Pull the sibling's changes
+in by merging. A re-pin is its own PR, holding only pins: work that needs
+the new pins stacks on it. Never push to its branch: see
+[`continual-progress`](../../reference/skill-instructions/continual-progress.html) §"Stack instead of waiting"
+(owner ruling, 2026-11-07).
+
+### The collision surface is FILES, and it is predictable before you touch one
+
+A work item scan finds sessions working the same *subject*. It does not find two
+sessions about to edit the same *file* from different subjects:
+
+| file | why two sessions want it |
+|---|---|
+| `scripts/stale-paths-baseline.json` | **two lines long.** Every milestone repair removes its own entry. Two repairs in flight = a conflict whose wrong resolution silently empties a file whose stated property is that it *shrinks rather than fossilises* — and an empty baseline fails every finding, "which is the safe direction" only if somebody notices. |
+| a shared work item | every stream appends its own outcome. **"An append cannot collide" is false when two sessions append**, because both land at EOF. |
+| generated dirs (`auto-docs/`, `skill-instructions/`, kg-qa sidecars) | nobody edits them, everybody regenerates them. Take `main`'s copy and re-run the generator — never hand-merge. For `test/results/**`, `bun run cat qa:resolve-conflicts`: those are derived QA results whose record is on the `qa-reports` branch. |
+| `test/attestations/**` | judgements, not generated — no generator can reproduce one. Read both sides and keep both unless they are the same judgement; see [`prepare-merge`](../../reference/skill-instructions/prepare-merge.html) §"Conflicts in `test/results/` and `test/attestations/`". |
+
+**Name the files you will touch, not just the work items**, when you post intent.
+A sibling can dodge a file; it cannot dodge a subject it cannot see.
+
+### Duplicated work is measured in what was already pushed, not in what is open
+
+Before re-deriving a measurement, check whether a sibling's **pushed commit** already carries it:
+an open PR's diff is a fact, and reading it costs one call against a session's
+worth of re-measurement.
+
+## Starting new work — a collision review, recorded before the first edit (STRICT)
+
+**This section is the rule's only home.** `bean-coordination`,
+`session-intent`, `continual-progress`, `opening-brief`, `issue-working` and
+`crdm-requirements-workflow` point here. They do not restate it.
+
+### When it runs — the start of any new unit of work
+
+Run the review once, before the first edit, whenever you start:
+
+- a new story, epic, feature or task work item;
+- work on an issue, before you announce the branch;
+- CRDM Phase 6, implementation;
+- a new tranche of a workplan;
+- a pickup of someone else's work from a handover.
+
+A pickup runs its own review. The previous session's review is dated, and PRs
+may have opened since it was written.
+
+### How deep — scale the review to the blast radius
+
+The review is proportional. The question is how much other work your change
+can collide with, not how big your diff is.
+
+- **A platform refactor gets the full review: all five steps, with messages
+  to the owners.** A platform refactor is a change to something that many
+  pages, generators or open PRs depend on:
+  - shared layout and includes: `_includes/`, `docs-ui.css`, `docs-ui.js`,
+    the navbar;
+  - a generator whose output is committed or published, such as
+    `gen-ig-pages.ts` or `gen-navbar-include.ts`;
+  - a schema, a BPMN process, a workflow or a gate that other work is
+    checked against.
+
+  A ten-line change to a shared include collides with every PR that
+  regenerates it.
+- **A small, local story still runs steps 1 and 2, quickly.** When they find
+  nothing, record "no overlap found" in the work item, together with what you
+  checked: the PR search, the work item search, and the terms you used. That takes
+  about two minutes and one work item note.
+- **Only an overlap triggers steps 3 and 4.** If steps 1 and 2 find a
+  sibling on your files or your subject, name its owner and message it,
+  whatever the size of your change.
+
+"No overlap found" with no record of what was checked is not a review. The
+next session cannot tell it from a review that was skipped.
+
+The work item trigger above catches a sibling working on the same **subject**.
+§"The collision surface is FILES" catches two sessions editing the same
+**file** from different subjects. A refactor causes both kinds at once, which
+is why it gets the full review and does not rely on either trigger.
+
+### The five steps, in order, before any file is edited
+
+1. **List the open PRs and the files they change.** Use the
+   *list change proposals* [forge-operation Tool](../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each), then *list changed files* for each PR. Intersect the
+   result with the files your work will touch. A PR that changes only
+   **generated** files you will also regenerate is not a collision; say so
+   and move on.
+2. **Scan the `in-progress` work items for overlapping scope.** Use
+   `beans list --status in-progress --search <term>`, and search the subject
+   as well as the ids: the file names, the generator, the page type. A work item id finds nothing
+   when the overlapping work has no work item of its own; see
+   [`bean-coordination`](../../reference/skill-instructions/bean-coordination.html) §"The trigger is STARTING WORK".
+3. **Name the owning sessions.** Use `list_sessions`, the `Claude-Session:`
+   trailers on each PR's commits, and `bun run cat sessions --since <window>`.
+   [`bean-coordination`](../../reference/skill-instructions/bean-coordination.html) §"Where a sibling session is
+   visible from" says how far that inference goes.
+4. **Message each owner with your intent and your asks.** State what you will
+   change, phase by phase, and the files each phase touches. Then ask two
+   things: which order do we land in, and who owns each overlapping file.
+   Send it through a channel that actually reaches them; §"What actually
+   reaches a sibling" says which ones do. A PR comment also leaves a durable
+   copy.
+5. **Record the review in the workplan work item before editing.** Write down each
+   overlapping session, its PRs and work items, the files you share, and the phases
+   affected; or "no overlap found" and what you checked. A review that exists
+   only in the chat is gone when the container goes, and the next session has
+   to run it again.
+
+**Phases that overlap a sibling wait.** They wait until the sibling has agreed
 an order, or until its overlapping PR has landed. Phases that touch none of the
-sibling’s files can go ahead, and the review says which ones those are.</p><h3 id="worked-example-a-platform-refactor"><a href="#worked-example-a-platform-refactor" class="anchor-heading" aria-labelledby="worked-example-a-platform-refactor"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Worked example: a platform refactor
-  
-  
-</h3><p>A refactor moving the per-page nav, the harness bar, icons, scripts and the IG
+sibling's files can go ahead, and the review says which ones those are.
+
+### Worked example: a platform refactor
+
+A refactor moving the per-page nav, the harness bar, icons, scripts and the IG
 chrome CSS into shared cached assets touches the layout of every page. Before
 any edit, the review found active sibling work on every layout file the plan
-needed: a navbar session (four PRs on <code class="language-plaintext highlighter-rouge">docs-ui.css</code>, <code class="language-plaintext highlighter-rouge">docs-ui.js</code>, the navbar
-include, <code class="language-plaintext highlighter-rouge">harness_details.html</code>, <code class="language-plaintext highlighter-rouge">head_custom.html</code>), and two IG sessions on
-<code class="language-plaintext highlighter-rouge">gen-ig-pages.ts</code>. The review went into the work item, the three owning sessions
+needed: a navbar session (four PRs on `docs-ui.css`, `docs-ui.js`, the navbar
+include, `harness_details.html`, `head_custom.html`), and two IG sessions on
+`gen-ig-pages.ts`. The review went into the work item, the three owning sessions
 were asked for an order, and the only work that started touched none of their
 files. Without the review, five PRs would have been rebased into a refactor of
-the files they were editing.</p><h2 id="related-skills"><a href="#related-skills" class="anchor-heading" aria-labelledby="related-skills"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Related skills
-  
-  
-</h2><ul><li><code class="language-plaintext highlighter-rouge">bean-coordination</code> — the committed store siblings read, how to
-claim, and how far a sibling’s state can be inferred from it. The
-DETECTION half of this skill’s work item trigger lives there.</li><li><code class="language-plaintext highlighter-rouge">delivery-summary</code> — what to post <strong>after</strong> a feature lands
-(one PR scope).</li><li><code class="language-plaintext highlighter-rouge">watch</code> — passive monitoring of upstream branches.</li><li><code class="language-plaintext highlighter-rouge">diff</code> — per-block change report (one PR scope).</li><li><code class="language-plaintext highlighter-rouge">session-intent</code> — session-start / session-end ledger +
-queue update protocol (the durable-state arm of coordination).</li><li><code class="language-plaintext highlighter-rouge">pending-show</code> — read-only display of current session’s
-pending work (todos, intent, queue assignments).</li><li><code class="language-plaintext highlighter-rouge">prepare-merge-auto</code> — autonomous merge pipeline (uses
-this skill’s sibling-coord pattern).</li><li><code class="language-plaintext highlighter-rouge">specification-management</code> — governance of specification requirements,
-linking CRDM and spec-kit to the bootstrap Requirement definition.</li></ul><p><code class="language-plaintext highlighter-rouge">/coordinate</code> complements them: it is the <strong>active</strong> cross-PR
+the files they were editing.
+
+## Related skills
+
+- `bean-coordination` — the committed store siblings read, how to
+  claim, and how far a sibling's state can be inferred from it. The
+  DETECTION half of this skill's work item trigger lives there.
+- `delivery-summary` — what to post **after** a feature lands
+  (one PR scope).
+- `watch` — passive monitoring of upstream branches.
+- `diff` — per-block change report (one PR scope).
+- `session-intent` — session-start / session-end ledger +
+  queue update protocol (the durable-state arm of coordination).
+- `pending-show` — read-only display of current session's
+  pending work (todos, intent, queue assignments).
+- `prepare-merge-auto` — autonomous merge pipeline (uses
+  this skill's sibling-coord pattern).
+- `specification-management` — governance of specification requirements,
+  linking CRDM and spec-kit to the bootstrap Requirement definition.
+
+`/coordinate` complements them: it is the **active** cross-PR
 protocol — including handling of code-review comments on your own
-PR — not a passive watcher and not a single-PR summary.</p><h2 id="flag-bearer-reflections"><a href="#flag-bearer-reflections" class="anchor-heading" aria-labelledby="flag-bearer-reflections"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Flag-bearer reflections
-  
-  
-</h2><p>Lessons from acting as flag-bearer across many sibling PRs on a shared
-goal. Apply when you hold the flag.</p><ol><li><p><strong>Build the ledger hub FIRST, then post.</strong> Create
-<code class="language-plaintext highlighter-rouge">docs/coordination/&lt;goal&gt;.md</code> with: the direction (one boxed
-statement of the target), the <em>common infra everyone rows toward</em>
-(cheat-sheet step table, watcher queues, dashboards, a falsification
-anchor), and a per-PR “which way to row” roster with <strong>report-back
-slots</strong>. Post intent only after the hub exists, so every comment can
-link one canonical place. This is what makes “make sure all use common
-infra” actionable rather than a slogan.</p></li><li><p><strong>Tailor per-PR; then LISTEN.</strong> A flag-bearer that only broadcasts is
-half-doing the job. Pull each sibling’s current state (a background
-<code class="language-plaintext highlighter-rouge">Explore</code> agent reading PR bodies + last comments is ideal), and
-<strong>fold their findings back as sharpenings</strong> to your own plan. Record
-sharpenings in the ledger and amend the workplan — do not silently
-keep the stale plan.</p></li><li><p><strong>Anchor the cluster to one falsifiable target.</strong> Give every sibling a
-shared regression target. It turns “which way to row”
-into a checkable claim and prevents divergent re-derivations.</p></li><li><p><strong>Push-race coordination with background agents.</strong> When a background
-sub-agent and you both push to the same branch, wrap every push in a
-<code class="language-plaintext highlighter-rouge">fetch → rebase → retry</code> loop:
-<code class="language-plaintext highlighter-rouge">for i in 1 2 3 4; do git push &amp;&amp; break || { git fetch origin &lt;br&gt; -q;
-git rebase origin/&lt;br&gt;; sleep $((2**i)); }; done</code>. The agent’s commits
-may already be in your local history (shared working dir) — check
-<code class="language-plaintext highlighter-rouge">git log</code> before assuming a divergence.</p></li><li><p><strong>Billing-CI is noise — do not let it derail coordination.</strong> If CI
-fails setup-phase (≤5 s, simultaneous, no logs) on every push while
-local validation stays green, recognise the billing signature
-(<code class="language-plaintext highlighter-rouge">litlfred/qou</code> <code class="language-plaintext highlighter-rouge">AGENTS.md</code> “CI billing failures”), note <code class="language-plaintext highlighter-rouge">[skip-ci: billing]</code>, and keep
-working; never re-diagnose it as a code problem or pause the cluster
-for it.</p></li></ol><h2 id="sdlc-multi-agent-landscape--coverage"><a href="#sdlc-multi-agent-landscape--coverage" class="anchor-heading" aria-labelledby="sdlc-multi-agent-landscape--coverage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> SDLC multi-agent landscape &amp; coverage
-  
-  
-</h2><p>For systematic evaluation of multi-agent SDLC workflows (comparing Waterfall, Agile, and dynamic process models against this repository’s 69 BPMN processes) and the architectural gap checklist, see:</p><ul><li>Methodology: <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/sdlc-agentic-landscape.md"><code class="language-plaintext highlighter-rouge">methodologies/sdlc-agentic-landscape.md</code></a> (derived from arXiv:2404.04834v4, He, Treude, and Lo)</li><li>Architectural analysis: <a href="../../architecture/sdlc-agentic-coverage.html"><code class="language-plaintext highlighter-rouge">docs/architecture/sdlc-agentic-coverage.md</code></a></li><li>Cross-paper literature synthesis &amp; bidirectional adversarial pass: <a href="https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/agentic-se-literature-synthesis.md"><code class="language-plaintext highlighter-rouge">methodologies/agentic-se-literature-synthesis.md</code></a> (synthesizing arXiv:2404.04834v4, arXiv:2507.23348v1, arXiv:2607.00053v1, arXiv:2601.04544v1, arXiv:2402.02172v5 under epic <code class="language-plaintext highlighter-rouge">0ipy</code>)</li></ul><hr /><p><a id="part-protocol"></a></p><h1 id="coordinate--the-protocol-111"><a href="#coordinate--the-protocol-111" class="anchor-heading" aria-labelledby="coordinate--the-protocol-111"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> coordinate — the Protocol, §1–§11
-  
-  
-</h1><p>The eleven numbered coordination steps. Read this when you are <strong>doing</strong> the
-coordination; the parent says when to invoke it and what it is for.</p><p><strong>Section numbers are the parent’s</strong> — a citation such as <code class="language-plaintext highlighter-rouge">coordinate.md §8a</code>
-resolves to this file.</p><h2 id="protocol"><a href="#protocol" class="anchor-heading" aria-labelledby="protocol"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Protocol
-  
-  
-</h2><h3 id="1--read-sibling-prs-first"><a href="#1--read-sibling-prs-first" class="anchor-heading" aria-labelledby="1--read-sibling-prs-first"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 1.  Read sibling PRs first
-  
-  
-</h3><p>For each sibling change proposal (pull request, PR), read its number,
+PR — not a passive watcher and not a single-PR summary.
+
+## Flag-bearer reflections
+
+Lessons from acting as flag-bearer across many sibling PRs on a shared
+goal. Apply when you hold the flag.
+
+1. **Build the ledger hub FIRST, then post.** Create
+   `docs/coordination/<goal>.md` with: the direction (one boxed
+   statement of the target), the *common infra everyone rows toward*
+   (cheat-sheet step table, watcher queues, dashboards, a falsification
+   anchor), and a per-PR "which way to row" roster with **report-back
+   slots**. Post intent only after the hub exists, so every comment can
+   link one canonical place. This is what makes "make sure all use common
+   infra" actionable rather than a slogan.
+
+2. **Tailor per-PR; then LISTEN.** A flag-bearer that only broadcasts is
+   half-doing the job. Pull each sibling's current state (a background
+   `Explore` agent reading PR bodies + last comments is ideal), and
+   **fold their findings back as sharpenings** to your own plan. Record
+   sharpenings in the ledger and amend the workplan — do not silently
+   keep the stale plan.
+
+3. **Anchor the cluster to one falsifiable target.** Give every sibling a
+   shared regression target. It turns "which way to row"
+   into a checkable claim and prevents divergent re-derivations.
+
+4. **Push-race coordination with background agents.** When a background
+   sub-agent and you both push to the same branch, wrap every push in a
+   `fetch → rebase → retry` loop:
+   `for i in 1 2 3 4; do git push &amp;&amp; break || { git fetch origin <br /> -q;
+   git rebase origin/<br />; sleep $((2**i)); }; done`. The agent's commits
+   may already be in your local history (shared working dir) — check
+   `git log` before assuming a divergence.
+
+5. **Billing-CI is noise — do not let it derail coordination.** If CI
+   fails setup-phase (≤5 s, simultaneous, no logs) on every push while
+   local validation stays green, recognise the billing signature
+   (`litlfred/qou` `AGENTS.md` "CI billing failures"), note `[skip-ci: billing]`, and keep
+   working; never re-diagnose it as a code problem or pause the cluster
+   for it.
+
+## SDLC multi-agent landscape &amp; coverage
+
+For systematic evaluation of multi-agent SDLC workflows (comparing Waterfall, Agile, and dynamic process models against this repository's 69 BPMN processes) and the architectural gap checklist, see:
+- Methodology: [`methodologies/sdlc-agentic-landscape.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/sdlc-agentic-landscape.md) (derived from arXiv:2404.04834v4, He, Treude, and Lo)
+- Architectural analysis: [`docs/architecture/sdlc-agentic-coverage.md`](../../architecture/sdlc-agentic-coverage.html)
+- Cross-paper literature synthesis &amp; bidirectional adversarial pass: [`methodologies/agentic-se-literature-synthesis.md`](https://github.com/litlfred/folio-assistant/blob/main/cat-harness/methodologies/agentic-se-literature-synthesis.md) (synthesizing arXiv:2404.04834v4, arXiv:2507.23348v1, arXiv:2607.00053v1, arXiv:2601.04544v1, arXiv:2402.02172v5 under epic `0ipy`)
+
+
+
+
+
+---
+
+<a id="part-protocol"></a>
+
+# coordinate — the Protocol, §1–§11
+
+The eleven numbered coordination steps. Read this when you are **doing** the
+coordination; the parent says when to invoke it and what it is for.
+
+**Section numbers are the parent's** — a citation such as `coordinate.md §8a`
+resolves to this file.
+
+## Protocol
+
+### 1.  Read sibling PRs first
+
+For each sibling change proposal (pull request, PR), read its number,
 title, body, state, head branch and last update, and the paths of every file
-it changes — the <em>read change proposal</em> and <em>list changed files</em> <a href="../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each">forge-operation Tool</a>s.
-Read the <strong>full</strong> file list, not a truncated head — partial scope
-maps cause silent overlaps later. File paths are cheap.</p><p>Build a <strong>scope map</strong>: which PR owns which workplan phase,
-which files, which blocks, which scripts.</p><h3 id="2--identify-three-relationships-per-sibling"><a href="#2--identify-three-relationships-per-sibling" class="anchor-heading" aria-labelledby="2--identify-three-relationships-per-sibling"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2.  Identify three relationships per sibling
-  
-  
-</h3><p>For every sibling PR, classify yourself on three axes:</p><div class="table-wrapper"><table><thead><tr><th>Axis</th><th>Values</th></tr></thead><tbody><tr><td><strong>Overlap</strong></td><td>none / additive (different files, same goal) / conflicting (same file or same block)</td></tr><tr><td><strong>Dependency</strong></td><td>independent / I depend on theirs / they depend on mine</td></tr><tr><td><strong>Cherry-pick opportunity</strong></td><td>none / I want X / they probably want Y</td></tr></tbody></table></div><p>A sibling that is <code class="language-plaintext highlighter-rouge">(none, independent, none)</code> doesn’t need a
-coordination comment.  Anything else does.</p><h4 id="2-bis--domain-contract-sync"><a href="#2-bis--domain-contract-sync" class="anchor-heading" aria-labelledby="2-bis--domain-contract-sync"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 2-bis.  Domain-contract sync
-  
-  
-</h4><p><strong>If your PR touches an algorithm, pipeline step, or data contract
-that the project documents as a <em>maintenance contract</em> (a doc whose
-<code class="language-plaintext highlighter-rouge">uses[]</code>, <code class="language-plaintext highlighter-rouge">computation.script</code>, <code class="language-plaintext highlighter-rouge">computation.witness</code>, and prose
+it changes — the *read change proposal* and *list changed files* [forge-operation Tool](../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each)s.
+Read the **full** file list, not a truncated head — partial scope
+maps cause silent overlaps later. File paths are cheap.
+
+Build a **scope map**: which PR owns which workplan phase,
+which files, which blocks, which scripts.
+
+### 2.  Identify three relationships per sibling
+
+For every sibling PR, classify yourself on three axes:
+
+| Axis | Values |
+|------|--------|
+| **Overlap** | none / additive (different files, same goal) / conflicting (same file or same block) |
+| **Dependency** | independent / I depend on theirs / they depend on mine |
+| **Cherry-pick opportunity** | none / I want X / they probably want Y |
+
+A sibling that is `(none, independent, none)` doesn't need a
+coordination comment.  Anything else does.
+
+#### 2-bis.  Domain-contract sync
+
+**If your PR touches an algorithm, pipeline step, or data contract
+that the project documents as a *maintenance contract* (a doc whose
+`uses[]`, `computation.script`, `computation.witness`, and prose
 sections must stay in sync with the actual code), you MUST update the
-matching contract block in the same PR.</strong></p><p>Such a contract is not a static document: reviewers diff it against
+matching contract block in the same PR.**
+
+Such a contract is not a static document: reviewers diff it against
 the code change. When posting your intent comment on a sibling PR
 whose scope overlaps such a contract, name the contract block(s) you
-will touch alongside the script paths.</p><h3 id="3--post-intent-before-working"><a href="#3--post-intent-before-working" class="anchor-heading" aria-labelledby="3--post-intent-before-working"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 3.  Post intent before working
-  
-  
-</h3><p>Comment on each sibling PR with non-trivial relationship (the <code class="language-plaintext highlighter-rouge">github</code>
-Tool, <em>comment on change proposal</em>).  Format:</p><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## Coordination from #&lt;your PR&gt;</span>
+will touch alongside the script paths.
 
-<span class="gs">**Picking up:**</span> <span class="nt">&lt;one</span> <span class="na">sentence</span> <span class="err">—</span> <span class="na">which</span> <span class="na">workplan</span> <span class="na">phase</span> <span class="err">/</span> <span class="na">task</span><span class="nt">&gt;</span>
+### 3.  Post intent before working
 
-<span class="gs">**Scope confirmation:**</span>
-<span class="p">-</span> I will touch: <span class="sb">`path/to/file:line-range`</span>, <span class="sb">`path/to/other`</span>, …
-<span class="p">-</span> I will not touch: <span class="sb">`&lt;the sibling's territory&gt;`</span>
+Comment on each sibling PR with non-trivial relationship (the `github`
+Tool, *comment on change proposal*).  Format:
 
-<span class="gs">**Cherry-pick from you:**</span>
-<span class="p">-</span> <span class="nt">&lt;what</span> <span class="na">you</span> <span class="na">need</span> <span class="na">from</span> <span class="na">them</span><span class="err">;</span> <span class="na">e.g.</span> <span class="err">"</span><span class="na">the</span> <span class="na">template</span> <span class="na">you</span> <span class="na">used</span> <span class="na">for</span> <span class="err">`&lt;</span><span class="na">block</span><span class="nt">&gt;</span><span class="sb">`"&gt;
+```markdown
+## Coordination from #<your PR="">
+
+**Picking up:** &lt;one sentence — which workplan phase / task&gt;
+
+**Scope confirmation:**
+- I will touch: `path/to/file:line-range`, `path/to/other`, …
+- I will not touch: `&lt;the sibling's territory&gt;`
+
+**Cherry-pick from you:**
+- &lt;what you need from them; e.g. "the template you used for `<block>`"&gt;
 
 **Cherry-pick for you:**
 - &lt;what you'll produce that they may want; e.g. "the reader for
-  `</span><span class="nt">&lt;artifact&gt;</span><span class="sb">` is the same shape they need for `</span><span class="nt">&lt;other</span> <span class="na">path</span><span class="nt">&gt;</span><span class="err">`</span>"&gt;
+  `<artifact>` is the same shape they need for `<other path="">`"&gt;
 
-<span class="gs">**Asks (small):**</span> <span class="nt">&lt;questions</span> <span class="na">they</span> <span class="na">can</span> <span class="na">answer</span> <span class="na">in</span> <span class="na">one</span> <span class="na">line</span><span class="nt">&gt;</span>
+**Asks (small):** <questions they="" can="" answer="" in="" one="" line="">
 
-<span class="gs">**Escalation to author:**</span> <span class="nt">&lt;if</span> <span class="na">any</span><span class="err">;</span> <span class="na">see</span> <span class="err">§6</span><span class="nt">&gt;</span>
-</code></pre></div></div><p>Keep it short.  One ask per ask.  No prose.</p><h3 id="4--post-progress-at-task-boundaries"><a href="#4--post-progress-at-task-boundaries" class="anchor-heading" aria-labelledby="4--post-progress-at-task-boundaries"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4.  Post progress at task boundaries
-  
-  
-</h3><p>When you commit something cherry-pickable, post a follow-up:</p><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## Progress from #&lt;your PR&gt; · `&lt;short-task-name&gt;`</span>
-<span class="p">
--</span> Landed in <span class="sb">`&lt;commit-sha&gt;`</span>: <span class="nt">&lt;one</span> <span class="na">sentence</span><span class="nt">&gt;</span>
-<span class="p">-</span> Cherry-pick file pointers: <span class="sb">`path/file.py:fn`</span>, <span class="sb">`path/file.lean:Decl`</span>
-<span class="p">-</span> Updated <span class="p">[</span><span class="nv">`&lt;your-audit-or-plan-doc&gt;.md`</span><span class="p">](</span><span class="sx">…</span><span class="p">)</span> §<span class="nt">&lt;section&gt;</span>: &lt;what
-  changed&gt; — and/or appended a row to
-  <span class="p">[</span><span class="nv">`docs/coordination/&lt;goal-slug&gt;.md`</span><span class="p">](</span><span class="sx">…</span><span class="p">)</span>
-<span class="p">-</span> Next: <span class="nt">&lt;next</span> <span class="na">task</span> <span class="na">on</span> <span class="na">your</span> <span class="na">queue</span><span class="nt">&gt;</span>
-</code></pre></div></div><p>Cherry-pick file pointers are the load-bearing part — the sibling
-agent should be able to copy/cite without reading your whole diff.</p><h3 id="5--responding-to-review-comments-on-your-own-pr"><a href="#5--responding-to-review-comments-on-your-own-pr" class="anchor-heading" aria-labelledby="5--responding-to-review-comments-on-your-own-pr"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5.  Responding to review comments on your own PR
-  
-  
-</h3><p>Code-review tools (<code class="language-plaintext highlighter-rouge">gemini-code-assist[bot]</code>,
-<code class="language-plaintext highlighter-rouge">copilot-pull-request-reviewer[bot]</code>, <code class="language-plaintext highlighter-rouge">codex[bot]</code>) and human
-reviewers leave comments on your PR.  <strong>Do not silently accept or
-silently dismiss.</strong>  The same rules that govern cross-PR
-inconsistencies (§6) govern review feedback.</p><h4 id="5a--triage-every-comment"><a href="#5a--triage-every-comment" class="anchor-heading" aria-labelledby="5a--triage-every-comment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5a.  Triage every comment
-  
-  
-</h4><p>For each comment, assign one of four verdicts:</p><div class="table-wrapper"><table><thead><tr><th>Verdict</th><th>When</th><th>Action</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">accept</code></td><td>Suggestion is correct and small</td><td>Apply the fix in a single commit citing the comment URL; mark the thread resolved if the tooling permits.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">accept-with-modification</code></td><td>Intent is right but the suggested patch has its own issue (e.g. introduces a different off-by-one, or breaks a sibling-PR’s convention)</td><td>Apply a corrected version; reply on the thread with one paragraph explaining what you did and why the original suggestion needed adjusting (cite <code class="language-plaintext highlighter-rouge">file:line</code> where the divergence matters).</td></tr><tr><td><code class="language-plaintext highlighter-rouge">reject-with-reason</code></td><td>Finding is incorrect (mathematically, empirically, or by project convention)</td><td>Reply with the reasoning: cite the specific line, definition, or sibling-PR convention that contradicts the suggestion.  Never silent-dismiss.</td></tr><tr><td><code class="language-plaintext highlighter-rouge">escalate</code></td><td>Finding is correct but would cross a sibling-PR’s territory, or two reviewers disagree, or the comment exposes an inconsistency in a sibling PR’s audit</td><td>See §6.  Reply with an <code class="language-plaintext highlighter-rouge">⚠️</code> flag and tag the author.</td></tr></tbody></table></div><h4 id="5b--verify-against-the-actual-artifact--code-before-replying"><a href="#5b--verify-against-the-actual-artifact--code-before-replying" class="anchor-heading" aria-labelledby="5b--verify-against-the-actual-artifact--code-before-replying"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5b.  Verify against the actual artifact / code before replying
-  
-  
-</h4><p>Review-tool suggestions can be <strong>subtly wrong</strong>.  Common failure
-modes:</p><ul><li><strong>Off-by-one fixes that flip-flop a convention</strong>: a reviewer
-proposes a boundary change without noticing context that makes
-the original correct.  Read the artifact, not just the suggested patch.</li><li><strong>Cross-PR convention conflicts</strong>: e.g. PR A names a field
-<code class="language-plaintext highlighter-rouge">active_set</code>, PR B names it <code class="language-plaintext highlighter-rouge">active_constraints</code>; a
-reviewer suggesting one without checking the other introduces
-a merge conflict downstream.  Check sibling PRs before applying.</li><li><strong>Hallucinated context</strong>: review tools sometimes reference PR
-numbers or comment IDs that don’t exist.  If the reviewer
-references a comment you didn’t write, treat it as a
-hallucination and ignore the cross-reference (but still
-evaluate the substantive content of the comment on its merits).</li></ul><p>If you can’t verify in &lt; 2 minutes, escalate (§6) rather than
-guess.</p><h4 id="5c--post-one-consolidated-status-comment"><a href="#5c--post-one-consolidated-status-comment" class="anchor-heading" aria-labelledby="5c--post-one-consolidated-status-comment"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5c.  Post one consolidated status comment
-  
-  
-</h4><p>After triaging all threads from one review pass, post a <strong>single</strong>
-PR-level summary (the <em>comment on change proposal</em> <a href="../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each">forge-operation Tool</a>):</p><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Thanks @<span class="nt">&lt;reviewer&gt;</span> — addressed all <span class="nt">&lt;N&gt;</span> threads in <span class="p">[</span><span class="nv">`&lt;sha&gt;`</span><span class="p">](</span><span class="nt">&lt;</span><span class="sx">commit-url</span><span class="nt">&gt;</span><span class="p">)</span>.
+**Escalation to author:** &lt;if any; see §6&gt;
+```
+
+Keep it short.  One ask per ask.  No prose.
+
+### 4.  Post progress at task boundaries
+
+When you commit something cherry-pickable, post a follow-up:
+
+```markdown
+## Progress from #<your PR=""> · `<short-task-name>`
+
+- Landed in `<commit-sha>`: <one sentence="">
+- Cherry-pick file pointers: `path/file.py:fn`, `path/file.lean:Decl`
+- Updated [`<your-audit-or-plan-doc>.md`](…) §<section>: <what changed=""> — and/or appended a row to
+  [`docs/coordination/<goal-slug>.md`](…)
+- Next: <next task="" on="" your="" queue="">
+```
+
+Cherry-pick file pointers are the load-bearing part — the sibling
+agent should be able to copy/cite without reading your whole diff.
+
+### 5.  Responding to review comments on your own PR
+
+Code-review tools (`gemini-code-assist[bot]`,
+`copilot-pull-request-reviewer[bot]`, `codex[bot]`) and human
+reviewers leave comments on your PR.  **Do not silently accept or
+silently dismiss.**  The same rules that govern cross-PR
+inconsistencies (§6) govern review feedback.
+
+#### 5a.  Triage every comment
+
+For each comment, assign one of four verdicts:
+
+| Verdict | When | Action |
+|---------|------|--------|
+| `accept` | Suggestion is correct and small | Apply the fix in a single commit citing the comment URL; mark the thread resolved if the tooling permits. |
+| `accept-with-modification` | Intent is right but the suggested patch has its own issue (e.g. introduces a different off-by-one, or breaks a sibling-PR's convention) | Apply a corrected version; reply on the thread with one paragraph explaining what you did and why the original suggestion needed adjusting (cite `file:line` where the divergence matters). |
+| `reject-with-reason` | Finding is incorrect (mathematically, empirically, or by project convention) | Reply with the reasoning: cite the specific line, definition, or sibling-PR convention that contradicts the suggestion.  Never silent-dismiss. |
+| `escalate` | Finding is correct but would cross a sibling-PR's territory, or two reviewers disagree, or the comment exposes an inconsistency in a sibling PR's audit | See §6.  Reply with an `⚠️` flag and tag the author. |
+
+#### 5b.  Verify against the actual artifact / code before replying
+
+Review-tool suggestions can be **subtly wrong**.  Common failure
+modes:
+
+- **Off-by-one fixes that flip-flop a convention**: a reviewer
+  proposes a boundary change without noticing context that makes
+  the original correct.  Read the artifact, not just the suggested patch.
+- **Cross-PR convention conflicts**: e.g. PR A names a field
+  `active_set`, PR B names it `active_constraints`; a
+  reviewer suggesting one without checking the other introduces
+  a merge conflict downstream.  Check sibling PRs before applying.
+- **Hallucinated context**: review tools sometimes reference PR
+  numbers or comment IDs that don't exist.  If the reviewer
+  references a comment you didn't write, treat it as a
+  hallucination and ignore the cross-reference (but still
+  evaluate the substantive content of the comment on its merits).
+
+If you can't verify in &lt; 2 minutes, escalate (§6) rather than
+guess.
+
+#### 5c.  Post one consolidated status comment
+
+After triaging all threads from one review pass, post a **single**
+PR-level summary (the *comment on change proposal* [forge-operation Tool](../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each)):
+
+```markdown
+Thanks @<reviewer> — addressed all <N> threads in [`<sha>`](<commit-url>).
 
 | # | Issue | Verdict | Resolution |
 |---|---|---|---|
 | 1 | Off-by-one in index | accept | Fixed |
 | 2 | … | accept-with-modification | Fixed differently — see note below |
 | 3 | … | reject-with-reason | See reply on thread |
-| 4 | … | escalate | ⚠️ tagged @<span class="nt">&lt;author&gt;</span> |
+| 4 | … | escalate | ⚠️ tagged @<author> |
 
-<span class="gs">**Re #2 (note):**</span> <span class="nt">&lt;short</span> <span class="na">paragraph</span> <span class="na">explaining</span> <span class="na">the</span> <span class="na">modification</span><span class="nt">&gt;</span>
-</code></pre></div></div><p>One summary avoids a reply per thread while still recording every verdict.
-Threads marked <code class="language-plaintext highlighter-rouge">accept</code> /
-<code class="language-plaintext highlighter-rouge">accept-with-modification</code> should be resolved (the <em>resolve review thread</em> <a href="../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each">forge-operation Tool</a>)
-once the reviewer acknowledges or after a one-day cooling period.</p><h4 id="5d--when-the-reviewer-pushes-back"><a href="#5d--when-the-reviewer-pushes-back" class="anchor-heading" aria-labelledby="5d--when-the-reviewer-pushes-back"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5d.  When the reviewer pushes back
-  
-  
-</h4><p>Keep the dialogue <strong>short</strong> — re-state the reasoning or the sibling-PR
+**Re #2 (note):** <short paragraph="" explaining="" the="" modification="">
+```
+
+One summary avoids a reply per thread while still recording every verdict.
+Threads marked `accept` /
+`accept-with-modification` should be resolved (the *resolve review thread* [forge-operation Tool](../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each))
+once the reviewer acknowledges or after a one-day cooling period.
+
+#### 5d.  When the reviewer pushes back
+
+Keep the dialogue **short** — re-state the reasoning or the sibling-PR
 convention once, ask for a yes/no on whether the reviewer agrees.  After
-the second exchange, escalate (§6), because loops with bots do not converge.</p><h3 id="6--inconsistent-findings--escalate-do-not-paper-over"><a href="#6--inconsistent-findings--escalate-do-not-paper-over" class="anchor-heading" aria-labelledby="6--inconsistent-findings--escalate-do-not-paper-over"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6.  Inconsistent findings → escalate, do not paper over
-  
-  
-</h3><p>If a sibling PR’s finding contradicts yours — <strong>or</strong> if a code-review
-comment claims a fact that contradicts a sibling PR’s audit (§5a
-<code class="language-plaintext highlighter-rouge">escalate</code>) — do NOT silently change your framing.  Post on every
-affected PR:</p><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gu">## ⚠️ Inconsistent finding — author input requested</span>
-<span class="p">
--</span> This PR's claim: <span class="nt">&lt;yours</span><span class="err">,</span> <span class="na">file_path:line</span> <span class="na">cited</span><span class="nt">&gt;</span>
-<span class="p">-</span> Sibling #<span class="nt">&lt;N&gt;</span>'s claim: <span class="nt">&lt;theirs</span><span class="err">,</span> <span class="na">file_path:line</span> <span class="na">cited</span><span class="nt">&gt;</span>  (or:
-  Reviewer's claim in <span class="nt">&lt;comment-url&gt;</span>)
-<span class="p">-</span> Likely cause: <span class="nt">&lt;best</span> <span class="na">guess</span><span class="err">,</span> <span class="err">≤</span> <span class="err">2</span> <span class="na">sentences</span><span class="nt">&gt;</span>
-<span class="p">-</span> Resolution requested: <span class="nt">&lt;which</span> <span class="na">framing</span> <span class="na">to</span> <span class="na">adopt</span> <span class="na">going</span> <span class="na">forward</span><span class="nt">&gt;</span>
+the second exchange, escalate (§6), because loops with bots do not converge.
 
-Tagging @<span class="nt">&lt;author&gt;</span>.  Will hold downstream work blocked on this.
-</code></pre></div></div><p>The author owns the resolution.  Do not “split the difference” or
+### 6.  Inconsistent findings → escalate, do not paper over
+
+If a sibling PR's finding contradicts yours — **or** if a code-review
+comment claims a fact that contradicts a sibling PR's audit (§5a
+`escalate`) — do NOT silently change your framing.  Post on every
+affected PR:
+
+```markdown
+## ⚠️ Inconsistent finding — author input requested
+
+- This PR's claim: &lt;yours, file_path:line cited&gt;
+- Sibling #<N>'s claim: &lt;theirs, file_path:line cited&gt;  (or:
+  Reviewer's claim in <comment-url>)
+- Likely cause: &lt;best guess, ≤ 2 sentences&gt;
+- Resolution requested: <which framing="" to="" adopt="" going="" forward="">
+
+Tagging @<author>.  Will hold downstream work blocked on this.
+```
+
+The author owns the resolution.  Do not "split the difference" or
 guess.  Inconsistent findings — whether between sibling PRs, or
-between a reviewer and a sibling PR — are an audit flag.</p><p><strong>Escalation rate-limit.</strong>  An author flooded with pings cannot arbitrate, so
+between a reviewer and a sibling PR — are an audit flag.
+
+**Escalation rate-limit.**  An author flooded with pings cannot arbitrate, so
 batch-escalate when possible: one comment listing every disagreement found in a
-review pass, with a short table.</p><h3 id="7--periodic-sibling-pr-triage"><a href="#7--periodic-sibling-pr-triage" class="anchor-heading" aria-labelledby="7--periodic-sibling-pr-triage"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7.  Periodic sibling-PR triage
-  
-  
-</h3><p>Sibling PRs land commits and comments while you work.  Without
-periodic triage you will:</p><ul><li>duplicate a fix the sibling already landed,</li><li>miss a question they posted directing back at you,</li><li>accept a review-comment that contradicts a finding the sibling
-just published.</li></ul><p>Run a triage <strong>every 3–5 of your own commits</strong>, or whenever you
-finish one substantive task and pick up the next.  Format:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>## Sibling-PR triage report (&lt;your PR&gt;, &lt;timestamp&gt;)
+review pass, with a short table.
+
+### 7.  Periodic sibling-PR triage
+
+Sibling PRs land commits and comments while you work.  Without
+periodic triage you will:
+
+- duplicate a fix the sibling already landed,
+- miss a question they posted directing back at you,
+- accept a review-comment that contradicts a finding the sibling
+  just published.
+
+Run a triage **every 3–5 of your own commits**, or whenever you
+finish one substantive task and pick up the next.  Format:
+
+```
+## Sibling-PR triage report (<your PR="">, <timestamp>)
 
 | PR | New comments | New commits | CI | Asks for me | Action |
 |----|:---:|:---:|:---:|---|---|
 | #564 | 6 | 8 | ✅ | (none) | none |
 | #565 | 5 | 3 | 🟡 | P6 scope check (3 Q) | answer in next round |
 | #568 | 1 | 1 | ⚪ | (cherry-pick acked) | post drop-duplicate notice |
-</code></pre></div></div><p>For each “Asks for me” with verdict <code class="language-plaintext highlighter-rouge">answer</code> or <code class="language-plaintext highlighter-rouge">escalate</code>, queue a
+```
+
+For each "Asks for me" with verdict `answer` or `escalate`, queue a
 coordination response in the next coordination round.  For verdict
-<code class="language-plaintext highlighter-rouge">none</code> or <code class="language-plaintext highlighter-rouge">acked</code>, no further action.</p><p><strong>Use a background subagent for triage when possible</strong> —
-<code class="language-plaintext highlighter-rouge">Agent(subagent_type=Explore, run_in_background=true, prompt=...)</code> reads sibling
-PRs without blocking your foreground work.  Triage prompt template:</p><blockquote><p>Background triage of sibling PRs <list>. For each:</list></p><ol><li>New comments since <my last="" coordination="" round="" timestamp="">.</my></li><li>New commits + sha + 1-line message.</li><li>CI status.</li><li>Specifically flag asks/replies directed at <my PR=""> + any
-inconsistent findings vs &lt;my key audit/artifact claims&gt;.
-Report under 400 words; per-PR table.</my></li></ol></blockquote><h3 id="8--watching-main-and-newly-created-branches"><a href="#8--watching-main-and-newly-created-branches" class="anchor-heading" aria-labelledby="8--watching-main-and-newly-created-branches"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8.  Watching <code class="language-plaintext highlighter-rouge">main</code> and newly-created branches
-  
-  
-</h3><p>Sibling PRs are not the only thing that moves.  <code class="language-plaintext highlighter-rouge">main</code> lands merges,
-and <strong>new branches/PRs</strong> sometimes open mid-session by the author or
-other agents — these need to enter the scope map immediately.</p><h4 id="8a--watch-main-for-new-commits"><a href="#8a--watch-main-for-new-commits" class="anchor-heading" aria-labelledby="8a--watch-main-for-new-commits"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8a.  Watch <code class="language-plaintext highlighter-rouge">main</code> for new commits
-  
-  
-</h4><p>Run <code class="language-plaintext highlighter-rouge">git fetch origin main</code> at each triage cycle.  If new commits
-landed since your last fetch, run:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git log <span class="nt">--oneline</span> &lt;last-fetched-main-sha&gt;..origin/main <span class="se">\</span>
-  <span class="nt">--</span> &lt;files-or-paths-you-are-touching&gt;
-</code></pre></div></div><p>For each main-landed commit that touches <strong>a file or block
-you are editing</strong>, classify it like a sibling PR using §2: overlap /
-dependency / cherry-pick.  Then choose:</p><ul><li><strong>Merge <code class="language-plaintext highlighter-rouge">origin/main</code> into your branch</strong> if the changes are
-additive and you don’t have local edits to the same files.</li><li><strong>Cherry-pick the relevant commit</strong> if main’s branch tip has too
-much unrelated noise.</li><li><strong>Escalate to the author (§6)</strong> if main’s change contradicts a
-finding you just published.</li></ul><p>Do not silently rebase or force-push to incorporate <code class="language-plaintext highlighter-rouge">main</code> — those
-are author-authorised actions, see the repo’s Git Operations policy.</p><h5 id="8a-bis--watch-for-new-skills-landing-on-main"><a href="#8a-bis--watch-for-new-skills-landing-on-main" class="anchor-heading" aria-labelledby="8a-bis--watch-for-new-skills-landing-on-main"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8a-bis.  Watch for new skills landing on main
-  
-  
-</h5><p>In the same <code class="language-plaintext highlighter-rouge">git fetch origin main</code> pass, additionally run:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git diff <span class="nt">--name-only</span> <span class="nt">--diff-filter</span><span class="o">=</span>A <span class="se">\</span>
-  &lt;last-fetched-main-sha&gt;..origin/main <span class="se">\</span>
-  <span class="nt">--</span> <span class="s1">'*skills/*.md'</span>
-</code></pre></div></div><p>For each new skill file:</p><ol><li><strong>Read its frontmatter</strong> (<code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">roles</code>, <code class="language-plaintext highlighter-rouge">description</code>,
-<code class="language-plaintext highlighter-rouge">inherits</code>).</li><li><strong>Decide relevance</strong>: does the skill’s description overlap your
-branch’s scope?
-    <ul><li>Mention a file kind / domain / pattern you’re editing (touched
-in <code class="language-plaintext highlighter-rouge">git diff origin/main..HEAD --name-only</code>), OR</li><li>Provide a new integration-watcher child (<code class="language-plaintext highlighter-rouge">inherits:
-sdlc-core/integration-watcher</code>) and your branch is itself an
-integration-watcher PR, OR</li><li>Provide a new QA / sweep / audit skill (one-voice-<em>, proof-</em>,
-compute-*, etc.) and your branch touches the corresponding
-content blocks.</li></ul></li><li><strong>Surface to the user via <code class="language-plaintext highlighter-rouge">AskUserQuestion</code></strong> with the standard
-3-chip pattern from <code class="language-plaintext highlighter-rouge">watch.md §3.Q3a</code>:
-    <ul><li><code class="language-plaintext highlighter-rouge">Adopt now</code> — invoke the skill on the relevant subset</li><li><code class="language-plaintext highlighter-rouge">Defer to follow-up branch</code> — record decision, don’t change
-this branch</li><li><code class="language-plaintext highlighter-rouge">Not relevant</code> — record so the watcher doesn’t re-prompt</li></ul></li><li><strong>Record the decision in the coordination ledger</strong> under a
-new <code class="language-plaintext highlighter-rouge">## New skills detected on main</code> subsection so future
-sessions don’t re-prompt.</li></ol><p>This mirrors <code class="language-plaintext highlighter-rouge">watch.md §3.Q3a</code>, so every coordinator session picks up new
-infrastructure as it lands, without the user announcing it to each PR.</p><h4 id="8c--pre-push-stale-state-check-mandatory"><a href="#8c--pre-push-stale-state-check-mandatory" class="anchor-heading" aria-labelledby="8c--pre-push-stale-state-check-mandatory"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8c.  Pre-push stale-state check (MANDATORY)
-  
-  
-</h4><p><strong>Trigger:</strong> before every <code class="language-plaintext highlighter-rouge">git push</code> (whether new commits or force-
+`none` or `acked`, no further action.
+
+**Use a background subagent for triage when possible** —
+`Agent(subagent_type=Explore, run_in_background=true, prompt=...)` reads sibling
+PRs without blocking your foreground work.  Triage prompt template:
+
+&gt; Background triage of sibling PRs <list>. For each:
+&gt; 1. New comments since <my last="" coordination="" round="" timestamp="">.
+&gt; 2. New commits + sha + 1-line message.
+&gt; 3. CI status.
+&gt; 4. Specifically flag asks/replies directed at <my PR=""> + any
+&gt;    inconsistent findings vs &lt;my key audit/artifact claims&gt;.
+&gt; Report under 400 words; per-PR table.
+
+### 8.  Watching `main` and newly-created branches
+
+Sibling PRs are not the only thing that moves.  `main` lands merges,
+and **new branches/PRs** sometimes open mid-session by the author or
+other agents — these need to enter the scope map immediately.
+
+#### 8a.  Watch `main` for new commits
+
+Run `git fetch origin main` at each triage cycle.  If new commits
+landed since your last fetch, run:
+
+```bash
+git log --oneline <last-fetched-main-sha>..origin/main \
+  -- <files-or-paths-you-are-touching>
+```
+
+For each main-landed commit that touches **a file or block
+you are editing**, classify it like a sibling PR using §2: overlap /
+dependency / cherry-pick.  Then choose:
+
+- **Merge `origin/main` into your branch** if the changes are
+  additive and you don't have local edits to the same files.
+- **Cherry-pick the relevant commit** if main's branch tip has too
+  much unrelated noise.
+- **Escalate to the author (§6)** if main's change contradicts a
+  finding you just published.
+
+Do not silently rebase or force-push to incorporate `main` — those
+are author-authorised actions, see the repo's Git Operations policy.
+
+##### 8a-bis.  Watch for new skills landing on main
+
+In the same `git fetch origin main` pass, additionally run:
+
+```bash
+git diff --name-only --diff-filter=A \
+  <last-fetched-main-sha>..origin/main \
+  -- '*skills/*.md'
+```
+
+For each new skill file:
+
+1. **Read its frontmatter** (`name`, `roles`, `description`,
+   `inherits`).
+2. **Decide relevance**: does the skill's description overlap your
+   branch's scope?
+   - Mention a file kind / domain / pattern you're editing (touched
+     in `git diff origin/main..HEAD --name-only`), OR
+   - Provide a new integration-watcher child (`inherits:
+     sdlc-core/integration-watcher`) and your branch is itself an
+     integration-watcher PR, OR
+   - Provide a new QA / sweep / audit skill (one-voice-*, proof-*,
+     compute-*, etc.) and your branch touches the corresponding
+     content blocks.
+3. **Surface to the user via `AskUserQuestion`** with the standard
+   3-chip pattern from `watch.md §3.Q3a`:
+   - `Adopt now` — invoke the skill on the relevant subset
+   - `Defer to follow-up branch` — record decision, don't change
+     this branch
+   - `Not relevant` — record so the watcher doesn't re-prompt
+4. **Record the decision in the coordination ledger** under a
+   new `## New skills detected on main` subsection so future
+   sessions don't re-prompt.
+
+This mirrors `watch.md §3.Q3a`, so every coordinator session picks up new
+infrastructure as it lands, without the user announcing it to each PR.
+
+#### 8c.  Pre-push stale-state check (MANDATORY)
+
+**Trigger:** before every `git push` (whether new commits or force-
 push). The watcher can lapse silently (Monitor timeouts, hooks-busy
 windows, background-agent waits), so force a fresh fetch and compute
-the upstream delta:</p><div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git fetch origin <span class="s1">'+refs/heads/main:refs/remotes/origin/main'</span> 2&gt;/dev/null
-<span class="nv">DELTA</span><span class="o">=</span><span class="si">$(</span>git rev-list <span class="nt">--count</span> HEAD..origin/main<span class="si">)</span>
-<span class="nv">SIBS</span><span class="o">=</span><span class="si">$(</span>git log <span class="nt">--oneline</span> <span class="k">${</span><span class="nv">MERGE_BASE</span><span class="k">:-</span><span class="si">$(</span>git merge-base HEAD origin/main<span class="si">)</span><span class="k">}</span>..origin/main 2&gt;/dev/null | <span class="nb">wc</span> <span class="nt">-l</span><span class="si">)</span>
-<span class="nb">echo</span> <span class="s2">"main is </span><span class="k">${</span><span class="nv">DELTA</span><span class="k">}</span><span class="s2"> commits ahead since branch base"</span>
-</code></pre></div></div><blockquote><p><strong>Fetch the ref you are about to read, with an explicit refspec.</strong> <code class="language-plaintext highlighter-rouge">git fetch origin main</code> writes <code class="language-plaintext highlighter-rouge">FETCH_HEAD</code>; it refreshes
-<code class="language-plaintext highlighter-rouge">refs/remotes/origin/main</code> only when the clone’s configured
-<code class="language-plaintext highlighter-rouge">remote.origin.fetch</code> covers that branch — and it <strong>exits 0 either way</strong>, so
-a clone whose refspec was narrowed to one branch answers every <code class="language-plaintext highlighter-rouge">origin/main</code>
-question from a stale ref. Use <code class="language-plaintext highlighter-rouge">+refs/heads/&lt;b&gt;:refs/remotes/origin/&lt;b&gt;</code>,
-which is correct whatever the clone is configured with.</p><ul><li><strong>Fetch the same ref you then read.</strong> Fetching <code class="language-plaintext highlighter-rouge">main</code> and then measuring
-<code class="language-plaintext highlighter-rouge">origin/&lt;BRANCH&gt;</code> reports 0 missed commits by construction.</li><li><strong>A per-branch refspec does not repair <code class="language-plaintext highlighter-rouge">for-each-ref</code>.</strong> Anything walking
-<code class="language-plaintext highlighter-rouge">refs/remotes/origin/claude/*</code> sees only what was fetched by name, so an
-empty result means “never fetched”, not “no siblings”. Check
-<code class="language-plaintext highlighter-rouge">git config --get-all remote.origin.fetch | grep 'refs/heads/\*'</code> before
-believing it.</li></ul></blockquote><p>Decision matrix:</p><div class="table-wrapper"><table><thead><tr><th>Delta</th><th>Action</th></tr></thead><tbody><tr><td><code class="language-plaintext highlighter-rouge">0..2</code></td><td>push freely</td></tr><tr><td><code class="language-plaintext highlighter-rouge">3..10</code></td><td><strong>fetch and triage</strong>: list each new main commit; for any touching files in your branch’s diff, classify per §2 (rebase-now, defer, escalate) BEFORE pushing</td></tr><tr><td><code class="language-plaintext highlighter-rouge">&gt; 10</code></td><td><strong>stop</strong>: announce to the user. Long-discharge sessions risk substantial divergence; offer prepare-merge rebase OR continue + flag</td></tr></tbody></table></div><p>Additionally, list PRs with the <em>list change proposals</em> <a href="../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each">forge-operation Tool</a>, filtered to
-<code class="language-plaintext highlighter-rouge">state:open updated since &lt;session_start&gt;</code> and check for sibling PRs
-that opened mid-session. Each new sibling enters scope per §3.</p><p>A stale base turns a clean fast-forward push into a multi-conflict rebase, so
+the upstream delta:
+
+```bash
+git fetch origin '+refs/heads/main:refs/remotes/origin/main' 2&gt;/dev/null
+DELTA=$(git rev-list --count HEAD..origin/main)
+SIBS=$(git log --oneline ${MERGE_BASE:-$(git merge-base HEAD origin/main)}..origin/main 2&gt;/dev/null | wc -l)
+echo "main is ${DELTA} commits ahead since branch base"
+```
+
+&gt; **Fetch the ref you are about to read, with an explicit refspec.**
+&gt; `git fetch origin main` writes `FETCH_HEAD`; it refreshes
+&gt; `refs/remotes/origin/main` only when the clone's configured
+&gt; `remote.origin.fetch` covers that branch — and it **exits 0 either way**, so
+&gt; a clone whose refspec was narrowed to one branch answers every `origin/main`
+&gt; question from a stale ref. Use `+refs/heads/<b>:refs/remotes/origin/<b>`,
+&gt; which is correct whatever the clone is configured with.
+&gt;
+&gt; - **Fetch the same ref you then read.** Fetching `main` and then measuring
+&gt;   `origin/<BRANCH>` reports 0 missed commits by construction.
+&gt; - **A per-branch refspec does not repair `for-each-ref`.** Anything walking
+&gt;   `refs/remotes/origin/claude/*` sees only what was fetched by name, so an
+&gt;   empty result means "never fetched", not "no siblings". Check
+&gt;   `git config --get-all remote.origin.fetch | grep 'refs/heads/\*'` before
+&gt;   believing it.
+
+Decision matrix:
+
+| Delta | Action |
+|---|---|
+| `0..2` | push freely |
+| `3..10` | **fetch and triage**: list each new main commit; for any touching files in your branch's diff, classify per §2 (rebase-now, defer, escalate) BEFORE pushing |
+| `&gt; 10` | **stop**: announce to the user. Long-discharge sessions risk substantial divergence; offer prepare-merge rebase OR continue + flag |
+
+Additionally, list PRs with the *list change proposals* [forge-operation Tool](../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each), filtered to
+`state:open updated since <session_start>` and check for sibling PRs
+that opened mid-session. Each new sibling enters scope per §3.
+
+A stale base turns a clean fast-forward push into a multi-conflict rebase, so
 when pushing many small commits in a row, run this check every ~5 commits or
-every 30 minutes of foreground work.</p><h4 id="8d--long-task-drift-recovery"><a href="#8d--long-task-drift-recovery" class="anchor-heading" aria-labelledby="8d--long-task-drift-recovery"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8d.  Long-task drift recovery
-  
-  
-</h4><p>If you discover ≥ 5 new main commits AFTER a Monitor timeout or
-hooks-busy window, do NOT just “re-arm and continue”:</p><ol><li><strong>Compare</strong>: <code class="language-plaintext highlighter-rouge">git diff --name-only HEAD..origin/main</code> to find
-overlapping files.</li><li><strong>If overlap is empty</strong>: re-arm watch (silent OK).</li><li><strong>If overlap exists</strong>: invoke <code class="language-plaintext highlighter-rouge">coordinate</code> §2 classification
-on each overlap. Most common: another agent edited the same content
-block (<code class="language-plaintext highlighter-rouge">.lean</code>, <code class="language-plaintext highlighter-rouge">.md</code>, <code class="language-plaintext highlighter-rouge">.ts</code> trio). Resolve BEFORE committing
-more work that will conflict.</li><li><strong>Notify the user</strong> if ≥ 2 substantive overlaps: this is the
-signal that multiple agents are working in the same scope and the
-user should coordinate goals.</li></ol><h4 id="8b--watch-for-newly-opened-prs--branches"><a href="#8b--watch-for-newly-opened-prs--branches" class="anchor-heading" aria-labelledby="8b--watch-for-newly-opened-prs--branches"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8b.  Watch for newly-opened PRs / branches
-  
-  
-</h4><p>Each triage cycle, list open PRs (number, title, head branch, creation
-time) and branches — the <em>list change proposals</em> and <em>list branches</em> <a href="../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each">forge-operation Tool</a>s; branches alone are also listable with <code class="language-plaintext highlighter-rouge">git ls-remote
---heads origin</code>, which needs no forge.</p><p>If a <strong>new</strong> PR or branch appears since the last triage and its
+every 30 minutes of foreground work.
+
+#### 8d.  Long-task drift recovery
+
+If you discover ≥ 5 new main commits AFTER a Monitor timeout or
+hooks-busy window, do NOT just "re-arm and continue":
+
+1. **Compare**: `git diff --name-only HEAD..origin/main` to find
+   overlapping files.
+2. **If overlap is empty**: re-arm watch (silent OK).
+3. **If overlap exists**: invoke `coordinate` §2 classification
+   on each overlap. Most common: another agent edited the same content
+   block (`.lean`, `.md`, `.ts` trio). Resolve BEFORE committing
+   more work that will conflict.
+4. **Notify the user** if ≥ 2 substantive overlaps: this is the
+   signal that multiple agents are working in the same scope and the
+   user should coordinate goals.
+
+#### 8b.  Watch for newly-opened PRs / branches
+
+Each triage cycle, list open PRs (number, title, head branch, creation
+time) and branches — the *list change proposals* and *list branches*
+[forge-operation Tool](../../reference/skill-instructions/skills-and-tools.html#the-forge-operations-one-tool-node-each)s; branches alone are also listable with `git ls-remote
+--heads origin`, which needs no forge.
+
+If a **new** PR or branch appears since the last triage and its
 title / branch-name overlaps any of your scope keywords (your
-audit subjects, your changed files, your blocks), <strong>prompt
-the author</strong>:</p><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**Q from #&lt;your PR&gt;:**</span> I see #<span class="nt">&lt;N&gt;</span> (<span class="sb">`&lt;branch&gt;`</span>) opened at
-<span class="nt">&lt;timestamp&gt;</span>; should I add it to my coordination scope (§3) and
-post intent?  Or is it independent of the <span class="nt">&lt;goal&gt;</span> goal-thread?
-</code></pre></div></div><p>Do not silently add the new PR to scope — the author may have
+audit subjects, your changed files, your blocks), **prompt
+the author**:
+
+```markdown
+**Q from #<your PR="">:** I see #<N> (`<branch>`) opened at
+<timestamp>; should I add it to my coordination scope (§3) and
+post intent?  Or is it independent of the <goal> goal-thread?
+```
+
+Do not silently add the new PR to scope — the author may have
 opened it as an isolated probe.  Wait for confirmation before
-posting coordination comments on the new PR.</p><h3 id="9--coordination-ledger"><a href="#9--coordination-ledger" class="anchor-heading" aria-labelledby="9--coordination-ledger"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9.  Coordination ledger
-  
-  
-</h3><p>Maintain a single shared ledger at:</p><div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docs/coordination/&lt;goal-slug&gt;.md
-</code></pre></div></div><p>Each PR appends a row (no rewrites of others’ rows):</p><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| Date | PR | Phase | Status | Cherry-pick |
+posting coordination comments on the new PR.
+
+### 9.  Coordination ledger
+
+Maintain a single shared ledger at:
+
+```
+docs/coordination/<goal-slug>.md
+```
+
+Each PR appends a row (no rewrites of others' rows):
+
+```markdown
+| Date | PR | Phase | Status | Cherry-pick |
 |------|----|-------|--------|-------------|
-| 2026-01-01 | #564 | phase A wire-up | landed <span class="sb">`&lt;sha&gt;`</span> | <span class="sb">`&lt;reader&gt;`</span> |
+| 2026-01-01 | #564 | phase A wire-up | landed `<sha>` | `<reader>` |
 | 2026-01-01 | #565 | migration | in-progress | — |
-| 2026-01-01 | #567 | sub-lemma | landed <span class="sb">`&lt;sha&gt;`</span> | <span class="sb">`&lt;block&gt;`</span> template |
-</code></pre></div></div><p>The ledger lives on the branch where the coordinator is currently
-posting; final state can be merged to main when the goal completes.</p><h3 id="10--cherry-picking"><a href="#10--cherry-picking" class="anchor-heading" aria-labelledby="10--cherry-picking"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10.  Cherry-picking
-  
-  
-</h3><p><strong>Cherry-picking is fine — treat it as a low-friction default.</strong>
+| 2026-01-01 | #567 | sub-lemma | landed `<sha>` | `<block>` template |
+```
+
+The ledger lives on the branch where the coordinator is currently
+posting; final state can be merged to main when the goal completes.
+
+### 10.  Cherry-picking
+
+**Cherry-picking is fine — treat it as a low-friction default.**
 When an in-flight sibling has infrastructure (a script, a witness,
-a template, a content block) that you’d otherwise
+a template, a content block) that you'd otherwise
 duplicate, just cherry-pick it: small structured commits exist so that anyone
-can pick them up. The rules:</p><ol><li><p><strong>Cite the source in your commit message.</strong> Either
-<code class="language-plaintext highlighter-rouge">Cherry-pick of #&lt;N&gt;:&lt;sha&gt;</code> on the trailer line or a
-<code class="language-plaintext highlighter-rouge">Co-authored-by:</code> line. Attribution is cheap and lets
-<code class="language-plaintext highlighter-rouge">git log --grep</code> surface who originated the change. Optional
-but recommended — missing attribution is not a blocker.</p></li><li><p><strong>One-voice still applies.</strong> Whatever you keep from the source
-should read as your own work; rewrite voice / framing if the
-sibling’s tone clashes (AGENTS.md voice rules don’t relax just
-because the source was a different agent).</p></li><li><p><strong>You may diverge.</strong> If you adapt the cherry-picked file —
-rename imports, change a helper, tighten a tolerance — that’s
-normal. No requirement to post the adaptation back on the
-source PR; the sibling will see your divergence in their own
-§7 triage if it matters to them.</p></li><li><p><strong>You may pre-empt main.</strong> Cherry-picks from open sibling PRs
-are explicitly allowed; you do not need to wait for the source
-to land on <code class="language-plaintext highlighter-rouge">main</code>. When the source eventually merges, you’ll
-either pick up the canonical version on your next rebase
-(drift handled by the <code class="language-plaintext highlighter-rouge">watch</code> §2a auto-resolve) or
-keep a slight divergence (also fine).</p></li><li><p><strong>Pre-flagging is optional.</strong> If you’re picking something
-substantive (a whole module, a large script) and want to
-reduce the chance of duplicated work, posting a one-liner
-coord comment on the source PR before picking is courteous —
-but it is <strong>not required</strong>. For small picks (single helper, a
-witness JSON, a class declaration), just commit.</p></li></ol><p>When the source PR lands on <code class="language-plaintext highlighter-rouge">main</code>, attribution stops being
+can pick them up. The rules:
+
+1. **Cite the source in your commit message.** Either
+   `Cherry-pick of #<N>:<sha>` on the trailer line or a
+   `Co-authored-by:` line. Attribution is cheap and lets
+   `git log --grep` surface who originated the change. Optional
+   but recommended — missing attribution is not a blocker.
+
+2. **One-voice still applies.** Whatever you keep from the source
+   should read as your own work; rewrite voice / framing if the
+   sibling's tone clashes (AGENTS.md voice rules don't relax just
+   because the source was a different agent).
+
+3. **You may diverge.** If you adapt the cherry-picked file —
+   rename imports, change a helper, tighten a tolerance — that's
+   normal. No requirement to post the adaptation back on the
+   source PR; the sibling will see your divergence in their own
+   §7 triage if it matters to them.
+
+4. **You may pre-empt main.** Cherry-picks from open sibling PRs
+   are explicitly allowed; you do not need to wait for the source
+   to land on `main`. When the source eventually merges, you'll
+   either pick up the canonical version on your next rebase
+   (drift handled by the `watch` §2a auto-resolve) or
+   keep a slight divergence (also fine).
+
+5. **Pre-flagging is optional.** If you're picking something
+   substantive (a whole module, a large script) and want to
+   reduce the chance of duplicated work, posting a one-liner
+   coord comment on the source PR before picking is courteous —
+   but it is **not required**. For small picks (single helper, a
+   witness JSON, a class declaration), just commit.
+
+When the source PR lands on `main`, attribution stops being
 necessary — the file is just upstream code. A fresh PR sourced
-from a main-merged commit needs no <code class="language-plaintext highlighter-rouge">Cherry-pick of</code> line.</p><h3 id="11--asks-and-responses"><a href="#11--asks-and-responses" class="anchor-heading" aria-labelledby="11--asks-and-responses"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 11.  Asks and responses
-  
-  
-</h3><p>Asks are a first-class artefact.  Format every cross-PR ask as:</p><div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gs">**Q from #&lt;your PR&gt;:**</span> <span class="nt">&lt;question&gt;</span>
+from a main-merged commit needs no `Cherry-pick of` line.
+
+### 11.  Asks and responses
+
+Asks are a first-class artefact.  Format every cross-PR ask as:
+
+```markdown
+**Q from #<your PR="">:** <question>
 
 (answers as inline replies on the destination PR)
-</code></pre></div></div><p>If a sibling has not answered an ask after 1 calendar day in an
+```
+
+If a sibling has not answered an ask after 1 calendar day in an
 async setting, restate the ask in a fresh comment and tag the
-author.  Do not block indefinitely.</p><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
-  
-  
-</h2><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/crdm-signoff.html">CRDM Phase 5 — beans and sign-off</a></td><td>Announce the branch on the issue</td></tr><tr><td><a href="../../en/cat-harness/processes/stalled-agent-triage.html">Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route</a></td><td>Re-route open PRs that lost their driver</td></tr></tbody></table></div></main><hr><footer><details class="fa-provenance" id="fa-provenance" data-fa-provenance-count="13"><summary class="fa-provenance-summary">Provenance (13)</summary><p class="fa-provenance-lead">Who decided, when, and under which work item. This record was moved out of the text of the page.</p><h3 class="fa-provenance-section">When to invoke</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>2026-09-21</code></span><div class="fa-provenance-text">Resolve it AND coordinate. Owner, 2026-09-21: <em>&quot;collision=coordinate&quot;</em>.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span><div class="fa-provenance-text">That is the cheapest collision to find, because it is the one found BEFORE either of you has written anything. Owner, same day: <em>&quot;potential collision by looking at beans = coordinate&quot;</em>. How to read a sibling&#39;s state out of the store, and the boundary of that inference, is [<code>bean-coordination</code>](../../../work-plan/skills/work-plan/bean-coordination.md) §&quot;Where a sibling session is visible from&quot; — not restated here.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>#1885</code> <code>2026-10-02</code></span><div class="fa-provenance-text">How to read a sibling&#39;s state out of the store, and the boundary of that inference, is [<code>bean-coordination</code>](../../../work-plan/skills/work-plan/bean-coordination.md) §&quot;Where a sibling session is visible from&quot; — not restated here. - <strong>When you START any new unit of work — before the first edit.</strong> A new story, epic, feature or task bean, an issue, CRDM Phase 6, a workplan tranche, or a handover pickup runs the collision review in §&quot;Starting new work&quot; below, scaled to its blast radius, and records it in the workplan bean. Owner, 2026-10-02 (#1885).</div></li></ul><h3 class="fa-provenance-section">Watching for sibling-PR contradictions</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="date"><span class="fa-provenance-kind">date</span> <span class="fa-provenance-refs"><code>2026-09-21</code></span><div class="fa-provenance-text">## What actually reaches a sibling — measured, 2026-09-21</div></li></ul><h3 class="fa-provenance-section">What actually reaches a sibling — measured, 2026-09-21</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean ml9h</code> <code>bean yex5</code> <code>2026-10-10</code> <code>2026-10-20</code></span><div class="fa-provenance-text">### Since 2026-10: a spawned helper is reachable, and the owner&#39;s authority is not relayed<br><br>The table above predates the remote-session tools. A session that has <code>create_session</code> and <code>send_message</code> (the <code>claude-code-remote</code> server) <strong>can</strong> seed a helper session and message a cloud session it lists: both worked from the drain coordinator on 2026-10-10 and 2026-10-20 (epic <code>ml9h</code>). Reaching it does not give it the owner&#39;s authority (bean <code>yex5</code>).<br><br>What lane B of that drain hit: its permission layer refused a push, a <code>send_message</code> back, and finally a read-only <code>beans show</code>, because its task arrived from another session rather than from the owner. It also refused to treat the coordinator&#39;s relayed &quot;4 h merge window&quot; as the owner&#39;s ruling. That refusal was correct.</div></li></ul><h3 class="fa-provenance-section">Eleven sessions is the normal case, not the exception</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text">The same measurement: eleven sessions on <code>litlfred/folio-assistant</code>, each on its own branch, each merging <code>main</code> on a loop. One branch took <strong>four</strong> base merges in three hours, three of them conflicted. Main moved 109, 38, 20, 24 and 28 commits between them.<br><br>A session that treats a conflict as an accident will treat all four as accidents. The rate IS the environment, and the thing to do about it is coordinate earlier, not merge harder.</div></li></ul><h3 class="fa-provenance-section">Crossing into a sibling&#39;s subject — permitted, and what it costs</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>bean yg29</code> <code>bean hqku</code> <code>#956</code> <code>2026-09-22</code></span><div class="fa-provenance-text">Owner, 2026-09-22, on stream 3 of the #956 consolidation rewriting the <code>yg29</code> milestone it had been told not to touch:<br><br>&gt; <em>&quot;crossing stream is ok, but /coordinate and be aware of potential collisions. &gt; try avoid duplicating work.&quot;</em><br><br>Two rulings, and they are not the same one twice.<br><br><strong>1. The stream that owns a milestone&#39;s WORK may repair the milestone.</strong> <code>check-stale-paths.ts</code> reserved that repair to &quot;the bean&#39;s OWNER&quot; on the ground that <em>&quot;a milestone is a statement of what its owner believes the goal needs next, and rewriting somebody else&#39;s belief is not a checker&#39;s to do.&quot;</em> That ground still holds <strong>for a checker</strong> — a gate that guesses replaces a stale belief with an invented one. It does <strong>not</strong> hold for a session that has re-measured the goal&#39;s whole surface. Stream 3 repaired <code>yg29</code> and found two defects a path detector structurally cannot see: <code>hqku</code> carried as a live &quot;blocked on the owner&quot; for two days after it completed, and *&quot;the IRIS replica has no <code>docs/</code>&quot;* against a directory holding three rendered pages.<br><br>So the line is <strong>checker vs. session</strong>, not owner vs. non-owner. A session repairing somebody&#39;s milestone re-measures every line it rewrites, in a fresh container, by running the thing — and says which clause it could not verify.</div></li></ul><h3 class="fa-provenance-section">The collision surface is FILES, and it is predictable before you touch one</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="issue"><span class="fa-provenance-kind">issue</span> <span class="fa-provenance-refs"><code>#956</code></span><div class="fa-provenance-text">It does not find two sessions about to edit the same <em>file</em> from different subjects, which is how the #956 consolidation nearly lost a baseline:</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean k59d</code></span><div class="fa-provenance-text">| a shared bean like <code>k59d</code> | every stream appends its own outcome. <strong>&quot;An append cannot collide&quot; is false when two sessions append</strong>, because both land at EOF. That precedent is recorded in <code>k59d</code> itself and is wrong as stated. | | generated dirs (<code>auto-docs/</code>, <code>skill-instructions/</code>, kg-qa sidecars) | nobody edits them, everybody regenerates them.</div></li></ul><h3 class="fa-provenance-section">Duplicated work is measured in what was already pushed, not in what is open</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean p5wm</code></span><div class="fa-provenance-text">The same consolidation measured <code>p5wm</code>&#39;s critical path <strong>twice</strong> — once in the session writing the stream claims, once in the stream that received them, reaching the identical answer (five live steps, not eight). Neither was wrong and both were competent; the second was free to skip. Before re-deriving a measurement</div></li></ul><h3 class="fa-provenance-section">Starting new work — a collision review, recorded before the first edit (STRICT)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>#1885</code> <code>2026-10-02</code></span><div class="fa-provenance-text">&lt;a id=&quot;before-a-platform-refactor&quot;&gt;&lt;/a&gt; Formerly §&quot;Before a platform refactor&quot;. The rule began there and now covers the start of any unit of SDLC work; citations of the old title land here.<br><br>Owner, 2026-10-02, on issue #1885, verbatim:<br><br>&gt; <em>&quot;(in genreal update agent-agent coorindation/hadover skills - if you are &gt; working on a refactor of the platform, review active agents/beans for impact &gt; and coordiante)&quot;</em><br><br>Owner, 2026-10-02, later the same day, verbatim:<br><br>&gt; <em>&quot;Before any platform refactor, a session must now review the open PR--&gt; &gt; genrealizes to parts of the SDLC / begining on a new story/epic or so...&quot;</em></div></li></ul><h3 class="fa-provenance-section">The five steps, in order, before any file is edited</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean gp2f</code> <code>bean ob3m</code> <code>bean wnhh</code> <code>#1885</code> <code>#1804</code> <code>#1805</code> <code>#1808</code> <code>#1819</code> <code>#1816</code> <code>#1766</code></span><div class="fa-provenance-text">### Worked example — #1885, bean <code>gp2f</code><br><br>This is the full-depth case: a platform refactor, with overlaps found and owners messaged.<br><br>The refactor moves the per-page nav, the harness bar, icons, scripts and the IG chrome CSS into shared cached assets. It touches the layout of every page on the site. Before any edit, the review found active sibling work on <strong>every layout file the plan needed</strong>:<br><br>| sibling | its PRs | shared files | <code>gp2f</code> phases affected | |---|---|---|---| | navbar session (bean <code>ob3m</code>) | #1804, #1805, #1808, #1819 | <code>docs-ui.css</code>, <code>docs-ui.js</code>, <code>_includes/generated/navbar-footer.html</code>, <code>harness_details.html</code>, <code>head_custom.html</code>, <code>harness-tiles.md</code> | B, C, D, E | | fhir-ast session (bean <code>wnhh</code>) | #1816 | the FHIR IG layer&#39;s <code>scripts/gen-ig-pages.ts</code> | A | | the trust IG IG session | #1766 | the <code>gen-ig-pages</code> area | A |<br><br>If the review had been skipped, five PRs would have been rebased into a refactor of the files they were editing.<br><br>What happened instead:<br><br>- The review went into <code>gp2f</code> before any edit. - The three owning sessions were messaged with the plan and asked for an order. - The only work that started was work that touches none of their files: this section, and a read-only baseline measurement of page sizes.</div></li></ul><h3 class="fa-provenance-section">A spawned helper is reachable, and the owner&#39;s authority is not relayed</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean 55ka</code> <code>2026-11-05</code></span><div class="fa-provenance-text">Item 5 added 2026-11-05 (bean <code>55ka</code>), after helpers spawned by <code>session_01VQDpPffYARDQ8juksAZScf</code> (<code>k3vv</code>) and <code>session_01VQDpPfGantMCt7AV4LCCK2</code> (<code>drnh</code>) asked the owner in prose without cards when <code>add_repo</code> was refused or a scope decision arose. Owner, 2026-11-05: <em>&quot;did you and your siblings forget I am disabled? why has it not been heeded lately?&quot;</em></div></li></ul></details><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+author.  Do not block indefinitely.
+
+
+## Processes that run this skill
+
+| process | step(s) that name it |
+|---|---|
+| [CRDM Phase 5 — beans and sign-off](../../en/cat-harness/processes/crdm-signoff.html) | Announce the branch on the issue |
+| [Stalled-agent triage: collect handovers, consolidate themes, recommend, re-route](../../en/cat-harness/processes/stalled-agent-triage.html) | Re-route open PRs that lost their driver |
+
+</question></your></sha></N></block></sha></reader></sha></goal-slug></goal></timestamp></branch></N></your></session_start></BRANCH></b></b></last-fetched-main-sha></files-or-paths-you-are-touching></last-fetched-main-sha></my></my></list></timestamp></your></author></which></comment-url></N></short></author></commit-url></sha></N></reviewer></next></goal-slug></what></section></your-audit-or-plan-doc></one></commit-sha></short-task-name></your></questions></other></artifact></block></your></goal></window></term></n></repo></session></main><hr><footer><details class="fa-provenance" id="fa-provenance" data-fa-provenance-count="13"><summary class="fa-provenance-summary">Provenance (13)</summary><p class="fa-provenance-lead">Who decided, when, and under which work item. This record was moved out of the text of the page.</p><h3 class="fa-provenance-section">When to invoke</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>2026-09-21</code></span><div class="fa-provenance-text">Resolve it AND coordinate. Owner, 2026-09-21: <em>&quot;collision=coordinate&quot;</em>.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span><div class="fa-provenance-text">That is the cheapest collision to find, because it is the one found BEFORE either of you has written anything. Owner, same day: <em>&quot;potential collision by looking at beans = coordinate&quot;</em>. How to read a sibling&#39;s state out of the store, and the boundary of that inference, is [<code>bean-coordination</code>](../../../work-plan/skills/work-plan/bean-coordination.md) §&quot;Where a sibling session is visible from&quot; — not restated here.</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>#1885</code> <code>2026-10-02</code></span><div class="fa-provenance-text">How to read a sibling&#39;s state out of the store, and the boundary of that inference, is [<code>bean-coordination</code>](../../../work-plan/skills/work-plan/bean-coordination.md) §&quot;Where a sibling session is visible from&quot; — not restated here. - <strong>When you START any new unit of work — before the first edit.</strong> A new story, epic, feature or task bean, an issue, CRDM Phase 6, a workplan tranche, or a handover pickup runs the collision review in §&quot;Starting new work&quot; below, scaled to its blast radius, and records it in the workplan bean. Owner, 2026-10-02 (#1885).</div></li></ul><h3 class="fa-provenance-section">Watching for sibling-PR contradictions</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="date"><span class="fa-provenance-kind">date</span> <span class="fa-provenance-refs"><code>2026-09-21</code></span><div class="fa-provenance-text">## What actually reaches a sibling — measured, 2026-09-21</div></li></ul><h3 class="fa-provenance-section">What actually reaches a sibling — measured, 2026-09-21</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean ml9h</code> <code>bean yex5</code> <code>2026-10-10</code> <code>2026-10-20</code></span><div class="fa-provenance-text">### Since 2026-10: a spawned helper is reachable, and the owner&#39;s authority is not relayed<br><br>The table above predates the remote-session tools. A session that has <code>create_session</code> and <code>send_message</code> (the <code>claude-code-remote</code> server) <strong>can</strong> seed a helper session and message a cloud session it lists: both worked from the drain coordinator on 2026-10-10 and 2026-10-20 (epic <code>ml9h</code>). Reaching it does not give it the owner&#39;s authority (bean <code>yex5</code>).<br><br>What lane B of that drain hit: its permission layer refused a push, a <code>send_message</code> back, and finally a read-only <code>beans show</code>, because its task arrived from another session rather than from the owner. It also refused to treat the coordinator&#39;s relayed &quot;4 h merge window&quot; as the owner&#39;s ruling. That refusal was correct.</div></li></ul><h3 class="fa-provenance-section">Eleven sessions is the normal case, not the exception</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span><div class="fa-provenance-text">The same measurement: eleven sessions on <code>litlfred/folio-assistant</code>, each on its own branch, each merging <code>main</code> on a loop. One branch took <strong>four</strong> base merges in three hours, three of them conflicted. Main moved 109, 38, 20, 24 and 28 commits between them.<br><br>A session that treats a conflict as an accident will treat all four as accidents. The rate IS the environment, and the thing to do about it is coordinate earlier, not merge harder.</div></li></ul><h3 class="fa-provenance-section">Crossing into a sibling&#39;s subject — permitted, and what it costs</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>bean yg29</code> <code>bean hqku</code> <code>#956</code> <code>2026-09-22</code></span><div class="fa-provenance-text">Owner, 2026-09-22, on stream 3 of the #956 consolidation rewriting the <code>yg29</code> milestone it had been told not to touch:<br><br>&gt; <em>&quot;crossing stream is ok, but /coordinate and be aware of potential collisions. &gt; try avoid duplicating work.&quot;</em><br><br>Two rulings, and they are not the same one twice.<br><br><strong>1. The stream that owns a milestone&#39;s WORK may repair the milestone.</strong> <code>check-stale-paths.ts</code> reserved that repair to &quot;the bean&#39;s OWNER&quot; on the ground that <em>&quot;a milestone is a statement of what its owner believes the goal needs next, and rewriting somebody else&#39;s belief is not a checker&#39;s to do.&quot;</em> That ground still holds <strong>for a checker</strong> — a gate that guesses replaces a stale belief with an invented one. It does <strong>not</strong> hold for a session that has re-measured the goal&#39;s whole surface. Stream 3 repaired <code>yg29</code> and found two defects a path detector structurally cannot see: <code>hqku</code> carried as a live &quot;blocked on the owner&quot; for two days after it completed, and *&quot;the IRIS replica has no <code>docs/</code>&quot;* against a directory holding three rendered pages.<br><br>So the line is <strong>checker vs. session</strong>, not owner vs. non-owner. A session repairing somebody&#39;s milestone re-measures every line it rewrites, in a fresh container, by running the thing — and says which clause it could not verify.</div></li></ul><h3 class="fa-provenance-section">The collision surface is FILES, and it is predictable before you touch one</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="issue"><span class="fa-provenance-kind">issue</span> <span class="fa-provenance-refs"><code>#956</code></span><div class="fa-provenance-text">It does not find two sessions about to edit the same <em>file</em> from different subjects, which is how the #956 consolidation nearly lost a baseline:</div></li><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean k59d</code></span><div class="fa-provenance-text">| a shared bean like <code>k59d</code> | every stream appends its own outcome. <strong>&quot;An append cannot collide&quot; is false when two sessions append</strong>, because both land at EOF. That precedent is recorded in <code>k59d</code> itself and is wrong as stated. | | generated dirs (<code>auto-docs/</code>, <code>skill-instructions/</code>, kg-qa sidecars) | nobody edits them, everybody regenerates them.</div></li></ul><h3 class="fa-provenance-section">Duplicated work is measured in what was already pushed, not in what is open</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean p5wm</code></span><div class="fa-provenance-text">The same consolidation measured <code>p5wm</code>&#39;s critical path <strong>twice</strong> — once in the session writing the stream claims, once in the stream that received them, reaching the identical answer (five live steps, not eight). Neither was wrong and both were competent; the second was free to skip. Before re-deriving a measurement</div></li></ul><h3 class="fa-provenance-section">Starting new work — a collision review, recorded before the first edit (STRICT)</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>#1885</code> <code>2026-10-02</code></span><div class="fa-provenance-text">&lt;a id=&quot;before-a-platform-refactor&quot;&gt;&lt;/a&gt; Formerly §&quot;Before a platform refactor&quot;. The rule began there and now covers the start of any unit of SDLC work; citations of the old title land here.<br><br>Owner, 2026-10-02, on issue #1885, verbatim:<br><br>&gt; <em>&quot;(in genreal update agent-agent coorindation/hadover skills - if you are &gt; working on a refactor of the platform, review active agents/beans for impact &gt; and coordiante)&quot;</em><br><br>Owner, 2026-10-02, later the same day, verbatim:<br><br>&gt; <em>&quot;Before any platform refactor, a session must now review the open PR--&gt; &gt; genrealizes to parts of the SDLC / begining on a new story/epic or so...&quot;</em></div></li></ul><h3 class="fa-provenance-section">The five steps, in order, before any file is edited</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean gp2f</code> <code>bean ob3m</code> <code>bean wnhh</code> <code>#1885</code> <code>#1804</code> <code>#1805</code> <code>#1808</code> <code>#1819</code> <code>#1816</code> <code>#1766</code></span><div class="fa-provenance-text">### Worked example — #1885, bean <code>gp2f</code><br><br>This is the full-depth case: a platform refactor, with overlaps found and owners messaged.<br><br>The refactor moves the per-page nav, the harness bar, icons, scripts and the IG chrome CSS into shared cached assets. It touches the layout of every page on the site. Before any edit, the review found active sibling work on <strong>every layout file the plan needed</strong>:<br><br>| sibling | its PRs | shared files | <code>gp2f</code> phases affected | |---|---|---|---| | navbar session (bean <code>ob3m</code>) | #1804, #1805, #1808, #1819 | <code>docs-ui.css</code>, <code>docs-ui.js</code>, <code>_includes/generated/navbar-footer.html</code>, <code>harness_details.html</code>, <code>head_custom.html</code>, <code>harness-tiles.md</code> | B, C, D, E | | fhir-ast session (bean <code>wnhh</code>) | #1816 | the FHIR IG layer&#39;s <code>scripts/gen-ig-pages.ts</code> | A | | the trust IG IG session | #1766 | the <code>gen-ig-pages</code> area | A |<br><br>If the review had been skipped, five PRs would have been rebased into a refactor of the files they were editing.<br><br>What happened instead:<br><br>- The review went into <code>gp2f</code> before any edit. - The three owning sessions were messaged with the plan and asked for an order. - The only work that started was work that touches none of their files: this section, and a read-only baseline measurement of page sizes.</div></li></ul><h3 class="fa-provenance-section">A spawned helper is reachable, and the owner&#39;s authority is not relayed</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="bean"><span class="fa-provenance-kind">bean</span> <span class="fa-provenance-refs"><code>bean 55ka</code> <code>2026-11-05</code></span><div class="fa-provenance-text">Item 5 added 2026-11-05 (bean <code>55ka</code>), after helpers spawned by <code>session_01VQDpPffYARDQ8juksAZScf</code> (<code>k3vv</code>) and <code>session_01VQDpPfGantMCt7AV4LCCK2</code> (<code>drnh</code>) asked the owner in prose without cards when <code>add_repo</code> was refused or a scope decision arose. Owner, 2026-11-05: <em>&quot;did you and your siblings forget I am disabled? why has it not been heeded lately?&quot;</em></div></li></ul></details><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

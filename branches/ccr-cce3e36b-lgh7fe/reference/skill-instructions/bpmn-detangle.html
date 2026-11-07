@@ -290,7 +290,14 @@ loop target gets a row below it, in the column of the gateway that
 leads there. A loop-back leaves its task, runs left in its row or in the
 channel under it, and comes up into its target’s bottom. Two loops into
 one task enter at different x, the longer one further left, so they
-never cross.</li><li><strong>Hand-offs in one column.</strong> A step in another lane sits straight above
+never cross.</li><li><strong>Lanes in the order they talk.</strong> Order the lanes so that each one is
+next to the lanes it exchanges flows with. A flow that crosses a lane it
+does not stop in is read as an interaction with that lane’s actor. So an
+actor that talks to only one other lane goes on the outside, next to it:
+the owner who approves the merge steward’s card sits below the steward,
+not between the steward and the sibling sessions (owner, 2026-11-07).
+<code class="language-plaintext highlighter-rouge">lane-order</code> measures the total; this is the rule to apply by hand when
+<code class="language-plaintext highlighter-rouge">--write</code> cannot.</li><li><strong>Hand-offs in one column.</strong> A step in another lane sits straight above
 or below the step that hands to it. Put the lanes a path visits <strong>on the
 same side</strong> of the main lane (both helper lanes above, say), so the loops
 below stay free.</li><li><strong>Wrap a long row.</strong> More than about eight tasks in a row will not fit

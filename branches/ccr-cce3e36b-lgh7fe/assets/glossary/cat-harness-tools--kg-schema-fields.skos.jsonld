@@ -19603,6 +19603,139 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.decidedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.decidedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When, as an ISO date."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.decidedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.decidedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.decidedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The agent or person that ruled: an id, never a model name."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.decidedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.label",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.label"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The label that matched, for a reader."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.label",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.msgid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.msgid"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The source sentence, for a reader; the hash is what is compared."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.msgid",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.msgidsha256",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.msgidSha256"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "SHA-256 (hex) of the msgid, exactly as the catalogue holds it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.msgidSha256",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One line: why. For an `exception`, why the fixed translation is wrong here."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.term",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.term"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The term's id: its IRI, or `<subject area>#<label>` for a terminology pin."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.term",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-node.graphtypologynodeschema.description",
       "@type": "skos:Concept",
       "skos:inScheme": {

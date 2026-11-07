@@ -5611,7 +5611,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Tell the owner, then take the stalled PR over."
+          "@value": "A PR owner who stalled: tell the owner, then take the stalled PR over."
         }
       ],
       "skos:notation": "Call_Stalled",
@@ -5631,11 +5631,91 @@
       ],
       "skos:definition": [
         {
-          "@value": "Ready PRs that stack land as a train through merge:guard."
+          "@value": "Add the merge-train label instead of merging; the train lands the batch with one CI run."
         }
       ],
       "skos:notation": "Call_Train",
       "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Call_Train",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergemanagerwatch.owner_approve",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Approve the batch card"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In the merge manager's session only: one card per batch, naming each PR, after its six lines were posted in that chat. An approval given in a sibling's session does not authorise a merge (owner ruling, 2026-11-07, card Approvals, B)."
+        }
+      ],
+      "skos:notation": "Owner_Approve",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Owner_Approve",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergemanagerwatch.task_card",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Post the request in chat, then the batch card"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The sibling's six lines go into the merge manager's chat first; a request with no rendered preview and no reason goes back to the sibling (owner ruling, 2026-11-07). Then one card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
+        }
+      ],
+      "skos:notation": "Task_Card",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Task_Card",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergemanagerwatch.task_direct",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge it through merge:guard"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A workflow PR, or a PR in a repository with no train, merges directly. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card Workflow PRs, A)."
+        }
+      ],
+      "skos:notation": "Task_Direct",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Task_Direct",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergemanagerwatch.task_lapse",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Announce the hand-over or the lapse"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tell every sibling and the owner, and update the durable note: either the session that holds the lane now, or that the lane lapses and each session merges its own green PRs with the owner's approval, still sending the six-line merge request."
+        }
+      ],
+      "skos:notation": "Task_Lapse",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Task_Lapse",
       "skos:note": "candidate"
     },
     {
@@ -5646,16 +5726,36 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Read PRs, runner queue, main verdict and owners"
+          "@value": "Read the queue, acknowledge requests"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment."
+          "@value": "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. One sweep runs merge:watch over every repository it holds. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one."
         }
       ],
       "skos:notation": "Task_Read",
       "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Task_Read",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergemanagerwatch.task_relieve",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Relieve the runners"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
+        }
+      ],
+      "skos:notation": "Task_Relieve",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Task_Relieve",
       "skos:note": "candidate"
     },
     {
@@ -5886,6 +5986,186 @@
       ],
       "skos:notation": "Task_Scrap",
       "dcterms:source": "cat-harness/sdlc/processes/merge-refusal.bpmn#Task_Scrap",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_announce",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Announce and note the merge manager"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Send \"merge manager: <session id>\" to every sibling and the owner, and note it durably on the coordination work item, so it is used by all, including siblings started later."
+        }
+      ],
+      "skos:notation": "Sib_Announce",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Announce",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_callstalled",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Stalled-agent triage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tell the owner that the merge manager stalled, then re-elect with the stalled session excluded. The new holder announces itself, takes over the queue and tells the owner."
+        }
+      ],
+      "skos:notation": "Sib_CallStalled",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_CallStalled",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_callwatch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge manager watch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The elected session holds the merge steward lane and runs its loop until it hands over or the lane lapses."
+        }
+      ],
+      "skos:notation": "Sib_CallWatch",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_CallWatch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_elect",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Elect the merge manager with the siblings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The deterministic rule (electHolder): the active session that owns the P0 PR, else the earliest-created active session, the session id breaking a tie. Stalled sessions are not candidates. Every sibling computes the same answer from the same listing (owner ruling, 2026-11-07)."
+        }
+      ],
+      "skos:notation": "Sib_Elect",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Elect",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_ready",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Make the PR ready"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its own work is done and its full tier is green as judged; it is marked ready by the queue rule (continual-progress, Pace the ready marking)."
+        }
+      ],
+      "skos:notation": "Sib_Ready",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Ready",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_retarget",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "When the base lands, retarget"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Retarget the PR onto main and merge main in; across layers, re-pin to the dependency's merge commit on main, so pins only move forward. Never merge the stacked PR into its base branch, and never mark it ready while it pins an unmerged commit."
+        }
+      ],
+      "skos:notation": "Sib_Retarget",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Retarget",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_self",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge manager for its own PRs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "No merge manager is needed (a lone session, or a lapsed lane): the session is its own merge manager for its own PRs only, so it runs the merge manager loop for them. It does not announce itself to the others; it posts the six lines in its own chat and asks the owner by card."
+        }
+      ],
+      "skos:notation": "Sib_Self",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Self",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_send",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Send the six-line merge request"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "To the merge manager: the PR URL and full head SHA, the session URL, 1-3 sentences on the change, the rendered preview URL or no preview with a reason, what to look for, and full tier green as judged (owner ruling, 2026-11-07). Never merge it yourself, and never push to another session's branch."
+        }
+      ],
+      "skos:notation": "Sib_Send",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Send",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_stack",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Stack on it and keep working"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body. A re-pin is its own PR holding only pins; work that needs the new pins stacks on it, and a fix the re-pin needs lands in its owning layer (owner ruling, 2026-11-07)."
+        }
+      ],
+      "skos:notation": "Sib_Stack",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Stack",
       "skos:note": "candidate"
     },
     {

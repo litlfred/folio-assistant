@@ -1110,6 +1110,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "instance": "cat-harness-tools",
+      "name": "glossary-sense",
+      "graphNode": "schema",
+      "summary": "**The glossary sense verdicts** of an instance: for a use of a glossary term",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/kg/graph-typology-node.test.ts",
       "instance": "cat-harness-tools",
       "name": "graph-typology-node.test",
@@ -29881,6 +29889,151 @@
         "FSH_GUTS_SCHEMA_ID",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseStore",
+      "name": "GlossarySenseStore",
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseStoreSchema",
+      "name": "GlossarySenseStoreSchema",
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "kind": "zod-object",
+      "doc": "The whole store: one verdict per (term, msgid hash).",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(GLOSSARY_SENSE_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verdicts",
+          "type": "z.array(GlossarySenseVerdictSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "GLOSSARY_SENSE_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdict",
+      "name": "GlossarySenseVerdict",
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema",
+      "name": "GlossarySenseVerdictSchema",
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "kind": "zod-object",
+      "doc": "One verdict on one use of one term.",
+      "fields": [
+        {
+          "name": "term",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The term's id: its IRI, or `<subject area>#<label>` for a terminology pin."
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The label that matched, for a reader."
+        },
+        {
+          "name": "msgidSha256",
+          "type": "z.string().regex(/^[0-9a-f]{64}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "SHA-256 (hex) of the msgid, exactly as the catalogue holds it."
+        },
+        {
+          "name": "msgid",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The source sentence, for a reader; the hash is what is compared."
+        },
+        {
+          "name": "verdict",
+          "type": "z.enum(SENSE_VERDICTS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "z.string().regex(ONE_LINE)",
+          "optional": false,
+          "array": false,
+          "doc": "One line: why. For an `exception`, why the fixed translation is wrong here."
+        },
+        {
+          "name": "decidedBy",
+          "type": "z.string().regex(/^\\S+$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The agent or person that ruled: an id, never a model name."
+        },
+        {
+          "name": "decidedAt",
+          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}/).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When, as an ISO date."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ONE_LINE",
+        "SENSE_VERDICTS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/glossary-sense.ts#SenseVerdictKind",
+      "name": "SenseVerdictKind",
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -95437,6 +95590,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseStoreSchema",
+      "to": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema",
+      "via": "verdicts",
+      "kind": "field",
+      "optional": false,
+      "array": true
     },
     {
       "from": "cat-harness-tools/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema",

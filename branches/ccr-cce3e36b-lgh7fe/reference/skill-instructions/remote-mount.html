@@ -396,7 +396,49 @@ mount with local edits is left untouched by the next mount, at its old
 commit, while the lock’s top-level pin moves, so CI would keep testing the
 old layer. <code class="language-plaintext highlighter-rouge">--seed</code> refuses while a mount it moves has such edits, and
 <code class="language-plaintext highlighter-rouge">mount:check</code> reports an instance entry behind its pin as <code class="language-plaintext highlighter-rouge">missing</code>. After the re-pin, check that
-the moved instance’s <code class="language-plaintext highlighter-rouge">sha</code> in <code class="language-plaintext highlighter-rouge">index.lock.json</code> is the new pin.</p><p><strong>The committer re-pins, locally, and CI only verifies.</strong> The person or agent
+the moved instance’s <code class="language-plaintext highlighter-rouge">sha</code> in <code class="language-plaintext highlighter-rouge">index.lock.json</code> is the new pin.</p><p><strong>A pin only moves forward</strong> (owner ruling, 2026-11-06, card “Pin target”,
+A). When layers pin different commits of a shared layer, align them forward,
+bottom-up: start at the lowest layer, and move each shared layer to the
+newest commit that any layer needs. Stop when every lock names one commit per
+layer. Never move a pin back to an older commit so that two layers agree.</p><p><strong>A re-pin is a cross-layer set</strong> (owner ruling, 2026-11-07). Pin together
+every layer the change needs, re-pinned to the current mains, and verify on a
+fresh mount (<code class="language-plaintext highlighter-rouge">mount:remote --fresh</code>). A layer can need another layer’s newer
+commit. For example, cat-harness#1100 removed routes that were listed by hand,
+because a content layer above it now derives them (<code class="language-plaintext highlighter-rouge">builtOnHostSite</code>). So
+cat-harness at 6dd3746 or later needs that content layer’s change, and the
+tools layer’s matching one, in the same re-pin. An asset that a layer
+commits must also match the tools recipe that generates it, such as
+cat-harness’s <code class="language-plaintext highlighter-rouge">edit-links.js</code>.</p><p><strong>A re-pin is its own PR</strong> (owner ruling, 2026-11-07: “keep repins on own
+PR so easier to stack dependencies”). A re-pin PR changes the pins and
+nothing else: <code class="language-plaintext highlighter-rouge">index.config.json</code>, <code class="language-plaintext highlighter-rouge">index.lock.json</code>, the generated <code class="language-plaintext highlighter-rouge">uses:</code>
+pins, and what regenerates from them. It carries no feature change, no
+workflow logic and no fix.</p><ul><li>A feature that needs the new pins is stacked on the re-pin PR (below)
+rather than riding inside it.</li><li>A fix that the re-pin needs lands in the layer that owns it, and the
+re-pin then only moves the pin.</li><li>Counter-example: folio-assistant#2985 carried #2999 (the shared ci-setup
+move) and its own <code class="language-plaintext highlighter-rouge">caches:viz</code> gate line inside the re-pin.</li><li><strong>The one exception: mutual dependence</strong> (owner ruling, 2026-11-07, card,
+about 08:43Z, “A. Allow the exception”). A re-pin may share a PR with a
+change only when neither can pass on its own. The PR body must say why.
+Example: a content layer re-pinned to cat-harness#1032 failed
+<code class="language-plaintext highlighter-rouge">check:tools</code> without its own PR’s <code class="language-plaintext highlighter-rouge">library</code> topic, and that PR alone
+declared the <code class="language-plaintext highlighter-rouge">library</code> topic twice against the old pin. A change that
+merely needs the new pins is not mutual: it stacks.</li></ul><p><strong>A lower layer’s new gate must not break the next re-pin.</strong> A gate or
+check script added to a lower layer has passed a downstream dry run before
+it lands, so a re-pin moves pins and nothing else. When a re-pin
+nonetheless fails on a gate a lower layer just added, the fix goes into
+that layer, not into the re-pin
+(<a href="../../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a>
+§”A new gate in a lower layer must pass downstream”).</p><p><strong>Stacking across layers</strong> (owner ruling, 2026-11-07). Work that needs an
+unmerged PR in a lower layer does not wait for it. Develop against that
+PR’s branch laid over a fresh mount. A draft PR may pin the dependency
+PR’s full 40-hex head SHA so that its CI sees the change. A branch is never
+pinned, as for any pin. That draft is never marked ready or merged while it
+pins an unmerged commit: once the dependency lands, re-pin to its merge
+commit on main. That move goes forward, so “a pin only moves forward” holds
+throughout.</p><p><strong>The re-pin refreshes layer health</strong> (owner ruling, 2026-11-07, card “Layer
+health”, A). When a re-pin moves the tools layer, it regenerates the
+checkout’s layer health report at the new pins and publishes it. The health
+check fails a re-pin once the report is more than 26 hours old and the checker
+has moved. The tools layer implements it.</p><p><strong>The committer re-pins, locally, and CI only verifies.</strong> The person or agent
 who moves a pin does the whole re-pin in their own checkout: <code class="language-plaintext highlighter-rouge">--seed</code>, a
 fresh <code class="language-plaintext highlighter-rouge">mount:remote</code>, the regenerated agent surface (<code class="language-plaintext highlighter-rouge">skill:commands</code>,
 <code class="language-plaintext highlighter-rouge">agent-memory</code>, <code class="language-plaintext highlighter-rouge">index:render</code>), and the local checks. That same
@@ -484,7 +526,8 @@ A worked example is in
 <a href="../../reference/skill-instructions/repo-conversion.html"><code class="language-plaintext highlighter-rouge">repo-conversion</code></a> §5.</p><h2 id="never"><a href="#never" class="anchor-heading" aria-labelledby="never"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Never
   
   
-</h2><ul><li><strong>Never add a submodule</strong> to get a dependency, and never clone into <code class="language-plaintext highlighter-rouge">.deps/</code>.</li><li><strong>Never pin a branch or an abbreviated SHA.</strong> The schema refuses both.</li><li><strong>Never edit a mounted directory and expect a re-mount to keep the edit, or
+</h2><ul><li><strong>Never add a submodule</strong> to get a dependency, and never clone into <code class="language-plaintext highlighter-rouge">.deps/</code>.</li><li><strong>Never pin a branch or an abbreviated SHA.</strong> The schema refuses both.</li><li><strong>Never move a pin back.</strong> Align layers forward to the newest commit any
+of them needs (§”Re-pinning”).</li><li><strong>Never edit a mounted directory and expect a re-mount to keep the edit, or
 to throw it away.</strong> A re-mount leaves edited bytes untouched and reports them
 as missing. Move the edit upstream, or delete the directory and re-mount.</li><li><strong>Never mount over tracked files</strong>, or over a directory that no lock says
 this mount made. Both are refused.</li><li><strong>Never read <code class="language-plaintext highlighter-rouge">missing</code> or <code class="language-plaintext highlighter-rouge">could-not-determine</code> as “that layer has nothing
