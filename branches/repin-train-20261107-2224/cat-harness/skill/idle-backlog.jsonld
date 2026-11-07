@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/skill/idle-backlog.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2224",
+    "sha": "940591cb26fae8d251fd78993a88069ea1e356af",
+    "pr": "repin-train/20261107-2224",
+    "run": "42420484247"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/skill/idle-backlog",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "idle-backlog",
+      "title": "idle-backlog",
+      "description": "While idle or waiting on a long-running async task (a build, a long compute script, a CI run, a background agent), pull the applicable backlog in priority order and work non-conflicting items instead of stalling. Use whenever blocked on an async wait with no substantive output to produce.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/package/work-plan"
+      ],
+      "instructionsPath": "work-plan/skills/work-plan/idle-backlog.md",
+      "instructionLines": 57,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/idle-backlog"
+    }
+  ]
+}

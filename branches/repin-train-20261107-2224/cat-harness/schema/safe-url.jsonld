@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/schema/safe-url.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2224",
+    "sha": "940591cb26fae8d251fd78993a88069ea1e356af",
+    "pr": "repin-train/20261107-2224",
+    "run": "42420484247"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/schema/safe-url",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "safe-url",
+      "title": "safe-url",
+      "summary": "Which URL schemes may reach an `href`, and why the answer is a list.",
+      "module": "schemas/ui/safe-url.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/safe-url"
+    }
+  ]
+}

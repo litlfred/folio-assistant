@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/skill/kg-export.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2224",
+    "sha": "940591cb26fae8d251fd78993a88069ea1e356af",
+    "pr": "repin-train/20261107-2224",
+    "run": "42420484247"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/skill/kg-export",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "kg-export",
+      "title": "KG export — publishing the graph as linked data, not as a page",
+      "description": "Serialize an instance's knowledge graph to one JSON document, for publication and inspection. Read when asked to visualize, audit or share the KG, before adding a node type to the export, and before minting or authoring any subject IRI — subjects are `<doc dir>/<kind>/<id>`, never `#fragments`.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/kg-export.md",
+      "instructionLines": 1056,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-export"
+    }
+  ]
+}

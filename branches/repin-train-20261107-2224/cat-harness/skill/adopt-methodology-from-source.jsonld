@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/skill/adopt-methodology-from-source.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2224",
+    "sha": "940591cb26fae8d251fd78993a88069ea1e356af",
+    "pr": "repin-train/20261107-2224",
+    "run": "42420484247"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/skill/adopt-methodology-from-source",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "adopt-methodology-from-source",
+      "title": "Adopt a methodology from a source document",
+      "description": "The general process for turning a shared paper, book or standard into an adopted methodology: establish origin and licence, ingest the source, find and summarize related work items and issues and ask whether to coordinate, render the method with its adopted and refused parts, place it by ownership, integrate it by calling existing processes, give every tool it uses a Tool node, and put it to the owner. Process: processes/library/methodology-from-source.bpmn.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "skills/library/library-core/adopt-methodology-from-source.md",
+      "instructionLines": 42,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/adopt-methodology-from-source"
+    }
+  ]
+}

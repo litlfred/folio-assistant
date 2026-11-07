@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_EvidenceAttached.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2224",
+    "sha": "940591cb26fae8d251fd78993a88069ea1e356af",
+    "pr": "repin-train/20261107-2224",
+    "run": "42420484247"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_EvidenceAttached",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Recommendation is evidence-backed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/folio-assistant-core/process/Process_EvidenceRetrieval",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/folio-assistant-core/process/Process_EvidenceRetrieval#flow/Flow_19"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/EndEvent_EvidenceAttached"
+    }
+  ]
+}

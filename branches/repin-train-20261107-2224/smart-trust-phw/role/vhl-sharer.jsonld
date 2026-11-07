@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/smart-trust-phw/role/vhl-sharer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2224",
+    "sha": "940591cb26fae8d251fd78993a88069ea1e356af",
+    "pr": "repin-train/20261107-2224",
+    "run": "42420484247"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2224/smart-trust-phw/role/vhl-sharer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "VHL Sharer",
+      "title": "VHL Sharer",
+      "notation": "vhl-sharer",
+      "description": "Holds the health information, generates verifiable health links, and enforces consent when a link is redeemed. Specializes the ActorDefinition Issuer (input/fsh/actors/actors.fsh).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/vhl-sharer"
+    }
+  ]
+}
