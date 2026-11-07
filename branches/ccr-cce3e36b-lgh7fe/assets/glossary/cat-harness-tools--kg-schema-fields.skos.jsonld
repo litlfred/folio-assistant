@@ -9305,6 +9305,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cat-harness.harnessvisualiserschema.builtonhostsite",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HarnessVisualiserSchema.builtOnHostSite"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its pages are built at publish on the HOST site (the site owner's, e.g. cat-harness's), at `<site>/<locale>/<harness>/<id>/`, so the publish plan derives those routes from this entry and the host lists none of them (bean folio-assistant-uldr, owner option \"1\", 2026-11-06). `translated`: it also writes one route per locale the checkout's translation sources hold, besides the page locale. The writer is the `renderedBy` Tool's `invoke.shell` script, and it marks each route it writes with a self-ignoring `.gitignore` (`*`), which keeps the route out of git and out of the mount digest."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#HarnessVisualiserSchema.builtOnHostSite",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cat-harness.harnessvisualiserschema.covers",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -21690,6 +21709,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexSiteSchema.landing",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexsiteschema.taskskills",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexSiteSchema.taskSkills"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the ⓘ task panel on this site's BPMN drawings shows skills: the skills a task requires and the skills its lane's role has. Absent or `true` shows them, as every knowledge-graph site does; `false` hides them, for a site whose processes are not modelled with skills, such as an implementation guide's business processes (owner, 2026-11-06: \"i dont think skills are modelled in DAK ... dont necc turn those on but i want common styling\"; \"maybe in future DAK personas get skills\"). The rest of the panel (the step, its lane and role, the process, a called process) is shown either way. A fact about how THIS checkout publishes, so it sits on the index's `site` beside `landing` and `agentRun`. Read by `task-panel.ts` `taskSkillsDeclared`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexSiteSchema.taskSkills",
       "skos:note": "candidate"
     },
     {
@@ -42897,6 +42935,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.referenceschema.href",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceSchema.href"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A URL (`https:`, `mailto:` …), an absolute path or a `#fragment` as it is; anything else is a path from the SITE'S ROOT (`vaxlink/`, `journeys.html#j1`), resolved the same way on the journey page and the workshop pages (`fromSite`, `scripts/journeys/read.ts`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#ReferenceSchema.href",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.referenceschema.rel",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -45763,6 +45820,44 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.badge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoppresentationschema.cast",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopPresentationSchema.cast"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The order the cast is listed in, everywhere it is listed (the overview, the journey map's lanes, the persona lens): actor ids. An actor a step names and this list does not follows, in order of first appearance; an id no step names is not drawn. Absent: order of first appearance."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.cast",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoppresentationschema.chaptertitles",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopPresentationSchema.chapterTitles"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A chapter's title in the room, by the id of the journey the chapter is (`\"j4-family-records-abroad\": \"Crossing back\"`). Absent: the journey's title without its code in front."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.chapterTitles",
       "skos:note": "candidate"
     },
     {

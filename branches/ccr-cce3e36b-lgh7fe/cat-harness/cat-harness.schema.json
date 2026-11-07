@@ -1143,6 +1143,16 @@
                   "type": "string",
                   "pattern": "^[a-z0-9][a-z0-9-]*(?:\\/[a-z0-9][a-z0-9-]*)*$"
                 }
+              },
+              "builtOnHostSite": {
+                "type": "object",
+                "properties": {
+                  "translated": {
+                    "type": "boolean",
+                    "const": true
+                  }
+                },
+                "additionalProperties": false
               }
             },
             "required": [
@@ -2293,8 +2303,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "172537210b54199186b33dc2f3973fda9c41ab40",
+    "sha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
     "pr": "2985/merge",
-    "run": "42190366456"
+    "run": "42343823482"
   }
 }

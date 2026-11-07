@@ -297,7 +297,7 @@ are generic and name no DAK. What a DAK adds to each:</p><ul><li><strong>BPMN is
 process into FHIR Shorthand, so names and ids chosen in the diagram appear
 in the generated FSH. Author it knowing it will be transformed. A changed
 diagram also changes its picture and its translation templates: re-render
-it (<code class="language-plaintext highlighter-rouge">smart-base/scripts/render-processes.ts</code>) and run <code class="language-plaintext highlighter-rouge">bun run cat regen</code>
+it (<code class="language-plaintext highlighter-rouge">bun run cat render:bpmn</code>) and run <code class="language-plaintext highlighter-rouge">bun run cat regen</code>
 (<a href="../../reference/skill-instructions/prepare-merge.html"><code class="language-plaintext highlighter-rouge">prepare-merge</code></a>),
 which re-extracts the <code class="language-plaintext highlighter-rouge">.pot</code> files <code class="language-plaintext highlighter-rouge">translate-bpmn:check</code> gates on.</li><li><strong>DMN is a source artefact.</strong> <code class="language-plaintext highlighter-rouge">dmn2html</code> renders decision tables for human
 review, and <code class="language-plaintext highlighter-rouge">dmn_questionnaire_generator</code> derives questionnaires from them;

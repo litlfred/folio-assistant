@@ -227,10 +227,22 @@ as steps — the ingestion transport, the versioned store, and the signing
 scheme. A pipeline that picks one of those is asserting a decision nobody
 made.</p><p>A CDN is a LAYER, not a publication host. PUBLICATION_HOSTS answers “what
 serves the rendering”; a cache answers “what stands between the server and
-the reader”, and the canonical URL stays the origin’s either way.</p><style>.pt-diagram{position:relative;width:100%}.pt-diagram>img{display:block;width:100%;height:auto}.pt-mark{position:absolute;transform:translate(-50%,-50%);width:1.35em;height:1.35em;padding:0;border-radius:50%;border:1px solid #1f6feb;background:#fff;color:#1f6feb;font:bold 0.8em/1 sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.25)}.pt-layer{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:2}.pt-layer>*{pointer-events:auto}.pt-go{position:absolute;display:block;border-radius:3px;cursor:pointer}.pt-go:hover,.pt-go:focus-visible{outline:2px solid #1f6feb;outline-offset:1px;background:rgba(31,111,235,.07)}.pt-mark{z-index:1}.pt-mark:hover,.pt-mark[aria-expanded=true]{background:#1f6feb;color:#fff}.pt-mark:focus-visible{outline:2px solid #1f6feb;outline-offset:2px}.pt-panel{position:absolute;z-index:5;margin:0.9em 0 0 -0.6em;max-width:min(26em,90vw);min-width:14em;padding:0.6em 0.7em;background:#fff;color:#1b1f24;border:1px solid #8c959f;border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-size:0.85em;line-height:1.35}.pt-close{position:absolute;top:0.2em;right:0.35em;border:0;background:none;font-size:1.2em;cursor:pointer;color:inherit}.pt-obj{border:1px solid #57606a;border-radius:3px;margin:0.15em 0}.pt-head{border-bottom:1px solid #57606a;padding:0.15em 0.45em;background:#f6f8fa;text-decoration:underline}.pt-head .pt-st{text-decoration:none;display:inline-block;margin-right:0.35em}.pt-attr{padding:0.1em 0.45em}.pt-st,.pt-via{color:#57606a;font-size:0.9em}.pt-edge{color:#57606a;font-size:0.85em;padding-left:1em}.pt-role .pt-head{background:#fff8c5}.pt-skill .pt-head{background:#ddf4ff}.pt-task .pt-head{background:#f6f8fa}.pt-none{color:#57606a;font-style:italic;margin-top:0.3em}</style><div class="pt-diagram" data-panel="kg-to-portal.tasks.json"><img src="../../../assets/img/workflows/kg-to-portal.svg" alt="BPMN diagram: KG to public portal" /><div class="pt-layer"><button type="button" class="pt-mark" data-task="D_Constraints" style="left:18.79%;top:56.71%" aria-expanded="false" aria-label="About step: State the constraints, with denominators" title="About: State the constraints, with denominators">i</button> <button type="button" class="pt-mark" data-task="E_Scope" style="left:30.35%;top:42.75%" aria-expanded="false" aria-label="About step: Decide what may leave the repository" title="About: Decide what may leave the repository">i</button> <button type="button" class="pt-mark" data-task="A_Select" style="left:29.48%;top:1.83%" aria-expanded="false" aria-label="About step: Cut the subgraph that leaves" title="About: Cut the subgraph that leaves">i</button> <button type="button" class="pt-mark" data-task="A_Serialize" style="left:40.46%;top:1.83%" aria-expanded="false" aria-label="About step: Serialize to JSON-LD" title="About: Serialize to JSON-LD">i</button> <button type="button" class="pt-mark" data-task="A_Package" style="left:52.31%;top:3.76%" aria-expanded="false" aria-label="About step: Package with digests" title="About: Package with digests">i</button> <button type="button" class="pt-mark" data-task="S_Sign" style="left:68.21%;top:22.72%" aria-expanded="false" aria-label="About step: Sign the package and/or each asset" title="About: Sign the package and/or each asset">i</button> <button type="button" class="pt-mark" data-task="E_HumanEyes" style="left:69.08%;top:42.75%" aria-expanded="false" aria-label="About step: Human eyes on the rendered artefact" title="About: Human eyes on the rendered artefact">i</button> <button type="button" class="pt-mark" data-task="D_Undetermined" style="left:88.73%;top:56.71%" aria-expanded="false" aria-label="About step: Record the decision as still open" title="About: Record the decision as still open">i</button> <button type="button" class="pt-mark" data-task="A_Distribute" style="left:77.17%;top:69.82%" aria-expanded="false" aria-label="About step: Publish to the origin (a cache may front it)" title="About: Publish to the origin (a cache may front it)">i</button> <button type="button" class="pt-mark" data-task="P_Verify" style="left:77.17%;top:85.28%" aria-expanded="false" aria-label="About step: Verify what arrived against what was signed" title="About: Verify what arrived against what was signed">i</button></div><div class="pt-panel" role="dialog" aria-label="Task details" hidden=""></div></div><script>(function () {
+the reader”, and the canonical URL stays the origin’s either way.</p><style>.pt-diagram{position:relative;width:100%}.pt-diagram>img{display:block;width:100%;height:auto}.pt-mark{position:absolute;transform:translate(-50%,-50%);width:1.35em;height:1.35em;padding:0;border-radius:50%;border:1px solid #1f6feb;background:#fff;color:#1f6feb;font:bold 0.8em/1 sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 2px rgba(0,0,0,.25)}.pt-layer{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;z-index:2}.pt-layer>*{pointer-events:auto}.pt-go{position:absolute;display:block;border-radius:3px;cursor:pointer}.pt-go:hover,.pt-go:focus-visible{outline:2px solid #1f6feb;outline-offset:1px;background:rgba(31,111,235,.07)}.pt-mark{z-index:1}.pt-mark:hover,.pt-mark[aria-expanded=true]{background:#1f6feb;color:#fff}.pt-mark:focus-visible{outline:2px solid #1f6feb;outline-offset:2px}.pt-panel{position:absolute;z-index:5;text-align:left;margin:0.9em 0 0 -0.6em;max-width:min(26em,90vw);min-width:14em;padding:0.6em 0.7em;background:#fff;color:#1b1f24;border:1px solid #8c959f;border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,.18);font-size:0.85em;line-height:1.35}.pt-close{position:absolute;top:0.2em;right:0.35em;border:0;background:none;font-size:1.2em;cursor:pointer;color:inherit}.pt-obj{border:1px solid #57606a;border-radius:3px;margin:0.15em 0}.pt-head{border-bottom:1px solid #57606a;padding:0.15em 0.45em;background:#f6f8fa;text-decoration:underline}.pt-head .pt-st{text-decoration:none;display:inline-block;margin-right:0.35em}.pt-attr{padding:0.1em 0.45em}.pt-st,.pt-via{color:#57606a;font-size:0.9em}.pt-edge{color:#57606a;font-size:0.85em;padding-left:1em}.pt-role .pt-head{background:#fff8c5}.pt-skill .pt-head{background:#ddf4ff}.pt-task .pt-head{background:#f6f8fa}.pt-none{color:#57606a;font-style:italic;margin-top:0.3em}.pt-diagram [data-pt-hl]>[class$="djs-visual"]>:first-child{stroke:#d97706!important;stroke-width:4px!important;fill:#fff3d6!important}.pt-diagram [data-pt-hl]>[class$="djs-visual"]>path:first-child{fill:none!important}.pt-has-hl [class*="djs-shape"]:not([data-pt-hl])>[class$="djs-visual"]>:first-child{opacity:.75}</style><div class="pt-diagram" data-panel="kg-to-portal.tasks.json"><img src="../../../assets/img/workflows/kg-to-portal.svg" alt="BPMN diagram: KG to public portal" /><div class="pt-layer"><button type="button" class="pt-mark" data-task="D_Constraints" style="left:18.79%;top:56.71%" aria-expanded="false" aria-label="About step: State the constraints, with denominators" title="About: State the constraints, with denominators">i</button> <button type="button" class="pt-mark" data-task="E_Scope" style="left:30.35%;top:42.75%" aria-expanded="false" aria-label="About step: Decide what may leave the repository" title="About: Decide what may leave the repository">i</button> <button type="button" class="pt-mark" data-task="A_Select" style="left:29.48%;top:1.83%" aria-expanded="false" aria-label="About step: Cut the subgraph that leaves" title="About: Cut the subgraph that leaves">i</button> <button type="button" class="pt-mark" data-task="A_Serialize" style="left:40.46%;top:1.83%" aria-expanded="false" aria-label="About step: Serialize to JSON-LD" title="About: Serialize to JSON-LD">i</button> <button type="button" class="pt-mark" data-task="A_Package" style="left:52.31%;top:3.76%" aria-expanded="false" aria-label="About step: Package with digests" title="About: Package with digests">i</button> <button type="button" class="pt-mark" data-task="S_Sign" style="left:68.21%;top:22.72%" aria-expanded="false" aria-label="About step: Sign the package and/or each asset" title="About: Sign the package and/or each asset">i</button> <button type="button" class="pt-mark" data-task="E_HumanEyes" style="left:69.08%;top:42.75%" aria-expanded="false" aria-label="About step: Human eyes on the rendered artefact" title="About: Human eyes on the rendered artefact">i</button> <button type="button" class="pt-mark" data-task="D_Undetermined" style="left:88.73%;top:56.71%" aria-expanded="false" aria-label="About step: Record the decision as still open" title="About: Record the decision as still open">i</button> <button type="button" class="pt-mark" data-task="A_Distribute" style="left:77.17%;top:69.82%" aria-expanded="false" aria-label="About step: Publish to the origin (a cache may front it)" title="About: Publish to the origin (a cache may front it)">i</button> <button type="button" class="pt-mark" data-task="P_Verify" style="left:77.17%;top:85.28%" aria-expanded="false" aria-label="About step: Verify what arrived against what was signed" title="About: Verify what arrived against what was signed">i</button></div><div class="pt-panel" role="dialog" aria-label="Task details" hidden=""></div></div><script>(function () {
   Array.prototype.forEach.call(document.querySelectorAll(".pt-diagram:not([data-pt-ready])"), init);
   function init(root) {
   root.setAttribute("data-pt-ready", "");
+  // Every href in the sidecar is relative to the sidecar (it sits beside the
+  // process page), so a page elsewhere on the site that shows the same
+  // drawing resolves them to the same targets.
+  var base = new URL(root.getAttribute("data-panel"), location.href);
+  function abs(h) { try { return new URL(h, base).href; } catch (e) { return h; } }
+  // A page with no server-drawn markers gets them from the sidecar.
+  var drawn = !!root.querySelector(".pt-layer");
+  if (!drawn) {
+    var ly = document.createElement("div"); ly.className = "pt-layer"; root.appendChild(ly);
+    var pn = document.createElement("div"); pn.className = "pt-panel"; pn.setAttribute("role", "dialog");
+    pn.setAttribute("aria-label", "Task details"); pn.hidden = true; root.appendChild(pn);
+  }
   var panel = root.querySelector(".pt-panel"), data = null, pending = null, open = null;
   function load() {
     if (data) return Promise.resolve(data);
@@ -243,7 +255,7 @@ the reader”, and the canonical URL stays the origin’s either way.</p><style>
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function link(l, cls) {
     var e = el(l.href ? "a" : "code", cls, l.name);
-    if (l.href) e.href = l.href; else e.title = "no page for this one";
+    if (l.href) e.href = abs(l.href); else e.title = "no page for this one";
     return e;
   }
   function obj(stereo, name, kind) {
@@ -282,7 +294,8 @@ the reader”, and the canonical URL stays the origin’s either way.</p><style>
       Object.keys(t.shared.inputs || {}).forEach(function (k) { gt.appendChild(el("div", "pt-attr", k + " = " + t.shared.inputs[k])); });
       panel.appendChild(gt);
     }
-    t.skills.forEach(function (s) {
+    var sk_on = !(data && data.skills === false);
+    (sk_on ? t.skills : []).forEach(function (s) {
       panel.appendChild(edge("requires"));
       var sk = obj("Skill", link(s), "skill");
       (s.methodologies || []).forEach(function (m) {
@@ -291,19 +304,22 @@ the reader”, and the canonical URL stays the origin’s either way.</p><style>
       });
       panel.appendChild(sk);
     });
-    if (!t.skills.length && !t.calls) panel.appendChild(el("div", "pt-none", "This task names no skill."));
+    if (sk_on && !t.skills.length && !t.calls) panel.appendChild(el("div", "pt-none", "This task names no skill."));
     if (t.role) {
       panel.appendChild(edge("lane names"));
       var role = obj("Role", link(t.role), "role");
       if (t.role.title) role.appendChild(el("div", "pt-attr", "title = " + t.role.title));
-      var list = el("div", "pt-attr"); list.appendChild(el("span", "pt-st", "hasSkill: "));
-      if (!t.role.skills.length) list.appendChild(el("i", null, "none listed"));
-      t.role.skills.forEach(function (s, i) {
-        if (i) list.appendChild(document.createTextNode(", "));
-        list.appendChild(link(s));
-        if (s.via) list.appendChild(el("span", "pt-via", " (via " + s.via + ")"));
-      });
-      role.appendChild(list); panel.appendChild(role);
+      if (sk_on) {
+        var list = el("div", "pt-attr"); list.appendChild(el("span", "pt-st", "hasSkill: "));
+        if (!t.role.skills.length) list.appendChild(el("i", null, "none listed"));
+        t.role.skills.forEach(function (s, i) {
+          if (i) list.appendChild(document.createTextNode(", "));
+          list.appendChild(link(s));
+          if (s.via) list.appendChild(el("span", "pt-via", " (via " + s.via + ")"));
+        });
+        role.appendChild(list);
+      }
+      panel.appendChild(role);
     } else if (t.binding) {
       panel.appendChild(el("div", "pt-none", "Lane role: " + t.binding + "."));
     }
@@ -325,9 +341,22 @@ the reader”, and the canonical URL stays the origin’s either way.</p><style>
     }
     return null;
   }
+  // A page may name steps to pick out (a journey's step shows the tasks it
+  // realises): `data-pt-highlight="Task_A Task_B"`. Marked once the drawing
+  // is inline, which is when its shapes exist to mark.
+  var hl = (root.getAttribute("data-pt-highlight") || "").split(/\s+/).filter(Boolean);
+  if (hl.length) root.classList.add("pt-has-hl");
+  function mark(a) {
+    if (!hl.length || a.tagName.toLowerCase() !== "svg" || a.hasAttribute("data-pt-marked")) return;
+    a.setAttribute("data-pt-marked", "");
+    Array.prototype.forEach.call(a.querySelectorAll("[data-element-id]"), function (g) {
+      if (hl.indexOf(g.getAttribute("data-element-id")) >= 0) g.setAttribute("data-pt-hl", "");
+    });
+  }
   function place() {
     queued = false;
     var a = art();
+    if (a) mark(a);
     if (!layer || !a) return;
     var r = root.getBoundingClientRect(), b = a.getBoundingClientRect();
     var x = b.left - r.left, y = b.top - r.top, w = b.width, h = b.height, vw = 0, vh = 0;
@@ -358,6 +387,20 @@ the reader”, and the canonical URL stays the origin’s either way.</p><style>
   root.addEventListener("load", schedule, true);
   window.addEventListener("resize", schedule);
   schedule();
+  if (!drawn) load().then(function (j) {
+    (j.markers || []).forEach(function (m) {
+      var t = j.tasks[m.id], to = t && t.calls ? (t.calls.diagram || t.calls.href) : null;
+      if (to && m.box) {
+        var g = el("a", "pt-go"); g.href = abs(to);
+        g.style.left = m.box.left + "%"; g.style.top = m.box.top + "%"; g.style.width = m.box.width + "%"; g.style.height = m.box.height + "%";
+        g.setAttribute("aria-label", "Open subprocess: " + m.name); g.title = "Open subprocess: " + m.name; layer.appendChild(g);
+      }
+      var b = el("button", "pt-mark", "i"); b.type = "button"; b.setAttribute("data-task", m.id);
+      b.style.left = m.left + "%"; b.style.top = m.top + "%"; b.setAttribute("aria-expanded", "false");
+      b.setAttribute("aria-label", "About step: " + m.name); b.title = "About: " + m.name; layer.appendChild(b);
+    });
+    schedule();
+  }).catch(function (e) { console.warn("task panel: could not load " + base.href + " (" + e.message + ")"); });
   function at(b) {
     var r = root.getBoundingClientRect(), m = b.getBoundingClientRect();
     panel.style.left = (m.left + m.width / 2 - r.left) + "px"; panel.style.top = (m.top + m.height / 2 - r.top) + "px";

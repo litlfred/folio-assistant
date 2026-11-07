@@ -4,15 +4,15 @@
   "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "172537210b54199186b33dc2f3973fda9c41ab40",
+    "sha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
     "pr": "2985/merge",
-    "run": "42190366456"
+    "run": "42343823482"
   },
   "@graph": [
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Change merged",
+      "name": "Change merged and closed",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback",
@@ -22,7 +22,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10"
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback#flow/CF14"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-processes",

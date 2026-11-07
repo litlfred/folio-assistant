@@ -359,9 +359,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "172537210b54199186b33dc2f3973fda9c41ab40",
+    "sha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
     "pr": "2985/merge",
-    "run": "42190366456"
+    "run": "42343823482"
   },
   "@graph": [
     {
@@ -369,7 +369,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "journey-refs",
       "title": "Every reference a journey or a workshop names resolves",
-      "description": "Read every `user-scenario` and `workshop` node in the checkout through the instances' declared directories, with the journeys viewer's own resolver, and resolve what each names: actors (`personas`, a step's `lead`, `experiences[].actor`, `handoff.from`/`to`, `illustrationStyle.cast[].actor`), user stories, `realisedBy` BPMN files (instance-relative) and the element ids in them, `uses` blocks in a directory declaring `building-blocks`, `req:` requirements, FHIR examples in a `fhir-artifact-index`, `illustration.src` files, `follows`/`partOf` journeys, the `trustLadder` code list and each `record.state` code of it, and ArchiMate `views`; and each workshop's `scenarios`, `steps[]` `{scenario, step}` and `<scenario>#<step>` refs. A node that does not parse is a finding. One line per finding, naming the instance, file and step. Exit 0 every reference resolves (or no instance holds a journey or a workshop, which is said); 1 one does not; 2 the declarations could not be read.",
+      "description": "Read every `user-scenario` and `workshop` node in the checkout through the instances' declared directories, with the journeys viewer's own resolver, and resolve what each names: actors (`personas`, a step's `lead`, `experiences[].actor`, `handoff.from`/`to`, `illustrationStyle.cast[].actor`), user stories, `realisedBy` BPMN files (instance-relative) and the element ids in them, `uses` blocks in a directory declaring `building-blocks`, `req:` requirements, FHIR examples and a step's `dak` assets (data sets, decision tables, indicators) in a `fhir-artifact-index` (could not determine while the index is built at publish), `illustration.src` files, `follows`/`partOf` journeys, the `trustLadder` code list and each `record.state` code of it, and ArchiMate `views`; and each workshop's `scenarios`, `steps[]` `{scenario, step}` and `<scenario>#<step>` refs; each device screen's `owner` and `personCard` actors, its `steps[]` `{scenario, step}`, and the FHIR examples its `qr` and `recordList` blocks name; and every persona's `avatar` image path. A node that does not parse is a finding. One line per finding, naming the instance, file and step. Exit 0 every reference resolves (or no instance holds a journey or a workshop, which is said); 1 one does not; 2 the declarations could not be read.",
       "install": {
         "none": true
       },

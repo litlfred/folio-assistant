@@ -5,9 +5,9 @@
   "sameAs": "http://smart.who.int/base/directory/smart-base-scripts.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "172537210b54199186b33dc2f3973fda9c41ab40",
+    "sha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
     "pr": "2985/merge",
-    "run": "42190366456"
+    "run": "42343823482"
   },
   "@graph": [
     {
@@ -22,7 +22,7 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
       ],
-      "description": "This layer's own scripts and their tests: document kinds, the DAK components figure, the DTH term findings, the smart-kg L1 extraction, the fhir-harness exclusions check, the L1 recommendation scenario candidates with the vocabulary reader they resolve against (fixtures and the measles run under `scripts/fixtures/`), the process renderer, and `dth-init.ts`, which writes a new DTH repository's wiring. Declared so a remote mount brings them.",
+      "description": "This layer's own scripts and their tests: document kinds, the DAK components figure, the DTH term findings, the smart-kg L1 extraction, the fhir-harness exclusions check, the L1 recommendation scenario candidates with the vocabulary reader they resolve against (fixtures and the measles run under `scripts/fixtures/`), and `dth-init.ts`, which writes a new DTH repository's wiring. Declared so a remote mount brings them.",
       "readmePath": "scripts/README.md",
       "fileCount": 0,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-scripts"

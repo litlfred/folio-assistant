@@ -1,6 +1,128 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_Translation",
+ "markers": [
+  {
+   "id": "Task_PotExtract",
+   "name": "Extract translatable strings (POT)",
+   "left": 16.35,
+   "top": 12.64,
+   "box": {
+    "left": 11.11,
+    "top": 27.46,
+    "width": 1.74,
+    "height": 3.74
+   }
+  },
+  {
+   "id": "Task_Translate",
+   "name": "Produce translation (PO file)",
+   "left": 27.93,
+   "top": 12.64,
+   "box": {
+    "left": 22.68,
+    "top": 27.46,
+    "width": 1.74,
+    "height": 3.74
+   }
+  },
+  {
+   "id": "Task_PoInject",
+   "name": "Inject translations (PO → Markdown)",
+   "left": 39.51,
+   "top": 12.64,
+   "box": {
+    "left": 34.26,
+    "top": 27.46,
+    "width": 1.74,
+    "height": 3.74
+   }
+  },
+  {
+   "id": "Task_RoundTripQA",
+   "name": "Round-trip translation QA (back-translate)",
+   "left": 51.09,
+   "top": 12.64,
+   "box": {
+    "left": 45.84,
+    "top": 27.46,
+    "width": 1.74,
+    "height": 3.74
+   }
+  },
+  {
+   "id": "Task_Adjudicate",
+   "name": "Adjudicate the flagged passage (human)",
+   "left": 60.85,
+   "top": 48.52,
+   "box": {
+    "left": 55.61,
+    "top": 63.34,
+    "width": 1.74,
+    "height": 3.74
+   }
+  },
+  {
+   "id": "Task_EditTranslation",
+   "name": "Edit the flagged passage and re-inject",
+   "left": 39.51,
+   "top": 48.52,
+   "box": {
+    "left": 34.26,
+    "top": 63.34,
+    "width": 1.74,
+    "height": 3.74
+   }
+  },
+  {
+   "id": "Task_WriteUnofficial",
+   "name": "Write status.json (unofficial)",
+   "left": 72.07,
+   "top": 12.64,
+   "box": {
+    "left": 66.82,
+    "top": 27.46,
+    "width": 1.74,
+    "height": 3.74
+   }
+  },
+  {
+   "id": "Task_Signoff",
+   "name": "Sign off translation (human adjudicator)",
+   "left": 91.61,
+   "top": 12.64,
+   "box": {
+    "left": 86.36,
+    "top": 27.46,
+    "width": 1.74,
+    "height": 3.74
+   }
+  },
+  {
+   "id": "Task_WriteOfficial",
+   "name": "Write status.json (official)",
+   "left": 91.61,
+   "top": 48.52,
+   "box": {
+    "left": 86.36,
+    "top": 63.34,
+    "width": 1.74,
+    "height": 3.74
+   }
+  },
+  {
+   "id": "Task_StalenessCheck",
+   "name": "Check staleness (source hash)",
+   "left": 91.61,
+   "top": 75.04,
+   "box": {
+    "left": 86.36,
+    "top": 89.86,
+    "width": 1.74,
+    "height": 3.74
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation",
  "tasks": {
   "Task_PotExtract": {

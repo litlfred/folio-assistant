@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 47,
+      "count": 48,
       "unit": "open beans"
     }
   },
@@ -219,6 +219,20 @@
       "updatedAt": "2026-11-06T01:48:35Z",
       "preview": "Launched by session_01VQDpPffYARDQ8juksAZScf (owner litlfred: \"do it all properly, shave every second\"); worked by \"CI speed 7\" (session_01VQDpPfihRU4aFLjQGkhvs8).\n\nOn pull_request, the four typescript-test shards run only the test files the PR's change can affect: the relative-import closure of every changed file (cat-harness-tools scripts/affected-tests.ts, cat-harness-tools#1487) plus each test",
       "file": "beans/defs/folio-assistant-711q--ci-speed-ii-h-pull-requests-run-only-the-bun-test.md"
+    },
+    {
+      "id": "folio-assistant-724x",
+      "title": "Every test has a Gherkin: @test:<name> Scenario per executable test, test-has-gherkin criterion, check:test-gherkin",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-4j43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-06T09:22:02Z",
+      "updatedAt": "2026-11-06T09:57:23Z",
+      "preview": "Owner rule (litlfred, 2026-11-06): \"A test should always have a Gherkin.\" Harness half: skill text in sdlc-core/test-engineer + test-plan-execution. Tools half (cat-harness-tools): test-plan/v1 feature required (minor), test-has-gherkin in qa-criteria-registry depends_on feature, check:test-gherkin with language adapters. Holder: claude session_01VQDpPfzC5nMP7YvwEJa2XR (2026-11-06).\n\nPR litlfred/c",
+      "file": "beans/defs/folio-assistant-724x--every-test-has-a-gherkin-testname-scenario-per-exe.md"
     },
     {
       "id": "folio-assistant-75c5",
@@ -925,6 +939,20 @@
       "file": "beans/defs/folio-assistant-nikw--regen-writerstestts-reads-cat-harnessdocsassetsimg.md"
     },
     {
+      "id": "folio-assistant-npx2",
+      "title": "Layer mains out of step: cat-harness process pages link assets/img/workflows/*.svg, but cat-harness-tools #1504 draws diagrams beside each .bpmn",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-dthl",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-06T09:21:33Z",
+      "updatedAt": "2026-11-06T09:21:33Z",
+      "preview": "Found 2026-11-06 repinning dth-hrh to every layer's main (dth-hrh#105). With cat-harness-tools main d391194 + cat-harness main 57a1428 (+ other mains), the site build stops at '137 unresolved link(s)': every en/cat-harness/processes/*.html links ../../../assets/img/workflows/<name>.svg, which tools #1504 ('render:bpmn: draw every layer's diagram beside its own .bpmn') no longer writes (run 4219223",
+      "file": "beans/defs/folio-assistant-npx2--layer-mains-out-of-step-cat-harness-process-pages.md"
+    },
+    {
       "id": "folio-assistant-nvhg",
       "title": "TERMINOLOGY / adjudication leg 2: two judges disagree about a mapping (from 2i5f)",
       "status": "todo",
@@ -1095,14 +1123,14 @@
     {
       "id": "folio-assistant-rwhr",
       "title": "A process declares whether it starts from a work plan; workflow_start says so when one is missing",
-      "status": "in-progress",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T20:10:15Z",
-      "updatedAt": "2026-11-06T08:35:21Z",
+      "updatedAt": "2026-11-06T09:53:20Z",
       "preview": "Split from folio-assistant-exrp (plan step 3), owner 2026-11-05: not chosen for now; filed as its own work item. A BPMN process declares (optionally) that it starts from a work plan; small processes need none. workflow_start reports, without refusing, when such a process is started with no plan.\n\n_2026-11-06T08:35:21Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: ",
       "file": "beans/defs/folio-assistant-rwhr--a-process-declares-whether-it-starts-from-a-work-p.md"
     },
@@ -1434,18 +1462,18 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 3,
-        "total": 62,
-        "closed": 26,
+        "total": 63,
+        "closed": 27,
         "open": 36,
         "inProgress": 24,
         "todo": 12,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.41935483870967744
+        "share": 0.42857142857142855
       }
     ],
-    "orphanOpen": 10,
-    "openTotal": 47,
+    "orphanOpen": 11,
+    "openTotal": 48,
     "coveredOpen": 36,
     "duplicateIds": 0
   }

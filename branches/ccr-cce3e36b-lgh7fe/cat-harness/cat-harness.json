@@ -363,10 +363,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/172537210b54199186b33dc2f3973fda9c41ab40",
-  "sourceCommitSha": "172537210b54199186b33dc2f3973fda9c41ab40",
-  "sourceTree": "b458dacfe2a13b8809a03fed93e8311e284307cc",
-  "sourceCommitAt": "2026-11-06T08:48:46Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c1fbb654e6630b8c01496d3fbc712a0371157dff",
+  "sourceCommitSha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
+  "sourceTree": "cbce598056e2a5ae0983cc17f159a63459e3427c",
+  "sourceCommitAt": "2026-11-07T05:41:52Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -2459,7 +2459,7 @@
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/package/workflow"
       ],
       "instructionsPath": "skills/process/workflow/bpmn-processes.md",
-      "instructionLines": 288,
+      "instructionLines": 312,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3116,12 +3116,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "journey-maps",
       "title": "Journey maps — journeys and workshops as nodes",
-      "description": "Journeys and workshops as knowledge-graph content: a DAK user scenario told as a journey map (`user-scenario` kind: ordered steps, per person what they do and feel, pain points, enablers, the record's trust state, and edges to stories, BPMN tasks, requirements, FHIR examples and building blocks), the `building-blocks` catalogue its steps use, a workshop that teaches from it (`workshop` kind: modules, objectives, questions for the room on each step, reference tables, sheets, job aids), the `journeys-viewer` visualiser that draws them for an instance and the layers it mounts, and the `check:journey-refs` gate that every reference they name resolves. Read before writing a journey or a workshop, before declaring the viewer, and before building a journey walkthrough app of your own.",
+      "description": "Journeys and workshops as knowledge-graph content: a DAK user scenario told as a journey map (`user-scenario` kind: ordered steps, per person what they do and feel, pain points, enablers, the record's trust state, and edges to stories, BPMN tasks, requirements, FHIR examples, building blocks and the DAK's data sets, decision tables and indicators), the `building-blocks` catalogue its steps use, a workshop that teaches from it (`workshop` kind: modules, objectives, questions for the room on each step, reference tables, sheets, job aids), the `journeys-viewer` visualiser that draws them for an instance and the layers it mounts, and the `check:journey-refs` gate that every reference they name resolves. Read before writing a journey or a workshop, before declaring the viewer, and before building a journey walkthrough app of your own.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/journey-maps.md",
-      "instructionLines": 168,
+      "instructionLines": 227,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -45931,7 +45931,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "journey-refs",
       "title": "Every reference a journey or a workshop names resolves",
-      "description": "Read every `user-scenario` and `workshop` node in the checkout through the instances' declared directories, with the journeys viewer's own resolver, and resolve what each names: actors (`personas`, a step's `lead`, `experiences[].actor`, `handoff.from`/`to`, `illustrationStyle.cast[].actor`), user stories, `realisedBy` BPMN files (instance-relative) and the element ids in them, `uses` blocks in a directory declaring `building-blocks`, `req:` requirements, FHIR examples in a `fhir-artifact-index`, `illustration.src` files, `follows`/`partOf` journeys, the `trustLadder` code list and each `record.state` code of it, and ArchiMate `views`; and each workshop's `scenarios`, `steps[]` `{scenario, step}` and `<scenario>#<step>` refs. A node that does not parse is a finding. One line per finding, naming the instance, file and step. Exit 0 every reference resolves (or no instance holds a journey or a workshop, which is said); 1 one does not; 2 the declarations could not be read.",
+      "description": "Read every `user-scenario` and `workshop` node in the checkout through the instances' declared directories, with the journeys viewer's own resolver, and resolve what each names: actors (`personas`, a step's `lead`, `experiences[].actor`, `handoff.from`/`to`, `illustrationStyle.cast[].actor`), user stories, `realisedBy` BPMN files (instance-relative) and the element ids in them, `uses` blocks in a directory declaring `building-blocks`, `req:` requirements, FHIR examples and a step's `dak` assets (data sets, decision tables, indicators) in a `fhir-artifact-index` (could not determine while the index is built at publish), `illustration.src` files, `follows`/`partOf` journeys, the `trustLadder` code list and each `record.state` code of it, and ArchiMate `views`; and each workshop's `scenarios`, `steps[]` `{scenario, step}` and `<scenario>#<step>` refs; each device screen's `owner` and `personCard` actors, its `steps[]` `{scenario, step}`, and the FHIR examples its `qr` and `recordList` blocks name; and every persona's `avatar` image path. A node that does not parse is a finding. One line per finding, naming the instance, file and step. Exit 0 every reference resolves (or no instance holds a journey or a workshop, which is said); 1 one does not; 2 the declarations could not be read.",
       "install": {
         "none": true
       },
@@ -45983,7 +45983,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "journeys-viewer",
       "title": "Journeys viewer",
-      "description": "Draw every journey (`user-scenario`) and workshop (`workshop`) in the checkout as static pages at the route of the visualiser an instance declares for this Tool, `<locale>/<instance>/<id>/`: an index of all journeys, grouped by instance (each a sub-graph page) and by `partOf`, ordered along `follows`; one page per journey, a journey map with a lane and a feeling curve per persona, then each step with its BPMN drawing (the step's flow nodes highlighted), user stories, requirements, FHIR examples, building blocks and ArchiMate views; and the workshop layer, the questions for the room on each step, a page per workshop and per module, job aids, and printable A3/A4 sheets. Instances below the declaring one are read through their declarations, so a downstream site shows the journeys of the layers it mounts too.",
+      "description": "Draw every journey (`user-scenario`) and workshop (`workshop`) in the checkout as static pages at the route of the visualiser an instance declares for this Tool, `<locale>/<instance>/<id>/`: an index of all journeys, grouped by instance (each a sub-graph page) and by `partOf`, ordered along `follows`; one page per journey, a journey map with a lane and a feeling curve per persona, then each step with its BPMN drawing (the step's flow nodes highlighted), user stories, requirements, FHIR examples, building blocks, the DAK assets it uses (data sets, decision tables and indicators, linked into the IG) and ArchiMate views; and the workshop layer, the questions for the room on each step, a page per workshop and per module, job aids, and printable A3/A4 sheets; and each device screen (`device-screen`) that shows a step a workshop presents, drawn as a static device mock (phone, tablet, scanner, desktop, kiosk) with its owner beside it, in the workshop's Device Demo, linked both ways with the walkthrough. A persona's picture (`meta.persona.avatar`) is drawn wherever the persona appears. Instances below the declaring one are read through their declarations, so a downstream site shows the journeys of the layers it mounts too.",
       "install": {
         "none": true
       },
@@ -57477,8 +57477,8 @@
   ],
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "172537210b54199186b33dc2f3973fda9c41ab40",
+    "sha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
     "pr": "2985/merge",
-    "run": "42190366456"
+    "run": "42343823482"
   }
 }

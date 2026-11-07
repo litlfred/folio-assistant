@@ -26907,6 +26907,13 @@
           "optional": true,
           "array": false,
           "doc": "Opt-in `<base>/<alias>/` redirect to the canonical route (bean `t4xb`)."
+        },
+        {
+          "name": "builtOnHostSite",
+          "type": "z.object({ translated: z.literal(true).optional() }).strict().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Its pages are built at publish on the HOST site (the site owner's, e.g."
         }
       ],
       "extendsNames": [
@@ -31875,6 +31882,13 @@
           "optional": true,
           "array": false,
           "doc": "This repository is AGENT-RUN: an agent builds and publishes its site"
+        },
+        {
+          "name": "taskSkills",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Whether the ⓘ task panel on this site's BPMN drawings shows skills: the"
         },
         {
           "name": "workflows",
@@ -49639,7 +49653,8 @@
           "name": "href",
           "type": "Text",
           "optional": false,
-          "array": false
+          "array": false,
+          "doc": "A URL (`https:`, `mailto:` …), an absolute path or a `#fragment` as it"
         },
         {
           "name": "rel",
@@ -50430,6 +50445,20 @@
           "optional": true,
           "array": false,
           "doc": "The actor whose record the trust ladder follows (\"Somsack's record\")."
+        },
+        {
+          "name": "cast",
+          "type": "z.array(Id).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The order the cast is listed in, everywhere it is listed (the overview,"
+        },
+        {
+          "name": "chapterTitles",
+          "type": "z.record(Id, Text).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A chapter's title in the room, by the id of the journey the chapter is"
         },
         {
           "name": "presenterNote",
@@ -98355,6 +98384,22 @@
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "cast",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "chapterTitles",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
       "via": "recordOf",
       "kind": "field",
       "optional": true,
@@ -98372,6 +98417,14 @@
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
       "via": "badge",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "chapterTitles",
       "kind": "field",
       "optional": true,
       "array": false

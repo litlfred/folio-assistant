@@ -1,6 +1,56 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_SmeTestDataReview",
+ "markers": [
+  {
+   "id": "Task_PrepareWorkedCase",
+   "name": "Prepare the worked case: input, logic, output",
+   "left": 45.97,
+   "top": 10,
+   "box": {
+    "left": 39.87,
+    "top": 22.67,
+    "width": 2.02,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Task_PrepareCohort",
+   "name": "Prepare the cohort: inputs, expected and computed",
+   "left": 45.97,
+   "top": 30,
+   "box": {
+    "left": 39.87,
+    "top": 42.67,
+    "width": 2.02,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Task_SmeJudge",
+   "name": "Judge whether the case or cohort is right",
+   "left": 66.13,
+   "top": 50,
+   "box": {
+    "left": 60.04,
+    "top": 62.67,
+    "width": 2.02,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Task_RecordCaseVerdict",
+   "name": "Record the SME's verdict and rationale",
+   "left": 66.13,
+   "top": 70,
+   "box": {
+    "left": 60.04,
+    "top": 82.67,
+    "width": 2.02,
+    "height": 3.2
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview",
  "tasks": {
   "Task_PrepareWorkedCase": {

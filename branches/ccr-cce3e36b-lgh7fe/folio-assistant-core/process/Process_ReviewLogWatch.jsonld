@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "172537210b54199186b33dc2f3973fda9c41ab40",
+    "sha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
     "pr": "2985/merge",
-    "run": "42190366456"
+    "run": "42343823482"
   },
   "@graph": [
     {
@@ -22,8 +22,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll"
       ],
-      "nodeCount": 9,
-      "flowCount": 8,
+      "nodeCount": 11,
+      "flowCount": 10,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch"
     },
@@ -50,9 +50,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch",
       "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
-      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF09",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF09"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04",
@@ -88,9 +97,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch",
       "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
-      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08",

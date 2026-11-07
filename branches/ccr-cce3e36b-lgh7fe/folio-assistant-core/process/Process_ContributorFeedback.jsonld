@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "172537210b54199186b33dc2f3973fda9c41ab40",
+    "sha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
     "pr": "2985/merge",
-    "run": "42190366456"
+    "run": "42343823482"
   },
   "@graph": [
     {
@@ -22,8 +22,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback/node/StartEvent_Feedback"
       ],
-      "nodeCount": 12,
-      "flowCount": 13,
+      "nodeCount": 13,
+      "flowCount": 14,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback"
     },
@@ -144,9 +144,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge",
-      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback/node/Task_CloseChangeSet",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback#flow/CF14",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback/node/Task_CloseChangeSet",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF14"
     }
   ]
 }
