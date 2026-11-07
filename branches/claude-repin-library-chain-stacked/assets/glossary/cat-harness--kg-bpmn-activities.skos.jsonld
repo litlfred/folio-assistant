@@ -6829,6 +6829,266 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.call_ml_roundtrip",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Untainted round trip on a sample"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The sample: every diagram label, the personas and scenarios, and a seeded random fraction of the rest."
+        }
+      ],
+      "skos:notation": "Call_ML_RoundTrip",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Call_ML_RoundTrip",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_extract",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Extract every template once"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Once, for every locale: the `.pot` templates for the pages, the diagrams (`translate-bpmn --extract`) and the glossary schemes, each by the instance's own extractor. A locale that would need a different template is a defect in the extraction, not a reason to extract again."
+        }
+      ],
+      "skos:notation": "Task_ML_Extract",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Extract",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_fixdrift",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Fix each drift on the PR"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Correct each string the adjudicator ruled drift, on the locale PR, and note the fix beside the ruling in the QA report."
+        }
+      ],
+      "skos:notation": "Task_ML_FixDrift",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_FixDrift",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_gates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Run the deterministic gates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Template currency, catalogue coverage, placeholder, tag and URL preservation, officiality, `kg:locale`, and the locale's supplements compiling with no SUSHI error and passing their structural checks."
+        }
+      ],
+      "skos:notation": "Task_ML_Gates",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Gates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_glossary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check glossary consistency"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`translation:glossary:check`, against the layered term base: the normative reference glossaries first, then each layer in the order the index config lists it, the instance's own glossary last and never overriding. A platform term found in text of another subject area is a sense check for a person, not a violation."
+        }
+      ],
+      "skos:notation": "Task_ML_Glossary",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Glossary",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_localepr",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the locale PR to main"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One PR per locale, based on and targeting main. Never into the source branch."
+        }
+      ],
+      "skos:notation": "Task_ML_LocalePR",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_LocalePR",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_merge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Validate and merge in the window"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read each locale's QA report, confirm the PR is green, and merge it inside the owner's merge window. Outside the window it waits."
+        }
+      ],
+      "skos:notation": "Task_ML_Merge",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Merge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_qareport",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the locale's QA report"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One report per locale under `test/results/translation-qa/`: coverage, the gates, the round trip with its counts and every drift ruling, the glossary violations and sense checks, and the source errors reported."
+        }
+      ],
+      "skos:notation": "Task_ML_QAReport",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_QAReport",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_scope",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Set locales, scope and merge window"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which instances, which locales, which assets (pages, diagrams, glossary, FHIR terms), and the window in which locale PRs may be merged."
+        }
+      ],
+      "skos:notation": "Task_ML_Scope",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Scope",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_sourceissue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "File the source errors as one issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One issue for every source-text error the translators found, each with its location and the reading the translator took. Never fixed in a translation: a fix to the source is a source PR, and the next refresh carries it to every locale."
+        }
+      ],
+      "skos:notation": "Task_ML_SourceIssue",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_SourceIssue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_sourcepr",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge the one source PR to main"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "All the templates in one PR to main, merged before any locale starts, so every translator branches from the same main. Once it has merged, its branch receives nothing more: a later fix to the source is a new PR."
+        }
+      ],
+      "skos:notation": "Task_ML_SourcePR",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_SourcePR",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_translate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Translate one locale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "From the merged templates, with the locale term base: `translations/<locale>/**.po`, a translation-node manifest beside each (`official: false`, `generatedBy: \"agent\"`; no `status.json`), and the FHIR terms as CodeSystem supplements, all in one file for the locale rather than edits inside the resources."
+        }
+      ],
+      "skos:notation": "Task_ML_Translate",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Translate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_watcher",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Schedule the refresh watcher"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Schedule a fresh session that follows `translation-refresh` on each instance, so a template that moves after today is caught by its check failing, not by a reader."
+        }
+      ],
+      "skos:notation": "Task_ML_Watcher",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Watcher",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_namedqueryexecution.a_bindexecute",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -11016,6 +11276,326 @@
       ],
       "skos:notation": "Task_WriteUnofficial",
       "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_WriteUnofficial",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.call_tr_roundtrip",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Round trip on the changed strings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The untainted round trip, with the sample restricted to the strings this run translated."
+        }
+      ],
+      "skos:notation": "Call_TR_RoundTrip",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Call_TR_RoundTrip",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_coldstart",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Cold start: mount and attach"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Lay down every pinned layer from each instance's lock, as its AGENTS.md cold start says, and attach each repository the run will change."
+        }
+      ],
+      "skos:notation": "Task_TR_ColdStart",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_ColdStart",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_detect",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Detect what moved"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`translation:status --instance <root>` for new, obsolete and fuzzy strings, and the instance's template check. Either failing, or showing anything but zero, is a change."
+        }
+      ],
+      "skos:notation": "Task_TR_Detect",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Detect",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_gates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Re-run the gates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Officiality, catalogue coverage, translated links, `kg:locale`, `translation:glossary:check`, and the supplements compiling."
+        }
+      ],
+      "skos:notation": "Task_TR_Gates",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Gates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_merge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge the PR"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Merge the instance's PR to main, then confirm the template checks pass on main."
+        }
+      ],
+      "skos:notation": "Task_TR_Merge",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Merge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_mergelocales",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge into each locale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Merge each refreshed template into every locale's catalogue: new strings arrive empty, changed ones fuzzy, and obsolete ones are kept as `#~` entries, never deleted."
+        }
+      ],
+      "skos:notation": "Task_TR_MergeLocales",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_MergeLocales",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_report",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QA report and one PR to main"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write each locale's QA report, then open one PR for the instance, based on and targeting main."
+        }
+      ],
+      "skos:notation": "Task_TR_Report",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Report",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_sourceissue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report source errors as one issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Any source-text error the translators found goes into one issue on the source, with its location. When there is none, this step writes nothing."
+        }
+      ],
+      "skos:notation": "Task_TR_SourceIssue",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_SourceIssue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_templates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Refresh the templates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Re-run the instance's extractors, once for every locale: pages, diagrams, glossary schemes."
+        }
+      ],
+      "skos:notation": "Task_TR_Templates",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Templates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_translate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Translate new and fuzzy only"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Only the empty and fuzzy entries, in every locale, with the terms the term base fixes. A finished string is not touched."
+        }
+      ],
+      "skos:notation": "Task_TR_Translate",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Translate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_backtranslate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Back-translate the target text"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render each target string into the source language, from the target text alone, using no tools, and say so in a TOOLS_USED line that is recorded. A string that cannot be rendered is reported as such, not guessed."
+        }
+      ],
+      "skos:notation": "Task_RT_BackTranslate",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_BackTranslate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_prescreen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Pre-screen every pair"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Mechanically, over every (source, back-translation) pair: flag a pair whose negation, modal, quantifier, number or code tokens differ, and a pair whose word overlap is low. The pre-screen only chooses what is read first; it rules on nothing, and an unflagged pair is still in the sample."
+        }
+      ],
+      "skos:notation": "Task_RT_PreScreen",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_PreScreen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_record",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record both witnesses"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Record the adjudicator's verdict first and the back-translator's rendering behind it (`translation:roundtrip --payload`), so a reader can ask both who ruled and on what basis. The counts (sampled, flagged, drift, not drift) go into the locale's QA report."
+        }
+      ],
+      "skos:notation": "Task_RT_Record",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_Record",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_recordna",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record could not dispatch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write one entry, `result: \"n/a\"`, `metrics.dispatch: \"unavailable\"`, with the reason. The producer may write this entry and no other. It is never a pass, and the QA report says so."
+        }
+      ],
+      "skos:notation": "Task_RT_RecordNA",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_RecordNA",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_rule",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read and rule each flagged pair"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read every flagged pair in full and rule it drift or not drift, with the reason. Not drift: synonyms, articles, word order, inflection, a purpose clause rendered in the subjunctive, an acronym left uninflected, an acronym spelled out with the acronym kept. Drift: a claim added, dropped, weakened, strengthened or reversed; a term of art swapped for one that means something else; a named entity, number or quantifier moved."
+        }
+      ],
+      "skos:notation": "Task_RT_Rule",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_Rule",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_sample",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Draw the sample"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On a first translation: every diagram label, every persona and scenario string, and a seeded random fraction of the rest, with the seed written down so the sample can be drawn again. On a refresh: only the strings that were new or fuzzy. Hand the back-translator the msgstr values alone, keyed by an opaque id."
+        }
+      ],
+      "skos:notation": "Task_RT_Sample",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_Sample",
       "skos:note": "candidate"
     },
     {

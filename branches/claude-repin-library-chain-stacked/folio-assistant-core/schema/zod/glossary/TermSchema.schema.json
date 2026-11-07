@@ -122,6 +122,24 @@
           "type": "string",
           "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/\\S+$"
         },
+        "subject": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "translationStatus": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]+)*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "official",
+              "unofficial"
+            ]
+          }
+        },
         "focus": {
           "anyOf": [
             {
@@ -255,8 +273,8 @@
   "description": "Generated from `TermSchema` in schemas/glossary.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "claude/repin-library-chain-stacked",
-    "sha": "4f17d27b7a02fb849bd803aa5eac6059e338f803",
+    "sha": "251f8717eee7c005cb0fb669dd057632495fe86a",
     "pr": "3016/merge",
-    "run": "42359533187"
+    "run": "42384030510"
   }
 }

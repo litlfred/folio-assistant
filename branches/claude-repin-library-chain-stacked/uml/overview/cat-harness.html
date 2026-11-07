@@ -917,6 +917,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       judgementOnly [0..1] boolean
       requiredCapabilities [0..1] object
       store [0..1] object
+      holding [0..1] object
     }
     class cat_harness_scenarios_Actor["Actor"] {
       &lt;&lt;json: RoleGraphSchema&gt;&gt;
@@ -1446,6 +1447,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       blocks [1] string
       detail [1] string
     }
+    class cat_harness_docs_folio_bean_index_v1_PlanFinding["PlanFinding"] {
+      &lt;&lt;json: BeanIndexSchema&gt;&gt;
+      id [1] string
+      problem [1] string
+    }
     class cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1["folio-bean-index/v1"] {
       &lt;&lt;json: BeanIndexSchema&gt;&gt;
       $schema [1] 'folio-bean-index/v1'
@@ -1456,6 +1462,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       items [0..*] Item[]
       edges [0..*] Edge[]
       findings [0..*] Finding[]
+      planFindings [0..*] PlanFinding[]
       plan [0..1] object
     }
     class cat_harness_docs_folio_graph_projection_v1_File["File"] {
@@ -2643,6 +2650,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Item : items
   cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Edge : edges
   cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_Finding : findings
+  cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1 *-- "0..*" cat_harness_docs_folio_bean_index_v1_PlanFinding : planFindings
   cat_harness_docs_folio_graph_projection_v1_Directory *-- "0..*" cat_harness_docs_folio_graph_projection_v1_File : files
   cat_harness_docs_folio_graph_projection_v1_folio_graph_projection_v1 *-- "0..*" cat_harness_docs_folio_graph_projection_v1_Directory : directories
   cat_harness_docs_folio_graph_projection_v1_Node *-- "0..*" cat_harness_docs_folio_graph_projection_v1_Link : links
@@ -2657,6 +2665,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   cssClass "cat_harness_docs_folio_bean_index_v1_Item" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_bean_index_v1_Edge" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_bean_index_v1_Finding" fa_uml_kind_docs
+  cssClass "cat_harness_docs_folio_bean_index_v1_PlanFinding" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_bean_index_v1_folio_bean_index_v1" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_File" fa_uml_kind_docs
   cssClass "cat_harness_docs_folio_graph_projection_v1_Directory" fa_uml_kind_docs

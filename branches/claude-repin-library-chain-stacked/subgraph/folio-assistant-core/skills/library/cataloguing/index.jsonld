@@ -1,0 +1,115 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/cataloguing/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/archiving-arxiv",
+      "@type": "bootstrap:Skill",
+      "name": "archiving-arxiv",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ac46647f505f689eec96d95b1bc7865edb467de536ea62920becbf3da1b08027",
+        "bytes": 6726,
+        "sha256": "ac46647f505f689eec96d95b1bc7865edb467de536ea62920becbf3da1b08027"
+      },
+      "title": "Materializing from arXiv"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/archiving-web-pages",
+      "@type": "bootstrap:Skill",
+      "name": "archiving-web-pages",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/64f81bbd805018a2f3b3adec3303dcc14a39f1b758055bb26af2d2666f104604",
+        "bytes": 3287,
+        "sha256": "64f81bbd805018a2f3b3adec3303dcc14a39f1b758055bb26af2d2666f104604"
+      },
+      "title": "Archiving a web page"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bib-human-review",
+      "@type": "bootstrap:Skill",
+      "name": "bib-human-review",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d66b435ba4679b81ad5d283ad1cbe8f7d79412477aade2e329dd9d290680009c",
+        "bytes": 3590,
+        "sha256": "d66b435ba4679b81ad5d283ad1cbe8f7d79412477aade2e329dd9d290680009c"
+      },
+      "title": "bib-human-review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bib-photo-ingestion-watcher",
+      "@type": "bootstrap:Skill",
+      "name": "bib-photo-ingestion-watcher",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/129b2b280aebb60a869e8e421ff1a94aaa86c2df56de60fe5d81607ec8b4e0a6",
+        "bytes": 2669,
+        "sha256": "129b2b280aebb60a869e8e421ff1a94aaa86c2df56de60fe5d81607ec8b4e0a6"
+      },
+      "title": "bib-photo-ingestion-watcher"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bib-qa",
+      "@type": "bootstrap:Skill",
+      "name": "bib-qa",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/28f5333e6545f63d8a503797910d003d9fbbb0d5a54a83af6b2439304b10b883",
+        "bytes": 13903,
+        "sha256": "28f5333e6545f63d8a503797910d003d9fbbb0d5a54a83af6b2439304b10b883"
+      },
+      "title": "Bibliography QA Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/filing-dublin-core",
+      "@type": "bootstrap:Skill",
+      "name": "filing-dublin-core",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1f4f78f480c0447b8cf96377b1b64cede3370ae655792ff18dd7ccc30ddb9371",
+        "bytes": 4749,
+        "sha256": "1f4f78f480c0447b8cf96377b1b64cede3370ae655792ff18dd7ccc30ddb9371"
+      },
+      "title": "Filing a source: what Dublin Core carries, and what it does not"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/glossary-build",
+      "@type": "bootstrap:Skill",
+      "name": "glossary-build",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c967ffcec9a742018baee534aac76a725cadef3dc4d22aa5f8828512c23692ac",
+        "bytes": 6515,
+        "sha256": "c967ffcec9a742018baee534aac76a725cadef3dc4d22aa5f8828512c23692ac"
+      },
+      "title": "Glossary Build Skill"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/glossary-terms",
+      "@type": "bootstrap:Skill",
+      "name": "glossary-terms",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f96f595a61c2ee0c163a743b97ae8c4548dbacce9cf8abb1876823b4e650b926",
+        "bytes": 24525,
+        "sha256": "f96f595a61c2ee0c163a743b97ae8c4548dbacce9cf8abb1876823b4e650b926"
+      },
+      "title": "Glossary terms"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/ontologist",
+      "@type": "bootstrap:Skill",
+      "name": "ontologist",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8ce357c858410816f2d4272f4673cc29d1fffeedd8bea5efc9c8a0d639e2dd59",
+        "bytes": 9274,
+        "sha256": "8ce357c858410816f2d4272f4673cc29d1fffeedd8bea5efc9c8a0d639e2dd59"
+      },
+      "title": "Semantic Ontologist (Ambiguity Detection & Glossary)"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/cataloguing/bib-qa/"
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/library/cataloguing",
+  "path": "skills/library/cataloguing/"
+}

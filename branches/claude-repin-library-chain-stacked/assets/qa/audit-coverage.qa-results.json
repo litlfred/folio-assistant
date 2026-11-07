@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/audit-coverage.ts",
-    "script_hash": "b7f630cd559a"
+    "script_hash": "b536c5af5d8d"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 97 of 97 declared kind(s), 278 gate(s), 108 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 97 of 97 declared kind(s), 279 gate(s), 108 criteria.",
       "count": 97,
       "entries": [
         {
@@ -178,6 +178,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:kind-validators",
             "bun run cat check:kind-validators:require-all"
           ],
           "typed": true,
@@ -193,6 +194,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:harness-state",
             "bun run cat check:harness-state:check"
           ],
           "typed": true,
@@ -368,6 +370,7 @@
             "bun run cat readme:subgraphs:check",
             "bun run cat root-scan-census:check",
             "bun run cat skill:register:check",
+            "bun run cat skill:register:declarations:check",
             "bun run cat subscriptions:viz:check",
             "bun run cat translation:pot:check"
           ],
@@ -388,7 +391,11 @@
           "subjectKinds": [],
           "gates": [
             "bun run cat check:bibliography",
-            "bun run cat id-lookup:check"
+            "bun run cat check:catalogue",
+            "bun run cat dc:render:check",
+            "bun run cat id-lookup:check",
+            "bun run cat iris:covers:check",
+            "bun run cat iris:pages:check"
           ],
           "typed": true,
           "adversarial": "never",
@@ -458,6 +465,7 @@
             "bun run cat check:agents-claims",
             "bun run cat check:bootstrap-standalone",
             "bun run cat check:cat-harness-standalone",
+            "bun run cat check:cat-harness-tools-standalone",
             "bun run cat check:code-accounting",
             "bun run cat check:content-code-free",
             "bun run cat check:dependency-advisories",
@@ -528,6 +536,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:kind-validators",
             "bun run cat check:kind-validators:require-all"
           ],
           "typed": true,
@@ -708,6 +717,7 @@
             "bun run cat ig-ast:lock:check",
             "bun run cat ig-index:build",
             "bun run cat p2:refusals:check",
+            "bun run cat smart-base:pages:check",
             "bun run cat smart:pages",
             "bun run smart:pages"
           ],
@@ -793,6 +803,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:harness-state",
             "bun run cat check:harness-state:check"
           ],
           "typed": true,
@@ -862,6 +873,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat smart-base:pages:check",
             "bun run cat smart:pages",
             "bun run smart:pages"
           ],
@@ -878,6 +890,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:harness-state",
             "bun run cat check:harness-state:check"
           ],
           "typed": true,
@@ -893,6 +906,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:harness-state",
             "bun run cat check:harness-state:check"
           ],
           "typed": true,
@@ -960,15 +974,18 @@
           "gates": [
             "bun run cat check:l1-complete",
             "bun run cat check:l1-complete:check",
+            "bun run cat check:library-qa",
             "bun run cat check:library-qa:check",
             "bun run cat check:methodology-evidence:check",
             "bun run cat check:soft-hyphens",
+            "bun run cat check:source-licence",
             "bun run cat check:source-licence:check",
             "bun run cat check:structure-accessor",
             "bun run cat check:upload-names:check",
             "bun run cat check:uploads-retired",
             "bun run cat gen:jsonld:check",
             "bun run cat library:covers:check",
+            "bun run cat library:keywords:check",
             "bun run cat lsi:skills:check",
             "bun run cat smart-base:smart-kg-l1:check"
           ],
@@ -1002,6 +1019,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:harness-state",
             "bun run cat check:harness-state:check"
           ],
           "typed": true,
@@ -1096,6 +1114,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:kind-validators",
             "bun run cat check:kind-validators:require-all"
           ],
           "typed": true,
@@ -1191,6 +1210,7 @@
           "gates": [
             "bun run cat audit:reachability:check",
             "bun run cat bpmn:checklist:check",
+            "bun run cat check:bean-calls",
             "bun run cat check:lane-documentation:check",
             "bun run cat check:process-bindings",
             "bun run cat check:process-documentation",
@@ -1283,6 +1303,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:kind-validators",
             "bun run cat check:kind-validators:require-all"
           ],
           "typed": true,
@@ -1444,6 +1465,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:harness-state",
             "bun run cat check:harness-state:check"
           ],
           "typed": true,
@@ -1508,6 +1530,7 @@
             "bun run cat lsi:skills:check",
             "bun run cat skill:commands:check",
             "bun run cat skill:register:check",
+            "bun run cat skill:register:declarations:check",
             "bun run cat skills:docs:check"
           ],
           "typed": true,
@@ -1682,6 +1705,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:harness-state",
             "bun run cat check:harness-state:check"
           ],
           "typed": true,
@@ -1697,6 +1721,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:harness-state",
             "bun run cat check:harness-state:check"
           ],
           "typed": true,
@@ -1712,6 +1737,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:harness-state",
             "bun run cat check:harness-state:check"
           ],
           "typed": true,
@@ -1851,10 +1877,12 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:source-licence",
             "bun run cat check:source-licence:check",
             "bun run cat check:upload-names:check",
             "bun run cat check:uploads-retired",
-            "bun run cat gen:jsonld:check"
+            "bun run cat gen:jsonld:check",
+            "bun run cat iris:covers:check"
           ],
           "typed": true,
           "adversarial": "never",
@@ -1887,6 +1915,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:kind-validators",
             "bun run cat check:kind-validators:require-all"
           ],
           "typed": true,
@@ -1971,6 +2000,7 @@
           "criteria": [],
           "subjectKinds": [],
           "gates": [
+            "bun run cat check:dak-annexes",
             "bun run cat check:web-annexes"
           ],
           "typed": true,
@@ -2009,8 +2039,16 @@
     },
     "gates-undeclared": {
       "summary": "A gate CI runs whose script carries no @covers line. Reported and never failed by default (--require-all fails it): the gap is real, and hiding it would render an unmeasured corpus as clean.",
-      "count": 0,
-      "entries": []
+      "count": 1,
+      "entries": [
+        {
+          "command": "bun run cat check:test-gherkin",
+          "scripts": [
+            "cat-harness-tools/scripts/check-test-gherkin.ts"
+          ],
+          "why": "no @covers line in its docblock"
+        }
+      ]
     },
     "kinds-empty": {
       "summary": "A directory of this kind exists and holds no countable file. A determined empty, not an absent answer.",
@@ -2156,7 +2194,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 278 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. An UPPER bound while gates remain undeclared: 1 of 279 have not said what they cover.",
       "count": 0,
       "entries": []
     },
@@ -2166,5 +2204,5 @@
       "entries": []
     }
   },
-  "total": 121
+  "total": 122
 }

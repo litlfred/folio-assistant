@@ -245,6 +245,12 @@ on shared kinds like <code class="language-plaintext highlighter-rouge">remark</
 the schema marks <code class="language-plaintext highlighter-rouge">lean</code> optional).</li><li><strong>TeX-free document render path:</strong> <code class="language-plaintext highlighter-rouge">document_render_{md,html,pdf}</code> assemble
 the folio to Markdown and drive Pandoc (with <code class="language-plaintext highlighter-rouge">weasyprint</code>, <code class="language-plaintext highlighter-rouge">prince</code>, or
 <code class="language-plaintext highlighter-rouge">wkhtmltopdf</code> for PDF), never falling back to <code class="language-plaintext highlighter-rouge">latexmk</code>.</li><li><strong>Normative statements:</strong> carried by <code class="language-plaintext highlighter-rouge">recommendation</code> blocks per
-<a href="../../reference/skill-instructions/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a>, never by <code class="language-plaintext highlighter-rouge">definition</code>.</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+<a href="../../reference/skill-instructions/normative-statements.html"><code class="language-plaintext highlighter-rouge">normative-statements</code></a>, never by <code class="language-plaintext highlighter-rouge">definition</code>.</li><li><strong>Extracted-statement pages:</strong> when source documents are added to the
+folio’s working artifact, the standard step
+<a href="../../reference/skill-instructions/publish-extracted-statements.html"><code class="language-plaintext highlighter-rouge">publish-extracted-statements</code></a>
+publishes every statement extracted from them, each linked to its library
+entry and section. The step is the same for every profile; the profile’s
+adapter decides only how those pages look in its artifact (pages of a
+document, an appendix of a paper, pages of an implementation guide).</li></ul></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/repin-library-chain-stacked",
-    "sha": "4f17d27b7a02fb849bd803aa5eac6059e338f803",
+    "sha": "251f8717eee7c005cb0fb669dd057632495fe86a",
     "pr": "3016/merge",
-    "run": "42359533187"
+    "run": "42384030510"
   },
   "@graph": [
     {
@@ -22,8 +22,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/process/Process_L1DocumentIngestion/node/StartEvent_Document"
       ],
-      "nodeCount": 20,
-      "flowCount": 21,
+      "nodeCount": 21,
+      "flowCount": 22,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion"
     },
@@ -162,9 +162,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/process/Process_L1DocumentIngestion",
       "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Promote",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_PublishStatements",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/process/Process_L1DocumentIngestion",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_PublishStatements",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12",

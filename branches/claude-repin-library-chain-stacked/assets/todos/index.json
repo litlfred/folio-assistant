@@ -210,6 +210,9 @@
       "Process_Ingestion",
       "Process_RelatedWork"
     ],
+    "Process_MultiLocaleTranslation": [
+      "Process_TranslationRoundTrip"
+    ],
     "Process_RefreshMaterialized": [
       "Process_Adjudication"
     ],
@@ -221,6 +224,10 @@
       "Process_MaterializeRemote",
       "Process_RefreshMaterialized"
     ],
+    "Process_TranslationRefresh": [
+      "Process_TranslationRoundTrip"
+    ],
+    "Process_TranslationRoundTrip": [],
     "Process_Translation": [
       "Process_Adjudication"
     ],
@@ -438,7 +445,8 @@
     "Process_DocumentAuthoring": [
       "Process_BeanClose",
       "Process_BeanOpen",
-      "Process_FolioReviewPublish"
+      "Process_FolioReviewPublish",
+      "Process_PublishExtractedStatements"
     ],
     "Process_ContentChangeReviewCommittee": [
       "Process_Adjudication",
@@ -517,8 +525,10 @@
       "Process_ExtractStructure",
       "Process_IngestTheme",
       "Process_Ingestion",
-      "Process_L1Gate"
+      "Process_L1Gate",
+      "Process_PublishExtractedStatements"
     ],
+    "Process_PublishExtractedStatements": [],
     "Process_BoardOpenClose": [],
     "Process_BoardPlaceNote": [],
     "Process_BoardRelocate": [],

@@ -1594,6 +1594,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_documentauthoring.call_publishstatements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish extracted statements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document draws on library sources; every statement extracted from them is published in the document's own pages and in the shared extraction viewer, each linked to its library entry and section, before the document is rendered. The same sub-process ingestion calls when an entry is promoted: here it catches a source the document took up since, and a statement changed since. How the pages look is this content type's, through its adapter."
+        }
+      ],
+      "skos:notation": "Call_PublishStatements",
+      "dcterms:source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Call_PublishStatements",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_documentauthoring.call_reviewpublish",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -3614,6 +3634,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_l1documentingestion.callactivity_publishstatements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish the extracted statements with source links"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "THE ENTRY IS COMPLETE HERE, so its statements are published here. Every statement the extraction captured from this entry (a recommendation, a requirement, a candidate a person still has to rule on) becomes readable in two places: the folio's working artifact, in the pages its content profile renders, and the shared extraction viewer. Each one links back to the library entry and to the section it came from. WHY IN INGESTION AND NOT LATER. A statement nobody can read beside its source is reviewed from memory, or not at all. Publishing when the entry is promoted means a reviewer can check every extracted statement against its source the moment it exists. The sub-process is the same for every content type. The content type decides only how its pages look, through its adapter. An entry that yields no statements (a referenced source, a dataset) passes through it with nothing to publish, and says so."
+        }
+      ],
+      "skos:notation": "CallActivity_PublishStatements",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_PublishStatements",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_l1documentingestion.task_citeable",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4691,6 +4731,86 @@
       ],
       "skos:notation": "Task_WriteAnnouncement",
       "dcterms:source": "folio-assistant-core/processes/content/public-comment-release.bpmn#Task_WriteAnnouncement",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_publishextractedstatements.task_checkcurrent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check pages are current, links resolve"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The generator's check mode regenerates in memory and fails on any difference from the committed pages, and on any source link that does not resolve. It runs in CI, so a change to an extraction or a library entry that was not republished fails the build rather than leaving a page that says something the extraction no longer does."
+        }
+      ],
+      "skos:notation": "Task_CheckCurrent",
+      "dcterms:source": "folio-assistant-core/processes/library/publish-extracted-statements.bpmn#Task_CheckCurrent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_publishextractedstatements.task_collect",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Collect each statement with its source section"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For every statement extracted from the library entries the artifact draws on, read three things off files: the statement verbatim, the library entry it came from, and the section of that entry, as a library reference (instance, library id, section id). The section's label is read from the entry's structure: its title and its locator in the source's own unit (a slide, a page, a cell range, a line range). For example \"Catch up schedule, slide 7\". A statement whose section cannot be resolved is NOT published without a link: it is reported, because a statement nobody can trace is the failure this process exists to prevent."
+        }
+      ],
+      "skos:notation": "Task_Collect",
+      "dcterms:source": "folio-assistant-core/processes/library/publish-extracted-statements.bpmn#Task_Collect",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_publishextractedstatements.task_renderartifact",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Render them in the artifact's own pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The statements are written into pages of the folio's working artifact, so a reader of the artifact finds them without leaving it. HOW the pages look is the content type's: its adapter renders them in its own format (pages of a document, a section of a paper, pages of an implementation guide), as its content profile declares. Each statement carries two links: to the library entry's page, and to the section, labelled as collected. The pages are GENERATED: a person edits the extraction or the source, never the page."
+        }
+      ],
+      "skos:notation": "Task_RenderArtifact",
+      "dcterms:source": "folio-assistant-core/processes/library/publish-extracted-statements.bpmn#Task_RenderArtifact",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_publishextractedstatements.task_renderviewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish them in the shared viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The same statements, with the same two links, are published in the shared extraction viewer, reachable from the site's sources menu. The viewer is the cross-artifact view: every source and every statement extracted from it, whichever artifact uses them. Both places read ONE collected list, so they cannot disagree about what was extracted or where it came from."
+        }
+      ],
+      "skos:notation": "Task_RenderViewer",
+      "dcterms:source": "folio-assistant-core/processes/library/publish-extracted-statements.bpmn#Task_RenderViewer",
       "skos:note": "candidate"
     },
     {
