@@ -359,9 +359,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
+    "sha": "e696f2074a66d57a28a9bc01d3536277f2747611",
     "pr": "2985/merge",
-    "run": "42343823482"
+    "run": "42357297477"
   },
   "@graph": [
     {
@@ -369,7 +369,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "journeys-viewer",
       "title": "Journeys viewer",
-      "description": "Draw every journey (`user-scenario`) and workshop (`workshop`) in the checkout as static pages at the route of the visualiser an instance declares for this Tool, `<locale>/<instance>/<id>/`: an index of all journeys, grouped by instance (each a sub-graph page) and by `partOf`, ordered along `follows`; one page per journey, a journey map with a lane and a feeling curve per persona, then each step with its BPMN drawing (the step's flow nodes highlighted), user stories, requirements, FHIR examples, building blocks, the DAK assets it uses (data sets, decision tables and indicators, linked into the IG) and ArchiMate views; and the workshop layer, the questions for the room on each step, a page per workshop and per module, job aids, and printable A3/A4 sheets; and each device screen (`device-screen`) that shows a step a workshop presents, drawn as a static device mock (phone, tablet, scanner, desktop, kiosk) with its owner beside it, in the workshop's Device Demo, linked both ways with the walkthrough. A persona's picture (`meta.persona.avatar`) is drawn wherever the persona appears. Instances below the declaring one are read through their declarations, so a downstream site shows the journeys of the layers it mounts too.",
+      "description": "Draw every journey (`user-scenario`) and workshop (`workshop`) in the checkout as static pages at the route of the visualiser an instance declares for this Tool, `<locale>/<instance>/<id>/`: an index of all journeys, grouped by instance (each a sub-graph page), each parent's `parts` nested under it in its order with optional and repeating parts marked (an older file's `partOf` children after them, ordered along `follows`), and a plain DAK user scenario with no steps listed as one; one page per journey, its parts in order and the journeys it is a part of, a journey map with a lane and a feeling curve per persona, then each step, linked to the journey it `includes`, with its BPMN drawing (the step's flow nodes highlighted), user stories, requirements, FHIR examples, building blocks, the DAK assets it uses (data sets, decision tables and indicators, linked into the IG) and ArchiMate views; and the workshop layer, the questions for the room on each step, a page per workshop and per module, job aids, and printable A3/A4 sheets; and each device screen (`device-screen`) that shows a step a workshop presents, drawn as a static device mock (phone, tablet, scanner, desktop, kiosk) with its owner beside it, in the workshop's Device Demo, linked both ways with the walkthrough. A persona's picture (`meta.persona.avatar`) is drawn wherever the persona appears. Instances below the declaring one are read through their declarations, so a downstream site shows the journeys of the layers it mounts too.",
       "install": {
         "none": true
       },

@@ -1,0 +1,55 @@
+{
+  "$ref": "#/definitions/FhirChange",
+  "definitions": {
+    "FhirChange": {
+      "type": "object",
+      "properties": {
+        "resource": {
+          "type": "string",
+          "minLength": 1
+        },
+        "change": {
+          "type": "string",
+          "minLength": 1
+        },
+        "why": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profile": {
+          "type": "string",
+          "minLength": 1
+        },
+        "profileOf": {
+          "type": "string",
+          "minLength": 1
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Za-z]+\\/[A-Za-z0-9.-]+$"
+          }
+        },
+        "spec": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "resource",
+        "change"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/FhirChangeSchema.schema.json",
+  "title": "FhirChangeSchema",
+  "description": "Generated from `FhirChangeSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/ast-site-prefix",
+    "sha": "c9bf7f63e4e5b09c06c2574ac5febae944c9f927",
+    "pr": "3014/merge",
+    "run": "42355570137"
+  }
+}

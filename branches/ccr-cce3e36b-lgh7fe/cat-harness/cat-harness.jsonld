@@ -363,10 +363,10 @@
   ],
   "canonicalDocument": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
   "repository": "cat-harness",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c1fbb654e6630b8c01496d3fbc712a0371157dff",
-  "sourceCommitSha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
-  "sourceTree": "cbce598056e2a5ae0983cc17f159a63459e3427c",
-  "sourceCommitAt": "2026-11-07T05:41:52Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/e696f2074a66d57a28a9bc01d3536277f2747611",
+  "sourceCommitSha": "e696f2074a66d57a28a9bc01d3536277f2747611",
+  "sourceTree": "8972037ddf76f88a28e195e4d3a1818c3c5e447d",
+  "sourceCommitAt": "2026-11-07T08:52:17Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -377,9 +377,9 @@
     "Decision": 11,
     "Task": 12,
     "Process": 83,
-    "SequenceFlow": 1073,
+    "SequenceFlow": 1075,
     "Lane": 180,
-    "ProcessNode": 1035,
+    "ProcessNode": 1037,
     "Tool": 175,
     "Schema": 190,
     "ExternalSchema": 28,
@@ -2153,7 +2153,7 @@
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/package/library-core"
       ],
       "instructionsPath": "skills/library/library-core/translation-manager.md",
-      "instructionLines": 691,
+      "instructionLines": 766,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3121,7 +3121,7 @@
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/package/ui-core"
       ],
       "instructionsPath": "skills/ui/ui-core/journey-maps.md",
-      "instructionLines": 227,
+      "instructionLines": 284,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3360,7 +3360,7 @@
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "sdlc/skills/sdlc-core/test-engineer.md",
-      "instructionLines": 168,
+      "instructionLines": 226,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -4273,12 +4273,12 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "test-plan-execution",
       "title": "Running a test plan — from a request to a signed certification",
-      "description": "Run a `test-plan/v1` against a system under test and take it to a certification decision — the five lanes of `test-plan-execution.bpmn` (requester, tester, untainted checker, certifier, attestation service), how the test data is bound, what the run and the report must record, the facts the certification table reads, and the four kg-audit criteria that judge a run afterwards. Read before executing a plan, re-executing a sample, or certifying a result.",
+      "description": "Run a `test-plan/v1` against a system under test and take it to a certification decision — the five lanes of `test-plan-execution.bpmn` (requester, tester, untainted checker, certifier, attestation service), how the test data is bound, what the run and the report must record, the facts the certification table reads, and the kg-audit criteria that judge a run afterwards. Read before executing a plan, re-executing a sample, or certifying a result.",
       "inPackage": [
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/package/sdlc-core"
       ],
       "instructionsPath": "sdlc/skills/sdlc-core/test-plan-execution.md",
-      "instructionLines": 155,
+      "instructionLines": 160,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -17169,8 +17169,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Start_ContentAuthored"
       ],
-      "nodeCount": 16,
-      "flowCount": 18,
+      "nodeCount": 18,
+      "flowCount": 20,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/externalSchema/omg-dd-1.0",
@@ -17193,9 +17193,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation",
       "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Task_PotExtract",
-      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Task_Translate",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Task_TermBase",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_Extract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_TermBase",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Task_TermBase",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Task_Translate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_TermBase"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_Translate",
@@ -17220,9 +17229,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation",
       "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Task_RoundTripQA",
-      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Gateway_Drift",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Task_GlossaryCheck",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_QA"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_GlossaryCheck",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Task_GlossaryCheck",
+      "to": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Gateway_Drift",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_GlossaryCheck"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_DriftYes",
@@ -17419,6 +17437,29 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_PotExtract"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Task_TermBase",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Build and review the locale term base",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/lane/Lane_Platform",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_Extract"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_TermBase"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_TermBase"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Task_Translate",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Produce translation (PO file)",
@@ -17433,7 +17474,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_Extract",
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_TermBase",
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_PostQA_Redo"
       ],
       "outgoing": [
@@ -17492,6 +17533,29 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_RoundTripQA"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Task_GlossaryCheck",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Check glossary terms (translation:glossary:check)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/lane/Lane_Platform",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_QA"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_GlossaryCheck"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_GlossaryCheck"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation/node/Gateway_Drift",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Drift or bad terminology?",
@@ -17504,7 +17568,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_QA"
+        "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_GlossaryCheck"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/branches/ccr-cce3e36b-lgh7fe/cat-harness/process/Process_Translation#flow/Flow_DriftYes",
@@ -45931,7 +45995,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "journey-refs",
       "title": "Every reference a journey or a workshop names resolves",
-      "description": "Read every `user-scenario` and `workshop` node in the checkout through the instances' declared directories, with the journeys viewer's own resolver, and resolve what each names: actors (`personas`, a step's `lead`, `experiences[].actor`, `handoff.from`/`to`, `illustrationStyle.cast[].actor`), user stories, `realisedBy` BPMN files (instance-relative) and the element ids in them, `uses` blocks in a directory declaring `building-blocks`, `req:` requirements, FHIR examples and a step's `dak` assets (data sets, decision tables, indicators) in a `fhir-artifact-index` (could not determine while the index is built at publish), `illustration.src` files, `follows`/`partOf` journeys, the `trustLadder` code list and each `record.state` code of it, and ArchiMate `views`; and each workshop's `scenarios`, `steps[]` `{scenario, step}` and `<scenario>#<step>` refs; each device screen's `owner` and `personCard` actors, its `steps[]` `{scenario, step}`, and the FHIR examples its `qr` and `recordList` blocks name; and every persona's `avatar` image path. A node that does not parse is a finding. One line per finding, naming the instance, file and step. Exit 0 every reference resolves (or no instance holds a journey or a workshop, which is said); 1 one does not; 2 the declarations could not be read.",
+      "description": "Read every `user-scenario` and `workshop` node in the checkout through the instances' declared directories, with the journeys viewer's own resolver, and resolve what each names: actors (`personas`, a step's `lead`, `experiences[].actor`, `handoff.from`/`to`, `illustrationStyle.cast[].actor`), user stories, `realisedBy` BPMN files (instance-relative) and the element ids in them, `uses` blocks in a directory declaring `building-blocks`, `req:` requirements, FHIR examples and a step's `dak` assets (data sets, decision tables, indicators) in a `fhir-artifact-index` (could not determine while the index is built at publish), `illustration.src` files, `follows`/`partOf`/`parts`/`includes` journeys (parts and includes forming no cycle; an `includes` held against the call activity its step's `realisedBy` names, could not determine when the call names no process), the `trustLadder` code list and each `record.state` code of it, and ArchiMate `views`; and each workshop's `scenarios`, `steps[]` `{scenario, step}` and `<scenario>#<step>` refs; each device screen's `owner` and `personCard` actors, its `steps[]` `{scenario, step}`, and the FHIR examples its `qr` and `recordList` blocks name; and every persona's `avatar` image path. Every journey is a DAK user scenario (the kind `specialises` it): its DAK personas, the roles its persona actors play, must be non-empty and each a declared role; a persona may be an actor or (0.4.0) a role. What is derived is not also written: a listed part's `follows` or `partOf`, personas equal to the parts', a lead equal to the lanes' first actor, are each a redundant finding, and a 0.4.0 step with no experiences whose lanes no persona plays is a finding. A node that does not parse is a finding. One line per finding, naming the instance, file and step. Exit 0 every reference resolves (or no instance holds a journey or a workshop, which is said); 1 one does not; 2 the declarations could not be read.",
       "install": {
         "none": true
       },
@@ -45983,7 +46047,7 @@
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "journeys-viewer",
       "title": "Journeys viewer",
-      "description": "Draw every journey (`user-scenario`) and workshop (`workshop`) in the checkout as static pages at the route of the visualiser an instance declares for this Tool, `<locale>/<instance>/<id>/`: an index of all journeys, grouped by instance (each a sub-graph page) and by `partOf`, ordered along `follows`; one page per journey, a journey map with a lane and a feeling curve per persona, then each step with its BPMN drawing (the step's flow nodes highlighted), user stories, requirements, FHIR examples, building blocks, the DAK assets it uses (data sets, decision tables and indicators, linked into the IG) and ArchiMate views; and the workshop layer, the questions for the room on each step, a page per workshop and per module, job aids, and printable A3/A4 sheets; and each device screen (`device-screen`) that shows a step a workshop presents, drawn as a static device mock (phone, tablet, scanner, desktop, kiosk) with its owner beside it, in the workshop's Device Demo, linked both ways with the walkthrough. A persona's picture (`meta.persona.avatar`) is drawn wherever the persona appears. Instances below the declaring one are read through their declarations, so a downstream site shows the journeys of the layers it mounts too.",
+      "description": "Draw every journey (`user-scenario`) and workshop (`workshop`) in the checkout as static pages at the route of the visualiser an instance declares for this Tool, `<locale>/<instance>/<id>/`: an index of all journeys, grouped by instance (each a sub-graph page), each parent's `parts` nested under it in its order with optional and repeating parts marked (an older file's `partOf` children after them, ordered along `follows`), and a plain DAK user scenario with no steps listed as one; one page per journey, its parts in order and the journeys it is a part of, a journey map with a lane and a feeling curve per persona, then each step, linked to the journey it `includes`, with its BPMN drawing (the step's flow nodes highlighted), user stories, requirements, FHIR examples, building blocks, the DAK assets it uses (data sets, decision tables and indicators, linked into the IG) and ArchiMate views; and the workshop layer, the questions for the room on each step, a page per workshop and per module, job aids, and printable A3/A4 sheets; and each device screen (`device-screen`) that shows a step a workshop presents, drawn as a static device mock (phone, tablet, scanner, desktop, kiosk) with its owner beside it, in the workshop's Device Demo, linked both ways with the walkthrough. A persona's picture (`meta.persona.avatar`) is drawn wherever the persona appears. Instances below the declaring one are read through their declarations, so a downstream site shows the journeys of the layers it mounts too.",
       "install": {
         "none": true
       },
@@ -57477,8 +57541,8 @@
   ],
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
+    "sha": "e696f2074a66d57a28a9bc01d3536277f2747611",
     "pr": "2985/merge",
-    "run": "42343823482"
+    "run": "42357297477"
   }
 }

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/prepare-merge.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ast-site-prefix",
+    "sha": "c9bf7f63e4e5b09c06c2574ac5febae944c9f927",
+    "pr": "3014/merge",
+    "run": "42355570137"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/prepare-merge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "prepare-merge",
+      "title": "Prepare-merge — get a feature branch ready to land",
+      "description": "Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for \"prepare-merge\", \"make it mergeable\", \"ship it\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/prepare-merge.md",
+      "instructionLines": 515,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge"
+    }
+  ]
+}

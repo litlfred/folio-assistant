@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/folio-init.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ast-site-prefix",
+    "sha": "c9bf7f63e4e5b09c06c2574ac5febae944c9f927",
+    "pr": "3014/merge",
+    "run": "42355570137"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/folio-init",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "folio-init",
+      "title": "Instantiate a folio — `folio-init`",
+      "description": "Scaffold a new folio instance from the harness — the instantiate affordance of the knowledge graph. Covers when to run folio-init vs remote-mount, what the scaffold writes, the builder shim, state branch seeding, write capability requirements, and --dry-run degradation.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/package/kg-core"
+      ],
+      "instructionsPath": "skills/kg/kg-core/folio-init.md",
+      "instructionLines": 110,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/folio-init"
+    }
+  ]
+}

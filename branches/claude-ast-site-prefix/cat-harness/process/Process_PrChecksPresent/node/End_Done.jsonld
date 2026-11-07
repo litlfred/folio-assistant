@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_PrChecksPresent/node/End_Done.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ast-site-prefix",
+    "sha": "c9bf7f63e4e5b09c06c2574ac5febae944c9f927",
+    "pr": "3014/merge",
+    "run": "42355570137"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_PrChecksPresent/node/End_Done",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Every head has a run, or could not tell",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_PrChecksPresent",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_PrChecksPresent#flow/Flow_4"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/End_Done"
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/schema/cat-harness.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ast-site-prefix",
+    "sha": "c9bf7f63e4e5b09c06c2574ac5febae944c9f927",
+    "pr": "3014/merge",
+    "run": "42355570137"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/schema/cat-harness",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "cat-harness",
+      "title": "cat-harness",
+      "summary": "The `CatHarness` declaration — what an instance IS, at its root.",
+      "module": "schemas/kg/cat-harness.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/tools/cat-harness-schema.jsonld"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/cat-harness"
+    }
+  ]
+}

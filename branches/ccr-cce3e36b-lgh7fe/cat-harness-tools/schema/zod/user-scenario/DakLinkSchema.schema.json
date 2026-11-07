@@ -1,0 +1,35 @@
+{
+  "$ref": "#/definitions/DakLink",
+  "definitions": {
+    "DakLink": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Za-z]+\\/[A-Za-z0-9.-]+$"
+        },
+        "rel": {
+          "type": "string",
+          "enum": [
+            "data",
+            "decides",
+            "measures"
+          ]
+        }
+      },
+      "required": [
+        "key"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/DakLinkSchema.schema.json",
+  "title": "DakLinkSchema",
+  "description": "Generated from `DakLinkSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "ccr-cce3e36b-lgh7fe",
+    "sha": "e696f2074a66d57a28a9bc01d3536277f2747611",
+    "pr": "2985/merge",
+    "run": "42357297477"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/folio-assistant-core/role/evidence-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/ast-site-prefix",
+    "sha": "c9bf7f63e4e5b09c06c2574ac5febae944c9f927",
+    "pr": "3014/merge",
+    "run": "42355570137"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/folio-assistant-core/role/evidence-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Evidence agent",
+      "title": "Evidence agent",
+      "notation": "evidence-agent",
+      "description": "Retrieves and appraises external evidence for a guideline claim.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/folio-assistant-core/skill/document-intake"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent"
+    }
+  ]
+}

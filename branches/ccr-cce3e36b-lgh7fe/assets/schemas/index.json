@@ -30010,6 +30010,13 @@
           "array": false
         },
         {
+          "name": "specialises",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The block kind a node of this kind IS, read through the kind module's view of it."
+        },
+        {
           "name": "avatar",
           "type": "KindAvatarSchema.optional()",
           "optional": true,
@@ -30335,6 +30342,13 @@
           "optional": true,
           "array": false,
           "doc": "The kind this one is a SUB-GRAPH of, when it is one."
+        },
+        {
+          "name": "specialises",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The BLOCK KIND (a `folio-block-kind/v1` node's `kind`, in whichever layer"
         },
         {
           "name": "avatar",
@@ -35446,10 +35460,10 @@
         },
         {
           "name": "paths",
-          "type": "{ md: string; ts?: string }",
+          "type": "{ md?: string; ts?: string; pot?: string }",
           "optional": false,
           "array": false,
-          "doc": "Repo-relative paths of the block's files."
+          "doc": "Repo-relative paths of the subject's files: a block's or page's `.md` (and"
         },
         {
           "name": "po",
@@ -48899,6 +48913,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#AuthoredStep",
+      "name": "AuthoredStep",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "doc": "A step as its file says it: from 0.4.0 its `lead` and `experiences` may be left to derivation.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlock",
       "name": "BuildingBlock",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
@@ -49048,6 +49076,115 @@
       "refs": [
         "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlocksKind"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#DakLink",
+      "name": "DakLink",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#DakLinkSchema",
+      "name": "DakLinkSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "One DAK asset a step uses, by its key in the instance's",
+      "fields": [
+        {
+          "name": "key",
+          "type": "ExampleKey",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rel",
+          "type": "DakRelSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#DakRelSchema",
+        "cat-harness-tools/schemas/process/user-scenario.ts#ExampleKey"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#DakRel",
+      "name": "DakRel",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#DakRelSchema",
+      "name": "DakRelSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#DakUserScenario",
+      "name": "DakUserScenario",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "interface",
+      "doc": "The DAK `UserScenario` a journey is, as a DAK reader takes it: the logical",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "personas",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Role ids, in the order the journey's personas first reach them."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -49506,6 +49643,59 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#Part",
+      "name": "Part",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#PartSchema",
+      "name": "PartSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "One part of a journey, in story order.",
+      "fields": [
+        {
+          "name": "scenario",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "doc": "The journey that is this part."
+        },
+        {
+          "name": "optional",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The story may skip it."
+        },
+        {
+          "name": "repeats",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "It may happen more than once."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Id"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-scenario.ts#PreconditionSchema",
       "name": "PreconditionSchema",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
@@ -49674,10 +49864,69 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#RefinedScenario",
+      "name": "RefinedScenario",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "personas",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "partOf",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "parts",
+          "type": "readonly { scenario: string }[]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "steps",
+          "type": "readonly { id: string; experiences?: readonly { actor: string }[]; lead?: string }[]",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#Scenario",
+      "name": "Scenario",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "doc": "A journey as a reader takes it: its personas (actors) and its steps' people, authored or derived (`scripts/journeys/derive.ts`).",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-scenario.ts#ScenarioStep",
       "name": "ScenarioStep",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
       "kind": "type-alias",
+      "doc": "A step as a reader takes it: `lead` and `experiences` authored, or derived from its lanes.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -49759,6 +50008,34 @@
       "exported": false
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#StepV03",
+      "name": "StepV03",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "undetermined",
+      "note": "{ ...StepV02, /** The DAK assets the step uses: its data sets, the decision tables that decide it, the indicators that measure it. */ dak: z.array(DakLinkSchem…",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#StepV04",
+      "name": "StepV04",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "undetermined",
+      "note": "{ ...StepV03, /** Absent (0.4.0): the first actor the step's lanes derive. */ lead: Id.optional(), /** Absent (0.4.0): one per actor who plays a lane of the st…",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
       "name": "Text",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
@@ -49776,7 +50053,7 @@
       "name": "UserScenario",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
       "kind": "type-alias",
-      "doc": "A user scenario of either family, as a reader takes it.",
+      "doc": "A user scenario of any family, as its file says it.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -49790,7 +50067,7 @@
       "name": "UserScenarioKind",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
       "kind": "zod-object",
-      "doc": "`user-scenario/0.2.0`, as a node kind: 0.1.0 plus grouping, views,",
+      "doc": "`user-scenario/0.4.0`, as a node kind: 0.1.0 plus grouping, views,",
       "fields": [],
       "extendsNames": [
         "nodeKind"
@@ -62532,7 +62809,7 @@
           "type": "z .string() .regex(/\\.feature$/, \"a Gherkin link names a `.feature` file\") .optional()",
           "optional": true,
           "array": false,
-          "doc": "Optional Gherkin `.feature` file the case is written in."
+          "doc": "The Gherkin `.feature` file the case is written in. Required under"
         },
         {
           "name": "dependsOn",
@@ -62639,7 +62916,7 @@
       "fields": [
         {
           "name": "$schema",
-          "type": "z.literal(TEST_PLAN_SCHEMA_ID)",
+          "type": "z.enum(TEST_PLAN_SCHEMA_IDS)",
           "optional": false,
           "array": false
         },
@@ -62719,9 +62996,22 @@
       "unresolved": [],
       "external": [
         "RequirementRefSchema",
-        "TEST_PLAN_SCHEMA_ID",
+        "TEST_PLAN_SCHEMA_IDS",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/test-plan.ts#TestPlanSchemaId",
+      "name": "TestPlanSchemaId",
+      "module": "cat-harness-tools/schemas/sdlc/test-plan.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -97814,6 +98104,22 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#DakLinkSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#DakRelSchema",
+      "via": "rel",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#DakLinkSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#ExampleKey",
+      "via": "key",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness-tools/schemas/process/user-scenario.ts#ExperienceSchema",
       "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
       "via": "actor",
@@ -98035,6 +98341,14 @@
       "via": "role",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#PartSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+      "via": "scenario",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
@@ -106177,7 +106491,7 @@
       "source": "node-kind",
       "instance": "cat-harness-tools",
       "decl": "cat-harness-tools/schemas/process/user-scenario.ts#UserScenarioKind",
-      "tag": "user-scenario/0.2.0",
+      "tag": "user-scenario/0.4.0",
       "parents": [],
       "subclasses": [],
       "typologies": [

@@ -1,0 +1,19 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/skills/staging-review/input.schema.json",
+  "title": "Staging Review Input (moved)",
+  "description": "Moved to https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skills/staging-review/input.schema.json (litlfred/cat-harness-tools#603 decision 1b: the host's documents sit under its own directory, like every layer's). This address is a tombstone kept for one release; it validates as the new document does.",
+  "deprecated": true,
+  "isReplacedBy": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skills/staging-review/input.schema.json",
+  "allOf": [
+    {
+      "$ref": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skills/staging-review/input.schema.json"
+    }
+  ],
+  "staging": {
+    "branch": "claude/ast-site-prefix",
+    "sha": "c9bf7f63e4e5b09c06c2574ac5febae944c9f927",
+    "pr": "3014/merge",
+    "run": "42355570137"
+  }
+}

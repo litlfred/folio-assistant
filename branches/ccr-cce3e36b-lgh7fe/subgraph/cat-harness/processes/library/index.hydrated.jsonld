@@ -3401,10 +3401,10 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/translation-workflow.svg",
       "description": "The machine half of translation, end to end: extract the translatable strings, inject a catalogue back, check the result by back-translating it, and track whether the source has moved since.\n\nYou are in this process whenever translation happens without a person having to be present. Two of its steps are the exception and are drawn in their own lane: a flagged passage is ADJUDICATED by a human, and a translation becomes official only when a human signs it off. `human-translation-workflow` is what happens when a person is doing the translating rather than checking it.\n\nStaleness is an END state that re-enters at the beginning, not a failure. A source change does not invalidate a translation's accuracy; it invalidates its currency, which is a different fact and is why it is recorded rather than thrown away.",
       "enforcement": "advisory",
-      "flowCount": 18,
+      "flowCount": 20,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "name": "Translation Workflow",
-      "nodeCount": 16,
+      "nodeCount": 18,
       "sourcePath": "processes/library/translation-workflow.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/library/translation-workflow.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Start_ContentAuthored",
@@ -3450,7 +3450,15 @@
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_PotExtract",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_Translate"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_TermBase"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_GlossaryCheck",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_GlossaryCheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Gateway_Drift"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_Inject",
@@ -3501,7 +3509,7 @@
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_RoundTripQA",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Gateway_Drift"
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_GlossaryCheck"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_Signoff",
@@ -3544,6 +3552,14 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_PotExtract"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_TermBase",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_TermBase",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_Translate"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_Translate",
@@ -3619,7 +3635,7 @@
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_QA",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_GlossaryCheck",
       "name": "Drift or bad terminology?",
       "nodeKind": "exclusive",
       "outgoing": [
@@ -3719,6 +3735,22 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_GlossaryCheck",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_QA",
+      "name": "Check glossary terms (translation:glossary:check)",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_GlossaryCheck",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager",
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_PoInject",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:Task",
@@ -3805,13 +3837,29 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_TermBase",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_Extract",
+      "name": "Build and review the locale term base",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_TermBase",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/authoring-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager",
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_Translate",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ServiceTask",
       "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes",
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_Extract",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_TermBase",
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_PostQA_Redo"
       ],
       "name": "Produce translation (PO file)",

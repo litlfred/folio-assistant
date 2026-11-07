@@ -48,6 +48,31 @@
           "type": "string",
           "pattern": "^[a-z0-9][a-z0-9-]*$"
         },
+        "parts": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "scenario": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
+              },
+              "optional": {
+                "type": "boolean",
+                "const": true
+              },
+              "repeats": {
+                "type": "boolean",
+                "const": true
+              }
+            },
+            "required": [
+              "scenario"
+            ],
+            "additionalProperties": false
+          }
+        },
         "views": {
           "type": "array",
           "items": {
@@ -190,6 +215,7 @@
           }
         },
         "steps": {
+          "default": [],
           "type": "array",
           "items": {
             "type": "object",
@@ -547,13 +573,39 @@
                 ],
                 "additionalProperties": false,
                 "description": "A step's picture, or the brief for drawing it. A picture carries no text; the title and caption are page text."
+              },
+              "dak": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "key": {
+                      "type": "string",
+                      "pattern": "^[A-Z][A-Za-z]+\\/[A-Za-z0-9.-]+$"
+                    },
+                    "rel": {
+                      "type": "string",
+                      "enum": [
+                        "data",
+                        "decides",
+                        "measures"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "key"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "includes": {
+                "type": "string",
+                "pattern": "^[a-z0-9][a-z0-9-]*$"
               }
             },
             "required": [
               "id",
-              "title",
-              "lead",
-              "experiences"
+              "title"
             ],
             "additionalProperties": false
           }
@@ -566,8 +618,6 @@
         "id",
         "title",
         "description",
-        "personas",
-        "steps",
         "$schema"
       ],
       "additionalProperties": false
@@ -578,8 +628,8 @@
   "description": "Generated from `UserScenarioSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "ccr-cce3e36b-lgh7fe",
-    "sha": "c1fbb654e6630b8c01496d3fbc712a0371157dff",
+    "sha": "e696f2074a66d57a28a9bc01d3536277f2747611",
     "pr": "2985/merge",
-    "run": "42343823482"
+    "run": "42357297477"
   }
 }

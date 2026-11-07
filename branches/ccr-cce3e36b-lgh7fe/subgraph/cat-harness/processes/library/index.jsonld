@@ -1338,6 +1338,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_GlossaryCheck",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_Inject",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -1384,6 +1388,10 @@
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_Start",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation#flow/Flow_TermBase",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -1450,6 +1458,11 @@
       "name": "Edit the flagged passage and re-inject"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_GlossaryCheck",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Check glossary terms (translation:glossary:check)"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_PoInject",
       "@type": "bootstrap:ProcessNode",
       "name": "Inject translations (PO → Markdown)"
@@ -1473,6 +1486,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_StalenessCheck",
       "@type": "bootstrap:ProcessNode",
       "name": "Check staleness (source hash)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_TermBase",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Build and review the locale term base"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_Translate",

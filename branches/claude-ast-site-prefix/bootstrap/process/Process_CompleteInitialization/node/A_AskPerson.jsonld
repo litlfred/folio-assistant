@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/bootstrap/process/Process_CompleteInitialization/node/A_AskPerson.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/bootstrap/process/Process_CompleteInitialization/node/A_AskPerson",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Ask the person",
+      "type": "bpmn:callActivity",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/bootstrap/process/Process_CompleteInitialization",
+      "requires": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/bootstrap/skill/human-agent-discussion",
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/bootstrap/process/Process_HumanAgentDiscussion"
+    }
+  ]
+}

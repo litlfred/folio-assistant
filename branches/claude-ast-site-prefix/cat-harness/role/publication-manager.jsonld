@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/role/publication-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ast-site-prefix",
+    "sha": "c9bf7f63e4e5b09c06c2574ac5febae944c9f927",
+    "pr": "3014/merge",
+    "run": "42355570137"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/role/publication-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Publication manager",
+      "title": "Publication manager",
+      "notation": "publication-manager",
+      "description": "Takes an authorised release to its published form and is accountable for what is live.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/content-publish",
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/content-review",
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/decision-audit",
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/qa-report-signing",
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/publish-verification",
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/instance-publication",
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/package-release",
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/render-kg-to-cdn",
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/skill/staging-review"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager"
+    }
+  ]
+}

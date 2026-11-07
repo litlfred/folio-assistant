@@ -19736,6 +19736,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-node.graphtypologynodeschema.specialises",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphTypologyNodeSchema.specialises"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The block kind a node of this kind IS, read through the kind module's view of it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.specialises",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-node.graphtypologynodeschema.tileicon",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -20132,6 +20151,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.skillBearing",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-registry.graphtypologydef.specialises",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphTypologyDef.specialises"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The BLOCK KIND (a `folio-block-kind/v1` node's `kind`, in whichever layer declares it) that a node of this kind IS, read through the kind module's view of it: a journey is a DAK user scenario."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.specialises",
       "skos:note": "candidate"
     },
     {
@@ -28317,7 +28355,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Repo-relative paths of the block's files."
+          "@value": "Repo-relative paths of the subject's files: a block's or page's `.md` (and `.ts`), or — for a catalogue measured against its template, which has no page of its own here (an IG page, a glossary) — the `.pot`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/qa-record-shapes.ts#TranslationBlockQaReport.paths",
@@ -36582,7 +36620,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Optional Gherkin `.feature` file the case is written in."
+          "@value": "The Gherkin `.feature` file the case is written in. Required under `test-plan/v1.1` — enforced on the plan, since a case does not know its plan's version — and optional only in a `test-plan/v1` plan."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/test-plan.ts#TestPlanCaseSchema.feature",
@@ -42460,6 +42498,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.dakuserscenario.personas",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DakUserScenario.personas"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Role ids, in the order the journey's personas first reach them."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#DakUserScenario.personas",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.experienceschema.emotion",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -42856,6 +42913,63 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema.initials",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.partschema.optional",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PartSchema.optional"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The story may skip it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#PartSchema.optional",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.partschema.repeats",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PartSchema.repeats"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "It may happen more than once."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#PartSchema.repeats",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.partschema.scenario",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PartSchema.scenario"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The journey that is this part."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#PartSchema.scenario",
       "skos:note": "candidate"
     },
     {

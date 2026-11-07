@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/ast-site-prefix",
+    "sha": "c9bf7f63e4e5b09c06c2574ac5febae944c9f927",
+    "pr": "3014/merge",
+    "run": "42355570137"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Which of the three?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_CriterionAdjudication",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/role/adjudicator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_CriterionAdjudication#flow/F_C2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_CriterionAdjudication#flow/F_Stands",
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_CriterionAdjudication#flow/F_Scope",
+        "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/process/Process_CriterionAdjudication#flow/F_Exception"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-ast-site-prefix/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/node/GW_Outcome"
+    }
+  ]
+}

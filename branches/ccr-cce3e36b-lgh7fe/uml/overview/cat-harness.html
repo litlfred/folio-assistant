@@ -1158,7 +1158,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       label [1] string
       block [0..1] string
       locale [1] string
-      paths [1]  md: string; ts?: string 
+      paths [1]  md?: string; ts?: string; pot?: string 
       po [1] string
       source_hashes [1] TranslationFieldHash
       criteria [1] Record~string, TranslationQaEntry[]~
@@ -1266,7 +1266,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     }
     class cat_harness_test_plans_TestPlan["TestPlan"] {
       &lt;&lt;json: TestPlanSchema&gt;&gt;
-      $schema [1] 'test-plan/v1'
+      $schema [1] test-plan/v1 | test-plan/v1.1
       id [1] string
       title [1] string
       status [1] draft | active | retired | unknown
@@ -2132,6 +2132,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       declarationFile [0..1] string
       concernGroups [0..1] true
       within [0..1] string
+      specialises [0..1] string
       avatar [0..1] object
       tileIcon [0..1] string
       published [0..1] false
@@ -2257,6 +2258,7 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       declarationFile [0..1] string
       concernGroups [0..1] true
       within [0..1] string
+      specialises [0..1] string
       avatar [0..1] object
       tileIcon [0..1] string
       published [0..1] false

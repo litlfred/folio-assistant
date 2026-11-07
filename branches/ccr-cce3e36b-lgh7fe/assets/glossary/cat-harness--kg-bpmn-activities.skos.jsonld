@@ -4321,7 +4321,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Generates or retrieves the domain glossary for the target locale. Sources: 1. Root folio's translations/ glossary 2. Folio-assistant dependency translations (depth-first walk) 3. WHO standard terminology (from the WHO SMART Base IG) 4. Previous translations of related content"
+          "@value": "Builds the locale term base for the target locale from the layered glossaries, has it reviewed, and hands it to the translator with the POT. Each layer's glossary is the directory it declares with the `glossary` graph typology. Precedence, within one subject area (the scheme's `subject`): the more authoritative (lower) layer fixes a term's translation; an instance layer only adds, and may not give a fixed term a second translation. A match in another subject area is a sense check for the reviewer, not a violation. Previous translations of related content are evidence for a term with no fixed form, not a source that overrides one. A fixed translation is an authored term with a non-empty, non-fuzzy msgstr in its scheme's catalogue (translation-manager, \"The locale term base\")."
         }
       ],
       "skos:notation": "Task_PrepareGlossary",
@@ -4401,7 +4401,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original. It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool. No gateway follows: drift or clean, the translation goes to Task_SMEReview with the findings attached. Which of two readings is right is a human call (translation-manager, \"route drift to a human reviewer\"), and every translation in this workflow is reviewed and signed off anyway, so a clean result is evidence for the reviewer and never a way around them."
+          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original. It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool. No gateway follows: drift or clean, the translation goes to Task_SMEReview with the findings attached. Which of two readings is right is a human call (translation-manager, \"route drift to a human reviewer\"), and every translation in this workflow is reviewed and signed off anyway, so a clean result is evidence for the reviewer and never a way around them. The findings include `translation:glossary:check`'s: every glossary term translated against the locale term base, fixed before sign-off, with its glossary section in the KG QA report."
         }
       ],
       "skos:notation": "Task_RoundTripQA",
@@ -10859,6 +10859,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translation.task_glossarycheck",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check glossary terms (translation:glossary:check)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "After translating: run `translation:glossary:check --instance <dir> --locale <locale>`, fix the violations, and include its glossary section in the KG QA report. A term translated against the term base is a terminology miss, so it takes the drift branch to the adjudicator."
+        }
+      ],
+      "skos:notation": "Task_GlossaryCheck",
+      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_GlossaryCheck",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translation.task_poinject",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -10959,6 +10979,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translation.task_termbase",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build and review the locale term base"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Before translating: build the locale term base from the layered glossaries, review it, and translate with it. Precedence, within one subject area (the scheme's `subject`): the more authoritative (lower) layer fixes a term's translation; an instance layer only adds. A match in another subject area is a sense check, not a violation. Each layer's glossary is the directory it declares with the `glossary` graph typology. A fixed translation is an authored term with a non-empty, non-fuzzy msgstr in its scheme's catalogue."
+        }
+      ],
+      "skos:notation": "Task_TermBase",
+      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_TermBase",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translation.task_translate",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -10971,7 +11011,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Translation of .pot → .po by one of: 1. Existing PO from the WHO SMART Base IG (Weblate/Crowdin/Launchpad) 2. FHIR/translation-utils po-translate CLI (DeepL/Google, tagged #fuzzy) 3. Agent (LLM) translation 4. Human translator Result: <locale>/block.po with msgid/msgstr pairs."
+          "@value": "Translation of .pot → .po, with the locale term base, by one of: 1. Existing PO from the WHO SMART Base IG (Weblate/Crowdin/Launchpad) 2. FHIR/translation-utils po-translate CLI (DeepL/Google, tagged #fuzzy) 3. Agent (LLM) translation 4. Human translator Result: <locale>/block.po with msgid/msgstr pairs."
         }
       ],
       "skos:notation": "Task_Translate",
