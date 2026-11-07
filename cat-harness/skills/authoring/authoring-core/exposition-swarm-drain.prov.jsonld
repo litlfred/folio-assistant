@@ -1,0 +1,104 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of exposition-swarm-drain.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-1"
+        },
+        {
+          "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-2"
+        },
+        {
+          "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-3"
+        },
+        {
+          "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-4"
+        },
+        {
+          "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-5"
+        },
+        {
+          "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-6"
+        }
+      ]
+    },
+    {
+      "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "1. The pattern (three roles)",
+      "prov:value": "1. **Foreground (this session)** — enumerate + batch the blocks, launch\n   the swarm, then **auto prepare-merge** each swarm PR (via\n   `/prepare-merge-auto`). Runs the drain loop until every batch is\n   merged or explicitly parked. Does **not** stop for check-ins — go\n   until completely drained (owner directive 2026-07-04).",
+      "cat-harness:refs": [
+        "2026-07-04",
+        "owner"
+      ],
+      "dcterms:date": [
+        "2026-07-04"
+      ]
+    },
+    {
+      "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "1. The pattern (three roles)",
+      "prov:value": "3. **Auto-merge** — the foreground runs `/prepare-merge-auto` on each\n   returned PR: rebase, one-voice + lean checks, request reviews,\n   resolve mechanical comments, merge (rebase-merge default). Merge is\n   pre-authorized for this drain (owner directive); architectural review\n   comments still escalate via `AskUserQuestion`.",
+      "cat-harness:refs": [
+        "owner"
+      ]
+    },
+    {
+      "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-3",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "2. The audit rubric (what each agent scores)",
+      "prov:value": "**Gate (owner ruling 2026-07-04, STRICT):** `T = ΣHi`. `T = 16` → **pass**;\n`12 ≤ T ≤ 15` → **warn**; `T ≤ 11` → **fail**. Perfection is the bar.",
+      "cat-harness:refs": [
+        "2026-07-04",
+        "owner"
+      ],
+      "dcterms:date": [
+        "2026-07-04"
+      ]
+    },
+    {
+      "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-4",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "pr",
+      "cat-harness:section": "4. Conservative-edit discipline (STRICT — the resolve half)",
+      "prov:value": "**DO-NOT-TOUCH-DERIVATIONS rule (STRICT, added 2026-07-04 after a live\nincident).** A resolve agent must **not edit the prose of a derivation,\ncomputation, or proof body at all** — not even to \"tighten\" or \"clarify\"\nit. Polishing a derivation can make a *wrong* one read more cleanly and\nauthoritative, which is worse than leaving it rough. (Incident: the swarm\nreworded a `frobenius-relation-su2` derivation that was mathematically\nfalse — it conflated the Hopf comultiplication with the Frobenius\ncomultiplication — and the cleaner prose lent the error false authority;\nGemini caught it, PR #3301.) Therefore:\n- **Only edit the *surrounding exposition*** — the intro/motivation\n  sentence, the notation-introduction, a redundant restatement *outside*\n  the derivation, the closing interpretation. Leave every derivation /\n  computation / proof step **verbatim**.\n- If a derivation itself reads poorly, **do not fix it** — set\n  `needs_owner` with a note. A resolve agent is not authorized to verify\n  or repair mathematics.\n- The audit stage **may** score H5/H6/H7 low on a muddy derivation and\n  **flag** it, but the flag routes to `needs_owner`, not to an autonomous\n  prose rewrite of the derivation.",
+      "cat-harness:refs": [
+        "#3301",
+        "2026-07-04"
+      ],
+      "dcterms:date": [
+        "2026-07-04"
+      ]
+    },
+    {
+      "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-5",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "4. Conservative-edit discipline (STRICT — the resolve half)",
+      "prov:value": "**The review layer is the backstop, not the gate.** Every swarm PR still\ngoes through `/prepare-merge-auto` (Gemini + Copilot) before merge; that\nlayer caught the incident above. Do not merge a content batch on the\nswarm's self-check alone."
+    },
+    {
+      "@id": "skills/authoring/authoring-core/exposition-swarm-drain.md#provenance-6",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "pr",
+      "cat-harness:section": "7. Interaction with the flag-preservation guard",
+      "prov:value": "Per\n`qa-flag-preservation-audit.ts` (PR #3289), a distrusted `expo-milnor-clarity`\nverdict must be **re-audited**, never `n/a`-cleared.",
+      "cat-harness:refs": [
+        "#3289"
+      ]
+    }
+  ]
+}
