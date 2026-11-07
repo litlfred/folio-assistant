@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_PreScreen.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2003",
+    "sha": "65f0cde1add447ed593a23391eb9ebd923bba4e7",
+    "pr": "repin-train/20261107-2003",
+    "run": "42409239648"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_PreScreen",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Pre-screen every pair",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/role/round-trip-adjudicator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_PreScreen"
+    }
+  ]
+}

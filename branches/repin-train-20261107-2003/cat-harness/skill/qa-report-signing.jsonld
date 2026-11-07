@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/skill/qa-report-signing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2003",
+    "sha": "65f0cde1add447ed593a23391eb9ebd923bba4e7",
+    "pr": "repin-train/20261107-2003",
+    "run": "42409239648"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/skill/qa-report-signing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "qa-report-signing",
+      "title": "QA report signing — two routes, chosen by the performer's reach",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/qa-report-signing.md",
+      "instructionLines": 110,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/qa-report-signing"
+    }
+  ]
+}

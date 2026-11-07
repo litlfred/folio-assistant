@@ -1,0 +1,44 @@
+{
+  "@context": {
+    "fhir": "http://hl7.org/fhir/",
+    "dcterms": "http://purl.org/dc/terms/",
+    "schema": "https://schema.org/",
+    "prov": "http://www.w3.org/ns/prov#"
+  },
+  "$schema": "folio-ig-artifact-jsonld/v1",
+  "@id": "StructureDefinition-PHWImpliedConsent.jsonld",
+  "@type": "fhir:StructureDefinition",
+  "dcterms:identifier": "StructureDefinition/PHWImpliedConsent",
+  "schema:name": "PHWImpliedConsent",
+  "dcterms:title": "PHW Implied Consent",
+  "dcterms:description": "A consent the holder did not give by any act: categorized with an HL7 ActConsentDirective code (IMPLIED, IMPLIEDD or NOPP); the trust domain's default policy applies, normally an IHE PCF implicit policy (Volume 1 §1:53.2.1). Consent.policy names it, and the domain's published policy is the evidence (sourceAttachment). Carried in a document so that a receiver can see which policy the data was shared under.",
+  "schema:version": "0.2.0-litlfred",
+  "dcterms:type": "Structures: Resource Profiles",
+  "schema:sameAs": {
+    "@id": "http://smart.who.int/trust-phw/StructureDefinition/PHWImpliedConsent"
+  },
+  "schema:creativeWorkStatus": "materialized",
+  "schema:encoding": [
+    {
+      "@type": "schema:MediaObject",
+      "schema:contentUrl": {
+        "@id": "../../ast-data/resources/StructureDefinition/PHWImpliedConsent--489c5f86.json"
+      },
+      "schema:encodingFormat": "application/fhir+json",
+      "dcterms:source": "local"
+    }
+  ],
+  "prov:wasGeneratedBy": {
+    "@type": "prov:Activity",
+    "schema:instrument": "ig-publisher 3.0.0 / core 7.0.1",
+    "prov:used": "1e44fc31959132396cc39189bbd8310e90009873"
+  },
+  "dcterms:isPartOf": {
+    "@type": "fhir:ImplementationGuide",
+    "dcterms:identifier": "smart.who.int.trust-phw",
+    "schema:version": "0.2.0-litlfred",
+    "schema:sameAs": {
+      "@id": "http://smart.who.int/trust-phw"
+    }
+  }
+}

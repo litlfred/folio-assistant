@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/folio-assistant-core/process/Process_GettingStarted/node/EndEvent_HandOff.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2003",
+    "sha": "65f0cde1add447ed593a23391eb9ebd923bba4e7",
+    "pr": "repin-train/20261107-2003",
+    "run": "42409239648"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/folio-assistant-core/process/Process_GettingStarted/node/EndEvent_HandOff",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Handed to content authoring",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/folio-assistant-core/process/Process_GettingStarted",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/folio-assistant-core/role/onboarding-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/folio-assistant-core/process/Process_GettingStarted#flow/Flow_newcontent"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/EndEvent_HandOff"
+    }
+  ]
+}

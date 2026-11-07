@@ -1,0 +1,222 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261107-2003",
+    "sha": "65f0cde1add447ed593a23391eb9ebd923bba4e7",
+    "pr": "repin-train/20261107-2003",
+    "run": "42409239648"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Multi-locale translation",
+      "summary": "Translate one or more instances into several locales at once, as a team: one source-language lead, one translator per locale, an untainted round trip, and the owner's merge window.",
+      "description": "Translate one or more instances into several locales at once, as a team: one source-language lead, one translator per locale, an untainted round trip, and the owner's merge window. The result is unofficial, on main, and kept current by a watcher.\n\nYou are in this process when more than one locale is being produced from the same source at the same time. `translation-workflow` is the machine half for one catalogue and `human-translation-workflow` is the path to an official, signed-off translation; this process is the team around them. It extracts ONCE: every locale starts from the same templates, merged to main in one source PR before any locale begins, and no translator re-extracts. Each locale then lands as its own PR to main, never into the source branch, and a source PR's branch receives nothing after it merges.\n\nTwo things are never done in a translation: fixing the source (a source-text error is reported as one issue to the lead), and editing a FHIR resource inline (terms go into one CodeSystem supplement per locale). Officiality is not decided here: every catalogue is written unofficial, and a person makes it official through human-translation-workflow.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/library/multi-locale-translation.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/library/multi-locale-translation.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/assets/img/workflows/multi-locale-translation.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Start_ML"
+      ],
+      "nodeCount": 18,
+      "flowCount": 20,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/externalSchema/omg-dd-1.0",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/externalSchema/w3c-xsd11-structures"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Start_ML",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Scope",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Scope",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Extract",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Extract",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourcePR",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourcePR",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Watcher",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Watcher",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Translate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_6",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Translate",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_SourceError",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_6"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrYes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_SourceError",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourceIssue",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrYes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrNo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "No",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_SourceError",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Gates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_ErrNo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_7",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourceIssue",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Gates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_7"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_8",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Gates",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_8"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesYes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Call_ML_RoundTrip",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesYes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesNo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "No: fix, re-run",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Gates",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Translate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_GatesNo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_9",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Call_ML_RoundTrip",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Glossary",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_9"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Glossary",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_QAReport",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_QAReport",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_LocalePR",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_11"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_LocalePR",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Drift",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftYes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "Yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Drift",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_FixDrift",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftYes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftNo",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "No",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Gateway_ML_Drift",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_DriftNo"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_FixDrift",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Merge",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_13"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_14",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation",
+      "from": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Merge",
+      "to": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/process/Process_MultiLocaleTranslation/node/End_ML",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261107-2003/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_14"
+    }
+  ]
+}
