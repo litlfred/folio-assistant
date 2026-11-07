@@ -139,3 +139,4 @@ _2026-11-07T06:05:00Z_ — Re-count 3 (owner, this session: "re-count smart-ra/b
   - BEFORE in smart-base was ≈6 cross-layer NEW (16:45Z note).
 - Too small a sample to call. Next measurable run: smart-base#315 (branched after the re-pin).
 Bean stays open: bootstrap-tools#80 (iri:sync, F's) is still open. Session https://claude.ai/code/session_01VQDpPcbpLjEo8EuzFLVq5Z
+- 2026-11-07 06:45Z: Owner rules relayed by the parent: NO SELF-MERGES; the merge manager is session_01VQDpPffYARDQ8juksAZScf; a 6-line "ready"; pacing. bootstrap-tools#80 at 240f0e1 is full-tier green and mergeable clean. Marked ready, and the 6-line "ready" was sent to the merge manager and the parent. Next, after it lands: re-pin smart-immunizations and who-iris to the bootstrap-tools and core mains (a re-pin link), then send "ready".
