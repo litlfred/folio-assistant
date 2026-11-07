@@ -69,3 +69,8 @@ Drop the 6 lines and their .gitignore lines. publish:check glossary:page stays a
   - Step 1: folio-assistant-core#654. `glossary-page.ts` writes a `.gitignore` of `*` alone into each of its 6 routes. It does not add `!.gitignore`, so the marker itself is never committed either.
   - Step 2: cat-harness-tools#1564. The mount digest leaves out any directory below an instance whose `.gitignore` is `*` alone (`withoutSelfIgnored`). It does not read other instances' visualiser declarations, because `builtAtPublishOf(dir)` sees one instance at a time and cannot know which layer writes onto its site. Measured: of cat-harness's files, 179 are dropped, all in the 6 routes, and nothing else.
   - Step 3 (cat-harness) is next, once #1091 lands, since both PRs edit the same `.gitignore` block.
+- **2026-11-07, landed — all three steps.**
+  - cat-harness-tools#1564 (2026-11-06 09:22Z): the `builtOnHostSite` viewer field; the publish plan derives host-site routes (`hostSiteArtefacts`, writer order unchanged); the mount digest skips self-ignoring routes.
+  - folio-assistant-core#654 (41d9da9): the glossary and bibliography routes ignore themselves; both viewers declare `builtOnHostSite`; core re-pinned to the platform mains.
+  - cat-harness#1100 (6dd3746): the last 7 hand-listed entries naming core's routes, and their `.gitignore` lines, are gone.
+  - Together with #1091, cat-harness no longer hand-lists any higher layer's viewer route. Left for the index: folio-assistant must re-pin cat-harness, core and cat-harness-tools together (cat-harness alone would drop the bibliography writer from the plan).
