@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/schema/waiver.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "3a5214ba2b55f5c9779d654ca82da68305f729da",
+    "pr": "2953/merge",
+    "run": "42343057589"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/schema/waiver",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "waiver",
+      "title": "waiver",
+      "summary": "A confirmation the owner has given **in advance**, scoped and dated.",
+      "module": "schemas/conduct/waiver.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/waiver"
+    }
+  ]
+}
