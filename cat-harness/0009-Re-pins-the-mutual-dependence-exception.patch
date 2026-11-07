@@ -1,0 +1,81 @@
+From 15fd0b47f5225b23ad0df36b09dfd2b36fceb160 Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 08:47:58 +0000
+Subject: [PATCH] Re-pins: the mutual-dependence exception
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+Owner ruling, 2026-11-07 (card, about 08:43Z, "A. Allow the exception"):
+a re-pin may share a PR with a change only when the two are mutually
+dependent, neither passing on its own, and the PR body says why. Example:
+folio-assistant-core#639 (core re-pinned to cat-harness#1032 fails
+check:tools without #639's library topic; #639 alone declares the library
+topic twice against the old pin). A change that merely needs the new pins
+still stacks.
+
+In remote-mount §"Re-pinning", index-config, and merge-manager-watcher
+sweep rule 10 (the merge manager checks the stated reason).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ sdlc/skills/sdlc-core/merge-manager-watcher.md | 6 +++++-
+ skills/kg/kg-core/index-config.md              | 5 +++--
+ skills/kg/kg-core/remote-mount.md              | 7 +++++++
+ 3 files changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/sdlc/skills/sdlc-core/merge-manager-watcher.md b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+index 8dc2ced1..f5e43008 100644
+--- a/sdlc/skills/sdlc-core/merge-manager-watcher.md
++++ b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+@@ -343,7 +343,11 @@ ledger entry.
+     does not land it. It sends it back, and asks for the extra change to
+     be split onto a PR stacked on the re-pin, or into the layer that owns
+     the fix. Counter-example: folio-assistant#2985 carried #2999 and a
+-    `caches:viz` gate line inside its re-pin.
++    `caches:viz` gate line inside its re-pin. **Exception** (owner ruling,
++    2026-11-07, card "A. Allow the exception"): a change mutually dependent
++    with the re-pin, where neither passes alone, may share the PR when its
++    body says why (as folio-assistant-core#639 does). The merge manager
++    checks the reason; a change that only needs the new pins still stacks.
+ 
+ ## Runner relief
+ 
+diff --git a/skills/kg/kg-core/index-config.md b/skills/kg/kg-core/index-config.md
+index 90ede6ac..f75197af 100644
+--- a/skills/kg/kg-core/index-config.md
++++ b/skills/kg/kg-core/index-config.md
+@@ -239,8 +239,9 @@ and its test holds it to `lockFilesIn`.
+ (owner ruling, 2026-11-06, card "Pin target", A). Every layer the change
+ needs is pinned in the same re-pin, and the re-pin PR holds the pins and
+ nothing else: a change that needs the new pins stacks on it (owner ruling,
+-2026-11-07). The rules are in [`remote-mount`](remote-mount.md)
+-§"Re-pinning".
++2026-11-07). The one exception is a change mutually dependent with the
++re-pin, where neither passes alone. It may share the PR, and the body says
++why. The rules are in [`remote-mount`](remote-mount.md) §"Re-pinning".
+ 
+ ## The reserved `index` stem
+ 
+diff --git a/skills/kg/kg-core/remote-mount.md b/skills/kg/kg-core/remote-mount.md
+index 0e3980cb..83eccaa5 100644
+--- a/skills/kg/kg-core/remote-mount.md
++++ b/skills/kg/kg-core/remote-mount.md
+@@ -345,6 +345,13 @@ workflow logic and no fix.
+   re-pin then only moves the pin.
+ - Counter-example: folio-assistant#2985 carried #2999 (the shared ci-setup
+   move) and its own `caches:viz` gate line inside the re-pin.
++- **The one exception: mutual dependence** (owner ruling, 2026-11-07, card,
++  about 08:43Z, "A. Allow the exception"). A re-pin may share a PR with a
++  change only when neither can pass on its own. The PR body must say why.
++  Example: folio-assistant-core#639. Core re-pinned to cat-harness#1032
++  fails `check:tools` without #639's `library` topic, and #639 alone
++  declares the `library` topic twice against the old pin. A change that
++  merely needs the new pins is not mutual: it stacks.
+ 
+ **Stacking across layers** (owner ruling, 2026-11-07). Work that needs an
+ unmerged PR in a lower layer does not wait for it. Develop against that
+-- 
+2.43.0
+
