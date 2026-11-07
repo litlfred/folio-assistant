@@ -33,6 +33,20 @@
 # building over it would not be the same build either.
 #
 # Env: REPO, SHA (the pushed commit), GH_TOKEN.
+#
+# ## A preview of a PR (bean `tv20`, an experiment)
+#
+# Feature Staging's `stage` checks out the PR's test merge commit, the same
+# commit the PR's own `code-quality-gates` run checks out, so the same record
+# names the copy for it. Two optional variables serve that caller:
+#
+# - PR_HEAD: the PR head, used as the head whose runs are read, in place of a
+#   parent of SHA;
+# - WAIT_SECONDS: how long to wait for that run's producer job when it has
+#   not finished yet (both jobs start on the same event). Default 0.
+#
+# Neither changes the rule: the record must name this tree, or nothing is
+# reused.
 
 set -uo pipefail
 
@@ -56,7 +70,9 @@ parents=$(gh api "repos/$REPO/commits/$SHA" --jq '[.parents[].sha] | join(" ")' 
   || build "Could not read the parents of \`$SHA\`."
 read -r p1 p2 extra <<< "$parents"
 [ -z "${extra:-}" ] || build "\`$SHA\` is an octopus merge."
-if [ -z "${p2:-}" ]; then
+if [ -n "${PR_HEAD:-}" ]; then
+  p2=$PR_HEAD
+elif [ -z "${p2:-}" ]; then
   [ -n "${p1:-}" ] || build "\`$SHA\` has no parents on record."
   prs=$(gh api "repos/$REPO/commits/$SHA/pulls" \
     --jq ".[] | select(.merged_at != null and .merge_commit_sha == \"$SHA\") | .head.sha" 2>/dev/null) \
@@ -66,15 +82,22 @@ if [ -z "${p2:-}" ]; then
   p2=$prs
 fi
 
+deadline=$(( $(date +%s) + ${WAIT_SECONDS:-0} ))
+started=$(date +%s)
+while :; do
 runs=$(gh api "repos/$REPO/actions/workflows/$WORKFLOW/runs?head_sha=$p2&event=pull_request&per_page=30" \
   --jq '.workflow_runs[] | .id' 2>/dev/null) || build "Could not list \`$WORKFLOW\` runs on the PR head \`$p2\`."
-[ -n "$runs" ] || build "No \`$WORKFLOW\` pull_request run on the PR head \`$p2\`."
 
 checked=""
+pending=0
 for id in $runs; do
-  ok=$(gh api "repos/$REPO/actions/runs/$id/jobs?per_page=100" \
-    --jq "[.jobs[] | select(.name == \"$PRODUCER_JOB\" and .conclusion == \"success\")] | length" 2>/dev/null) \
+  states=$(gh api "repos/$REPO/actions/runs/$id/jobs?per_page=100" \
+    --jq ".jobs[] | select(.name == \"$PRODUCER_JOB\") | [.status, (.conclusion // \"\")] | @tsv" 2>/dev/null) \
     || { checked+=" $id(jobs unreadable)"; continue; }
+  if printf '%s\n' "$states" | grep -qE '^(queued|in_progress|waiting|pending)'; then
+    pending=1; checked+=" $id(producer job not finished)"; continue
+  fi
+  ok=$(printf '%s\n' "$states" | grep -c $'^completed\tsuccess$')
   [ "$ok" = 1 ] || { checked+=" $id(no successful producer job)"; continue; }
   arts=$(gh api "repos/$REPO/actions/runs/$id/artifacts?per_page=100" \
     --jq '.artifacts[] | select(.expired == false) | [.name, .archive_download_url] | @tsv' 2>/dev/null) \
@@ -105,8 +128,12 @@ for id in $runs; do
   fi
   output reused true
   output run_id "$id"
-  summary "### QA working copy: reused from the merged PR's run $id (Q-SPD-7b)" "" \
-    "This push \`$SHA\` has tree \`$tree\`, which run [$id](https://github.com/$REPO/actions/runs/$id) on PR head \`$p2\` tested. Its \`qa-working-copy\` artifact was restored byte-identical to its manifest (sha256 \`$manifest\`)."
+  output waited "$(( $(date +%s) - started ))"
+  summary "### QA working copy: reused from the PR's run $id (Q-SPD-7b)" "" \
+    "Commit \`$SHA\` has tree \`$tree\`, which run [$id](https://github.com/$REPO/actions/runs/$id) on PR head \`$p2\` tested. Its \`qa-working-copy\` artifact was restored byte-identical to its manifest (sha256 \`$manifest\`), after waiting $(( $(date +%s) - started )) s."
   exit 0
 done
-build "No run on the PR head \`$p2\` has a usable copy of tree \`$tree\`. Checked:${checked:- nothing}."
+if [ "$pending" = 1 ] && [ "$(date +%s)" -lt "$deadline" ]; then sleep 20; continue; fi
+break
+done
+build "No run on the PR head \`$p2\` has a usable copy of tree \`$tree\` (waited $(( $(date +%s) - started )) s). Checked:${checked:- nothing}."
