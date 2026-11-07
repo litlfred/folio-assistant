@@ -1422,11 +1422,15 @@ jobs:
           PRED=()
           [ -s "$W/rendered-impact.json" ] && PRED=(--predicted "$W/rendered-impact.json")
           ROOT="$W/pages-root"
+          # The live root is read from git objects (`--before-git`,
+          # cat-harness-tools#1496), with no checkout: byte-identical files and
+          # binaries are compared by blob id, and only live HTML and differing
+          # text are fetched. It skips the same paths the old sparse checkout
+          # left out (every preview prefix, `_render-log`), so the page is the
+          # one `--before <dir>` gives.
           if git clone -q --depth 1 --filter=blob:none --no-checkout --branch gh-pages \
-               "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "$ROOT" \
-             && git -C "$ROOT" sparse-checkout set --no-cone '/*' '!/STAGING/' '!/branches/' '!/_render-log/' \
-             && git -C "$ROOT" checkout -q; then
-            QA=(--before "$ROOT" --after ./_site --staging-base "/$REPO_NAME/$PREVIEW_DIR/$STAGING_SLUG" --site-base "/$REPO_NAME" --base "$BASE_SHA")
+               "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY" "$ROOT"; then
+            QA=(--before-git "$ROOT" --after ./_site --staging-base "/$REPO_NAME/$PREVIEW_DIR/$STAGING_SLUG" --site-base "/$REPO_NAME" --base "$BASE_SHA")
           else
             echo "could not read the gh-pages root — the page will say 'not measured'"
             QA=()
@@ -2173,12 +2177,30 @@ jobs:
 
       - name: Check out the publish branch
         # Only for the in-job deploy, when the hand-off above did not happen.
+        #
+        # SPARSE AND BLOBLESS (preview-speed front, 2026-11-06). The deploy
+        # writes only `<PREVIEW_DIR>/<slug>/` and `_render-log/`, and retires
+        # into `<PREVIEW_DIR>/_retired/`, so only those are checked out: the
+        # full branch took 38 s (job 127218440011), this 3 s (measured on a
+        # sparse blobless clone of gh-pages). `staging-share` and
+        # `staging-rotate` read everything outside the cone from git objects
+        # since cat-harness-tools#1496, fetching only the blobs they need, with
+        # the answers a full checkout gives; legacy `STAGING/` previews are
+        # read the same way. The deploy's fetch and reset keep the blobless
+        # filter (partial-clone config). The slug is the value the `slug` step
+        # validated; `with:` is not a shell.
         if: steps.handoff_dispatch.outcome != 'success'
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: gh-pages
           path: pages
           persist-credentials: true
+          filter: blob:none
+          sparse-checkout-cone-mode: true
+          sparse-checkout: |
+            ${{ env.PREVIEW_DIR }}/${{ steps.slug.outputs.slug }}
+            ${{ env.PREVIEW_DIR }}/_retired
+            _render-log
 
       # THE PREVIEW IS STAGED BEFORE IT IS PUSHED — issue #1956. The deploy
       # below may wait for the rate-limit window, so the reviewer is told now
