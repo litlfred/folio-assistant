@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/who-iris/role/cloudflare-git.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-merges",
+    "sha": "ca2e97f690089927283b35028162251f6cebd988",
+    "pr": "3029/merge",
+    "run": "42409349486"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/who-iris/role/cloudflare-git",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Cloudflare git (Artifacts)",
+      "title": "Cloudflare git (Artifacts)",
+      "notation": "cloudflare-git",
+      "description": "A git repository hosted on Cloudflare Artifacts, not GitHub. Holds the release history: BagIt tag files, signatures, the cursor, checkpoints and run reports. A mechanical role: written to, deciding nothing.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/who-iris/skill/iris-cdn-exporter",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/who-iris/skill/iris-rest-feed"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/role/cloudflare-git"
+    }
+  ]
+}

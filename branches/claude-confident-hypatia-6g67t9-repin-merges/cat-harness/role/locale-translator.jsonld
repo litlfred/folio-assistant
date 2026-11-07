@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/role/locale-translator.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-merges",
+    "sha": "ca2e97f690089927283b35028162251f6cebd988",
+    "pr": "3029/merge",
+    "run": "42409349486"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/role/locale-translator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Locale translator",
+      "title": "Locale translator",
+      "notation": "locale-translator",
+      "description": "Produces one locale's catalogues from the shared templates: the `.po` files, their unofficial translation-node manifests and the locale's terminology supplement, then the gates, the QA report and the locale PR. Never re-extracts and never edits the source; a source-text error is reported, not fixed in the translation. One lane covers every locale, each run once per locale. Distinct from `translator`, a person working in their own tool under human-translation-workflow: this position may be an agent, and what it produces is unofficial until a person signs it off.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent",
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/skill/translation-manager"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/skill/journey-maps.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-merges",
+    "sha": "ca2e97f690089927283b35028162251f6cebd988",
+    "pr": "3029/merge",
+    "run": "42409349486"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/skill/journey-maps",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "journey-maps",
+      "title": "Journey maps — journeys and workshops as nodes",
+      "description": "Journeys and workshops as knowledge-graph content: a DAK user scenario told as a journey map (`user-scenario` kind: ordered steps, per person what they do and feel, pain points, enablers, the record's trust state, and edges to stories, BPMN tasks, requirements, FHIR examples, building blocks and the DAK's data sets, decision tables and indicators), the `building-blocks` catalogue its steps use, a workshop that teaches from it (`workshop` kind: modules, objectives, questions for the room on each step, reference tables, sheets, job aids), the `journeys-viewer` visualiser that draws them for an instance and the layers it mounts, and the `check:journey-refs` gate that every reference they name resolves. Read before writing a journey or a workshop, before declaring the viewer, and before building a journey walkthrough app of your own.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/journey-maps.md",
+      "instructionLines": 284,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/journey-maps"
+    }
+  ]
+}

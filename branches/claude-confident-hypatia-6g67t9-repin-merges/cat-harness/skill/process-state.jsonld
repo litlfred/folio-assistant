@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/skill/process-state.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-merges",
+    "sha": "ca2e97f690089927283b35028162251f6cebd988",
+    "pr": "3029/merge",
+    "run": "42409349486"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/skill/process-state",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "process-state",
+      "title": "Process state — the task you are in, inside the process you are running",
+      "description": "Track where you are inside a running process — which task, in which swimlane, under which role — and recover deliberately when you find yourself outside it. Read before completing a workflow step, and whenever something unexpected interrupts one. Covers what to do about notes and stickies you re-anchored while off-process, which leave no trace in the artefact.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/package/workflow"
+      ],
+      "instructionsPath": "skills/process/workflow/process-state.md",
+      "instructionLines": 289,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/process-state"
+    }
+  ]
+}

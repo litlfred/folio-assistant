@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/decision/requirement-signoff-recorded/Decision_RequirementSignoffRecorded.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-merges",
+    "sha": "ca2e97f690089927283b35028162251f6cebd988",
+    "pr": "3029/merge",
+    "run": "42409349486"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/decision/requirement-signoff-recorded/Decision_RequirementSignoffRecorded",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Decision",
+      "name": "Is the sign-off recorded, and does it let the work proceed?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/process/decisions/requirement-signoff-recorded.dmn",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/externalSchema/omg-dmn-1.3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/decision/requirement-signoff-recorded/Decision_RequirementSignoffRecorded"
+    }
+  ]
+}

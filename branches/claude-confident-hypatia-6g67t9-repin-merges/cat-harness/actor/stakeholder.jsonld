@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/actor/stakeholder.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-merges",
+    "sha": "ca2e97f690089927283b35028162251f6cebd988",
+    "pr": "3029/merge",
+    "run": "42409349486"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/actor/stakeholder",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "stakeholder",
+      "actorKind": "person",
+      "title": "Stakeholder",
+      "description": "Signs off that a requirement is met. Holds no capabilities here deliberately: sign-off is a judgement, and a capability would suggest it could be automated.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/role/stakeholder"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/stakeholder"
+    }
+  ]
+}

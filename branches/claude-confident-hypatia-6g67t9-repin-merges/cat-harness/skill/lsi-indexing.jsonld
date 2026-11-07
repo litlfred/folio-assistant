@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/skill/lsi-indexing.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-merges",
+    "sha": "ca2e97f690089927283b35028162251f6cebd988",
+    "pr": "3029/merge",
+    "run": "42409349486"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/skill/lsi-indexing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "lsi-indexing",
+      "title": "LSI indexing — the platform's application of `methodologies/lsi.md`",
+      "description": "Build, read and audit a Latent Semantic Indexing index over a declared prose graph — a library, the skills, the work items, docs — to find units that discuss the same thing in different words, near-duplicates, outlier clusters, and a proposed home for unfiled work. Every output is a proposal; LSI never writes a relation.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/package/graph-management"
+      ],
+      "instructionsPath": "skills/kg/graph-management/lsi-indexing.md",
+      "instructionLines": 268,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/lsi-indexing"
+    }
+  ]
+}

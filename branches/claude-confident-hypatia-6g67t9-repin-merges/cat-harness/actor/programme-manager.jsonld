@@ -1,0 +1,45 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/actor/programme-manager.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-merges",
+    "sha": "ca2e97f690089927283b35028162251f6cebd988",
+    "pr": "3029/merge",
+    "run": "42409349486"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/actor/programme-manager",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "programme-manager",
+      "actorKind": "person",
+      "title": "Programme Manager",
+      "description": "Overall coordination and governance. Responsible for scope definition, team formation, resource allocation, timeline planning, and stakeholder engagement.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.ProgrammeManager",
+        "lifecycle": [
+          "plan",
+          "review",
+          "publish",
+          "feedback"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/role/certifier",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/role/programme-manager",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/role/test-requester",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/role/translation-coordinator"
+      ],
+      "permissionName": [
+        "project-governance",
+        "release-authorization"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/programme-manager"
+    }
+  ]
+}

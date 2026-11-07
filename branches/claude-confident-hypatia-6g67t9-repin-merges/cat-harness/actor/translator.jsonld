@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/actor/translator.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/confident-hypatia-6g67t9-repin-merges",
+    "sha": "ca2e97f690089927283b35028162251f6cebd988",
+    "pr": "3029/merge",
+    "run": "42409349486"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/actor/translator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "translator",
+      "actorKind": "person",
+      "title": "Translator",
+      "description": "Localization specialist who adapts content for UN-supported languages.",
+      "meta": {
+        "smartBaseAnalog": "SGAuthoring.Persona.Translator",
+        "lifecycle": [
+          "author"
+        ]
+      },
+      "hasCapability": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/capability/git-push"
+      ],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-merges/cat-harness/role/translator"
+      ],
+      "permissionName": [
+        "translation"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/translator"
+    }
+  ]
+}
