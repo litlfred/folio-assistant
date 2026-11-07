@@ -3,7 +3,7 @@ Feature: folio-staging.yml checks the platform out inside the workspace, and fin
   .github/workflows/folio-staging.yml, with bash -e in a fake runner
   workspace, and read the outputs the step writes to GITHUB_OUTPUT.
 
-  @test:test/workflows/folio-staging-platform.test.ts::${job}:_where_the_platform_is_checked_out_(zdfa)::a_sibling_path_is_checked_out_inside_the_workspace,_then_linked_where_the_folio_names_it
+  @test:test/workflows/folio-staging-platform.test.ts::siblingPathCheckedOutThenLinked[${job}]
   Scenario Outline: In <job>, a sibling path is checked out inside the workspace, then linked where the folio names it
     Given a fake workspace "repo" inside a fresh temporary directory
     When the <job> job's "Locate the platform" step runs with PLATFORM_DIR "../platform"
@@ -19,7 +19,7 @@ Feature: folio-staging.yml checks the platform out inside the workspace, and fin
       | stage        |
       | publish-main |
 
-  @test:test/workflows/folio-staging-platform.test.ts::${job}:_where_the_platform_is_checked_out_(zdfa)::a_path_inside_the_workspace_is_checked_out_where_it_is_named,_and_not_linked
+  @test:test/workflows/folio-staging-platform.test.ts::insidePathCheckedOutNotLinked[${job}]
   Scenario Outline: In <job>, a path inside the workspace is checked out where it is named, and not linked
     Given a fake workspace
     When the <job> job's "Locate the platform" step runs with PLATFORM_DIR "folio-assistant"
@@ -30,7 +30,7 @@ Feature: folio-staging.yml checks the platform out inside the workspace, and fin
       | stage        |
       | publish-main |
 
-  @test:test/workflows/folio-staging-platform.test.ts::${job}:_where_the_platform_is_checked_out_(zdfa)::the_link_step_refuses_to_replace_something_already_at_the_named_path
+  @test:test/workflows/folio-staging-platform.test.ts::linkRefusesToReplace[${job}]
   Scenario Outline: In <job>, the link step refuses to replace something already at the named path
     Given a fake workspace "repo" whose sibling directory ../platform already exists
     When the <job> job's "Link the platform where the folio names it" step runs with ABS set to that directory

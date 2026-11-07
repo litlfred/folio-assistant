@@ -1,7 +1,7 @@
 Feature: Least-privilege defaults for the workflows
   Reads this repository's .github/workflows/ and .mcp.json.
 
-  @test:test/workflows/least-privilege-permissions.test.ts::read-only_default_token::${f}_declares_permissions:_contents:_read_at_the_top
+  @test:test/workflows/least-privilege-permissions.test.ts::read-only_default_token::declaresReadOnlyContents[${f}]
   Scenario Outline: <file> declares permissions: contents: read at the top
     Given the workflow <file>
     Then its top-level permissions are exactly "contents: read"

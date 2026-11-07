@@ -34,6 +34,13 @@ Feature: Code-quality gates judge a PR by "no new failures compared with main"
     And a step "true" with CQG_UNJUDGED "true" exits 0
     And no steps.jsonl record is written
 
+  @test:test/workflows/cqg-no-new-failures.test.ts::push,_merge_group_and_workflow_dispatch:_any_failure_fails,_so_main_stays_red::anyFailureFails[${event}]
+  Scenario: On push, merge_group and workflow_dispatch, any failure fails
+    Given a sandbox where --begin ran, a step "exit 1" ran and then a step "true"
+    When the verdict runs for each of push, merge_group and workflow_dispatch
+    Then it exits 1
+    And it prints a CQG-REPORT-V1 line
+
   @test:test/workflows/cqg-no-new-failures.test.ts::push,_merge_group_and_workflow_dispatch:_any_failure_fails,_so_main_stays_red::a_run_with_no_failure_passes
   Scenario: On push, a run with no failure passes
     Given a sandbox where --begin ran and a step "true" ran
