@@ -8,7 +8,7 @@ priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-07T08:00:00Z
+updated_at: 2026-11-07T15:40:00Z
 parent: folio-assistant-4j43
 ---
 
@@ -147,3 +147,4 @@ _2026-11-07T08:00:00Z_ — Coordinator (session_01VQDpPfGantMCt7AV4LCCK2, took o
 - 2026-11-07 09:22Z: who-iris#190 merged by the merge manager. Note: its layer judge ran nothing (pin-only; layer mode mounts the index lock); its own checks.yml (catalogue, DC renderings, tests) was green. Correction sent. Left: smart-immunizations#116, re-running with main recomputed.
 - 2026-11-07 09:58Z: smart-immunizations#116 is full-tier green with main recomputed (attempt 2); the cached-answer NEWs cleared. "ready" sent to the merge manager. Found: iri:sync:check, now scoped, is red on main and on #116 for smart-immunizations' OWN 7 stale library/*/smart-kg-l1-library.jsonld (29 IRIs). Its own fix (`bun run iri:sync`) is offered to the owner as a separate PR.
 - 2026-11-07 10:05Z: Owner card "IRI fix" 1. https://github.com/litlfred/smart-immunizations/pull/117 (draft, eceff1b) rewrites the 29 stale cat-harness/0.1.0/ns IRIs in 7 library JSON-LD to v0/ns. The source is smart-base scripts/l1-specialise.ts:58 and extract-dak-l1-references.ts:89, which hard-code the full-version namespace; their fix belongs in smart-base (no push access here). smart-immunizations#116: "ready" sent at 09:58Z.
+- 2026-11-07 15:40Z: Owner chose "Sibling opens draft PR" for the source of the stale IRIs. https://github.com/litlfred/smart-base/pull/323 (draft, 897c9cf) makes l1-specialise.ts and extract-dak-l1-references.ts derive CAT_HARNESS_NS from cat-harness.json via instanceNamespaceOf, the release-IRI rule, which gives v0/ns. It adds a test. Not covered: smart-base/kg/src/l1-library.ts:55 and its generated kg/generated/l1/l1-library.jsonld still carry 0.1.0/ns (a follow-up). Session https://claude.ai/code/session_01VQDpPefuU428bYWziAFStW
