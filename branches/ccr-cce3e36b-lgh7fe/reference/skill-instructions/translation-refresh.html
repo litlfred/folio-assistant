@@ -103,7 +103,7 @@
   @media print, (forced-colors: active) {
     html:root { background-image: none; }
   }
-</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/translation-refresh.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#what-wakes-it","label":"What wakes it"},{"href":"#cold-start-once-per-run","label":"Cold start, once per run"},{"href":"#per-instance-in-order","label":"Per instance, in order","children":[{"href":"#1-detect","label":"Detect","icon":"1","depth":1},{"href":"#2-refresh-the-templates","label":"Refresh the templates","icon":"2","depth":1},{"href":"#3-merge-into-each-locale","label":"Merge into each locale","icon":"3","depth":1}],"fold":"3 sub-sections"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
+</style><link rel="stylesheet" href="../../assets/css/navbar.css"><script src="../../assets/navbar/rail-giobbw31pa.js" defer></script><script src="../../assets/js/navbar.js" defer></script><link rel="stylesheet" href="../../assets/page-layout.css" data-fa-page-layout><script src="../../assets/page-layout.js" defer data-fa-page-layout></script></head><body><script type="application/json" id="fa-rail" data-fa-root="../.." data-fa-to-root="../..">{"data":"rail-giobbw31pa","here":"/reference/skill-instructions/translation-refresh.html","documentIndex":{"label":"On this page","icon":"§","items":[{"href":"#what-wakes-it","label":"What wakes it"},{"href":"#cold-start-once-per-run","label":"Cold start, once per run"},{"href":"#per-instance-in-order","label":"Per instance, in order","children":[{"href":"#1-detect","label":"Detect","icon":"1","depth":1},{"href":"#2-refresh-the-templates","label":"Refresh the templates","icon":"2","depth":1},{"href":"#3-merge-into-each-locale","label":"Merge into each locale","icon":"3","depth":1},{"href":"#4-translate-only-the-new-and-fuzzy-strings","label":"Translate only the new and fuzzy strings","icon":"4","depth":1},{"href":"#5-gates","label":"Gates","icon":"5","depth":1},{"href":"#6-round-trip-on-the-changed-strings","label":"Round trip on the changed strings","icon":"6","depth":1},{"href":"#7-qa-report","label":"QA report","icon":"7","depth":1},{"href":"#8-one-pr-per-instance-to-main","label":"One PR per instance, to main","icon":"8","depth":1},{"href":"#9-merge-by-the-instances-policy","label":"Merge, by the instance’s policy","icon":"9","depth":1},{"href":"#10-source-mistakes-one-issue","label":"Source mistakes: one issue","icon":"10","depth":1}],"fold":"10 sub-sections"},{"href":"#never","label":"Never"},{"href":"#processes-that-run-this-skill","label":"Processes that run this skill"}],"collapsible":true}}</script><nav class="fa-nav" aria-label="folio-assistant" data-fa-rail="pending"><a href="../../">Folio Assistant Core</a></nav><div data-fa-staging-banner lang="en" dir="ltr" style="background:#4F6F52;color:#fff;padding:8px 16px;font-size:14px;text-align:center;position:fixed;top:0;left:0;right:0;box-sizing:border-box;z-index:2147483001;font-family:system-ui">🔀 <b>FEATURE BRANCH</b> <span data-fa-staging-detail>— loading build details…</span></div><style>:root{--fa-staging-offset:0px}body{margin:0}.side-bar,.fa-nav{top:var(--fa-staging-offset,0px)!important}html{padding-top:var(--fa-staging-offset,0px)}</style><script>(function(){
 function el(t,a,x){var e=document.createElement(t);if(a)for(var k in a)e.setAttribute(k,a[k]);if(x!=null)e.textContent=x;return e;}
 function link(href,text,extra){var a=el('a',{href:href,style:'color:#fff;text-decoration:underline'},text);if(extra)a.setAttribute('style',a.getAttribute('style')+';'+extra);return a;}
 function chip(text){return el('span',{style:"font-family:ui-monospace,SFMono-Regular,Menlo,monospace;background:rgba(0,0,0,.22);color:#fff;padding:1px 6px;border-radius:3px"},text);}
@@ -276,118 +276,81 @@ modified; re-lay it from the lock afterwards, as the cold start says.</p><h3 id=
   
   
 </h3><p>Merge each refreshed template into every locale’s catalogue:</p><ul><li><strong>new strings arrive empty</strong>: they are the work of step 4;</li><li><strong>changed strings arrive fuzzy</strong>, with the old translation kept as a hint;</li><li><strong>obsolete strings are kept as <code class="language-plaintext highlighter-rouge">#~</code> entries</strong>, never deleted, so the
-translation can be revived if the source comes back.</li></ul><p>With gettext installed, `msgmerge –update –backup=none <locale.po></locale.po></p><template.pot>` does all three. Without it,
-`bun run cat translation:obsolete --instance <root>` marks the obsolete
-entries, and the instance's `AGENTS.md` names how its new strings are added.
-Then re-run step 1's `translation:drift:check`: it fails while any catalogue
-still differs from its template.
-
-### 4. Translate only the new and fuzzy strings
-
-Translate the empty and fuzzy entries in every locale, and nothing else. A
+translation can be revived if the source comes back.</li></ul><p>With gettext installed,
+<code class="language-plaintext highlighter-rouge">msgmerge --update --backup=none &lt;locale.po&gt; &lt;template.pot&gt;</code> does all three.
+Without it,
+<code class="language-plaintext highlighter-rouge">bun run cat translation:obsolete --instance &lt;root&gt;</code> marks the obsolete
+entries, and the instance’s <code class="language-plaintext highlighter-rouge">AGENTS.md</code> names how its new strings are added.
+Then re-run step 1’s <code class="language-plaintext highlighter-rouge">translation:drift:check</code>: it fails while any catalogue
+still differs from its template.</p><h3 id="4-translate-only-the-new-and-fuzzy-strings"><a href="#4-translate-only-the-new-and-fuzzy-strings" class="anchor-heading" aria-labelledby="4-translate-only-the-new-and-fuzzy-strings"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Translate only the new and fuzzy strings
+  
+  
+</h3><p>Translate the empty and fuzzy entries in every locale, and nothing else. A
 string already translated is not re-translated, even where you would have
 worded it differently today. Translate with the locale term base
-([`translation-manager`](../../reference/skill-instructions/translation-manager.html) §"The locale term base"):
-a term a lower layer fixes keeps its fixed form. Clear `#, fuzzy` only on an
-entry you have actually re-translated.
-
-FHIR terms go into the locale's one CodeSystem supplement, never into the
-resource. Translation-node manifests stay `official: false`,
-`generatedBy: "agent"`. Write no `status.json`.
-
-**A mistake in the source is not fixed here.** Translate what the source says,
-and note the location for step 10.
-
-### 5. Gates
-
-```sh
-bun run cat check:translation-officiality
-bun run cat translation:catalogue:check
-bun run cat translated-links:check
-bun run cat kg:locale:check --instance <root>
-bun run cat translation:glossary:check --instance <root> --locale <locale>
-```
-
-The first three read the checkout they run in and take no `--instance`, so
-run them from the checkout that holds the instance. Then the instance's
-supplement build: the locale's CodeSystem supplements
+(<a href="../../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a> §”The locale term base”):
+a term a lower layer fixes keeps its fixed form. Clear <code class="language-plaintext highlighter-rouge">#, fuzzy</code> only on an
+entry you have actually re-translated.</p><p>FHIR terms go into the locale’s one CodeSystem supplement, never into the
+resource. Translation-node manifests stay <code class="language-plaintext highlighter-rouge">official: false</code>,
+<code class="language-plaintext highlighter-rouge">generatedBy: "agent"</code>. Write no <code class="language-plaintext highlighter-rouge">status.json</code>.</p><p><strong>A mistake in the source is not fixed here.</strong> Translate what the source says,
+and note the location for step 10.</p><h3 id="5-gates"><a href="#5-gates" class="anchor-heading" aria-labelledby="5-gates"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 5. Gates
+  
+  
+</h3><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>check:translation-officiality
+bun run <span class="nb">cat </span>translation:catalogue:check
+bun run <span class="nb">cat </span>translated-links:check
+bun run <span class="nb">cat </span>kg:locale:check <span class="nt">--instance</span> &lt;root&gt;
+bun run <span class="nb">cat </span>translation:glossary:check <span class="nt">--instance</span> &lt;root&gt; <span class="nt">--locale</span> &lt;locale&gt;
+</code></pre></div></div><p>The first three read the checkout they run in and take no <code class="language-plaintext highlighter-rouge">--instance</code>, so
+run them from the checkout that holds the instance. Then the instance’s
+supplement build: the locale’s CodeSystem supplements
 compile with no SUSHI error and pass their structural checks (the command is
-in the instance's `AGENTS.md`). Placeholders, tags and URLs are preserved:
-`translation:page-qa` reports a lost one as `translation-terms-preserved`.
-
-A gate that fails is fixed in the `.po`, the manifest or the supplement, and
+in the instance’s <code class="language-plaintext highlighter-rouge">AGENTS.md</code>). Placeholders, tags and URLs are preserved:
+<code class="language-plaintext highlighter-rouge">translation:page-qa</code> reports a lost one as <code class="language-plaintext highlighter-rouge">translation-terms-preserved</code>.</p><p>A gate that fails is fixed in the <code class="language-plaintext highlighter-rouge">.po</code>, the manifest or the supplement, and
 step 5 runs again. A glossary hit on a platform term in text of another
 subject area is a sense check, not a violation: read it, note it in the
-report, and change nothing because of it.
-
-### 6. Round trip on the changed strings
-
-Run [`translation-round-trip.bpmn`](../../en/cat-harness/processes/translation-round-trip.html)
+report, and change nothing because of it.</p><h3 id="6-round-trip-on-the-changed-strings"><a href="#6-round-trip-on-the-changed-strings" class="anchor-heading" aria-labelledby="6-round-trip-on-the-changed-strings"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 6. Round trip on the changed strings
+  
+  
+</h3><p>Run <a href="../../en/cat-harness/processes/translation-round-trip.html"><code class="language-plaintext highlighter-rouge">translation-round-trip.bpmn</code></a>
 on the strings this run translated, and only those. The method is in
-[`translation-manager`](../../reference/skill-instructions/translation-manager.html) §"The untainted round trip,
-as run". When two separate parties cannot be dispatched, record "could not
-dispatch" with the reason: it is never a pass, and the PR says so.
-
-### 7. QA report
-
-```sh
-bun run cat translation:page-qa --instance <root>
-```
-
-writes the per-catalogue sidecars under the instance's
-`test/results/translation-qa/`. Beside them, write the locale's report: the
-strings refreshed, each gate's result, the round-trip counts (sampled,
+<a href="../../reference/skill-instructions/translation-manager.html"><code class="language-plaintext highlighter-rouge">translation-manager</code></a> §”The untainted round trip,
+as run”. When two separate parties cannot be dispatched, record “could not
+dispatch” with the reason: it is never a pass, and the PR says so.</p><h3 id="7-qa-report"><a href="#7-qa-report" class="anchor-heading" aria-labelledby="7-qa-report"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 7. QA report
+  
+  
+</h3><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run <span class="nb">cat </span>translation:page-qa <span class="nt">--instance</span> &lt;root&gt;
+</code></pre></div></div><p>writes the per-catalogue sidecars under the instance’s
+<code class="language-plaintext highlighter-rouge">test/results/translation-qa/</code>. Beside them, write the locale’s report: the
+strings refreshed, each gate’s result, the round-trip counts (sampled,
 flagged, drift, not drift) with every drift ruling and its fix, the glossary
-violations and sense checks, and the source mistakes found.
-
-### 8. One PR per instance, to main
-
-One branch from main, one PR to main, carrying every locale this run
-refreshed for that instance. Never push to a source PR's branch, and never
-to a branch that has already merged. The PR body links the QA report.
-
-### 9. Merge, by the instance's policy
-
-The policy is the instance's to declare, in its `AGENTS.md`:
-
-- **open only** (the default): open the PR, merge nothing, report it.
-- **merge-when-green**: merge the run's own refresh PR only when every check
-  is green **and** the untainted round trip on the changed strings records no
-  fail. Anything red, uncertain or failing is left open and reported to the
-  owner; the next run looks again.
-
-Either way the translations stay unofficial: merging is not sign-off. Never
+violations and sense checks, and the source mistakes found.</p><h3 id="8-one-pr-per-instance-to-main"><a href="#8-one-pr-per-instance-to-main" class="anchor-heading" aria-labelledby="8-one-pr-per-instance-to-main"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 8. One PR per instance, to main
+  
+  
+</h3><p>One branch from main, one PR to main, carrying every locale this run
+refreshed for that instance. Never push to a source PR’s branch, and never
+to a branch that has already merged. The PR body links the QA report.</p><h3 id="9-merge-by-the-instances-policy"><a href="#9-merge-by-the-instances-policy" class="anchor-heading" aria-labelledby="9-merge-by-the-instances-policy"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 9. Merge, by the instance’s policy
+  
+  
+</h3><p>The policy is the instance’s to declare, in its <code class="language-plaintext highlighter-rouge">AGENTS.md</code>:</p><ul><li><strong>open only</strong> (the default): open the PR, merge nothing, report it.</li><li><strong>merge-when-green</strong>: merge the run’s own refresh PR only when every check
+is green <strong>and</strong> the untainted round trip on the changed strings records no
+fail. Anything red, uncertain or failing is left open and reported to the
+owner; the next run looks again.</li></ul><p>Either way the translations stay unofficial: merging is not sign-off. Never
 merge a PR the run did not open, and never one to a repository the owner has
-said only a person merges.
-
-### 10. Source mistakes: one issue
-
-Every source-text mistake the translators noted goes into **one** issue on
+said only a person merges.</p><h3 id="10-source-mistakes-one-issue"><a href="#10-source-mistakes-one-issue" class="anchor-heading" aria-labelledby="10-source-mistakes-one-issue"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 10. Source mistakes: one issue
+  
+  
+</h3><p>Every source-text mistake the translators noted goes into <strong>one</strong> issue on
 the source repository, with the location and the reading the translation
 took. Not one per locale, and not a fix in the translation: a fix to the
-source is a source PR, and the next run carries it to every locale.
-
-## Never
-
-- **Never re-extract per locale.** Templates are refreshed once, for every
-  locale.
-- **Never re-translate a finished string**, and never delete an obsolete one.
-- **Never write `official: true`.** A person makes a translation official
-  ([`human-translation-workflow`](../../en/cat-harness/processes/human-translation-workflow.html)).
-- **Never read exit 2 as clean.** "Could not tell" is reported, every time.
-
-
-## Processes that run this skill
-
-This skill has its own process: **[Translation refresh (watcher)](../../en/cat-harness/processes/translation-refresh.html)**.
-
-<img src="../../assets/img/workflows/translation-refresh.svg" alt="BPMN diagram: Translation refresh (watcher)" style="max-width:100%" />
-
-| process | step(s) that name it |
-|---|---|
-| [Multi-locale translation](../../en/cat-harness/processes/multi-locale-translation.html) | Schedule the refresh watcher |
-| [Translation refresh (watcher)](../../en/cat-harness/processes/translation-refresh.html) | Cold start: mount and attach; Detect what moved; Refresh the templates; Merge into each locale; Report source errors as one issue; Merge the PR |
-
-</root></locale></root></root></root></template.pot></main><hr><footer><details class="fa-provenance" id="fa-provenance" data-fa-provenance-count="2"><summary class="fa-provenance-summary">Provenance (2)</summary><p class="fa-provenance-lead">Who decided, when, and under which work item. This record was moved out of the text of the page.</p><h3 class="fa-provenance-section">About this page</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>2026-11-07</code></span><div class="fa-provenance-text">Owner, 2026-11-07: &quot;English lead should document the process and skills&quot; for the multi-locale translation flow the team had just run across three implementation-guide and harness instances, written generically.</div></li></ul><h3 class="fa-provenance-section">Per instance, in order</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span> <span class="fa-provenance-refs"><code>cat-harness-tools#1598</code> <code>cat-harness-tools#1595</code> <code>cat-harness-tools#1599</code> <code>cat-harness-tools#1601</code></span><div class="fa-provenance-text">The commands it names were merged to the harness tools before this skill was written: <code>--instance</code> on translation:drift:check, translation:obsolete:check, translation:index:check and translation:status (cat-harness-tools#1598), and po-inject&#39;s use of segmentMarkdown (cat-harness-tools#1595). translation:glossary:check was in flight in cat-harness-tools#1599 and #1601.</div></li></ul></details><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
+source is a source PR, and the next run carries it to every locale.</p><h2 id="never"><a href="#never" class="anchor-heading" aria-labelledby="never"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Never
+  
+  
+</h2><ul><li><strong>Never re-extract per locale.</strong> Templates are refreshed once, for every
+locale.</li><li><strong>Never re-translate a finished string</strong>, and never delete an obsolete one.</li><li><strong>Never write <code class="language-plaintext highlighter-rouge">official: true</code>.</strong> A person makes a translation official
+(<a href="../../en/cat-harness/processes/human-translation-workflow.html"><code class="language-plaintext highlighter-rouge">human-translation-workflow</code></a>).</li><li><strong>Never read exit 2 as clean.</strong> “Could not tell” is reported, every time.</li></ul><h2 id="processes-that-run-this-skill"><a href="#processes-that-run-this-skill" class="anchor-heading" aria-labelledby="processes-that-run-this-skill"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Processes that run this skill
+  
+  
+</h2><p>This skill has its own process: <strong><a href="../../en/cat-harness/processes/translation-refresh.html">Translation refresh (watcher)</a></strong>.</p><p><img src="../../assets/img/workflows/translation-refresh.svg" alt="BPMN diagram: Translation refresh (watcher)" style="max-width:100%" /></p><div class="table-wrapper"><table><thead><tr><th>process</th><th>step(s) that name it</th></tr></thead><tbody><tr><td><a href="../../en/cat-harness/processes/multi-locale-translation.html">Multi-locale translation</a></td><td>Schedule the refresh watcher</td></tr><tr><td><a href="../../en/cat-harness/processes/translation-refresh.html">Translation refresh (watcher)</a></td><td>Cold start: mount and attach; Detect what moved; Refresh the templates; Merge into each locale; Report source errors as one issue; Merge the PR</td></tr></tbody></table></div></main><hr><footer><details class="fa-provenance" id="fa-provenance" data-fa-provenance-count="2"><summary class="fa-provenance-summary">Provenance (2)</summary><p class="fa-provenance-lead">Who decided, when, and under which work item. This record was moved out of the text of the page.</p><h3 class="fa-provenance-section">About this page</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="owner-decision"><span class="fa-provenance-kind">owner-decision</span> <span class="fa-provenance-refs"><code>2026-11-07</code></span><div class="fa-provenance-text">Owner, 2026-11-07: &quot;English lead should document the process and skills&quot; for the multi-locale translation flow the team had just run across three implementation-guide and harness instances, written generically.</div></li></ul><h3 class="fa-provenance-section">Per instance, in order</h3><ul class="fa-provenance-list"><li class="fa-provenance-entry" data-fa-provenance-kind="history"><span class="fa-provenance-kind">history</span> <span class="fa-provenance-refs"><code>cat-harness-tools#1598</code> <code>cat-harness-tools#1595</code> <code>cat-harness-tools#1599</code> <code>cat-harness-tools#1601</code></span><div class="fa-provenance-text">The commands it names were merged to the harness tools before this skill was written: <code>--instance</code> on translation:drift:check, translation:obsolete:check, translation:index:check and translation:status (cat-harness-tools#1598), and po-inject&#39;s use of segmentMarkdown (cat-harness-tools#1595). translation:glossary:check was in flight in cat-harness-tools#1599 and #1601.</div></li></ul></details><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
   <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

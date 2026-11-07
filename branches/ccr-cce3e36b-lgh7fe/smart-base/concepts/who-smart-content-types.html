@@ -252,7 +252,9 @@ which.</p><h2 id="the-who-build" data-fa-label="sec:who-smart-content-types-the-
 <a href="https://litlfred.github.io/folio-assistant/fhir-harness/fhir/ig-publisher.html">FHIR IG Publisher</a>
 and <a href="https://litlfred.github.io/folio-assistant/fhir-harness/fhir/fhir-content.html">FHIR content</a>
 pages of the FHIR IG layer. This section covers what is specific to the WHO
-SMART Guidelines build.</p><p><strong>The Publisher is one step of many.</strong> It runs between six pre-processing
+SMART Guidelines build. The commands, the publishing pipeline and the
+published assets are on
+<a href="../../smart-base/guides/smart-base-build.html">Building and publishing the SMART Base IG</a>.</p><p><strong>The Publisher is one step of many.</strong> It runs between six pre-processing
 invocations and nine post-processing ones. The DAK API, the JSON Schemas and
 the JSON-LD vocabularies are produced <em>after</em> it exits, by scripts.</p><p><strong>The version floats.</strong> The WHO build downloads <code class="language-plaintext highlighter-rouge">publisher.jar</code> from the
 <strong>latest</strong> release on every run, so two builds of an unchanged commit can

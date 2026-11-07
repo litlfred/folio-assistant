@@ -108,8 +108,9 @@ Merge each refreshed template into every locale's catalogue:
 - **obsolete strings are kept as `#~` entries**, never deleted, so the
   translation can be revived if the source comes back.
 
-With gettext installed, `msgmerge --update --backup=none <locale.po>
-<template.pot>` does all three. Without it,
+With gettext installed,
+`msgmerge --update --backup=none <locale.po> <template.pot>` does all three.
+Without it,
 `bun run cat translation:obsolete --instance <root>` marks the obsolete
 entries, and the instance's `AGENTS.md` names how its new strings are added.
 Then re-run step 1's `translation:drift:check`: it fails while any catalogue
