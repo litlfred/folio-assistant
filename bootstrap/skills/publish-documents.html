@@ -13,21 +13,20 @@
 a declaration and every node may be; its vocabulary says what each term
 means; its graph says what it holds. Each names itself with an IRI: a JSON
 Schema with <code>$id</code>, a JSON-LD document with <code>@id</code>. <strong>An IRI that answers 404
-is a broken promise</strong>, and every document and every harness that points at
-it inherits the break. So this is the first step checked once the
-declarations are read, before any directory, README or site step (owner,
-2026-09-30: <em>"json(ld) is primary step in initializing KG harness"</em>).</p><h2>Which documents</h2><p>Read from the files, never from a list:</p><ul><li>every JSON file whose top-level <code>$id</code> lies under the declaration's
+is a broken promise</strong> to everything that points at it. So this is the first
+step checked once the declarations are read, before any directory, README or
+site step.</p><h2>Which documents</h2><p>Read from the files, never from a list:</p><ul><li>every JSON file whose top-level <code>$id</code> lies under the declaration's
 <code>iriBase</code> is a JSON Schema published at that <code>$id</code>;</li><li>every JSON-LD file whose top-level <code>@id</code> lies under <code>iriBase</code> is published
 at that <code>@id</code>. For bootstrap that is the vocabulary (<code>ns.jsonld</code>, at
-<code>&#x3C;iriBase>v&#x3C;major>/ns</code>) and the diagram vocabulary (<code>processes/ns.jsonld</code>,
-at <code>&#x3C;iriBase>v&#x3C;major>/processes/ns</code>, the namespace every diagram binds);</li><li>the graph export, built when the site is published, at the address its own
+<code>&#x3C;iriBase>v&#x3C;major>/ns/</code>) and the diagram vocabulary (<code>processes/ns.jsonld</code>,
+at <code>&#x3C;iriBase>v&#x3C;major>/processes/ns/</code>, the namespace every diagram binds);</li><li>the graph export, built when the site is published, at the address its own
 <code>@id</code> names (<a href="bootstrap-graph-publication.html"><code>bootstrap-graph-publication</code></a>).</li></ul><p>Each document carries its <code>@context</code> inline, so publishing the document
 publishes its context. A harness whose documents name an external context
 publishes that context the same way, at its own IRI.</p><p><strong>No <code>iriBase</code>, no addresses.</strong> An instance that declares none has nothing
-here to publish, and says so rather than reporting a pass over nothing.</p><h2>Where each goes</h2><p>At the path its IRI names, with <code>iriBase</code> removed. An extensionless address
-(<code>…/v0/ns</code>) gets the document at that extensionless path. A <code>.jsonld</code>
-gets a <code>.json</code> copy with the same bytes beside it, because many hosts serve
-<code>.jsonld</code> as a download. The <code>.jsonld</code> stays the real one: it is what the
+here to publish, and says so rather than reporting a pass over nothing.</p><h2>Where each goes</h2><p>At the path its IRI names, with <code>iriBase</code> removed. An address ending in <code>/</code>
+(<code>…/v0/ns/</code>) gets the document as <code>index.jsonld</code> there, with an <code>index.json</code>
+copy beside it. A <code>.jsonld</code> gets a <code>.json</code> copy with the same bytes beside it,
+because many hosts serve <code>.jsonld</code> as a download. The <code>.jsonld</code> stays the real one: it is what the
 <code>@id</code> names.</p><h2>Two checks, four states</h2><table><thead><tr><th>step</th><th>checks</th><th>done</th><th>not done</th><th>could not determine</th></tr></thead><tbody><tr><td><code>schemas:staged</code></td><td>the site build puts each document at its address</td><td>every one is there, byte for byte</td><td>one is missing, or another file holds its address</td><td>the build could not run</td></tr><tr><td><code>schemas:published</code></td><td>each address answers</td><td>every one answers</td><td>one answers 404</td><td>403, 407, 5xx or no answer: that is about the way from here (a proxy, an access rule), not about the address</td></tr></tbody></table><h2>The site is the vehicle</h2><p>The documents get to their addresses by the Pages site
 (<a href="publish-site.html"><code>publish-site</code></a>): its workflow stages each one where its
 IRI says, and lists them all under "Published documents" on the README page (<code>README.html</code>).

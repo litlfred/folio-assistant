@@ -24,7 +24,7 @@ Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — to 
 
 - Who: the `GitHub Pages` lane (role `github-pages`).
 - Skill: `render-kg-to-github-pages`.
-- What: Provisioning the target, owned by this Tool's subprocess rather than by the general step (owner, 2026-10-01: "need to create gh-pages branch before can turn on").
+- What: Provisioning the target, owned by this process rather than by the publication step that calls it.
 - Record it: `workflow_complete` with `node: "A_Provision"`.
 - next: → `A_Stage` (Stage the rendering)
 
@@ -54,7 +54,7 @@ Render a Knowledge Graph — the whole of it, or a list of its Subgraphs — to 
 
 - Who: the `GitHub Pages` lane (role `github-pages`).
 - Skill: `render-kg-to-github-pages`.
-- What: Commit the staged tree onto gh-pages as a full replace (the instance's Pages workflow on a push to main, or by hand); GitHub Pages then builds it from the branch.
+- What: publish-site.ts commits the staged tree onto gh-pages as a full replace (run by the instance's Pages workflow on a push to main, or by an agent with its own git credentials); GitHub Pages then builds it from the branch.
 - Record it: `workflow_complete` with `node: "A_Deploy"`.
 - next: → `A_CheckServed` (Check what is served)
 

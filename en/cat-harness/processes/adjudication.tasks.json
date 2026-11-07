@@ -1,6 +1,44 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_Adjudication",
+ "markers": [
+  {
+   "id": "A_StateFinding",
+   "name": "State the finding and what it read",
+   "left": 34.49,
+   "top": 5.56,
+   "box": {
+    "left": 26.35,
+    "top": 26.67,
+    "width": 2.7,
+    "height": 5.33
+   }
+  },
+  {
+   "id": "A_Dispatch",
+   "name": "Dispatch with adjudicator_sees — never the artefact",
+   "left": 55.28,
+   "top": 45.56,
+   "box": {
+    "left": 47.13,
+    "top": 66.67,
+    "width": 2.7,
+    "height": 5.33
+   }
+  },
+  {
+   "id": "A_Adjudicate",
+   "name": "Adjudicate the disagreement",
+   "left": 72.13,
+   "top": 45.56,
+   "box": {
+    "left": 63.99,
+    "top": 66.67,
+    "width": 2.7,
+    "height": 5.33
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Adjudication",
  "tasks": {
   "A_StateFinding": {

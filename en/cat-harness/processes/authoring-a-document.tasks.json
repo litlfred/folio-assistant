@@ -1,6 +1,140 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_DocumentAuthoring",
+ "markers": [
+  {
+   "id": "Task_Plan",
+   "name": "Plan the document",
+   "left": 17.26,
+   "top": 2.67,
+   "box": {
+    "left": 12.54,
+    "top": 15.33,
+    "width": 1.56,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "left": 17.26,
+   "top": 22.67,
+   "box": {
+    "left": 12.54,
+    "top": 35.33,
+    "width": 1.56,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Task_SeedPlan",
+   "name": "Seed the work plan",
+   "left": 36.81,
+   "top": 22.67,
+   "box": {
+    "left": 32.08,
+    "top": 35.33,
+    "width": 1.56,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Task_Scaffold",
+   "name": "Scaffold the folio",
+   "left": 36.81,
+   "top": 42.67,
+   "box": {
+    "left": 32.08,
+    "top": 55.33,
+    "width": 1.56,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Task_AuthorBlocks",
+   "name": "Author blocks",
+   "left": 47.23,
+   "top": 42.67,
+   "box": {
+    "left": 42.51,
+    "top": 55.33,
+    "width": 1.56,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Task_ProfileCheck",
+   "name": "Check the profile",
+   "left": 47.23,
+   "top": 62.67,
+   "box": {
+    "left": 42.51,
+    "top": 75.33,
+    "width": 1.56,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Task_Validate",
+   "name": "Validate",
+   "left": 64.5,
+   "top": 62.67,
+   "box": {
+    "left": 59.77,
+    "top": 75.33,
+    "width": 1.56,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Call_PublishStatements",
+   "name": "Publish extracted statements",
+   "left": 74.59,
+   "top": 62.67,
+   "box": {
+    "left": 69.87,
+    "top": 75.33,
+    "width": 1.56,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Task_Render",
+   "name": "Render MD, HTML and PDF",
+   "left": 84.69,
+   "top": 62.67,
+   "box": {
+    "left": 79.97,
+    "top": 75.33,
+    "width": 1.56,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Call_ReviewPublish",
+   "name": "Review and publish",
+   "left": 95.77,
+   "top": 62.67,
+   "box": {
+    "left": 91.04,
+    "top": 75.33,
+    "width": 1.56,
+    "height": 3.2
+   }
+  },
+  {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "left": 84.69,
+   "top": 82.67,
+   "box": {
+    "left": 79.97,
+    "top": 95.33,
+    "width": 1.56,
+    "height": 3.2
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
  "tasks": {
   "Task_Plan": {
@@ -731,6 +865,108 @@
      "href": "../../../reference/skill-instructions/content-validate.html"
     }
    ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../reference/skill-instructions/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../reference/skill-instructions/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-publish",
+      "href": "../../../reference/skill-instructions/content-publish.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../reference/skill-instructions/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../reference/skill-instructions/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../reference/skill-instructions/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../reference/skill-instructions/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../reference/skill-instructions/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../reference/skill-instructions/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../reference/skill-instructions/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../reference/skill-instructions/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../reference/skill-instructions/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../reference/skill-instructions/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../reference/skill-instructions/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../reference/skill-instructions/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../reference/skill-instructions/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../reference/skill-instructions/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../reference/skill-instructions/watch.html"
+     }
+    ]
+   }
+  },
+  "Call_PublishStatements": {
+   "id": "Call_PublishStatements",
+   "name": "Publish extracted statements",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_PublishStatements",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "publish-extracted-statements",
+     "href": "../../../reference/skill-instructions/publish-extracted-statements.html"
+    }
+   ],
+   "calls": {
+    "name": "Publish extracted statements with source links",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
+    "diagram": "publish-extracted-statements.html"
+   },
    "role": {
     "name": "build-pipeline",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",

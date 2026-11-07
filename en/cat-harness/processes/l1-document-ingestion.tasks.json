@@ -1,6 +1,188 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_L1DocumentIngestion",
+ "markers": [
+  {
+   "id": "CallActivity_Basic",
+   "name": "Basic ingestion (harness)",
+   "left": 15.64,
+   "top": 5.47,
+   "box": {
+    "left": 13.44,
+    "top": 20.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "Task_Detect",
+   "name": "Detect media type, mint a doc id",
+   "left": 20.79,
+   "top": 5.47,
+   "box": {
+    "left": 18.59,
+    "top": 20.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "Task_Licence",
+   "name": "Establish the licence from the upload",
+   "left": 27.47,
+   "top": 5.47,
+   "box": {
+    "left": 25.27,
+    "top": 20.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "CallActivity_Extract",
+   "name": "Extract structure",
+   "left": 33.69,
+   "top": 5.47,
+   "box": {
+    "left": 31.49,
+    "top": 20.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "CallActivity_Derive",
+   "name": "Derive content from the assets",
+   "left": 39.91,
+   "top": 5.47,
+   "box": {
+    "left": 37.71,
+    "top": 20.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "CallActivity_IngestTheme",
+   "name": "Ingest the theme",
+   "left": 49.17,
+   "top": 5.47,
+   "box": {
+    "left": 46.97,
+    "top": 20.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "left": 7.07,
+   "top": 5.47,
+   "box": {
+    "left": 4.87,
+    "top": 20.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "left": 95.51,
+   "top": 61.72,
+   "box": {
+    "left": 93.31,
+    "top": 76.56,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "CallActivity_BuildKg",
+   "name": "Build the L1 knowledge graph",
+   "left": 56.45,
+   "top": 5.47,
+   "box": {
+    "left": 54.25,
+    "top": 20.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "CallActivity_Gate",
+   "name": "L1 completeness gate",
+   "left": 62.67,
+   "top": 5.47,
+   "box": {
+    "left": 60.47,
+    "top": 20.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "Task_OpenBean",
+   "name": "Record the gap as a bean",
+   "left": 69.8,
+   "top": 36.72,
+   "box": {
+    "left": 66.69,
+    "top": 45.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "Task_Promote",
+   "name": "Move into library/<bib-slug>/",
+   "left": 75.57,
+   "top": 5.47,
+   "box": {
+    "left": 73.37,
+    "top": 20.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "CallActivity_PublishStatements",
+   "name": "Publish the extracted statements with source links",
+   "left": 75.57,
+   "top": 36.72,
+   "box": {
+    "left": 73.37,
+    "top": 51.56,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "Task_SummaryQueue",
+   "name": "Queue prose blocks for summary",
+   "left": 82.25,
+   "top": 5.47,
+   "box": {
+    "left": 80.05,
+    "top": 20.31,
+    "width": 0.73,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "Task_Citeable",
+   "name": "Available to cite as an L1 source",
+   "left": 88.92,
+   "top": 64.84,
+   "box": {
+    "left": 86.27,
+    "top": 73.44,
+    "width": 0.73,
+    "height": 3.75
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion",
  "tasks": {
   "CallActivity_Basic": {
@@ -639,6 +821,64 @@
      "href": "../../../reference/skill-instructions/document-intake.html"
     }
    ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../reference/skill-instructions/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../reference/skill-instructions/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../reference/skill-instructions/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../reference/skill-instructions/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../reference/skill-instructions/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../reference/skill-instructions/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../reference/skill-instructions/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../reference/skill-instructions/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "CallActivity_PublishStatements": {
+   "id": "CallActivity_PublishStatements",
+   "name": "Publish the extracted statements with source links",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_PublishStatements",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
+   "skills": [
+    {
+     "name": "publish-extracted-statements",
+     "href": "../../../reference/skill-instructions/publish-extracted-statements.html"
+    }
+   ],
+   "calls": {
+    "name": "Publish extracted statements with source links",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
+    "diagram": "publish-extracted-statements.html"
+   },
    "role": {
     "name": "ingestion-agent",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",

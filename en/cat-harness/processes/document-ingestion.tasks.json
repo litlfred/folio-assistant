@@ -1,6 +1,56 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_Ingestion",
+ "markers": [
+  {
+   "id": "Task_Place",
+   "name": "Place it in uploads/ by a declared route",
+   "left": 34.2,
+   "top": 7.76,
+   "box": {
+    "left": 25.25,
+    "top": 24.14,
+    "width": 2.96,
+    "height": 4.14
+   }
+  },
+  {
+   "id": "Task_ExtractMetadata",
+   "name": "Extract its metadata into the KG",
+   "left": 34.2,
+   "top": 49.14,
+   "box": {
+    "left": 25.25,
+    "top": 65.52,
+    "width": 2.96,
+    "height": 4.14
+   }
+  },
+  {
+   "id": "Task_PlaceInLibrary",
+   "name": "Place the asset in library/<slug>/",
+   "left": 71.23,
+   "top": 49.14,
+   "box": {
+    "left": 62.28,
+    "top": 65.52,
+    "width": 2.96,
+    "height": 4.14
+   }
+  },
+  {
+   "id": "Task_CatalogueReference",
+   "name": "Record it in library/ as referenced",
+   "left": 71.23,
+   "top": 73.28,
+   "box": {
+    "left": 62.28,
+    "top": 89.66,
+    "width": 2.96,
+    "height": 4.14
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion",
  "tasks": {
   "Task_Place": {

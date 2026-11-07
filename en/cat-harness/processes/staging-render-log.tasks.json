@@ -1,6 +1,80 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_RenderLog",
+ "markers": [
+  {
+   "id": "A_LogRendered",
+   "name": "Append `rendered`",
+   "left": 36.9,
+   "top": 5.74,
+   "box": {
+    "left": 30.49,
+    "top": 21.31,
+    "width": 2.12,
+    "height": 3.93
+   }
+  },
+  {
+   "id": "A_Preflight",
+   "name": "Preflight: is the preview live?",
+   "left": 36.9,
+   "top": 28.69,
+   "box": {
+    "left": 30.49,
+    "top": 44.26,
+    "width": 2.12,
+    "height": 3.93
+   }
+  },
+  {
+   "id": "A_LogRetained",
+   "name": "Append `retained` with the reason",
+   "left": 66.11,
+   "top": 28.69,
+   "box": {
+    "left": 59.69,
+    "top": 44.26,
+    "width": 2.12,
+    "height": 3.93
+   }
+  },
+  {
+   "id": "A_LogRemoved",
+   "name": "Append `removed` with the reason",
+   "left": 66.11,
+   "top": 51.64,
+   "box": {
+    "left": 59.69,
+    "top": 67.21,
+    "width": 2.12,
+    "height": 3.93
+   }
+  },
+  {
+   "id": "A_Remove",
+   "name": "Remove the artefact",
+   "left": 80.27,
+   "top": 51.64,
+   "box": {
+    "left": 73.85,
+    "top": 67.21,
+    "width": 2.12,
+    "height": 3.93
+   }
+  },
+  {
+   "id": "A_LogRestored",
+   "name": "Append `restored`",
+   "left": 36.9,
+   "top": 74.59,
+   "box": {
+    "left": 30.49,
+    "top": 90.16,
+    "width": 2.12,
+    "height": 3.93
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderLog",
  "tasks": {
   "A_LogRendered": {

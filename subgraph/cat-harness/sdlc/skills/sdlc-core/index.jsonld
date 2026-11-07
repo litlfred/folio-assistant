@@ -120,13 +120,24 @@
       "title": "Bun Runtime, Toolchain, and Multi-Repo Conventions"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/cache-first-ci",
+      "@type": "bootstrap:Skill",
+      "name": "cache-first-ci",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/54eb7f6b9276fbee48aebbc35352587ef39367969c2c98fa2ec46517afb33f3b",
+        "bytes": 6548,
+        "sha256": "54eb7f6b9276fbee48aebbc35352587ef39367969c2c98fa2ec46517afb33f3b"
+      },
+      "title": "Cache-first CI — a step is a pure function of its inputs"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/ci-health",
       "@type": "bootstrap:Skill",
       "name": "ci-health",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/54efd5a44db219f0c32f7edb8d02a273d41de6a8d84f1ef6feed88ee8e9b6f2b",
-        "bytes": 16232,
-        "sha256": "54efd5a44db219f0c32f7edb8d02a273d41de6a8d84f1ef6feed88ee8e9b6f2b"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ee8bc106fa6aab2faf94b9213de38ba60df9f5a56b643ccf0f6b5a959e9be0d1",
+        "bytes": 16414,
+        "sha256": "ee8bc106fa6aab2faf94b9213de38ba60df9f5a56b643ccf0f6b5a959e9be0d1"
       },
       "title": "CI health — a red workflow looks exactly like a green one from in here"
     },
@@ -146,9 +157,9 @@
       "@type": "bootstrap:Skill",
       "name": "continual-progress",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/533db5c872f9183697d2c6ccd3452c56be0ab63cafe13adba8facec4f79b0681",
-        "bytes": 15000,
-        "sha256": "533db5c872f9183697d2c6ccd3452c56be0ab63cafe13adba8facec4f79b0681"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ed1d8c7d448f99b71ead75397fae5a73ec274515cad933d53af2280444f358cb",
+        "bytes": 18746,
+        "sha256": "ed1d8c7d448f99b71ead75397fae5a73ec274515cad933d53af2280444f358cb"
       },
       "title": "/continual-progress — trackable, always-PR'd, continually-committed work"
     },
@@ -157,9 +168,9 @@
       "@type": "bootstrap:Skill",
       "name": "coordinate",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e8c2cd406afca80eccb65b1f8a2f868b947e16958e7c6b711358d8a90b642cc2",
-        "bytes": 26962,
-        "sha256": "e8c2cd406afca80eccb65b1f8a2f868b947e16958e7c6b711358d8a90b642cc2"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ead8f11fd263e44d613530f8e526b764d07782b3561279de66f2d8ec195ab8af",
+        "bytes": 29574,
+        "sha256": "ead8f11fd263e44d613530f8e526b764d07782b3561279de66f2d8ec195ab8af"
       },
       "title": "/coordinate — multi-agent / multi-PR coordination"
     },
@@ -201,9 +212,9 @@
       "@type": "bootstrap:Skill",
       "name": "dispatch-agent",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f2eaf3a678f3ac5250837f4144da9ad02bfd2795b8dc6beb9dc8575cc79e9f5f",
-        "bytes": 11713,
-        "sha256": "f2eaf3a678f3ac5250837f4144da9ad02bfd2795b8dc6beb9dc8575cc79e9f5f"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/92c601563498df9b8db16bbbdd6b80b2f3272afb609bed332e2263e1a370e9c8",
+        "bytes": 12364,
+        "sha256": "92c601563498df9b8db16bbbdd6b80b2f3272afb609bed332e2263e1a370e9c8"
       },
       "title": "/dispatch-agent — parallel dispatch with a live 2-minute status heartbeat"
     },
@@ -344,9 +355,9 @@
       "@type": "bootstrap:Skill",
       "name": "merge-manager-watcher",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4118f3c44a6f33739d863dcb91839098393edef454a919966e08a308c089a535",
-        "bytes": 5252,
-        "sha256": "4118f3c44a6f33739d863dcb91839098393edef454a919966e08a308c089a535"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b48eff02d114024559e96d210f82559b3a670d68dd6fb4467d881c6c68508e10",
+        "bytes": 22887,
+        "sha256": "b48eff02d114024559e96d210f82559b3a670d68dd6fb4467d881c6c68508e10"
       },
       "title": "Merge manager watcher — the loop that runs the merge-steward role"
     },
@@ -355,9 +366,9 @@
       "@type": "bootstrap:Skill",
       "name": "merge-queue",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5d8f441790422cca128ade5cb33d7261a4d456d2be4ff15a94096cc7085c1638",
-        "bytes": 54199,
-        "sha256": "5d8f441790422cca128ade5cb33d7261a4d456d2be4ff15a94096cc7085c1638"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1d15ed0b3c96ffb5c3de0130923b6b0da9ffbc1991f34dd70734336a7ee92995",
+        "bytes": 59144,
+        "sha256": "1d15ed0b3c96ffb5c3de0130923b6b0da9ffbc1991f34dd70734336a7ee92995"
       },
       "title": "Merge queue — what lands next, and as what"
     },
@@ -399,9 +410,9 @@
       "@type": "bootstrap:Skill",
       "name": "opening-brief",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/abc9f8a96b86b16c27de411c59517f7e40bc0f7e3253af605e59fbc7973f518c",
-        "bytes": 10015,
-        "sha256": "abc9f8a96b86b16c27de411c59517f7e40bc0f7e3253af605e59fbc7973f518c"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/df7fa16e25990a69663c58a0b8c3b721d0e3f0ec86e7ea7071621e5a58d38f13",
+        "bytes": 11856,
+        "sha256": "df7fa16e25990a69663c58a0b8c3b721d0e3f0ec86e7ea7071621e5a58d38f13"
       },
       "title": "Opening brief — brief the topic before you touch anything"
     },
@@ -476,9 +487,9 @@
       "@type": "bootstrap:Skill",
       "name": "prepare-merge",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cc0b6a1450de7c2fd1dbf50b4f590a9fbd0f79c526c8242432b514b6430bc3b5",
-        "bytes": 29466,
-        "sha256": "cc0b6a1450de7c2fd1dbf50b4f590a9fbd0f79c526c8242432b514b6430bc3b5"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/1551bc9c6f137a8caf3d13da7c3654122219fc91f563c06913833e857894a845",
+        "bytes": 31486,
+        "sha256": "1551bc9c6f137a8caf3d13da7c3654122219fc91f563c06913833e857894a845"
       },
       "title": "Prepare-merge — get a feature branch ready to land"
     },
@@ -685,9 +696,9 @@
       "@type": "bootstrap:Skill",
       "name": "swarm-management",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2bfbf7f05015360353121426b4b651406a0d366b4c67e0d67a383da0dfc2394c",
-        "bytes": 10138,
-        "sha256": "2bfbf7f05015360353121426b4b651406a0d366b4c67e0d67a383da0dfc2394c"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4a19e749c2371691ad137c7f3ea6046db6c115acf9d84af6082a6b4aa527bebd",
+        "bytes": 10929,
+        "sha256": "4a19e749c2371691ad137c7f3ea6046db6c115acf9d84af6082a6b4aa527bebd"
       },
       "title": "Swarm management"
     },
@@ -707,9 +718,9 @@
       "@type": "bootstrap:Skill",
       "name": "test-engineer",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fd24eb7d33b5d128e8acd2b871d736ed4652f3be4612c5b9442c08a9e0e2a4fb",
-        "bytes": 6605,
-        "sha256": "fd24eb7d33b5d128e8acd2b871d736ed4652f3be4612c5b9442c08a9e0e2a4fb"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/5208d031feb7181b83464394f01f2a5f10e8824b929c4bfb791e38daceb8fac5",
+        "bytes": 11103,
+        "sha256": "5208d031feb7181b83464394f01f2a5f10e8824b929c4bfb791e38daceb8fac5"
       },
       "title": "Test Engineer Skill"
     },
@@ -718,9 +729,9 @@
       "@type": "bootstrap:Skill",
       "name": "test-plan-execution",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/a4f2d996bfdf3b745bbce8e05ee28b0f96e8db8079aefbbae39ef2871dfb69e8",
-        "bytes": 7925,
-        "sha256": "a4f2d996bfdf3b745bbce8e05ee28b0f96e8db8079aefbbae39ef2871dfb69e8"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/afa0f2c426e67dd982ab61cd0070ea58f673edaaaac28bed2f3d88195d291e65",
+        "bytes": 8395,
+        "sha256": "afa0f2c426e67dd982ab61cd0070ea58f673edaaaac28bed2f3d88195d291e65"
       },
       "title": "Running a test plan — from a request to a signed certification"
     },

@@ -1,6 +1,92 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_NQuadsDistribution",
+ "markers": [
+  {
+   "id": "A_ExtractSkolemize",
+   "name": "Extract & Skolemize RDF Dataset",
+   "left": 23.8,
+   "top": 11.4,
+   "box": {
+    "left": 18.18,
+    "top": 28.07,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "A_PartitionQuads",
+   "name": "Stream W3C N-Quads into Subgraph Partitions",
+   "left": 35.43,
+   "top": 11.4,
+   "box": {
+    "left": 29.81,
+    "top": 28.07,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "A_ReportBudgetExcess",
+   "name": "Report Budget Finding; Refine Subgraph Splitting",
+   "left": 45.12,
+   "top": 37.72,
+   "box": {
+    "left": 39.5,
+    "top": 54.39,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "A_DeclareManifest",
+   "name": "Declare Distribution Manifest & Named Queries",
+   "left": 59.46,
+   "top": 11.4,
+   "box": {
+    "left": 53.84,
+    "top": 28.07,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "A_VerifyQueries",
+   "name": "Verify Queries via CLI & Test Graph Availability",
+   "left": 71.09,
+   "top": 11.4,
+   "box": {
+    "left": 65.47,
+    "top": 28.07,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "A_GateCheck",
+   "name": "Audit the manifest and schemas",
+   "left": 71.09,
+   "top": 67.54,
+   "box": {
+    "left": 65.47,
+    "top": 84.21,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "A_DeployPages",
+   "name": "Publish Distribution via 'served: true' to Pages",
+   "left": 92.02,
+   "top": 67.54,
+   "box": {
+    "left": 86.4,
+    "top": 84.21,
+    "width": 1.86,
+    "height": 4.21
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
  "tasks": {
   "A_ExtractSkolemize": {

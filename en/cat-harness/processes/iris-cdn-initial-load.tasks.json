@@ -1,6 +1,128 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_IrisCdnInitialLoad",
+ "markers": [
+  {
+   "id": "Task_StateBudget",
+   "name": "State scope and budget, with denominators",
+   "left": 15.81,
+   "top": 3.72,
+   "box": {
+    "left": 12.56,
+    "top": 9.57,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_PlanBatches",
+   "name": "Plan batches by community and collection",
+   "left": 22.87,
+   "top": 18.62,
+   "box": {
+    "left": 19.62,
+    "top": 24.47,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_HarvestBatch",
+   "name": "Harvest a batch of item records (REST)",
+   "left": 29.38,
+   "top": 31.6,
+   "box": {
+    "left": 26.68,
+    "top": 41.7,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_FetchBitstreams",
+   "name": "Fetch bitstreams not already held",
+   "left": 36.44,
+   "top": 31.6,
+   "box": {
+    "left": 33.75,
+    "top": 41.7,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_StoreBytes",
+   "name": "Store bytes under SHA-256 (skip if held)",
+   "left": 51.12,
+   "top": 63.3,
+   "box": {
+    "left": 47.87,
+    "top": 69.15,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_Checkpoint",
+   "name": "Commit the batch checkpoint",
+   "left": 58.18,
+   "top": 78.19,
+   "box": {
+    "left": 54.93,
+    "top": 84.04,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_Quarantine",
+   "name": "Quarantine and report the mismatch",
+   "left": 57.63,
+   "top": 46.28,
+   "box": {
+    "left": 54.93,
+    "top": 56.38,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Call_BuildGraph",
+   "name": "Build the graph partitions",
+   "left": 75.1,
+   "top": 31.6,
+   "box": {
+    "left": 72.4,
+    "top": 41.7,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Call_SignPublish",
+   "name": "Sign and publish the release",
+   "left": 82.16,
+   "top": 31.6,
+   "box": {
+    "left": 79.46,
+    "top": 41.7,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_ReviewLoad",
+   "name": "Review the load report; open beans for gaps",
+   "left": 89.78,
+   "top": 18.62,
+   "box": {
+    "left": 86.53,
+    "top": 24.47,
+    "width": 0.89,
+    "height": 2.55
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
  "tasks": {
   "Task_StateBudget": {

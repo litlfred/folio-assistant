@@ -12360,6 +12360,28 @@
     });
   }
 
+  /**
+   * Date a "when" row from the reviewed tree (owner rulings 2026-11-06: card
+   * "QA dates", option 1, and card "Date source", option 1, derive the date ON
+   * READ). Writers no longer stamp a clock in a verdict, so the same verdict
+   * over the same tree is the same bytes on a PR and on main; its date is the
+   * commit date of the commit on main carrying that tree, from the index's
+   * `dates`. A tree the index does not date leaves the row as it was: the
+   * witness's own legacy date, or "not recorded" -- never now.
+   */
+  function dateRowFromTree(row, tree) {
+    treeCommits().then(function (idx) {
+      var iso = idx && idx.dates && idx.dates[tree];
+      var when = typeof iso === "string" ? qaWhen(iso) : null;
+      var v = row.querySelector(".fa-qa-field-value");
+      if (!when || !v) return;
+      v.textContent = when.text;
+      v.className = v.className.replace(/\s*fa-qa-absent\b/, "");
+      v.setAttribute("title", "The commit date of the commit on main carrying the reviewed tree " +
+        tree + ": " + when.title);
+    });
+  }
+
   function qaWitnessCard(w) {
     var card = el("div", { class: "fa-qa-witness fa-qa-kind-" + (w.kind || "script") });
 
@@ -12404,7 +12426,9 @@
 
     var when = qaWhen(w.at);
     var grid = el("div", { class: "fa-qa-field-grid" });
-    grid.appendChild(qaField("when", when && when.text, { title: when && when.title }));
+    var whenRow = qaField("when", when && when.text, { title: when && when.title });
+    grid.appendChild(whenRow);
+    if (w.tree) dateRowFromTree(whenRow, w.tree);
     // A verdict records the TREE it reviewed, not HEAD's commit (folio-assistant
     // bean 69lr; owner card Q4, 2026-11-05: "the tree is the identity"). On a
     // pull_request run HEAD is the synthetic refs/pull/<n>/merge commit, which

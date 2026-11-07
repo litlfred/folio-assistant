@@ -1,6 +1,56 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_RenderKgToCdn",
+ "markers": [
+  {
+   "id": "Task_Resolve",
+   "name": "Determine which CDN, the root URL and the Subgraphs",
+   "left": 23.8,
+   "top": 28.79,
+   "box": {
+    "left": 18.11,
+    "top": 57.58,
+    "width": 1.89,
+    "height": 7.27
+   }
+  },
+  {
+   "id": "Call_GitHubPages",
+   "name": "Render and push to GitHub Pages",
+   "left": 56.01,
+   "top": 6.06,
+   "box": {
+    "left": 47.96,
+    "top": 22.73,
+    "width": 1.89,
+    "height": 7.27
+   }
+  },
+  {
+   "id": "Call_ToolSubprocess",
+   "name": "Render and push with that CDN's own Tool",
+   "left": 56.01,
+   "top": 34.85,
+   "box": {
+    "left": 47.96,
+    "top": 51.52,
+    "width": 1.89,
+    "height": 7.27
+   }
+  },
+  {
+   "id": "Task_Report",
+   "name": "Report the push: status and message",
+   "left": 70.93,
+   "top": 28.79,
+   "box": {
+    "left": 65.24,
+    "top": 57.58,
+    "width": 1.89,
+    "height": 7.27
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn",
  "tasks": {
   "Task_Resolve": {

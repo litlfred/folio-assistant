@@ -5,6 +5,149 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "@type": "bootstrap:Process",
+      "name": "Act on decision-support guidance"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D03",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D04",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D05",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D06",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D07",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "@type": "cat-harness:Lane",
+      "name": "Health worker"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_System",
+      "@type": "cat-harness:Lane",
+      "name": "Point-of-care system"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_Activated",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Care plan updated"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoChange",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Guidance declined"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoGuidance",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Nothing to act on"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoReason",
+      "@type": "bootstrap:ProcessNode",
+      "name": "No reason noted"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_Noted",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Reason recorded"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Any action accepted?"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Tapped \"add a reason\"?"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gateway_Fork"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_HasGuidance",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Anything proposed?"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Start_GuidanceDue",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Guidance is due"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Activate",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Update the care plan"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Apply",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Apply the PlanDefinition"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Rationale",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Note the reason (optional)"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Review",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Accept or decline the guidance"
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_ClassifyAndCodeContent",
       "@type": "bootstrap:Process",
       "name": "Classify and code content"
@@ -1150,6 +1293,73 @@
       "@id": "http://smart.who.int/base/process/Process_Planning/node/Task_Scoping",
       "@type": "bootstrap:ProcessNode",
       "name": "Define DAK scope, purpose, and target audience"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture",
+      "@type": "bootstrap:Process",
+      "name": "Capture data with an SDC questionnaire"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q03",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q04",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture#flow/Q05",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_HealthWorker",
+      "@type": "cat-harness:Lane",
+      "name": "Health worker"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/lane/Lane_System",
+      "@type": "cat-harness:Lane",
+      "name": "Point-of-care system"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/End_Extracted",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Resources saved"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/End_Stored",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Response stored"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Gateway_Extracts",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Form declares an extraction?"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Start_FormDue",
+      "@type": "bootstrap:ProcessNode",
+      "name": "A form is due"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Task_Complete",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Complete the form"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_QuestionnaireDataCapture/node/Task_Extract",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Extract and save the resources"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_SgEndToEnd",

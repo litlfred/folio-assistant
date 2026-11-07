@@ -1,6 +1,92 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_L3Fhir",
+ "markers": [
+  {
+   "id": "Task_AuthorFsh",
+   "name": "Author FSH profiles",
+   "left": 25.63,
+   "top": 2.35,
+   "box": {
+    "left": 21.95,
+    "top": 13.53,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Sushi",
+   "name": "Compile FSH to FHIR JSON",
+   "left": 33.76,
+   "top": 37.65,
+   "box": {
+    "left": 30.08,
+    "top": 48.82,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Validate",
+   "name": "Validate against profiles",
+   "left": 41.88,
+   "top": 37.65,
+   "box": {
+    "left": 38.2,
+    "top": 48.82,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_QcGates",
+   "name": "QC gates",
+   "left": 58.12,
+   "top": 55.29,
+   "box": {
+    "left": 54.44,
+    "top": 66.47,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_QcBeans",
+   "name": "File QC findings as beans",
+   "left": 74.62,
+   "top": 21.76,
+   "box": {
+    "left": 70.69,
+    "top": 29.41,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_IgPublisher",
+   "name": "IG Publisher build",
+   "left": 82.49,
+   "top": 37.65,
+   "box": {
+    "left": 78.81,
+    "top": 48.82,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_PublishIg",
+   "name": "Publish the IG site",
+   "left": 90.61,
+   "top": 72.94,
+   "box": {
+    "left": 86.93,
+    "top": 84.12,
+    "width": 1.22,
+    "height": 2.82
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
  "tasks": {
   "Task_AuthorFsh": {

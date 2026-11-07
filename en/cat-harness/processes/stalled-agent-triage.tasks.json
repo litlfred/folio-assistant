@@ -1,6 +1,80 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_StalledAgentTriage",
+ "markers": [
+  {
+   "id": "A_Footprint",
+   "name": "Find the footprint",
+   "left": 23.99,
+   "top": 38.46,
+   "box": {
+    "left": 19.8,
+    "top": 56.73,
+    "width": 1.39,
+    "height": 4.62
+   }
+  },
+  {
+   "id": "A_Collect",
+   "name": "Collect or reconstruct a handover report per agent",
+   "left": 34.97,
+   "top": 38.46,
+   "box": {
+    "left": 30.78,
+    "top": 56.73,
+    "width": 1.39,
+    "height": 4.62
+   }
+  },
+  {
+   "id": "A_Consolidate",
+   "name": "Consolidate into 2-4 themes, with a recommendation each",
+   "left": 46.53,
+   "top": 38.46,
+   "box": {
+    "left": 42.34,
+    "top": 56.73,
+    "width": 1.39,
+    "height": 4.62
+   }
+  },
+  {
+   "id": "U_Decide",
+   "name": "Decide each theme",
+   "left": 58.09,
+   "top": 71.15,
+   "box": {
+    "left": 53.9,
+    "top": 89.42,
+    "width": 1.39,
+    "height": 4.62
+   }
+  },
+  {
+   "id": "A_Record",
+   "name": "Record the triage and claim the picked-up work",
+   "left": 69.08,
+   "top": 38.46,
+   "box": {
+    "left": 64.88,
+    "top": 56.73,
+    "width": 1.39,
+    "height": 4.62
+   }
+  },
+  {
+   "id": "S_Reroute",
+   "name": "Re-route open PRs that lost their driver",
+   "left": 80.06,
+   "top": 5.77,
+   "box": {
+    "left": 75.87,
+    "top": 24.04,
+    "width": 1.39,
+    "height": 4.62
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",
  "tasks": {
   "A_Footprint": {

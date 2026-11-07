@@ -191,6 +191,25 @@
             "additionalProperties": false
           }
         },
+        "planFindings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "problem": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "id",
+              "problem"
+            ],
+            "additionalProperties": false
+          }
+        },
         "plan": {
           "type": "object",
           "properties": {

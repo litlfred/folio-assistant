@@ -1,6 +1,80 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_VoiceReview",
+ "markers": [
+  {
+   "id": "Task_LoadActive",
+   "name": "Load the active voices",
+   "left": 28.36,
+   "top": 29.76,
+   "box": {
+    "left": 23.18,
+    "top": 52.38,
+    "width": 1.71,
+    "height": 5.71
+   }
+  },
+  {
+   "id": "Task_MechanicalHalf",
+   "name": "Run the rule's mechanical half",
+   "left": 39.79,
+   "top": 29.76,
+   "box": {
+    "left": 34.61,
+    "top": 52.38,
+    "width": 1.71,
+    "height": 5.71
+   }
+  },
+  {
+   "id": "Task_OpenCitation",
+   "name": "Open the rule's citation",
+   "left": 51.21,
+   "top": 29.76,
+   "box": {
+    "left": 46.04,
+    "top": 52.38,
+    "width": 1.71,
+    "height": 5.71
+   }
+  },
+  {
+   "id": "Task_RuleIsWrong",
+   "name": "The RULE is the defect — bean it",
+   "left": 69.79,
+   "top": 5.95,
+   "box": {
+    "left": 64.61,
+    "top": 28.57,
+    "width": 1.71,
+    "height": 5.71
+   }
+  },
+  {
+   "id": "Task_Adjudicate",
+   "name": "Adjudicate: prose, scope, or exception",
+   "left": 69.79,
+   "top": 53.57,
+   "box": {
+    "left": 64.61,
+    "top": 76.19,
+    "width": 1.71,
+    "height": 5.71
+   }
+  },
+  {
+   "id": "Task_RecordOnSidecar",
+   "name": "Record on the block's QA sidecar",
+   "left": 91.93,
+   "top": 29.76,
+   "box": {
+    "left": 86.75,
+    "top": 52.38,
+    "width": 1.71,
+    "height": 5.71
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_VoiceReview",
  "tasks": {
   "Task_LoadActive": {

@@ -78,6 +78,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Ingestion/Lane_0",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_0",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Owner",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Owner",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_0",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_0",
@@ -85,6 +86,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeManagerWatch/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
@@ -136,6 +138,15 @@
       "label": "Owner",
       "scopeNote": "Shares the source and the intent in chat, answers the coordination question, and decides the adoption. Only the owner accepts an adoption or moves a proposal's status.",
       "source": "cat-harness/processes/library/methodology-from-source.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation",
+      "label": "Owner",
+      "scopeNote": "Decides which instances and locales are translated, and when locale PRs may be merged. The merge window set here binds the lead's merge step and the refresh watcher alike. Official sign-off is also this person's, and is a separate process.",
+      "source": "cat-harness/processes/library/multi-locale-translation.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
@@ -199,6 +210,15 @@
       "label": "Human actor",
       "scopeNote": "The only lane whose actor cannot be a machine — `deletion-requires-confirmation` is not satisfied by a click, so H_Confirm must repeat the slug rather than approve generically, which is what stops a confirmation from an earlier run being replayed against a different preview. It precedes Start_Dispatch rather than following it, so the dispatch entry point cannot fire at all until this lane has acted.",
       "source": "cat-harness/sdlc/processes/feature-staging.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeManagerWatch/Lane_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
+      "label": "Owner",
+      "scopeNote": "Approves in the merge manager's session only, one card per batch. An approval given in a sibling's session does not authorise a merge.",
+      "source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner",
@@ -585,12 +605,14 @@
       "definition": "Takes an authorised release to its published form and is accountable for what is live.",
       "altLabel": [
         "Deployment owner",
+        "FHIR IG AST cache (the FHIR IG layer)",
         "Human signer"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
       "usage": [
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgSeparation/Lane_Publication",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_KgToPortal/Lane_Deployment",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Cache/Lane_IgAst",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_QaReportSigning/Lane_Human",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_UpstreamAdoption/Lane_Publication"
@@ -613,6 +635,15 @@
       "label": "Deployment owner",
       "scopeNote": "Owns the numbers every other gate in the pipeline checks against: GW_Budget measures the package against D_Constraints' figures, not a feeling. When GW_Transport has no default branch to take, this lane is the one that records the gap as still open — at D_Undetermined — rather than letting the build pick a transport nobody decided on.",
       "source": "cat-harness/processes/kg/kg-to-portal.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Cache/Lane_IgAst",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache",
+      "label": "FHIR IG AST cache (the FHIR IG layer)",
+      "scopeNote": "the FHIR IG layer's `Process_IgAstCache`, whose site build and AST refresh sit under the publication manager: the component's verify is that process's \"valid for this commit?\", and its save is that process's refresh dispatch.",
+      "source": "cat-harness/sdlc/processes/cache.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_PublishAlert/Lane_PubMgr",
@@ -835,6 +866,126 @@
       "label": "Human reviewer / adjudicator",
       "scopeNote": "The only lane here that JUDGES. Mechanical translation QA produces candidates — a flagged passage, a terminology miss, a staleness verdict — and a candidate is not a finding until somebody decides it is. This lane is where that decision is made, and it is the lane that signs the translation off, because the actor who resolves a disputed passage is the one who can say the whole is fit to publish.\n\nAdjudicator rather than reviewer alone, and the distinction is the accountability: a reviewer reports, an adjudicator settles. The word is used here because the passage reaching this lane is one where a checker and a translator disagree, and somebody has to choose between them WITH a reason. That reason is the record, not the choice.",
       "source": "cat-harness/processes/library/translation-workflow.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-source-lead",
+      "@type": "skos:Concept",
+      "prefLabel": "Source-language lead",
+      "title": "Source-language lead",
+      "notation": "translation-source-lead",
+      "definition": "Owns the source-language side of a translation into several locales: extracts every template once, in one shared source PR merged to main before any locale starts, validates each locale PR and merges it inside the owner's merge window, files the one issue for source-text errors the translators report, and keeps the refresh watcher that brings every locale up to date when the source moves. Distinct from `translation-coordinator`, who decides what is translated and accepts it: this position does the source-side work, and an agent can do it.",
+      "altLabel": [
+        "Source-language lead (watcher)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Lead",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRefresh/Lane_TR_Lead"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Lead",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-source-lead",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation",
+      "label": "Source-language lead",
+      "scopeNote": "The one party that touches the source. It extracts every template once, merges that source PR first, collects source-text errors into one issue, validates and merges each locale PR inside the owner's window, and keeps the watcher that runs `translation-refresh`.",
+      "source": "cat-harness/processes/library/multi-locale-translation.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRefresh/Lane_TR_Lead",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-source-lead",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh",
+      "label": "Source-language lead (watcher)",
+      "scopeNote": "Owns the watcher. It decides whether anything changed from the files, not from memory, refreshes the templates once for every locale, and merges the instance's PR only where the instance declares merge-when-green, every check is green and the round trip records no fail.",
+      "source": "cat-harness/processes/library/translation-refresh.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+      "@type": "skos:Concept",
+      "prefLabel": "Locale translator",
+      "title": "Locale translator",
+      "notation": "locale-translator",
+      "definition": "Produces one locale's catalogues from the shared templates: the `.po` files, their unofficial translation-node manifests and the locale's terminology supplement, then the gates, the QA report and the locale PR. Never re-extracts and never edits the source; a source-text error is reported, not fixed in the translation. One lane covers every locale, each run once per locale. Distinct from `translator`, a person working in their own tool under human-translation-workflow: this position may be an agent, and what it produces is unofficial until a person signs it off.",
+      "altLabel": [
+        "Locale translator (one per locale)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Translator",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRefresh/Lane_TR_Translator",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Translator"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Translator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation",
+      "label": "Locale translator (one per locale)",
+      "scopeNote": "One lane for every locale: each step here runs once per locale, in parallel, and each locale's work is its own branch and its own PR. A translator starts from the merged templates, never from its own extraction, and reports a source error rather than translating around it.",
+      "source": "cat-harness/processes/library/multi-locale-translation.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRefresh/Lane_TR_Translator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh",
+      "label": "Locale translator",
+      "scopeNote": "The same position as in the first translation, now working on a delta: only the strings the merge left empty or fuzzy, in every locale, then the gates and the round trip over those strings.",
+      "source": "cat-harness/processes/library/translation-refresh.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Translator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
+      "label": "Locale translator",
+      "scopeNote": "The producer. It chooses what is checked, by a rule stated before any result is seen, and hands on the target strings alone. It may record one thing here, \"could not dispatch\", because without that state a producer forbidden from writing a verdict has nothing honest to write.",
+      "source": "cat-harness/processes/library/translation-round-trip.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/back-translator",
+      "@type": "skos:Concept",
+      "prefLabel": "Back-translator",
+      "title": "Back-translator",
+      "notation": "back-translator",
+      "definition": "The checker of a translation round trip: renders a sample of the target-language text back into the source language from the target text alone, with no tools and without seeing the source. It rules on nothing. Its rendering is the intermediate the adjudicator reads (`untainted-verification`, rule 1: neither party sees what would let it shortcut).",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Back"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Back",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/back-translator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
+      "label": "Back-translator",
+      "scopeNote": "Sees the target strings and nothing else: not the source, not the repository, no tools. Shown the source, it writes the source back and the check passes without measuring anything.",
+      "source": "cat-harness/processes/library/translation-round-trip.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/round-trip-adjudicator",
+      "@type": "skos:Concept",
+      "prefLabel": "Round-trip adjudicator",
+      "title": "Round-trip adjudicator",
+      "notation": "round-trip-adjudicator",
+      "definition": "Rules on a translation round trip: given the source strings and the back-translation, and never the target text, it pre-screens every pair mechanically, reads each flagged pair in full, and records drift or not-drift for each with the reason. A specialisation of `adjudicator` for the translation instance of untainted verification; it adds the translation-specific drift definition.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Adjudicator"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Adjudicator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/round-trip-adjudicator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
+      "label": "Round-trip adjudicator",
+      "scopeNote": "Sees the source strings and the back-translation, never the target text, and rules each pair drift or not drift with its reason. Both halves of the drift definition are in front of it, so that inflection and word order are not ruled as drift.",
+      "source": "cat-harness/processes/library/translation-round-trip.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/adjudicator",
@@ -1470,6 +1621,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRequest/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Sibling"
       ]
@@ -1502,6 +1654,15 @@
       "source": "cat-harness/sdlc/processes/merge-refusal.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRequest/Lane_Sibling",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
+      "label": "Sibling session",
+      "scopeNote": "Any coding agent with a PR ready to merge. It first checks whether a merge manager is active; if none is and one is needed, it elects one with its siblings by the fixed rule; a lone or lapsed session manages its own PRs. It never merges another session's PR, never pushes to another session's branch, and treats a merge manager that does not acknowledge within the stall window as stalled. It never waits for a dependency to merge: it stacks on the dependency PR and keeps working.",
+      "source": "cat-harness/sdlc/processes/merge-request.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
@@ -1525,7 +1686,7 @@
       "prefLabel": "Merge steward",
       "title": "Merge steward",
       "notation": "merge-steward",
-      "definition": "Stewards writes to ONE watched ref -- a long-lived branch several processes write and something downstream consumes serially. The ref is a parameter of the LANE INSTANCE, not of this persona, so `main`, `gh-pages` and each `cat/cat-harness/*` store branch can each have a steward without a schema change; a ref qualifies when a declaring directory's `storage` (or `source`) names it, or it is `main`/`gh-pages`. On `main` that work is a merge train: composes it from the queue, attributes and ejects on red, lands at the tested SHA. On a route-keyed ref it is coalescing: batches the writes arriving in one window into a single write. Decides nothing the reprioritisation table or the owner has not -- placement is computed by merge-priority.dmn, and landing waits for the owner's release. Records decisions on queue entries and windows, never the host's facts.",
+      "definition": "Stewards writes to ONE watched ref -- a long-lived branch several processes write and something downstream consumes serially. The ref is a parameter of the LANE INSTANCE, not of this persona, so `main`, `gh-pages` and each `cat/cat-harness/*` store branch can each have a steward without a schema change; a ref qualifies when a declaring directory's `storage` (or `source`) names it, or it is `main`/`gh-pages`. On `main` that work is a merge train: composes it from the queue, attributes and ejects on red, lands at the tested SHA. On a route-keyed ref it is coalescing: batches the writes arriving in one window into a single write. Decides nothing the reprioritisation table or the owner has not -- placement is computed by merge-priority.dmn, and landing waits for the owner's release, given in the steward's own session as one card per batch. Records decisions on queue entries and windows, never the host's facts. On `main` the lane is conditional: it is held while two or more active sessions have ready PRs in the same repositories and their merges slow each other down (contended runners, or PRs that conflict with or supersede each other), and lapses when that stops. With none active the sibling sessions elect one by a fixed rule (the owner of the P0 PR, else the earliest-created active session); a lone session is its own steward. The holder acknowledges each merge request within a heartbeat window, and a holder that stalls is replaced by re-election without it (owner rulings, 2026-11-07; skill merge-manager-watcher).",
       "altLabel": [
         "Merging session"
       ],
@@ -1543,7 +1704,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
       "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch",
       "label": "Merge steward",
-      "scopeNote": "The merge manager, holding the merge-steward role across one or more repositories. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, then routes to the process the queue needs (merge train, saturation meta-merge, stalled-agent takeover) or stays idle.",
+      "scopeNote": "The merge manager: the one session holding the merge-steward lane, by the owner's word, by election, or for its own PRs only. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, acknowledges requests within the heartbeat, then routes to the process the queue needs or stays idle. It hands over explicitly when it stops; like any agent it may stall, and the siblings then re-elect.",
       "source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn"
     },
     {
@@ -1605,6 +1766,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ArchimatePublish/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HarnessRendering/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RenderLog/Lane_Pipeline",
+        "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Cache/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CiHealth/Lane_Ci",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeChangeReview/Lane_Pipeline",
         "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CodeQualityGates/Lane_Ci",
@@ -1751,6 +1913,15 @@
       "label": "CI/CD Pipeline",
       "scopeNote": "Every branch of GW_What — deploy, takedown, full-replace — is logged by this same lane regardless of which is firing, and the ORDER matters as much as the fact: A_LogRemoved happens before A_Remove specifically so a job that dies mid-step leaves a record of intent rather than an artefact that vanished with nothing said about it.",
       "source": "cat-harness/processes/ui/staging-render-log.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Cache/Lane_Ci",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+      "inProcess": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache",
+      "label": "Build pipeline",
+      "scopeNote": "The run that consumes the caches: a CI job, a render, a publish, a preview, or a committer's local mount.",
+      "source": "cat-harness/sdlc/processes/cache.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_CiHealth/Lane_Ci",
@@ -2539,6 +2710,24 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/health-worker",
+      "@type": "skos:Concept",
+      "prefLabel": "Health worker",
+      "title": "Health worker",
+      "notation": "health-worker",
+      "definition": "The generic DAK persona who delivers care at the point of care and records it on a device: completes the DAK's SDC forms and acts on its decision-support guidance (`questionnaire-data-capture.bpmn`, `act-on-decision-support.bpmn`). A DAK's own health-worker roles (a vaccinator, a community health worker) carry these skills or inherit this role. WHO's DAK personas call this a health worker; the role is a lane, never a person.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/point-of-care-system",
+      "@type": "skos:Concept",
+      "prefLabel": "Point-of-care system",
+      "title": "Point-of-care system",
+      "notation": "point-of-care-system",
+      "definition": "The app or EHR the health worker uses: renders the DAK's forms, extracts their resources, applies the DAK's decision tables (PlanDefinitions) and writes what the health worker accepted. Decides nothing clinical. A DAK's own systems (a CHW app, a clinic EHR) carry these skills or inherit this role.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/archimate",
       "@type": "skos:Concept",
       "prefLabel": "Archimate",
@@ -2659,6 +2848,15 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cache",
+      "@type": "skos:Concept",
+      "prefLabel": "CI caches",
+      "title": "CI caches",
+      "notation": "kind/cache",
+      "definition": "CI caches -- one `cache/1.0.0` node per cache a layer declares: key recipe, trust class, location, producer, consumers, save policy, verify and budget. Never the entries; the stored key, size and hit rate come from the daily cache report, so staleness is computed, never claimed.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness",
       "@type": "skos:Concept",
       "prefLabel": "Harness graph",
@@ -2701,6 +2899,15 @@
       "title": "Content adapters",
       "notation": "kind/content-adapters",
       "definition": "The block vocabularies a harness owns, one node per vocabulary carrying its companion roles and whether the platform's code types it. Discovered across the instances; no module lists them.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/device-screen",
+      "@type": "skos:Concept",
+      "prefLabel": "Device screens",
+      "title": "Device screens",
+      "notation": "kind/device-screen",
+      "definition": "Device screens -- what one person sees on one device at a journey step, as typed data-only blocks (QR code, passcode, verdict, record list, consent), drawn as a device mock.",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
     },
     {
@@ -3114,7 +3321,7 @@
       "prefLabel": "User scenarios",
       "title": "User scenarios",
       "notation": "kind/user-scenario",
-      "definition": "User scenarios as journey maps -- one file per journey: ordered steps, per actor what they do and feel, pain points, enablers, the record's trust state, and edges to user stories, BPMN tasks, requirements, FHIR examples and the building blocks each step uses.",
+      "definition": "User scenarios as journey maps -- one file per journey: ordered steps, per actor what they do and feel, pain points, enablers, the record's trust state, and edges to user stories, BPMN tasks, requirements, FHIR examples, the building blocks each step uses and its DAK assets; a DAK user scenario, composed of other journeys in order.",
       "inScheme": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness-glossary.jsonld"
     },
     {

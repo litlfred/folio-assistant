@@ -1143,6 +1143,16 @@
                   "type": "string",
                   "pattern": "^[a-z0-9][a-z0-9-]*(?:\\/[a-z0-9][a-z0-9-]*)*$"
                 }
+              },
+              "builtOnHostSite": {
+                "type": "object",
+                "properties": {
+                  "translated": {
+                    "type": "boolean",
+                    "const": true
+                  }
+                },
+                "additionalProperties": false
               }
             },
             "required": [
@@ -2081,10 +2091,19 @@
                       "report",
                       "covered-by",
                       "no-folio",
-                      "scheduled"
+                      "scheduled",
+                      "pending-baseline"
                     ]
                   },
                   "reason": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "writer": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "followUp": {
                     "type": "string",
                     "minLength": 1
                   }

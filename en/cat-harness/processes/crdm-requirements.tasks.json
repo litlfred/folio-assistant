@@ -1,6 +1,116 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_CRDM",
+ "markers": [
+  {
+   "id": "BA_Submit",
+   "name": "Describe the need (chat, issue, discussion)",
+   "left": 30.27,
+   "top": 3.15,
+   "box": {
+    "left": 22.05,
+    "top": 18.11,
+    "width": 2.72,
+    "height": 3.78
+   }
+  },
+  {
+   "id": "A_Detect",
+   "name": "Detect feature request (crdm-detect skill)",
+   "left": 30.27,
+   "top": 30.71,
+   "box": {
+    "left": 22.05,
+    "top": 45.67,
+    "width": 2.72,
+    "height": 3.78
+   }
+  },
+  {
+   "id": "Call_Issue",
+   "name": "Link the work to an issue",
+   "left": 62.02,
+   "top": 30.71,
+   "box": {
+    "left": 53.8,
+    "top": 45.67,
+    "width": 2.72,
+    "height": 3.78
+   }
+  },
+  {
+   "id": "Call_Needs",
+   "name": "Phase 1 Needs",
+   "left": 79.02,
+   "top": 30.71,
+   "box": {
+    "left": 70.8,
+    "top": 45.67,
+    "width": 2.72,
+    "height": 3.78
+   }
+  },
+  {
+   "id": "Call_Requirements",
+   "name": "Phases 2–4 BPA + requirements",
+   "left": 96.03,
+   "top": 30.71,
+   "box": {
+    "left": 87.81,
+    "top": 45.67,
+    "width": 2.72,
+    "height": 3.78
+   }
+  },
+  {
+   "id": "Call_DataModel",
+   "name": "Data model Entities + cardinalities",
+   "left": 23.24,
+   "top": 75.59,
+   "box": {
+    "left": 15.02,
+    "top": 90.55,
+    "width": 2.72,
+    "height": 3.78
+   }
+  },
+  {
+   "id": "Call_Signoff",
+   "name": "Phase 5 Plan + sign-off",
+   "left": 40.25,
+   "top": 75.59,
+   "box": {
+    "left": 32.03,
+    "top": 90.55,
+    "width": 2.72,
+    "height": 3.78
+   }
+  },
+  {
+   "id": "Call_Deliver",
+   "name": "Phase 6 Implement + acceptance",
+   "left": 57.26,
+   "top": 75.59,
+   "box": {
+    "left": 49.04,
+    "top": 90.55,
+    "width": 2.72,
+    "height": 3.78
+   }
+  },
+  {
+   "id": "Call_Close",
+   "name": "Close-out",
+   "left": 74.26,
+   "top": 75.59,
+   "box": {
+    "left": 66.04,
+    "top": 90.55,
+    "width": 2.72,
+    "height": 3.78
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM",
  "tasks": {
   "BA_Submit": {

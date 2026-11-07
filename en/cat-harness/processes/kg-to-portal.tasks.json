@@ -1,6 +1,128 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_KgToPortal",
+ "markers": [
+  {
+   "id": "D_Constraints",
+   "name": "State the constraints, with denominators",
+   "left": 18.79,
+   "top": 56.71,
+   "box": {
+    "left": 13.73,
+    "top": 62.62,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "E_Scope",
+   "name": "Decide what may leave the repository",
+   "left": 30.35,
+   "top": 42.75,
+   "box": {
+    "left": 25.29,
+    "top": 48.66,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "A_Select",
+   "name": "Cut the subgraph that leaves",
+   "left": 29.48,
+   "top": 1.83,
+   "box": {
+    "left": 25.29,
+    "top": 12.03,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "A_Serialize",
+   "name": "Serialize to JSON-LD",
+   "left": 40.46,
+   "top": 1.83,
+   "box": {
+    "left": 36.27,
+    "top": 12.03,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "A_Package",
+   "name": "Package with digests",
+   "left": 52.31,
+   "top": 3.76,
+   "box": {
+    "left": 47.25,
+    "top": 9.67,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "S_Sign",
+   "name": "Sign the package and/or each asset",
+   "left": 68.21,
+   "top": 22.72,
+   "box": {
+    "left": 64.02,
+    "top": 32.92,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "E_HumanEyes",
+   "name": "Human eyes on the rendered artefact",
+   "left": 69.08,
+   "top": 42.75,
+   "box": {
+    "left": 64.02,
+    "top": 48.66,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "D_Undetermined",
+   "name": "Record the decision as still open",
+   "left": 88.73,
+   "top": 56.71,
+   "box": {
+    "left": 83.67,
+    "top": 62.62,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "A_Distribute",
+   "name": "Publish to the origin (a cache may front it)",
+   "left": 77.17,
+   "top": 69.82,
+   "box": {
+    "left": 72.98,
+    "top": 80.02,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "P_Verify",
+   "name": "Verify what arrived against what was signed",
+   "left": 77.17,
+   "top": 85.28,
+   "box": {
+    "left": 72.98,
+    "top": 95.49,
+    "width": 1.39,
+    "height": 2.58
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
  "tasks": {
   "D_Constraints": {

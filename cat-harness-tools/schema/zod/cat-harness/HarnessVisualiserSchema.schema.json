@@ -104,6 +104,16 @@
             "type": "string",
             "pattern": "^[a-z0-9][a-z0-9-]*(?:\\/[a-z0-9][a-z0-9-]*)*$"
           }
+        },
+        "builtOnHostSite": {
+          "type": "object",
+          "properties": {
+            "translated": {
+              "type": "boolean",
+              "const": true
+            }
+          },
+          "additionalProperties": false
         }
       },
       "required": [

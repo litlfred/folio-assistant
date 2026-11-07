@@ -14,7 +14,7 @@
     "@id": "http://smart.who.int/trust"
   },
   "dcterms:title": "WHO SMART Trust",
-  "schema:numberOfItems": 701,
+  "schema:numberOfItems": 761,
   "schema:hasPart": [
     {
       "@id": "ActorDefinition-BusinessOwnerRepresentative.jsonld",
@@ -8174,6 +8174,61 @@
       }
     },
     {
+      "@id": "CodeSystem-Actors-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Actors-ar",
+      "dcterms:title": "نظام رموز الجهات الفاعلة في الثقة في GDHCN التابعة لمنظمة الصحة العالمية (WHO)",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز Actors: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Actors-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-Actors-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Actors-es",
+      "dcterms:title": "Actores de confianza de la GDHCN de la OMS (es)",
+      "dcterms:description": "Suplemento en español (es) de Actors. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Actors-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-Actors-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Actors-fr",
+      "dcterms:title": "Système de codes des acteurs de confiance du GDHCN de l’OMS",
+      "dcterms:description": "French (fr) supplement to Actors: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Actors-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-Actors-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Actors-ru",
+      "dcterms:title": "Actors (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for Actors: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Actors-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-Actors-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Actors-zh",
+      "dcterms:title": "WHO GDHCN Trust Actors CodeSystem — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the Actors code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Actors-zh"
+      }
+    },
+    {
       "@id": "CodeSystem-ConnectionTypes.jsonld",
       "@type": "fhir:CodeSystem",
       "dcterms:identifier": "CodeSystem/ConnectionTypes",
@@ -8182,6 +8237,61 @@
       "dcterms:type": "Terminology: Code Systems",
       "schema:sameAs": {
         "@id": "http://smart.who.int/trust/CodeSystem/ConnectionTypes"
+      }
+    },
+    {
+      "@id": "CodeSystem-ConnectionTypes-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/ConnectionTypes-ar",
+      "dcterms:title": "أنواع الاتصال في GDHCN التابعة لمنظمة الصحة العالمية (WHO)",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز ConnectionTypes: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/ConnectionTypes-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-ConnectionTypes-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/ConnectionTypes-es",
+      "dcterms:title": "Tipos de conexión de la GDHCN de la OMS (es)",
+      "dcterms:description": "Suplemento en español (es) de ConnectionTypes. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/ConnectionTypes-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-ConnectionTypes-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/ConnectionTypes-fr",
+      "dcterms:title": "Types de connexion du GDHCN de l’OMS",
+      "dcterms:description": "French (fr) supplement to ConnectionTypes: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/ConnectionTypes-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-ConnectionTypes-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/ConnectionTypes-ru",
+      "dcterms:title": "ConnectionTypes (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for ConnectionTypes: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/ConnectionTypes-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-ConnectionTypes-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/ConnectionTypes-zh",
+      "dcterms:title": "WHO GDHCN Connection Types — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the ConnectionTypes code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/ConnectionTypes-zh"
       }
     },
     {
@@ -8196,6 +8306,61 @@
       }
     },
     {
+      "@id": "CodeSystem-DAKComponents-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DAKComponents-ar",
+      "dcterms:title": "مكوّنات مجموعة أدوات التكيُّف الرقمي (DAK)",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز DAKComponents: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DAKComponents-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-DAKComponents-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DAKComponents-es",
+      "dcterms:title": "Componentes del DAK (es)",
+      "dcterms:description": "Suplemento en español (es) de DAKComponents. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DAKComponents-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-DAKComponents-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DAKComponents-fr",
+      "dcterms:title": "Composantes du DAK",
+      "dcterms:description": "French (fr) supplement to DAKComponents: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DAKComponents-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-DAKComponents-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DAKComponents-ru",
+      "dcterms:title": "DAKComponents (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for DAKComponents: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DAKComponents-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-DAKComponents-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DAKComponents-zh",
+      "dcterms:title": "DAK components — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the DAKComponents code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DAKComponents-zh"
+      }
+    },
+    {
       "@id": "CodeSystem-DDCCTermsOfUse.jsonld",
       "@type": "fhir:CodeSystem",
       "dcterms:identifier": "CodeSystem/DDCCTermsOfUse",
@@ -8204,6 +8369,61 @@
       "dcterms:type": "Terminology: Code Systems",
       "schema:sameAs": {
         "@id": "http://smart.who.int/trust/CodeSystem/DDCCTermsOfUse"
+      }
+    },
+    {
+      "@id": "CodeSystem-DDCCTermsOfUse-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DDCCTermsOfUse-ar",
+      "dcterms:title": "شروط استخدام نطاق الثقة DDCC",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز DDCCTermsOfUse: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DDCCTermsOfUse-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-DDCCTermsOfUse-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DDCCTermsOfUse-es",
+      "dcterms:title": "Condiciones de uso del Ámbito de confianza DDCC (es)",
+      "dcterms:description": "Suplemento en español (es) de DDCCTermsOfUse. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DDCCTermsOfUse-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-DDCCTermsOfUse-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DDCCTermsOfUse-fr",
+      "dcterms:title": "Conditions d’utilisation du Domaine de confiance DDCC",
+      "dcterms:description": "French (fr) supplement to DDCCTermsOfUse: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DDCCTermsOfUse-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-DDCCTermsOfUse-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DDCCTermsOfUse-ru",
+      "dcterms:title": "DDCCTermsOfUse (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for DDCCTermsOfUse: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DDCCTermsOfUse-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-DDCCTermsOfUse-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/DDCCTermsOfUse-zh",
+      "dcterms:title": "DDCC Trust Domain terms of use — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the DDCCTermsOfUse code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/DDCCTermsOfUse-zh"
       }
     },
     {
@@ -8229,6 +8449,61 @@
       }
     },
     {
+      "@id": "CodeSystem-Domains-DEV-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-DEV-ar",
+      "dcterms:title": "نطاقات الثقة في GDHCN التابعة لمنظمة الصحة العالمية (WHO) - DEV",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز Domains-DEV: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-DEV-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-DEV-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-DEV-es",
+      "dcterms:title": "Ámbitos de confianza de la GDHCN de la OMS - DEV (es)",
+      "dcterms:description": "Suplemento en español (es) de Domains-DEV. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-DEV-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-DEV-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-DEV-fr",
+      "dcterms:title": "Domaines de confiance du GDHCN de l’OMS – DEV",
+      "dcterms:description": "French (fr) supplement to Domains-DEV: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-DEV-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-DEV-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-DEV-ru",
+      "dcterms:title": "Domains-DEV (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for Domains-DEV: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-DEV-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-DEV-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-DEV-zh",
+      "dcterms:title": "WHO GDHCN Trust Domains - DEV — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the Domains-DEV code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-DEV-zh"
+      }
+    },
+    {
       "@id": "CodeSystem-Domains-UAT.jsonld",
       "@type": "fhir:CodeSystem",
       "dcterms:identifier": "CodeSystem/Domains-UAT",
@@ -8237,6 +8512,116 @@
       "dcterms:type": "Terminology: Code Systems",
       "schema:sameAs": {
         "@id": "http://smart.who.int/trust/CodeSystem/Domains-UAT"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-UAT-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-UAT-ar",
+      "dcterms:title": "نطاقات الثقة في GDHCN التابعة لمنظمة الصحة العالمية (WHO) - UAT",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز Domains-UAT: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-UAT-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-UAT-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-UAT-es",
+      "dcterms:title": "Ámbitos de confianza de la GDHCN de la OMS - UAT (es)",
+      "dcterms:description": "Suplemento en español (es) de Domains-UAT. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-UAT-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-UAT-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-UAT-fr",
+      "dcterms:title": "Domaines de confiance du GDHCN de l’OMS – UAT",
+      "dcterms:description": "French (fr) supplement to Domains-UAT: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-UAT-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-UAT-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-UAT-ru",
+      "dcterms:title": "Domains-UAT (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for Domains-UAT: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-UAT-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-UAT-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-UAT-zh",
+      "dcterms:title": "WHO GDHCN Trust Domains - UAT — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the Domains-UAT code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-UAT-zh"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-ar",
+      "dcterms:title": "نطاقات الثقة في GDHCN التابعة لمنظمة الصحة العالمية (WHO)",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز Domains: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-es",
+      "dcterms:title": "Ámbitos de confianza de la GDHCN de la OMS (es)",
+      "dcterms:description": "Suplemento en español (es) de Domains. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-fr",
+      "dcterms:title": "Domaines de confiance du GDHCN de l’OMS",
+      "dcterms:description": "French (fr) supplement to Domains: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-ru",
+      "dcterms:title": "Domains (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for Domains: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-Domains-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/Domains-zh",
+      "dcterms:title": "WHO GDHCN Trust Domains — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the Domains code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/Domains-zh"
       }
     },
     {
@@ -8262,6 +8647,61 @@
       }
     },
     {
+      "@id": "CodeSystem-KeyUsage-DEV-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-DEV-ar",
+      "dcterms:title": "نظام رموز استخدامات المفاتيح في GDHCN التابعة لمنظمة الصحة العالمية (WHO) - DEV",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز KeyUsage-DEV: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-DEV-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-DEV-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-DEV-es",
+      "dcterms:title": "Uso de claves de la GDHCN de la OMS - DEV (es)",
+      "dcterms:description": "Suplemento en español (es) de KeyUsage-DEV. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-DEV-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-DEV-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-DEV-fr",
+      "dcterms:title": "Système de codes d’usage des clés du GDHCN de l’OMS – DEV",
+      "dcterms:description": "French (fr) supplement to KeyUsage-DEV: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-DEV-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-DEV-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-DEV-ru",
+      "dcterms:title": "KeyUsage-DEV (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for KeyUsage-DEV: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-DEV-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-DEV-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-DEV-zh",
+      "dcterms:title": "WHO GDHCN Key Usage CodeSystem - DEV — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the KeyUsage-DEV code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-DEV-zh"
+      }
+    },
+    {
       "@id": "CodeSystem-KeyUsage-UAT.jsonld",
       "@type": "fhir:CodeSystem",
       "dcterms:identifier": "CodeSystem/KeyUsage-UAT",
@@ -8270,6 +8710,116 @@
       "dcterms:type": "Terminology: Code Systems",
       "schema:sameAs": {
         "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-UAT"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-UAT-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-UAT-ar",
+      "dcterms:title": "نظام رموز استخدامات المفاتيح في GDHCN التابعة لمنظمة الصحة العالمية (WHO) - UAT",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز KeyUsage-UAT: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-UAT-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-UAT-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-UAT-es",
+      "dcterms:title": "Uso de claves de la GDHCN de la OMS - UAT (es)",
+      "dcterms:description": "Suplemento en español (es) de KeyUsage-UAT. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-UAT-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-UAT-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-UAT-fr",
+      "dcterms:title": "Système de codes d’usage des clés du GDHCN de l’OMS – UAT",
+      "dcterms:description": "French (fr) supplement to KeyUsage-UAT: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-UAT-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-UAT-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-UAT-ru",
+      "dcterms:title": "KeyUsage-UAT (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for KeyUsage-UAT: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-UAT-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-UAT-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-UAT-zh",
+      "dcterms:title": "WHO GDHCN Key Usage CodeSystem - UAT — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the KeyUsage-UAT code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-UAT-zh"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-ar",
+      "dcterms:title": "نظام رموز استخدامات المفاتيح في GDHCN التابعة لمنظمة الصحة العالمية (WHO)",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز KeyUsage: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-es",
+      "dcterms:title": "Uso de claves de la GDHCN de la OMS (es)",
+      "dcterms:description": "Suplemento en español (es) de KeyUsage. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-fr",
+      "dcterms:title": "Système de codes d’usage des clés du GDHCN de l’OMS",
+      "dcterms:description": "French (fr) supplement to KeyUsage: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-ru",
+      "dcterms:title": "KeyUsage (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for KeyUsage: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-KeyUsage-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/KeyUsage-zh",
+      "dcterms:title": "WHO GDHCN Key Usage CodeSystem — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the KeyUsage code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/KeyUsage-zh"
       }
     },
     {
@@ -8317,6 +8867,61 @@
       }
     },
     {
+      "@id": "CodeSystem-PayloadTypes-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/PayloadTypes-ar",
+      "dcterms:title": "أنواع الحمولات في GDHCN التابعة لمنظمة الصحة العالمية (WHO)",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز PayloadTypes: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/PayloadTypes-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-PayloadTypes-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/PayloadTypes-es",
+      "dcterms:title": "Tipos de carga útil de la GDHCN de la OMS (es)",
+      "dcterms:description": "Suplemento en español (es) de PayloadTypes. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/PayloadTypes-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-PayloadTypes-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/PayloadTypes-fr",
+      "dcterms:title": "Types de charge utile du GDHCN de l’OMS",
+      "dcterms:description": "French (fr) supplement to PayloadTypes: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/PayloadTypes-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-PayloadTypes-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/PayloadTypes-ru",
+      "dcterms:title": "PayloadTypes (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for PayloadTypes: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/PayloadTypes-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-PayloadTypes-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/PayloadTypes-zh",
+      "dcterms:title": "WHO GDHCN Payload Types — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the PayloadTypes code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/PayloadTypes-zh"
+      }
+    },
+    {
       "@id": "CodeSystem-RefMartCountryList.jsonld",
       "@type": "fhir:CodeSystem",
       "dcterms:identifier": "CodeSystem/RefMartCountryList",
@@ -8347,6 +8952,61 @@
       "dcterms:type": "Terminology: Code Systems",
       "schema:sameAs": {
         "@id": "http://smart.who.int/trust/CodeSystem/WHORegionalOffices"
+      }
+    },
+    {
+      "@id": "CodeSystem-WHORegionalOffices-ar.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/WHORegionalOffices-ar",
+      "dcterms:title": "نظام رموز المكاتب الإقليمية لمنظمة الصحة العالمية (WHO)",
+      "dcterms:description": "ملحق باللغة العربية (ar) لنظام الرموز WHORegionalOffices: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/WHORegionalOffices-ar"
+      }
+    },
+    {
+      "@id": "CodeSystem-WHORegionalOffices-es.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/WHORegionalOffices-es",
+      "dcterms:title": "Oficinas Regionales de la OMS (es)",
+      "dcterms:description": "Suplemento en español (es) de WHORegionalOffices. Traducción no oficial generada por un agente, sin revisión humana.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/WHORegionalOffices-es"
+      }
+    },
+    {
+      "@id": "CodeSystem-WHORegionalOffices-fr.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/WHORegionalOffices-fr",
+      "dcterms:title": "Système de codes des bureaux régionaux de l’OMS",
+      "dcterms:description": "French (fr) supplement to WHORegionalOffices: displays and definitions in French. Unofficial agent translation.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/WHORegionalOffices-fr"
+      }
+    },
+    {
+      "@id": "CodeSystem-WHORegionalOffices-ru.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/WHORegionalOffices-ru",
+      "dcterms:title": "WHORegionalOffices (ru designations, unofficial)",
+      "dcterms:description": "Unofficial Russian designations for WHORegionalOffices: an agent translation that no person has signed off.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/WHORegionalOffices-ru"
+      }
+    },
+    {
+      "@id": "CodeSystem-WHORegionalOffices-zh.jsonld",
+      "@type": "fhir:CodeSystem",
+      "dcterms:identifier": "CodeSystem/WHORegionalOffices-zh",
+      "dcterms:title": "WHO Regional Offices CodeSystem — Chinese (zh) supplement",
+      "dcterms:description": "Unofficial Simplified Chinese (zh) display designations for the WHORegionalOffices code system, drafted by an agent and not signed off by a human.",
+      "dcterms:type": "Terminology: Code Systems",
+      "schema:sameAs": {
+        "@id": "http://smart.who.int/trust/CodeSystem/WHORegionalOffices-zh"
       }
     },
     {

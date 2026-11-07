@@ -1631,10 +1631,10 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/contributor-feedback.svg",
       "description": "A document is still being written, and the Authoring Committee gives\nfeedback on it in a shared Contributor Feedback sheet. This is what\nhappens to ONE change set, one row of that sheet: a member starts it\nwith a title, the sections it is about and their feedback; the agent\nproposes a direction; an Editor lets the agent edit; the agent makes the\nedit in the row's one pull request, whose staging preview shows what\nchanged; the committee answers on the row; and an Editor lets the agent\nmerge. If the row's feedback changes after the agent wrote its\nproposal, the proposal is marked stale and the row's Ready for agent\ngoes back to No, so the agent proposes again and an Editor decides\nagain. The sheet's colours follow the lanes: Blue for the committee,\nGreen for the agent, Orange for the Editor. Skill: review-sheet-script.",
       "enforcement": "strict",
-      "flowCount": 13,
+      "flowCount": 14,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Contributor feedback on a working draft",
-      "nodeCount": 12,
+      "nodeCount": 13,
       "sourcePath": "processes/content/contributor-feedback.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/contributor-feedback.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/StartEvent_Feedback",
@@ -1720,7 +1720,7 @@
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
-      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged"
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_CloseChangeSet"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF11",
@@ -1747,6 +1747,14 @@
       "name": "passed",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForMerge"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF14",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_CloseChangeSet",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Agent",
@@ -1786,8 +1794,8 @@
       "bpmnType": "bpmn:EndEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Agent",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10",
-      "name": "Change merged",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF14",
+      "name": "Change merged and closed",
       "nodeKind": "end",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
@@ -1861,6 +1869,22 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_CloseChangeSet",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10",
+      "name": "Close the change set: the issue, then the sheet row",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF14",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-agent-columns",
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_EditInPullRequest",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ServiceTask",
@@ -1921,7 +1945,7 @@
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_QaReviewer",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF08",
-      "name": "QA-review the dispositions",
+      "name": "QA gate: review dispositions against the people and the pull request",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF11",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback",
@@ -1984,10 +2008,10 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/authoring-a-document.svg",
       "description": "How a document folio — structured prose and policy guidance, with no Lean and no required TeX — is authored, built and reviewed end to end.\nSource of truth: this file. The SVG under docs/assets/img/workflows/ is generated\nfrom it by `bun run cat render:bpmn` — never hand-edit the SVG.\nThe shape is the paper process minus the Lean lane and plus one step, the profile\ncheck, which is what keeps a document folio publishable without either toolchain.\n\nReview, publish and committee feedback are core's shared Process_FolioReviewPublish, called after rendering. Its `no` answer, changes asked, comes back to Task_AuthorBlocks.",
       "enforcement": "advisory",
-      "flowCount": 17,
+      "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Authoring a document",
-      "nodeCount": 16,
+      "nodeCount": 17,
       "sourcePath": "processes/content/authoring-a-document.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/authoring-a-document.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/StartEvent_NewDocument",
@@ -2089,6 +2113,14 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12",
       "@type": "bootstrap:SequenceFlow",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Validate",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_PublishStatements"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12b",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_PublishStatements",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Render"
@@ -2197,6 +2229,23 @@
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/work-plan",
       "relaxable": true,
       "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/bean-coordination",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_PublishStatements",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12",
+      "name": "Publish extracted statements",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12b",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/build-pipeline",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements",
       "touchesWorkPlan": false
     },
     {
@@ -2373,7 +2422,7 @@
       "bpmnType": "bpmn:ServiceTask",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12b",
       "name": "Render MD, HTML and PDF",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A13",
@@ -7913,15 +7962,185 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "@type": "bootstrap:Process",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/record-agent-step.svg",
+      "description": "The one way an agent reports a move on a change set. The sheet script\nbuilds Agentic status, Agentic status (filter) and Staging review from\nthe Agent tab, and warns that no agent has picked a row up when the\nAgent step is missing or older than Ready for agent. Writing only\nFeedback (agent) leaves those columns stale, so it is never done alone.",
+      "enforcement": "strict",
+      "flowCount": 6,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "name": "Record agent step",
+      "nodeCount": 6,
+      "sourcePath": "processes/content/record-agent-step.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/record-agent-step.bpmn",
+      "startNode": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/StartEvent_Moved",
+      "summary": "The one way an agent reports a move on a change set."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS01",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/StartEvent_Moved",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS02",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteFeedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS03",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteFeedback",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_ReadBack"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS04",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_ReadBack",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Gateway_Agrees"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS05",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Gateway_Agrees",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "name": "no: fix the Agent row, never the copied columns",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS06",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Gateway_Agrees",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/EndEvent_Recorded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "name": "Authoring agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/EndEvent_Recorded",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:EndEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS06",
+      "name": "Step recorded",
+      "nodeKind": "end",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Gateway_Agrees",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS04",
+      "name": "Sheet agrees with Feedback (agent)?",
+      "nodeKind": "exclusive",
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS05",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS06"
+      ],
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/StartEvent_Moved",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:StartEvent",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "name": "Agent moved on a change set",
+      "nodeKind": "start",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS01",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_ReadBack",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS03",
+      "name": "Read back Agentic status and Staging review",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS04",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-log-watch",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS01",
+        "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS05"
+      ],
+      "name": "Write the change set's Agent row",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS02",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-agent-columns",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteFeedback",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:ServiceTask",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS02",
+      "name": "Write Feedback (agent) from that row",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS03",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-script",
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
       "@type": "bootstrap:Process",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/review-log-watch.svg",
       "description": "One poll of one review log (a drafting Contributor Feedback sheet, or a\npublic-comment sheet's Review Change Sets) and its folio repository. A tool decides, with no agent judgement, whether\nanything a person set in the sheet or any open issue changed since the\nlast poll. Only then does the agent append rows for new issues and do\nits pass. Skill: review-log-watch.",
       "enforcement": "strict",
-      "flowCount": 8,
+      "flowCount": 10,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "name": "Review-log watch",
-      "nodeCount": 9,
+      "nodeCount": 11,
       "sourcePath": "processes/content/review-log-watch.bpmn",
       "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/review-log-watch.bpmn",
       "startNode": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll",
@@ -7949,7 +8168,7 @@
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
-      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed"
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04",
@@ -7983,7 +8202,7 @@
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
-      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept"
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08",
@@ -7992,6 +8211,22 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/EndEvent_Done"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF09",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
@@ -8035,7 +8270,7 @@
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF09",
       "name": "Sheet or issues changed?",
       "nodeKind": "exclusive",
       "outgoing": [
@@ -8053,7 +8288,7 @@
       "bpmnType": "bpmn:StartEvent",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
-      "name": "Every 3 minutes",
+      "name": "Every minute",
       "nodeKind": "start",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF01",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
@@ -8067,7 +8302,7 @@
       "bpmnType": "bpmn:ServiceTask",
       "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
-      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10",
       "name": "Accept the new state",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08",
@@ -8127,6 +8362,23 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "calledElement": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07",
+      "name": "Record agent step on each row it wrote",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-sheet-agent-columns",
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ServiceTask",
@@ -8136,6 +8388,22 @@
       "name": "Run the review-log-watch check",
       "nodeKind": "activity",
       "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
+      "relaxable": true,
+      "requires": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/review-log-watch",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:Task",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-processes",
+      "incoming": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03",
+      "name": "Hand new feedback to the row's agent; take over stalled rows",
+      "nodeKind": "activity",
+      "outgoing": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF09",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
       "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/authoring-agent",
       "relaxable": true,

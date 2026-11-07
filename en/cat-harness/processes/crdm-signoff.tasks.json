@@ -1,6 +1,92 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_CRDM_Signoff",
+ "markers": [
+  {
+   "id": "A_CreateBeans",
+   "name": "Phase 5: Create beans",
+   "left": 21.1,
+   "top": 48.96,
+   "box": {
+    "left": 15.77,
+    "top": 68.75,
+    "width": 1.76,
+    "height": 5
+   }
+  },
+  {
+   "id": "BA_Signoff",
+   "name": "Sign off on requirements",
+   "left": 32.87,
+   "top": 6.25,
+   "box": {
+    "left": 27.54,
+    "top": 26.04,
+    "width": 1.76,
+    "height": 5
+   }
+  },
+  {
+   "id": "A_RecordSignoff",
+   "name": "Record the sign-off attestation",
+   "left": 32.87,
+   "top": 48.96,
+   "box": {
+    "left": 27.54,
+    "top": 68.75,
+    "width": 1.76,
+    "height": 5
+   }
+  },
+  {
+   "id": "A_AnnounceBranch",
+   "name": "Announce the branch on the issue",
+   "left": 90.96,
+   "top": 48.96,
+   "box": {
+    "left": 85.63,
+    "top": 68.75,
+    "width": 1.76,
+    "height": 5
+   }
+  },
+  {
+   "id": "A_OfferKg",
+   "name": "Offer KG destinations for the agreed set",
+   "left": 55.66,
+   "top": 48.96,
+   "box": {
+    "left": 50.33,
+    "top": 68.75,
+    "width": 1.76,
+    "height": 5
+   }
+  },
+  {
+   "id": "BA_ChooseKg",
+   "name": "Choose a destination, or none",
+   "left": 67.43,
+   "top": 6.25,
+   "box": {
+    "left": 62.1,
+    "top": 26.04,
+    "width": 1.76,
+    "height": 5
+   }
+  },
+  {
+   "id": "A_RecordKg",
+   "name": "Run placement, file a bean",
+   "left": 79.19,
+   "top": 48.96,
+   "box": {
+    "left": 73.86,
+    "top": 68.75,
+    "width": 1.76,
+    "height": 5
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff",
  "tasks": {
   "A_CreateBeans": {

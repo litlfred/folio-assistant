@@ -1,6 +1,236 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_IgIncremental",
+ "markers": [
+  {
+   "id": "Task_Restore",
+   "name": "Restore derived state",
+   "left": 11.08,
+   "top": 32,
+   "box": {
+    "left": 8.75,
+    "top": 41.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_LogEnvError",
+   "name": "Log the environment error on the bean",
+   "left": 16.37,
+   "top": 18.5,
+   "box": {
+    "left": 13.88,
+    "top": 25,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_FullBuild",
+   "name": "Full publisher build",
+   "left": 21.35,
+   "top": 47,
+   "box": {
+    "left": 19.02,
+    "top": 56.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_Cone",
+   "name": "Compute the cone of the change",
+   "left": 21.35,
+   "top": 32,
+   "box": {
+    "left": 19.02,
+    "top": 41.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_ConeReport",
+   "name": "Post the cone report on the PR",
+   "left": 26.48,
+   "top": 62,
+   "box": {
+    "left": 24.16,
+    "top": 71.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_Checkout",
+   "name": "Restricted checkout of the backward cone",
+   "left": 26.48,
+   "top": 32,
+   "box": {
+    "left": 24.16,
+    "top": 41.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_Sushi",
+   "name": "SUSHI on the restricted tank",
+   "left": 31.62,
+   "top": 32,
+   "box": {
+    "left": 29.29,
+    "top": 41.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_ContextLoad",
+   "name": "Load or reuse the warm context",
+   "left": 36.76,
+   "top": 47,
+   "box": {
+    "left": 34.43,
+    "top": 56.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_Validate",
+   "name": "Validate the cone (fhir_validate)",
+   "left": 41.89,
+   "top": 47,
+   "box": {
+    "left": 39.57,
+    "top": 56.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_LogFindings",
+   "name": "Log findings on the bean",
+   "left": 47.19,
+   "top": 18.5,
+   "box": {
+    "left": 44.7,
+    "top": 25,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_Render",
+   "name": "Re-render the cone's records (fhir_narrative · skip lists)",
+   "left": 52.17,
+   "top": 32,
+   "box": {
+    "left": 49.84,
+    "top": 41.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_Merge",
+   "name": "Merge restored and rebuilt records",
+   "left": 57.3,
+   "top": 32,
+   "box": {
+    "left": 54.98,
+    "top": 41.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_Index",
+   "name": "Rebuild the meta-index (ig_metaindex_rebuild)",
+   "left": 62.44,
+   "top": 32,
+   "box": {
+    "left": 60.11,
+    "top": 41.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_Site",
+   "name": "Assemble the site",
+   "left": 67.58,
+   "top": 32,
+   "box": {
+    "left": 65.25,
+    "top": 41.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_Qa",
+   "name": "Run QC gates on the aggregate QA",
+   "left": 72.71,
+   "top": 62,
+   "box": {
+    "left": 70.39,
+    "top": 71.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_QcBeans",
+   "name": "File QC findings as beans",
+   "left": 78.01,
+   "top": 18.5,
+   "box": {
+    "left": 75.52,
+    "top": 25,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_DeployPreview",
+   "name": "Deploy the preview site",
+   "left": 88.12,
+   "top": 62,
+   "box": {
+    "left": 85.79,
+    "top": 71.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_Deploy",
+   "name": "Deploy the site",
+   "left": 88.12,
+   "top": 77,
+   "box": {
+    "left": 85.79,
+    "top": 86.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  },
+  {
+   "id": "Task_Seed",
+   "name": "Seed the cache from the green build",
+   "left": 93.26,
+   "top": 77,
+   "box": {
+    "left": 90.93,
+    "top": 86.5,
+    "width": 0.77,
+    "height": 2.4
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
  "tasks": {
   "Task_Restore": {

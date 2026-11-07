@@ -1,6 +1,152 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_FeatureStaging",
+ "markers": [
+  {
+   "id": "Task_Build",
+   "name": "Build the docs site",
+   "left": 31.01,
+   "top": 2.78,
+   "box": {
+    "left": 23.69,
+    "top": 13.33,
+    "width": 2.42,
+    "height": 2.67
+   }
+  },
+  {
+   "id": "Task_Deploy",
+   "name": "Push to the CDN under branches/",
+   "left": 46.16,
+   "top": 2.78,
+   "box": {
+    "left": 38.84,
+    "top": 13.33,
+    "width": 2.42,
+    "height": 2.67
+   }
+  },
+  {
+   "id": "Task_LogRendered",
+   "name": "Append `rendered` to the render log",
+   "left": 61.31,
+   "top": 2.78,
+   "box": {
+    "left": 53.99,
+    "top": 13.33,
+    "width": 2.42,
+    "height": 2.67
+   }
+  },
+  {
+   "id": "Task_Comment",
+   "name": "Comment the preview URL on the PR",
+   "left": 76.46,
+   "top": 2.78,
+   "box": {
+    "left": 69.14,
+    "top": 13.33,
+    "width": 2.42,
+    "height": 2.67
+   }
+  },
+  {
+   "id": "Task_Slug",
+   "name": "Derive the slug from the head ref",
+   "left": 31.01,
+   "top": 21.67,
+   "box": {
+    "left": 23.69,
+    "top": 32.22,
+    "width": 2.42,
+    "height": 2.67
+   }
+  },
+  {
+   "id": "Task_Remove",
+   "name": "Remove the preview and log it",
+   "left": 65.35,
+   "top": 21.67,
+   "box": {
+    "left": 58.03,
+    "top": 32.22,
+    "width": 2.42,
+    "height": 2.67
+   }
+  },
+  {
+   "id": "Task_LogRetained",
+   "name": "Append `retained`, with why it stays",
+   "left": 65.35,
+   "top": 38.33,
+   "box": {
+    "left": 58.03,
+    "top": 48.89,
+    "width": 2.42,
+    "height": 2.67
+   }
+  },
+  {
+   "id": "Task_Notice",
+   "name": "Post the retention notice on the PR",
+   "left": 80.51,
+   "top": 38.33,
+   "box": {
+    "left": 73.18,
+    "top": 48.89,
+    "width": 2.42,
+    "height": 2.67
+   }
+  },
+  {
+   "id": "Task_Validate",
+   "name": "Check the slug and its confirmation",
+   "left": 31.01,
+   "top": 57.22,
+   "box": {
+    "left": 23.69,
+    "top": 67.78,
+    "width": 2.42,
+    "height": 2.67
+   }
+  },
+  {
+   "id": "Task_Preflight",
+   "name": "Re-evaluate liveness AT REMOVAL TIME",
+   "left": 46.16,
+   "top": 57.22,
+   "box": {
+    "left": 38.84,
+    "top": 67.78,
+    "width": 2.42,
+    "height": 2.67
+   }
+  },
+  {
+   "id": "Task_RemoveDisp",
+   "name": "Remove it AND append `removed` — one commit",
+   "left": 80.51,
+   "top": 57.22,
+   "box": {
+    "left": 73.18,
+    "top": 67.78,
+    "width": 2.42,
+    "height": 2.67
+   }
+  },
+  {
+   "id": "H_Confirm",
+   "name": "Repeat the slug, exactly, to confirm",
+   "left": 19.7,
+   "top": 85.56,
+   "box": {
+    "left": 12.37,
+    "top": 96.11,
+    "width": 2.42,
+    "height": 2.67
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_FeatureStaging",
  "tasks": {
   "Task_Build": {

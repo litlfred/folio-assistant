@@ -1,6 +1,56 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_PublicCommentChange",
+ "markers": [
+  {
+   "id": "Task_AuthorEdits",
+   "name": "Edit the document as decided, on a feature branch",
+   "left": 33.33,
+   "top": 4.55,
+   "box": {
+    "left": 26.54,
+    "top": 21.59,
+    "width": 2.11,
+    "height": 5.45
+   }
+  },
+  {
+   "id": "CallActivity_ChangeSet",
+   "name": "Review the change set on its staging preview",
+   "left": 42.54,
+   "top": 34.09,
+   "box": {
+    "left": 36.18,
+    "top": 55.68,
+    "width": 2.11,
+    "height": 5.45
+   }
+  },
+  {
+   "id": "Task_QaGate",
+   "name": "QA gate: check dispositions against the people and the pull request",
+   "left": 57.46,
+   "top": 68.18,
+   "box": {
+    "left": 51.1,
+    "top": 89.77,
+    "width": 2.11,
+    "height": 5.45
+   }
+  },
+  {
+   "id": "Task_Incorporate",
+   "name": "Mark incorporated when the change set merges",
+   "left": 84.65,
+   "top": 34.09,
+   "box": {
+    "left": 78.29,
+    "top": 55.68,
+    "width": 2.11,
+    "height": 5.45
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange",
  "tasks": {
   "Task_AuthorEdits": {

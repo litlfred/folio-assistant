@@ -1,6 +1,224 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_SgEndToEnd",
+ "markers": [
+  {
+   "id": "Task_DescribeUseCase",
+   "name": "0 · Describe the use case",
+   "left": 9.42,
+   "top": 5.36,
+   "box": {
+    "left": 7.26,
+    "top": 16.96,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_IdentifyL1",
+   "name": "1 · Identify L1 guidelines and recommendations",
+   "left": 13.74,
+   "top": 33.04,
+   "box": {
+    "left": 11.58,
+    "top": 44.64,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_AdjL1",
+   "name": "Adjudicate the L1 source list",
+   "left": 18.06,
+   "top": 61.61,
+   "box": {
+    "left": 15.9,
+    "top": 73.21,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_IngestKg",
+   "name": "2 · Ingest into the L1 KG",
+   "left": 26.7,
+   "top": 33.04,
+   "box": {
+    "left": 24.54,
+    "top": 44.64,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_AdjKg",
+   "name": "Adjudicate the L1 KG",
+   "left": 31.02,
+   "top": 61.61,
+   "box": {
+    "left": 28.86,
+    "top": 73.21,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_DepsL2",
+   "name": "3 · Choose L2 dependencies (WHO / jurisdiction DAKs)",
+   "left": 39.66,
+   "top": 33.04,
+   "box": {
+    "left": 37.5,
+    "top": 44.64,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_AdjDepsL2",
+   "name": "Adjudicate L2 dependencies",
+   "left": 43.98,
+   "top": 61.61,
+   "box": {
+    "left": 41.82,
+    "top": 73.21,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_L2",
+   "name": "4 · Create / adapt L2 DAK assets",
+   "left": 48.3,
+   "top": 33.04,
+   "box": {
+    "left": 46.14,
+    "top": 44.64,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_AdjL2",
+   "name": "Review each L2 asset (before / after if adapted)",
+   "left": 52.62,
+   "top": 61.61,
+   "box": {
+    "left": 50.46,
+    "top": 73.21,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_DepsL3",
+   "name": "5 · Choose L3 dependencies (WHO / jurisdiction IGs)",
+   "left": 56.94,
+   "top": 33.04,
+   "box": {
+    "left": 54.78,
+    "top": 44.64,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_AdjDepsL3",
+   "name": "Adjudicate L3 dependencies",
+   "left": 61.26,
+   "top": 61.61,
+   "box": {
+    "left": 59.1,
+    "top": 73.21,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_L3Ready",
+   "name": "Check L3 readiness",
+   "left": 64.53,
+   "top": 33.04,
+   "box": {
+    "left": 62.37,
+    "top": 44.64,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_L3",
+   "name": "6 · Produce L3 assets",
+   "left": 73.17,
+   "top": 33.04,
+   "box": {
+    "left": 71.01,
+    "top": 44.64,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_AdjL3",
+   "name": "Review each L3 asset (before / after if adapted)",
+   "left": 77.49,
+   "top": 61.61,
+   "box": {
+    "left": 75.33,
+    "top": 73.21,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_DescribeApp",
+   "name": "7 · L4: describe the consuming application",
+   "left": 81.81,
+   "top": 5.36,
+   "box": {
+    "left": 79.65,
+    "top": 16.96,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_WireframeApp",
+   "name": "8a · L4: wireframe the application",
+   "left": 86.13,
+   "top": 33.04,
+   "box": {
+    "left": 83.97,
+    "top": 44.64,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_BuildApp",
+   "name": "8b · L4: build the consuming application",
+   "left": 90.45,
+   "top": 33.04,
+   "box": {
+    "left": 88.29,
+    "top": 44.64,
+    "width": 0.63,
+    "height": 4.29
+   }
+  },
+  {
+   "id": "Task_AdjApp",
+   "name": "Adjudicate the L4 wireframes and application",
+   "left": 94.76,
+   "top": 61.61,
+   "box": {
+    "left": 92.6,
+    "top": 73.21,
+    "width": 0.63,
+    "height": 4.29
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_SgEndToEnd",
  "tasks": {
   "Task_DescribeUseCase": {

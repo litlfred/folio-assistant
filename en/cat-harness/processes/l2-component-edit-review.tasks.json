@@ -1,6 +1,80 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_L2ComponentEditReview",
+ "markers": [
+  {
+   "id": "Task_Edit",
+   "name": "Edit the component",
+   "left": 21.93,
+   "top": 12.04,
+   "box": {
+    "left": 17.4,
+    "top": 22.22,
+    "width": 1.4,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "Task_Check",
+   "name": "Run the component's checker",
+   "left": 32.46,
+   "top": 12.04,
+   "box": {
+    "left": 27.92,
+    "top": 22.22,
+    "width": 1.4,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "Task_RenderStage",
+   "name": "Render, stage, before/after",
+   "left": 42.98,
+   "top": 12.04,
+   "box": {
+    "left": 38.45,
+    "top": 22.22,
+    "width": 1.4,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "Task_RequestReview",
+   "name": "Ask for review with staging deep links",
+   "left": 51.17,
+   "top": 36.11,
+   "box": {
+    "left": 46.64,
+    "top": 46.3,
+    "width": 1.4,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "Call_Review",
+   "name": "Review the staged component",
+   "left": 62.87,
+   "top": 69.44,
+   "box": {
+    "left": 58.33,
+    "top": 79.63,
+    "width": 1.4,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "Task_ReopenUpstream",
+   "name": "Reopen upstream, flag derived assets",
+   "left": 89.77,
+   "top": 12.04,
+   "box": {
+    "left": 85.23,
+    "top": 22.22,
+    "width": 1.4,
+    "height": 4.44
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2ComponentEditReview",
  "tasks": {
   "Task_Edit": {

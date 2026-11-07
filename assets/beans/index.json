@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 54,
+      "count": 48,
       "unit": "open beans"
     }
   },
@@ -41,14 +41,14 @@
     {
       "id": "folio-assistant-2akf",
       "title": "document-export: pin the Word styling with a reference.docx so the pandoc version cannot change the PDF's pages and lines",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-dthl",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-06T05:56:50Z",
-      "updatedAt": "2026-11-06T05:56:50Z",
+      "updatedAt": "2026-11-06T07:55:31Z",
       "preview": "Found 2026-11-06 (dth-hrh#104 previews). The same commit exported on the GitHub runner (pandoc 3.7.0.2, LibreOffice 26.2) gives a 169-page, 2514-line PDF; in a Claude container (pandoc 3.1.3, LibreOffice 24.2) 143 pages, 2162 lines. Cause: pandoc 3.7's default reference docx uses the Aptos theme font; 3.1.3's uses Cambria/Calibri. Laying out the CI .docx locally gives 166 pages in Inter (the local",
       "file": "beans/defs/folio-assistant-2akf--document-export-pin-the-word-styling-with-a-refere.md"
     },
@@ -111,14 +111,14 @@
     {
       "id": "folio-assistant-55ka",
       "title": "Siblings asked the owner in prose without cards on 2026-11-05; make interaction-modality part of every sibling brief, and check that it's followed",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:47:16Z",
-      "updatedAt": "2026-11-06T05:53:00Z",
+      "updatedAt": "2026-11-06T08:38:30Z",
       "preview": "The owner, litlfred, has low dexterity. On 2026-11-05 they asked: *\"did you and your siblings forget I am disabled? why has it not been heeded lately?\"* (relayed by the CI-speed parent session).\n\nSome sibling sessions asked the owner in prose only, without numbered options and without a tappable card. The rule is the cat-harness skill `interaction-modality`:\n- the full question in chat first, with",
       "file": "beans/defs/folio-assistant-55ka--siblings-asked-the-owner-in-prose-without-cards-on.md"
     },
@@ -202,7 +202,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:02:05Z",
-      "updatedAt": "2026-11-06T06:20:00Z",
+      "updatedAt": "2026-11-07T17:33:00Z",
       "preview": "**Owner ruling, 2026-11-05 ~13:00Z**, verbatim choice: \"Move the checks (Recommended)\": checks of cat-harness's own files run only in the repo that commits those files, so other layers stop seeing false new failures.\n\n## Evidence\n- `check:schema-nodes` judges the harness's own `schemas/` (cat-harness-tools#1478 left two modules untagged; fixed by #1483 / #1485). Every root that mounts the layer ra",
       "file": "beans/defs/folio-assistant-70hd--cat-harness-file-checks-run-only-in-the-repo-that.md"
     },
@@ -219,6 +219,20 @@
       "updatedAt": "2026-11-06T01:48:35Z",
       "preview": "Launched by session_01VQDpPffYARDQ8juksAZScf (owner litlfred: \"do it all properly, shave every second\"); worked by \"CI speed 7\" (session_01VQDpPfihRU4aFLjQGkhvs8).\n\nOn pull_request, the four typescript-test shards run only the test files the PR's change can affect: the relative-import closure of every changed file (cat-harness-tools scripts/affected-tests.ts, cat-harness-tools#1487) plus each test",
       "file": "beans/defs/folio-assistant-711q--ci-speed-ii-h-pull-requests-run-only-the-bun-test.md"
+    },
+    {
+      "id": "folio-assistant-724x",
+      "title": "Every test has a Gherkin: @test:<name> Scenario per executable test, test-has-gherkin criterion, check:test-gherkin",
+      "status": "in-progress",
+      "type": "feature",
+      "priority": "normal",
+      "parent": "folio-assistant-4j43",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-06T09:22:02Z",
+      "updatedAt": "2026-11-06T09:57:23Z",
+      "preview": "Owner rule (litlfred, 2026-11-06): \"A test should always have a Gherkin.\" Harness half: skill text in sdlc-core/test-engineer + test-plan-execution. Tools half (cat-harness-tools): test-plan/v1 feature required (minor), test-has-gherkin in qa-criteria-registry depends_on feature, check:test-gherkin with language adapters. Holder: claude session_01VQDpPfzC5nMP7YvwEJa2XR (2026-11-06).\n\nPR litlfred/c",
+      "file": "beans/defs/folio-assistant-724x--every-test-has-a-gherkin-testname-scenario-per-exe.md"
     },
     {
       "id": "folio-assistant-75c5",
@@ -363,14 +377,14 @@
     {
       "id": "folio-assistant-audl",
       "title": "cat-harness: French translation of the rewritten docs/guides/agent-onboarding.md",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T14:22:39Z",
-      "updatedAt": "2026-11-06T05:52:40Z",
+      "updatedAt": "2026-11-06T08:38:30Z",
       "preview": "Docs QA passes d6e155a6, 756943ad and 7c759481 rewrote cat-harness's `docs/guides/agent-onboarding.md`. Then 944dbd62 regenerated `translations/fr/guides/agent-onboarding.po`: 41 msgids, 25 of them empty. That is an inherited `translation:block-qa` finding, one of 16 inherited at `qa-reports:main/83c80d73`.\n\nFound by \"CI speed 12\" while judging smart-base#307.\n\nSign-off follows the translation pro",
       "file": "beans/defs/folio-assistant-audl--cat-harness-french-translation-of-the-rewritten-do.md"
     },
@@ -398,21 +412,21 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T18:30:00Z",
-      "updatedAt": "2026-11-02T19:26:00Z",
+      "updatedAt": "2026-11-06T08:35:33Z",
       "preview": "## How to resume (read this first)\n\n1. Read this bean, newest comment last. The last comment is the current state.\n2. Project thread: \"Move glossary and acronyms to end matter\" (cmsg_017WNUkNK8kdDziPK58Pv6G9AcL9aRjjsVCideLLzUF3hc). Project memory: `document-back-matter-order.md`.\n3. Check the open PRs below: CI, merge state. Structure-only PRs merge when green (owner OK'd smart-ra#230 at 18:17Z; m",
       "file": "beans/defs/folio-assistant-bmat--document-back-matter-glossary-acronyms.md"
     },
     {
       "id": "folio-assistant-bpnl",
       "title": "Fix overlapping harness BPMN layouts (nice-BPMN criteria)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T18:55:00Z",
-      "updatedAt": "2026-11-05T14:03:00Z",
+      "updatedAt": "2026-11-06T08:31:00Z",
       "preview": "Owner 2026-11-02 18:41Z, on the cat-harness BPMN in the beans-by-process mockup: \"this bpmn has overlaps, does not meet nice bpmn criteria\". Thread: https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9TKtbAKvnZPFwBmpCcBD2oP\n\nCriteria: skill `bpmn-detangle` (cat-harness skills/process/workflow/bpmn-detangle.md), checks in cat-harness-tools src/workflow/d",
       "file": "beans/defs/folio-assistant-bpnl--fix-overlapping-harness-bpmn-layouts.md"
     },
@@ -552,7 +566,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-06T05:06:13Z",
-      "updatedAt": "2026-11-06T05:23:43Z",
+      "updatedAt": "2026-11-06T08:36:21Z",
       "preview": "folio-assistant#2986 (cat-harness 7321322, cat-harness-tools 925882a, bootstrap 12fa6d5) fails 5 checks that pass on main ae0fe43 (run 42152541993): activity-skill-coverage and process-index chatter (cat-harness sdlc/processes/cache.bpmn: 8 tasks name no skill; Process_Cache summary carries a dated owner quote), bpmn:checklist:check (2 cat-harness checklists stale vs bootstrap 12fa6d5), audit:cove",
       "file": "beans/defs/folio-assistant-evtx--re-pin-train-20261106-0425-has-five-new-failures-p.md"
     },
@@ -601,14 +615,14 @@
     {
       "id": "folio-assistant-fn8q",
       "title": "CI speed II (e): gates before push (pre-push, agent hook, tree-keyed record)",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T08:26:16Z",
-      "updatedAt": "2026-11-06T06:08:19Z",
+      "updatedAt": "2026-11-06T07:49:12Z",
       "preview": "Catch failures before they reach a runner: a pre-push hook, an agent hook, and a record keyed by the tree hash so CI can see the gates already passed on that exact tree. Sibling \"CI speed 3\", in cat-harness-tools. An agent's record never stands in for the QA verdict; it only lets CI skip a rebuild it will check.\n\n## Done when\n- [x] the pre-push and agent hooks run the fast gates — the hook is litl",
       "file": "beans/defs/folio-assistant-fn8q--ci-speed-ii-e-gates-before-push-pre-push-agent-hoo.md"
     },
@@ -622,7 +636,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T19:30:00Z",
-      "updatedAt": "2026-11-02T20:05:00Z",
+      "updatedAt": "2026-11-07T16:20:00Z",
       "preview": "## Goal\n\nOwner saw \"POTENTIAL RISKS MITIGATION MITIGATION ...\" run-on text under the real risks table on the dth-pc staging site (Chapter 4). The seeder copied PDF table text into prose pages next to the structured t-chNN-step-N table blocks.\n\nSame owner message also asked: more padding between content and the \"grill\" (side decoration), and no right-side grill. That is site chrome (cat-harness), n",
       "file": "beans/defs/folio-assistant-ftpc--dth-pc-flattened-table-prose-cleanup.md"
     },
@@ -925,6 +939,20 @@
       "file": "beans/defs/folio-assistant-nikw--regen-writerstestts-reads-cat-harnessdocsassetsimg.md"
     },
     {
+      "id": "folio-assistant-npx2",
+      "title": "Layer mains out of step: cat-harness process pages link assets/img/workflows/*.svg, but cat-harness-tools #1504 draws diagrams beside each .bpmn",
+      "status": "todo",
+      "type": "bug",
+      "priority": "",
+      "parent": "folio-assistant-dthl",
+      "blocking": [],
+      "blockedBy": [],
+      "createdAt": "2026-11-06T09:21:33Z",
+      "updatedAt": "2026-11-06T09:21:33Z",
+      "preview": "Found 2026-11-06 repinning dth-hrh to every layer's main (dth-hrh#105). With cat-harness-tools main d391194 + cat-harness main 57a1428 (+ other mains), the site build stops at '137 unresolved link(s)': every en/cat-harness/processes/*.html links ../../../assets/img/workflows/<name>.svg, which tools #1504 ('render:bpmn: draw every layer's diagram beside its own .bpmn') no longer writes (run 4219223",
+      "file": "beans/defs/folio-assistant-npx2--layer-mains-out-of-step-cat-harness-process-pages.md"
+    },
+    {
       "id": "folio-assistant-nvhg",
       "title": "TERMINOLOGY / adjudication leg 2: two judges disagree about a mapping (from 2i5f)",
       "status": "todo",
@@ -1018,8 +1046,8 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-06T05:55:05Z",
-      "updatedAt": "2026-11-06T05:55:05Z",
-      "preview": "Owner litlfred 2026-11-06 chose 'One new session': fix the 3 causes failing re-pin trains fa#2975…#2986.\n\n## Done when\n- [ ] Cause 1: cat-harness#1097 (re-pin bootstrap 12fa6d5 / tools 9f478d4 + 2 checklists) merged\n- [ ] Cause 3: cat-harness#1088 (CI speed 14, Process_Cache skills + summary) merged\n- [ ] Cause 2: fa#2985 (integrator, caches:viz:check gate) merged\n- [ ] Train session (session_01Xu",
+      "updatedAt": "2026-11-06T08:36:09Z",
+      "preview": "Owner litlfred 2026-11-06 chose 'One new session': fix the 3 causes failing re-pin trains fa#2975…#2986.\n\n## Done when\n- [x] Cause 1: cat-harness#1097 merged 43d7648 — (re-pin bootstrap 12fa6d5 / tools 9f478d4 + 2 checklists) merged\n- [x] Cause 3: cat-harness#1088 merged — (CI speed 14, Process_Cache skills + summary) merged\n- [ ] Cause 2: fa#2985 (integrator, caches:viz:check gate) merged\n- [ ] T",
       "file": "beans/defs/folio-assistant-pdsq--re-pin-trains-fix-the-3-standing-blockers-owner-20.md"
     },
     {
@@ -1039,14 +1067,14 @@
     {
       "id": "folio-assistant-pqlh",
       "title": "Re-pin trains: keep bootstrap checklists in step with the train's bootstrap pin",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-06T05:55:06Z",
-      "updatedAt": "2026-11-06T05:55:06Z",
+      "updatedAt": "2026-11-06T08:35:57Z",
       "preview": "Structural fix for cause 1 of the 2026-11-06 train failures: cat-harness commits bootstrap's checklists built from its own bootstrap pin, so any train that moves folio-assistant's bootstrap past cat-harness's lock fails bpmn:checklist:check. Options: (a) the train never moves bootstrap/-tools past cat-harness's lock (re-pin cat-harness first, as a cascade), or (b) build below-harness checklists at",
       "file": "beans/defs/folio-assistant-pqlh--re-pin-trains-keep-bootstrap-checklists-in-step-wi.md"
     },
@@ -1074,7 +1102,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T18:30:00Z",
-      "updatedAt": "2026-11-05T13:45:30Z",
+      "updatedAt": "2026-11-07T16:06:00Z",
       "preview": "## How to resume (read this first)\n\n1. Read this bean, newest comment last.\n2. Check litlfred/smart-ra#232 live (CI, mergeable, review threads). Branch `claude/dpi-h-ra-bibliography`, issue #231.\n3. It is CONTENT: merge only after the owner answers card \"How should I finish the dpi-h-ra bibliography PR?\" in project thread cmsg_017WNUkNK8kdDziPK58Pv6G9PSc4XQEZrAnZp8PdoGokYJ (options A merge as is (",
       "file": "beans/defs/folio-assistant-rbib--dpi-h-ra-bibliography-handover.md"
     },
@@ -1095,15 +1123,15 @@
     {
       "id": "folio-assistant-rwhr",
       "title": "A process declares whether it starts from a work plan; workflow_start says so when one is missing",
-      "status": "todo",
+      "status": "completed",
       "type": "feature",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T20:10:15Z",
-      "updatedAt": "2026-11-05T20:10:15Z",
-      "preview": "Split from folio-assistant-exrp (plan step 3), owner 2026-11-05: not chosen for now; filed as its own work item. A BPMN process declares (optionally) that it starts from a work plan; small processes need none. workflow_start reports, without refusing, when such a process is started with no plan.",
+      "updatedAt": "2026-11-06T09:53:20Z",
+      "preview": "Split from folio-assistant-exrp (plan step 3), owner 2026-11-05: not chosen for now; filed as its own work item. A BPMN process declares (optionally) that it starts from a work plan; small processes need none. workflow_start reports, without refusing, when such a process is started with no plan.\n\n_2026-11-06T08:35:21Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: ",
       "file": "beans/defs/folio-assistant-rwhr--a-process-declares-whether-it-starts-from-a-work-p.md"
     },
     {
@@ -1207,14 +1235,14 @@
     {
       "id": "folio-assistant-v29t",
       "title": "CI site publish has no pandoc/LibreOffice, so site:export fails every CI publish of dth-hrh",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
-      "priority": "",
+      "priority": "normal",
       "parent": "folio-assistant-dthl",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T20:09:21Z",
-      "updatedAt": "2026-11-05T20:09:21Z",
+      "updatedAt": "2026-11-06T07:55:31Z",
       "preview": "Found 2026-11-05 (bean xxow). dth-hrh run 42076453040 failed at site:export with 'pandoc is not installed (needed for release)'. The shared reusable workflow cat-harness-tools/.github/workflows/folio-site-publish.yml (pinned at 9b62dbf; main is the same) installs Ruby but not pandoc, LibreOffice or poppler-utils. No CI publish of dth-hrh main has succeeded since site:export was added (fcd940b, 202",
       "file": "beans/defs/folio-assistant-v29t--ci-site-publish-has-no-pandoclibreoffice-so-siteex.md"
     },
@@ -1235,14 +1263,14 @@
     {
       "id": "folio-assistant-veb9",
       "title": "cat-harness-tools: adversarial-backfill.ts resolveSidecarPath still uses the pre-#1014 path",
-      "status": "in-progress",
+      "status": "completed",
       "type": "bug",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T17:24:23Z",
-      "updatedAt": "2026-11-06T05:55:20Z",
+      "updatedAt": "2026-11-06T08:38:30Z",
       "preview": "`resolveSidecarPath` in cat-harness-tools `adversarial-backfill.ts` still maps a skill to `kg-qa/skills/sdlc/sdlc-core/`. Since #1014 the store has been at cat-harness `test/attestations/adversarial-review/sdlc/skills/sdlc-core/<name>.attestations.json`.\n\nAs a result:\n- `--rank` reports reviewed sdlc skills as \"never\" reviewed;\n- the write path would create orphaned files.\n\nFound during the owner-",
       "file": "beans/defs/folio-assistant-veb9--cat-harness-tools-adversarial-backfillts-resolvesi.md"
     },
@@ -1312,7 +1340,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:21:54Z",
-      "updatedAt": "2026-11-05T13:21:54Z",
+      "updatedAt": "2026-11-06T08:36:33Z",
       "preview": "Every fresh folio-assistant session: the container's instance mounts are older than index.lock.json (mount-from-lock leaves them untouched), and a plain `bun run cat state:mount` rewrites the root .gitignore 'state mounts' block from those stale declarations, dropping /who-iris/test/attestations/** (declared by the pinned who-iris 35f23d3, absent from the stale on-disk copy). The staleLayerMounts ",
       "file": "beans/defs/folio-assistant-x38u--statemount-rewrites-the-gitignore-block-from-stale.md"
     },
@@ -1434,19 +1462,19 @@
         "file": "beans/defs/folio-assistant-rwmf--goal-4-platform-the-harnesss-own-reliability-gates.md",
         "status": "in-progress",
         "epics": 3,
-        "total": 62,
-        "closed": 21,
-        "open": 41,
-        "inProgress": 26,
-        "todo": 15,
+        "total": 63,
+        "closed": 27,
+        "open": 36,
+        "inProgress": 24,
+        "todo": 12,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.3387096774193548
+        "share": 0.42857142857142855
       }
     ],
-    "orphanOpen": 12,
-    "openTotal": 54,
-    "coveredOpen": 41,
+    "orphanOpen": 11,
+    "openTotal": 48,
+    "coveredOpen": 36,
     "duplicateIds": 0
   }
 }

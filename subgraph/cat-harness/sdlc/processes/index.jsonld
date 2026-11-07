@@ -658,6 +658,188 @@
       "name": "Durable work identified"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache",
+      "@type": "bootstrap:Process",
+      "name": "The cache process: restore and save every cache a run can use"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f100",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f101",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f11",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f12",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f2",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "needed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "nothing needed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f50",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f51",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f52",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f53",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f60",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f61",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f62",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f63",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f7",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f8",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f90",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache#flow/f91",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/lane/Lane_Ci",
+      "@type": "cat-harness:Lane",
+      "name": "Build pipeline"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/lane/Lane_IgAst",
+      "@type": "cat-harness:Lane",
+      "name": "FHIR IG AST cache (the FHIR IG layer)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/End_Ready",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Caches restored, or saved"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/End_Skipped",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Skipped: the consumer builds"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/GW_Enabled",
+      "@type": "bootstrap:ProcessNode",
+      "name": "cache:plan: anything needed?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/PG_After_Layers",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Independent components"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/PG_After_Lean",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Independent components"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/PG_Join_Independent",
+      "@type": "bootstrap:ProcessNode",
+      "name": "PG_Join_Independent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/PG_Join_Render",
+      "@type": "bootstrap:ProcessNode",
+      "name": "PG_Join_Render"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/Start_Cache",
+      "@type": "bootstrap:ProcessNode",
+      "name": "A consumer asks for its caches"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/Task_Deps",
+      "@type": "bootstrap:ProcessNode",
+      "name": "bun / pip dependencies"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/Task_Gates",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Gate results: restore / save"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/Task_IgAst",
+      "@type": "bootstrap:ProcessNode",
+      "name": "FHIR IG ASTs: Process_IgAstCache"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/Task_Image",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Prepared image + node_modules"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/Task_Jekyll",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Jekyll cache: restore / save"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/Task_Layers",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Layers ref: restore / save"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/Task_Lean",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Lean .oleans: restore / save"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/Task_RenderSeed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Render seed: writer records"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/Task_Sets",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Generated sets: QA copy, pages"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth",
       "@type": "bootstrap:Process",
       "name": "Is CI actually working on the default branch?"
@@ -1835,7 +2017,67 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_10",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_11",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_12",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_13",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_14",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_15",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_16",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_17",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_18",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_19",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Yes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_20",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_21",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch#flow/Flow_22",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -1871,6 +2113,11 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Owner",
+      "@type": "cat-harness:Lane",
+      "name": "Owner"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
       "@type": "cat-harness:Lane",
       "name": "Merge steward"
@@ -1901,19 +2148,84 @@
       "name": "Nothing to do"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/End_Lapsed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Lane released"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/End_MetaDone",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Wake handled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/End_NotGreen",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Not green yet"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/End_StalledDone",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Wake handled"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Gw_Approved",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Pre-approved?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Gw_Green",
+      "@type": "bootstrap:ProcessNode",
+      "name": "All green per rule 1?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Gw_Needed",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Still holding the lane?"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Gw_Route",
       "@type": "bootstrap:ProcessNode",
       "name": "What does the queue need?"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Gw_Train",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Rides the train?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Owner_Approve",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Approve the batch card"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Start_Wake",
       "@type": "bootstrap:ProcessNode",
-      "name": "Timer, PR event, main run done, or sibling message"
+      "name": "Timer, PR event, request, main run, or sibling message"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Card",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Post the request in chat, then the batch card"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Direct",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Merge it through merge:guard"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Lapse",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Announce the hand-over or the lapse"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Read",
       "@type": "bootstrap:ProcessNode",
-      "name": "Read PRs, runner queue, main verdict and owners"
+      "name": "Read the queue, acknowledge requests"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Relieve",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Relieve the runners"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal",
@@ -2171,6 +2483,196 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal/node/Task_Scrap",
       "@type": "bootstrap:ProcessNode",
       "name": "Scrap the bean, with the reason"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest",
+      "@type": "bootstrap:Process",
+      "name": "Merge request: find or elect the merge manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S10",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S11",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S12",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S13",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S14",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S15",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S16",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S17",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S18",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S19",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S2",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S20",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S3",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S4",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S5",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S6",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S7",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "Yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S8",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "No"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest#flow/Flow_S9",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
+      "@type": "cat-harness:Lane",
+      "name": "Sibling session"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Announce",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Announce and note the merge manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_CallStalled",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Stalled-agent triage"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_CallWatch",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Merge manager watch"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Elect",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Elect the merge manager with the siblings"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_EndHolds",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Lane handed over or lapsed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_EndQueued",
+      "@type": "bootstrap:ProcessNode",
+      "name": "With the merge manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_EndSelf",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Own PRs landed"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwAcked",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Acknowledged in time?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwActive",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Merge manager active?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwDepends",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Depends on an unmerged PR?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwNeeded",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Merge manager needed?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_GwWon",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Elected this session?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Ready",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Make the PR ready"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Retarget",
+      "@type": "bootstrap:ProcessNode",
+      "name": "When the base lands, retarget"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Self",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Merge manager for its own PRs"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Send",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Send the six-line merge request"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Stack",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Stack on it and keep working"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Start",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Feature work starts"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain",
@@ -2890,7 +3392,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Record",
       "@type": "bootstrap:ProcessNode",
-      "name": "Record the recommendation AND the rejected options"
+      "name": "Record the chosen option AND the rejected ones"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_OptionsAnalysis/node/A_Select",
@@ -3934,12 +4436,12 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_PrepareCohort",
       "@type": "bootstrap:ProcessNode",
-      "name": "Prepare cohort: inputs, indicatorRef, expected & computed value"
+      "name": "Prepare the cohort: inputs, expected and computed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_PrepareWorkedCase",
       "@type": "bootstrap:ProcessNode",
-      "name": "Prepare worked case: input, decisionLogicRef and systemOutput"
+      "name": "Prepare the worked case: input, logic, output"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_RecordCaseVerdict",
@@ -3949,7 +4451,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_SmeJudge",
       "@type": "bootstrap:ProcessNode",
-      "name": "Judge domain correctness of worked case or indicator cohort"
+      "name": "Judge whether the case or cohort is right"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage",

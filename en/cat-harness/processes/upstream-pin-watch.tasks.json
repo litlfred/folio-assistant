@@ -1,6 +1,104 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_UpstreamPinWatch",
+ "markers": [
+  {
+   "id": "Task_ReadPins",
+   "name": "Read the pin registry upstream-pins.json",
+   "left": 18.23,
+   "top": 4.63,
+   "box": {
+    "left": 13.09,
+    "top": 22.22,
+    "width": 1.7,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "Task_QueryUpstream",
+   "name": "List upstream releases and compare to the pin",
+   "left": 28.87,
+   "top": 4.63,
+   "box": {
+    "left": 23.72,
+    "top": 22.22,
+    "width": 1.7,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "Task_CloseIssue",
+   "name": "Close the tracking issue",
+   "left": 44.11,
+   "top": 32.41,
+   "box": {
+    "left": 38.97,
+    "top": 50,
+    "width": 1.7,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "Task_TrackIssue",
+   "name": "Open or EDIT the one tracking issue",
+   "left": 53.69,
+   "top": 4.63,
+   "box": {
+    "left": 48.55,
+    "top": 22.22,
+    "width": 1.7,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "A_PickUp",
+   "name": "Pick up the stale pin",
+   "left": 72.13,
+   "top": 62.04,
+   "box": {
+    "left": 66.99,
+    "top": 79.63,
+    "width": 1.7,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "Call_Adopt",
+   "name": "Adopt the version bump",
+   "left": 82.77,
+   "top": 62.04,
+   "box": {
+    "left": 77.62,
+    "top": 79.63,
+    "width": 1.7,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "left": 53.69,
+   "top": 62.04,
+   "box": {
+    "left": 48.55,
+    "top": 79.63,
+    "width": 1.7,
+    "height": 4.44
+   }
+  },
+  {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "left": 93.4,
+   "top": 62.04,
+   "box": {
+    "left": 88.26,
+    "top": 79.63,
+    "width": 1.7,
+    "height": 4.44
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch",
  "tasks": {
   "Task_ReadPins": {

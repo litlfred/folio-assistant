@@ -688,6 +688,10 @@
       "name": "passed"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF14",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Agent",
       "@type": "cat-harness:Lane",
       "name": "Authoring agent"
@@ -710,7 +714,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged",
       "@type": "bootstrap:ProcessNode",
-      "name": "Change merged"
+      "name": "Change merged and closed"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Gateway_FeedbackChanged",
@@ -733,6 +737,11 @@
       "name": "Review the preview and answer"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_CloseChangeSet",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Close the change set: the issue, then the sheet row"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_EditInPullRequest",
       "@type": "bootstrap:ProcessNode",
       "name": "Edit the document in the row's pull request"
@@ -750,7 +759,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_QaGate",
       "@type": "bootstrap:ProcessNode",
-      "name": "QA-review the dispositions"
+      "name": "QA gate: review dispositions against the people and the pull request"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_ReadyForAgent",
@@ -825,6 +834,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12b",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A13",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -875,6 +888,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_BeanOpen",
       "@type": "bootstrap:ProcessNode",
       "name": "Open the bean"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_PublishStatements",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish extracted statements"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_ReviewPublish",
@@ -3090,6 +3108,72 @@
       "name": "Clinical or scientific sign-off"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep",
+      "@type": "bootstrap:Process",
+      "name": "Record agent step"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS01",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS02",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS03",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS04",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS05",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "no: fix the Agent row, never the copied columns"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS06",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "@type": "cat-harness:Lane",
+      "name": "Authoring agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/EndEvent_Recorded",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Step recorded"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Gateway_Agrees",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Sheet agrees with Feedback (agent)?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/StartEvent_Moved",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Agent moved on a change set"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_ReadBack",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Read back Agentic status and Staging review"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Write the change set's Agent row"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteFeedback",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Write Feedback (agent) from that row"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch",
       "@type": "bootstrap:Process",
       "name": "Review-log watch"
@@ -3129,6 +3213,14 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
       "@type": "cat-harness:Lane",
       "name": "Log watcher (authoring agent)"
@@ -3151,7 +3243,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll",
       "@type": "bootstrap:ProcessNode",
-      "name": "Every 3 minutes"
+      "name": "Every minute"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
@@ -3174,9 +3266,19 @@
       "name": "Read the Contributor Feedback tab"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Record agent step on each row it wrote"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
       "@type": "bootstrap:ProcessNode",
       "name": "Run the review-log-watch check"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Hand new feedback to the row's agent; take over stalled rows"
     }
   ],
   "hasSubgraph": [

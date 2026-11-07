@@ -17,6 +17,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/harness-tiles",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/html-rendering-qc",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/incremental-render",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/journey-maps",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-viewer",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/liquid-templates",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/markdown-render-check",
@@ -207,6 +208,25 @@
         "sha256": "5cf6d0457daac1a508e25e2e00f7bc31734e4f28d6894b3e8fd441cce915903f"
       },
       "title": "Incremental render — the cache is easy, the cascade is the work"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/journey-maps",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Journeys and workshops as knowledge-graph content: a DAK user scenario told as a journey map (`user-scenario` kind: ordered steps, per person what they do and feel, pain points, enablers, the record's trust state, and edges to stories, BPMN tasks, requirements, FHIR examples, building blocks and the DAK's data sets, decision tables and indicators), the `building-blocks` catalogue its steps use, a workshop that teaches from it (`workshop` kind: modules, objectives, questions for the room on each step, reference tables, sheets, job aids), the `journeys-viewer` visualiser that draws them for an instance and the layers it mounts, and the `check:journey-refs` gate that every reference they name resolves. Read before writing a journey or a workshop, before declaring the viewer, and before building a journey walkthrough app of your own.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/ui-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 284,
+      "instructionsPath": "skills/ui/ui-core/journey-maps.md",
+      "name": "journey-maps",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/737934ed4c5dabeebea527c7c88f37184370a2884610ae02d5169dbe0374b681",
+        "bytes": 17057,
+        "sha256": "737934ed4c5dabeebea527c7c88f37184370a2884610ae02d5169dbe0374b681"
+      },
+      "title": "Journey maps — journeys and workshops as nodes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/kg-viewer",

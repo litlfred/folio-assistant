@@ -11,9 +11,7 @@ tested-by:
 
 # The Logger's contract
 
-**A Logger plays a Role, and this is the Role's contract** (owner, 2026-10-16:
-roles played by mechanical Actors "each [have] a contract (responsibilities)
-that it must perform … those are the skills it can perform"). The author of a
+**A Logger plays a Role, and this is the Role's contract.** The author of a
 log line follows [`log-message`](log-message.md). This skill is the other side:
 what happens to the line once it arrives.
 
@@ -37,11 +35,9 @@ It sits in the `Logger` lane of [`log-message`](../processes/log-message.bpmn).
 ## Tests
 
 Bootstrap runs nothing, so the test named in `tested-by:` lives with the
-toolset, at its address. It holds the Logger to what a file can show: the five
-fields and the optional body in line 1 are the ones `log-message` requires, and
-a message reaches the `Logger` lane only on the branch where all five are
-present. Lines 2–4 are about the destination itself, the discussion, and are
-not exercised there: nothing in bootstrap or its toolset records a line.
+toolset. It checks line 1 (the fields match `log-message`, and only a
+complete message reaches the `Logger` lane). Lines 2–4 concern the
+destination, the discussion, and are not tested.
 
 ## Not its responsibility
 

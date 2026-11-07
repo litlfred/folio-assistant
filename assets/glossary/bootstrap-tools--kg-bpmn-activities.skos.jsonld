@@ -66,7 +66,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Commit the staged tree onto gh-pages as a full replace (the instance's Pages workflow on a push to main, or by hand); GitHub Pages then builds it from the branch. Rebuild and retry on a rejected push; never rebase the branch. The gh-pages commit SHA is the message the report names."
+          "@value": "publish-site.ts commits the staged tree onto gh-pages as a full replace (run by the instance's Pages workflow on a push to main, or by an agent with its own git credentials); GitHub Pages then builds it from the branch. Rebuild and retry on a rejected push; never rebase the branch. The report names the gh-pages commit SHA."
         }
       ],
       "skos:notation": "A_Deploy",
@@ -86,7 +86,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Provisioning the target, owned by this Tool's subprocess rather than by the general step (owner, 2026-10-01: \"need to create gh-pages branch before can turn on\"). In order: (1) an orphan gh-pages branch exists — git ls-remote --heads origin gh-pages; if absent, push a placeholder (index.html + .nojekyll); (2) Pages is on, Source = the gh-pages branch at / — gh api -X POST repos/<o>/<r>/pages -f source[branch]=gh-pages -f source[path]=/ when gh is signed in, otherwise the exact manual step (Settings → Pages → Deploy from a branch → gh-pages, / (root)). Each half is done, not done, or could not be determined; never assumed."
+          "@value": "Provisioning the target, owned by this process rather than by the publication step that calls it. Pages cannot serve a branch that does not exist, so in order: (1) an orphan gh-pages branch exists — git ls-remote --heads origin gh-pages; if absent, push a placeholder (index.html + .nojekyll); (2) Pages is on, Source = the gh-pages branch at / — gh api -X POST repos/<o>/<r>/pages -f source[branch]=gh-pages -f source[path]=/ when gh is signed in, otherwise the exact manual step (Settings → Pages → Deploy from a branch → gh-pages, / (root)). Each half is done, not done, or could not be determined; never assumed."
         }
       ],
       "skos:notation": "A_Provision",

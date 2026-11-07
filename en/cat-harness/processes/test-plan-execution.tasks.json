@@ -1,6 +1,164 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_TestPlanExecution",
+ "markers": [
+  {
+   "id": "A_Request",
+   "name": "Request certification of the system against plan P",
+   "left": 34.29,
+   "top": 1.1,
+   "box": {
+    "left": 30.2,
+    "top": 11.6,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "A_ResolvePlan",
+   "name": "Resolve the plan",
+   "left": 34.29,
+   "top": 18.23,
+   "box": {
+    "left": 30.2,
+    "top": 28.73,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "A_BindData",
+   "name": "Bind the test data",
+   "left": 42.77,
+   "top": 18.23,
+   "box": {
+    "left": 38.67,
+    "top": 28.73,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "A_Execute",
+   "name": "Execute every case, or skip it with a reason",
+   "left": 51.24,
+   "top": 18.23,
+   "box": {
+    "left": 47.15,
+    "top": 28.73,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "A_WriteRun",
+   "name": "Write the test run and the test report",
+   "left": 59.72,
+   "top": 18.23,
+   "box": {
+    "left": 55.62,
+    "top": 28.73,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "A_ReExecuteSample",
+   "name": "Re-execute a sample, blind to the tester's verdicts",
+   "left": 59.72,
+   "top": 33.7,
+   "box": {
+    "left": 55.62,
+    "top": 44.2,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "A_RecordCertification",
+   "name": "Record the certification decision",
+   "left": 68.76,
+   "top": 49.17,
+   "box": {
+    "left": 64.66,
+    "top": 59.67,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "A_RecordRefusal",
+   "name": "Record the refusal, with the failing cases",
+   "left": 50.96,
+   "top": 49.17,
+   "box": {
+    "left": 46.86,
+    "top": 59.67,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "A_RecordUndetermined",
+   "name": "Record why it could not be decided",
+   "left": 59.72,
+   "top": 64.09,
+   "box": {
+    "left": 55.62,
+    "top": 74.59,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "Call_Sign",
+   "name": "Sign the certification",
+   "left": 68.76,
+   "top": 79.56,
+   "box": {
+    "left": 64.66,
+    "top": 90.06,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "A_FileCertification",
+   "name": "File the signed certification",
+   "left": 77.23,
+   "top": 79.56,
+   "box": {
+    "left": 73.14,
+    "top": 90.06,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "left": 16.78,
+   "top": 1.1,
+   "box": {
+    "left": 12.68,
+    "top": 11.6,
+    "width": 1.36,
+    "height": 2.65
+   }
+  },
+  {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "left": 85.71,
+   "top": 79.56,
+   "box": {
+    "left": 81.61,
+    "top": 90.06,
+    "width": 1.36,
+    "height": 2.65
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution",
  "tasks": {
   "A_Request": {

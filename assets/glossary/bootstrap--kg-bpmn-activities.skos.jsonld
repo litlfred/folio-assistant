@@ -46,7 +46,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "THE PRIMARY STEP of initializing a Knowledge Graph harness (owner, 2026-09-30: \"json(ld) is primary step in initializing KG harness\"), and so the first one checked once the declarations are read. Every JSON Schema the harness publishes (its `$id`) and every JSON-LD document (its vocabulary, its diagram vocabulary, its graph export, each carrying its own `@context`) is at the address it names under `iriBase`, where a program following the IRI finds it. Two checks: that the site build stages each one at its address, and that each address answers. A 404 is not published; a 403 or no answer from here could not be determined. The Pages site is the vehicle: when the documents are not yet answering, the site steps below are how they get there, and the report leads with this step's state."
+          "@value": "THE PRIMARY STEP of initializing a Knowledge Graph harness and so the first one checked once the declarations are read. Every JSON Schema the harness publishes (its `$id`) and every JSON-LD document (its vocabulary, its diagram vocabulary, its graph export, each carrying its own `@context`) is at the address it names under `iriBase`, where a program following the IRI finds it. Two checks: that the site build stages each one at its address, and that each address answers. A 404 is not published; a 403 or no answer from here could not be determined. The Pages site is the vehicle: when the documents are not yet answering, the site steps below are how they get there, and the report leads with this step's state."
         }
       ],
       "skos:notation": "A_CheckDocuments",
@@ -106,7 +106,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "In the order of the table in `initialization-steps`: declaration, needs, each dependency's instructions, the documents at their IRIs (checked above, and listed first), directories, assets, README, README sections, site. Each step names the declaration that names it, so a reader can see why it is there."
+          "@value": "In the order of the table in `initialization-steps`: declaration, needs, each dependency's instructions, the documents at their IRIs (checked above; the report leads with them), directories, assets, README, README sections, site. Each step names the declaration that names it, so a reader can see why it is there."
         }
       ],
       "skos:notation": "A_ListSteps",
@@ -406,7 +406,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Name the Process, the lane and the task the question belongs to, and say so in the message: \"Process: Initialize a harness, at Determine the harness and repositories, as the Bootstrapping Agent\". A reader who does not know which process you are in will assume the last one's rules still hold. If you are in no Process, that is an answer too: you are IDLE, and what you are doing is classifying a request to find the Process it belongs to — say that, rather than presenting a question as though a step had asked for it. You are OUT of process, and it is undetermined, when you cannot name the instance, when two candidates fit, when the step you believed was next is not the one the diagram enables, or when the work in hand was not what you said you would do. Do not infer your way back in."
+          "@value": "Name the Process, the lane and the task the question belongs to, and say so in the message: \"Process: Initialize a harness, at Determine the harness and repositories, as the Bootstrapping Agent\". A reader who does not know which process you are in will assume the last one's rules still hold. If you are in no Process, that is an answer too: you are IDLE, and what you are doing is classifying a request to find the Process it belongs to — say that, rather than presenting a question as though a step had asked for it. You are OUT of process, and it is undetermined, when you cannot name the Process, when two candidates fit, when the step you believed was next is not the one the diagram enables, or when the work in hand was not what you said you would do. Do not infer your way back in."
         }
       ],
       "skos:notation": "A_DetermineProcess",
@@ -686,7 +686,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Performed against the data store — a git repository, through the git CLI or a forge API. The instructions are at a PREDETERMINED spot on the harness: `<stub>/docs/bootstrap/initialization.md`, the same for every harness, which is what lets a Bootstrapping Agent be pointed at one nobody has written yet."
+          "@value": "Performed against the data store — a git repository, through the git CLI or a forge API. The instructions are at a PREDETERMINED spot on the harness: `<name>/docs/bootstrap/initialization.md`, the same for every harness, which is what lets a Bootstrapping Agent be pointed at one nobody has written yet."
         }
       ],
       "skos:notation": "A_ReadDeclaration",
@@ -706,7 +706,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself. `<name>.json` present and parsing is the whole test, and `bootstrap-kg-navigation` says what the three answers mean — absent (not an instance yet), present, and present-but-unreadable, which is an instance asserting something broken and is not a green light either. Before reading the chosen harness rather than after, deliberately: if the location is spoken for by another harness there is nothing to learn from the chosen one, and fetching it first only makes the failure more expensive."
+          "@value": "Ask the location, not your memory of it: a Knowledge Graph Data Store that carries a declaration at its root is ALREADY an instance, and it says so itself. `<name>.json` present and parsing is the whole test, and `bootstrap-kg-navigation` says what the three answers mean — absent (not an instance yet), present, and present-but-unreadable, which is an instance asserting something broken and is not a green light either. Done before reading the chosen harness: a location held by another harness ends the process here."
         }
       ],
       "skos:notation": "A_ReadLocation",
@@ -726,7 +726,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The repository now IS an instance of something, and nothing at its root says so. It carries a LINK to the harness that was installed and the OVERALL install status across every location — WHEN ABSENT, never replacing: where a README is already there, the link and status go in a marker pair the harness's own README tool maintains. WRITING IT IS NOT A PROCESS WRITE. `instance-readme` declares `layer: context`, and this step writes one. Both hold, because INITIALISATION IS NOT PROCESS RUNTIME: the rule governs a process operating on an instance that exists, and this is the act that brings the instance into being."
+          "@value": "The repository now IS an instance of something, and nothing at its root says so. It carries a LINK to the harness that was installed and the OVERALL install status across every location — WHEN ABSENT, never replacing: where a README is already there, the link and status go in a marker pair the harness's own README tool maintains. Initialization may create the README: the rule that a running process never writes an `instance-readme` governs an instance that already exists."
         }
       ],
       "skos:notation": "A_WriteRootReadme",

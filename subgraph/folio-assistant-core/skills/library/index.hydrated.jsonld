@@ -188,13 +188,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-          "instructionLines": 450,
+          "instructionLines": 474,
           "instructionsPath": "skills/library/cataloguing/glossary-terms.md",
           "name": "glossary-terms",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/66c22ace876038869b7d82e9251607cd805c40d27d0d5a9a56e0fefb203f97d2",
-            "bytes": 23054,
-            "sha256": "66c22ace876038869b7d82e9251607cd805c40d27d0d5a9a56e0fefb203f97d2"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f96f595a61c2ee0c163a743b97ae8c4548dbacce9cf8abb1876823b4e650b926",
+            "bytes": 24525,
+            "sha256": "f96f595a61c2ee0c163a743b97ae8c4548dbacce9cf8abb1876823b4e650b926"
           },
           "title": "Glossary terms"
         },
@@ -264,13 +264,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-          "instructionLines": 473,
+          "instructionLines": 482,
           "instructionsPath": "skills/library/ingestion/document-intake.md",
           "name": "document-intake",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b01f4e44f139479836b7aec3901bdece23c582852b608b5cef82df89d82b8ace",
-            "bytes": 22087,
-            "sha256": "b01f4e44f139479836b7aec3901bdece23c582852b608b5cef82df89d82b8ace"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8234c454d829e58fe1e9d2b02807e9bc898d08bc49248529094766fc391eaa99",
+            "bytes": 22721,
+            "sha256": "8234c454d829e58fe1e9d2b02807e9bc898d08bc49248529094766fc391eaa99"
           },
           "title": "Document Intake"
         },
@@ -300,13 +300,13 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-          "instructionLines": 87,
+          "instructionLines": 92,
           "instructionsPath": "skills/library/ingestion/l1-coverage.md",
           "name": "l1-coverage",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e866ac3975d6e06f47f5de9b3520ddc8aca8fa7fa3f7c7c48312c38a807dda7e",
-            "bytes": 4431,
-            "sha256": "e866ac3975d6e06f47f5de9b3520ddc8aca8fa7fa3f7c7c48312c38a807dda7e"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/50591d200ba091877838e0ccdfbf3930b419ca92012e2b20e4ffaf6f0f69c1c9",
+            "bytes": 4691,
+            "sha256": "50591d200ba091877838e0ccdfbf3930b419ca92012e2b20e4ffaf6f0f69c1c9"
           },
           "title": "L1 coverage — nothing normative goes missing silently"
         },
@@ -318,15 +318,33 @@
           "hasIOContract": false,
           "hasInstructions": true,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
-          "instructionLines": 862,
+          "instructionLines": 869,
           "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
           "name": "l1-document-ingestion",
           "payload": {
-            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/461f27f9e03ff63be4b24ce8cc61c904410483c4c545c8fe6815cf397165efc6",
-            "bytes": 48021,
-            "sha256": "461f27f9e03ff63be4b24ce8cc61c904410483c4c545c8fe6815cf397165efc6"
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/36e47ad1ca20c7f39f99102ac88c1396e4cb2594bc26cb7615d5b3aa914ed2e1",
+            "bytes": 48571,
+            "sha256": "36e47ad1ca20c7f39f99102ac88c1396e4cb2594bc26cb7615d5b3aa914ed2e1"
           },
           "title": "L1 document ingestion"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements",
+          "@type": "bootstrap:Skill",
+          "ambiguous": false,
+          "description": "The standard step of adding source documents to a folio's working artifact: every statement extracted from a library source is published readably in the artifact's own pages AND in the shared extraction viewer, each with a link to its library entry and to the section it came from, and CI fails when the generated pages are stale. Generic across content types; each type's adapter says only how its pages look. Executable form: `processes/library/publish-extracted-statements.bpmn`.",
+          "hasIOContract": false,
+          "hasInstructions": true,
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+          "instructionLines": 133,
+          "instructionsPath": "skills/library/ingestion/publish-extracted-statements.md",
+          "name": "publish-extracted-statements",
+          "payload": {
+            "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/11a2871bd5f0e8159c68d4f842f35e29c5077b183ad7488eeb5bea14e79b69c4",
+            "bytes": 6656,
+            "sha256": "11a2871bd5f0e8159c68d4f842f35e29c5077b183ad7488eeb5bea14e79b69c4"
+          },
+          "title": "Publish extracted statements with source links"
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/tabular-metadata",

@@ -1,6 +1,140 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_DocsSite",
+ "markers": [
+  {
+   "id": "Task_SecurityGate",
+   "name": "Run the release security gate",
+   "left": 12.76,
+   "top": 8.52,
+   "box": {
+    "left": 10.5,
+    "top": 35.51,
+    "width": 0.75,
+    "height": 6.82
+   }
+  },
+  {
+   "id": "Task_Regenerate",
+   "name": "Regenerate every derived reference from its source",
+   "left": 24.28,
+   "top": 8.52,
+   "box": {
+    "left": 22.02,
+    "top": 35.51,
+    "width": 0.75,
+    "height": 6.82
+   }
+  },
+  {
+   "id": "Call_InstanceSites",
+   "name": "Compose each instance's site [its Tool]",
+   "left": 31.12,
+   "top": 8.52,
+   "box": {
+    "left": 28.87,
+    "top": 35.51,
+    "width": 0.75,
+    "height": 6.82
+   }
+  },
+  {
+   "id": "Task_Build",
+   "name": "Build the Jekyll site and the API reference",
+   "left": 37.97,
+   "top": 8.52,
+   "box": {
+    "left": 35.71,
+    "top": 35.51,
+    "width": 0.75,
+    "height": 6.82
+   }
+  },
+  {
+   "id": "Task_Export",
+   "name": "Export the knowledge graph and its schema",
+   "left": 44.82,
+   "top": 8.52,
+   "box": {
+    "left": 42.56,
+    "top": 35.51,
+    "width": 0.75,
+    "height": 6.82
+   }
+  },
+  {
+   "id": "Call_Verify",
+   "name": "Verify the export",
+   "left": 51.67,
+   "top": 8.52,
+   "box": {
+    "left": 49.41,
+    "top": 35.51,
+    "width": 0.75,
+    "height": 6.82
+   }
+  },
+  {
+   "id": "Task_Restore",
+   "name": "Restore the OPEN PRs' staging previews",
+   "left": 58.51,
+   "top": 8.52,
+   "box": {
+    "left": 56.26,
+    "top": 35.51,
+    "width": 0.75,
+    "height": 6.82
+   }
+  },
+  {
+   "id": "Task_Publish",
+   "name": "Push to the CDN (full replace)",
+   "left": 65.36,
+   "top": 8.52,
+   "box": {
+    "left": 63.1,
+    "top": 35.51,
+    "width": 0.75,
+    "height": 6.82
+   }
+  },
+  {
+   "id": "Task_Judge",
+   "name": "Judge the built-site checks",
+   "left": 81.54,
+   "top": 8.52,
+   "box": {
+    "left": 79.29,
+    "top": 35.51,
+    "width": 0.75,
+    "height": 6.82
+   }
+  },
+  {
+   "id": "Task_CloseAlert",
+   "name": "Close the publication manager's alert, if open",
+   "left": 93.06,
+   "top": 8.52,
+   "box": {
+    "left": 90.8,
+    "top": 35.51,
+    "width": 0.75,
+    "height": 6.82
+   }
+  },
+  {
+   "id": "Call_Alert",
+   "name": "Alert the publication manager",
+   "left": 92.9,
+   "top": 64.91,
+   "box": {
+    "left": 89.71,
+    "top": 84.23,
+    "width": 0.75,
+    "height": 6.82
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite",
  "tasks": {
   "Task_SecurityGate": {

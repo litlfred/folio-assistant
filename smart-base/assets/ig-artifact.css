@@ -33,6 +33,20 @@
 .ast-json{background:var(--iga-soft);border:1px solid var(--iga-line);border-radius:6px;padding:.75rem;overflow:auto;max-height:40rem;font-size:.8rem}
 #ig-footer{margin:0;padding:1rem 1.5rem;border-top:1px solid var(--iga-line);color:var(--iga-muted);font-size:.85rem;box-sizing:border-box}
 #ig-footer p{margin:.25rem 0}
+/* THE FOOTER STAYS IN VIEW (owner, 2026-11-06: "keep it fixed at bottom of displayed window (unlike IG publisher)"). Sticky, not fixed: it is
+   the last thing in its column, so it spans the column beside the rail at every width and the rail's open state, sits at the window's bottom
+   while the page scrolls under it, and at the end of the page rests in its own place, so nothing is ever left hidden behind it and no padding
+   has to guess its height. Opaque, because text scrolls under it. In print it is static: once, at the end. */
+#ig-footer{position:sticky;bottom:0;z-index:80;background:var(--fa-pl-bg,#fff);margin-top:1.5rem;padding:.35rem 1.5rem;font-size:.8rem;line-height:1.4;box-shadow:0 -2px 6px rgba(0,0,0,.08)}
+#ig-footer p{margin:.1rem 0}
+/* A page shorter than the window: the body is a column at least the window's height, the content takes the free space and the footer,
+   the body's last box, lands at the window's bottom. The footer is a child of the body after <main> on every IG page (`harnessLayout`,
+   `thinIgLayout`, the thin artefact pages), so no content block becomes a flex item and their margins collapse as before. */
+body:has(>#ig-footer){display:flex;flex-direction:column;min-height:100vh;min-height:100dvh;box-sizing:border-box}
+body:has(>#ig-footer)>main{flex:1 0 auto}
+body>#ig-footer{margin-top:0}
+@media (max-width:40rem){body #ig-footer{padding:.3rem .75rem;font-size:.72rem}body #ig-footer .ig-footer-band{padding:.2rem .5rem}}
+@media print{#ig-footer{position:static;box-shadow:none;background:none}body:has(>#ig-footer){display:block;min-height:0}}
 @media (max-width:40rem){.iga-identity,.iga-identity tbody,.iga-identity tr,.iga-identity th,.iga-identity td{display:block;width:auto}.iga-identity th{border-bottom:0}.iga-grid{grid-template-columns:repeat(auto-fill,minmax(9.5rem,1fr))}#ig-footer{padding:1rem .75rem}}
 /* The IG's list pages (artifacts.html, toc.html). */
 .igi-count{color:var(--iga-muted)}

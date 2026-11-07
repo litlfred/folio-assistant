@@ -101,6 +101,68 @@
       "path": "tools/build-ig-site/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/check-translation-supplements/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/check-translation-supplements.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Compile the IG's CodeSystems with every `input/fsh/translations/<locale>.fsh` CodeSystem supplement in a throw-away FSHOnly SUSHI project, require 0 SUSHI errors, and check that each supplement's base CodeSystem is the IG's own, its codes are a subset of the base's, its language is the file's locale, and every CodeSystem id is unique. SUSHI is the version `ig-toolchain.env` pins, installed from `scripts/sushi/package-lock.json` with install scripts off; the FHIR core package is pinned by sha512; SUSHI runs with no network.",
+          "install": {
+            "cli": "npm ci --ignore-scripts --no-audit --no-fund --prefix fhir-harness/scripts/sushi"
+          },
+          "invoke": {
+            "shell": "bun run fhir-harness/scripts/check-translation-supplements.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "positional": 0
+                },
+                "description": "The IG root; default the working directory. Only paths its `contentTypes.ig.include` declares are read.",
+                "name": "igRoot",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--json"
+                },
+                "description": "Print the result as JSON.",
+                "name": "json",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Exit 0 pass or not applicable, 1 findings (each named with its file), 2 could not run. Could-not-run is never a pass.",
+                "name": "verdict",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "check-translation-supplements",
+          "requirements": {
+            "network": true,
+            "runtime": [
+              "bun",
+              "node",
+              "npm"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation",
+          "title": "Compile and check an IG's translation CodeSystem supplements"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/check-translation-supplements",
+      "path": "tools/check-translation-supplements/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/tools/check-wireframe-questionnaire/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [

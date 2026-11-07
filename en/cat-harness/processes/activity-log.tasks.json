@@ -1,6 +1,104 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_ActivityLog",
+ "markers": [
+  {
+   "id": "A_LogStart",
+   "name": "Log task-start",
+   "left": 24.27,
+   "top": 4.12,
+   "box": {
+    "left": 17.68,
+    "top": 15.29,
+    "width": 2.18,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "A_DoWork",
+   "name": "Do the work",
+   "left": 38.82,
+   "top": 4.12,
+   "box": {
+    "left": 32.23,
+    "top": 15.29,
+    "width": 2.18,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "A_LogMessage",
+   "name": "Log a message or an error",
+   "left": 50.18,
+   "top": 21.76,
+   "box": {
+    "left": 43.59,
+    "top": 32.94,
+    "width": 2.18,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "A_LogEnd",
+   "name": "Log task-end",
+   "left": 64.27,
+   "top": 4.12,
+   "box": {
+    "left": 57.68,
+    "top": 15.29,
+    "width": 2.18,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "A_PersistLog",
+   "name": "Persist the log to the data store",
+   "left": 75.64,
+   "top": 21.76,
+   "box": {
+    "left": 69.05,
+    "top": 32.94,
+    "width": 2.18,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "A_ReportCaptureState",
+   "name": "Report the capture state",
+   "left": 89.73,
+   "top": 4.12,
+   "box": {
+    "left": 83.14,
+    "top": 15.29,
+    "width": 2.18,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "A_EmptyOne",
+   "name": "Discard one entry by id",
+   "left": 64.27,
+   "top": 55.88,
+   "box": {
+    "left": 57.68,
+    "top": 67.06,
+    "width": 2.18,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "A_EmptyAll",
+   "name": "Discard all entries, or a whole session",
+   "left": 64.27,
+   "top": 73.53,
+   "box": {
+    "left": 57.68,
+    "top": 84.71,
+    "width": 2.18,
+    "height": 2.82
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog",
  "tasks": {
   "A_LogStart": {

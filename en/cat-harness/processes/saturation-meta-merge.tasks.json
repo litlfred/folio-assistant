@@ -1,6 +1,104 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_SaturationMetaMerge",
+ "markers": [
+  {
+   "id": "Task_Hold",
+   "name": "Broadcast the hold to siblings",
+   "left": 27.69,
+   "top": 32.35,
+   "box": {
+    "left": 22.12,
+    "top": 43.53,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_SibHold",
+   "name": "Hold, and name the heads to merge",
+   "left": 27.69,
+   "top": 4.12,
+   "box": {
+    "left": 22.12,
+    "top": 15.29,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Ask",
+   "name": "Dry-run, then ask the owner naming every PR",
+   "left": 39.23,
+   "top": 32.35,
+   "box": {
+    "left": 33.65,
+    "top": 43.53,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Owner",
+   "name": "Choose A, B, C or D",
+   "left": 39.23,
+   "top": 60.59,
+   "box": {
+    "left": 33.65,
+    "top": 71.76,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Land",
+   "name": "Cancel queued PR runs; build, push, merge",
+   "left": 62.31,
+   "top": 41.76,
+   "box": {
+    "left": 56.73,
+    "top": 52.94,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Done",
+   "name": "Post done to every held sibling",
+   "left": 73.85,
+   "top": 32.35,
+   "box": {
+    "left": 68.27,
+    "top": 43.53,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_MainRun",
+   "name": "Run main's checks",
+   "left": 96.92,
+   "top": 81.76,
+   "box": {
+    "left": 91.35,
+    "top": 92.94,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Report",
+   "name": "Report what landed and main's verdict",
+   "left": 96.92,
+   "top": 32.35,
+   "box": {
+    "left": 91.35,
+    "top": 43.53,
+    "width": 1.85,
+    "height": 2.82
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
  "tasks": {
   "Task_Hold": {

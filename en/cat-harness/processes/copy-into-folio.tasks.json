@@ -1,6 +1,104 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_CopyIntoFolio",
+ "markers": [
+  {
+   "id": "Task_ChooseAsset",
+   "name": "Select upstream asset and target folio",
+   "left": 19.65,
+   "top": 54.49,
+   "box": {
+    "left": 14.5,
+    "top": 66.67,
+    "width": 1.7,
+    "height": 3.08
+   }
+  },
+  {
+   "id": "Task_ProbeWriteCapability",
+   "name": "Probe write capability",
+   "left": 19.65,
+   "top": 33.97,
+   "box": {
+    "left": 14.5,
+    "top": 46.15,
+    "width": 1.7,
+    "height": 3.08
+   }
+  },
+  {
+   "id": "Task_InspectReadOnly",
+   "name": "Browse in place, emit a KgAsset snippet",
+   "left": 40.07,
+   "top": 54.49,
+   "box": {
+    "left": 34.93,
+    "top": 66.67,
+    "width": 1.7,
+    "height": 3.08
+   }
+  },
+  {
+   "id": "Task_ReadUpstreamAsset",
+   "name": "Read the upstream asset (no writes)",
+   "left": 40.07,
+   "top": 8.33,
+   "box": {
+    "left": 34.93,
+    "top": 20.51,
+    "width": 1.7,
+    "height": 3.08
+   }
+  },
+  {
+   "id": "Task_CopyAndDeclareAsset",
+   "name": "Copy asset into target folio and declare in assets[]",
+   "left": 55.67,
+   "top": 33.97,
+   "box": {
+    "left": 50.53,
+    "top": 46.15,
+    "width": 1.7,
+    "height": 3.08
+   }
+  },
+  {
+   "id": "Task_StampAssetSource",
+   "name": "Stamp the asset's source",
+   "left": 67.02,
+   "top": 33.97,
+   "box": {
+    "left": 61.88,
+    "top": 46.15,
+    "width": 1.7,
+    "height": 3.08
+   }
+  },
+  {
+   "id": "Task_ValidateDeclaredAsset",
+   "name": "Validate the asset and provenance",
+   "left": 78.37,
+   "top": 81.41,
+   "box": {
+    "left": 73.23,
+    "top": 93.59,
+    "width": 1.7,
+    "height": 3.08
+   }
+  },
+  {
+   "id": "Task_WorkOnCopy",
+   "name": "Edit, comment or raise todos on the folio's copy",
+   "left": 89.72,
+   "top": 54.49,
+   "box": {
+    "left": 84.57,
+    "top": 66.67,
+    "width": 1.7,
+    "height": 3.08
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio",
  "tasks": {
   "Task_ChooseAsset": {

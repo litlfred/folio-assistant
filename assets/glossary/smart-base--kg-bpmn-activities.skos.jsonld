@@ -14,6 +14,86 @@
       "dcterms:source": "BPMN activities of smart-base"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities/process_actondecisionsupport.task_activate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Update the care plan"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Make each accepted request active (intent plan or order) and reference it from the client's CarePlan, in one transaction; write nothing for a declined action."
+        }
+      ],
+      "skos:notation": "Task_Activate",
+      "dcterms:source": "smart-base/processes/content/act-on-decision-support.bpmn#Task_Activate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities/process_actondecisionsupport.task_apply",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Apply the PlanDefinition"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "PlanDefinition/$apply for this client (or a CDS Hooks call): every proposed request is a draft proposal, and nothing is written to the record."
+        }
+      ],
+      "skos:notation": "Task_Apply",
+      "dcterms:source": "smart-base/processes/content/act-on-decision-support.bpmn#Task_Apply",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities/process_actondecisionsupport.task_rationale",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Note the reason (optional)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional: pick a coded reason or type one, or neither; one FHIR Provenance records who decided what about which guidance, and why. Never required, never waited for."
+        }
+      ],
+      "skos:notation": "Task_Rationale",
+      "dcterms:source": "smart-base/processes/content/act-on-decision-support.bpmn#Task_Rationale",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities/process_actondecisionsupport.task_review",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Accept or decline the guidance"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "See the proposed actions on the device and accept or decline each one, one tap each (\"accept all\" is one tap); modify one only where the device offers it. Nothing else is asked; an \"add a reason\" link is shown, never required."
+        }
+      ],
+      "skos:notation": "Task_Review",
+      "dcterms:source": "smart-base/processes/content/act-on-decision-support.bpmn#Task_Review",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities/process_classifyandcodecontent.task_identifyslots",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -2396,6 +2476,46 @@
       ],
       "skos:notation": "Task_VerifyL2Input",
       "dcterms:source": "smart-base/processes/content/SGAuthoring.DAKLifecycle.bpmn#Task_VerifyL2Input",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities/process_questionnairedatacapture.task_complete",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Complete the form"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Complete the SDC Questionnaire as the device renders it: confirm or correct each pre-populated answer, answer every enabled required item within its constraints, and submit. The result is a completed QuestionnaireResponse."
+        }
+      ],
+      "skos:notation": "Task_Complete",
+      "dcterms:source": "smart-base/processes/content/questionnaire-data-capture.bpmn#Task_Complete",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities/process_questionnairedatacapture.task_extract",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Extract and save the resources"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run SDC $extract by the method the Questionnaire declares and save the resulting transaction Bundle whole, queued when offline."
+        }
+      ],
+      "skos:notation": "Task_Extract",
+      "dcterms:source": "smart-base/processes/content/questionnaire-data-capture.bpmn#Task_Extract",
       "skos:note": "candidate"
     },
     {

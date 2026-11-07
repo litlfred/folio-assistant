@@ -1097,6 +1097,272 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.extractedstatementschema.id",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedStatementSchema.id"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Stable within the list; the anchor the statement's row is published under."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema.id",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.extractedstatementschema.kind",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedStatementSchema.kind"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The kind the extraction gave it: recommendation, requirement, candidate, …"
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema.kind",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.extractedstatementschema.statement",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedStatementSchema.statement"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The statement as captured, verbatim. Never paraphrased here."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema.statement",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.extractedstatementschema.status",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedStatementSchema.status"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its review state, as the extraction records it: published as is."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema.status",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.extractedstatementsschema.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ExtractedStatementsSchema.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the list is, in a reader's words: a heading for its part of the page."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementsSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.statementpageschema.entrybase",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StatementPageSchema.entryBase"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "URL prefix of the library viewer: an entry's link is `<entryBase>/<libraryId>/`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema.entryBase",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.statementpageschema.out",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StatementPageSchema.out"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The page to write."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema.out",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.statementpageschema.sectionbase",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StatementPageSchema.sectionBase"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "URL prefix of the sources: a section's link is `<sectionBase>/<repo-relative section file>`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema.sectionBase",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.statementpageschema.statements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StatementPageSchema.statements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The statement lists, in the order their parts appear."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema.statements",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.statementpageschema.tableattr",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StatementPageSchema.tableAttr"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The content type's look, written after each table (for example a kramdown class)."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema.tableAttr",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.statementsourceschema.instance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StatementSourceSchema.instance"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The DECLARED NAME of the instance holding the library; absent means this instance."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema.instance",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.statementsourceschema.libraryid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StatementSourceSchema.libraryId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The library entry: `library/<libraryId>/`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema.libraryId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.statementsourceschema.page",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StatementSourceSchema.page"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The page (or slide) the statement was read from, in the source's own numbering."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema.page",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/extracted-statement.statementsourceschema.sectionid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StatementSourceSchema.sectionId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The section the statement was read from, when the extraction knows it."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema.sectionId",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary.glossaryschema.hasversion",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1227,6 +1493,25 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary.glossaryschema.subject",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySchema.subject"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The subject area this scheme's translations bind in ({@link SubjectSchema}): `dcterms:subject`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#GlossarySchema.subject",
       "skos:note": "candidate"
     },
     {
@@ -1398,6 +1683,44 @@
         }
       ],
       "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.source",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary.termschema.subject",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermSchema.subject"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Overrides the scheme's {@link SubjectSchema subject area} for this term."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.subject",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/glossary.termschema.translationstatus",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TermSchema.translationStatus"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Per locale, whether this term's translation is signed off. The translation itself is in the scheme's `.po`, never here: this records only who stands behind it. A locale not listed is `unofficial`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/glossary.ts#TermSchema.translationStatus",
       "skos:note": "candidate"
     },
     {

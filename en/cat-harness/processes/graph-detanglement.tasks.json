@@ -1,6 +1,104 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_GraphDetanglement",
+ "markers": [
+  {
+   "id": "Task_Brief",
+   "name": "Brief the topic before touching anything",
+   "left": 35.5,
+   "top": 22.94,
+   "box": {
+    "left": 30.32,
+    "top": 34.12,
+    "width": 1.71,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Declare",
+   "name": "1 · Declare in place (nothing moves)",
+   "left": 46.93,
+   "top": 22.94,
+   "box": {
+    "left": 41.75,
+    "top": 34.12,
+    "width": 1.71,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Measure",
+   "name": "2a · Measure — unassigned column FIRST",
+   "left": 66.93,
+   "top": 22.94,
+   "box": {
+    "left": 61.75,
+    "top": 34.12,
+    "width": 1.71,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Move",
+   "name": "2b · Prune, merge, factor — or the classification is wrong",
+   "left": 66.93,
+   "top": 2.94,
+   "box": {
+    "left": 61.75,
+    "top": 14.12,
+    "width": 1.71,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Isolate",
+   "name": "3 · Isolate — own declaration, namespace, artefact",
+   "left": 89.07,
+   "top": 22.94,
+   "box": {
+    "left": 83.89,
+    "top": 34.12,
+    "width": 1.71,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Propose",
+   "name": "Report what would move — sizes, and what breaks",
+   "left": 98,
+   "top": 61.76,
+   "box": {
+    "left": 92.82,
+    "top": 72.94,
+    "width": 1.71,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Authorise",
+   "name": "Authorise the extraction",
+   "left": 83.71,
+   "top": 82.94,
+   "box": {
+    "left": 78.54,
+    "top": 94.12,
+    "width": 1.71,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Extract",
+   "name": "4 · Extract — a directory move, not a file-by-file sift",
+   "left": 83.71,
+   "top": 61.76,
+   "box": {
+    "left": 78.54,
+    "top": 72.94,
+    "width": 1.71,
+    "height": 2.82
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_GraphDetanglement",
  "tasks": {
   "Task_Brief": {

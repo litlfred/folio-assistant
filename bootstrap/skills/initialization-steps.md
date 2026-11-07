@@ -34,16 +34,13 @@ declaration that names it, so a reader can see why it is there.
 | `readme` | FR-8 | the root has a `README.md` |
 | `readme-sections` | the README's own markers | every section the README opts into is current |
 | `site:workflow` | `repository` | a workflow commits the rendered site onto `gh-pages` |
-| `site:branch` | `repository` | a `gh-pages` branch exists — it must, before Pages can be switched on (2026-10-01) |
+| `site:branch` | `repository` | a `gh-pages` branch exists — it must, before Pages can be switched on |
 | `site:enabled` | `repository` | Pages is on, serving `gh-pages` |
 | `site:live` | `iriBase`, else the Pages address | the address answers |
 
-**The two `schemas:` steps are the primary ones** (owner, 2026-09-30:
-*"json(ld) is primary step in initializing KG harness"*). They are checked
-first once the declarations are read, and the report leads with them:
-[`publish-documents`](publish-documents.md). Everything after them is either
-how those documents are reached (the site) or how a person reads about them
-(the README).
+**The two `schemas:` steps are the primary ones.** They are checked first
+once the declarations are read, and the report leads with them:
+[`publish-documents`](publish-documents.md).
 
 A harness above bootstrap names more steps **the same way**. A work-plan
 store it declares as a directory is a `directory:` step, and a harness's own
@@ -61,8 +58,7 @@ The site steps are in [`publish-site`](publish-site.md).
   pass.
 - **stated**: the declarations name it but nothing can observe it (reading
   and following a harness's instructions). Follow it, say you did, and leave
-  it *stated*, as a stated precondition in bootstrap's diagrams is never
-  reported as satisfied.
+  it *stated*.
 
 ## Idempotent by construction
 

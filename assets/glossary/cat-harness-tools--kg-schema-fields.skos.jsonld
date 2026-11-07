@@ -4719,7 +4719,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Report creation / last-update timestamp (ISO-8601 UTC)."
+          "@value": "Report creation / last-update timestamp (ISO-8601 UTC). Optional and no longer written, as {@link QaCriterionEntry.reviewed_at}."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/block-qa.ts#BlockQaReport.updated_at",
@@ -5232,7 +5232,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "When the audit ran (ISO-8601 UTC)."
+          "@value": "When the audit ran (ISO-8601 UTC). Optional, and no longer written by the platform's writers (owner rulings 2026-11-06: card \"QA dates\", option 1, derive the date; card \"Date source\", option 1, derive it ON READ): the date a verdict is shown and ordered by is DERIVED from {@link reviewed_tree} — the commit date of the commit carrying that tree (`tree-commits.json`, `entryDate` in `pipeline/qa-utils.ts`) — so the verdict's bytes carry no clock and a PR's QA output can be reused on main. The run's own time is in its run record. Kept readable for existing sidecars."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/block-qa.ts#QaCriterionEntry.reviewed_at",
@@ -5745,7 +5745,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "ISO-8601 UTC timestamp of the most recent qa-sweep run."
+          "@value": "ISO-8601 UTC timestamp of the most recent qa-sweep run. Optional and no longer written: the run's time is in its run record."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/block-qa.ts#QaScriptSidecar.last_run_at",
@@ -6357,6 +6357,272 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/built-at-publish.ts#BuiltAtPublishSchema.writer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.cacheinventoryschema.takenat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CacheInventorySchema.takenAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When the snapshot was taken (ISO date) and how. A snapshot is never a declaration."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#CacheInventorySchema.takenAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.cacheschema.consumers",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CacheSchema.consumers"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who is known to read it, in words — INFORMATIVE. Which targets need a cache is derived, never taken from here (owner, 2026-11-05: \"not all rendering/CI/merge processes need all caches\"): a target needs it when the target's recorded read set (the CI cone, the writer cone) touches one of {@link materializes}, plus the `needs` closure of what it needs."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema.consumers",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.cacheschema.derivedinputs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CacheSchema.derivedInputs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the key is a function of, in words — derived, never a hand glob list (a lock is allowed)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema.derivedInputs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.cacheschema.instance",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CacheSchema.instance"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The instance whose workflows and scripts hold it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema.instance",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.cacheschema.location",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CacheSchema.location"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The key prefix, image, ref or path the entries live under."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema.location",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.cacheschema.materializes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CacheSchema.materializes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The paths a restore lays down (checkout-relative, or `~/` for the home directory) — what lets a target's read set say it needs this cache. Absent: no read set can name it, so a plan restores it only through another cache's `needs`, or not at all (the safe direction: the target builds)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema.materializes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.cacheschema.needs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CacheSchema.needs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The ids of the caches this one is built over, so restores and refreshes go in order (`Process_Cache`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema.needs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.cacheschema.refresh",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CacheSchema.refresh"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How a stale entry is brought up to date: `incremental` (only what changed — the changed writers, modules, layers or IG delta — over the restored entry) or `whole`. A refresh never rebuilds wholesale when an incremental one is valid (owner, 2026-11-05)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema.refresh",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.cacheschema.stateinputs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CacheSchema.stateInputs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the producer reads MUTABLE STATE the tree does not pin — a branch-kept graph (`state:mount`: the work plan `beans/`, `qa-reports`, fsh-guts…). A producer that reads one must carry that ref's commit in its key, or its entry is never current (#2966: the publish pages read the work plan's finished instances, and a cache keyed on the tree alone served a stale page). REQUIRED, so no node is silent on it: - `none`: shown to read no state mount (by construction, or by a recorded read set that touches no state path); - `keyed`: every state ref it reads is in the key (`refs`); - `unkeyed`: it reads state the key does not carry — never current; - `unmeasured`: not shown either way yet — never current."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema.stateInputs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.cacheschema.verify",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "CacheSchema.verify"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "How a restored entry is checked, or why it is not."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema.verify",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.keyrecipeschema.expression",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KeyRecipeSchema.expression"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The key text as the workflow writes it, for the reader."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#KeyRecipeSchema.expression",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.keyrecipeschema.files",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KeyRecipeSchema.files"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`hashFiles`: the files, checkout-relative (a lock, never a hand-picked glob of sources)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#KeyRecipeSchema.files",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.keyrecipeschema.implementation",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KeyRecipeSchema.implementation"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`script`: the mount-free implementation of the recipe."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#KeyRecipeSchema.implementation",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cache.keyrecipeschema.script",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "KeyRecipeSchema.script"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`cache:key` / `cache:key --base`: the package script fingerprinted."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/cache.ts#KeyRecipeSchema.script",
       "skos:note": "candidate"
     },
     {
@@ -9036,6 +9302,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#HarnessVisualiserSchema.alias",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/cat-harness.harnessvisualiserschema.builtonhostsite",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HarnessVisualiserSchema.builtOnHostSite"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its pages are built at publish on the HOST site (the site owner's, e.g. cat-harness's), at `<site>/<locale>/<harness>/<id>/`, so the publish plan derives those routes from this entry and the host lists none of them (bean folio-assistant-uldr, owner option \"1\", 2026-11-06). `translated`: it also writes one route per locale the checkout's translation sources hold, besides the page locale. The writer is the `renderedBy` Tool's `invoke.shell` script, and it marks each route it writes with a self-ignoring `.gitignore` (`*`), which keeps the route out of git and out of the mount digest."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/cat-harness.ts#HarnessVisualiserSchema.builtOnHostSite",
       "skos:note": "candidate"
     },
     {
@@ -14093,6 +14378,557 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.consentblockschema.granted",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConsentBlockSchema.granted"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the person has said yes: drawn as a toggle."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema.granted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.consentblockschema.until",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConsentBlockSchema.until"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Until when."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema.until",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.consentblockschema.what",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConsentBlockSchema.what"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What they may see."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema.what",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.consentblockschema.who",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ConsentBlockSchema.who"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Who may see it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema.who",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.fieldsblockschema.columns",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FieldsBlockSchema.columns"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Two columns of fields, on a screen wide enough."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#FieldsBlockSchema.columns",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.headerblockschema.app",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HeaderBlockSchema.app"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The app's or the facility's name."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema.app",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.headerblockschema.brand",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HeaderBlockSchema.brand"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The brand colour of the bar's mark."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema.brand",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.headerblockschema.status",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HeaderBlockSchema.status"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A status at the right: \"Offline (28d)\", \"Online · CA key active\"."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema.status",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.passcodeblockschema.digits",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PasscodeBlockSchema.digits"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The digits."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#PasscodeBlockSchema.digits",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.passcodeblockschema.entry",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PasscodeBlockSchema.entry"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Drawn as boxes being typed into (a verifier's entry) rather than a code held."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#PasscodeBlockSchema.entry",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.passcodeblockschema.shown",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PasscodeBlockSchema.shown"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Shown, or drawn as dots."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#PasscodeBlockSchema.shown",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.personcardblockschema.actor",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PersonCardBlockSchema.actor"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The actor shown: name and avatar from its persona."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema.actor",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.personcardblockschema.banner",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PersonCardBlockSchema.banner"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Drawn as a dark banner across the screen, as an EMR's patient bar."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema.banner",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.personcardblockschema.name",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PersonCardBlockSchema.name"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The name as the screen spells it, when it is not the persona's (\"Somsack Sengmany\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema.name",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.personcardblockschema.subtitle",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PersonCardBlockSchema.subtitle"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A line under the name."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema.subtitle",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.qrblockschema.example",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QrBlockSchema.example"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The FHIR example the code carries, `Type/id`: linked to its page."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema.example",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.qrblockschema.holder",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QrBlockSchema.holder"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whose it is, as the card prints it (\"Somsack Sengmany\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema.holder",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.qrblockschema.holdernote",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QrBlockSchema.holderNote"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A line under the holder (\"Guardian: Khamla Sengmany\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema.holderNote",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.qrblockschema.label",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QrBlockSchema.label"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What it is, under the title (\"Vaccine: Hep B birth dose\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema.label",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.qrblockschema.mode",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QrBlockSchema.mode"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`show`: a code on this screen; `scan`: the camera reading one."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema.mode",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.qrblockschema.payload",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QrBlockSchema.payload"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the code encodes: drawn as a real QR code of this text."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema.payload",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.qrblockschema.title",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QrBlockSchema.title"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The card's title (\"Digital Vaccine Certificate\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema.title",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.recordlistblockschema.example",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RecordListBlockSchema.example"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A FHIR example, `Type/id`, whose resources are the rows when `rows` is absent (a Bundle's entries, else the resource itself); linked to its page either way."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema.example",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.recordlistblockschema.footnote",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RecordListBlockSchema.footnote"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Small print under the rows."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema.footnote",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.recordlistblockschema.summary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RecordListBlockSchema.summary"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A chip beside the title (\"2 doses completed\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema.summary",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.recordrowschema.code",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RecordRowSchema.code"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A code or an identifier, drawn in mono."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema.code",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.recordrowschema.detail",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RecordRowSchema.detail"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A line under the label."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema.detail",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.recordrowschema.struck",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RecordRowSchema.struck"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Drawn struck through: a thing that must NOT be given (an allergy)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema.struck",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/device-screen.statusbadgeblockschema.verdict",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "StatusBadgeBlockSchema.verdict"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A short verdict at the right (\"PASS\")."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/device-screen.ts#StatusBadgeBlockSchema.verdict",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/diff-renderers.diffrendererschema.defaultfor",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -18767,6 +19603,139 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.decidedat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.decidedAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "When, as an ISO date."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.decidedAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.decidedby",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.decidedBy"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The agent or person that ruled: an id, never a model name."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.decidedBy",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.label",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.label"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The label that matched, for a reader."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.label",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.msgid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.msgid"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The source sentence, for a reader; the hash is what is compared."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.msgid",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.msgidsha256",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.msgidSha256"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "SHA-256 (hex) of the msgid, exactly as the catalogue holds it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.msgidSha256",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.reason",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.reason"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One line: why. For an `exception`, why the fixed translation is wrong here."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.reason",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/glossary-sense.glossarysenseverdictschema.term",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GlossarySenseVerdictSchema.term"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The term's id: its IRI, or `<subject area>#<label>` for a terminology pin."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema.term",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-node.graphtypologynodeschema.description",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -18897,6 +19866,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.skillBearing",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-node.graphtypologynodeschema.specialises",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphTypologyNodeSchema.specialises"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The block kind a node of this kind IS, read through the kind module's view of it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema.specialises",
       "skos:note": "candidate"
     },
     {
@@ -19296,6 +20284,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.skillBearing",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/graph-typology-registry.graphtypologydef.specialises",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "GraphTypologyDef.specialises"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The BLOCK KIND (a `folio-block-kind/v1` node's `kind`, in whichever layer declares it) that a node of this kind IS, read through the kind module's view of it: a journey is a DAK user scenario."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/graph-typology-registry.ts#GraphTypologyDef.specialises",
       "skos:note": "candidate"
     },
     {
@@ -20873,6 +21880,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexSiteSchema.landing",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/index-config.indexsiteschema.taskskills",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndexSiteSchema.taskSkills"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Whether the ⓘ task panel on this site's BPMN drawings shows skills: the skills a task requires and the skills its lane's role has. Absent or `true` shows them, as every knowledge-graph site does; `false` hides them, for a site whose processes are not modelled with skills, such as an implementation guide's business processes (owner, 2026-11-06: \"i dont think skills are modelled in DAK ... dont necc turn those on but i want common styling\"; \"maybe in future DAK personas get skills\"). The rest of the panel (the step, its lane and role, the process, a called process) is shown either way. A fact about how THIS checkout publishes, so it sits on the index's `site` beside `landing` and `agentRun`. Read by `task-panel.ts` `taskSkillsDeclared`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/index-config.ts#IndexSiteSchema.taskSkills",
       "skos:note": "candidate"
     },
     {
@@ -23609,6 +24635,44 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MemberFactsSchema.unblocks",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/merge-queue.mergerequestschema.fulltiergreen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MergeRequestSchema.fullTierGreen"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The sender's statement that the full tier is green as judged (every judge)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestSchema.fullTierGreen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/merge-queue.mergerequestschema.lookfor",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MergeRequestSchema.lookFor"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What to look for in the preview. Required when there is one."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestSchema.lookFor",
       "skos:note": "candidate"
     },
     {
@@ -27462,7 +28526,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Repo-relative paths of the block's files."
+          "@value": "Repo-relative paths of the subject's files: a block's or page's `.md` (and `.ts`), or — for a catalogue measured against its template, which has no page of its own here (an IG page, a glossary) — the `.pot`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/qa-record-shapes.ts#TranslationBlockQaReport.paths",
@@ -27485,6 +28549,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/kg/qa-record-shapes.ts#TranslationBlockQaReport.po",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/qa-record-shapes.translationblockqareport.updated_at",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "TranslationBlockQaReport.updated_at"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Optional and no longer written (owner rulings 2026-11-06, cards \"QA dates\" and \"Date source\"): the date is derived on read from the entries' `reviewed_tree`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/kg/qa-record-shapes.ts#TranslationBlockQaReport.updated_at",
       "skos:note": "candidate"
     },
     {
@@ -29730,6 +30813,234 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.holdercandidate.createdat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HolderCandidate.createdAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "ISO 8601 creation time, as `list_sessions` reports it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#HolderCandidate.createdAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.holdercandidate.minutessinceanswer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HolderCandidate.minutesSinceAnswer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Minutes since it last answered or posted a heartbeat; unknown counts as live."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#HolderCandidate.minutesSinceAnswer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.holdercandidate.ownsp0",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HolderCandidate.ownsP0"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "It owns a P0 PR: the fix for a red main, or a link of the re-pin chain."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#HolderCandidate.ownsP0",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneholdingschema.announce",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneHoldingSchema.announce"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the holder announces to every sibling and the owner, e.g. `merge manager: <session id>`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema.announce",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneholdingschema.election",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneHoldingSchema.election"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Applied in order by {@link electHolder}."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema.election",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneholdingschema.heartbeatminutes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneHoldingSchema.heartbeatMinutes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The holder acknowledges each request, and posts a heartbeat, within this many minutes."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema.heartbeatMinutes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneholdingschema.lonesessionholds",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneHoldingSchema.loneSessionHolds"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A session alone in its coordination group holds the lane for itself."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema.loneSessionHolds",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneholdingschema.stalledafterminutes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneHoldingSchema.stalledAfterMinutes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A session silent for longer than this is stalled: not a candidate, and its lane is vacant."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema.stalledAfterMinutes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.lanereading.activesessions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneReading.activeSessions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Active sessions with ready PRs in the same repositories."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneReading.activeSessions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.lanereading.conflictingprs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneReading.conflictingPrs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Open PRs that conflict with or supersede another open PR."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneReading.conflictingPrs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.lanereading.oldestqueuedminutes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneReading.oldestQueuedMinutes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Age of the oldest queued run, in minutes (0 with none queued)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneReading.oldestQueuedMinutes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.lanereading.queuedruns",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneReading.queuedRuns"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The most queued runs on any one of those repositories."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneReading.queuedRuns",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneroleread.performervaries",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -29993,6 +31304,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#RoleDef.formerNames",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.roledef.holding",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RoleDef.holding"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For a lane one session holds at a time, such as the merge steward: when the lane is needed at all, how sibling sessions choose its holder, and whether a lone session holds it for itself (owner rulings, 2026-11-07). See {@link LaneHolding}, {@link laneNeeded} and {@link electHolder}."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#RoleDef.holding",
       "skos:note": "candidate"
     },
     {
@@ -31034,7 +32364,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "ISO-8601 UTC timestamp of last write."
+          "@value": "ISO-8601 UTC timestamp of last write. Optional and no longer written (owner rulings 2026-11-06, cards \"QA dates\" and \"Date source\"): the date is derived on read from the entries' `reviewed_tree`."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/script-qa.ts#ScriptQaReport.updated_at",
@@ -31741,6 +33071,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/ui/site-indexes.ts#BeanIndexSchema.plan",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/site-indexes.beanindexschema.planfindings",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BeanIndexSchema.planFindings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Work plans filed wrong: an item naming a process that is not an epic or a milestone, or a proposal naming no process (`workPlanFindings`, `schemas/sdlc/work-plan.ts`). Written by `gen-docs-pages.ts` since 089be6f8, which left this schema rejecting the index it wrote (check:kind-validators, dth-hrh run 42343581318). OPTIONAL, as `plan` is: an index written before the field is still valid."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/ui/site-indexes.ts#BeanIndexSchema.planFindings",
       "skos:note": "candidate"
     },
     {
@@ -35708,7 +37057,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Optional Gherkin `.feature` file the case is written in."
+          "@value": "The Gherkin `.feature` file the case is written in. Required under `test-plan/v1.1` — enforced on the plan, since a case does not know its plan's version — and optional only in a `test-plan/v1` plan."
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/sdlc/test-plan.ts#TestPlanCaseSchema.feature",
@@ -41586,6 +42935,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.dakuserscenario.personas",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DakUserScenario.personas"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Role ids, in the order the journey's personas first reach them."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#DakUserScenario.personas",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.experienceschema.emotion",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -41909,6 +43277,25 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.journeypersonaschema.avatar",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "JourneyPersonaSchema.avatar"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A square picture of the person, a path from the instance root; the initials are the fallback."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema.avatar",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.journeypersonaschema.color",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -41963,6 +43350,63 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#JourneyPersonaSchema.initials",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.partschema.optional",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PartSchema.optional"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The story may skip it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#PartSchema.optional",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.partschema.repeats",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PartSchema.repeats"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "It may happen more than once."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#PartSchema.repeats",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.partschema.scenario",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PartSchema.scenario"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The journey that is this part."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#PartSchema.scenario",
       "skos:note": "candidate"
     },
     {
@@ -42039,6 +43483,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#RecordSchema.state",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/user-scenario.referenceschema.href",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceSchema.href"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A URL (`https:`, `mailto:` …), an absolute path or a `#fragment` as it is; anything else is a path from the SITE'S ROOT (`vaxlink/`, `journeys.html#j1`), resolved the same way on the journey page and the workshop pages (`fromSite`, `scripts/journeys/read.ts`)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/user-scenario.ts#ReferenceSchema.href",
       "skos:note": "candidate"
     },
     {
@@ -44908,6 +46371,44 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.badge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoppresentationschema.cast",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopPresentationSchema.cast"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The order the cast is listed in, everywhere it is listed (the overview, the journey map's lanes, the persona lens): actor ids. An actor a step names and this list does not follows, in order of first appearance; an id no step names is not drawn. Absent: order of first appearance."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.cast",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/workshop.workshoppresentationschema.chaptertitles",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "WorkshopPresentationSchema.chapterTitles"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A chapter's title in the room, by the id of the journey the chapter is (`\"j4-family-records-abroad\": \"Crossing back\"`). Absent: the journey's title without its code in front."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema.chapterTitles",
       "skos:note": "candidate"
     },
     {

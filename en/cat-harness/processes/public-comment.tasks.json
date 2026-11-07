@@ -1,6 +1,128 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_PublicComment",
+ "markers": [
+  {
+   "id": "Task_Ingest",
+   "name": "Ingest and place each comment",
+   "left": 16.79,
+   "top": 19.88,
+   "box": {
+    "left": 11.5,
+    "top": 31.06,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Triage",
+   "name": "Triage: confirm the anchor, type and priority",
+   "left": 16.79,
+   "top": 36.82,
+   "box": {
+    "left": 11.5,
+    "top": 48,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_ProposeChangeSets",
+   "name": "Propose change-sets, as records with no issue yet",
+   "left": 35.77,
+   "top": 19.88,
+   "box": {
+    "left": 30.47,
+    "top": 31.06,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_GroupChangeSets",
+   "name": "Agree each change-set's requirements on its issue",
+   "left": 44.53,
+   "top": 55.65,
+   "box": {
+    "left": 39.23,
+    "top": 66.82,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_RerouteChangeSet",
+   "name": "Re-route to another committee",
+   "left": 55.11,
+   "top": 55.65,
+   "box": {
+    "left": 49.82,
+    "top": 66.82,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Assign",
+   "name": "Assign to committee members",
+   "left": 55.11,
+   "top": 36.82,
+   "box": {
+    "left": 49.82,
+    "top": 48,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_CommitteeRecommends",
+   "name": "Recommend a decision, with a rationale",
+   "left": 66.06,
+   "top": 55.65,
+   "box": {
+    "left": 60.77,
+    "top": 66.82,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_EditorDecides",
+   "name": "Decide, weighing the recommendations",
+   "left": 66.06,
+   "top": 73.53,
+   "box": {
+    "left": 60.77,
+    "top": 84.71,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "CallActivity_MakeChange",
+   "name": "Make the change, check it and merge it",
+   "left": 89.42,
+   "top": 73.53,
+   "box": {
+    "left": 84.12,
+    "top": 84.71,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Withdraw",
+   "name": "Record the withdrawal",
+   "left": 68.98,
+   "top": 2.94,
+   "box": {
+    "left": 63.69,
+    "top": 14.12,
+    "width": 1.75,
+    "height": 2.82
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
  "tasks": {
   "Task_Ingest": {

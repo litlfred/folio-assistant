@@ -1,6 +1,56 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_CriterionAdjudication",
+ "markers": [
+  {
+   "id": "Call_Adjudicate",
+   "name": "Adjudicate the criterion disagreement",
+   "left": 26.05,
+   "top": 8.14,
+   "box": {
+    "left": 19.96,
+    "top": 30.23,
+    "width": 2.02,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "A_ScopeCriterion",
+   "name": "Scope the criterion so it stops applying here",
+   "left": 52.94,
+   "top": 36.05,
+   "box": {
+    "left": 46.85,
+    "top": 58.14,
+    "width": 2.02,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "A_Dispensation",
+   "name": "Grant a dispensation, with its reason",
+   "left": 52.94,
+   "top": 63.95,
+   "box": {
+    "left": 46.85,
+    "top": 86.05,
+    "width": 2.02,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "A_RecordEntry",
+   "name": "Write the entry that LEADS — keeping the checker's beneath it",
+   "left": 72.69,
+   "top": 8.14,
+   "box": {
+    "left": 66.6,
+    "top": 30.23,
+    "width": 2.02,
+    "height": 5.58
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication",
  "tasks": {
   "Call_Adjudicate": {

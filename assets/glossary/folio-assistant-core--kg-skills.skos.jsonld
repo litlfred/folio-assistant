@@ -744,6 +744,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-skills/publish-extracted-statements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-skills"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "publish-extracted-statements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The standard step of adding source documents to a folio's working artifact: every statement extracted from a library source is published readably in the artifact's own pages AND in the shared extraction viewer, each with a link to its library entry and to the section it came from, and CI fails when the generated pages are stale. Generic across content types; each type's adapter says only how its pages look. Executable form: `processes/library/publish-extracted-statements.bpmn`."
+        }
+      ],
+      "skos:notation": "publish-extracted-statements",
+      "dcterms:source": "folio-assistant-core/skills/library/ingestion/publish-extracted-statements.md",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-skills/quality-control",
       "@type": "skos:Concept",
       "skos:inScheme": {

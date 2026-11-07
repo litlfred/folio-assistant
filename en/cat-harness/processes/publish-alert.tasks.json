@@ -1,6 +1,56 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_PublishAlert",
+ "markers": [
+  {
+   "id": "A_Label",
+   "name": "Ensure the publication-manager label",
+   "left": 33.67,
+   "top": 13.81,
+   "box": {
+    "left": 27.04,
+    "top": 29.01,
+    "width": 1.63,
+    "height": 6.63
+   }
+  },
+  {
+   "id": "A_Open",
+   "name": "Open the tracking issue, naming the failed step",
+   "left": 63.61,
+   "top": 4.7,
+   "box": {
+    "left": 56.97,
+    "top": 19.89,
+    "width": 1.63,
+    "height": 6.63
+   }
+  },
+  {
+   "id": "A_Comment",
+   "name": "Comment on the open issue, naming the step",
+   "left": 63.61,
+   "top": 26.24,
+   "box": {
+    "left": 56.97,
+    "top": 41.44,
+    "width": 1.63,
+    "height": 6.63
+   }
+  },
+  {
+   "id": "U_Triage",
+   "name": "Triage the failure: hold or fix forward",
+   "left": 76.87,
+   "top": 58.56,
+   "box": {
+    "left": 71.94,
+    "top": 84.81,
+    "width": 1.63,
+    "height": 6.63
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PublishAlert",
  "tasks": {
   "A_Label": {

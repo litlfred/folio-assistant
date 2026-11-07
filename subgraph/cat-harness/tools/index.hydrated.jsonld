@@ -3688,6 +3688,126 @@
       "path": "tools/instantiate-harness/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/journey-refs/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/journey-refs.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Read every `user-scenario` and `workshop` node in the checkout through the instances' declared directories, with the journeys viewer's own resolver, and resolve what each names: actors (`personas`, a step's `lead`, `experiences[].actor`, `handoff.from`/`to`, `illustrationStyle.cast[].actor`), user stories, `realisedBy` BPMN files (instance-relative) and the element ids in them, `uses` blocks in a directory declaring `building-blocks`, `req:` requirements, FHIR examples and a step's `dak` assets (data sets, decision tables, indicators) in a `fhir-artifact-index` (could not determine while the index is built at publish), `illustration.src` files, `follows`/`partOf`/`parts`/`includes` journeys (parts and includes forming no cycle; an `includes` held against the call activity its step's `realisedBy` names, could not determine when the call names no process), the `trustLadder` code list and each `record.state` code of it, and ArchiMate `views`; and each workshop's `scenarios`, `steps[]` `{scenario, step}` and `<scenario>#<step>` refs; each device screen's `owner` and `personCard` actors, its `steps[]` `{scenario, step}`, and the FHIR examples its `qr` and `recordList` blocks name; and every persona's `avatar` image path. Every journey is a DAK user scenario (the kind `specialises` it): its DAK personas, the roles its persona actors play, must be non-empty and each a declared role; a persona may be an actor or (0.4.0) a role. What is derived is not also written: a listed part's `follows` or `partOf`, personas equal to the parts', a lead equal to the lanes' first actor, are each a redundant finding, and a 0.4.0 step with no experiences whose lanes no persona plays is a finding. A node that does not parse is a finding. One line per finding, naming the instance, file and step. Exit 0 every reference resolves (or no instance holds a journey or a workshop, which is said); 1 one does not; 2 the declarations could not be read.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat check:journey-refs"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--root"
+                },
+                "description": "A directory in the checkout to check. Default: the working directory.",
+                "name": "root",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--json"
+                },
+                "description": "Print the report as JSON.",
+                "name": "json",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Unresolved references and unparsed nodes, one line each on stderr, with the count of references examined; or one ✓ line.",
+                "name": "findings",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Count"
+              }
+            ]
+          },
+          "name": "journey-refs",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/journey-maps",
+          "title": "Every reference a journey or a workshop names resolves"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/journey-refs",
+      "path": "tools/journey-refs/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/journeys-viewer/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/journeys-viewer.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Draw every journey (`user-scenario`) and workshop (`workshop`) in the checkout as static pages at the route of the visualiser an instance declares for this Tool, `<locale>/<instance>/<id>/`: an index of all journeys, grouped by instance (each a sub-graph page), each parent's `parts` nested under it in its order with optional and repeating parts marked (an older file's `partOf` children after them, ordered along `follows`), and a plain DAK user scenario with no steps listed as one; one page per journey, its parts in order and the journeys it is a part of, a journey map with a lane and a feeling curve per persona, then each step, linked to the journey it `includes`, with its BPMN drawing (the step's flow nodes highlighted), user stories, requirements, FHIR examples, building blocks, the DAK assets it uses (data sets, decision tables and indicators, linked into the IG) and ArchiMate views; and the workshop layer, the questions for the room on each step, a page per workshop and per module, job aids, and printable A3/A4 sheets; and each device screen (`device-screen`) that shows a step a workshop presents, drawn as a static device mock (phone, tablet, scanner, desktop, kiosk) with its owner beside it, in the workshop's Device Demo, linked both ways with the walkthrough. A persona's picture (`meta.persona.avatar`) is drawn wherever the persona appears. Instances below the declaring one are read through their declarations, so a downstream site shows the journeys of the layers it mounts too.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run cat journeys:viz"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--instance"
+                },
+                "description": "The instance whose `visualisers` declare this Tool: the pages go to that visualiser's route. One that declares none gets nothing, and the run exits 78 (not applicable).",
+                "name": "instance",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--site"
+                },
+                "description": "A site being built: the pages are written at the declared route under it. Absent, under the instance's own site directory. The route is this Tool's alone and is replaced whole.",
+                "name": "site",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "The viewer's pages and its two assets (`assets/journeys.css`, `assets/journeys.js`), under the declared route.",
+                "name": "pages",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "journeys-viewer",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/journey-maps",
+          "title": "Journeys viewer"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/journeys-viewer",
+      "path": "tools/journeys-viewer/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/judge-tree/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [
@@ -4628,6 +4748,183 @@
       ],
       "name": "tools/mcp-server-image",
       "path": "tools/mcp-server-image/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/memory-checkpoint/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/memory-checkpoint.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Before you stop or hand over, keep where the work stands: what is done, what is next, and anything the next person must know to carry on.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "inProcess": {
+              "module": "src/tools/memory.ts"
+            },
+            "mcp": {
+              "tool": "memory_checkpoint"
+            }
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "stdin": true
+                },
+                "description": "Where the work stands, in plain words.",
+                "name": "note",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              },
+              {
+                "arg": {
+                  "flag": "--shared"
+                },
+                "description": "true: the memory you share with the other agents working with you. Default: your own memory of this work.",
+                "name": "shared",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Whether it was kept.",
+                "name": "kept",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "memory-checkpoint",
+          "requirements": {
+            "network": false
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-context",
+          "title": "Keep where the work stands"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/memory-checkpoint",
+      "path": "tools/memory-checkpoint/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/memory-note/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/memory-note.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Keep a short note on the work you are doing — what you did, what you decided and why, and what is left open — so it is there when the work is picked up again.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "inProcess": {
+              "module": "src/tools/memory.ts"
+            },
+            "mcp": {
+              "tool": "memory_note"
+            }
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "stdin": true
+                },
+                "description": "The note, in plain words. One paragraph is plenty.",
+                "name": "note",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              },
+              {
+                "arg": {
+                  "flag": "--shared"
+                },
+                "description": "true: the memory you share with the other agents working with you. Default: your own memory of this work.",
+                "name": "shared",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "Whether it was kept.",
+                "name": "kept",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text"
+              }
+            ]
+          },
+          "name": "memory-note",
+          "requirements": {
+            "network": false
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-context",
+          "title": "Keep a note on the work"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/memory-note",
+      "path": "tools/memory-note/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/memory-recall/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/cat-harness/tools/memory-recall.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Read what has been kept about this work so far, oldest first, so you can start where the last person stopped.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "inProcess": {
+              "module": "src/tools/memory.ts"
+            },
+            "mcp": {
+              "tool": "memory_recall"
+            }
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--shared"
+                },
+                "description": "true: the memory you share with the other agents working with you. Default: your own memory of this work.",
+                "name": "shared",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "What was kept, oldest first: when, who, what kind, and the text.",
+                "name": "entries",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Markdown"
+              }
+            ]
+          },
+          "name": "memory-recall",
+          "requirements": {
+            "network": false
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-context",
+          "title": "Read what was kept"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/memory-recall",
+      "path": "tools/memory-recall/"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/tools/merge-leftover/",

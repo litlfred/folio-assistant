@@ -122,6 +122,24 @@
           "type": "string",
           "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/\\S+$"
         },
+        "subject": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "translationStatus": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]+)*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "official",
+              "unofficial"
+            ]
+          }
+        },
         "focus": {
           "anyOf": [
             {

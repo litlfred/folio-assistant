@@ -1,6 +1,56 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_IgDocsSiteCompose",
+ "markers": [
+  {
+   "id": "Task_Indexes",
+   "name": "Build each IG's artefact index",
+   "left": 28.26,
+   "top": 26.19,
+   "box": {
+    "left": 21.24,
+    "top": 61.9,
+    "width": 1.82,
+    "height": 11.43
+   }
+  },
+  {
+   "id": "Task_Pages",
+   "name": "Generate each IG instance's artefact pages",
+   "left": 45.72,
+   "top": 26.19,
+   "box": {
+    "left": 38.7,
+    "top": 61.9,
+    "width": 1.82,
+    "height": 11.43
+   }
+  },
+  {
+   "id": "Task_Stage",
+   "name": "Clone each IG at its recorded commit and stage it",
+   "left": 63.18,
+   "top": 26.19,
+   "box": {
+    "left": 56.16,
+    "top": 61.9,
+    "width": 1.82,
+    "height": 11.43
+   }
+  },
+  {
+   "id": "Task_ComposeInto",
+   "name": "Compose each staged IG into the host source",
+   "left": 80.64,
+   "top": 26.19,
+   "box": {
+    "left": 73.62,
+    "top": 61.9,
+    "width": 1.82,
+    "height": 11.43
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose",
  "tasks": {
   "Task_Indexes": {

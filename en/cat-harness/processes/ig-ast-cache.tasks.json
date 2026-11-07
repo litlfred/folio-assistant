@@ -1,6 +1,68 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_IgAstCache",
+ "markers": [
+  {
+   "id": "Task_Restore",
+   "name": "Restore and judge the cached AST",
+   "left": 25.65,
+   "top": 34.24,
+   "box": {
+    "left": 19.35,
+    "top": 49.36,
+    "width": 2.09,
+    "height": 3.82
+   }
+  },
+  {
+   "id": "Task_BuildSite",
+   "name": "Build and publish the site from the AST",
+   "left": 56.09,
+   "top": 34.24,
+   "box": {
+    "left": 49.78,
+    "top": 49.36,
+    "width": 2.09,
+    "height": 3.82
+   }
+  },
+  {
+   "id": "Task_Dispatch",
+   "name": "Dispatch AST refresh",
+   "left": 41.74,
+   "top": 8.76,
+   "box": {
+    "left": 33.7,
+    "top": 17.52,
+    "width": 2.09,
+    "height": 3.82
+   }
+  },
+  {
+   "id": "Task_Export",
+   "name": "Build the IG with the AST exporter",
+   "left": 25.65,
+   "top": 62.9,
+   "box": {
+    "left": 19.35,
+    "top": 78.03,
+    "width": 2.09,
+    "height": 3.82
+   }
+  },
+  {
+   "id": "Task_Seed",
+   "name": "Seed the cache branch",
+   "left": 57.83,
+   "top": 66.08,
+   "box": {
+    "left": 49.78,
+    "top": 74.84,
+    "width": 2.09,
+    "height": 3.82
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgAstCache",
  "tasks": {
   "Task_Restore": {

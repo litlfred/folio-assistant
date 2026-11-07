@@ -1,6 +1,44 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_PrChecksPresent",
+ "markers": [
+  {
+   "id": "Task_Sweep",
+   "name": "Ask whether each open PR head has a run",
+   "left": 32.56,
+   "top": 22.97,
+   "box": {
+    "left": 24.56,
+    "top": 48.65,
+    "width": 2.65,
+    "height": 6.49
+   }
+  },
+  {
+   "id": "Call_Watch",
+   "name": "Report the verdict on the tracking issue",
+   "left": 52.43,
+   "top": 22.97,
+   "box": {
+    "left": 44.43,
+    "top": 48.65,
+    "width": 2.65,
+    "height": 6.49
+   }
+  },
+  {
+   "id": "Task_Comment",
+   "name": "Comment once per PR and head",
+   "left": 83.33,
+   "top": 22.97,
+   "box": {
+    "left": 75.33,
+    "top": 48.65,
+    "width": 2.65,
+    "height": 6.49
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent",
  "tasks": {
   "Task_Sweep": {

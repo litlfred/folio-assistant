@@ -5,6 +5,11 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
+      "@id": "cat-harness:graphTypology/cache",
+      "@type": "bootstrap:GraphTypology",
+      "name": "cache"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/asset/agent-instructions",
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
@@ -31,9 +36,9 @@
       "@type": "bootstrap:Asset",
       "name": "npm-manifest",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3983448ab50128b87a3164f12fd30b3b0373a169d1732e039ed2d973eba716a7",
-        "bytes": 55132,
-        "sha256": "3983448ab50128b87a3164f12fd30b3b0373a169d1732e039ed2d973eba716a7"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/d4e471acd7c0450ebd81e565353244e904825d9536447972597a75e6d05489d0",
+        "bytes": 56181,
+        "sha256": "d4e471acd7c0450ebd81e565353244e904825d9536447972597a75e6d05489d0"
       },
       "title": "package.json"
     },
@@ -46,6 +51,12 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-adapters",
       "@type": "bootstrap:Subgraph",
       "name": "cat-harness-tools-adapters"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-caches",
+      "@type": "bootstrap:Subgraph",
+      "name": "cat-harness-tools-caches",
+      "title": "CI caches"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-deploy",

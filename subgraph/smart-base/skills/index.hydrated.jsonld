@@ -32,6 +32,46 @@
           "@type": "bootstrap:Subgraph",
           "hasMember": [
             {
+              "@id": "http://smart.who.int/base/skill/activate-accepted-guidance",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The point-of-care system carries out the health worker's decisions on decision-support guidance: each accepted action's request becomes active (intent plan or order) and joins the client's CarePlan; a declined action is not written. Input is the guidance and the decisions; output is the transaction Bundle saved.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+              "inputSchema": "http://smart.who.int/base/schema/skills/activate-accepted-guidance/input.schema.json",
+              "instructionLines": 46,
+              "instructionsPath": "skills/content/authoring-who-smart-guidelines/activate-accepted-guidance.md",
+              "name": "activate-accepted-guidance",
+              "outputSchema": "http://smart.who.int/base/schema/skills/activate-accepted-guidance/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/73342270adda5b3fce65ea34d42b115914bf8c6c488bc8776088ebca77bfcc08",
+                "bytes": 2060,
+                "sha256": "73342270adda5b3fce65ea34d42b115914bf8c6c488bc8776088ebca77bfcc08"
+              },
+              "title": "Activate accepted guidance"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/apply-decision-support",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The point-of-care system applies a DAK decision table's PlanDefinition to one client ($apply) and gets the proposed actions back as a RequestGroup (R4; RequestOrchestration in R5), or as CDS Hooks cards when the guidance comes from a CDS service. Input is the PlanDefinition and the client; output is the proposal, every request in it still a proposal.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+              "inputSchema": "http://smart.who.int/base/schema/skills/apply-decision-support/input.schema.json",
+              "instructionLines": 54,
+              "instructionsPath": "skills/content/authoring-who-smart-guidelines/apply-decision-support.md",
+              "name": "apply-decision-support",
+              "outputSchema": "http://smart.who.int/base/schema/skills/apply-decision-support/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/07633bd65350158e56a305df8c2af90839e63224f21763bf482887e3258cc66a",
+                "bytes": 2584,
+                "sha256": "07633bd65350158e56a305df8c2af90839e63224f21763bf482887e3258cc66a"
+              },
+              "title": "Apply decision support"
+            },
+            {
               "@id": "http://smart.who.int/base/skill/classify-and-code-content",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -50,6 +90,26 @@
                 "sha256": "039d91d9c32e6143dd71ecb0c2ccff3cda81d747292e78edcbc674072e88e26a"
               },
               "title": "classify-and-code-content"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/complete-sdc-questionnaire",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "A health worker (or a client, on their own device) completes a FHIR R4 Questionnaire conforming to Structured Data Capture as their device renders it, and the result is a QuestionnaireResponse. Generic for any DAK form: a registration, a visit, a referral. Input is the Questionnaire as rendered, with any pre-populated answers; output is the completed QuestionnaireResponse.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+              "inputSchema": "http://smart.who.int/base/schema/skills/complete-sdc-questionnaire/input.schema.json",
+              "instructionLines": 80,
+              "instructionsPath": "skills/content/authoring-who-smart-guidelines/complete-sdc-questionnaire.md",
+              "name": "complete-sdc-questionnaire",
+              "outputSchema": "http://smart.who.int/base/schema/skills/complete-sdc-questionnaire/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/f44f0a99c795b4ea9b1c6cbe69582abf3ae432d75bde8bcc4661ac4d3e009c46",
+                "bytes": 3906,
+                "sha256": "f44f0a99c795b4ea9b1c6cbe69582abf3ae432d75bde8bcc4661ac4d3e009c46"
+              },
+              "title": "Complete an SDC questionnaire"
             },
             {
               "@id": "http://smart.who.int/base/skill/dak-l1-library",
@@ -142,6 +202,26 @@
                 "sha256": "f695237bd9025d647173305d14e6d38930c8b69082891077ebe2c9b135941fcd"
               },
               "title": "dth-l1-to-l2-ingest"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/extract-questionnaire-response",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "The point-of-care system turns a completed QuestionnaireResponse into the FHIR resources it stands for, by the extraction its SDC Questionnaire declares (StructureMap-based, definition-based or observation-based $extract), and saves them. Input is the response and its Questionnaire; output is a transaction Bundle. Generic for any DAK form.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+              "inputSchema": "http://smart.who.int/base/schema/skills/extract-questionnaire-response/input.schema.json",
+              "instructionLines": 59,
+              "instructionsPath": "skills/content/authoring-who-smart-guidelines/extract-questionnaire-response.md",
+              "name": "extract-questionnaire-response",
+              "outputSchema": "http://smart.who.int/base/schema/skills/extract-questionnaire-response/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/acafc28d0b305ae76aa711bbef1560d164843808c44fcb809e916213e24cf13d",
+                "bytes": 2810,
+                "sha256": "acafc28d0b305ae76aa711bbef1560d164843808c44fcb809e916213e24cf13d"
+              },
+              "title": "Extract resources from a questionnaire response"
             },
             {
               "@id": "http://smart.who.int/base/skill/grade",
@@ -435,6 +515,46 @@
               "title": "recommendation-scenarios"
             },
             {
+              "@id": "http://smart.who.int/base/skill/record-decision-rationale",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "OPTIONAL and never blocking: a health worker who chooses to may note why they accepted or declined decision-support guidance, in one tap plus an optional coded or free-text reason. Input is the decision; output is one FHIR Provenance (or nothing, when skipped, which is the default). The care plan is updated whether or not this is ever done.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+              "inputSchema": "http://smart.who.int/base/schema/skills/record-decision-rationale/input.schema.json",
+              "instructionLines": 70,
+              "instructionsPath": "skills/content/authoring-who-smart-guidelines/record-decision-rationale.md",
+              "name": "record-decision-rationale",
+              "outputSchema": "http://smart.who.int/base/schema/skills/record-decision-rationale/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c6212865b5b556d81f82b578c1ad94a2073fd643aa4f0a4b78967db9c04fa8c4",
+                "bytes": 3328,
+                "sha256": "c6212865b5b556d81f82b578c1ad94a2073fd643aa4f0a4b78967db9c04fa8c4"
+              },
+              "title": "Record a decision rationale (optional)"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/review-decision-support-guidance",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "A health worker sees the decision-support guidance for one client on their device (the proposed actions of a RequestGroup or CDS Hooks cards) and accepts or declines each action; modifies one only where the device offers it. Input is the guidance as rendered; output is the decision per action. At most one tap per action; nothing else is asked.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+              "inputSchema": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/input.schema.json",
+              "instructionLines": 56,
+              "instructionsPath": "skills/content/authoring-who-smart-guidelines/review-decision-support-guidance.md",
+              "name": "review-decision-support-guidance",
+              "outputSchema": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2382942b953c593ca75ced1ecdceffb447a00ad803b8d0440b8729bcc052c109",
+                "bytes": 2654,
+                "sha256": "2382942b953c593ca75ced1ecdceffb447a00ad803b8d0440b8729bcc052c109"
+              },
+              "title": "Review decision-support guidance"
+            },
+            {
               "@id": "http://smart.who.int/base/skill/smart-base-tools",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -445,9 +565,9 @@
               "instructionsPath": "skills/content/authoring-who-smart-guidelines/smart-base-tools.md",
               "name": "smart-base-tools",
               "payload": {
-                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/4909c74e2ab15b17f76420c53f9be8e777d3d0d96e0799f4543cbcbbcacdc07d",
-                "bytes": 7251,
-                "sha256": "4909c74e2ab15b17f76420c53f9be8e777d3d0d96e0799f4543cbcbbcacdc07d"
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/199e2b6fa9e8e075f34dbe2d93aa7017f7197ad567e9261fa9ba666a9b3a4ea5",
+                "bytes": 7236,
+                "sha256": "199e2b6fa9e8e075f34dbe2d93aa7017f7197ad567e9261fa9ba666a9b3a4ea5"
               },
               "title": "smart-base Toolchain"
             },

@@ -1,6 +1,104 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_IrisCdnSignPublish",
+ "markers": [
+  {
+   "id": "Task_BuildBag",
+   "name": "Write the BagIt tag files (sorted, no dates)",
+   "left": 17.01,
+   "top": 1.57,
+   "box": {
+    "left": 14,
+    "top": 10.37,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_Diff",
+   "name": "Diff against the published manifest",
+   "left": 24.9,
+   "top": 1.57,
+   "box": {
+    "left": 21.89,
+    "top": 10.37,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_Upload",
+   "name": "Store new objects (never overwrite)",
+   "left": 41.29,
+   "top": 42.13,
+   "box": {
+    "left": 37.66,
+    "top": 47.22,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_SignItems",
+   "name": "Sign each changed item manifest (ES256)",
+   "left": 48.55,
+   "top": 27.5,
+   "box": {
+    "left": 45.54,
+    "top": 36.3,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_Sign",
+   "name": "Sign the release tag manifest (ES256)",
+   "left": 56.43,
+   "top": 27.5,
+   "box": {
+    "left": 53.42,
+    "top": 36.3,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_PublishTags",
+   "name": "Commit tag files and signature, last",
+   "left": 64.94,
+   "top": 55.09,
+   "box": {
+    "left": 61.31,
+    "top": 60.19,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_Verify",
+   "name": "Resolve did:web; verify JWS and digests",
+   "left": 72.2,
+   "top": 66.39,
+   "box": {
+    "left": 69.19,
+    "top": 75.19,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_Revert",
+   "name": "Revert to the previous release",
+   "left": 87.97,
+   "top": 79.17,
+   "box": {
+    "left": 84.96,
+    "top": 87.96,
+    "width": 1,
+    "height": 2.22
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
  "tasks": {
   "Task_BuildBag": {

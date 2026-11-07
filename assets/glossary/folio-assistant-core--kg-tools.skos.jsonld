@@ -394,6 +394,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools/publish-extracted-statements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish extracted statements with source links"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render each declared page (a `folio-statement-page/v1` spec naming `folio-extracted-statements/v1` lists) as Markdown: every statement extracted from a library source, verbatim, with its kind and status, linked to its library entry and to the section it came from, labelled in the source's own unit (\"Catch up schedule, slide 7\"). A statement whose source does not resolve fails the run and nothing is written. `--check` fails when a committed page is stale."
+        }
+      ],
+      "skos:notation": "publish-extracted-statements",
+      "dcterms:source": "folio-assistant-core/tools/publish-extracted-statements/publish-extracted-statements.ts#publish-extracted-statements",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-tools/references-render",
       "@type": "skos:Concept",
       "skos:inScheme": {

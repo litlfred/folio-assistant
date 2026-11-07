@@ -34,6 +34,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-tools/check-translation-supplements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Compile and check an IG's translation CodeSystem supplements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Compile the IG's CodeSystems with every `input/fsh/translations/<locale>.fsh` CodeSystem supplement in a throw-away FSHOnly SUSHI project, require 0 SUSHI errors, and check that each supplement's base CodeSystem is the IG's own, its codes are a subset of the base's, its language is the file's locale, and every CodeSystem id is unique. SUSHI is the version `ig-toolchain.env` pins, installed from `scripts/sushi/package-lock.json` with install scripts off; the FHIR core package is pinned by sha512; SUSHI runs with no network."
+        }
+      ],
+      "skos:notation": "check-translation-supplements",
+      "dcterms:source": "fhir-harness/tools/check-translation-supplements/check-translation-supplements.ts#check-translation-supplements",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-tools/check-wireframe-questionnaire",
       "@type": "skos:Concept",
       "skos:inScheme": {

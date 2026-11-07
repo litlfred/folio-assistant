@@ -1,6 +1,116 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_IrisCdnNightly",
+ "markers": [
+  {
+   "id": "Task_ReadCursor",
+   "name": "Read the cursor of the last published run",
+   "left": 17.03,
+   "top": 2.58,
+   "box": {
+    "left": 14.02,
+    "top": 16.97,
+    "width": 1,
+    "height": 3.64
+   }
+  },
+  {
+   "id": "Task_ListChanged",
+   "name": "List items changed since the cursor",
+   "left": 24.91,
+   "top": 2.58,
+   "box": {
+    "left": 21.9,
+    "top": 16.97,
+    "width": 1,
+    "height": 3.64
+   }
+  },
+  {
+   "id": "Task_FetchChanged",
+   "name": "Fetch the changed records and bitstream lists",
+   "left": 40.67,
+   "top": 2.58,
+   "box": {
+    "left": 37.67,
+    "top": 16.97,
+    "width": 1,
+    "height": 3.64
+   }
+  },
+  {
+   "id": "Task_FetchNewBytes",
+   "name": "Fetch only bitstreams whose checksum changed",
+   "left": 48.56,
+   "top": 2.58,
+   "box": {
+    "left": 45.55,
+    "top": 16.97,
+    "width": 1,
+    "height": 3.64
+   }
+  },
+  {
+   "id": "Task_WriteRecords",
+   "name": "Write canonical records into the library",
+   "left": 56.44,
+   "top": 2.58,
+   "box": {
+    "left": 53.43,
+    "top": 16.97,
+    "width": 1,
+    "height": 3.64
+   }
+  },
+  {
+   "id": "Call_Rebuild",
+   "name": "Rebuild the whole graph (sorted output)",
+   "left": 64.32,
+   "top": 2.58,
+   "box": {
+    "left": 61.31,
+    "top": 16.97,
+    "width": 1,
+    "height": 3.64
+   }
+  },
+  {
+   "id": "Call_SignPublish",
+   "name": "Sign and publish the release",
+   "left": 72.2,
+   "top": 2.58,
+   "box": {
+    "left": 69.2,
+    "top": 16.97,
+    "width": 1,
+    "height": 3.64
+   }
+  },
+  {
+   "id": "Task_AdvanceCursor",
+   "name": "Commit the advanced cursor",
+   "left": 80.71,
+   "top": 47.73,
+   "box": {
+    "left": 77.08,
+    "top": 56.06,
+    "width": 1,
+    "height": 3.64
+   }
+  },
+  {
+   "id": "Task_Review",
+   "name": "Review the run report; open beans for anomalies",
+   "left": 87.97,
+   "top": 66.21,
+   "box": {
+    "left": 84.96,
+    "top": 80.61,
+    "width": 1,
+    "height": 3.64
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly",
  "tasks": {
   "Task_ReadCursor": {

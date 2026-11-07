@@ -241,6 +241,9 @@
       "Process_Ingestion",
       "Process_RelatedWork"
     ],
+    "Process_MultiLocaleTranslation": [
+      "Process_TranslationRoundTrip"
+    ],
     "Process_RefreshMaterialized": [
       "Process_Adjudication"
     ],
@@ -252,6 +255,10 @@
       "Process_MaterializeRemote",
       "Process_RefreshMaterialized"
     ],
+    "Process_TranslationRefresh": [
+      "Process_TranslationRoundTrip"
+    ],
+    "Process_TranslationRoundTrip": [],
     "Process_Translation": [
       "Process_Adjudication"
     ],
@@ -325,6 +332,7 @@
       "Process_BeanOpen"
     ],
     "Process_BeanOpen": [],
+    "Process_Cache": [],
     "Process_CiHealth": [
       "Process_TrackedWatch"
     ],
@@ -360,6 +368,10 @@
     "Process_MergeRefusal": [
       "Process_BeanClose",
       "Process_BeanOpen"
+    ],
+    "Process_MergeRequest": [
+      "Process_MergeManagerWatch",
+      "Process_StalledAgentTriage"
     ],
     "Process_MergeToMain": [
       "Process_AskThePerson",
@@ -437,7 +449,8 @@
     "Process_DocumentAuthoring": [
       "Process_BeanClose",
       "Process_BeanOpen",
-      "Process_FolioReviewPublish"
+      "Process_FolioReviewPublish",
+      "Process_PublishExtractedStatements"
     ],
     "Process_ContentChangeReviewCommittee": [
       "Process_Adjudication",
@@ -496,8 +509,10 @@
     "Process_PublicComment": [
       "Process_PublicCommentChange"
     ],
+    "Process_RecordAgentStep": [],
     "Process_ReviewLogWatch": [
-      "Process_ContributorFeedback"
+      "Process_ContributorFeedback",
+      "Process_RecordAgentStep"
     ],
     "Process_DeepDocumentResearch": [],
     "Process_BuildL1Kg": [],
@@ -514,8 +529,10 @@
       "Process_ExtractStructure",
       "Process_IngestTheme",
       "Process_Ingestion",
-      "Process_L1Gate"
+      "Process_L1Gate",
+      "Process_PublishExtractedStatements"
     ],
+    "Process_PublishExtractedStatements": [],
     "Process_BoardOpenClose": [],
     "Process_BoardPlaceNote": [],
     "Process_BoardRelocate": [],
@@ -533,6 +550,7 @@
       "Process_BeanOpen"
     ],
     "Process_Planning": [],
+    "Process_ActOnDecisionSupport": [],
     "Process_ClassifyAndCodeContent": [],
     "Process_DakL3Ig": [
       "Process_L3Fhir"
@@ -548,6 +566,7 @@
       "Process_BeanOpen",
       "Process_L2ComponentEditReview"
     ],
+    "Process_QuestionnaireDataCapture": [],
     "Process_SgEndToEnd": [
       "Process_Review"
     ],

@@ -1,6 +1,68 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_CRDM_DataModel",
+ "markers": [
+  {
+   "id": "A_Entities",
+   "name": "Identify entities from the BPA and requirements",
+   "left": 19.39,
+   "top": 33.67,
+   "box": {
+    "left": 15.07,
+    "top": 49.66,
+    "width": 1.43,
+    "height": 4.04
+   }
+  },
+  {
+   "id": "A_Relations",
+   "name": "Relations and cardinalities, both ways",
+   "left": 31.32,
+   "top": 33.67,
+   "box": {
+    "left": 27,
+    "top": 49.66,
+    "width": 1.43,
+    "height": 4.04
+   }
+  },
+  {
+   "id": "BA_ConfirmEntities",
+   "name": "Confirm the entities are the ones meant",
+   "left": 43.26,
+   "top": 5.05,
+   "box": {
+    "left": 38.93,
+    "top": 21.04,
+    "width": 1.43,
+    "height": 4.04
+   }
+  },
+  {
+   "id": "S_ConfirmCardinality",
+   "name": "Confirm the cardinalities",
+   "left": 55.19,
+   "top": 62.29,
+   "box": {
+    "left": 50.87,
+    "top": 78.28,
+    "width": 1.43,
+    "height": 4.04
+   }
+  },
+  {
+   "id": "A_Declare",
+   "name": "Declare the model where a tool can read it",
+   "left": 76.07,
+   "top": 33.67,
+   "box": {
+    "left": 71.75,
+    "top": 49.66,
+    "width": 1.43,
+    "height": 4.04
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_DataModel",
  "tasks": {
   "A_Entities": {

@@ -6,7 +6,10 @@
       "properties": {
         "$schema": {
           "type": "string",
-          "const": "test-plan/v1"
+          "enum": [
+            "test-plan/v1",
+            "test-plan/v1.1"
+          ]
         },
         "id": {
           "type": "string",

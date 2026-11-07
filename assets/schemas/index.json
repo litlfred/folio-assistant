@@ -2,7 +2,7 @@
   "$schema": "folio-schema-graph/v1",
   "tile": {
     "core-schemas": {
-      "count": 41,
+      "count": 42,
       "unit": "modules"
     }
   },
@@ -1110,6 +1110,14 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "instance": "cat-harness-tools",
+      "name": "glossary-sense",
+      "graphNode": "schema",
+      "summary": "**The glossary sense verdicts** of an instance: for a use of a glossary term",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/kg/graph-typology-node.test.ts",
       "instance": "cat-harness-tools",
       "name": "graph-typology-node.test",
@@ -1978,6 +1986,21 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/process/device-screen.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "device-screen.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "instance": "cat-harness-tools",
+      "name": "device-screen",
+      "graphNode": "schema",
+      "summary": "Device screens: what one person sees on one device at a moment of a",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/process/methodology.test.ts",
       "instance": "cat-harness-tools",
       "name": "methodology.test",
@@ -2216,6 +2239,21 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/sdlc/cache.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "cache.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "instance": "cat-harness-tools",
+      "name": "cache",
+      "graphNode": "schema",
+      "summary": "Caches — one node per CI cache a layer DECLARES: its key recipe, where its",
+      "isTest": false
+    },
+    {
       "module": "cat-harness-tools/schemas/sdlc/change-size.ts",
       "instance": "cat-harness-tools",
       "name": "change-size",
@@ -2288,6 +2326,14 @@
       "graphNode": "schema",
       "summary": "The MERGE QUEUE — what the merge steward DECIDED about each open pull",
       "isTest": false
+    },
+    {
+      "module": "cat-harness-tools/schemas/sdlc/merge-request.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "merge-request.test",
+      "graphNode": "undeclared",
+      "summary": "The six-line merge request a sibling sends the merge manager (owner,",
+      "isTest": true
     },
     {
       "module": "cat-harness-tools/schemas/sdlc/merge-review.ts",
@@ -3453,6 +3499,14 @@
       "name": "dublin-core",
       "graphNode": "schema",
       "summary": "Qualified Dublin Core, as a graph node.",
+      "isTest": false
+    },
+    {
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "instance": "folio-assistant-core",
+      "name": "extracted-statement",
+      "graphNode": "schema",
+      "summary": "Statements extracted from library sources, as a list a page can be built from.",
       "isTest": false
     },
     {
@@ -26609,7 +26663,7 @@
         },
         {
           "name": "scripts",
-          "type": "z .array( z .object({ script: z.string().min(1), kind: z.enum([\"report\", \"covered-by\", \"no-folio\", \"scheduled\"]), reaso…",
+          "type": "z .array( z .object({ script: z.string().min(1), kind: z.enum([\"report\", \"covered-by\", \"no-folio\", \"scheduled\", \"pendin…",
           "optional": true,
           "array": true
         },
@@ -26877,6 +26931,13 @@
           "optional": true,
           "array": false,
           "doc": "Opt-in `<base>/<alias>/` redirect to the canonical route (bean `t4xb`)."
+        },
+        {
+          "name": "builtOnHostSite",
+          "type": "z.object({ translated: z.literal(true).optional() }).strict().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Its pages are built at publish on the HOST site (the site owner's, e.g."
         }
       ],
       "extendsNames": [
@@ -29831,6 +29892,151 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseStore",
+      "name": "GlossarySenseStore",
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseStoreSchema",
+      "name": "GlossarySenseStoreSchema",
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "kind": "zod-object",
+      "doc": "The whole store: one verdict per (term, msgid hash).",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(GLOSSARY_SENSE_SCHEMA)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verdicts",
+          "type": "z.array(GlossarySenseVerdictSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "GLOSSARY_SENSE_SCHEMA",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdict",
+      "name": "GlossarySenseVerdict",
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema",
+      "name": "GlossarySenseVerdictSchema",
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "kind": "zod-object",
+      "doc": "One verdict on one use of one term.",
+      "fields": [
+        {
+          "name": "term",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The term's id: its IRI, or `<subject area>#<label>` for a terminology pin."
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The label that matched, for a reader."
+        },
+        {
+          "name": "msgidSha256",
+          "type": "z.string().regex(/^[0-9a-f]{64}$/)",
+          "optional": false,
+          "array": false,
+          "doc": "SHA-256 (hex) of the msgid, exactly as the catalogue holds it."
+        },
+        {
+          "name": "msgid",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The source sentence, for a reader; the hash is what is compared."
+        },
+        {
+          "name": "verdict",
+          "type": "z.enum(SENSE_VERDICTS)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "reason",
+          "type": "z.string().regex(ONE_LINE)",
+          "optional": false,
+          "array": false,
+          "doc": "One line: why. For an `exception`, why the fixed translation is wrong here."
+        },
+        {
+          "name": "decidedBy",
+          "type": "z.string().regex(/^\\S+$/)",
+          "optional": false,
+          "array": false,
+          "doc": "The agent or person that ruled: an id, never a model name."
+        },
+        {
+          "name": "decidedAt",
+          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}/).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "When, as an ISO date."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ONE_LINE",
+        "SENSE_VERDICTS",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/kg/glossary-sense.ts#SenseVerdictKind",
+      "name": "SenseVerdictKind",
+      "module": "cat-harness-tools/schemas/kg/glossary-sense.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/kg/graph-typology-node.ts#_EveryDefFieldIsDeclarable",
       "name": "_EveryDefFieldIsDeclarable",
       "module": "cat-harness-tools/schemas/kg/graph-typology-node.ts",
@@ -29971,6 +30177,13 @@
           "type": "z.string().min(1).optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "specialises",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The block kind a node of this kind IS, read through the kind module's view of it."
         },
         {
           "name": "avatar",
@@ -30298,6 +30511,13 @@
           "optional": true,
           "array": false,
           "doc": "The kind this one is a SUB-GRAPH of, when it is one."
+        },
+        {
+          "name": "specialises",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "The BLOCK KIND (a `folio-block-kind/v1` node's `kind`, in whichever layer"
         },
         {
           "name": "avatar",
@@ -31845,6 +32065,13 @@
           "optional": true,
           "array": false,
           "doc": "This repository is AGENT-RUN: an agent builds and publishes its site"
+        },
+        {
+          "name": "taskSkills",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Whether the ⓘ task panel on this site's BPMN drawings shows skills: the"
         },
         {
           "name": "workflows",
@@ -35402,10 +35629,10 @@
         },
         {
           "name": "paths",
-          "type": "{ md: string; ts?: string }",
+          "type": "{ md?: string; ts?: string; pot?: string }",
           "optional": false,
           "array": false,
-          "doc": "Repo-relative paths of the block's files."
+          "doc": "Repo-relative paths of the subject's files: a block's or page's `.md` (and"
         },
         {
           "name": "po",
@@ -35429,8 +35656,9 @@
         {
           "name": "updated_at",
           "type": "string",
-          "optional": false,
-          "array": false
+          "optional": true,
+          "array": false,
+          "doc": "Optional and no longer written (owner rulings 2026-11-06, cards \"QA dates\" and \"Date source\"): the date is derived on read from the entries' `reviewed_tree`."
         }
       ],
       "extendsNames": [],
@@ -46610,6 +46838,991 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ActionsBlockSchema",
+      "name": "ActionsBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"actions\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "buttons",
+          "type": "z .array(z.object({ label: Text, style: z.enum([\"primary\", \"secondary\", \"danger\", \"success\"]).default(\"primary\"), icon:…",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "caption",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#AlertBlockSchema",
+      "name": "AlertBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"alert\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "severity",
+          "type": "z.enum([\"info\", \"success\", \"warning\", \"danger\"])",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#BlockOf",
+      "name": "BlockOf",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "name": "ChipSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "text",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "tone",
+          "type": "Tone.default(\"neutral\")",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text",
+        "cat-harness-tools/schemas/process/device-screen.ts#Tone"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#common",
+      "name": "common",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "undetermined",
+      "note": "{ /** A block's id, when something must name it (a test, a translation). */ id: z.string().regex(/^[a-z0-9][a-z0-9-]*$/).optional(), /** `side`: the second col…",
+      "doc": "What every block may carry.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "name": "ConsentBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"consent\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "who",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "Who may see it."
+        },
+        {
+          "name": "what",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "What they may see."
+        },
+        {
+          "name": "until",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Until when."
+        },
+        {
+          "name": "granted",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "Whether the person has said yes: drawn as a toggle."
+        },
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#Device",
+      "name": "Device",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreen",
+      "name": "DeviceScreen",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenKind",
+      "name": "DeviceScreenKind",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "doc": "`device-screen/0.1.0`, as a node kind.",
+      "fields": [],
+      "extendsNames": [
+        "nodeKind"
+      ],
+      "values": [],
+      "refs": [],
+      "unresolved": [
+        "nodeKind"
+      ],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenSchema",
+      "name": "DeviceScreenSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [],
+      "extendsNames": [
+        "DeviceScreenKind"
+      ],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenKind"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ExampleKey",
+      "name": "ExampleKey",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-scalar",
+      "doc": "A FHIR example key, `Type/id`, as an artifact index holds it.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#FieldsBlockSchema",
+      "name": "FieldsBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"fields\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "rows",
+          "type": "z.array(FieldSchema).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "columns",
+          "type": "z.union([z.literal(1), z.literal(2)]).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Two columns of fields, on a screen wide enough."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "name": "FieldSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "value",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "mono",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "name": "HeaderBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"header\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "app",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "The app's or the facility's name."
+        },
+        {
+          "name": "subtitle",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "brand",
+          "type": "z.string().regex(/^#[0-9a-fA-F]{6}$/).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The brand colour of the bar's mark."
+        },
+        {
+          "name": "status",
+          "type": "ChipSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A status at the right: \"Offline (28d)\", \"Online · CA key active\"."
+        },
+        {
+          "name": "chips",
+          "type": "z.array(ChipSchema).optional()",
+          "optional": true,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#Id",
+      "name": "Id",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-scalar",
+      "doc": "An actor or scenario id: lower-case kebab.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#NoteBlockSchema",
+      "name": "NoteBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"note\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "mono",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#PasscodeBlockSchema",
+      "name": "PasscodeBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"passcode\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "digits",
+          "type": "z.string().regex(/^[0-9]{1,12}$/, \"a passcode is digits\")",
+          "optional": false,
+          "array": false,
+          "doc": "The digits."
+        },
+        {
+          "name": "shown",
+          "type": "z.boolean().default(false)",
+          "optional": true,
+          "array": false,
+          "doc": "Shown, or drawn as dots."
+        },
+        {
+          "name": "entry",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Drawn as boxes being typed into (a verifier's entry) rather than a code held."
+        },
+        {
+          "name": "note",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "name": "PersonCardBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"personCard\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "actor",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "doc": "The actor shown: name and avatar from its persona."
+        },
+        {
+          "name": "name",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The name as the screen spells it, when it is not the persona's (\"Somsack Sengmany\")."
+        },
+        {
+          "name": "subtitle",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A line under the name."
+        },
+        {
+          "name": "fields",
+          "type": "z.array(FieldSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "chips",
+          "type": "z.array(ChipSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "banner",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Drawn as a dark banner across the screen, as an EMR's patient bar."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Id",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "name": "QrBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"qr\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "payload",
+          "type": "Text",
+          "optional": false,
+          "array": false,
+          "doc": "What the code encodes: drawn as a real QR code of this text."
+        },
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The card's title (\"Digital Vaccine Certificate\")."
+        },
+        {
+          "name": "holder",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Whose it is, as the card prints it (\"Somsack Sengmany\")."
+        },
+        {
+          "name": "holderNote",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A line under the holder (\"Guardian: Khamla Sengmany\")."
+        },
+        {
+          "name": "label",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What it is, under the title (\"Vaccine: Hep B birth dose\")."
+        },
+        {
+          "name": "mode",
+          "type": "z.enum([\"show\", \"scan\"]).default(\"show\")",
+          "optional": true,
+          "array": false,
+          "doc": "`show`: a code on this screen; `scan`: the camera reading one."
+        },
+        {
+          "name": "badge",
+          "type": "ChipSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "caption",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "example",
+          "type": "ExampleKey.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The FHIR example the code carries, `Type/id`: linked to its page."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ExampleKey",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "name": "RecordListBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"recordList\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "summary",
+          "type": "ChipSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A chip beside the title (\"2 doses completed\")."
+        },
+        {
+          "name": "example",
+          "type": "ExampleKey.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A FHIR example, `Type/id`, whose resources are the rows when `rows` is"
+        },
+        {
+          "name": "rows",
+          "type": "z.array(RecordRowSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "footnote",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Small print under the rows."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ExampleKey",
+        "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "name": "RecordRowSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "icon",
+          "type": "ScreenGlyphSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "code",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A code or an identifier, drawn in mono."
+        },
+        {
+          "name": "detail",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A line under the label."
+        },
+        {
+          "name": "status",
+          "type": "ChipSchema.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "struck",
+          "type": "z.boolean().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Drawn struck through: a thing that must NOT be given (an allergy)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ScreenBlock",
+      "name": "ScreenBlock",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ScreenBlockSchema",
+      "name": "ScreenBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyph",
+      "name": "ScreenGlyph",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "name": "ScreenGlyphSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#ScreenId",
+      "name": "ScreenId",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-scalar",
+      "doc": "A screen id: as a room calls it (`S4`, `P4-scanner`). Also its URL segment.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#StatusBadgeBlockSchema",
+      "name": "StatusBadgeBlockSchema",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "type",
+          "type": "z.literal(\"statusBadge\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "status",
+          "type": "z.enum(STATUSES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "text",
+          "type": "Text",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "detail",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "fields",
+          "type": "z.array(FieldSchema).optional()",
+          "optional": true,
+          "array": true
+        },
+        {
+          "name": "verdict",
+          "type": "Text.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A short verdict at the right (\"PASS\")."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+        "cat-harness-tools/schemas/process/device-screen.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "STATUSES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "name": "Text",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-scalar",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/device-screen.ts#Tone",
+      "name": "Tone",
+      "module": "cat-harness-tools/schemas/process/device-screen.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness-tools/schemas/process/methodology.ts#MethodologyFrontMatter",
       "name": "MethodologyFrontMatter",
       "module": "cat-harness-tools/schemas/process/methodology.ts",
@@ -46807,6 +48020,19 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#ElectionRule",
+      "name": "ElectionRule",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/role-graph.ts#FormerName",
       "name": "FormerName",
       "module": "cat-harness-tools/schemas/process/role-graph.ts",
@@ -46863,6 +48089,48 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#HolderCandidate",
+      "name": "HolderCandidate",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "interface",
+      "doc": "One active session that could hold the lane.",
+      "fields": [
+        {
+          "name": "sessionId",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "createdAt",
+          "type": "string",
+          "optional": false,
+          "array": false,
+          "doc": "ISO 8601 creation time, as `list_sessions` reports it."
+        },
+        {
+          "name": "ownsP0",
+          "type": "boolean",
+          "optional": false,
+          "array": false,
+          "doc": "It owns a P0 PR: the fix for a red main, or a link of the re-pin chain."
+        },
+        {
+          "name": "minutesSinceAnswer",
+          "type": "number",
+          "optional": true,
+          "array": false,
+          "doc": "Minutes since it last answered or posted a heartbeat; unknown counts as live."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/role-graph.ts#LaneBinding",
       "name": "LaneBinding",
       "module": "cat-harness-tools/schemas/process/role-graph.ts",
@@ -46874,6 +48142,78 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#LaneHolding",
+      "name": "LaneHolding",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema",
+      "name": "LaneHoldingSchema",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "zod-object",
+      "doc": "When a lane held by one session at a time is needed, and who holds it.",
+      "fields": [
+        {
+          "name": "neededWhen",
+          "type": "z .object({ /** At least this many active sessions have ready PRs in the same repositories. */ minActiveSessions: z.num…",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "election",
+          "type": "z.array(z.enum(ELECTION_RULES)).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Applied in order by {@link electHolder}."
+        },
+        {
+          "name": "loneSessionHolds",
+          "type": "z.boolean()",
+          "optional": false,
+          "array": false,
+          "doc": "A session alone in its coordination group holds the lane for itself."
+        },
+        {
+          "name": "announce",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the holder announces to every sibling and the owner, e.g. `merge manager: <session id>`."
+        },
+        {
+          "name": "heartbeatMinutes",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The holder acknowledges each request, and posts a heartbeat, within this many minutes."
+        },
+        {
+          "name": "stalledAfterMinutes",
+          "type": "z.number().int().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "A session silent for longer than this is stalled: not a candidate, and its lane is vacant."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "ELECTION_RULES",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -46900,6 +48240,49 @@
           "type": "{ values?: ReadonlyArray<{ $type?: string; ref?: string; variable?: string }> }",
           "optional": true,
           "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/role-graph.ts#LaneReading",
+      "name": "LaneReading",
+      "module": "cat-harness-tools/schemas/process/role-graph.ts",
+      "kind": "interface",
+      "doc": "The live numbers {@link laneNeeded} reads; never stored.",
+      "fields": [
+        {
+          "name": "activeSessions",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Active sessions with ready PRs in the same repositories."
+        },
+        {
+          "name": "queuedRuns",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "The most queued runs on any one of those repositories."
+        },
+        {
+          "name": "oldestQueuedMinutes",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Age of the oldest queued run, in minutes (0 with none queued)."
+        },
+        {
+          "name": "conflictingPrs",
+          "type": "number",
+          "optional": false,
+          "array": false,
+          "doc": "Open PRs that conflict with or supersede another open PR."
         }
       ],
       "extendsNames": [],
@@ -47243,6 +48626,13 @@
           "optional": true,
           "array": false,
           "doc": "Present when this role is a DATA STORE: a place where things are kept,"
+        },
+        {
+          "name": "holding",
+          "type": "LaneHolding",
+          "optional": true,
+          "array": false,
+          "doc": "For a lane one session holds at a time, such as the merge steward: when"
         }
       ],
       "extendsNames": [],
@@ -47251,6 +48641,7 @@
         "cat-harness-tools/schemas/conduct/model-capabilities.ts#ModelCapabilities",
         "cat-harness-tools/schemas/kg/skill-package.ts#ActorKind",
         "cat-harness-tools/schemas/process/role-graph.ts#FormerName",
+        "cat-harness-tools/schemas/process/role-graph.ts#LaneHolding",
         "cat-harness-tools/schemas/process/role-graph.ts#StoreDef"
       ],
       "unresolved": [],
@@ -47338,6 +48729,12 @@
           "type": "StoreDefSchema.optional()",
           "optional": true,
           "array": false
+        },
+        {
+          "name": "holding",
+          "type": "LaneHoldingSchema.optional()",
+          "optional": true,
+          "array": false
         }
       ],
       "extendsNames": [],
@@ -47345,6 +48742,7 @@
       "refs": [
         "cat-harness-tools/schemas/conduct/model-capabilities.ts#ModelCapabilitiesSchema",
         "cat-harness-tools/schemas/process/role-graph.ts#FormerNameSchema",
+        "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema",
         "cat-harness-tools/schemas/process/role-graph.ts#StoreDefSchema",
         "cat-harness-tools/schemas/tools/tool-types.ts#SkillNameSchema"
       ],
@@ -47869,6 +49267,20 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#AuthoredStep",
+      "name": "AuthoredStep",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "doc": "A step as its file says it: from 0.4.0 its `lead` and `experiences` may be left to derivation.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlock",
       "name": "BuildingBlock",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
@@ -48018,6 +49430,115 @@
       "refs": [
         "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlocksKind"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#DakLink",
+      "name": "DakLink",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#DakLinkSchema",
+      "name": "DakLinkSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "One DAK asset a step uses, by its key in the instance's",
+      "fields": [
+        {
+          "name": "key",
+          "type": "ExampleKey",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "rel",
+          "type": "DakRelSchema.optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#DakRelSchema",
+        "cat-harness-tools/schemas/process/user-scenario.ts#ExampleKey"
+      ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#DakRel",
+      "name": "DakRel",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#DakRelSchema",
+      "name": "DakRelSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#DakUserScenario",
+      "name": "DakUserScenario",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "interface",
+      "doc": "The DAK `UserScenario` a journey is, as a DAK reader takes it: the logical",
+      "fields": [
+        {
+          "name": "id",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "personas",
+          "type": "string[]",
+          "optional": false,
+          "array": true,
+          "doc": "Role ids, in the order the journey's personas first reach them."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -48454,6 +49975,13 @@
           "optional": true,
           "array": false,
           "doc": "A glyph drawn in the avatar instead of the initials (a baby, who has none)."
+        },
+        {
+          "name": "avatar",
+          "type": "z.string().regex(/^[^/][^\\\\]*\\.(?:webp|png|jpe?g|svg)$/i, \"an avatar is an image path from the instance root\").optional…",
+          "optional": true,
+          "array": false,
+          "doc": "A square picture of the person, a path from the instance root; the initials are the fallback."
         }
       ],
       "extendsNames": [],
@@ -48461,6 +49989,59 @@
       "refs": [
         "cat-harness-tools/schemas/process/user-scenario.ts#JourneyGlyphSchema",
         "cat-harness-tools/schemas/process/user-scenario.ts#Text"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#Part",
+      "name": "Part",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#PartSchema",
+      "name": "PartSchema",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "zod-object",
+      "doc": "One part of a journey, in story order.",
+      "fields": [
+        {
+          "name": "scenario",
+          "type": "Id",
+          "optional": false,
+          "array": false,
+          "doc": "The journey that is this part."
+        },
+        {
+          "name": "optional",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The story may skip it."
+        },
+        {
+          "name": "repeats",
+          "type": "z.literal(true).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "It may happen more than once."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/process/user-scenario.ts#Id"
       ],
       "unresolved": [],
       "external": [
@@ -48616,7 +50197,8 @@
           "name": "href",
           "type": "Text",
           "optional": false,
-          "array": false
+          "array": false,
+          "doc": "A URL (`https:`, `mailto:` …), an absolute path or a `#fragment` as it"
         },
         {
           "name": "rel",
@@ -48636,10 +50218,69 @@
       "exported": true
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#RefinedScenario",
+      "name": "RefinedScenario",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "personas",
+          "type": "readonly string[]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "partOf",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "parts",
+          "type": "readonly { scenario: string }[]",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "steps",
+          "type": "readonly { id: string; experiences?: readonly { actor: string }[]; lead?: string }[]",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#Scenario",
+      "name": "Scenario",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "type-alias",
+      "doc": "A journey as a reader takes it: its personas (actors) and its steps' people, authored or derived (`scripts/journeys/derive.ts`).",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-scenario.ts#ScenarioStep",
       "name": "ScenarioStep",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
       "kind": "type-alias",
+      "doc": "A step as a reader takes it: `lead` and `experiences` authored, or derived from its lanes.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -48721,6 +50362,34 @@
       "exported": false
     },
     {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#StepV03",
+      "name": "StepV03",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "undetermined",
+      "note": "{ ...StepV02, /** The DAK assets the step uses: its data sets, the decision tables that decide it, the indicators that measure it. */ dak: z.array(DakLinkSchem…",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
+      "id": "cat-harness-tools/schemas/process/user-scenario.ts#StepV04",
+      "name": "StepV04",
+      "module": "cat-harness-tools/schemas/process/user-scenario.ts",
+      "kind": "undetermined",
+      "note": "{ ...StepV03, /** Absent (0.4.0): the first actor the step's lanes derive. */ lead: Id.optional(), /** Absent (0.4.0): one per actor who plays a lane of the st…",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "cat-harness-tools/schemas/process/user-scenario.ts#Text",
       "name": "Text",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
@@ -48738,7 +50407,7 @@
       "name": "UserScenario",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
       "kind": "type-alias",
-      "doc": "A user scenario of either family, as a reader takes it.",
+      "doc": "A user scenario of any family, as its file says it.",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -48752,7 +50421,7 @@
       "name": "UserScenarioKind",
       "module": "cat-harness-tools/schemas/process/user-scenario.ts",
       "kind": "zod-object",
-      "doc": "`user-scenario/0.2.0`, as a node kind: 0.1.0 plus grouping, views,",
+      "doc": "`user-scenario/0.4.0`, as a node kind: 0.1.0 plus grouping, views,",
       "fields": [],
       "extendsNames": [
         "nodeKind"
@@ -49407,6 +51076,20 @@
           "optional": true,
           "array": false,
           "doc": "The actor whose record the trust ladder follows (\"Somsack's record\")."
+        },
+        {
+          "name": "cast",
+          "type": "z.array(Id).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The order the cast is listed in, everywhere it is listed (the overview,"
+        },
+        {
+          "name": "chapterTitles",
+          "type": "z.record(Id, Text).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "A chapter's title in the room, by the id of the journey the chapter is"
         },
         {
           "name": "presenterNote",
@@ -50952,9 +52635,9 @@
         {
           "name": "updated_at",
           "type": "string",
-          "optional": false,
+          "optional": true,
           "array": false,
-          "doc": "Report creation / last-update timestamp (ISO-8601 UTC)."
+          "doc": "Report creation / last-update timestamp (ISO-8601 UTC). Optional and no longer written, as {@link QaCriterionEntry.reviewed_at}."
         },
         {
           "name": "runContext",
@@ -51310,9 +52993,9 @@
         {
           "name": "reviewed_at",
           "type": "string",
-          "optional": false,
+          "optional": true,
           "array": false,
-          "doc": "When the audit ran (ISO-8601 UTC)."
+          "doc": "When the audit ran (ISO-8601 UTC). Optional, and no longer written by the"
         },
         {
           "name": "reviewed_tree",
@@ -51566,9 +53249,9 @@
         {
           "name": "last_run_at",
           "type": "string",
-          "optional": false,
+          "optional": true,
           "array": false,
-          "doc": "ISO-8601 UTC timestamp of the most recent qa-sweep run."
+          "doc": "ISO-8601 UTC timestamp of the most recent qa-sweep run. Optional and no longer written: the run's time is in its run record."
         },
         {
           "name": "last_run_sha",
@@ -51634,6 +53317,496 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#Cache",
+      "name": "Cache",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#CacheInventory",
+      "name": "CacheInventory",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#CacheInventoryEntrySchema",
+      "name": "CacheInventoryEntrySchema",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "repo",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "kind",
+          "type": "CacheKindSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "locations",
+          "type": "z.array(z.string().min(1))",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "key",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "restoreKeys",
+          "type": "z.string().nullable().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "holds",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "producer",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "consumers",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "savePolicy",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "keyDerivation",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "notes",
+          "type": "z.string().optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/cache.ts#CacheKindSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#CacheInventorySchema",
+      "name": "CacheInventorySchema",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(CACHE_INVENTORY_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "takenAt",
+          "type": "z.string().regex(/^\\d{4}-\\d{2}-\\d{2}/)",
+          "optional": false,
+          "array": false,
+          "doc": "When the snapshot was taken (ISO date) and how. A snapshot is never a declaration."
+        },
+        {
+          "name": "method",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "repositories",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true
+        },
+        {
+          "name": "entries",
+          "type": "z.array(CacheInventoryEntrySchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/cache.ts#CacheInventoryEntrySchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "CACHE_INVENTORY_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#CacheKindSchema",
+      "name": "CacheKindSchema",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema",
+      "name": "CacheSchema",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "$schema",
+          "type": "z.literal(CACHE_SCHEMA_TAG)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "id",
+          "type": "z.string().regex(/^[a-z0-9][a-z0-9-]*$/)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "instance",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The instance whose workflows and scripts hold it."
+        },
+        {
+          "name": "kind",
+          "type": "CacheKindSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "trustClass",
+          "type": "TrustClassSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "location",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The key prefix, image, ref or path the entries live under."
+        },
+        {
+          "name": "keyRecipe",
+          "type": "KeyRecipeSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "derivedInputs",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "What the key is a function of, in words — derived, never a hand glob list (a lock is allowed)."
+        },
+        {
+          "name": "holds",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "producer",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "consumers",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "Who is known to read it, in words — INFORMATIVE. Which targets need a"
+        },
+        {
+          "name": "materializes",
+          "type": "z.array(z.string().min(1)).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The paths a restore lays down (checkout-relative, or `~/` for the"
+        },
+        {
+          "name": "stateInputs",
+          "type": "z.discriminatedUnion(\"reads\", [ z.object({ reads: z.literal(\"none\"), how: z.string().min(1) }).strict(), z.object({ rea…",
+          "optional": false,
+          "array": false,
+          "doc": "Whether the producer reads MUTABLE STATE the tree does not pin — a"
+        },
+        {
+          "name": "needs",
+          "type": "z.array(z.string().regex(/^[a-z0-9][a-z0-9-]*$/)).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "The ids of the caches this one is built over, so restores and refreshes go in order (`Process_Cache`)."
+        },
+        {
+          "name": "refresh",
+          "type": "z.object({ mode: z.enum([\"incremental\", \"whole\"]), how: z.string().min(1) }).strict().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "How a stale entry is brought up to date: `incremental` (only what"
+        },
+        {
+          "name": "savePolicy",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "verify",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "How a restored entry is checked, or why it is not."
+        },
+        {
+          "name": "budget",
+          "type": "z.object({ maxBytes: z.number().int().positive().optional(), note: z.string().min(1).optional() }).strict().optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "owner",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "uses",
+          "type": "Uses",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "notes",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/cache.ts#CacheKindSchema",
+        "cat-harness-tools/schemas/sdlc/cache.ts#KeyRecipeSchema",
+        "cat-harness-tools/schemas/sdlc/cache.ts#TrustClassSchema",
+        "cat-harness-tools/schemas/sdlc/cache.ts#Uses"
+      ],
+      "unresolved": [],
+      "external": [
+        "CACHE_SCHEMA_TAG",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#KeyRecipe",
+      "name": "KeyRecipe",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#KeyRecipeSchema",
+      "name": "KeyRecipeSchema",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "source",
+          "type": "z.enum(KEY_SOURCES)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "script",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`cache:key` / `cache:key --base`: the package script fingerprinted."
+        },
+        {
+          "name": "files",
+          "type": "z.array(z.string().min(1)).min(1).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "`hashFiles`: the files, checkout-relative (a lock, never a hand-picked glob of sources)."
+        },
+        {
+          "name": "implementation",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "`script`: the mount-free implementation of the recipe."
+        },
+        {
+          "name": "expression",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The key text as the workflow writes it, for the reader."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "KEY_SOURCES",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#Staleness",
+      "name": "Staleness",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#StoredFacts",
+      "name": "StoredFacts",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "interface",
+      "doc": "One stored-entry fact from the cache report, joined by the viewer (never kept in a node).",
+      "fields": [
+        {
+          "name": "key",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "sizeBytes",
+          "type": "number",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "lastAccessedAt",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "hitRate",
+          "type": "number",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "lastProducerRun",
+          "type": "string",
+          "optional": true,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#TrustClassSchema",
+      "name": "TrustClassSchema",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "zod-enum",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/cache.ts#Uses",
+      "name": "Uses",
+      "module": "cat-harness-tools/schemas/sdlc/cache.ts",
+      "kind": "zod-array",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "cat-harness-tools/schemas/sdlc/change-size.ts#ChangeCategory",
@@ -54203,6 +56376,113 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequest",
+      "name": "MergeRequest",
+      "module": "cat-harness-tools/schemas/sdlc/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestPreview",
+      "name": "MergeRequestPreview",
+      "module": "cat-harness-tools/schemas/sdlc/merge-queue.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestPreviewSchema",
+      "name": "MergeRequestPreviewSchema",
+      "module": "cat-harness-tools/schemas/sdlc/merge-queue.ts",
+      "kind": "zod-union",
+      "fields": [],
+      "extendsNames": [],
+      "values": [
+        "kind",
+        "url",
+        "none"
+      ],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestSchema",
+      "name": "MergeRequestSchema",
+      "module": "cat-harness-tools/schemas/sdlc/merge-queue.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "prUrl",
+          "type": "z.string().regex(/^https:\\/\\/github\\.com\\/[^/\\s]+\\/[^/\\s]+\\/pull\\/\\d+$/, \"a GitHub pull request URL\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "headSha",
+          "type": "z.string().regex(/^[0-9a-f]{40}$/, \"the full 40-hex head SHA\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "sessionUrl",
+          "type": "z.string().regex(/^https:\\/\\/claude\\.ai\\/code\\/session_[A-Za-z0-9]+$/, \"a claude.ai session URL\")",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "changes",
+          "type": "z .string() .trim() .min(1) .refine((t) => sentenceCount(t) <= MERGE_REQUEST_MAX_SENTENCES, { message: `the changes in …",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "preview",
+          "type": "MergeRequestPreviewSchema",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "lookFor",
+          "type": "z.string().trim().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What to look for in the preview. Required when there is one."
+        },
+        {
+          "name": "fullTierGreen",
+          "type": "z.literal(true)",
+          "optional": false,
+          "array": false,
+          "doc": "The sender's statement that the full tier is green as judged (every judge)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestPreviewSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "MERGE_REQUEST_MAX_SENTENCES",
+        "sentenceCount",
+        "z"
+      ],
       "exported": true
     },
     {
@@ -58886,9 +61166,9 @@
         {
           "name": "updated_at",
           "type": "string",
-          "optional": false,
+          "optional": true,
           "array": false,
-          "doc": "ISO-8601 UTC timestamp of last write."
+          "doc": "ISO-8601 UTC timestamp of last write. Optional and no longer written (owner rulings 2026-11-06, cards \"QA dates\" and \"Date source\"): the date is derived on read from the entries' `reviewed_tree`."
         },
         {
           "name": "references",
@@ -60990,7 +63270,7 @@
           "type": "z .string() .regex(/\\.feature$/, \"a Gherkin link names a `.feature` file\") .optional()",
           "optional": true,
           "array": false,
-          "doc": "Optional Gherkin `.feature` file the case is written in."
+          "doc": "The Gherkin `.feature` file the case is written in. Required under"
         },
         {
           "name": "dependsOn",
@@ -61097,7 +63377,7 @@
       "fields": [
         {
           "name": "$schema",
-          "type": "z.literal(TEST_PLAN_SCHEMA_ID)",
+          "type": "z.enum(TEST_PLAN_SCHEMA_IDS)",
           "optional": false,
           "array": false
         },
@@ -61177,9 +63457,22 @@
       "unresolved": [],
       "external": [
         "RequirementRefSchema",
-        "TEST_PLAN_SCHEMA_ID",
+        "TEST_PLAN_SCHEMA_IDS",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "cat-harness-tools/schemas/sdlc/test-plan.ts#TestPlanSchemaId",
+      "name": "TestPlanSchemaId",
+      "module": "cat-harness-tools/schemas/sdlc/test-plan.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -70652,6 +72945,13 @@
           "type": "z.array( z .object({ kind: z.enum([\"blocked-without-expiry\", \"blocker-closed\", \"blocking-unknown\"]), bean: BeanIdSchema…",
           "optional": false,
           "array": true
+        },
+        {
+          "name": "planFindings",
+          "type": "z.array(z.object({ id: z.string(), problem: z.string() }).strict()).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Work plans filed wrong: an item naming a process that is not an epic or"
         },
         {
           "name": "plan",
@@ -80699,6 +82999,263 @@
       "exported": true
     },
     {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatement",
+      "name": "ExtractedStatement",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatements",
+      "name": "ExtractedStatements",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema",
+      "name": "ExtractedStatementSchema",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "id",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "Stable within the list; the anchor the statement's row is published under."
+        },
+        {
+          "name": "statement",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The statement as captured, verbatim. Never paraphrased here."
+        },
+        {
+          "name": "kind",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The kind the extraction gave it: recommendation, requirement, candidate, …"
+        },
+        {
+          "name": "status",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Its review state, as the extraction records it: published as is."
+        },
+        {
+          "name": "source",
+          "type": "StatementSourceSchema",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementsSchema",
+      "name": "ExtractedStatementsSchema",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "_schema",
+          "type": "z.literal(EXTRACTED_STATEMENTS_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What the list is, in a reader's words: a heading for its part of the page."
+        },
+        {
+          "name": "statements",
+          "type": "z.array(ExtractedStatementSchema)",
+          "optional": false,
+          "array": true
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [
+        "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema"
+      ],
+      "unresolved": [],
+      "external": [
+        "EXTRACTED_STATEMENTS_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#StatementPage",
+      "name": "StatementPage",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#StatementPageSchema",
+      "name": "StatementPageSchema",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "zod-object",
+      "doc": "One generated page, declared in a committed file rather than on a command",
+      "fields": [
+        {
+          "name": "_schema",
+          "type": "z.literal(STATEMENT_PAGE_SCHEMA_ID)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "statements",
+          "type": "z.array(z.string().min(1)).min(1)",
+          "optional": false,
+          "array": true,
+          "doc": "The statement lists, in the order their parts appear."
+        },
+        {
+          "name": "out",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The page to write."
+        },
+        {
+          "name": "title",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "intro",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "entryBase",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "URL prefix of the library viewer: an entry's link is `<entryBase>/<libraryId>/`."
+        },
+        {
+          "name": "sectionBase",
+          "type": "z.string().url()",
+          "optional": false,
+          "array": false,
+          "doc": "URL prefix of the sources: a section's link is `<sectionBase>/<repo-relative section file>`."
+        },
+        {
+          "name": "tableAttr",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The content type's look, written after each table (for example a kramdown class)."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "STATEMENT_PAGE_SCHEMA_ID",
+        "z"
+      ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#StatementSource",
+      "name": "StatementSource",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema",
+      "name": "StatementSourceSchema",
+      "module": "folio-assistant-core/schemas/extracted-statement.ts",
+      "kind": "zod-object",
+      "fields": [
+        {
+          "name": "instance",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The DECLARED NAME of the instance holding the library; absent means this instance."
+        },
+        {
+          "name": "libraryId",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false,
+          "doc": "The library entry: `library/<libraryId>/`."
+        },
+        {
+          "name": "sectionId",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The section the statement was read from, when the extraction knows it."
+        },
+        {
+          "name": "page",
+          "type": "z.number().int().positive().optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The page (or slide) the statement was read from, in the source's own numbering."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
+      "exported": true
+    },
+    {
       "id": "folio-assistant-core/schemas/figure-data.ts#Cell",
       "name": "Cell",
       "module": "folio-assistant-core/schemas/figure-data.ts",
@@ -81606,6 +84163,13 @@
           "doc": "dcterms:source: what the terms were drawn from."
         },
         {
+          "name": "subject",
+          "type": "SubjectSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The subject area this scheme's translations bind in ({@link SubjectSchema}): `dcterms:subject`."
+        },
+        {
           "name": "license",
           "type": "z.string().min(1).optional()",
           "optional": true,
@@ -81637,6 +84201,7 @@
       "values": [],
       "refs": [
         "folio-assistant-core/schemas/glossary.ts#Iri",
+        "folio-assistant-core/schemas/glossary.ts#SubjectSchema",
         "folio-assistant-core/schemas/glossary.ts#TermSchema"
       ],
       "unresolved": [],
@@ -81748,6 +84313,20 @@
         "ORG_TYPES",
         "z"
       ],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#SubjectSchema",
+      "name": "SubjectSchema",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "zod-scalar",
+      "doc": "The subject area a scheme's (or a term's) translations BIND in",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
       "exported": true
     },
     {
@@ -81872,6 +84451,20 @@
           "doc": "The concept's IRI when its defining vocabulary already mints one. The"
         },
         {
+          "name": "subject",
+          "type": "SubjectSchema.optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Overrides the scheme's {@link SubjectSchema subject area} for this term."
+        },
+        {
+          "name": "translationStatus",
+          "type": "z.record(z.string().regex(BCP47), z.enum(TRANSLATION_STATUSES)).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "Per locale, whether this term's translation is signed off. The"
+        },
+        {
           "name": "focus",
           "type": "FocusSchema.optional()",
           "optional": true,
@@ -81904,12 +84497,15 @@
       "refs": [
         "folio-assistant-core/schemas/glossary.ts#FocusSchema",
         "folio-assistant-core/schemas/glossary.ts#Iri",
-        "folio-assistant-core/schemas/glossary.ts#LangTextSchema"
+        "folio-assistant-core/schemas/glossary.ts#LangTextSchema",
+        "folio-assistant-core/schemas/glossary.ts#SubjectSchema"
       ],
       "unresolved": [],
       "external": [
+        "BCP47",
         "LOCAL_ID",
         "TERM_STATUSES",
+        "TRANSLATION_STATUSES",
         "z"
       ],
       "exported": true
@@ -81917,6 +84513,19 @@
     {
       "id": "folio-assistant-core/schemas/glossary.ts#TermStatus",
       "name": "TermStatus",
+      "module": "folio-assistant-core/schemas/glossary.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/glossary.ts#TranslationStatus",
+      "name": "TranslationStatus",
       "module": "folio-assistant-core/schemas/glossary.ts",
       "kind": "type-alias",
       "fields": [],
@@ -92976,6 +95585,14 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseStoreSchema",
+      "to": "cat-harness-tools/schemas/kg/glossary-sense.ts#GlossarySenseVerdictSchema",
+      "via": "verdicts",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "cat-harness-tools/schemas/kg/graph-typology-node.ts#GraphTypologyNodeSchema",
       "to": "cat-harness-tools/schemas/kg/graph-typology-node.ts#KindAvatarSchema",
       "via": "avatar",
@@ -95512,6 +98129,462 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ActionsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "buttons",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ActionsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "buttons",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ActionsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "caption",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#AlertBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#AlertBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "text",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#AlertBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "text",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Tone",
+      "via": "tone",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "until",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "what",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#ConsentBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "who",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenKind",
+      "via": "",
+      "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#FieldsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "via": "rows",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#FieldsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#FieldsBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "value",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "chips",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "app",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#HeaderBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "subtitle",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#NoteBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#NoteBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "text",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PasscodeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PasscodeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "note",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "chips",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "via": "fields",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Id",
+      "via": "actor",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "name",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#PersonCardBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "subtitle",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "badge",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ExampleKey",
+      "via": "example",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "caption",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "holder",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "holderNote",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "payload",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#QrBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "summary",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ExampleKey",
+      "via": "example",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "via": "rows",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "footnote",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordListBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "title",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ChipSchema",
+      "via": "status",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#ScreenGlyphSchema",
+      "via": "icon",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "code",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "detail",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#RecordRowSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "label",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#StatusBadgeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#FieldSchema",
+      "via": "fields",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#StatusBadgeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "detail",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#StatusBadgeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "text",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/device-screen.ts#StatusBadgeBlockSchema",
+      "to": "cat-harness-tools/schemas/process/device-screen.ts#Text",
+      "via": "verdict",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
       "from": "cat-harness-tools/schemas/process/role-graph.ts#ActorDef",
       "to": "cat-harness-tools/schemas/kg/skill-package.ts#ActorKind",
       "via": "kind",
@@ -95585,6 +98658,14 @@
     },
     {
       "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDef",
+      "to": "cat-harness-tools/schemas/process/role-graph.ts#LaneHolding",
+      "via": "holding",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDef",
       "to": "cat-harness-tools/schemas/process/role-graph.ts#StoreDef",
       "via": "store",
       "kind": "field",
@@ -95614,6 +98695,14 @@
       "kind": "field",
       "optional": true,
       "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDefSchema",
+      "to": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema",
+      "via": "holding",
+      "kind": "field",
+      "optional": true,
+      "array": false
     },
     {
       "from": "cat-harness-tools/schemas/process/role-graph.ts#RoleDefSchema",
@@ -95812,6 +98901,22 @@
       "to": "cat-harness-tools/schemas/process/user-scenario.ts#BuildingBlocksKind",
       "via": "",
       "kind": "extends",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#DakLinkSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#DakRelSchema",
+      "via": "rel",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#DakLinkSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#ExampleKey",
+      "via": "key",
+      "kind": "field",
       "optional": false,
       "array": false
     },
@@ -96037,6 +99142,14 @@
       "via": "role",
       "kind": "field",
       "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/user-scenario.ts#PartSchema",
+      "to": "cat-harness-tools/schemas/process/user-scenario.ts#Id",
+      "via": "scenario",
+      "kind": "field",
+      "optional": false,
       "array": false
     },
     {
@@ -96386,6 +99499,22 @@
     {
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "cast",
+      "kind": "field",
+      "optional": true,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
+      "via": "chapterTitles",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Id",
       "via": "recordOf",
       "kind": "field",
       "optional": true,
@@ -96403,6 +99532,14 @@
       "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
       "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
       "via": "badge",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/process/workshop.ts#WorkshopPresentationSchema",
+      "to": "cat-harness-tools/schemas/process/workshop.ts#Text",
+      "via": "chapterTitles",
       "kind": "field",
       "optional": true,
       "array": false
@@ -97064,6 +100201,54 @@
       "array": false
     },
     {
+      "from": "cat-harness-tools/schemas/sdlc/cache.ts#CacheInventoryEntrySchema",
+      "to": "cat-harness-tools/schemas/sdlc/cache.ts#CacheKindSchema",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/cache.ts#CacheInventorySchema",
+      "to": "cat-harness-tools/schemas/sdlc/cache.ts#CacheInventoryEntrySchema",
+      "via": "entries",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema",
+      "to": "cat-harness-tools/schemas/sdlc/cache.ts#CacheKindSchema",
+      "via": "kind",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema",
+      "to": "cat-harness-tools/schemas/sdlc/cache.ts#KeyRecipeSchema",
+      "via": "keyRecipe",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema",
+      "to": "cat-harness-tools/schemas/sdlc/cache.ts#TrustClassSchema",
+      "via": "trustClass",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/cache.ts#CacheSchema",
+      "to": "cat-harness-tools/schemas/sdlc/cache.ts#Uses",
+      "via": "uses",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
       "from": "cat-harness-tools/schemas/sdlc/change-size.ts#ChangeSizeBreakdown",
       "to": "cat-harness-tools/schemas/sdlc/change-size.ts#ChangeCategory",
       "via": "fileDetails",
@@ -97491,6 +100676,14 @@
       "from": "cat-harness-tools/schemas/sdlc/merge-queue.ts#HoldSchema",
       "to": "cat-harness-tools/schemas/sdlc/merge-queue.ts#NonBlank",
       "via": "waitsOn",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestSchema",
+      "to": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestPreviewSchema",
+      "via": "preview",
       "kind": "field",
       "optional": false,
       "array": false
@@ -101352,6 +104545,22 @@
       "array": true
     },
     {
+      "from": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema",
+      "to": "folio-assistant-core/schemas/extracted-statement.ts#StatementSourceSchema",
+      "via": "source",
+      "kind": "field",
+      "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementsSchema",
+      "to": "folio-assistant-core/schemas/extracted-statement.ts#ExtractedStatementSchema",
+      "via": "statements",
+      "kind": "field",
+      "optional": false,
+      "array": true
+    },
+    {
       "from": "folio-assistant-core/schemas/figure-data.ts#DiigPhasesAdaptationSchema",
       "to": "folio-assistant-core/schemas/figure-data.ts#Resource",
       "via": "resources",
@@ -101561,6 +104770,14 @@
     },
     {
       "from": "folio-assistant-core/schemas/glossary.ts#GlossarySchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#SubjectSchema",
+      "via": "subject",
+      "kind": "field",
+      "optional": true,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#GlossarySchema",
       "to": "folio-assistant-core/schemas/glossary.ts#TermSchema",
       "via": "terms",
       "kind": "field",
@@ -101661,6 +104878,14 @@
       "via": "prefLabel",
       "kind": "field",
       "optional": false,
+      "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/glossary.ts#TermSchema",
+      "to": "folio-assistant-core/schemas/glossary.ts#SubjectSchema",
+      "via": "subject",
+      "kind": "field",
+      "optional": true,
       "array": false
     },
     {
@@ -102793,6 +106018,32 @@
       "page": "en/cat-harness-tools/building-blocks/"
     },
     {
+      "id": "cache",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "tag": "cache/1.0.0",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "cache"
+      ],
+      "page": "en/cat-harness-tools/cache/",
+      "note": "cat-harness-tools/schemas/sdlc/cache.ts#CacheKind — an export this reader does not model as a declaration"
+    },
+    {
+      "id": "cache-inventory",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "tag": "cache-inventory/1.0.0",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "cache"
+      ],
+      "page": "en/cat-harness-tools/cache-inventory/",
+      "note": "cat-harness-tools/schemas/sdlc/cache.ts#CacheInventoryKind — an export this reader does not model as a declaration"
+    },
+    {
       "id": "carried-note",
       "source": "node-kind",
       "parents": [],
@@ -102943,6 +106194,19 @@
       ],
       "page": "en/smart-base/dak-swimlanes/",
       "note": "smart-base/schemas/dak-annexes.ts#DakSwimlaneMapKind — an export this reader does not model as a declaration"
+    },
+    {
+      "id": "device-screen",
+      "source": "node-kind",
+      "instance": "cat-harness-tools",
+      "decl": "cat-harness-tools/schemas/process/device-screen.ts#DeviceScreenKind",
+      "tag": "device-screen/0.1.0",
+      "parents": [],
+      "subclasses": [],
+      "typologies": [
+        "device-screen"
+      ],
+      "page": "en/cat-harness-tools/device-screen/"
     },
     {
       "id": "diig-phases-figure",
@@ -104068,7 +107332,7 @@
       "source": "node-kind",
       "instance": "cat-harness-tools",
       "decl": "cat-harness-tools/schemas/process/user-scenario.ts#UserScenarioKind",
-      "tag": "user-scenario/0.2.0",
+      "tag": "user-scenario/0.4.0",
       "parents": [],
       "subclasses": [],
       "typologies": [

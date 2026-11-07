@@ -63,9 +63,7 @@ the four [Roles](schemas/README.md#role) here are declared in [`scenarios/roles.
 | **Knowledge Graph Data Store** | a repository: the one being set up, and any a [Harness](schemas/README.md#harness) is read from |
 | **Logger** | the record of what you did. Here, it is the conversation you are in. |
 
-The same four, as [`scenarios/roles.json`](scenarios/roles.json) defines them, with every
-name each goes by: other names in use today, and former names with the day each
-was retired, so a name met in older text still leads to the right one.
+As [`scenarios/roles.json`](scenarios/roles.json) declares them:
 
 <!-- kg:roles:begin -->
 
@@ -193,14 +191,11 @@ The same steps, and the [Processes](schemas/README.md#process) they start, as th
 7. **Make sure every step is done** (FR-10). The steps are the ones the
    declarations name. **First, and primary: the Harness's JSON Schemas and
    JSON-LD documents are published at the IRIs they name** (FR-11; read
-   [`skills/publish-documents.md`](skills/publish-documents.md)). Then the
-   declared directories and files, the README and the sections it opts
-   into, each needed Harness's own instructions, and the site on GitHub
-   Pages, which is how the documents get to their addresses. Check each one before doing anything, do what you
-   can, and ask the person for what only they can do. Read
+   [`skills/publish-documents.md`](skills/publish-documents.md)). Then every
+   other step the declarations name. Check each one before doing anything,
+   do what you can, and ask the person for what only they can do. Read
    [`skills/initialization-steps.md`](skills/initialization-steps.md) and,
-   for the site, [`skills/publish-site.md`](skills/publish-site.md). Where
-   a toolset that reads these declarations is available, it may perform the same checks.
+   for the site, [`skills/publish-site.md`](skills/publish-site.md).
 
 If anything cannot be found or read along the way, record what failed (step
 4's Skill) and stop (FR-6).
@@ -236,8 +231,8 @@ page with a table of contents at
 sits here; the site's root address redirects to it. The page is built by a
 separate toolset, from these files, and published from outside this
 repository: nothing here builds or publishes it, and no step in this README
-needs it (FR-7). The site is also the first repository to go through its own
-step 7: [`skills/publish-site.md`](skills/publish-site.md).
+needs it (FR-7). How the site is checked:
+[`skills/publish-site.md`](skills/publish-site.md).
 
 ---
 
@@ -268,7 +263,7 @@ Process that reads a file, where a diagram says so.
 | [`bootstrap-graph-publication.md`](skills/bootstrap-graph-publication.md) | Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the fi… |  |
 | [`bootstrap-kg-navigation.md`](skills/bootstrap-kg-navigation.md) | Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. | "Complete initialization", "Initialize a harness" |
 | [`confirm-harness.md`](skills/confirm-harness.md) | Narrow the harnesses and locations this could be, then have the Requestor settle it. | "Determine the harness and repositories", "Initialize a harness" |
-| [`discussion.md`](skills/discussion.md) | discussion — settling what an agent cannot read off disk |  |
+| [`discussion.md`](skills/discussion.md) | Settle which harness, and which repositories, when no file says: the output is a document conforming to `discussion.output.schema.json`. | "Determine the harness and repositories" |
 | [`human-agent-discussion.md`](skills/human-agent-discussion.md) | Ask a person (or a sibling agent) for what no file holds. | "Complete initialization", "Determine the harness and repositories", "Human–agent discussion" |
 | [`initialization-steps.md`](skills/initialization-steps.md) | Walk every initialization step the declarations name (the instance's own and each one it needs), check each before doing anything, do what can be done, ask f… | "Complete initialization", "Initialize a harness" |
 | [`knowledge-graph-data-store.md`](skills/knowledge-graph-data-store.md) | The contract a Knowledge Graph Data Store keeps: serve a declaration, its graph and its instructions exactly as committed, say plainly when a file is absent,… |  |

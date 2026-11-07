@@ -67,6 +67,7 @@ rebuild calls `nquads-distribution`.
      byte-identical across rebuilds.
 
 ### Stage 2: Build-Time Tests
+<!-- command-path-ok: run from the who-iris instance root (where scripts/ lives); in an index checkout that mounts who-iris at who-iris/ and has its own root scripts/, check:command-paths resolves scripts/ against the index root -->
 ```bash
 bun run scripts/build-iris-oxigraph.ts
 bun test scripts/tests/iris-oxigraph.test.ts

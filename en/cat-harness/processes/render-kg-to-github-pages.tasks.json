@@ -1,6 +1,92 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_RenderKgToGitHubPages",
+ "markers": [
+  {
+   "id": "A_ResolveInputs",
+   "name": "Resolve the Subgraphs and the root URL",
+   "left": 18.72,
+   "top": 23.58,
+   "box": {
+    "left": 13.83,
+    "top": 33.96,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_Provision",
+   "name": "Make sure gh-pages exists and Pages serves it",
+   "left": 18.72,
+   "top": 72.64,
+   "box": {
+    "left": 13.83,
+    "top": 83.02,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_Stage",
+   "name": "Stage the rendering",
+   "left": 29.89,
+   "top": 23.58,
+   "box": {
+    "left": 25,
+    "top": 33.96,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_CheckStaged",
+   "name": "Check what was staged",
+   "left": 41.06,
+   "top": 23.58,
+   "box": {
+    "left": 36.17,
+    "top": 33.96,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_Deploy",
+   "name": "Deploy the rendering",
+   "left": 57.26,
+   "top": 72.64,
+   "box": {
+    "left": 52.37,
+    "top": 83.02,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_CheckServed",
+   "name": "Check what is served",
+   "left": 67.88,
+   "top": 23.58,
+   "box": {
+    "left": 62.99,
+    "top": 33.96,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_Report",
+   "name": "Report the push: status and message",
+   "left": 79.05,
+   "top": 23.58,
+   "box": {
+    "left": 74.16,
+    "top": 33.96,
+    "width": 1.34,
+    "height": 4.53
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages",
  "tasks": {
   "A_ResolveInputs": {

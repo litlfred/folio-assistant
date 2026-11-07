@@ -1,6 +1,68 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_CopyOutMaterialized",
+ "markers": [
+  {
+   "id": "Task_EditDirectly",
+   "name": "Edit it in place — it is your own content",
+   "left": 36.72,
+   "top": 5.56,
+   "box": {
+    "left": 32.63,
+    "top": 17.28,
+    "width": 1.36,
+    "height": 2.96
+   }
+  },
+  {
+   "id": "Task_ReadSource",
+   "name": "Read the original — and write nothing",
+   "left": 36.72,
+   "top": 30.25,
+   "box": {
+    "left": 32.63,
+    "top": 41.98,
+    "width": 1.36,
+    "height": 2.96
+   }
+  },
+  {
+   "id": "Task_Land",
+   "name": "Land the bytes in the copier's own folio/",
+   "left": 52.54,
+   "top": 54.94,
+   "box": {
+    "left": 48.45,
+    "top": 66.67,
+    "width": 1.36,
+    "height": 2.96
+   }
+  },
+  {
+   "id": "Task_RecordProvenance",
+   "name": "Record what this is a copy of",
+   "left": 68.36,
+   "top": 54.94,
+   "box": {
+    "left": 64.27,
+    "top": 66.67,
+    "width": 1.36,
+    "height": 2.96
+   }
+  },
+  {
+   "id": "Task_VerifySourceUntouched",
+   "name": "Verify the ORIGINAL still hashes to its digest",
+   "left": 84.18,
+   "top": 79.63,
+   "box": {
+    "left": 80.08,
+    "top": 91.36,
+    "width": 1.36,
+    "height": 2.96
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized",
  "tasks": {
   "Task_EditDirectly": {

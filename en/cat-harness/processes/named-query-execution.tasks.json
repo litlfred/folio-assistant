@@ -1,6 +1,92 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_NamedQueryExecution",
+ "markers": [
+  {
+   "id": "A_ValidateParams",
+   "name": "Validate Arguments against Parameter Schema",
+   "left": 20.8,
+   "top": 3.91,
+   "box": {
+    "left": 15.51,
+    "top": 18.75,
+    "width": 1.75,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "A_RejectInvalidArgs",
+   "name": "Reject Request with ValidationError",
+   "left": 43.43,
+   "top": 3.91,
+   "box": {
+    "left": 38.14,
+    "top": 18.75,
+    "width": 1.75,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "A_CheckSubgraphs",
+   "name": "Check Graph Availability Guard (requiredSubgraphs)",
+   "left": 32.48,
+   "top": 41.41,
+   "box": {
+    "left": 27.19,
+    "top": 56.25,
+    "width": 1.75,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "A_FetchPartitions",
+   "name": "Fetch & Ingest Missing Subgraphs (.nq.gz)",
+   "left": 63.87,
+   "top": 55.47,
+   "box": {
+    "left": 58.58,
+    "top": 70.31,
+    "width": 1.75,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "A_RaiseMissingPartition",
+   "name": "Raise MissingPartitionError (Fail-Closed Guard)",
+   "left": 51.46,
+   "top": 76.56,
+   "box": {
+    "left": 46.17,
+    "top": 91.41,
+    "width": 1.75,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "A_BindExecute",
+   "name": "Bind Typed Parameters & Execute SPARQL",
+   "left": 75.55,
+   "top": 41.41,
+   "box": {
+    "left": 70.26,
+    "top": 56.25,
+    "width": 1.75,
+    "height": 3.75
+   }
+  },
+  {
+   "id": "A_FormatResponse",
+   "name": "Format Universal Result Response Envelope",
+   "left": 87.23,
+   "top": 41.41,
+   "box": {
+    "left": 81.93,
+    "top": 56.25,
+    "width": 1.75,
+    "height": 3.75
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution",
  "tasks": {
   "A_ValidateParams": {

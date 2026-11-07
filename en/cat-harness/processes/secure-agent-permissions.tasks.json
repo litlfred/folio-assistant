@@ -1,6 +1,80 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_SecureAgentPermissions",
+ "markers": [
+  {
+   "id": "Task_IdentifyTools",
+   "name": "Identify the agent Tool(s) acting here",
+   "left": 19.65,
+   "top": 11.96,
+   "box": {
+    "left": 14.5,
+    "top": 32.61,
+    "width": 1.7,
+    "height": 5.22
+   }
+  },
+  {
+   "id": "Task_ReadGrants",
+   "name": "Compare what the processes need with what is granted",
+   "left": 30.28,
+   "top": 11.96,
+   "box": {
+    "left": 25.14,
+    "top": 32.61,
+    "width": 1.7,
+    "height": 5.22
+   }
+  },
+  {
+   "id": "Task_Explain",
+   "name": "Explain each missing permission, with the exact config diff",
+   "left": 50.85,
+   "top": 11.96,
+   "box": {
+    "left": 45.71,
+    "top": 32.61,
+    "width": 1.7,
+    "height": 5.22
+   }
+  },
+  {
+   "id": "Task_OwnerGrants",
+   "name": "Grant, narrow or refuse each",
+   "left": 61.49,
+   "top": 67.39,
+   "box": {
+    "left": 56.35,
+    "top": 88.04,
+    "width": 1.7,
+    "height": 5.22
+   }
+  },
+  {
+   "id": "Task_RecordGrant",
+   "name": "Record each answer: who, when, scope, the quote",
+   "left": 71.42,
+   "top": 11.96,
+   "box": {
+    "left": 66.28,
+    "top": 32.61,
+    "width": 1.7,
+    "height": 5.22
+   }
+  },
+  {
+   "id": "Task_WriteConfig",
+   "name": "Write it through the Tool's adapter",
+   "left": 91.99,
+   "top": 11.96,
+   "box": {
+    "left": 86.84,
+    "top": 32.61,
+    "width": 1.7,
+    "height": 5.22
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions",
  "tasks": {
   "Task_IdentifyTools": {

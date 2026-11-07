@@ -5,9 +5,7 @@ description: >
   where you are — the context, the Role you act as and theirs, the Process
   and task (or that you are idle) — and ask about whichever you cannot
   determine before anything else. Then context, the options, a
-  recommendation and what happens with no answer, then ONE question. The reusable discussion every bootstrap diagram calls when it
-  needs a person; it records the answer, an applied default, or what is still
-  open, and never a guess.
+  recommendation and what happens with no answer, then ONE question.
 ---
 
 # Asking a person, in one reusable way
@@ -16,15 +14,11 @@ description: >
 choice, a judgement, or a step only they have the rights to perform. Every
 diagram in bootstrap that needs one calls
 [`processes/human-agent-discussion.bpmn`](../processes/human-agent-discussion.bpmn)
-as a call activity rather than drawing its own asking. A caller that draws
-its own has a second answer to "how do I ask", free to drift from this one.
+as a call activity rather than drawing its own asking.
 
 ## Before you ask: determine where you are
 
-Owner, 2026-10-01: *"i wanted to see more about determining context / role /
-process as part of precondition.. and that needs to be clarified as part of
-discussion/interaction."* So the diagram's first three tasks come before any
-question, and each is declared as a precondition of the first one
+The diagram's first three tasks come before any question, and each is declared as a precondition of the first one
 (`bootstrap.processes:precondition … before="A_GiveContext"`):
 
 | determine | what you must be able to say | why it comes first |

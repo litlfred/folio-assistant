@@ -1,6 +1,200 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_HumanTranslation",
+ "markers": [
+  {
+   "id": "Task_IdentifyContent",
+   "name": "Identify content and target locale",
+   "left": 8.78,
+   "top": 7.53,
+   "box": {
+    "left": 6.14,
+    "top": 15.07,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_AssignTranslator",
+   "name": "Assign to qualified human translator",
+   "left": 24.73,
+   "top": 7.53,
+   "box": {
+    "left": 22.09,
+    "top": 15.07,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_CheckCompleteness",
+   "name": "Check translation completeness",
+   "left": 46.35,
+   "top": 7.53,
+   "box": {
+    "left": 43.71,
+    "top": 15.07,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_RequestMoreWork",
+   "name": "Request completion of remaining strings",
+   "left": 54.07,
+   "top": 4.79,
+   "box": {
+    "left": 52.2,
+    "top": 17.81,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_ReceiveAssignment",
+   "name": "Receive assignment and materials",
+   "left": 30.39,
+   "top": 32.12,
+   "box": {
+    "left": 27.75,
+    "top": 39.79,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_TranslateInTool",
+   "name": "Translate strings in preferred tool",
+   "left": 36.05,
+   "top": 32.19,
+   "box": {
+    "left": 33.41,
+    "top": 39.73,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_SubmitPO",
+   "name": "Submit completed .po file",
+   "left": 40.68,
+   "top": 32.19,
+   "box": {
+    "left": 38.56,
+    "top": 39.73,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_SMEReview",
+   "name": "Review translation for accuracy",
+   "left": 72.08,
+   "top": 56.85,
+   "box": {
+    "left": 69.96,
+    "top": 64.38,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_ReturnForCorrection",
+   "name": "Return for correction with annotations",
+   "left": 79.54,
+   "top": 51.37,
+   "box": {
+    "left": 77.68,
+    "top": 64.38,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_Signoff",
+   "name": "Sign off translation as official",
+   "left": 90.61,
+   "top": 56.85,
+   "box": {
+    "left": 88.48,
+    "top": 64.38,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_ExtractPOT",
+   "name": "Extract the POT",
+   "left": 13.41,
+   "top": 81.51,
+   "box": {
+    "left": 11.28,
+    "top": 89.04,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_PrepareGlossary",
+   "name": "Prepare domain glossary",
+   "left": 19.07,
+   "top": 81.51,
+   "box": {
+    "left": 16.43,
+    "top": 89.04,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_InjectPO",
+   "name": "Inject the PO",
+   "left": 58.7,
+   "top": 81.51,
+   "box": {
+    "left": 56.57,
+    "top": 89.04,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_RoundTripQA",
+   "name": "Round-trip translation QA",
+   "left": 64.36,
+   "top": 81.51,
+   "box": {
+    "left": 61.72,
+    "top": 89.04,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_AppendDisclaimer",
+   "name": "Append WHO disclaimer (if DAK)",
+   "left": 85.98,
+   "top": 81.51,
+   "box": {
+    "left": 83.34,
+    "top": 89.04,
+    "width": 0.62,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_WriteStatus",
+   "name": "Write status.json (official)",
+   "left": 96.27,
+   "top": 81.51,
+   "box": {
+    "left": 93.63,
+    "top": 89.04,
+    "width": 0.62,
+    "height": 3.29
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HumanTranslation",
  "tasks": {
   "Task_IdentifyContent": {

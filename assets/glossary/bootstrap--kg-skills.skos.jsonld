@@ -26,7 +26,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "What bootstrap's own Knowledge Graph must be when it is written out as a data file, `.jsonld` with a `.json` copy. bootstrap renders no pages for a person to browse, so this file is how it shows it is a Knowledge Graph at all."
+          "@value": "What bootstrap's own Knowledge Graph must be when it is written out as a data file, `.jsonld` with a `.json` copy."
         }
       ],
       "skos:notation": "bootstrap-graph-emission",
@@ -66,7 +66,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. The first skill bootstrap hands you, because the second step of the handoff cannot be followed without it. Named `bootstrap-` so it cannot be confused with a navigation Skill of a Harness that is installed."
+          "@value": "Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. Named `bootstrap-` so it cannot be confused with a navigation Skill of a Harness that is installed."
         }
       ],
       "skos:notation": "bootstrap-kg-navigation",
@@ -104,6 +104,11 @@
           "@value": "discussion"
         }
       ],
+      "skos:definition": [
+        {
+          "@value": "Settle which harness, and which repositories, when no file says: the output is a document conforming to `discussion.output.schema.json`."
+        }
+      ],
       "skos:notation": "discussion",
       "dcterms:source": "bootstrap/skills/discussion.md",
       "skos:note": "candidate"
@@ -121,7 +126,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Ask a person (or a sibling agent) for what no file holds. First determine where you are — the context, the Role you act as and theirs, the Process and task (or that you are idle) — and ask about whichever you cannot determine before anything else. Then context, the options, a recommendation and what happens with no answer, then ONE question. The reusable discussion every bootstrap diagram calls when it needs a person; it records the answer, an applied default, or what is still open, and never a guess."
+          "@value": "Ask a person (or a sibling agent) for what no file holds. First determine where you are — the context, the Role you act as and theirs, the Process and task (or that you are idle) — and ask about whichever you cannot determine before anything else. Then context, the options, a recommendation and what happens with no answer, then ONE question."
         }
       ],
       "skos:notation": "human-agent-discussion",

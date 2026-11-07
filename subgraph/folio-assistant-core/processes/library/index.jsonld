@@ -392,6 +392,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10b",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i11",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -507,6 +511,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_IngestTheme",
       "@type": "bootstrap:ProcessNode",
       "name": "Ingest the theme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_PublishStatements",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish the extracted statements with source links"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Call_BeanClose",
@@ -677,6 +686,86 @@
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1Gate/node/Task_Verdict",
       "@type": "bootstrap:ProcessNode",
       "name": "Record the L1 completeness verdict"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "@type": "bootstrap:Process",
+      "name": "Publish extracted statements with source links"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p1",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p2",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p3",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p4",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p5",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p_none",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "none"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p_yes",
+      "@type": "bootstrap:SequenceFlow",
+      "name": "yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
+      "@type": "cat-harness:Lane",
+      "name": "Ingestion Engine (agent, runs unattended)"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/EndEvent_Nothing",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Nothing to publish"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/EndEvent_Published",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Statements published with source links"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Gateway_Any",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Any statements?"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/StartEvent_Statements",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Sources added to the artifact"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_CheckCurrent",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Check pages are current, links resolve"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_Collect",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Collect each statement with its source section"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderArtifact",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Render them in the artifact's own pages"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderViewer",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish them in the shared viewer"
     }
   ],
   "holdsGraph": [

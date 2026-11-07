@@ -1094,6 +1094,186 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_deps",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "bun / pip dependencies"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 2b. RESTORE: the package managers' download caches, keyed by the lockfile digest (`bun.lock`; the pip requirements file) and the tool version — never by a hand-listed version string. A restored download is re-verified by the package manager against the lockfile's integrity hashes: class (a). SAVE: main; a PR into its own ref scope. Owner role: the integrator (CI speed 14). `cache` node: `bun-deps`, `pip-deps`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Deps",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Deps",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_gates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Gate results: restore / save"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 2c. RESTORE: the result store (`build/result-store/`) and the CI cone records, by prefix — a WARM start: the cone (`ci-cone.ts`) then matches each stored entry exactly (fingerprint from `cache:key --base`, every recorded path state, every replayed git answer) and only an exact match is reported SKIPPED, never passed. A committer's local gate record is class (b): honoured on the critical path, then re-verified off it. SAVE: main only (class c for CI's records). Owner roles: the gate-reuse session (CI speed 8) and the committer-side session (CI speed 3). `cache` nodes: `result-store`, `ci-cone`, `local-gate-records`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Gates",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Gates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_igast",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FHIR IG ASTs: Process_IgAstCache"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 4b, in its own lane: the FHIR IG layer's IG AST cache, `Process_IgAstCache` (declared by that layer), integrated, not replaced. It is drawn as a task because this layer may not name a process of a layer above it; the steps are that process's. RESTORE: read the cached AST from its branch store and judge it — that process's \"valid for this commit?\" IS this component's verify (class a: the AST is judged against this commit's IG sources and tooling); valid → the site is built from it. SAVE: that process's own path, not `cached-step` — a miss dispatches an AST refresh on a Java runner with 10 GB, which rewrites the branch store. The branch store is a `cache` node (`ig-ast`). Owner: CI speed 12, the IG layers' session. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_IgAst",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_IgAst",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_image",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Prepared image + node_modules"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 2a. RESTORE: the prepared CI image `ghcr.io/<owner>/<repo>-ci`, keyed by `.github/ci-image/key.sh` (the lock, `bun.lock`, `package.json`, the recipe files, the bun version and `ImageOS`) — computed BEFORE anything is mounted, so it is not `cache:key`; `cache:key --check image` asserts the two agree. Each layer's sha256 is checked as it streams and `mount:lock:check` re-hashes the result: class (a). SAVE: main or a dispatch only (the one job with `packages: write`). Owner role: the prepared-image session (CI speed 9). `cache` node: `ci-image`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Image",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Image",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_jekyll",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Jekyll cache: restore / save"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 5, last: it caches the rendering of what the components above produce. RESTORE: `.jekyll-cache`, keyed by the theme, the layouts, includes and plugins, `Gemfile.lock` and the Ruby version, by exact key only. Jekyll invalidates an entry whose source changed, but a template change is not visible to it, which is why the templates are in the key. SAVE: main only — class (c). Owner role: the preview session (CI speed 2). `cache` node: `jekyll-cache`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Jekyll",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Jekyll",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_layers",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Layers ref: restore / save"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 1, which everything else needs. RESTORE: `mount-from-lock` replays the lock from `refs/cat/layers/<key>` (key = sha256 of the lock's instances), verifying every layer's tree digest, declaration and asset sha256 against the committed lock — class (a), verified against THIS tree, so a bad entry is only a miss, and a stale `refs/cat/layers/main` still serves every layer that did not move. SAVE: the committer (`layers:publish`, run by `mount:remote` after it changes the lock), with the re-pin train and main as fallbacks. Not wrapped in `cached-step`: its per-layer verify is finer than one hit. Owner role: the layers-ref session (CI speed 13). `cache` node: `layers`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Layers",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Layers",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_lean",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Lean .oleans: restore / save"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 3, after the layers (the Lean packages are mounted content). RESTORE: the compiled `.olean`s of each declared Lean package, keyed by the package, the toolchain AND the lake manifest (the Mathlib revision) — the manifest is part of the key, so an entry from another revision is a miss. `lake build` re-checks every restored module's trace, so a stale module is rebuilt, not trusted: class (a). SAVE: main; a contributor's warm build may be offered back (`compiled-artefact-cache`) and is accepted only through that same trace check. Owner role: the integrator (CI speed 14). `cache` node: `lean-oleans`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Lean",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Lean",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_renderseed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Render seed: writer records"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 4a, the seed of CI's render (owner, 2026-11-05: CI does not run `render`; its render is `derive:publish`). SAVE: main's `writer-records.yml` records each publish-time writer under trace (`writer-cone`): its read set, the state of every path it read, and the outputs it wrote. RESTORE: a run with `CAT_WRITER_SKIP=1` (a pull request, staging, the preview) skips every writer whose recorded reads all still match and puts back main's recorded outputs; a writer whose reads moved runs. The key is the writer's recorded read set; trust (a′): the outputs are the recording's own, so their PROVENANCE is checked — they come only from main's recording run, never from a run a pull request could write. Owner roles: the integrator and the preview session (CI speed 2). `cache` node: `writer-records`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_RenderSeed",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_RenderSeed",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cache.task_sets",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Generated sets: QA copy, pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Component 2d. RESTORE: the QA working copy and the publish-time pages, keyed by `bundle-cache.sh digest` (the tree and the exact tool versions). A bundle is checked against the manifest it carries AND a source rule (the source run's head is this head, a parent, or a commit with this tree; or a main-scoped save) — class (a′), because a manifest alone proves a bundle intact, not built from these inputs. Hits across commits wait on the producers being byte-reproducible (the determinism audit). SAVE: the run that built it, recorded; main's records are read by every branch. Owner role: the generated-sets session (CI speed 10); the preview's copy, the preview session (CI speed 2). `cache` nodes: `qa-working-copy`, `publish-pages`. It reports one line in `cached-step`'s format — `cached-step <step>: hit|warm|miss (<trust>) — <why>. Key <key>.` — to the job summary, which the daily hit-rate report counts."
+        }
+      ],
+      "skos:notation": "Task_Sets",
+      "dcterms:source": "cat-harness/sdlc/processes/cache.bpmn#Task_Sets",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_cihealth.call_watch",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4141,7 +4321,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Generates or retrieves the domain glossary for the target locale. Sources: 1. Root folio's translations/ glossary 2. Folio-assistant dependency translations (depth-first walk) 3. WHO standard terminology (from the WHO SMART Base IG) 4. Previous translations of related content"
+          "@value": "Builds the locale term base for the target locale from the layered glossaries, has it reviewed, and hands it to the translator with the POT. Each layer's glossary is the directory it declares with the `glossary` graph typology. Precedence, within one subject area (the scheme's `subject`): the more authoritative (lower) layer fixes a term's translation; an instance layer only adds, and may not give a fixed term a second translation. A match in another subject area is a sense check for the reviewer, not a violation. Previous translations of related content are evidence for a term with no fixed form, not a source that overrides one. A fixed translation is an authored term with a non-empty, non-fuzzy msgstr in its scheme's catalogue (translation-manager, \"The locale term base\")."
         }
       ],
       "skos:notation": "Task_PrepareGlossary",
@@ -4221,7 +4401,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original. It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool. No gateway follows: drift or clean, the translation goes to Task_SMEReview with the findings attached. Which of two readings is right is a human call (translation-manager, \"route drift to a human reviewer\"), and every translation in this workflow is reviewed and signed off anyway, so a clean result is evidence for the reviewer and never a way around them."
+          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original. It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool. No gateway follows: drift or clean, the translation goes to Task_SMEReview with the findings attached. Which of two readings is right is a human call (translation-manager, \"route drift to a human reviewer\"), and every translation in this workflow is reviewed and signed off anyway, so a clean result is evidence for the reviewer and never a way around them. The findings include `translation:glossary:check`'s: every glossary term translated against the locale term base, fixed before sign-off, with its glossary section in the KG QA report."
         }
       ],
       "skos:notation": "Task_RoundTripQA",
@@ -5431,7 +5611,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Tell the owner, then take the stalled PR over."
+          "@value": "A PR owner who stalled: tell the owner, then take the stalled PR over."
         }
       ],
       "skos:notation": "Call_Stalled",
@@ -5451,11 +5631,91 @@
       ],
       "skos:definition": [
         {
-          "@value": "Ready PRs that stack land as a train through merge:guard."
+          "@value": "Add the merge-train label instead of merging; the train lands the batch with one CI run."
         }
       ],
       "skos:notation": "Call_Train",
       "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Call_Train",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergemanagerwatch.owner_approve",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Approve the batch card"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In the merge manager's session only: one card per batch, naming each PR, after its six lines were posted in that chat. An approval given in a sibling's session does not authorise a merge (owner ruling, 2026-11-07, card Approvals, B)."
+        }
+      ],
+      "skos:notation": "Owner_Approve",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Owner_Approve",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergemanagerwatch.task_card",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Post the request in chat, then the batch card"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The sibling's six lines go into the merge manager's chat first; a request with no rendered preview and no reason goes back to the sibling (owner ruling, 2026-11-07). Then one card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
+        }
+      ],
+      "skos:notation": "Task_Card",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Task_Card",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergemanagerwatch.task_direct",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge it through merge:guard"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A workflow PR, or a PR in a repository with no train, merges directly. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card Workflow PRs, A)."
+        }
+      ],
+      "skos:notation": "Task_Direct",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Task_Direct",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergemanagerwatch.task_lapse",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Announce the hand-over or the lapse"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tell every sibling and the owner, and update the durable note: either the session that holds the lane now, or that the lane lapses and each session merges its own green PRs with the owner's approval, still sending the six-line merge request."
+        }
+      ],
+      "skos:notation": "Task_Lapse",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Task_Lapse",
       "skos:note": "candidate"
     },
     {
@@ -5466,16 +5726,36 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Read PRs, runner queue, main verdict and owners"
+          "@value": "Read the queue, acknowledge requests"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment."
+          "@value": "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. One sweep runs merge:watch over every repository it holds. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one."
         }
       ],
       "skos:notation": "Task_Read",
       "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Task_Read",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergemanagerwatch.task_relieve",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Relieve the runners"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
+        }
+      ],
+      "skos:notation": "Task_Relieve",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn#Task_Relieve",
       "skos:note": "candidate"
     },
     {
@@ -5706,6 +5986,186 @@
       ],
       "skos:notation": "Task_Scrap",
       "dcterms:source": "cat-harness/sdlc/processes/merge-refusal.bpmn#Task_Scrap",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_announce",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Announce and note the merge manager"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Send \"merge manager: <session id>\" to every sibling and the owner, and note it durably on the coordination work item, so it is used by all, including siblings started later."
+        }
+      ],
+      "skos:notation": "Sib_Announce",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Announce",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_callstalled",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Stalled-agent triage"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Tell the owner that the merge manager stalled, then re-elect with the stalled session excluded. The new holder announces itself, takes over the queue and tells the owner."
+        }
+      ],
+      "skos:notation": "Sib_CallStalled",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_CallStalled",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_callwatch",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge manager watch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The elected session holds the merge steward lane and runs its loop until it hands over or the lane lapses."
+        }
+      ],
+      "skos:notation": "Sib_CallWatch",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_CallWatch",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_elect",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Elect the merge manager with the siblings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The deterministic rule (electHolder): the active session that owns the P0 PR, else the earliest-created active session, the session id breaking a tie. Stalled sessions are not candidates. Every sibling computes the same answer from the same listing (owner ruling, 2026-11-07)."
+        }
+      ],
+      "skos:notation": "Sib_Elect",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Elect",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_ready",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Make the PR ready"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Its own work is done and its full tier is green as judged; it is marked ready by the queue rule (continual-progress, Pace the ready marking)."
+        }
+      ],
+      "skos:notation": "Sib_Ready",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Ready",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_retarget",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "When the base lands, retarget"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Retarget the PR onto main and merge main in; across layers, re-pin to the dependency's merge commit on main, so pins only move forward. Never merge the stacked PR into its base branch, and never mark it ready while it pins an unmerged commit."
+        }
+      ],
+      "skos:notation": "Sib_Retarget",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Retarget",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_self",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge manager for its own PRs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "No merge manager is needed (a lone session, or a lapsed lane): the session is its own merge manager for its own PRs only, so it runs the merge manager loop for them. It does not announce itself to the others; it posts the six lines in its own chat and asks the owner by card."
+        }
+      ],
+      "skos:notation": "Sib_Self",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Self",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_send",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Send the six-line merge request"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "To the merge manager: the PR URL and full head SHA, the session URL, 1-3 sentences on the change, the rendered preview URL or no preview with a reason, what to look for, and full tier green as judged (owner ruling, 2026-11-07). Never merge it yourself, and never push to another session's branch."
+        }
+      ],
+      "skos:notation": "Sib_Send",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Send",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_mergerequest.sib_stack",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Stack on it and keep working"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Same repository: branch from the dependency PR's branch and open a draft PR whose base is that branch; pull the dependency in with merge commits, never rebase or force-push another session's branch. Across layers: develop against the dependency's branch laid over a fresh mount; a draft may pin the dependency PR's full head SHA, never a branch. Write \"stacked on <repo>#<n>\" in the PR body. A re-pin is its own PR holding only pins; work that needs the new pins stacks on it, and a fix the re-pin needs lands in its owning layer (owner ruling, 2026-11-07)."
+        }
+      ],
+      "skos:notation": "Sib_Stack",
+      "dcterms:source": "cat-harness/sdlc/processes/merge-request.bpmn#Sib_Stack",
       "skos:note": "candidate"
     },
     {
@@ -6476,7 +6936,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Sparse checkout of the declaration and the chosen directories, copied to the mount path (by default the instance's home path, so relative imports and sibling discovery hold). Never onto tracked bytes; never onto a directory no lock says this mount made; never over edits to a previous mount — those are left untouched and reported."
+          "@value": "Sparse checkout of the declaration and the chosen directories, copied to the mount path (by default the instance's home path, so relative imports and sibling discovery hold). Never onto tracked bytes; never onto a directory no lock says this mount made; never over edits to a previous mount — those are left untouched and reported. A replay of the lock tries the index's layers cache ref first (`refs/cat/layers/<key>`, then `refs/cat/layers/main`): one shallow fetch, every byte verified against the lock, and any layer that does not verify is fetched from its own repository."
         }
       ],
       "skos:notation": "Task_MountInstances",
@@ -6536,7 +6996,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`index.lock.json` beside the downstream's `index.config.json` (the legacy `<instance>.mount-lock.json` is still read, and is renamed onto the new name when rewritten; both present is an error): the pins it was written for, each instance's repository, SHA and how the pin was found, each directory's tree digest — and what was NOT mounted, with why, so an offline check cannot read a gap as clean."
+          "@value": "`index.lock.json` beside the downstream's `index.config.json` (the legacy `<instance>.mount-lock.json` is still read, and is renamed onto the new name when rewritten; both present is an error): the pins it was written for, each instance's repository, SHA and how the pin was found, each directory's tree digest — and what was NOT mounted, with why, so an offline check cannot read a gap as clean. Whoever writes the lock writes its layers cache ref (`layers:publish`, which refuses unless every mount hashes to the lock); on main, the index's workflow does it."
         }
       ],
       "skos:notation": "Task_WriteLock",
@@ -6661,6 +7121,266 @@
       ],
       "skos:notation": "Task_UseCheckoutPath",
       "dcterms:source": "cat-harness/processes/kg/mount-subgraph.bpmn#Task_UseCheckoutPath",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.call_ml_roundtrip",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Untainted round trip on a sample"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The sample: every diagram label, the personas and scenarios, and a seeded random fraction of the rest."
+        }
+      ],
+      "skos:notation": "Call_ML_RoundTrip",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Call_ML_RoundTrip",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_extract",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Extract every template once"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Scan the source content and write the translatable strings to .pot files at the configured granularity: segment prose by paragraph, shield what must not be translated (math, code, labels, Lean companions) as placeholders, normalise whitespace, and extract metadata such as titles, alt text and captions. Tool: the translation_extract MCP tool. Once, for every locale: the `.pot` templates for the pages, the diagrams (`translate-bpmn --extract`) and the glossary schemes, each by the instance's own extractor. A locale that would need a different template is a defect in the extraction, not a reason to extract again."
+        }
+      ],
+      "skos:notation": "Task_ML_Extract",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Extract",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_fixdrift",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Fix each drift on the PR"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Correct each string the adjudicator ruled drift, on the locale PR, and note the fix beside the ruling in the QA report."
+        }
+      ],
+      "skos:notation": "Task_ML_FixDrift",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_FixDrift",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_gates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Run the deterministic gates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Template currency, catalogue coverage, placeholder, tag and URL preservation, officiality, `kg:locale`, and the locale's supplements compiling with no SUSHI error and passing their structural checks."
+        }
+      ],
+      "skos:notation": "Task_ML_Gates",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Gates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_glossary",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check glossary consistency"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`translation:glossary:check`, against the layered term base: the normative reference glossaries first, then each layer in the order the index config lists it, the instance's own glossary last and never overriding. A platform term found in text of another subject area is a sense check for a person, not a violation."
+        }
+      ],
+      "skos:notation": "Task_ML_Glossary",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Glossary",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_localepr",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Open the locale PR to main"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One PR per locale, based on and targeting main. Never into the source branch."
+        }
+      ],
+      "skos:notation": "Task_ML_LocalePR",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_LocalePR",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_merge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Validate and merge in the window"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read each locale's QA report, confirm the PR is green, and merge it inside the owner's merge window. Outside the window it waits."
+        }
+      ],
+      "skos:notation": "Task_ML_Merge",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Merge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_qareport",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the locale's QA report"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One report per locale under `test/results/translation-qa/`: coverage, the gates, the round trip with its counts and every drift ruling, the glossary violations and sense checks, and the source errors reported."
+        }
+      ],
+      "skos:notation": "Task_ML_QAReport",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_QAReport",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_scope",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Set locales, scope and merge window"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Which instances, which locales, which assets (pages, diagrams, glossary, FHIR terms), and the window in which locale PRs may be merged."
+        }
+      ],
+      "skos:notation": "Task_ML_Scope",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Scope",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_sourceissue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "File the source errors as one issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "One issue for every source-text error the translators found, each with its location and the reading the translator took. Never fixed in a translation: a fix to the source is a source PR, and the next refresh carries it to every locale."
+        }
+      ],
+      "skos:notation": "Task_ML_SourceIssue",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_SourceIssue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_sourcepr",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge the one source PR to main"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "All the templates in one PR to main, merged before any locale starts, so every translator branches from the same main. Once it has merged, its branch receives nothing more: a later fix to the source is a new PR."
+        }
+      ],
+      "skos:notation": "Task_ML_SourcePR",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_SourcePR",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_translate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Translate one locale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "From the merged templates, with the locale term base: `translations/<locale>/**.po`, a translation-node manifest beside each (`official: false`, `generatedBy: \"agent\"`; no `status.json`), and the FHIR terms as CodeSystem supplements, all in one file for the locale rather than edits inside the resources."
+        }
+      ],
+      "skos:notation": "Task_ML_Translate",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Translate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_multilocaletranslation.task_ml_watcher",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Schedule the refresh watcher"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Schedule a fresh session that follows `translation-refresh` on each instance, so a template that moves after today is caught by its check failing, not by a reader."
+        }
+      ],
+      "skos:notation": "Task_ML_Watcher",
+      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Watcher",
       "skos:note": "candidate"
     },
     {
@@ -7211,7 +7931,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Record the recommendation AND the rejected options"
+          "@value": "Record the chosen option AND the rejected ones"
         }
       ],
       "skos:definition": [
@@ -7791,7 +8511,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Record the conflict, decide nothing, and do NOT re-pin"
+          "@value": "Record the conflict: no decision, no re-pin"
         }
       ],
       "skos:definition": [
@@ -9166,7 +9886,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Prepare cohort: inputs, indicatorRef, expected & computed value"
+          "@value": "Prepare the cohort: inputs, expected and computed"
         }
       ],
       "skos:definition": [
@@ -9186,7 +9906,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Prepare worked case: input, decisionLogicRef and systemOutput"
+          "@value": "Prepare the worked case: input, logic, output"
         }
       ],
       "skos:definition": [
@@ -9226,7 +9946,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Judge domain correctness of worked case or indicator cohort"
+          "@value": "Judge whether the case or cohort is right"
         }
       ],
       "skos:definition": [
@@ -10646,7 +11366,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Adjudicate flagged passage (human reviewer)"
+          "@value": "Adjudicate the flagged passage (human)"
         }
       ],
       "skos:definition": [
@@ -10679,6 +11399,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translation.task_glossarycheck",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check glossary terms (translation:glossary:check)"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "After translating: run `translation:glossary:check --instance <dir> --locale <locale>`, fix the violations, and include its glossary section in the KG QA report. A term translated against the term base is a terminology miss, so it takes the drift branch to the adjudicator."
+        }
+      ],
+      "skos:notation": "Task_GlossaryCheck",
+      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_GlossaryCheck",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translation.task_poinject",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -10706,7 +11446,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Extract translatable strings (POT generation)"
+          "@value": "Extract translatable strings (POT)"
         }
       ],
       "skos:definition": [
@@ -10779,6 +11519,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translation.task_termbase",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Build and review the locale term base"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Before translating: build the locale term base from the layered glossaries, review it, and translate with it. Precedence, within one subject area (the scheme's `subject`): the more authoritative (lower) layer fixes a term's translation; an instance layer only adds. A match in another subject area is a sense check, not a violation. Each layer's glossary is the directory it declares with the `glossary` graph typology. A fixed translation is an authored term with a non-empty, non-fuzzy msgstr in its scheme's catalogue."
+        }
+      ],
+      "skos:notation": "Task_TermBase",
+      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_TermBase",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translation.task_translate",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -10791,7 +11551,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Translation of .pot → .po by one of: 1. Existing PO from the WHO SMART Base IG (Weblate/Crowdin/Launchpad) 2. FHIR/translation-utils po-translate CLI (DeepL/Google, tagged #fuzzy) 3. Agent (LLM) translation 4. Human translator Result: <locale>/block.po with msgid/msgstr pairs."
+          "@value": "Translation of .pot → .po, with the locale term base, by one of: 1. Existing PO from the WHO SMART Base IG (Weblate/Crowdin/Launchpad) 2. FHIR/translation-utils po-translate CLI (DeepL/Google, tagged #fuzzy) 3. Agent (LLM) translation 4. Human translator Result: <locale>/block.po with msgid/msgstr pairs."
         }
       ],
       "skos:notation": "Task_Translate",
@@ -10836,6 +11596,326 @@
       ],
       "skos:notation": "Task_WriteUnofficial",
       "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_WriteUnofficial",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.call_tr_roundtrip",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Round trip on the changed strings"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The untainted round trip, with the sample restricted to the strings this run translated."
+        }
+      ],
+      "skos:notation": "Call_TR_RoundTrip",
+      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Call_TR_RoundTrip",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_coldstart",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Cold start: mount and attach"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Lay down every pinned layer from each instance's lock, as its AGENTS.md cold start says, and attach each repository the run will change."
+        }
+      ],
+      "skos:notation": "Task_TR_ColdStart",
+      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_ColdStart",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_detect",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Detect what moved"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`translation:status --instance <root>` for new, obsolete and fuzzy strings, and the instance's template check. Either failing, or showing anything but zero, is a change."
+        }
+      ],
+      "skos:notation": "Task_TR_Detect",
+      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Detect",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_gates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Re-run the gates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Officiality, catalogue coverage, translated links, `kg:locale`, `translation:glossary:check`, and the supplements compiling."
+        }
+      ],
+      "skos:notation": "Task_TR_Gates",
+      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Gates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_merge",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge the PR"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Merge the instance's PR to main, then confirm the template checks pass on main."
+        }
+      ],
+      "skos:notation": "Task_TR_Merge",
+      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Merge",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_mergelocales",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Merge into each locale"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Merge each refreshed template into every locale's catalogue: new strings arrive empty, changed ones fuzzy, and obsolete ones are kept as `#~` entries, never deleted."
+        }
+      ],
+      "skos:notation": "Task_TR_MergeLocales",
+      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_MergeLocales",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_report",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "QA report and one PR to main"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write each locale's QA report, then open one PR for the instance, based on and targeting main."
+        }
+      ],
+      "skos:notation": "Task_TR_Report",
+      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Report",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_sourceissue",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Report source errors as one issue"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Any source-text error the translators found goes into one issue on the source, with its location. When there is none, this step writes nothing."
+        }
+      ],
+      "skos:notation": "Task_TR_SourceIssue",
+      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_SourceIssue",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_templates",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Refresh the templates"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Re-run the instance's extractors, once for every locale: pages, diagrams, glossary schemes."
+        }
+      ],
+      "skos:notation": "Task_TR_Templates",
+      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Templates",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationrefresh.task_tr_translate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Translate new and fuzzy only"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Only the empty and fuzzy entries, in every locale, with the terms the term base fixes. A finished string is not touched."
+        }
+      ],
+      "skos:notation": "Task_TR_Translate",
+      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Translate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_backtranslate",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Back-translate the target text"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Render each target string into the source language, from the target text alone, using no tools, and say so in a TOOLS_USED line that is recorded. A string that cannot be rendered is reported as such, not guessed."
+        }
+      ],
+      "skos:notation": "Task_RT_BackTranslate",
+      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_BackTranslate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_prescreen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Pre-screen every pair"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Mechanically, over every (source, back-translation) pair: flag a pair whose negation, modal, quantifier, number or code tokens differ, and a pair whose word overlap is low. The pre-screen only chooses what is read first; it rules on nothing, and an unflagged pair is still in the sample."
+        }
+      ],
+      "skos:notation": "Task_RT_PreScreen",
+      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_PreScreen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_record",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record both witnesses"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Record the adjudicator's verdict first and the back-translator's rendering behind it (`translation:roundtrip --payload`), so a reader can ask both who ruled and on what basis. The counts (sampled, flagged, drift, not drift) go into the locale's QA report."
+        }
+      ],
+      "skos:notation": "Task_RT_Record",
+      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_Record",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_recordna",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record could not dispatch"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Write one entry, `result: \"n/a\"`, `metrics.dispatch: \"unavailable\"`, with the reason. The producer may write this entry and no other. It is never a pass, and the QA report says so."
+        }
+      ],
+      "skos:notation": "Task_RT_RecordNA",
+      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_RecordNA",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_rule",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read and rule each flagged pair"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Read every flagged pair in full and rule it drift or not drift, with the reason. Not drift: synonyms, articles, word order, inflection, a purpose clause rendered in the subjunctive, an acronym left uninflected, an acronym spelled out with the acronym kept. Drift: a claim added, dropped, weakened, strengthened or reversed; a term of art swapped for one that means something else; a named entity, number or quantifier moved."
+        }
+      ],
+      "skos:notation": "Task_RT_Rule",
+      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_Rule",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_translationroundtrip.task_rt_sample",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Draw the sample"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On a first translation: every diagram label, every persona and scenario string, and a seeded random fraction of the rest, with the seed written down so the sample can be drawn again. On a refresh: only the strings that were new or fuzzy. Hand the back-translator the msgstr values alone, keyed by an opaque id."
+        }
+      ],
+      "skos:notation": "Task_RT_Sample",
+      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_Sample",
       "skos:note": "candidate"
     },
     {

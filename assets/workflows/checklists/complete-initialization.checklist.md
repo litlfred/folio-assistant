@@ -24,7 +24,7 @@ A SUB-PROCESS of initialize-harness, called after a harness is installed and als
 
 - Who: the `Bootstrapping Agent` lane (role `bootstrapping-agent`).
 - Skill: `publish-documents`, `initialization-steps`.
-- What: THE PRIMARY STEP of initializing a Knowledge Graph harness (owner, 2026-09-30: "json(ld) is primary step in initializing KG harness"), and so the first one checked once the declarations are read.
+- What: THE PRIMARY STEP of initializing a Knowledge Graph harness and so the first one checked once the declarations are read.
 - Record it: `workflow_complete` with `node: "A_CheckDocuments"`.
 - next: → `A_ListSteps` (List the steps the declarations name)
 
@@ -32,7 +32,7 @@ A SUB-PROCESS of initialize-harness, called after a harness is installed and als
 
 - Who: the `Bootstrapping Agent` lane (role `bootstrapping-agent`).
 - Skill: `initialization-steps`.
-- What: In the order of the table in `initialization-steps`: declaration, needs, each dependency's instructions, the documents at their IRIs (checked above, and listed first), directories, assets, README, README sections, site.
+- What: In the order of the table in `initialization-steps`: declaration, needs, each dependency's instructions, the documents at their IRIs (checked above; the report leads with them), directories, assets, README, README sections, site.
 - Record it: `workflow_complete` with `node: "A_ListSteps"`.
 - next: → `GW_NextStep_Join`
 

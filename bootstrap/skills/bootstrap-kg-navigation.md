@@ -2,8 +2,7 @@
 name: bootstrap-kg-navigation
 description: >
   Read and navigate a knowledge graph with nothing installed — no MCP server,
-  no tools, no harness. The first skill bootstrap hands you, because the second
-  step of the handoff cannot be followed without it. Named `bootstrap-` so it
+  no tools, no harness. Named `bootstrap-` so it
   cannot be confused with a navigation Skill of a Harness that is installed.
 consulted: true
 ---
@@ -13,11 +12,6 @@ consulted: true
 **This skill assumes a text editor and nothing else.** No MCP server, no
 skill-fetching tool, no work-plan store, no build. If those exist they are not yours to rely
 on yet — see [`AGENTS.md`](../AGENTS.md).
-
-That constraint is the reason this skill exists rather than a pointer to the
-harness's own navigation tooling: an agent here may have no connected server,
-and a bootstrap that required one would fail in exactly the cold-start case it
-exists for.
 
 ## A graph is files that declare what they are
 
@@ -53,7 +47,7 @@ trusting a copy.
    an instance yet, and that is the case bootstrap exists for.
 2. **Find the entry whose `graphTypologies` name the kind you want.** In
    bootstrap they are named for what they hold: `skills`, `processes`,
-   `scenarios` (the Roles) and `schemas`. The entry's `path` is relative to
+   `scenarios` (the Roles), `schemas` and `models`. The entry's `path` is relative to
    the declaration.
 3. **Read the files in that directory.** A markdown file declaring `name:` and
    `description:` in front matter is a **skill** — its body is the instruction
@@ -64,8 +58,7 @@ trusting a copy.
 
 ## What "I could not determine" means here
 
-**An absent declaration and an unreadable one are different**, and collapsing
-them is the mistake this section exists to prevent:
+**An absent declaration and an unreadable one are different:**
 
 | what you found | what it means | what to do |
 |---|---|---|
@@ -74,17 +67,9 @@ them is the mistake this section exists to prevent:
 | a declared directory that is not there | the declaration is wrong | **stop and say so** — scanning nothing and reporting a clean run is the defect |
 | no declaration for a kind you want | this instance has none of it | that is an answer, not a failure |
 
-A declared-but-absent directory is the one to be loudest about. Every consumer
-that scans it finds nothing and reports success, so the failure is silent and
-looks exactly like a clean result.
-
 ## What this skill is NOT
 
 It does not describe what a Harness above bootstrap holds, such as its content
-or its checks. Those are concepts of the Harness you have not loaded yet, and
-a description of them here would be a second one, free to disagree with the
-first.
-
-If you find yourself needing one of them to finish bootstrap, **that is a sign
-the boundary is in the wrong place** — say so rather than importing the
-definition.
+or its checks: those belong to the Harness you have not loaded yet. If you need
+one of them to finish bootstrap, **the boundary is in the wrong place** — say
+so rather than importing the definition.

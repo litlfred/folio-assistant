@@ -1,6 +1,56 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_ContentChangeReviewPublish",
+ "markers": [
+  {
+   "id": "Task_Merge",
+   "name": "Merge, on explicit confirmation",
+   "left": 27.62,
+   "top": 4.55,
+   "box": {
+    "left": 22.55,
+    "top": 26.14,
+    "width": 1.68,
+    "height": 5.45
+   }
+  },
+  {
+   "id": "Task_CleanupStaging",
+   "name": "Remove branches/<slug>/",
+   "left": 51.4,
+   "top": 38.64,
+   "box": {
+    "left": 46.33,
+    "top": 60.23,
+    "width": 1.68,
+    "height": 5.45
+   }
+  },
+  {
+   "id": "Task_RebuildMain",
+   "name": "Rebuild main site",
+   "left": 63.29,
+   "top": 38.64,
+   "box": {
+    "left": 58.22,
+    "top": 60.23,
+    "width": 1.68,
+    "height": 5.45
+   }
+  },
+  {
+   "id": "Task_WatchMainCI",
+   "name": "Note the main-branch watch",
+   "left": 75.17,
+   "top": 38.64,
+   "box": {
+    "left": 70.1,
+    "top": 60.23,
+    "width": 1.68,
+    "height": 5.45
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish",
  "tasks": {
   "Task_Merge": {

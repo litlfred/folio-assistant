@@ -1,6 +1,152 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_UpstreamAdoption",
+ "markers": [
+  {
+   "id": "A_Scope",
+   "name": "Scope the delta pinned → candidate",
+   "left": 24.92,
+   "top": 3.9,
+   "box": {
+    "left": 22.56,
+    "top": 16.23,
+    "width": 0.78,
+    "height": 3.12
+   }
+  },
+  {
+   "id": "A_Impact",
+   "name": "Impact analysis what of ours binds it",
+   "left": 32.08,
+   "top": 3.9,
+   "box": {
+    "left": 29.72,
+    "top": 16.23,
+    "width": 0.78,
+    "height": 3.12
+   }
+  },
+  {
+   "id": "Task_Mvp",
+   "name": "MVP: build the candidate on a staging branch",
+   "left": 39.25,
+   "top": 36.36,
+   "box": {
+    "left": 36.89,
+    "top": 48.7,
+    "width": 0.78,
+    "height": 3.12
+   }
+  },
+  {
+   "id": "Task_Gates",
+   "name": "Run the row's gates tests · e2e · site-links",
+   "left": 46.42,
+   "top": 36.36,
+   "box": {
+    "left": 44.06,
+    "top": 48.7,
+    "width": 0.78,
+    "height": 3.12
+   }
+  },
+  {
+   "id": "A_Evidence",
+   "name": "Post the MVP evidence staging URL + gate results",
+   "left": 53.58,
+   "top": 3.9,
+   "box": {
+    "left": 51.22,
+    "top": 16.23,
+    "width": 0.78,
+    "height": 3.12
+   }
+  },
+  {
+   "id": "R_Review",
+   "name": "Review the MVP against what we bind to",
+   "left": 60.75,
+   "top": 58.44,
+   "box": {
+    "left": 58.39,
+    "top": 70.78,
+    "width": 0.78,
+    "height": 3.12
+   }
+  },
+  {
+   "id": "Call_OptionsAnalysis",
+   "name": "Options analysis adopt · hold · decline",
+   "left": 73.78,
+   "top": 3.9,
+   "box": {
+    "left": 71.42,
+    "top": 16.23,
+    "width": 0.78,
+    "height": 3.12
+   }
+  },
+  {
+   "id": "PM_Decide",
+   "name": "Adopt, hold or decline",
+   "left": 73.78,
+   "top": 80.52,
+   "box": {
+    "left": 71.42,
+    "top": 92.86,
+    "width": 0.78,
+    "height": 3.12
+   }
+  },
+  {
+   "id": "A_ApplyPin",
+   "name": "Move the pin and open the PR",
+   "left": 87.79,
+   "top": 6.49,
+   "box": {
+    "left": 84.45,
+    "top": 13.64,
+    "width": 0.78,
+    "height": 3.12
+   }
+  },
+  {
+   "id": "A_RecordOutcome",
+   "name": "Record the hold or the decline",
+   "left": 87.79,
+   "top": 19.48,
+   "box": {
+    "left": 84.45,
+    "top": 26.62,
+    "width": 0.78,
+    "height": 3.12
+   }
+  },
+  {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "left": 15.47,
+   "top": 3.9,
+   "box": {
+    "left": 13.11,
+    "top": 16.23,
+    "width": 0.78,
+    "height": 3.12
+   }
+  },
+  {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "left": 94.63,
+   "top": 3.9,
+   "box": {
+    "left": 92.26,
+    "top": 16.23,
+    "width": 0.78,
+    "height": 3.12
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption",
  "tasks": {
   "A_Scope": {

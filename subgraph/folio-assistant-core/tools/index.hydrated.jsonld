@@ -1591,6 +1591,75 @@
       "path": "tools/l1-coverage/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/publish-extracted-statements/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/publish-extracted-statements.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "Render each declared page (a `folio-statement-page/v1` spec naming `folio-extracted-statements/v1` lists) as Markdown: every statement extracted from a library source, verbatim, with its kind and status, linked to its library entry and to the section it came from, labelled in the source's own unit (\"Catch up schedule, slide 7\"). A statement whose source does not resolve fails the run and nothing is written. `--check` fails when a committed page is stale.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run folio-assistant-core/scripts/publish-extracted-statements.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--page"
+                },
+                "description": "A `folio-statement-page/v1` spec (`schemas/extracted-statement.ts`): the statement lists to publish, the page to write, its title and introduction, the library viewer's and the sources' URL prefixes, and the content type's table look. Repeat the flag for several pages. A spec, not flags, because those are free text.",
+                "name": "page",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Compare instead of writing: exit 1 when a page is stale.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              },
+              {
+                "arg": {
+                  "flag": "--instance-root"
+                },
+                "description": "The citing instance, against which a source naming no instance resolves; the repository root when absent.",
+                "name": "instance-root",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "A generated Markdown page, one table per list: Id, Statement, Kind, Status, Source.",
+                "name": "page",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "publish-extracted-statements",
+          "requirements": {
+            "network": false,
+            "runtime": [
+              "bun"
+            ]
+          },
+          "satisfies": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements",
+          "title": "Publish extracted statements with source links"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/publish-extracted-statements",
+      "path": "tools/publish-extracted-statements/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/tools/references-render/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [

@@ -1,6 +1,56 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_BeanOpen",
+ "markers": [
+  {
+   "id": "Open_CheckExists",
+   "name": "Check before you create (exact-title search)",
+   "left": 30.8,
+   "top": 15.53,
+   "box": {
+    "left": 22.84,
+    "top": 35.74,
+    "width": 2.64,
+    "height": 5.11
+   }
+  },
+  {
+   "id": "Open_Create",
+   "name": "Create the bean (agent CLI, not an engine op)",
+   "left": 61.56,
+   "top": 3.62,
+   "box": {
+    "left": 53.59,
+    "top": 23.83,
+    "width": 2.64,
+    "height": 5.11
+   }
+  },
+  {
+   "id": "Open_LeaveAlone",
+   "name": "Leave it alone (coordinate instead)",
+   "left": 66.5,
+   "top": 68.09,
+   "box": {
+    "left": 58.54,
+    "top": 88.3,
+    "width": 2.64,
+    "height": 5.11
+   }
+  },
+  {
+   "id": "Open_Claim",
+   "name": "Claim it (status: in-progress)",
+   "left": 83.52,
+   "top": 15.53,
+   "box": {
+    "left": 75.56,
+    "top": 35.74,
+    "width": 2.64,
+    "height": 5.11
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
  "tasks": {
   "Open_CheckExists": {

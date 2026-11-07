@@ -1,6 +1,68 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_CRDM_Close",
+ "markers": [
+  {
+   "id": "S_FeatureSignoff",
+   "name": "Feature sign-off on issue",
+   "left": 26.97,
+   "top": 73.58,
+   "box": {
+    "left": 19.65,
+    "top": 91.51,
+    "width": 2.42,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "BA_Confirm",
+   "name": "Confirm all criteria met",
+   "left": 42.12,
+   "top": 45.28,
+   "box": {
+    "left": 34.8,
+    "top": 63.21,
+    "width": 2.42,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_RecordSignoff",
+   "name": "Record the sign-off attestation",
+   "left": 42.12,
+   "top": 6.6,
+   "box": {
+    "left": 34.8,
+    "top": 24.53,
+    "width": 2.42,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "Call_MergeToMain",
+   "name": "Land the feature's PRs",
+   "left": 74.44,
+   "top": 6.6,
+   "box": {
+    "left": 67.12,
+    "top": 24.53,
+    "width": 2.42,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_Close",
+   "name": "Close issue ONLY on BA authorisation",
+   "left": 89.6,
+   "top": 6.6,
+   "box": {
+    "left": 82.27,
+    "top": 24.53,
+    "width": 2.42,
+    "height": 4.53
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close",
  "tasks": {
   "S_FeatureSignoff": {

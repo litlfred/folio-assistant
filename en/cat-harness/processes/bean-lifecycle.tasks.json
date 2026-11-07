@@ -1,6 +1,44 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_BeanLifecycle",
+ "markers": [
+  {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "left": 29.47,
+   "top": 27.04,
+   "box": {
+    "left": 21.84,
+    "top": 62.22,
+    "width": 2.53,
+    "height": 8.89
+   }
+  },
+  {
+   "id": "Task_Work",
+   "name": "Work, keeping the body current (this is 'edit')",
+   "left": 60.53,
+   "top": 27.04,
+   "box": {
+    "left": 52.89,
+    "top": 62.22,
+    "width": 2.53,
+    "height": 8.89
+   }
+  },
+  {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "left": 82.11,
+   "top": 27.04,
+   "box": {
+    "left": 74.47,
+    "top": 62.22,
+    "width": 2.53,
+    "height": 8.89
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanLifecycle",
  "tasks": {
   "Call_BeanOpen": {

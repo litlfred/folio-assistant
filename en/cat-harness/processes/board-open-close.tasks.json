@@ -1,6 +1,92 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_BoardOpenClose",
+ "markers": [
+  {
+   "id": "A_RenderAvatars",
+   "name": "Render every card as its avatar",
+   "left": 25.73,
+   "top": 29.31,
+   "box": {
+    "left": 18.69,
+    "top": 47.22,
+    "width": 2.33,
+    "height": 4.52
+   }
+  },
+  {
+   "id": "A_Open",
+   "name": "Project a window onto the board",
+   "left": 62.62,
+   "top": 25.92,
+   "box": {
+    "left": 55.58,
+    "top": 43.83,
+    "width": 2.33,
+    "height": 4.52
+   }
+  },
+  {
+   "id": "A_Raise",
+   "name": "Raise the window the reader selected",
+   "left": 79.13,
+   "top": 25.92,
+   "box": {
+    "left": 72.09,
+    "top": 43.83,
+    "width": 2.33,
+    "height": 4.52
+   }
+  },
+  {
+   "id": "A_Close",
+   "name": "Close the window back to its avatar",
+   "left": 62.62,
+   "top": 50.05,
+   "box": {
+    "left": 55.58,
+    "top": 67.95,
+    "width": 2.33,
+    "height": 4.52
+   }
+  },
+  {
+   "id": "A_OfferWayBack",
+   "name": "Leave a reachable way back",
+   "left": 79.13,
+   "top": 50.05,
+   "box": {
+    "left": 72.09,
+    "top": 67.95,
+    "width": 2.33,
+    "height": 4.52
+   }
+  },
+  {
+   "id": "A_ResolveThreshold",
+   "name": "Resolve the kind's zoom threshold",
+   "left": 61.65,
+   "top": 76.44,
+   "box": {
+    "left": 53.64,
+    "top": 86.8,
+    "width": 2.33,
+    "height": 4.52
+   }
+  },
+  {
+   "id": "A_SwapToAvatar",
+   "name": "Swap cards below the threshold; leave open windows alone",
+   "left": 83.01,
+   "top": 76.44,
+   "box": {
+    "left": 74.03,
+    "top": 86.8,
+    "width": 2.33,
+    "height": 4.52
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardOpenClose",
  "tasks": {
   "A_RenderAvatars": {

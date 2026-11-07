@@ -1,6 +1,104 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_RefreshMaterialized",
+ "markers": [
+  {
+   "id": "Task_Fixity",
+   "name": "ARCHIVAL verify fixity — never re-fetch",
+   "left": 23.77,
+   "top": 82.58,
+   "box": {
+    "left": 18.19,
+    "top": 93.26,
+    "width": 1.85,
+    "height": 2.7
+   }
+  },
+  {
+   "id": "Task_Upstream",
+   "name": "WORKING what changed upstream",
+   "left": 27.62,
+   "top": 42.13,
+   "box": {
+    "left": 22.04,
+    "top": 52.81,
+    "width": 1.85,
+    "height": 2.7
+   }
+  },
+  {
+   "id": "Task_Local",
+   "name": "What changed LOCALLY since",
+   "left": 39.15,
+   "top": 42.13,
+   "box": {
+    "left": 33.58,
+    "top": 52.81,
+    "width": 1.85,
+    "height": 2.7
+   }
+  },
+  {
+   "id": "Task_Adjudicate",
+   "name": "Adjudicate the conflict",
+   "left": 48.77,
+   "top": 18.54,
+   "box": {
+    "left": 43.19,
+    "top": 29.21,
+    "width": 1.85,
+    "height": 2.7
+   }
+  },
+  {
+   "id": "Task_Reconcile",
+   "name": "Reconcile the two by hand",
+   "left": 64.15,
+   "top": 2.25,
+   "box": {
+    "left": 58.58,
+    "top": 12.92,
+    "width": 1.85,
+    "height": 2.7
+   }
+  },
+  {
+   "id": "Task_Apply",
+   "name": "Re-materialize and record new fixity",
+   "left": 83.77,
+   "top": 42.13,
+   "box": {
+    "left": 78.19,
+    "top": 52.81,
+    "width": 1.85,
+    "height": 2.7
+   }
+  },
+  {
+   "id": "Task_KeepLocal",
+   "name": "Keep the edit, re-pin",
+   "left": 57.62,
+   "top": 42.13,
+   "box": {
+    "left": 52.04,
+    "top": 52.81,
+    "width": 1.85,
+    "height": 2.7
+   }
+  },
+  {
+   "id": "Task_RecordConflict",
+   "name": "Record the conflict: no decision, no re-pin",
+   "left": 70.69,
+   "top": 42.13,
+   "box": {
+    "left": 65.12,
+    "top": 52.81,
+    "width": 1.85,
+    "height": 2.7
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized",
  "tasks": {
   "Task_Fixity": {
@@ -409,7 +507,7 @@
   },
   "Task_RecordConflict": {
    "id": "Task_RecordConflict",
-   "name": "Record the conflict, decide nothing, and do NOT re-pin",
+   "name": "Record the conflict: no decision, no re-pin",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RefreshMaterialized/node/Task_RecordConflict",
    "lane": "Ingestion Engine (agent, runs unattended)",

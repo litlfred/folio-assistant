@@ -34,6 +34,7 @@
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/sourceTreeDirty",
       "@type": "http://www.w3.org/2001/XMLSchema#boolean"
     },
+    "sourceTree": "https://litlfred.github.io/cat-harness/v0/ns/sourceTree",
     "sourceCommitUnavailable": "https://litlfred.github.io/cat-harness/v0/ns/sourceCommitUnavailable",
     "dependsOn": "https://litlfred.github.io/cat-harness/v0/ns/dependsOn",
     "packageId": "https://litlfred.github.io/cat-harness/v0/ns/packageId",
@@ -362,10 +363,10 @@
     "registry",
     "packages"
   ],
-  "generatedAt": "2026-11-06T07:53:06.913Z",
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6182ce09066fa7b7a6c6da46efaa98418da15632",
-  "sourceCommitSha": "6182ce09066fa7b7a6c6da46efaa98418da15632",
-  "sourceCommitAt": "2026-11-06T08:26:30+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/2808845b52363dc175f661908d777c9ca10e72df",
+  "sourceCommitSha": "2808845b52363dc175f661908d777c9ca10e72df",
+  "sourceTree": "69a626445440c54a4a5527673bfb6209c906d251",
+  "sourceCommitAt": "2026-11-07T20:30:43+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -378,7 +379,7 @@
     "Role": 2,
     "Subgraph": 15,
     "Asset": 3,
-    "Tool": 34
+    "Tool": 35
   },
   "@graph": [
     {
@@ -510,7 +511,7 @@
       "title": "ig-build-pipeline",
       "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Owns what an IG reader may read: `contentTypes.ig.include` in the repository's `index.config.json`, and the legacy warning for a repository that declares none. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site.",
       "instructionsPath": "skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 445,
+      "instructionLines": 479,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -523,7 +524,7 @@
       "title": "fhir-ig-create",
       "description": "Somebody asked for a new FHIR Implementation Guide. Decide where it lives, in a new repository of its own or as a staged sub-KG inside the harnessed repository the session is already in, by reading three facts and, when they do not settle it, asking ONE numbered question with a default. Then route: a new repository goes to init-folio; an in-repository IG is declared as a staged instance and follows sub-kg-lifecycle, so it can move to its own repository later. FHIR-generic only; a harness built on this one may specialise it. Also holds the two build questions asked whenever an IG repository is adopted: whether its automatic gh-pages builds keep running, and whether to render it as a just-the-docs site. Use whenever a user asks to create, start, set up or stand up an IG, an implementation guide, or a FHIR guide, or an agent adopts an IG repository.",
       "instructionsPath": "skills/fhir-ig-base/fhir-ig-create.md",
-      "instructionLines": 333,
+      "instructionLines": 336,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -562,7 +563,7 @@
       "title": "ig-site-links",
       "description": "What happens to an IG's links when its pages are rendered on our site rather than by the IG Publisher: which are rewritten (artefact pages, a case-only mismatch, the Publisher's downloads and pages, files of the IG's repository, the OpenAPI index), which are reported as the IG's own dead links, and the gate that keeps a generator from linking a page it does not write. Read before changing build-ig-site's relinking, gen-ig-pages' links, or before concluding an IG page's broken link is ours.",
       "instructionsPath": "skills/fhir-ig-base/ig-site-links.md",
-      "instructionLines": 90,
+      "instructionLines": 91,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -588,7 +589,7 @@
       "title": "ig-render-jekyll",
       "description": "Rendering a FHIR IG's content through the just-the-docs pipeline instead of mounting the IG Publisher's finished HTML — the JSON-only representation contract, navigation derived from sushi-config.yaml, and the LHS rail. Read before adding a representation, a menu entry, or a page kind.",
       "instructionsPath": "skills/fhir-ig-base/ig-render-jekyll.md",
-      "instructionLines": 222,
+      "instructionLines": 241,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3722,6 +3723,59 @@
       },
       "satisfies": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/tools/check-translation-supplements.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
+      "name": "check-translation-supplements",
+      "title": "Compile and check an IG's translation CodeSystem supplements",
+      "description": "Compile the IG's CodeSystems with every `input/fsh/translations/<locale>.fsh` CodeSystem supplement in a throw-away FSHOnly SUSHI project, require 0 SUSHI errors, and check that each supplement's base CodeSystem is the IG's own, its codes are a subset of the base's, its language is the file's locale, and every CodeSystem id is unique. SUSHI is the version `ig-toolchain.env` pins, installed from `scripts/sushi/package-lock.json` with install scripts off; the FHIR core package is pinned by sha512; SUSHI runs with no network.",
+      "install": {
+        "cli": "npm ci --ignore-scripts --no-audit --no-fund --prefix fhir-harness/scripts/sushi"
+      },
+      "invoke": {
+        "shell": "bun run fhir-harness/scripts/check-translation-supplements.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "igRoot",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The IG root; default the working directory. Only paths its `contentTypes.ig.include` declares are read.",
+            "required": false,
+            "arg": {
+              "positional": 0
+            }
+          },
+          {
+            "name": "json",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Print the result as JSON.",
+            "required": false,
+            "arg": {
+              "flag": "--json"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "verdict",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Text",
+            "description": "Exit 0 pass or not applicable, 1 findings (each named with its file), 2 could not run. Could-not-run is never a pass."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun",
+          "node",
+          "npm"
+        ],
+        "network": true
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-validation"
       ]
     },
     {

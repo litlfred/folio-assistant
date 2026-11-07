@@ -37,7 +37,7 @@ _13 skills in 1 directory, generated from each skill's front matter. `bun run ca
 | [`bootstrap-graph-publication`](skills/bootstrap-graph-publication.md) | Where bootstrap's Knowledge Graph file is published, why its `@id` must be exactly that address, why a `.json` copy sits beside the `.jsonld`, and why the file is not kept in the repository. |
 | [`bootstrap-kg-navigation`](skills/bootstrap-kg-navigation.md) | Read and navigate a knowledge graph with nothing installed — no MCP server, no tools, no harness. |
 | [`confirm-harness`](skills/confirm-harness.md) | Narrow the harnesses and locations this could be, then have the Requestor settle it. |
-| [`discussion`](skills/discussion.md) | discussion — settling what an agent cannot read off disk |
+| [`discussion`](skills/discussion.md) | Settle which harness, and which repositories, when no file says: the output is a document conforming to `discussion.output.schema.json`. |
 | [`human-agent-discussion`](skills/human-agent-discussion.md) | Ask a person (or a sibling agent) for what no file holds. |
 | [`initialization-steps`](skills/initialization-steps.md) | Walk every initialization step the declarations name (the instance's own and each one it needs), check each before doing anything, do what can be done, ask for what only a person can do, and report… |
 | [`knowledge-graph-data-store`](skills/knowledge-graph-data-store.md) | The contract a Knowledge Graph Data Store keeps: serve a declaration, its graph and its instructions exactly as committed, say plainly when a file is absent, and keep a new instance's declaration… |

@@ -49,10 +49,19 @@
                   "report",
                   "covered-by",
                   "no-folio",
-                  "scheduled"
+                  "scheduled",
+                  "pending-baseline"
                 ]
               },
               "reason": {
+                "type": "string",
+                "minLength": 1
+              },
+              "writer": {
+                "type": "string",
+                "minLength": 1
+              },
+              "followUp": {
                 "type": "string",
                 "minLength": 1
               }

@@ -590,7 +590,11 @@ function renderMeta() {
   if (loaded.sourceTreeDirty) bits.push(T("tree dirty"));
   // A timestamp is data rather than a sentence, and is shown as the document
   // wrote it.
-  if (loaded.generatedAt) bits.push(String(loaded.generatedAt).slice(0, 19).replace("T", " ") + "Z");
+  // An export no longer stamps when it ran (owner rulings 2026-11-06, "QA
+  // dates" / "Date source"): its date is derived, the source commit's own.
+  const when = loaded.generatedAt ?? loaded.sourceCommitAt;
+  const utc = when ? new Date(String(when)) : undefined;
+  if (utc && !isNaN(utc.getTime())) bits.push(utc.toISOString().slice(0, 19).replace("T", " ") + "Z");
 
   // Each bit is ISOLATED, and this line is where it stopped being optional.
   //

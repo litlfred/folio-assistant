@@ -1,0 +1,16 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker.jsonld",
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Health worker",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "bindsRole": "http://smart.who.int/base/role/health-worker",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

@@ -16,6 +16,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/literature-search",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/term-disagreement",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager",
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-refresh",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/upload-naming",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/upload-routes",
         "https://litlfred.github.io/folio-assistant/cat-harness/skill/uploads-watch"
@@ -164,20 +165,39 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-manager",
       "@type": "bootstrap:Skill",
       "ambiguous": false,
-      "description": "Translation lifecycle management for folio content. Covers gettext PO/POT extraction and injection, TranslationNode manifests as KG nodes, official vs unofficial translations, staleness tracking, sign-off workflow, automatic badge rendering, and the poSources fallback resolution chain.",
+      "description": "Translation lifecycle management for folio content. Covers gettext PO/POT extraction and injection, TranslationNode manifests as KG nodes, official vs unofficial translations, staleness tracking, sign-off workflow, automatic badge rendering, the poSources fallback resolution chain, and translating into several locales as a team: one extraction, a PR per locale to main, FHIR terms as CodeSystem supplements, the untainted round trip as run, and the per-locale QA report.",
       "hasIOContract": false,
       "hasInstructions": true,
       "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/library-core",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
-      "instructionLines": 691,
+      "instructionLines": 960,
       "instructionsPath": "skills/library/library-core/translation-manager.md",
       "name": "translation-manager",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/28333ad89f4e0a726e37c9e4aef80cbcf716a1391624c9ff08eccebc2ed77502",
-        "bytes": 31467,
-        "sha256": "28333ad89f4e0a726e37c9e4aef80cbcf716a1391624c9ff08eccebc2ed77502"
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/3b3e6ddefadee03371c5dad594c4762c4b10db7ce0fb538aa3e66082b125cc5c",
+        "bytes": 46734,
+        "sha256": "3b3e6ddefadee03371c5dad594c4762c4b10db7ce0fb538aa3e66082b125cc5c"
       },
       "title": "Translation manager"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-refresh",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The translation watcher: a scheduled fresh session that keeps every locale of every instance current after the source moves. Cold start, then, per instance, detect, refresh the templates, merge them into each locale, translate only the new and fuzzy strings with the fixed terms, run the gates, round-trip the changed strings, write the QA report, open one PR to main, merge it only where the instance declares merge-when-green, and report source mistakes as one issue. Use for \"refresh the translations\", \"a template check failed\", and when scheduling or running the watcher.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inPackage": "https://litlfred.github.io/folio-assistant/cat-harness/package/library-core",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/skills",
+      "instructionLines": 212,
+      "instructionsPath": "skills/library/library-core/translation-refresh.md",
+      "name": "translation-refresh",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/c23e7cc5f1363044079d23f22168938110d7f1e353410e620f95e32ee1529a6d",
+        "bytes": 10351,
+        "sha256": "c23e7cc5f1363044079d23f22168938110d7f1e353410e620f95e32ee1529a6d"
+      },
+      "title": "Translation refresh — the watcher"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/upload-naming",

@@ -1,6 +1,164 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_Publication",
+ "markers": [
+  {
+   "id": "Task_OpenReleaseBean",
+   "name": "Open the bean",
+   "left": 11.86,
+   "top": 13.65,
+   "box": {
+    "left": 9.36,
+    "top": 21.29,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "Task_BuildDraft",
+   "name": "Build the draft publication",
+   "left": 26.63,
+   "top": 13.65,
+   "box": {
+    "left": 24.14,
+    "top": 21.29,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "Task_PublicationQa",
+   "name": "Run publication QA gates",
+   "left": 33.51,
+   "top": 13.65,
+   "box": {
+    "left": 31.01,
+    "top": 21.29,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "CallActivity_Editing",
+   "name": "Editing and HCI validation",
+   "left": 33.51,
+   "top": 1.61,
+   "box": {
+    "left": 31.01,
+    "top": 9.24,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "Task_CirculateDraft",
+   "name": "Circulate the draft",
+   "left": 44.5,
+   "top": 43.37,
+   "box": {
+    "left": 42.01,
+    "top": 51,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "CallActivity_PublicComment",
+   "name": "Release for public comment",
+   "left": 55.5,
+   "top": 72.09,
+   "box": {
+    "left": 53.01,
+    "top": 79.72,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "Task_ReviewDraft",
+   "name": "Review the draft publication",
+   "left": 55.5,
+   "top": 31.33,
+   "box": {
+    "left": 53.01,
+    "top": 38.96,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "Task_SmeSignoff",
+   "name": "Clinical or scientific sign-off",
+   "left": 55.5,
+   "top": 55.42,
+   "box": {
+    "left": 53.01,
+    "top": 63.05,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "Task_OpenChangeBeans",
+   "name": "Open beans for the change requests",
+   "left": 71.99,
+   "top": 43.37,
+   "box": {
+    "left": 69.5,
+    "top": 51,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "Task_AuthorizeRelease",
+   "name": "Authorise the release",
+   "left": 71.99,
+   "top": 88.76,
+   "box": {
+    "left": 69.5,
+    "top": 96.39,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "Task_PublishRelease",
+   "name": "Version, tag and publish",
+   "left": 78.87,
+   "top": 43.37,
+   "box": {
+    "left": 76.37,
+    "top": 51,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "Task_CloseReleaseBeans",
+   "name": "Close the release beans",
+   "left": 85.05,
+   "top": 43.37,
+   "box": {
+    "left": 82.56,
+    "top": 51,
+    "width": 0.82,
+    "height": 1.93
+   }
+  },
+  {
+   "id": "Task_ArchiveReleaseBean",
+   "name": "Close the bean",
+   "left": 92.27,
+   "top": 43.37,
+   "box": {
+    "left": 89.78,
+    "top": 51,
+    "width": 0.82,
+    "height": 1.93
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication",
  "tasks": {
   "Task_OpenReleaseBean": {

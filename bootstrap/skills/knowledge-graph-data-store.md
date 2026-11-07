@@ -12,10 +12,7 @@ tested-by:
 
 # The Knowledge Graph Data Store's contract
 
-**A data store plays a Role, and this is the Role's contract** (owner,
-2026-10-16: roles played by mechanical Actors "each [have] a contract
-(responsibilities) that it must perform … those are the skills it can
-perform"). It decides nothing about what should happen. What it must do is
+**A data store plays a Role, and this is the Role's contract.** It decides nothing about what should happen. What it must do is
 below, and each line is something a test can check.
 
 It is a git repository, reached through the git CLI or a forge's API. It sits
@@ -44,10 +41,8 @@ this skill is the other side of those reads.
 ## Tests
 
 Bootstrap runs nothing, so the test named in `tested-by:` lives with the
-toolset, at its address. It holds a git repository, read through the git CLI,
-to each numbered line above: bytes served at a ref as committed, absent told
-apart from an empty file, a sibling's declaration read from beside it, and a
-committed declaration read back by a later clone with its author and date.
+toolset. It checks each numbered line above against a git repository read
+through the git CLI.
 
 ## Not its responsibility
 

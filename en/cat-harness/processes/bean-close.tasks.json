@@ -1,6 +1,56 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_BeanClose",
+ "markers": [
+  {
+   "id": "Close_Complete",
+   "name": "Complete (no unchecked todos left)",
+   "left": 48.38,
+   "top": 5,
+   "box": {
+    "left": 39.31,
+    "top": 24,
+    "width": 3,
+    "height": 4.8
+   }
+  },
+  {
+   "id": "Close_Scrap",
+   "name": "Scrap with reasons NEVER delete",
+   "left": 48.38,
+   "top": 37,
+   "box": {
+    "left": 39.31,
+    "top": 56,
+    "width": 3,
+    "height": 4.8
+   }
+  },
+  {
+   "id": "Close_Archive",
+   "name": "Archive the bean (completed or scrapped)",
+   "left": 70.88,
+   "top": 21,
+   "box": {
+    "left": 61.81,
+    "top": 40,
+    "width": 3,
+    "height": 4.8
+   }
+  },
+  {
+   "id": "Close_RecordBlocker",
+   "name": "Record the blocker and hand back",
+   "left": 48.38,
+   "top": 69,
+   "box": {
+    "left": 39.31,
+    "top": 88,
+    "width": 3,
+    "height": 4.8
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
  "tasks": {
   "Close_Complete": {

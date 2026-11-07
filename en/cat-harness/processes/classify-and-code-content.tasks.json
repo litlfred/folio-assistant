@@ -1,6 +1,68 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_ClassifyAndCodeContent",
+ "markers": [
+  {
+   "id": "Task_IdentifySlots",
+   "name": "Identify slots and proposed exclusions",
+   "left": 27.02,
+   "top": 11.43,
+   "box": {
+    "left": 21.27,
+    "top": 19.29,
+    "width": 1.49,
+    "height": 3.43
+   }
+  },
+  {
+   "id": "Task_LookupAndCode",
+   "name": "Run reuse-first lookup and record candidates",
+   "left": 40.06,
+   "top": 11.43,
+   "box": {
+    "left": 34.32,
+    "top": 19.29,
+    "width": 1.49,
+    "height": 3.43
+   }
+  },
+  {
+   "id": "Task_StageForReview",
+   "name": "Stage codings, warnings and exclusions for review",
+   "left": 53.11,
+   "top": 11.43,
+   "box": {
+    "left": 47.36,
+    "top": 19.29,
+    "width": 1.49,
+    "height": 3.43
+   }
+  },
+  {
+   "id": "Task_ReviewExclusions",
+   "name": "Check exclusions against page and sign",
+   "left": 63.04,
+   "top": 44.29,
+   "box": {
+    "left": 57.3,
+    "top": 52.14,
+    "width": 1.49,
+    "height": 3.43
+   }
+  },
+  {
+   "id": "Task_ReviewCodings",
+   "name": "Adjudicate slot codings and glossary candidates",
+   "left": 74.22,
+   "top": 77.14,
+   "box": {
+    "left": 68.17,
+    "top": 85,
+    "width": 1.49,
+    "height": 3.43
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent",
  "tasks": {
   "Task_IdentifySlots": {

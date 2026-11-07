@@ -1,6 +1,152 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_MergeRefusal",
+ "markers": [
+  {
+   "id": "Task_Record",
+   "name": "Record the refusal on the bean",
+   "left": 25.61,
+   "top": 29.45,
+   "box": {
+    "left": 21.94,
+    "top": 42.47,
+    "width": 1.21,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_Comment",
+   "name": "Comment on the PR once, linking the bean",
+   "left": 33.69,
+   "top": 29.45,
+   "box": {
+    "left": 30.03,
+    "top": 42.47,
+    "width": 1.21,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_HandBack",
+   "name": "Hand back, with a fail condition",
+   "left": 46.82,
+   "top": 29.45,
+   "box": {
+    "left": 43.16,
+    "top": 42.47,
+    "width": 1.21,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_Fix",
+   "name": "Fix the PR, report on the PR",
+   "left": 46.82,
+   "top": 4.79,
+   "box": {
+    "left": 43.16,
+    "top": 17.81,
+    "width": 1.21,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_Dispatch",
+   "name": "Dispatch one agent, recorded on the bean",
+   "left": 46.82,
+   "top": 52.74,
+   "box": {
+    "left": 43.16,
+    "top": 65.75,
+    "width": 1.21,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_AgentFix",
+   "name": "Merge main in, regenerate, fix mechanical gates",
+   "left": 46.82,
+   "top": 76.03,
+   "box": {
+    "left": 43.16,
+    "top": 89.04,
+    "width": 1.21,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_AskOwner",
+   "name": "Ask the owner on the PR, both sides quoted",
+   "left": 61.97,
+   "top": 76.03,
+   "box": {
+    "left": 58.31,
+    "top": 89.04,
+    "width": 1.21,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_Retrain",
+   "name": "Re-enter a train on the new head",
+   "left": 61.97,
+   "top": 29.45,
+   "box": {
+    "left": 58.31,
+    "top": 42.47,
+    "width": 1.21,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_Close",
+   "name": "Record the merge commit as evidence",
+   "left": 75.1,
+   "top": 29.45,
+   "box": {
+    "left": 71.44,
+    "top": 42.47,
+    "width": 1.21,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Task_Scrap",
+   "name": "Scrap the bean, with the reason",
+   "left": 75.1,
+   "top": 52.74,
+   "box": {
+    "left": 71.44,
+    "top": 65.75,
+    "width": 1.21,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "left": 11.97,
+   "top": 29.45,
+   "box": {
+    "left": 8.31,
+    "top": 42.47,
+    "width": 1.21,
+    "height": 3.29
+   }
+  },
+  {
+   "id": "Call_BeanClose_2",
+   "name": "Close the bean",
+   "left": 83.18,
+   "top": 29.45,
+   "box": {
+    "left": 79.52,
+    "top": 42.47,
+    "width": 1.21,
+    "height": 3.29
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal",
  "tasks": {
   "Task_Record": {

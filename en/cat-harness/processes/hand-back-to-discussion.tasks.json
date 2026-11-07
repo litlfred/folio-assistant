@@ -1,6 +1,104 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_HandBackToDiscussion",
+ "markers": [
+  {
+   "id": "S_Compose",
+   "name": "Compose the hand-back and post it in own thread",
+   "left": 18.21,
+   "top": 8.82,
+   "box": {
+    "left": 13.41,
+    "top": 27.45,
+    "width": 1.59,
+    "height": 4.71
+   }
+  },
+  {
+   "id": "S_Mirror",
+   "name": "Mirror it to the feedback channel",
+   "left": 34.11,
+   "top": 8.82,
+   "box": {
+    "left": 29.3,
+    "top": 27.45,
+    "width": 1.59,
+    "height": 4.71
+   }
+  },
+  {
+   "id": "S_HandBack",
+   "name": "Hand it back to the discussion agent",
+   "left": 50.66,
+   "top": 8.82,
+   "box": {
+    "left": 45.86,
+    "top": 27.45,
+    "width": 1.59,
+    "height": 4.71
+   }
+  },
+  {
+   "id": "D_Inform",
+   "name": "Post it in the discussion",
+   "left": 59.27,
+   "top": 71.57,
+   "box": {
+    "left": 54.47,
+    "top": 90.2,
+    "width": 1.59,
+    "height": 4.71
+   }
+  },
+  {
+   "id": "D_Ask",
+   "name": "Ask the person",
+   "left": 59.27,
+   "top": 48.04,
+   "box": {
+    "left": 54.47,
+    "top": 66.67,
+    "width": 1.59,
+    "height": 4.71
+   }
+  },
+  {
+   "id": "D_RouteBack",
+   "name": "Route the answer back, quoted",
+   "left": 69.87,
+   "top": 48.04,
+   "box": {
+    "left": 65.07,
+    "top": 66.67,
+    "width": 1.59,
+    "height": 4.71
+   }
+  },
+  {
+   "id": "D_MarkAnswered",
+   "name": "Mark every copy answered",
+   "left": 80.46,
+   "top": 48.04,
+   "box": {
+    "left": 75.66,
+    "top": 66.67,
+    "width": 1.59,
+    "height": 4.71
+   }
+  },
+  {
+   "id": "S_Act",
+   "name": "Act on the answer",
+   "left": 91.06,
+   "top": 8.82,
+   "box": {
+    "left": 86.26,
+    "top": 27.45,
+    "width": 1.59,
+    "height": 4.71
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion",
  "tasks": {
   "S_Compose": {

@@ -14,35 +14,26 @@ description: >
 publication at its site address, and the address answers**. How the
 rendering is staged, committed and checked is the toolset's own subprocess
 (its render-to-GitHub-Pages skill and diagram), so this skill stays a list
-of checks. Owner, 2026-09-30: bootstrap is not to be overloaded with the
-publication lifecycle.
-
-**The site is the vehicle, not the goal.** The goal is the harness's JSON
-Schemas and JSON-LD answering at the IRIs they name
-([`publish-documents`](publish-documents.md), the primary step); a README
-page for people rides along.
+of checks. The site is how the documents reach their IRIs
+([`publish-documents`](publish-documents.md), the primary step), not the
+goal.
 
 **Where the README page lands.** At `<site address>README.html`, and the site
 address itself (`index.html`) is the **landing page**: by default a plain
 redirect to `README.html`, so a Harness that wants a different front page puts
-its own `index.html` or `index.md` at its root and changes nothing else
-(owner, 2026-10-01: *"the harness landing page at …/index.html is a redirect
-to the README.html. Will make it easier for harnesses to change landing page
-behaviour"*). A page generated from the instance's files says so at its top,
+its own `index.html` or `index.md` at its root and changes nothing else. A page generated from the instance's files says so at its top,
 and its footer points to what it was generated from, never to an editor for
 the published copy: that copy is replaced on every publish.
 
 The site address is the declaration's `iriBase` when it declares one,
-otherwise `https://<owner>.github.io/<repo>/`. **An address a declaration
-names and that answers 404 is a broken promise**, and every IRI minted under
-it breaks with it.
+otherwise `https://<owner>.github.io/<repo>/`.
 
 ## The checks ([`initialization-steps`](initialization-steps.md))
 
 | step | done when |
 |---|---|
-| `site:workflow` | a workflow commits the rendering onto `gh-pages`: one under the instance's own `.github/workflows/`, or one in the toolset that publishes it from outside. bootstrap carries none; its site is published from outside, so it names no toolset |
-| `site:branch` | a `gh-pages` branch exists. **It must exist before Pages can be switched on** (owner, 2026-10-01: *"need to create gh-pages branch before can turn on"*); where it does not, the step says how to create it (an orphan branch with a placeholder page) |
+| `site:workflow` | a workflow commits the rendering onto `gh-pages`: one under the instance's own `.github/workflows/`, or one in the toolset that publishes it from outside. bootstrap's own workflow writes only its JSON-LD context to `gh-pages`; its site is published from outside |
+| `site:branch` | a `gh-pages` branch exists. **It must exist before Pages can be switched on**; where it does not, the step says how to create it (an orphan branch with a placeholder page) |
 | `site:enabled` | Pages is on, serving `gh-pages` at `/`. Switched on only by an authenticated forge CLI once the branch exists; otherwise the person gets the one step below |
 | `site:live` | the address answers 200, and so does its README page, `README.html`. 404 after Pages is on usually means the workflow has not run yet. A 403, 407, 5xx or no answer is about the way from here: *could not determine*, never done |
 

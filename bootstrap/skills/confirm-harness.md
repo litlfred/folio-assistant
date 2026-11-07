@@ -18,8 +18,7 @@ description: >
 | **out**, from the Requestor | **0 or 1** harness · 0 or more locations |
 
 **At most one.** A list of two harnesses is not an answer, and you may not
-break the tie yourself — which harness this repository should become is a
-judgement about intent, and nothing you can read produces it.
+break the tie yourself.
 
 Zero is a real outcome, not a failure to try again: it ends the process, logged.
 
@@ -28,7 +27,6 @@ Zero is a real outcome, not a failure to try again: it ends the process, logged.
 **Harnesses.** The default is **bootstrap itself**. Add any the context
 already names: *"please set up `<owner>/<repo>` here"* in a discussion names
 one, and so does any Harness built on bootstrap that the Requestor mentions.
-Adding a candidate costs nothing; inventing one costs a wrong repository.
 
 **Locations.** Is this already a git repository? Were one or more URLs to
 repositories supplied? Both are Knowledge Graph Data Stores and the difference
@@ -69,9 +67,5 @@ harness rather than asking for it separately.
 ## Do not guess
 
 **A wrong harness does not fail. It succeeds at being the wrong thing**, and
-every artefact written afterwards inherits it. An un-initialised repository is
-recoverable; one declaring the wrong upstream is not, because every consumer
-that reads a declaration will believe it.
-
-So when you cannot get an answer: say the process needs one harness, log the
-failure, and stop.
+every consumer that reads the declaration believes it. So when you cannot get
+an answer: say the process needs one harness, log the failure, and stop.

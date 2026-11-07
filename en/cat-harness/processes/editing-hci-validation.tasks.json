@@ -1,6 +1,212 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_Editing",
+ "markers": [
+  {
+   "id": "Task_DescribeChange",
+   "name": "Describe the intended change",
+   "left": 10.14,
+   "top": 1.56,
+   "box": {
+    "left": 8.01,
+    "top": 8.97,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_ClaimBean",
+   "name": "Open the bean",
+   "left": 10.14,
+   "top": 13.26,
+   "box": {
+    "left": 8.01,
+    "top": 20.67,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "CallActivity_Evidence",
+   "name": "Gather and verify the evidence",
+   "left": 16.16,
+   "top": 1.56,
+   "box": {
+    "left": 14.03,
+    "top": 8.97,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_DraftEdit",
+   "name": "Draft the block edit",
+   "left": 22.18,
+   "top": 33.54,
+   "box": {
+    "left": 20.05,
+    "top": 40.95,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_SchemaValidate",
+   "name": "Schema and constraint checks",
+   "left": 41.72,
+   "top": 56.71,
+   "box": {
+    "left": 38.85,
+    "top": 61.78,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_SyntaxSpell",
+   "name": "Syntax, spelling and links",
+   "left": 41.72,
+   "top": 64.7,
+   "box": {
+    "left": 38.85,
+    "top": 70.63,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_BuildGates",
+   "name": "Build and QA gates",
+   "left": 41.72,
+   "top": 73.71,
+   "box": {
+    "left": 38.85,
+    "top": 78.78,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_AgentReview",
+   "name": "Agent review of the change",
+   "left": 41.72,
+   "top": 82.61,
+   "box": {
+    "left": 38.85,
+    "top": 88.53,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_SmeReview",
+   "name": "Human / SME review",
+   "left": 41.72,
+   "top": 91.03,
+   "box": {
+    "left": 38.85,
+    "top": 96.1,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_CollateFindings",
+   "name": "Collate findings into a report",
+   "left": 55.08,
+   "top": 45.24,
+   "box": {
+    "left": 52.95,
+    "top": 52.65,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_LogFindings",
+   "name": "Log findings on the bean",
+   "left": 61.1,
+   "top": 14,
+   "box": {
+    "left": 58.24,
+    "top": 19.93,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_ReviewFindings",
+   "name": "Review the findings",
+   "left": 65.66,
+   "top": 1.56,
+   "box": {
+    "left": 63.53,
+    "top": 8.97,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Call_OptionsAnalysis",
+   "name": "Options analysis accept · revise · discard",
+   "left": 68.89,
+   "top": 13.26,
+   "box": {
+    "left": 66.76,
+    "top": 20.67,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_RecordDecision",
+   "name": "Record the decision and audit note",
+   "left": 72.27,
+   "top": 1.56,
+   "box": {
+    "left": 70.14,
+    "top": 8.97,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_ReviseEdit",
+   "name": "Revise the proposed change",
+   "left": 78.58,
+   "top": 33.54,
+   "box": {
+    "left": 76.45,
+    "top": 40.95,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_Commit",
+   "name": "Commit into the corpus",
+   "left": 88.07,
+   "top": 13.26,
+   "box": {
+    "left": 85.94,
+    "top": 20.67,
+    "width": 0.71,
+    "height": 1.87
+   }
+  },
+  {
+   "id": "Task_ResolveBean",
+   "name": "Close the bean",
+   "left": 93.51,
+   "top": 14.43,
+   "box": {
+    "left": 91.23,
+    "top": 19.5,
+    "width": 0.71,
+    "height": 1.87
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing",
  "tasks": {
   "Task_DescribeChange": {

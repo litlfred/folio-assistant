@@ -1,6 +1,44 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_AskThePerson",
+ "markers": [
+  {
+   "id": "A_Compose",
+   "name": "Compose the full question",
+   "left": 41.02,
+   "top": 18.09,
+   "box": {
+    "left": 31.58,
+    "top": 38.3,
+    "width": 3.13,
+    "height": 5.11
+   }
+  },
+  {
+   "id": "Call_Discuss",
+   "name": "Discuss it with the person",
+   "left": 78.78,
+   "top": 18.09,
+   "box": {
+    "left": 69.34,
+    "top": 38.3,
+    "width": 3.13,
+    "height": 5.11
+   }
+  },
+  {
+   "id": "A_HandBack",
+   "name": "Hand back to the discussion",
+   "left": 78.78,
+   "top": 52.13,
+   "box": {
+    "left": 69.34,
+    "top": 72.34,
+    "width": 3.13,
+    "height": 5.11
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_AskThePerson",
  "tasks": {
   "A_Compose": {

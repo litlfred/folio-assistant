@@ -434,9 +434,9 @@
       "@type": "bootstrap:Asset",
       "name": "agent-instructions",
       "payload": {
-        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/2a264c801c1749aee19276d2d9c9d8c2c8b160fefe08687750ca7466fb449854",
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b5e5fc2d5cbe0b6cc2c5e5d23d8c4b2c27a898c54eab157a1a6b6415afcbd1fa",
         "bytes": 19337,
-        "sha256": "2a264c801c1749aee19276d2d9c9d8c2c8b160fefe08687750ca7466fb449854"
+        "sha256": "b5e5fc2d5cbe0b6cc2c5e5d23d8c4b2c27a898c54eab157a1a6b6415afcbd1fa"
       },
       "title": "AGENTS.md — cat-harness"
     },
@@ -932,6 +932,11 @@
       "title": "Authoring agent"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/back-translator",
+      "@type": "bootstrap:Role",
+      "title": "Back-translator"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/board-renderer",
       "@type": "bootstrap:Role",
       "title": "Board renderer"
@@ -1007,6 +1012,11 @@
       "title": "Librarian"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+      "@type": "bootstrap:Role",
+      "title": "Locale translator"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/log",
       "@type": "bootstrap:Role",
       "title": "Activity log"
@@ -1057,6 +1067,11 @@
       "title": "Reviewer / SME"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/round-trip-adjudicator",
+      "@type": "bootstrap:Role",
+      "title": "Round-trip adjudicator"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/session-coordinator",
       "@type": "bootstrap:Role",
       "title": "Session coordinator"
@@ -1100,6 +1115,11 @@
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-coordinator",
       "@type": "bootstrap:Role",
       "title": "Translation coordinator"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-source-lead",
+      "@type": "bootstrap:Role",
+      "title": "Source-language lead"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/role/translator",
@@ -1247,6 +1267,12 @@
       "title": "board-positions"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/cache",
+      "@type": "cat-harness:Schema",
+      "name": "cache",
+      "title": "cache"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/carried-note",
       "@type": "cat-harness:Schema",
       "name": "carried-note",
@@ -1361,6 +1387,12 @@
       "title": "detangle-sidecar"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/device-screen",
+      "@type": "cat-harness:Schema",
+      "name": "device-screen",
+      "title": "device-screen"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/diff-renderers",
       "@type": "cat-harness:Schema",
       "name": "diff-renderers",
@@ -1437,6 +1469,12 @@
       "@type": "cat-harness:Schema",
       "name": "glossary-ledger",
       "title": "glossary-ledger"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/glossary-sense",
+      "@type": "cat-harness:Schema",
+      "name": "glossary-sense",
+      "title": "glossary-sense"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/schema/graph-typology-node",

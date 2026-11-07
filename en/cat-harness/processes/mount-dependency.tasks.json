@@ -1,6 +1,80 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_MountDependency",
+ "markers": [
+  {
+   "id": "Task_DeclareMount",
+   "name": "Declare the mount: harness, repository, pin",
+   "left": 20.56,
+   "top": 9.57,
+   "box": {
+    "left": 14.76,
+    "top": 29.79,
+    "width": 1.92,
+    "height": 5.11
+   }
+  },
+  {
+   "id": "Task_ResolveClosure",
+   "name": "Resolve the closure at the pin",
+   "left": 20.56,
+   "top": 54.26,
+   "box": {
+    "left": 14.76,
+    "top": 74.47,
+    "width": 1.92,
+    "height": 5.11
+   }
+  },
+  {
+   "id": "Task_MountInstances",
+   "name": "Mount each instance at its declared path",
+   "left": 33.36,
+   "top": 54.26,
+   "box": {
+    "left": 27.56,
+    "top": 74.47,
+    "width": 1.92,
+    "height": 5.11
+   }
+  },
+  {
+   "id": "Task_WriteLock",
+   "name": "Write the lock",
+   "left": 46.16,
+   "top": 54.26,
+   "box": {
+    "left": 40.36,
+    "top": 74.47,
+    "width": 1.92,
+    "height": 5.11
+   }
+  },
+  {
+   "id": "Task_RenderAgentSurface",
+   "name": "Re-render the agent surface",
+   "left": 58.96,
+   "top": 54.26,
+   "box": {
+    "left": 53.16,
+    "top": 74.47,
+    "width": 1.92,
+    "height": 5.11
+   }
+  },
+  {
+   "id": "Task_CheckAgainstLock",
+   "name": "Check disk against lock against declaration",
+   "left": 71.76,
+   "top": 54.26,
+   "box": {
+    "left": 65.96,
+    "top": 74.47,
+    "width": 1.92,
+    "height": 5.11
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency",
  "tasks": {
   "Task_DeclareMount": {

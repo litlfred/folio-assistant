@@ -1,6 +1,104 @@
 {
  "$schema": "process-task-panel/v1",
  "process": "Process_MergeBase",
+ "markers": [
+  {
+   "id": "Task_Merge",
+   "name": "Merge the base in, without committing",
+   "left": 22.25,
+   "top": 12.28,
+   "box": {
+    "left": 16.63,
+    "top": 28.95,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "Task_Classify",
+   "name": "Classify every conflicted path against the declared patterns",
+   "left": 41.63,
+   "top": 12.28,
+   "box": {
+    "left": 36.01,
+    "top": 28.95,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "Task_Resolve",
+   "name": "Resolve each by its declared strategy",
+   "left": 61.01,
+   "top": 12.28,
+   "box": {
+    "left": 55.39,
+    "top": 28.95,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "Task_Regen",
+   "name": "Regenerate, asking every CI gate",
+   "left": 72.64,
+   "top": 12.28,
+   "box": {
+    "left": 67.02,
+    "top": 28.95,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "Task_Commit",
+   "name": "Commit the merge",
+   "left": 92.02,
+   "top": 12.28,
+   "box": {
+    "left": 86.4,
+    "top": 28.95,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "Task_Abort",
+   "name": "Abort, restore the tree, list what was refused",
+   "left": 64.88,
+   "top": 38.6,
+   "box": {
+    "left": 59.26,
+    "top": 55.26,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "Task_ByHand",
+   "name": "Resolve by hand, then regenerate",
+   "left": 64.88,
+   "top": 74.56,
+   "box": {
+    "left": 59.26,
+    "top": 91.23,
+    "width": 1.86,
+    "height": 4.21
+   }
+  },
+  {
+   "id": "Task_Report",
+   "name": "Report what the run found, once",
+   "left": 22.25,
+   "top": 38.6,
+   "box": {
+    "left": 16.63,
+    "top": 55.26,
+    "width": 1.86,
+    "height": 4.21
+   }
+  }
+ ],
  "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase",
  "tasks": {
   "Task_Merge": {

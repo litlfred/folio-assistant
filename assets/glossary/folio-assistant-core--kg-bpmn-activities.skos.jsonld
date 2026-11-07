@@ -1194,6 +1194,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_contributorfeedback.task_closechangeset",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Close the change set: the issue, then the sheet row"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Closing is one step with two tools, GitHub and the review sheet. The agent closes the change set's issue on GitHub, with the merge or the reason it closed unmerged, then records Agentic status Closed (or Change merged) on the Agent tab through Record agent step (record-agent-step.bpmn). The sheet script then hides the row and strikes the whole row through (\"make sure complete changeset rows are hidden so not cluttered and that text of that whole row is crossed out\"). The agent never hides or strikes a row by hand, and never deletes one: reopening the issue and writing a new status shows it again. Hiding and striking are formatting only, which the review-log watcher ignores. A change set closed without a merge, at a person's request, takes this step too."
+        }
+      ],
+      "skos:notation": "Task_CloseChangeSet",
+      "dcterms:source": "folio-assistant-core/processes/content/contributor-feedback.bpmn#Task_CloseChangeSet",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_contributorfeedback.task_editinpullrequest",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -1206,7 +1226,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "One row, one branch, one active pull request: the agent edits on the row's branch and opens its pull request, or updates it when the row comes round again. A closed pull request the committee wants back is reopened, or replaced by a new one on the same branch; earlier ones stay listed in Agentic status. Agentic status (Green) says where it is, and Staging review opens the preview's what-changed page. Before the preview is staged, the agent writes the change set's Disposition (change set) on the Agent tab: one line per feedback item, starting from the people's Blue Disposition, after an optional Overall statement; the sheet shows it in Disposition (agent) and flags any item without a disposition, or one that differs from the people's."
+          "@value": "One row, one branch, one active pull request: the agent edits on the row's branch and opens its pull request, or updates it when the row comes round again. A closed pull request the committee wants back is reopened, or replaced by a new one on the same branch; earlier ones stay listed in Agentic status. Agentic status (Green) says where it is, and Staging review opens the preview's what-changed page. Before the preview is staged, the agent writes the change set's Disposition (change set) on the Agent tab: one line per feedback item, starting from the people's Blue Disposition, after an optional Overall statement; the sheet shows it in Disposition (agent) and flags any item without a disposition, or one that differs from the people's. It ends with Record agent step (record-agent-step.bpmn): the Agent tab row first, then Feedback (agent) from it, then the sheet read back, never Feedback (agent) alone."
         }
       ],
       "skos:notation": "Task_EditInPullRequest",
@@ -1226,7 +1246,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "The agent merges the row's pull request, and Agentic status says merged. The change set's Dispositions blurb, as it stands when Ready for merge is set to Yes, is the summary: it goes into the merge, and closes the change set's issue."
+          "@value": "The agent merges the row's pull request, and Agentic status says merged. The change set's Dispositions blurb, as it stands when Ready for merge is set to Yes, is the summary: it goes into the merge, and closes the change set's issue. It ends with Record agent step (record-agent-step.bpmn): the Agent tab row first, then Feedback (agent) from it, then the sheet read back, never Feedback (agent) alone."
         }
       ],
       "skos:notation": "Task_Merge",
@@ -1246,7 +1266,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Reads: the row (Title, Selected Sections, the Contributor Feedback columns, Disposition) and the sections it names. Writes: a proposed direction in Feedback (agent) (Green), and the row's feedback basis on the Agent tab, so the script can tell when the feedback has moved on. A question for people goes in Feedback (agent) as a Decision needed block with options and a recommendation, and the row's Agentic status becomes Needs human; a chat card may repeat it, but the sheet is the record. An answered question leaves the feedback: its decision is added to the change set's Disposition (change set) on the Agent tab, shown in Disposition (agent), whose decision history is appended to and never removed."
+          "@value": "Reads: the row (Title, Selected Sections, the Contributor Feedback columns, Disposition) and the sections it names. Writes: a proposed direction in Feedback (agent) (Green), and the row's feedback basis on the Agent tab, so the script can tell when the feedback has moved on. A question for people goes in Feedback (agent) as a Decision needed block with options and a recommendation, and the row's Agentic status becomes Needs human; a chat card may repeat it, but the sheet is the record. An answered question leaves the feedback: its decision is added to the change set's Disposition (change set) on the Agent tab, shown in Disposition (agent), whose decision history is appended to and never removed. It ends with Record agent step (record-agent-step.bpmn): the Agent tab row first, then Feedback (agent) from it, then the sheet read back, never Feedback (agent) alone."
         }
       ],
       "skos:notation": "Task_Propose",
@@ -1261,12 +1281,12 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "QA-review the dispositions"
+          "@value": "QA gate: review dispositions against the people and the pull request"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Reads: the change set's Disposition (change set), the people's Blue Disposition and feedback, the pull request's diff at its head commit, and the staging QA report. Checks that every feedback item has one disposition; that each agrees with the people's Blue Disposition; that each Accepted or Partially accepted item has the change in the diff, and a Not accepted, Noted, Duplicate or Out of scope item has none; that the diff changes nothing no disposition accounts for; and that the QA report for the staged commit has no failing gate. Writes: QA gate (change set) on the Agent tab, first line \"Passed <head sha>: …\" or \"Failed <head sha>: <why>\", and QA report (change set), the report's link. The sheet shows the gate under Staging review; a pass for an older commit reads as stale."
+          "@value": "Reads: the change set's Disposition (change set), the people's Blue Disposition and feedback, the pull request's diff at its head commit, and the staging QA report. Checks that every feedback item has one disposition; that each agrees with the people's Blue Disposition; that each Accepted or Partially accepted item has the change in the diff, and a Not accepted, Noted, Duplicate or Out of scope item has none; that the diff changes nothing no disposition accounts for; and that the QA report for the staged commit has no failing gate. Writes: QA gate (change set) on the Agent tab, first line \"Passed <head sha>: …\" or \"Failed <head sha>: <why>\", and QA report (change set), the report's link. The sheet shows the gate under Staging review; a pass for an older commit reads as stale. It ends with Record agent step (record-agent-step.bpmn): the Agent tab row first, then Feedback (agent) from it, then the sheet read back, never Feedback (agent) alone."
         }
       ],
       "skos:notation": "Task_QaGate",
@@ -1571,6 +1591,26 @@
       ],
       "skos:notation": "Call_BeanOpen",
       "dcterms:source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Call_BeanOpen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_documentauthoring.call_publishstatements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish extracted statements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The document draws on library sources; every statement extracted from them is published in the document's own pages and in the shared extraction viewer, each linked to its library entry and section, before the document is rendered. The same sub-process ingestion calls when an entry is promoted: here it catches a source the document took up since, and a statement changed since. How the pages look is this content type's, through its adapter."
+        }
+      ],
+      "skos:notation": "Call_PublishStatements",
+      "dcterms:source": "folio-assistant-core/processes/content/authoring-a-document.bpmn#Call_PublishStatements",
       "skos:note": "candidate"
     },
     {
@@ -3594,6 +3634,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_l1documentingestion.callactivity_publishstatements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish the extracted statements with source links"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "THE ENTRY IS COMPLETE HERE, so its statements are published here. Every statement the extraction captured from this entry (a recommendation, a requirement, a candidate a person still has to rule on) becomes readable in two places: the folio's working artifact, in the pages its content profile renders, and the shared extraction viewer. Each one links back to the library entry and to the section it came from. WHY IN INGESTION AND NOT LATER. A statement nobody can read beside its source is reviewed from memory, or not at all. Publishing when the entry is promoted means a reviewer can check every extracted statement against its source the moment it exists. The sub-process is the same for every content type. The content type decides only how its pages look, through its adapter. An entry that yields no statements (a referenced source, a dataset) passes through it with nothing to publish, and says so."
+        }
+      ],
+      "skos:notation": "CallActivity_PublishStatements",
+      "dcterms:source": "folio-assistant-core/processes/library/l1-document-ingestion.bpmn#CallActivity_PublishStatements",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_l1documentingestion.task_citeable",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4674,6 +4734,146 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_publishextractedstatements.task_checkcurrent",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Check pages are current, links resolve"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The generator's check mode regenerates in memory and fails on any difference from the committed pages, and on any source link that does not resolve. It runs in CI, so a change to an extraction or a library entry that was not republished fails the build rather than leaving a page that says something the extraction no longer does."
+        }
+      ],
+      "skos:notation": "Task_CheckCurrent",
+      "dcterms:source": "folio-assistant-core/processes/library/publish-extracted-statements.bpmn#Task_CheckCurrent",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_publishextractedstatements.task_collect",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Collect each statement with its source section"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For every statement extracted from the library entries the artifact draws on, read three things off files: the statement verbatim, the library entry it came from, and the section of that entry, as a library reference (instance, library id, section id). The section's label is read from the entry's structure: its title and its locator in the source's own unit (a slide, a page, a cell range, a line range). For example \"Catch up schedule, slide 7\". A statement whose section cannot be resolved is NOT published without a link: it is reported, because a statement nobody can trace is the failure this process exists to prevent."
+        }
+      ],
+      "skos:notation": "Task_Collect",
+      "dcterms:source": "folio-assistant-core/processes/library/publish-extracted-statements.bpmn#Task_Collect",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_publishextractedstatements.task_renderartifact",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Render them in the artifact's own pages"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The statements are written into pages of the folio's working artifact, so a reader of the artifact finds them without leaving it. HOW the pages look is the content type's: its adapter renders them in its own format (pages of a document, a section of a paper, pages of an implementation guide), as its content profile declares. Each statement carries two links: to the library entry's page, and to the section, labelled as collected. The pages are GENERATED: a person edits the extraction or the source, never the page."
+        }
+      ],
+      "skos:notation": "Task_RenderArtifact",
+      "dcterms:source": "folio-assistant-core/processes/library/publish-extracted-statements.bpmn#Task_RenderArtifact",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_publishextractedstatements.task_renderviewer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish them in the shared viewer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The same statements, with the same two links, are published in the shared extraction viewer, reachable from the site's sources menu. The viewer is the cross-artifact view: every source and every statement extracted from it, whichever artifact uses them. Both places read ONE collected list, so they cannot disagree about what was extracted or where it came from."
+        }
+      ],
+      "skos:notation": "Task_RenderViewer",
+      "dcterms:source": "folio-assistant-core/processes/library/publish-extracted-statements.bpmn#Task_RenderViewer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_recordagentstep.task_readback",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Read back Agentic status and Staging review"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "After the script's next run, read the row's Agentic status, Agentic status (filter) and Staging review. They must name the pull request and preview that Feedback (agent) names, and show no \"no agent has picked this up\" warning."
+        }
+      ],
+      "skos:notation": "Task_ReadBack",
+      "dcterms:source": "folio-assistant-core/processes/content/record-agent-step.bpmn#Task_ReadBack",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_recordagentstep.task_writeagentrow",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write the change set's Agent row"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On the Agent tab, the change set's row: Agentic status (Not started, Working, PR open, Ready for review, Change merged or Needs human); Pull request; Staging review page; Staging built, PR head, Staging built from and Staging deploy from `agent-record.ts push`; and Agent step from `agent-record.ts step <name>`, exactly \"<step> <YYYY-MM-DD HH:MMZ>\" with a step from the fixed list (reading, proposing, editing, pushing, staging, deploying, qa-review, merging, proposed, idle). Prose in Agent step is not read: use idle when the row waits for people. A preview or review link is written only once it is live: the GitHub Pages deploy of a gh-pages commit at or after the preview's publish has succeeded, and an HTTP GET of each link answers 200 where the agent can reach the site. A publish that is only on the gh-pages branch is not live: Pages deploys can be queued for many minutes or cancelled by the next push. Until then Staging review page stays empty, Staging deploy says deploying, and Feedback (agent) says \"Preview deploying\" with no preview link."
+        }
+      ],
+      "skos:notation": "Task_WriteAgentRow",
+      "dcterms:source": "folio-assistant-core/processes/content/record-agent-step.bpmn#Task_WriteAgentRow",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_recordagentstep.task_writefeedback",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Write Feedback (agent) from that row"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Feedback (agent) in the fixed layout (the ask first, then Status: and Next:), linking the same pull request and preview the Agent row now names. In a log one watcher owns, another thread sends the watcher its step and links instead of writing the sheet. A preview or review link is written only once it is live: the GitHub Pages deploy of a gh-pages commit at or after the preview's publish has succeeded, and an HTTP GET of each link answers 200 where the agent can reach the site. A publish that is only on the gh-pages branch is not live: Pages deploys can be queued for many minutes or cancelled by the next push. Until then Staging review page stays empty, Staging deploy says deploying, and Feedback (agent) says \"Preview deploying\" with no preview link."
+        }
+      ],
+      "skos:notation": "Task_WriteFeedback",
+      "dcterms:source": "folio-assistant-core/processes/content/record-agent-step.bpmn#Task_WriteFeedback",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_reviewlogwatch.task_accept",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4754,6 +4954,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_reviewlogwatch.task_recordstep",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Record agent step on each row it wrote"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For every row the pass or the stall check wrote, Record agent step: the Agent tab row first (status, pull request, preview, step), then Feedback (agent) from it, then read back Agentic status and Staging review. A row whose Feedback (agent) names a pull request or preview its Agent row does not, or whose Agent step is not \"<step> <time>\", is fixed here."
+        }
+      ],
+      "skos:notation": "Task_RecordStep",
+      "dcterms:source": "folio-assistant-core/processes/content/review-log-watch.bpmn#Task_RecordStep",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_reviewlogwatch.task_runcheck",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4771,6 +4991,26 @@
       ],
       "skos:notation": "Task_RunCheck",
       "dcterms:source": "folio-assistant-core/processes/content/review-log-watch.bpmn#Task_RunCheck",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities/process_reviewlogwatch.task_stallcheck",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Hand new feedback to the row's agent; take over stalled rows"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "On every poll, changed or not, new Blue feedback goes verbatim to the agent working the row, and a stalled row is restarted or taken over. For each row: new Blue feedback goes, verbatim and in the same poll, to the thread that owns the row (named in its Agent row or Feedback (agent)), and Feedback (agent) says who has it. A row is stalled when its Blue cells changed, or Ready for agent turned Yes, more than 10 minutes ago and no Agent step was recorded since; or when its agent recorded no step for 2 hours. A stalled row's owning thread is asked once; with no answer within 10 minutes, or a thread that is done or stopped, the watcher takes the row over, or asks the coordinator for a new thread, and writes the new owner, the step and a link into Feedback (agent)."
+        }
+      ],
+      "skos:notation": "Task_StallCheck",
+      "dcterms:source": "folio-assistant-core/processes/content/review-log-watch.bpmn#Task_StallCheck",
       "skos:note": "candidate"
     }
   ]
