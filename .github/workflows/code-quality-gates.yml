@@ -203,11 +203,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
 
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
@@ -459,11 +459,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -580,11 +580,11 @@ jobs:
       # verdict-reuse.sh is cat-harness's, and cat-harness is a mount.
       # Bun, the mounts index.lock.json pins, node_modules:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
 
       - name: Decide whether this tree's verdict already exists (bean qbco)
         id: decide
@@ -739,11 +739,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -1083,11 +1083,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
 
       # The same mount as the gates job, for the same reason one level down:
       # the test files that read the LIVE store (`bean-store-hygiene`,
@@ -1437,11 +1437,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
 
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
@@ -2165,11 +2165,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
@@ -3194,11 +3194,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
 
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
@@ -3354,11 +3354,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
@@ -3844,6 +3844,10 @@ jobs:
           # The tools index is generated from the Tool nodes, so it goes stale
           # the moment one is added or its `satisfies` changes.
           bun run cat tools:viz:check
+          # The caches page renders every `cache` node (cat-harness-tools/caches/)
+          # and refuses one that does not parse (`@covers cache`), so it goes
+          # stale the moment a cache node is added or its recipe changes.
+          bun run cat caches:viz:check
           # The themes page renders every theme in schemas/themes.ts with its
           # declared art, so it goes stale the moment a theme, a palette or a
           # crop changes.
@@ -4675,11 +4679,11 @@ jobs:
       # Bun, the mounts index.lock.json pins, node_modules,
       # Chromium:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
         with:
           chromium: browser
 
@@ -4888,11 +4892,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -5093,11 +5097,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
       # Bun, the mounts index.lock.json pins, node_modules:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
