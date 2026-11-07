@@ -906,13 +906,22 @@ jobs:
       # pages are built over it. A PR run's pages name its merge ref (measured
       # 2026-11-05, `test/results/witnesses/**`), so `bundle-cache.sh` reuses
       # them only on the same commit: a re-run, a dispatch, Feature Staging.
+      #
+      # The digest also adds the `gh-pages` tip. The published-site viewer
+      # (`gen-site-viz.ts`, built at publish `because: state`) prints that
+      # branch's tip and route counts, so pages reused across a gh-pages move
+      # would show a stale site (determinism audit run 42190970994: the only
+      # page differing between two builds of one tree). No tip read, no digest:
+      # the pages are built.
       - name: Digest of what the publish-time pages are built from (bundle cache)
         id: pages-digest
         env:
           QA_MANIFEST: ${{ steps.cache.outputs.manifest || steps.pack.outputs.manifest }}
         run: |
           [ -n "$QA_MANIFEST" ] || { echo "no QA working copy manifest: no digest, so the pages are built"; exit 0; }
-          echo "digest=$(bash .github/scripts/bundle-cache.sh digest publish-pages "qa-working-copy $QA_MANIFEST")" >> "$GITHUB_OUTPUT"
+          site=$(git ls-remote origin refs/heads/gh-pages | cut -f1)
+          [ -n "$site" ] || { echo "could not read the gh-pages tip: no digest, so the pages are built"; exit 0; }
+          echo "digest=$(bash .github/scripts/bundle-cache.sh digest publish-pages "qa-working-copy $QA_MANIFEST" "gh-pages $site")" >> "$GITHUB_OUTPUT"
 
       - name: Reuse publish-time pages already built from this digest (bundle cache)
         id: pages-cache
