@@ -113,7 +113,7 @@
       "source": {
         "remote": {
           "repository": "litlfred/smart-base",
-          "ref": "520cd52597935984b58cb0fe4e00b2e3375c518b",
+          "ref": "3578100f109139341298ddf957d9c246dfaca7c5",
           "overrides": {
             "smart-base": {
               "path": "smart-base",
@@ -150,8 +150,8 @@
             "consent": {
               "by": "litlfred",
               "on": "2026-11-07",
-              "ref": "520cd52597935984b58cb0fe4e00b2e3375c518b",
-              "evidence": "Owner litlfred, 2026-11-07, relayed by the coordinating session (session_01VQDpPg6DUZuufuAVwk6MqZ): 'repin + merge open 12 hrs'; owner chose A for folio-assistant#3012. smart-base is pinned to smart-base#313's head, which draws the glossary ledger's new roles (role/health-worker, role/point-of-care-system) that cat-harness main adds; at the old pin glossary:check reports them newly retired. A follow-up re-pin moves it to #313's merge commit."
+              "ref": "3578100f109139341298ddf957d9c246dfaca7c5",
+              "evidence": "Owner litlfred, 2026-11-07, relayed by the coordinating session (session_01VQDpPg6DUZuufuAVwk6MqZ): 'repin + merge open 12 hrs' (extended 12 hours). smart-base is pinned to smart-base#313's head 3578100f, which draws the glossary ledger's role/health-worker and role/point-of-care-system, and whose two diagram headers no longer name their own process as a calledElement (the phantom self-edge in the published process hierarchy). A follow-up re-pin moves it to #313's merge commit."
             }
           }
         }
@@ -523,6 +523,18 @@
         "script": "check:ig-citations",
         "kind": "no-folio",
         "reason": "smart-base's gate (owner, 2026-11-02: IG references \"KG managed\", with a QA check for citations not in the harnessed bibliography) reads an IG's OWN checkout: `input/pagecontent/*.md` and the bibliography its root `<name>.json` declares. This index has neither, so run here it reports 0 pages and judges nothing. Its input is an IG's tree, not this one."
+      },
+      {
+        "script": "translation:page-qa:check",
+        "kind": "pending-baseline",
+        "reason": "Catalogue translation-qa sidecars are new (cat-harness-tools#1598): qa-reports:main stores none yet, so every catalogue finding reads as new. qa:working-copy now runs translation:page-qa, so main's next push stores the baseline (owner, 2026-11-07, 'A. Two steps'). Ported from folio-assistant#2985 with the same tools re-pin.",
+        "writer": "translation:page-qa",
+        "followUp": "folio-assistant#3018, which wires translation:page-qa:check once main has stored the catalogue baseline"
+      },
+      {
+        "script": "translation:glossary:check",
+        "kind": "report",
+        "reason": "RED WHERE IT LANDED (cat-harness-tools#1599, arriving with this re-pin): it reports zh findings (e.g. «Actor» rendered 参与者 in concepts/skills.po and 行动者 in bootstrap's glossary) that predate the gate. Wiring it now would red every PR on catalogue text no PR here changed; it becomes a gate once the zh catalogues agree with the layered glossary. Owner card 2026-11-07 ~17:10Z, 'A. Allow both'; ported from folio-assistant#2985."
       }
     ]
   }

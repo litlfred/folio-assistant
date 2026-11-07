@@ -1920,6 +1920,14 @@ jobs:
       - name: sci workflow security
         run: bun run cat check:workflows:security
 
+      # cat-harness-tools' gate that every test has a Gherkin Scenario and
+      # every Scenario names a test, over this repository's own tests and
+      # their Scenarios (folio-assistant#3019). Wired here by the same
+      # "no check script is unrun" finding (folio-assistant#2781); ported
+      # from folio-assistant#2985 with the same tools re-pin.
+      - name: every test has a Gherkin Scenario
+        run: bun run cat check:test-gherkin
+
       # The other half of the same claim: the rules are cited, AND the
       # instruction body beside them does not restate them uncited.
       #
