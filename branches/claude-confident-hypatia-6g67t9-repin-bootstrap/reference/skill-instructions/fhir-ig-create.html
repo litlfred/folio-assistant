@@ -304,7 +304,10 @@ holds: usually
 §”What this layer reads” has the rules and the legacy warning.</li><li>Then steps 3 to 5 of <code class="language-plaintext highlighter-rouge">in-repo</code>, at the root.</li><li><strong>Ask the two build questions</strong> of §”4. Who starts a build” before the
 first push; a repository forked from an upstream IG is the usual case.</li><li><strong>Copy the site templates, unchanged.</strong> <code class="language-plaintext highlighter-rouge">templates/ig-repo-site/</code>
 holds <code class="language-plaintext highlighter-rouge">ig-ast-refresh.yml</code> and <code class="language-plaintext highlighter-rouge">site-publish.yml</code>; copy both into
-<code class="language-plaintext highlighter-rouge">.github/workflows/</code>, as they are. An IG repository’s site is built from
+<code class="language-plaintext highlighter-rouge">.github/workflows/</code>, as they are. When the IG has translations in
+<code class="language-plaintext highlighter-rouge">input/fsh/translations/</code>, copy <code class="language-plaintext highlighter-rouge">translation-supplements.yml</code> too: it
+compiles them on every pull request (<a href="../../reference/skill-instructions/ig-build-pipeline.html"><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></a>
+§”Translation supplements”). An IG repository’s site is built from
 the AST cache (§”The AST cache lifecycle” of
 <a href="../../reference/skill-instructions/ig-build-pipeline.html"><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></a>), and <code class="language-plaintext highlighter-rouge">ig-ast-refresh.yml</code>
 is its one writer. Without it the repository has no site, and

@@ -593,6 +593,9 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
     &quot;subgraphUnder&quot;: {
       &quot;glossary&quot;: &quot;instance&quot;
     },
+    &quot;builtOnHostSite&quot;: {
+      &quot;translated&quot;: true
+    },
     &quot;title&quot;: &quot;Glossary&quot;,
     &quot;alias&quot;: &quot;glossary&quot;
   },
@@ -604,7 +607,8 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
       &quot;catalogue&quot;
     ],
     &quot;subgraphs&quot;: &quot;directory&quot;,
-    &quot;title&quot;: &quot;Bibliography&quot;
+    &quot;title&quot;: &quot;Bibliography&quot;,
+    &quot;builtOnHostSite&quot;: {}
   }
 ]</pre></dd><dt>_needs_comment</dt><dd>The layer this instance sits on. Owner, 2026-09-20: &quot;So bootsteap, cat harness, fa-core, f-a, from bottom to top.&quot; Declared rather than hardcoded in the navbar, so the ordering is a fact of the repository and not of whichever consumer needed it first. `cat-harness-tools` added 2026-10-01 on owner ruling C1 (epic 7x5n, bean rmi6): the tool implementation layer sits BELOW this one, so core may use it and it may never use core.</dd><dt>needs</dt><dd><pre>[
   &quot;cat-harness&quot;,

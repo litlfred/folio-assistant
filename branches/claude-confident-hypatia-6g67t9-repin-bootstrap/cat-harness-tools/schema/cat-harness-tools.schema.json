@@ -1320,6 +1320,9 @@
     "zod/role-graph/FormerNameSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/FormerNameSchema.schema.json"
     },
+    "zod/role-graph/LaneHoldingSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/LaneHoldingSchema.schema.json"
+    },
     "zod/role-graph/PermissionDefSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/role-graph/PermissionDefSchema.schema.json"
     },
@@ -1586,6 +1589,12 @@
     },
     "zod/merge-queue/MergeQueueEntrySchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/MergeQueueEntrySchema.schema.json"
+    },
+    "zod/merge-queue/MergeRequestPreviewSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/MergeRequestPreviewSchema.schema.json"
+    },
+    "zod/merge-queue/MergeRequestSchema": {
+      "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/MergeRequestSchema.schema.json"
     },
     "zod/merge-queue/PlacementSchema": {
       "$ref": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/PlacementSchema.schema.json"
@@ -2644,8 +2653,8 @@
   "$comment": "Instance graph: https://litlfred.github.io/folio-assistant/cat-harness-tools/cat-harness-tools.jsonld",
   "staging": {
     "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
-    "sha": "227ecd6802b69de5833d7ec8ada04898a14288f5",
+    "sha": "c404c705e6bb8bf0bf6561f1782a82a79506f9b5",
     "pr": "3012/merge",
-    "run": "42365004948"
+    "run": "42388469519"
   }
 }

@@ -282,7 +282,10 @@ is whatever the language’s runner discovers, ignored or skipped ones
 included: a Rust <code class="language-plaintext highlighter-rouge">#[test]</code>, a Kotlin/JUnit <code class="language-plaintext highlighter-rouge">@Test</code>, a bun or vitest
 <code class="language-plaintext highlighter-rouge">test()</code> / <code class="language-plaintext highlighter-rouge">it()</code>, a pytest <code class="language-plaintext highlighter-rouge">test_*</code>. A parameterised test (<code class="language-plaintext highlighter-rouge">test.each</code>,
 <code class="language-plaintext highlighter-rouge">@pytest.mark.parametrize</code>, <code class="language-plaintext highlighter-rouge">@ParameterizedTest</code>) is ONE test and maps to
-one Scenario or Scenario Outline.</li><li><p><strong>The link is a tag on the Scenario</strong>, never on the <code class="language-plaintext highlighter-rouge">Feature:</code> line (a
+one Scenario or Scenario Outline. <strong>A test’s title is a fixed string</strong>: a
+test titled by a loop variable or a <code class="language-plaintext highlighter-rouge">${…}</code> template has no name a tag can
+carry, so the check reports it (<code class="language-plaintext highlighter-rouge">test-name-not-static</code>). Give it a literal
+title, or write the loop as <code class="language-plaintext highlighter-rouge">test.each(…)("… %s")</code>.</li><li><p><strong>The link is a tag on the Scenario</strong>, never on the <code class="language-plaintext highlighter-rouge">Feature:</code> line (a
 Feature tag would be inherited by every Scenario under it):</p><div class="language-gherkin highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">@test:tools/verify/tests/signature.rs::rejects_expired_key</span>
 <span class="kn">Scenario</span><span class="p">:</span> <span class="nf">an </span>expired signing key is refused
 </code></pre></div></div></li><li><strong>The tag grammar is one grammar for every language</strong> —

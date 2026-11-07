@@ -367,25 +367,25 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/227ecd6802b69de5833d7ec8ada04898a14288f5",
-  "sourceCommitSha": "227ecd6802b69de5833d7ec8ada04898a14288f5",
-  "sourceTree": "f53ca35107b53132b04974c4ca06022f2ee355a5",
-  "sourceCommitAt": "2026-11-07T10:41:18Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c404c705e6bb8bf0bf6561f1782a82a79506f9b5",
+  "sourceCommitSha": "c404c705e6bb8bf0bf6561f1782a82a79506f9b5",
+  "sourceTree": "b239772f8a923d419e438ffc61630a7b6def03bb",
+  "sourceCommitAt": "2026-11-07T15:52:19Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "Skill": 47,
+    "Skill": 48,
     "Decision": 4,
     "Task": 1,
-    "Process": 28,
-    "SequenceFlow": 432,
-    "Lane": 79,
-    "ProcessNode": 401,
+    "Process": 30,
+    "SequenceFlow": 450,
+    "Lane": 81,
+    "ProcessNode": 420,
     "GraphTypology": 29,
     "Role": 4,
     "Subgraph": 28,
     "Asset": 4,
-    "Tool": 25
+    "Tool": 26
   },
   "@graph": [
     {
@@ -623,7 +623,7 @@
       "title": "The review sheet's Apps Script",
       "description": "Build, install and reuse the Google Apps Script that keeps a review sheet's links and joined columns current (Tool `review-sheet-sync`). Public-comment mode: comment numbers, sections, pages and lines link into the frozen review draft, and Review Change Sets joins its comments. Drafting mode: one Contributor Feedback tab where each row is a change set with its own GitHub issue, and Sections pick from the document's table of contents. Use when setting up either sheet for a document, when its links are missing or stale, or after a tab, header, anchor or draft link changes.",
       "instructionsPath": "skills/content/folio-document-adapter/review-sheet-script.md",
-      "instructionLines": 1266,
+      "instructionLines": 1270,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -652,7 +652,7 @@
       "title": "Folio content profiles — `document` base and `paper` extension",
       "description": "The content-folio half of the harness's content-profiles skill: how a document folio is structured prose and how a paper folio extends it, block-kind discovery across block-kinds/ graphs, profile-check enforcement, and the TeX-free document render path.",
       "instructionsPath": "skills/content/folio-document-adapter/folio-content-profiles.md",
-      "instructionLines": 48,
+      "instructionLines": 55,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -695,7 +695,7 @@
       "title": "Review-log watch",
       "description": "Poll a review log (a drafting Contributor Feedback sheet, or a public-comment sheet's Review Change Sets) and its folio repository's issues mechanically, with Tool `review-log-watch`, and start agent work only when a cell people set or an open issue changed. Each issue that no row links yet becomes a Contributor Feedback row, and a closed issue's row is hidden with its text struck through. Use on every wake of a review-log watcher, and when setting up a watcher for a new log.",
       "instructionsPath": "skills/content/folio-document-adapter/review-log-watch.md",
-      "instructionLines": 291,
+      "instructionLines": 279,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -765,7 +765,7 @@
       "title": "Keep the review sheet's Agent columns current",
       "description": "Whenever an agent works on a change set of a folio whose review sheet is kept by the Tool `review-sheet-sync`, it writes the Agent tabs' columns for that change set and its comments as it goes: status, step, what it did, the PR, the staging page and its build, what the PR changed and when it finished. Use on every change-set edit, draft, PR, push, merge or close, in a sheet sync or not.",
       "instructionsPath": "skills/content/folio-document-adapter/review-sheet-agent-columns.md",
-      "instructionLines": 120,
+      "instructionLines": 185,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -932,7 +932,7 @@
       "title": "Glossary terms",
       "description": "Add terms to an instance's glossary: local SKOS terms (folio-glossary/v1) with a definition, a code and links to external SKOS concepts, and references to whole external schemes. Rendered on the glossary/ page; gated by check:glossary. Authored terms go to gettext (.pot) for translation; a paper's glossary is one more scheme.",
       "instructionsPath": "skills/library/cataloguing/glossary-terms.md",
-      "instructionLines": 450,
+      "instructionLines": 474,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -982,13 +982,27 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/publish-extracted-statements",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "publish-extracted-statements",
+      "title": "Publish extracted statements with source links",
+      "description": "The standard step of adding source documents to a folio's working artifact: every statement extracted from a library source is published readably in the artifact's own pages AND in the shared extraction viewer, each with a link to its library entry and to the section it came from, and CI fails when the generated pages are stale. Generic across content types; each type's adapter says only how its pages look. Executable form: `processes/library/publish-extracted-statements.bpmn`.",
+      "instructionsPath": "skills/library/ingestion/publish-extracted-statements.md",
+      "instructionLines": 133,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/document-intake",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "document-intake",
       "title": "Document Intake",
       "description": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
       "instructionsPath": "skills/library/ingestion/document-intake.md",
-      "instructionLines": 473,
+      "instructionLines": 482,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1002,7 +1016,7 @@
       "title": "L1 document ingestion",
       "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run cat ingest`.",
       "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
-      "instructionLines": 862,
+      "instructionLines": 869,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -1030,7 +1044,7 @@
       "title": "L1 coverage — nothing normative goes missing silently",
       "description": "Check that an L1 extraction accounted for every normative sentence in its source publication — captured as a node, or excluded for a fixed-list reason a person signed off. Per-page counts, captured %, accounted-for %, and a non-zero exit below 100 % accounted-for. Generic: three input files, nothing folio-specific. Implements smart-kg's docs/COVERAGE.md contract.",
       "instructionsPath": "skills/library/ingestion/l1-coverage.md",
-      "instructionLines": 87,
+      "instructionLines": 92,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3600,8 +3614,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion/node/StartEvent_Document"
       ],
-      "nodeCount": 20,
-      "flowCount": 21,
+      "nodeCount": 21,
+      "flowCount": 22,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion"
     },
@@ -3740,9 +3754,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion",
       "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Promote",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_PublishStatements",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_PublishStatements",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12",
@@ -4197,6 +4220,30 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Promote"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_PublishStatements",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Publish the extracted statements with source links",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/publish-extracted-statements"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_PublishStatements"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Queue prose blocks for summary",
@@ -4211,7 +4258,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10"
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i10b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_L1DocumentIngestion#flow/Flow_i12"
@@ -4260,6 +4307,482 @@
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/EndEvent_Ingested"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Publish extracted statements with source links",
+      "summary": "Makes every statement extracted from a library source readable, with a link back to where it came from, in the folio's working artifact AND in the shared extraction viewer, and keeps the pages current.",
+      "description": "Makes every statement extracted from a library source readable, with a link back to where it came from, in the folio's working artifact AND in the shared extraction viewer, and keeps the pages current.\n\nONE SUB-PROCESS, CALLED FROM EVERY PROCESS THAT ADDS SOURCE DOCUMENTS TO A FOLIO'S WORKING ARTIFACT. Ingestion calls it when an entry is promoted; an authoring process calls it when it brings a further source into its artifact. Nothing here depends on the content type: a document, a paper, an implementation guide and a guideline all run the same four steps. What differs is how the artifact's pages look, and that is the content type's adapter's business, read off its content profile, never named here.\n\nWHAT A STATEMENT IS, for this process: a sentence or row captured verbatim from a library entry, whatever kind the extraction gave it (a recommendation, a requirement, a candidate still awaiting a person's ruling). It is published as captured, with its status; this process neither promotes nor edits it.",
+      "enforcement": "advisory",
+      "sourcePath": "processes/library/publish-extracted-statements.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/library/publish-extracted-statements.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/assets/img/workflows/publish-extracted-statements.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/StartEvent_Statements"
+      ],
+      "nodeCount": 8,
+      "flowCount": 7,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/StartEvent_Statements",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_Collect",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p1"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_Collect",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Gateway_Any",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p2"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p_yes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Gateway_Any",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderArtifact",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p_yes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p_none",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "none",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Gateway_Any",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/EndEvent_Nothing",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p_none"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderArtifact",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderViewer",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p3"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderViewer",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_CheckCurrent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p4"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_CheckCurrent",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/EndEvent_Published",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p5"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Ingestion Engine (agent, runs unattended)",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/ingestion-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/StartEvent_Statements",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Sources added to the artifact",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/StartEvent_Statements"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_Collect",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Collect each statement with its source section",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/publish-extracted-statements"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p1"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p2"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_Collect"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Gateway_Any",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Any statements?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p_yes",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p_none"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Gateway_Any"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderArtifact",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Render them in the artifact's own pages",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/publish-extracted-statements"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p_yes"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderArtifact"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderViewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Publish them in the shared viewer",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/publish-extracted-statements"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderViewer"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_CheckCurrent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Check pages are current, links resolve",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/publish-extracted-statements"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_CheckCurrent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/EndEvent_Published",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Statements published with source links",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p5"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/EndEvent_Published"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/node/EndEvent_Nothing",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Nothing to publish",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p_none"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/EndEvent_Nothing"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Record agent step",
+      "summary": "The one way an agent reports a move on a change set.",
+      "description": "The one way an agent reports a move on a change set. The sheet script\nbuilds Agentic status, Agentic status (filter) and Staging review from\nthe Agent tab, and warns that no agent has picked a row up when the\nAgent step is missing or older than Ready for agent. Writing only\nFeedback (agent) leaves those columns stale, so it is never done alone.",
+      "enforcement": "strict",
+      "sourcePath": "processes/content/record-agent-step.bpmn",
+      "sourceUrl": "https://github.com/litlfred/folio-assistant-core/blob/main/processes/content/record-agent-step.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/assets/img/workflows/record-agent-step.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/StartEvent_Moved"
+      ],
+      "nodeCount": 6,
+      "flowCount": 6,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS01",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/StartEvent_Moved",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS01"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS02",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteFeedback",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS02"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS03",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteFeedback",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Task_ReadBack",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS04",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Task_ReadBack",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Gateway_Agrees",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS04"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS05",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no: fix the Agent row, never the copied columns",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Gateway_Agrees",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS05"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS06",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Gateway_Agrees",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/EndEvent_Recorded",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep#flow/RS06"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Authoring agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/authoring-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/StartEvent_Moved",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Agent moved on a change set",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS01"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/StartEvent_Moved"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Write the change set's Agent row",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/review-sheet-agent-columns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS01",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS05"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS02"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteAgentRow"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteFeedback",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Write Feedback (agent) from that row",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/review-sheet-script"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS02"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS03"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_WriteFeedback"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Task_ReadBack",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Read back Agentic status and Staging review",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/review-log-watch"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS04"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Task_ReadBack"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/Gateway_Agrees",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Sheet agrees with Feedback (agent)?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS04"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS05",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS06"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/Gateway_Agrees"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/node/EndEvent_Recorded",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Step recorded",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep/lane/Lane_Agent",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep#flow/RS06"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_RecordAgentStep/node/EndEvent_Recorded"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublicCommentRelease",
@@ -9305,8 +9828,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/StartEvent_NewDocument"
       ],
-      "nodeCount": 16,
-      "flowCount": 17,
+      "nodeCount": 17,
+      "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring"
     },
@@ -9418,9 +9941,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Validate",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Render",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_PublishStatements",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_PublishStatements",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Render",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring#flow/A13",
@@ -9754,6 +10286,30 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Validate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_PublishStatements",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Publish extracted statements",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Build",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/publish-extracted-statements"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_PublishStatements"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Render",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Render MD, HTML and PDF",
@@ -9768,7 +10324,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12"
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring#flow/A13"
@@ -9877,8 +10433,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll"
       ],
-      "nodeCount": 9,
-      "flowCount": 8,
+      "nodeCount": 11,
+      "flowCount": 10,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch"
     },
@@ -9905,9 +10461,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch",
       "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF09",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF09"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04",
@@ -9943,9 +10508,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch",
       "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08",
@@ -9968,7 +10542,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/StartEvent_Poll",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Every 3 minutes",
+      "name": "Every minute",
       "nodeKind": "start",
       "bpmnType": "bpmn:StartEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch",
@@ -10031,6 +10605,29 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RunCheck"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Hand new feedback to the row's agent; take over stalled rows",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/review-log-watch"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF09"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Gateway_Changed",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Sheet or issues changed?",
@@ -10043,7 +10640,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF09"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF04",
@@ -10100,6 +10697,30 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_AgentPass"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Record agent step on each row it wrote",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/review-sheet-agent-columns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_RecordAgentStep",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_RecordStep"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_Accept",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Accept the new state",
@@ -10114,7 +10735,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF07"
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF10"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF08"
@@ -12840,8 +13461,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback/node/StartEvent_Feedback"
       ],
-      "nodeCount": 12,
-      "flowCount": 13,
+      "nodeCount": 13,
+      "flowCount": 14,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback"
     },
@@ -12962,9 +13583,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback",
       "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback/node/Task_CloseChangeSet",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback#flow/CF14",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback/node/Task_CloseChangeSet",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback#flow/CF14"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Committee",
@@ -13163,7 +13793,7 @@
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback/node/Task_QaGate",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "QA-review the dispositions",
+      "name": "QA gate: review dispositions against the people and the pull request",
       "nodeKind": "activity",
       "bpmnType": "bpmn:ServiceTask",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback",
@@ -13252,9 +13882,32 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_Merge"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback/node/Task_CloseChangeSet",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Close the change set: the issue, then the sheet row",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/review-sheet-agent-columns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback#flow/CF14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContributorFeedback/node/Task_CloseChangeSet"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback/node/EndEvent_Merged",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Change merged",
+      "name": "Change merged and closed",
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback",
@@ -13264,7 +13917,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback#flow/CF10"
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_ContributorFeedback#flow/CF14"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
@@ -17508,6 +18161,67 @@
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/l1-coverage.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/tools/publish-extracted-statements.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
+      "name": "publish-extracted-statements",
+      "title": "Publish extracted statements with source links",
+      "description": "Render each declared page (a `folio-statement-page/v1` spec naming `folio-extracted-statements/v1` lists) as Markdown: every statement extracted from a library source, verbatim, with its kind and status, linked to its library entry and to the section it came from, labelled in the source's own unit (\"Catch up schedule, slide 7\"). A statement whose source does not resolve fails the run and nothing is written. `--check` fails when a committed page is stale.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run folio-assistant-core/scripts/publish-extracted-statements.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "page",
+            "schema": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A `folio-statement-page/v1` spec (`schemas/extracted-statement.ts`): the statement lists to publish, the page to write, its title and introduction, the library viewer's and the sources' URL prefixes, and the content type's table look. Repeat the flag for several pages. A spec, not flags, because those are free text.",
+            "required": true,
+            "arg": {
+              "flag": "--page"
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare instead of writing: exit 1 when a page is stale.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          },
+          {
+            "name": "instance-root",
+            "schema": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The citing instance, against which a source naming no instance resolves; the repository root when absent.",
+            "required": false,
+            "arg": {
+              "flag": "--instance-root"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "page",
+            "schema": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "A generated Markdown page, one table per list: Id, Statement, Kind, Status, Source."
+          }
+        ]
+      },
+      "requirements": {
+        "runtime": [
+          "bun"
+        ],
+        "network": false
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/skill/publish-extracted-statements"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/tools/publish-extracted-statements.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/tools/references-render.jsonld",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
       "name": "references-render",
@@ -17917,8 +18631,8 @@
   ],
   "staging": {
     "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
-    "sha": "227ecd6802b69de5833d7ec8ada04898a14288f5",
+    "sha": "c404c705e6bb8bf0bf6561f1782a82a79506f9b5",
     "pr": "3012/merge",
-    "run": "42365004948"
+    "run": "42388469519"
   }
 }

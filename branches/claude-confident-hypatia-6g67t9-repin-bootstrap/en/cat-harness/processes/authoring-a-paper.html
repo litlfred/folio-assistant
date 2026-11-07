@@ -234,7 +234,10 @@ work plan in beans/.</p><p>Review, publish and committee feedback are core’s s
   // Every href in the sidecar is relative to the sidecar (it sits beside the
   // process page), so a page elsewhere on the site that shows the same
   // drawing resolves them to the same targets.
-  var base = new URL(root.getAttribute("data-panel"), location.href);
+  // A drawing with no sidecar (a page that only highlights steps, where no
+  // processes viewer is published) gets the highlight and nothing else.
+  var sidecar = root.getAttribute("data-panel");
+  var base = new URL(sidecar || "", location.href);
   function abs(h) { try { return new URL(h, base).href; } catch (e) { return h; } }
   // A page with no server-drawn markers gets them from the sidecar.
   var drawn = !!root.querySelector(".pt-layer");
@@ -361,7 +364,7 @@ work plan in beans/.</p><p>Review, publish and committee feedback are core’s s
     var r = root.getBoundingClientRect(), b = a.getBoundingClientRect();
     var x = b.left - r.left, y = b.top - r.top, w = b.width, h = b.height, vw = 0, vh = 0;
     if (a.tagName.toLowerCase() === "img") { vw = a.naturalWidth; vh = a.naturalHeight; }
-    else { var vb = (a.getAttribute("viewBox") || "").trim().split(/[s,]+/).map(Number); vw = vb[2]; vh = vb[3]; }
+    else { var vb = (a.getAttribute("viewBox") || "").trim().split(/[\s,]+/).map(Number); vw = vb[2]; vh = vb[3]; }
     // An SVG keeps its aspect inside a box of another shape (xMidYMid meet).
     if (vw > 0 && vh > 0 && w > 0 && h > 0) {
       var k = vw / vh;
@@ -387,7 +390,7 @@ work plan in beans/.</p><p>Review, publish and committee feedback are core’s s
   root.addEventListener("load", schedule, true);
   window.addEventListener("resize", schedule);
   schedule();
-  if (!drawn) load().then(function (j) {
+  if (!drawn && sidecar) load().then(function (j) {
     (j.markers || []).forEach(function (m) {
       var t = j.tasks[m.id], to = t && t.calls ? (t.calls.diagram || t.calls.href) : null;
       if (to && m.box) {
@@ -424,7 +427,7 @@ work plan in beans/.</p><p>Review, publish and committee feedback are core’s s
 })();</script><h2 id="how-it-connects"><a href="#how-it-connects" class="anchor-heading" aria-labelledby="how-it-connects"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> How it connects
   
   
-</h2><ul><li><strong>Called by:</strong> no call activity names this process</li><li><strong>Calls:</strong> <a href="bean-close.html">Close the bean</a>, <a href="bean-open.html">Open the bean</a>, <a href="folio-review-publish.html">Review and publish a folio</a></li><li><strong>Presented on:</strong> <a href="https://github.com/litlfred/folio-assistant-sci/blob/HEAD/docs/guides/writing-a-paper.md#the-end-to-end-workflow" data-fa-pin="folio-assistant-sci">Writing a paper with folio-assistant — The end-to-end workflow</a></li><li><strong>Running instances:</strong> none recorded</li></ul><h2 id="lanes--who-acts"><a href="#lanes--who-acts" class="anchor-heading" aria-labelledby="lanes--who-acts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lanes — who acts
+</h2><ul><li><strong>Called by:</strong> no call activity names this process</li><li><strong>Calls:</strong> <a href="bean-close.html">Close the bean</a>, <a href="bean-open.html">Open the bean</a>, <a href="folio-review-publish.html">Review and publish a folio</a></li><li><strong>Presented on:</strong> <a href="../../../folio-assistant-sci/guides/writing-a-paper.html#the-end-to-end-workflow">Writing a paper with folio-assistant — The end-to-end workflow</a></li><li><strong>Running instances:</strong> none recorded</li></ul><h2 id="lanes--who-acts"><a href="#lanes--who-acts" class="anchor-heading" aria-labelledby="lanes--who-acts"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Lanes — who acts
   
   
 </h2><div class="table-wrapper"><table><thead><tr><th>lane</th><th>role</th><th>what it does here</th></tr></thead><tbody><tr><td>Author (person)</td><td><code class="language-plaintext highlighter-rouge">author</code></td><td>The plan set here — chapters, the blocks each needs, what gets formalised — is not revisited: GW_Published’s ‘no’ branch re-enters Task_AuthorBlocks, not this lane, so a scoping mistake surfaces only as rework downstream.</td></tr><tr><td>Work plan (beans)</td><td><code class="language-plaintext highlighter-rouge">work-plan</code></td><td>Opens and claims the bean, then turns the author’s plan into beans, so a resumed session or another agent can pick up Task_Scaffold.</td></tr><tr><td>Authoring agent (system)</td><td><code class="language-plaintext highlighter-rouge">authoring-agent</code></td><td>Scaffolds the repo from the author’s plan and writes every block, including every revision: GW_Published’s ‘no’ branch returns here, not to Lane_Author.</td></tr><tr><td>Lean toolchain (lean-mcp)</td><td><code class="language-plaintext highlighter-rouge">lean-toolchain</code></td><td>Owns its own loop: Gateway_LeanGreen, computed by decisions/lean-build-gate.dmn from the build result, sends ‘not yet’ back to Task_Formalize. The paper reaches Task_Validate only when it says green.</td></tr><tr><td>Build pipeline</td><td><code class="language-plaintext highlighter-rouge">build-pipeline</code></td><td>Validates and renders the Lean-green manuscript, calls the shared review-and-publish process (Call_ReviewPublish), and closes the bean once GW_Published says yes. It decides nothing itself.</td></tr></tbody></table></div><h2 id="steps"><a href="#steps" class="anchor-heading" aria-labelledby="steps"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Steps
@@ -435,4 +438,4 @@ work plan in beans/.</p><p>Review, publish and committee feedback are core’s s
   
 </h2><p>Every one of the 3 decision(s) is documented.</p><div class="table-wrapper"><table><thead><tr><th>decision</th><th>what decides it</th><th>branches</th></tr></thead><tbody><tr><td><strong>Bean claimed?</strong><br /><code class="language-plaintext highlighter-rouge">GW_BeanYours</code></td><td>Reads which end <a href="bean-open.html">Process_BeanOpen</a> reached. <code class="language-plaintext highlighter-rouge">claimed</code>: the bean is in progress and this process works it. <code class="language-plaintext highlighter-rouge">not yours</code>: a sibling session or a human holds it, nothing was written to it, and this process stops here rather than work a bean it does not own (bean-coordination).</td><td><strong>claimed</strong> → Seed the work plan<br /><strong>not yours</strong> → Not yours: left alone</td></tr><tr><td><strong>Build green, no sorries?</strong><br /><code class="language-plaintext highlighter-rouge">Gateway_LeanGreen</code></td><td>Answered by the Lean build after formalisation: is it green with no <code class="language-plaintext highlighter-rouge">sorry</code> left? <code class="language-plaintext highlighter-rouge">not yet</code> loops on formalisation; <code class="language-plaintext highlighter-rouge">green</code> goes on to validation. A build that passes with a deferred (closeable) <code class="language-plaintext highlighter-rouge">sorry</code> is not green; a sorry standing in for an open conjecture does not hold the gate.</td><td><strong>not yet</strong> → Formalise in Lean<br /><strong>green</strong> → Validate</td></tr><tr><td><strong>Published?</strong><br /><code class="language-plaintext highlighter-rouge">GW_Published</code></td><td>Reads which end <a href="folio-review-publish.html">Process_FolioReviewPublish</a> reached. <code class="language-plaintext highlighter-rouge">yes</code>: Published, so the bean is closed. <code class="language-plaintext highlighter-rouge">no</code>: Changes asked, or Feedback in, so the work goes back to Task_AuthorBlocks with the feedback.</td><td><strong>yes</strong> → Close the bean<br /><strong>no</strong> → Author blocks</td></tr></tbody></table></div></main><hr><footer><p class="text-small mb-0">folio-assistant — code under the Apache License 2.0, documentation under CC BY 3.0. Generated schema and API references are rebuilt from source on every push to main.</p><p class="text-small mb-0 fa-build-stamp">
   deployed
-  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div><script src="../../../assets/js/fa-pin-links.js" data-fa-pins="../../../pins.json" defer></script></body></html>
+  <a href="https://github.com/litlfred/folio-assistant/actions"><code>dev</code></a></p></footer></div></div><div class="search-overlay"></div></div></body></html>

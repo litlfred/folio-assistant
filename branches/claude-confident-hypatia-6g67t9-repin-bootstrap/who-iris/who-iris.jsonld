@@ -367,10 +367,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/227ecd6802b69de5833d7ec8ada04898a14288f5",
-  "sourceCommitSha": "227ecd6802b69de5833d7ec8ada04898a14288f5",
-  "sourceTree": "f53ca35107b53132b04974c4ca06022f2ee355a5",
-  "sourceCommitAt": "2026-11-07T10:41:18Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c404c705e6bb8bf0bf6561f1782a82a79506f9b5",
+  "sourceCommitSha": "c404c705e6bb8bf0bf6561f1782a82a79506f9b5",
+  "sourceTree": "b239772f8a923d419e438ffc61630a7b6def03bb",
+  "sourceCommitAt": "2026-11-07T15:52:19Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -393,7 +393,7 @@
       "title": "Signing and verifying an IRIS CDN release",
       "description": "How an IRIS CDN release is packaged, signed and verified using published standards only: a BagIt bag (RFC 8493), a detached JWS (RFC 7515 App. F) with ES256 (RFC 7518), and the key published in a did:web DID document whose publicKeyJwk carries an x5c chain up to WHO's signing key. No GDHCN trust list is assumed.",
       "instructionsPath": "skills/iris-cdn-signing.md",
-      "instructionLines": 130,
+      "instructionLines": 131,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -435,7 +435,7 @@
       "title": "Oxigraph multi-graph search for WHO IRIS",
       "description": "How to build WHO IRIS catalogue and Qualified Dublin Core metadata into partitioned N-Quads, and query it with Oxigraph — in Bun on the build side, in WebAssembly in the browser — including cross-graph joins and facet counts.",
       "instructionsPath": "skills/iris-oxigraph.md",
-      "instructionLines": 204,
+      "instructionLines": 205,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -2912,8 +2912,8 @@
   ],
   "staging": {
     "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
-    "sha": "227ecd6802b69de5833d7ec8ada04898a14288f5",
+    "sha": "c404c705e6bb8bf0bf6561f1782a82a79506f9b5",
     "pr": "3012/merge",
-    "run": "42365004948"
+    "run": "42388469519"
   }
 }

@@ -24505,6 +24505,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/merge-queue.mergerequestschema.fulltiergreen",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MergeRequestSchema.fullTierGreen"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The sender's statement that the full tier is green as judged (every judge)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestSchema.fullTierGreen",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/merge-queue.mergerequestschema.lookfor",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "MergeRequestSchema.lookFor"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What to look for in the preview. Required when there is one."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/sdlc/merge-queue.ts#MergeRequestSchema.lookFor",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/metamodel.metamodel.notallowed",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -30642,6 +30680,234 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.holdercandidate.createdat",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HolderCandidate.createdAt"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "ISO 8601 creation time, as `list_sessions` reports it."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#HolderCandidate.createdAt",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.holdercandidate.minutessinceanswer",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HolderCandidate.minutesSinceAnswer"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Minutes since it last answered or posted a heartbeat; unknown counts as live."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#HolderCandidate.minutesSinceAnswer",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.holdercandidate.ownsp0",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "HolderCandidate.ownsP0"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "It owns a P0 PR: the fix for a red main, or a link of the re-pin chain."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#HolderCandidate.ownsP0",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneholdingschema.announce",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneHoldingSchema.announce"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What the holder announces to every sibling and the owner, e.g. `merge manager: <session id>`."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema.announce",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneholdingschema.election",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneHoldingSchema.election"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Applied in order by {@link electHolder}."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema.election",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneholdingschema.heartbeatminutes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneHoldingSchema.heartbeatMinutes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The holder acknowledges each request, and posts a heartbeat, within this many minutes."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema.heartbeatMinutes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneholdingschema.lonesessionholds",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneHoldingSchema.loneSessionHolds"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A session alone in its coordination group holds the lane for itself."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema.loneSessionHolds",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneholdingschema.stalledafterminutes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneHoldingSchema.stalledAfterMinutes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "A session silent for longer than this is stalled: not a candidate, and its lane is vacant."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneHoldingSchema.stalledAfterMinutes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.lanereading.activesessions",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneReading.activeSessions"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Active sessions with ready PRs in the same repositories."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneReading.activeSessions",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.lanereading.conflictingprs",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneReading.conflictingPrs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Open PRs that conflict with or supersede another open PR."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneReading.conflictingPrs",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.lanereading.oldestqueuedminutes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneReading.oldestQueuedMinutes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Age of the oldest queued run, in minutes (0 with none queued)."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneReading.oldestQueuedMinutes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.lanereading.queuedruns",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "LaneReading.queuedRuns"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The most queued runs on any one of those repositories."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#LaneReading.queuedRuns",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.laneroleread.performervaries",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -30905,6 +31171,25 @@
         }
       ],
       "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#RoleDef.formerNames",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields/role-graph.roledef.holding",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "RoleDef.holding"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "For a lane one session holds at a time, such as the merge steward: when the lane is needed at all, how sibling sessions choose its holder, and whether a lone session holds it for itself (owner rulings, 2026-11-07). See {@link LaneHolding}, {@link laneNeeded} and {@link electHolder}."
+        }
+      ],
+      "dcterms:source": "cat-harness-tools/schemas/process/role-graph.ts#RoleDef.holding",
       "skos:note": "candidate"
     },
     {

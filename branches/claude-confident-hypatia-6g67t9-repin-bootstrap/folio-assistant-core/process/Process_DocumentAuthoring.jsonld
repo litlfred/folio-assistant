@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/folio-assistant-core.jsonld",
   "staging": {
     "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
-    "sha": "227ecd6802b69de5833d7ec8ada04898a14288f5",
+    "sha": "c404c705e6bb8bf0bf6561f1782a82a79506f9b5",
     "pr": "3012/merge",
-    "run": "42365004948"
+    "run": "42388469519"
   },
   "@graph": [
     {
@@ -22,8 +22,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/StartEvent_NewDocument"
       ],
-      "nodeCount": 16,
-      "flowCount": 17,
+      "nodeCount": 17,
+      "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring"
     },
@@ -135,9 +135,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Validate",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Render",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_PublishStatements",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Call_PublishStatements",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Render",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring#flow/A12b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/folio-assistant-core/process/Process_DocumentAuthoring#flow/A13",

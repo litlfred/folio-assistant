@@ -78,6 +78,7 @@
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_Ingestion/Lane_0",
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MaterializeRemote/Lane_0",
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MethodologyFromSource/Lane_Owner",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Owner",
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SampleImport/Lane_0",
         "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SubscribeKg/Lane_0",
@@ -136,6 +137,15 @@
       "label": "Owner",
       "scopeNote": "Shares the source and the intent in chat, answers the coordination question, and decides the adoption. Only the owner accepts an adoption or moves a proposal's status.",
       "source": "cat-harness/processes/library/methodology-from-source.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/process/Process_MultiLocaleTranslation",
+      "label": "Owner",
+      "scopeNote": "Decides which instances and locales are translated, and when locale PRs may be merged. The merge window set here binds the lead's merge step and the refresh watcher alike. Official sign-off is also this person's, and is a separate process.",
+      "source": "cat-harness/processes/library/multi-locale-translation.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RefreshMaterialized/Lane_0",
@@ -846,6 +856,126 @@
       "label": "Human reviewer / adjudicator",
       "scopeNote": "The only lane here that JUDGES. Mechanical translation QA produces candidates — a flagged passage, a terminology miss, a staleness verdict — and a candidate is not a finding until somebody decides it is. This lane is where that decision is made, and it is the lane that signs the translation off, because the actor who resolves a disputed passage is the one who can say the whole is fit to publish.\n\nAdjudicator rather than reviewer alone, and the distinction is the accountability: a reviewer reports, an adjudicator settles. The word is used here because the passage reaching this lane is one where a checker and a translator disagree, and somebody has to choose between them WITH a reason. That reason is the record, not the choice.",
       "source": "cat-harness/processes/library/translation-workflow.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/translation-source-lead",
+      "@type": "skos:Concept",
+      "prefLabel": "Source-language lead",
+      "title": "Source-language lead",
+      "notation": "translation-source-lead",
+      "definition": "Owns the source-language side of a translation into several locales: extracts every template once, in one shared source PR merged to main before any locale starts, validates each locale PR and merges it inside the owner's merge window, files the one issue for source-text errors the translators report, and keeps the refresh watcher that brings every locale up to date when the source moves. Distinct from `translation-coordinator`, who decides what is translated and accepts it: this position does the source-side work, and an agent can do it.",
+      "altLabel": [
+        "Source-language lead (watcher)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Lead",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRefresh/Lane_TR_Lead"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Lead",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/translation-source-lead",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/process/Process_MultiLocaleTranslation",
+      "label": "Source-language lead",
+      "scopeNote": "The one party that touches the source. It extracts every template once, merges that source PR first, collects source-text errors into one issue, validates and merges each locale PR inside the owner's window, and keeps the watcher that runs `translation-refresh`.",
+      "source": "cat-harness/processes/library/multi-locale-translation.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRefresh/Lane_TR_Lead",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/translation-source-lead",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/process/Process_TranslationRefresh",
+      "label": "Source-language lead (watcher)",
+      "scopeNote": "Owns the watcher. It decides whether anything changed from the files, not from memory, refreshes the templates once for every locale, and merges the instance's PR only where the instance declares merge-when-green, every check is green and the round trip records no fail.",
+      "source": "cat-harness/processes/library/translation-refresh.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/locale-translator",
+      "@type": "skos:Concept",
+      "prefLabel": "Locale translator",
+      "title": "Locale translator",
+      "notation": "locale-translator",
+      "definition": "Produces one locale's catalogues from the shared templates: the `.po` files, their unofficial translation-node manifests and the locale's terminology supplement, then the gates, the QA report and the locale PR. Never re-extracts and never edits the source; a source-text error is reported, not fixed in the translation. One lane covers every locale, each run once per locale. Distinct from `translator`, a person working in their own tool under human-translation-workflow: this position may be an agent, and what it produces is unofficial until a person signs it off.",
+      "altLabel": [
+        "Locale translator (one per locale)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Translator",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRefresh/Lane_TR_Translator",
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Translator"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MultiLocaleTranslation/Lane_ML_Translator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/locale-translator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/process/Process_MultiLocaleTranslation",
+      "label": "Locale translator (one per locale)",
+      "scopeNote": "One lane for every locale: each step here runs once per locale, in parallel, and each locale's work is its own branch and its own PR. A translator starts from the merged templates, never from its own extraction, and reports a source error rather than translating around it.",
+      "source": "cat-harness/processes/library/multi-locale-translation.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRefresh/Lane_TR_Translator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/locale-translator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/process/Process_TranslationRefresh",
+      "label": "Locale translator",
+      "scopeNote": "The same position as in the first translation, now working on a delta: only the strings the merge left empty or fuzzy, in every locale, then the gates and the round trip over those strings.",
+      "source": "cat-harness/processes/library/translation-refresh.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Translator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/locale-translator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/process/Process_TranslationRoundTrip",
+      "label": "Locale translator",
+      "scopeNote": "The producer. It chooses what is checked, by a rule stated before any result is seen, and hands on the target strings alone. It may record one thing here, \"could not dispatch\", because without that state a producer forbidden from writing a verdict has nothing honest to write.",
+      "source": "cat-harness/processes/library/translation-round-trip.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/back-translator",
+      "@type": "skos:Concept",
+      "prefLabel": "Back-translator",
+      "title": "Back-translator",
+      "notation": "back-translator",
+      "definition": "The checker of a translation round trip: renders a sample of the target-language text back into the source language from the target text alone, with no tools and without seeing the source. It rules on nothing. Its rendering is the intermediate the adjudicator reads (`untainted-verification`, rule 1: neither party sees what would let it shortcut).",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Back"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Back",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/back-translator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/process/Process_TranslationRoundTrip",
+      "label": "Back-translator",
+      "scopeNote": "Sees the target strings and nothing else: not the source, not the repository, no tools. Shown the source, it writes the source back and the check passes without measuring anything.",
+      "source": "cat-harness/processes/library/translation-round-trip.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/round-trip-adjudicator",
+      "@type": "skos:Concept",
+      "prefLabel": "Round-trip adjudicator",
+      "title": "Round-trip adjudicator",
+      "notation": "round-trip-adjudicator",
+      "definition": "Rules on a translation round trip: given the source strings and the back-translation, and never the target text, it pre-screens every pair mechanically, reads each flagged pair in full, and records drift or not-drift for each with the reason. A specialisation of `adjudicator` for the translation instance of untainted verification; it adds the translation-specific drift definition.",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld",
+      "usage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Adjudicator"
+      ]
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_TranslationRoundTrip/Lane_RT_Adjudicator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/round-trip-adjudicator",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/process/Process_TranslationRoundTrip",
+      "label": "Round-trip adjudicator",
+      "scopeNote": "Sees the source strings and the back-translation, never the target text, and rules each pair drift or not drift with its reason. Both halves of the drift definition are in front of it, so that inflection and word order are not ruled as drift.",
+      "source": "cat-harness/processes/library/translation-round-trip.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-confident-hypatia-6g67t9-repin-bootstrap/cat-harness/role/adjudicator",

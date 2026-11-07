@@ -122,6 +122,24 @@
           "type": "string",
           "pattern": "^[a-z][a-z0-9+.-]*:\\/\\/\\S+$"
         },
+        "subject": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "translationStatus": {
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]+)*$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "official",
+              "unofficial"
+            ]
+          }
+        },
         "focus": {
           "anyOf": [
             {
@@ -255,8 +273,8 @@
   "description": "Generated from `TermSchema` in schemas/glossary.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
   "staging": {
     "branch": "claude/confident-hypatia-6g67t9-repin-bootstrap",
-    "sha": "227ecd6802b69de5833d7ec8ada04898a14288f5",
+    "sha": "c404c705e6bb8bf0bf6561f1782a82a79506f9b5",
     "pr": "3012/merge",
-    "run": "42365004948"
+    "run": "42388469519"
   }
 }
