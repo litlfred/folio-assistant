@@ -1,0 +1,384 @@
+From ed9f0b73b287e7a15f85c7db4474d66d69a87f2f Mon Sep 17 00:00:00 2001
+From: Claude <noreply@anthropic.com>
+Date: Sat, 7 Nov 2026 08:12:01 +0000
+Subject: [PATCH] merge-manager-watcher: the sweep (cadence, steps, helper,
+ pre-approval ledger)
+
+Owner ruling, 2026-11-07 (card, about 07:55Z): document and tool the merge
+manager's sweep.
+
+- Cadence: every 10-15 minutes while a P0 is in flight, 30 otherwise;
+  "What wakes it" and the diagram's wake step now say the same.
+- One sweep: merge:watch over every repository, each green request's six
+  lines in chat, one batch card, merge or train-label what is approved,
+  landed:/back: to the waiting sessions, heartbeat, re-arm.
+- A helper may tabulate (step 1) and never writes.
+- The pre-approval ledger: "merge when green" for a named PR, recorded on
+  the coordination work item beside the merge manager note; no second card.
+- Heartbeat is posted with each sweep; requests are acknowledged within
+  about 10 minutes (actor description and diagram text aligned).
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+Claude-Session: https://claude.ai/code/session_01VQDpPc2tT1vUufdyDbQTBz
+---
+ scenarios/actors/merge-manager.json           |  2 +-
+ sdlc/processes/merge-manager-watch.bpmn       |  4 +-
+ .../merge-manager-watch.checklist.md          |  2 +-
+ .../skills/sdlc-core/merge-manager-watcher.md | 47 +++++++++++++++++--
+ .../ar/processes/merge-manager-watch.pot      | 14 +++---
+ .../es/processes/merge-manager-watch.pot      | 14 +++---
+ .../fr/processes/merge-manager-watch.pot      | 14 +++---
+ .../ru/processes/merge-manager-watch.pot      | 14 +++---
+ .../zh/processes/merge-manager-watch.pot      | 14 +++---
+ 9 files changed, 81 insertions(+), 44 deletions(-)
+
+diff --git a/scenarios/actors/merge-manager.json b/scenarios/actors/merge-manager.json
+index 12f13b6a..32a75c1c 100644
+--- a/scenarios/actors/merge-manager.json
++++ b/scenarios/actors/merge-manager.json
+@@ -2,7 +2,7 @@
+   "id": "merge-manager",
+   "title": "Merge manager",
+   "kind": "agent",
+-  "description": "The agent session that holds the merge-steward lane on one or more repositories and runs its watch loop (`merge-manager-watcher`, Process_MergeManagerWatch): it wakes on a timer, on PR events, when a main run finishes, or on a sibling's message; it reads the open PRs, the runner queue, main's verdict and the PR owners live; and it routes each reading to the merge train, a saturation meta-merge, or a stalled-agent takeover. One live session holds the lane per repository while the lane is needed, and announces `merge manager: <session id>` to every sibling and the owner when it takes the lane, and to whom when it hands it over. When none is active the siblings elect one (the owner of the P0 PR, else the earliest-created active session), and a lone session is its own merge manager. Siblings send it a six-line merge request (PR and head SHA, session URL, explanation, rendered preview, what to look for, full tier green as judged), which it posts in its chat before asking the owner by card. It acknowledges each request and posts a heartbeat within about 10 minutes; like any agent it may stall, and a sibling whose request goes unacknowledged for about 30 minutes, or whose merge manager's session is inactive, re-elects without it. It merges only on the owner's explicit OK, given in its own session as one card per batch, holds and releases the swarm around every batch landing, and reports what landed and main's verdict.",
++  "description": "The agent session that holds the merge-steward lane on one or more repositories and runs its watch loop (`merge-manager-watcher`, Process_MergeManagerWatch): it wakes on a timer, on PR events, when a main run finishes, or on a sibling's message; it reads the open PRs, the runner queue, main's verdict and the PR owners live; and it routes each reading to the merge train, a saturation meta-merge, or a stalled-agent takeover. One live session holds the lane per repository while the lane is needed, and announces `merge manager: <session id>` to every sibling and the owner when it takes the lane, and to whom when it hands it over. When none is active the siblings elect one (the owner of the P0 PR, else the earliest-created active session), and a lone session is its own merge manager. Siblings send it a six-line merge request (PR and head SHA, session URL, explanation, rendered preview, what to look for, full tier green as judged), which it posts in its chat before asking the owner by card. It acknowledges each request within about 10 minutes and posts a heartbeat with each sweep (every 10-15 minutes while a P0 is in flight, 30 otherwise); like any agent it may stall, and a sibling whose request goes unacknowledged for about 30 minutes, or whose merge manager's session is inactive, re-elects without it. It merges only on the owner's explicit OK, given in its own session as one card per batch, holds and releases the swarm around every batch landing, and reports what landed and main's verdict.",
+   "roles": [
+     "merge-steward"
+   ],
+diff --git a/sdlc/processes/merge-manager-watch.bpmn b/sdlc/processes/merge-manager-watch.bpmn
+index bf8de3d2..06189015 100644
+--- a/sdlc/processes/merge-manager-watch.bpmn
++++ b/sdlc/processes/merge-manager-watch.bpmn
+@@ -51,12 +51,12 @@
+       <bpmn:outgoing>Flow_22</bpmn:outgoing>
+     </bpmn:task>
+     <bpmn:startEvent id="Start_Wake" name="Timer, PR event, request, main run, or sibling message">
+-      <bpmn:documentation>Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn.</bpmn:documentation>
++      <bpmn:documentation>The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn.</bpmn:documentation>
+       <bpmn:outgoing>Flow_1</bpmn:outgoing>
+       <bpmn:timerEventDefinition id="Timer_Wake"/>
+     </bpmn:startEvent>
+     <bpmn:task id="Task_Read" name="Read the queue, acknowledge requests">
+-      <bpmn:documentation>Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. Liveness duty: acknowledge each new merge request, and post a heartbeat, within holding.heartbeatMinutes, so siblings can tell a live merge manager from a stalled one.</bpmn:documentation>
++      <bpmn:documentation>Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. One sweep runs merge:watch over every repository it holds. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one.</bpmn:documentation>
+       <bpmn:extensionElements><bootstrap.processes:skill ref="merge-manager-watcher"/></bpmn:extensionElements>
+       <bpmn:incoming>Flow_1</bpmn:incoming>
+       <bpmn:outgoing>Flow_2</bpmn:outgoing>
+diff --git a/sdlc/processes/merge-manager-watch.checklist.md b/sdlc/processes/merge-manager-watch.checklist.md
+index 8a35f9a8..18b85d21 100644
+--- a/sdlc/processes/merge-manager-watch.checklist.md
++++ b/sdlc/processes/merge-manager-watch.checklist.md
+@@ -8,7 +8,7 @@ The loop run by the session that holds the merge-steward lane (actor merge-manag
+ 
+ ## Begin — Timer, PR event, request, main run, or sibling message (`Start_Wake`)
+ 
+-- Begin here: Every 10 minutes in the merge window, and hourly outside it, as a backstop.
++- Begin here: The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise.
+ - Call `workflow_start` with `process: "Process_MergeManagerWatch"` and the subject this run is about; keep the instance id it returns.
+ - next: → `Task_Read` (Read the queue, acknowledge requests)
+ 
+diff --git a/sdlc/skills/sdlc-core/merge-manager-watcher.md b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+index 24376958..5318be96 100644
+--- a/sdlc/skills/sdlc-core/merge-manager-watcher.md
++++ b/sdlc/skills/sdlc-core/merge-manager-watcher.md
+@@ -118,9 +118,9 @@ inactive without a hand-off, and the owner had to appoint one.
+ ### Liveness and stalls
+ 
+ The merge manager, like any agent, may stall (owner ruling, 2026-11-07). So
+-it has a liveness duty: it acknowledges each merge request, and posts a
+-heartbeat to the coordination group, within about 10 minutes (the role's
+-`holding.heartbeatMinutes`, matching the 10-minute timer below).
++it has a liveness duty: it acknowledges each merge request within about 10
++minutes of receiving it (the role's `holding.heartbeatMinutes`; a request
++wakes it), and posts a heartbeat to the coordination group with each sweep.
+ 
+ A sibling treats the lane as vacant when its request has no acknowledgement
+ within about 30 minutes (`holding.stalledAfterMinutes`), or when the merge
+@@ -171,8 +171,9 @@ sibling.
+ 
+ ## What wakes it
+ 
+-- **A timer, every 10 minutes** while the merge window is open, and hourly
+-  outside it. This is a backstop, not the main signal.
++- **A timer, at the sweep's cadence** (§"The sweep"): every 10-15 minutes
++  while a P0 is in flight, every 30 minutes otherwise. This is a backstop,
++  not the main signal.
+ - **A PR event** on a subscribed PR: ready for review, CI finished, review
+   submitted, merged or closed. Subscribe to every open non-draft PR in the
+   repositories it holds.
+@@ -191,6 +192,42 @@ it.
+ 3. The latest main push run on each repository, and its verdict.
+ 4. The owners of the PRs: the last push or comment by each owning session.
+ 
++## The sweep
++
++Owner ruling, 2026-11-07 (card, about 07:55Z): the merge manager's sweep is
++documented and tooled.
++
++**Cadence.** Every 10-15 minutes while a P0 PR (a fix for a red main, or a
++link of the re-pin chain) is in flight; every 30 minutes otherwise. A PR
++event, a merge request or a main run finishing may start a sweep early.
++
++**One sweep**, in this order:
++
++1. Run `merge:watch` over every repository the lane holds. It makes the four
++   readings above, and judges each PR by every judge (rule 1 below).
++2. For each green request, post its six lines in this chat.
++3. Ask the owner with **one** batch card for all of them, in priority order.
++   Leave off any PR in the pre-approval ledger (below).
++4. Land what is approved. A workflow PR, or a PR in a repository with no
++   train, merges through `merge:guard`. A folio-assistant PR that does not
++   change `.github/workflows/` gets the `merge-train` label (rule 8 below).
++5. Send `landed: <repo>#<n> <sha>` to each session that was waiting, or
++   `back: <repo>#<n> <reason>` for a PR that cannot land.
++6. Post the heartbeat, and re-arm the timer at the cadence above.
++
++**A helper may tabulate, never write.** A helper agent may run step 1 and
++tabulate the result (rule 6 below). It never posts, labels, merges,
++comments, closes or pushes. Steps 2-6 are the merge manager's.
++
++**The pre-approval ledger.** When the owner says "merge when green" for a
++named PR, the merge manager records it: the PR, the owner's words, and when.
++It keeps the record on the coordination work item, beside the
++`merge manager:` note, so a successor inherits it. A PR in the ledger needs
++no second card. It lands at the first sweep that finds it green, and then
++leaves the ledger. The ledger covers only the PRs it names. A standing
++instruction to "merge everything green" is rule 2's standing OK, not a
++ledger entry.
++
+ ## Where each reading leads
+ 
+ | Reading | Process |
+diff --git a/translations/ar/processes/merge-manager-watch.pot b/translations/ar/processes/merge-manager-watch.pot
+index b478a803..d51c37d8 100644
+--- a/translations/ar/processes/merge-manager-watch.pot
++++ b/translations/ar/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-07T07:53:04.639Z\n"
++"POT-Creation-Date: 2026-11-07T08:08:43.065Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: ar\n"
+@@ -59,11 +59,6 @@ msgstr ""
+ msgid "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:54
+-#. Diagram element documentation
+-msgid "Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
+-msgstr ""
+-
+ #: sdlc/processes/merge-manager-watch.bpmn:100
+ #. Diagram element documentation
+ msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Every judge passes (owner ruling, 2026-11-07): an aggregate job covers only the parts it names, and each test shard's own no-new-failures table lists 0 new failures; with no judge, each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
+@@ -141,7 +136,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:59
+ #. Diagram element documentation
+-msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. Liveness duty: acknowledge each new merge request, and post a heartbeat, within holding.heartbeatMinutes, so siblings can tell a live merge manager from a stalled one."
++msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. One sweep runs merge:watch over every repository it holds. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:58
+@@ -214,6 +209,11 @@ msgstr ""
+ msgid "The sibling's six lines go into the merge manager's chat first; a request with no rendered preview and no reason goes back to the sibling (owner ruling, 2026-11-07). Then one card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
+ msgstr ""
+ 
++#: sdlc/processes/merge-manager-watch.bpmn:54
++#. Diagram element documentation
++msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
++msgstr ""
++
+ #: sdlc/processes/merge-manager-watch.bpmn:53
+ #. Diagram label
+ msgid "Timer, PR event, request, main run, or sibling message"
+diff --git a/translations/es/processes/merge-manager-watch.pot b/translations/es/processes/merge-manager-watch.pot
+index f1fad404..1de78fcb 100644
+--- a/translations/es/processes/merge-manager-watch.pot
++++ b/translations/es/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-07T07:53:04.640Z\n"
++"POT-Creation-Date: 2026-11-07T08:08:43.066Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: es\n"
+@@ -59,11 +59,6 @@ msgstr ""
+ msgid "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:54
+-#. Diagram element documentation
+-msgid "Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
+-msgstr ""
+-
+ #: sdlc/processes/merge-manager-watch.bpmn:100
+ #. Diagram element documentation
+ msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Every judge passes (owner ruling, 2026-11-07): an aggregate job covers only the parts it names, and each test shard's own no-new-failures table lists 0 new failures; with no judge, each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
+@@ -141,7 +136,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:59
+ #. Diagram element documentation
+-msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. Liveness duty: acknowledge each new merge request, and post a heartbeat, within holding.heartbeatMinutes, so siblings can tell a live merge manager from a stalled one."
++msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. One sweep runs merge:watch over every repository it holds. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:58
+@@ -214,6 +209,11 @@ msgstr ""
+ msgid "The sibling's six lines go into the merge manager's chat first; a request with no rendered preview and no reason goes back to the sibling (owner ruling, 2026-11-07). Then one card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
+ msgstr ""
+ 
++#: sdlc/processes/merge-manager-watch.bpmn:54
++#. Diagram element documentation
++msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
++msgstr ""
++
+ #: sdlc/processes/merge-manager-watch.bpmn:53
+ #. Diagram label
+ msgid "Timer, PR event, request, main run, or sibling message"
+diff --git a/translations/fr/processes/merge-manager-watch.pot b/translations/fr/processes/merge-manager-watch.pot
+index 87526b7c..9b071ce4 100644
+--- a/translations/fr/processes/merge-manager-watch.pot
++++ b/translations/fr/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-07T07:53:04.640Z\n"
++"POT-Creation-Date: 2026-11-07T08:08:43.066Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: fr\n"
+@@ -59,11 +59,6 @@ msgstr ""
+ msgid "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:54
+-#. Diagram element documentation
+-msgid "Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
+-msgstr ""
+-
+ #: sdlc/processes/merge-manager-watch.bpmn:100
+ #. Diagram element documentation
+ msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Every judge passes (owner ruling, 2026-11-07): an aggregate job covers only the parts it names, and each test shard's own no-new-failures table lists 0 new failures; with no judge, each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
+@@ -141,7 +136,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:59
+ #. Diagram element documentation
+-msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. Liveness duty: acknowledge each new merge request, and post a heartbeat, within holding.heartbeatMinutes, so siblings can tell a live merge manager from a stalled one."
++msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. One sweep runs merge:watch over every repository it holds. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:58
+@@ -214,6 +209,11 @@ msgstr ""
+ msgid "The sibling's six lines go into the merge manager's chat first; a request with no rendered preview and no reason goes back to the sibling (owner ruling, 2026-11-07). Then one card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
+ msgstr ""
+ 
++#: sdlc/processes/merge-manager-watch.bpmn:54
++#. Diagram element documentation
++msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
++msgstr ""
++
+ #: sdlc/processes/merge-manager-watch.bpmn:53
+ #. Diagram label
+ msgid "Timer, PR event, request, main run, or sibling message"
+diff --git a/translations/ru/processes/merge-manager-watch.pot b/translations/ru/processes/merge-manager-watch.pot
+index 70e37986..93cfcd4d 100644
+--- a/translations/ru/processes/merge-manager-watch.pot
++++ b/translations/ru/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-07T07:53:04.641Z\n"
++"POT-Creation-Date: 2026-11-07T08:08:43.067Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: ru\n"
+@@ -59,11 +59,6 @@ msgstr ""
+ msgid "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:54
+-#. Diagram element documentation
+-msgid "Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
+-msgstr ""
+-
+ #: sdlc/processes/merge-manager-watch.bpmn:100
+ #. Diagram element documentation
+ msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Every judge passes (owner ruling, 2026-11-07): an aggregate job covers only the parts it names, and each test shard's own no-new-failures table lists 0 new failures; with no judge, each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
+@@ -141,7 +136,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:59
+ #. Diagram element documentation
+-msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. Liveness duty: acknowledge each new merge request, and post a heartbeat, within holding.heartbeatMinutes, so siblings can tell a live merge manager from a stalled one."
++msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. One sweep runs merge:watch over every repository it holds. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:58
+@@ -214,6 +209,11 @@ msgstr ""
+ msgid "The sibling's six lines go into the merge manager's chat first; a request with no rendered preview and no reason goes back to the sibling (owner ruling, 2026-11-07). Then one card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
+ msgstr ""
+ 
++#: sdlc/processes/merge-manager-watch.bpmn:54
++#. Diagram element documentation
++msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
++msgstr ""
++
+ #: sdlc/processes/merge-manager-watch.bpmn:53
+ #. Diagram label
+ msgid "Timer, PR event, request, main run, or sibling message"
+diff --git a/translations/zh/processes/merge-manager-watch.pot b/translations/zh/processes/merge-manager-watch.pot
+index ac12b69e..734facfc 100644
+--- a/translations/zh/processes/merge-manager-watch.pot
++++ b/translations/zh/processes/merge-manager-watch.pot
+@@ -5,7 +5,7 @@
+ msgid ""
+ msgstr ""
+ "Project-Id-Version: merge-manager-watch\n"
+-"POT-Creation-Date: 2026-11-07T07:53:04.641Z\n"
++"POT-Creation-Date: 2026-11-07T08:08:43.067Z\n"
+ "PO-Revision-Date: \n"
+ "Last-Translator: \n"
+ "Language: zh\n"
+@@ -59,11 +59,6 @@ msgstr ""
+ msgid "Enforce the pacing rule of continual-progress (owner ruling, 2026-11-07, card Cancel CI): close superseded or duplicate PRs, such as a re-pin whose commits another open PR already carries, and cancel their runs; cancel stale queued runs that never started, never a main push run that has started; ask the owners of P3 PRs to return them to draft."
+ msgstr ""
+ 
+-#: sdlc/processes/merge-manager-watch.bpmn:54
+-#. Diagram element documentation
+-msgid "Every 10 minutes in the merge window, and hourly outside it, as a backstop. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
+-msgstr ""
+-
+ #: sdlc/processes/merge-manager-watch.bpmn:100
+ #. Diagram element documentation
+ msgid "Every check run on the head SHA has finished, and anything pending blocks; wait for every tier, e2e included. The full tier ran (the No new failures judge, or every full test shard); a draft or fast-tier-only pass never counts. Every judge passes (owner ruling, 2026-11-07): an aggregate job covers only the parts it names, and each test shard's own no-new-failures table lists 0 new failures; with no judge, each check concluded success, skipped or neutral. A cancelled job counts only when a later run of the same workflow on the same head passed that job. merge:watch prints this verdict per PR."
+@@ -141,7 +136,7 @@ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:59
+ #. Diagram element documentation
+-msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. Liveness duty: acknowledge each new merge request, and post a heartbeat, within holding.heartbeatMinutes, so siblings can tell a live merge manager from a stalled one."
++msgid "Read live, never from a stored copy: the open PRs (draft, head, mergeable, owed checks, open owner decisions), the queued and running runs with the age of the oldest, the latest main push run, and each PR owner's last push or comment. One sweep runs merge:watch over every repository it holds. Liveness duty: acknowledge each new merge request within holding.heartbeatMinutes, and post a heartbeat with each sweep, so siblings can tell a live merge manager from a stalled one."
+ msgstr ""
+ 
+ #: sdlc/processes/merge-manager-watch.bpmn:58
+@@ -214,6 +209,11 @@ msgstr ""
+ msgid "The sibling's six lines go into the merge manager's chat first; a request with no rendered preview and no reason goes back to the sibling (owner ruling, 2026-11-07). Then one card per batch, naming each PR, in priority order: P0 main-red fixes and the re-pin chain, P1 work they unblock, P2 CI speed, P3 the rest."
+ msgstr ""
+ 
++#: sdlc/processes/merge-manager-watch.bpmn:54
++#. Diagram element documentation
++msgid "The sweep cadence, as a backstop: every 10-15 minutes while a P0 PR is in flight, every 30 minutes otherwise. Otherwise a subscribed PR event, a sibling's merge request, a main run finishing, or a sibling's message wakes it. Never a polling loop inside a turn."
++msgstr ""
++
+ #: sdlc/processes/merge-manager-watch.bpmn:53
+ #. Diagram label
+ msgid "Timer, PR event, request, main run, or sibling message"
+-- 
+2.43.0
+
