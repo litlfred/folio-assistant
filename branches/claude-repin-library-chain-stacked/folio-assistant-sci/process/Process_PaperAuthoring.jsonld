@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/folio-assistant-sci.jsonld",
   "staging": {
     "branch": "claude/repin-library-chain-stacked",
-    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
+    "sha": "396e795c7de6efc32e6d0d4a7c4e5e6854d7c9ec",
     "pr": "3016/merge",
-    "run": "42456486300"
+    "run": "42460953692"
   },
   "@graph": [
     {
@@ -22,8 +22,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/process/Process_PaperAuthoring/node/StartEvent_NewPaper"
       ],
-      "nodeCount": 16,
-      "flowCount": 17,
+      "nodeCount": 17,
+      "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring"
     },
@@ -135,9 +135,18 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Validate",
-      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Render",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_PublishStatements",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/directory/sci-processes",
       "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/process/Process_PaperAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_PublishStatements",
+      "to": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Render",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12b"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/folio-assistant-sci/process/Process_PaperAuthoring#flow/A13",

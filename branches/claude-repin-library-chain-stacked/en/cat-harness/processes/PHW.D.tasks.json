@@ -1,0 +1,207 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "PHW.D",
+ "markers": [
+  {
+   "id": "PHW.D.1",
+   "name": "D1. Prepare client key or certificate under an accepted trust anchor",
+   "left": 23.29,
+   "top": 5.97,
+   "box": {
+    "left": 18.35,
+    "top": 14.18,
+    "width": 1.22,
+    "height": 3.58
+   }
+  },
+  {
+   "id": "PHW.D.2",
+   "name": "D2. Send dynamic client registration request (RFC 7591)",
+   "left": 44.05,
+   "top": 19.4,
+   "box": {
+    "left": 39.11,
+    "top": 27.61,
+    "width": 1.22,
+    "height": 3.58
+   }
+  },
+  {
+   "id": "PHW.D.9",
+   "name": "D9. Discover UDAP server metadata (SSRAA §2)",
+   "left": 44.05,
+   "top": 5.97,
+   "box": {
+    "left": 39.11,
+    "top": 14.18,
+    "width": 1.22,
+    "height": 3.58
+   }
+  },
+  {
+   "id": "PHW.D.10",
+   "name": "D10. Send UDAP registration request with signed software statement (SSRAA §3)",
+   "left": 54.43,
+   "top": 5.97,
+   "box": {
+    "left": 49.49,
+    "top": 14.18,
+    "width": 1.22,
+    "height": 3.58
+   }
+  },
+  {
+   "id": "PHW.D.3",
+   "name": "D3. Enter client by hand, scopes from the signed agreement text",
+   "left": 44.05,
+   "top": 37.31,
+   "box": {
+    "left": 39.11,
+    "top": 45.52,
+    "width": 1.22,
+    "height": 3.58
+   }
+  },
+  {
+   "id": "PHW.D.4",
+   "name": "D4. Validate client key or certificate against the accepted trust anchor",
+   "left": 54.43,
+   "top": 59.7,
+   "box": {
+    "left": 49.49,
+    "top": 67.91,
+    "width": 1.22,
+    "height": 3.58
+   }
+  },
+  {
+   "id": "PHW.D.5",
+   "name": "D5. Return trust list or certificate status",
+   "left": 54.43,
+   "top": 82.09,
+   "box": {
+    "left": 49.49,
+    "top": 90.3,
+    "width": 1.22,
+    "height": 3.58
+   }
+  },
+  {
+   "id": "PHW.D.7",
+   "name": "D7. Issue client_id (RFC 7591)",
+   "left": 75.19,
+   "top": 59.7,
+   "box": {
+    "left": 70.25,
+    "top": 67.91,
+    "width": 1.22,
+    "height": 3.58
+   }
+  },
+  {
+   "id": "PHW.D.8",
+   "name": "D8. Read authorization server metadata (RFC 8414)",
+   "left": 85.57,
+   "top": 5.97,
+   "box": {
+    "left": 80.63,
+    "top": 14.18,
+    "width": 1.22,
+    "height": 3.58
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D",
+ "tasks": {
+  "PHW.D.1": {
+   "id": "PHW.D.1",
+   "name": "D1. Prepare client key or certificate under an accepted trust anchor",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/node/PHW.D.1",
+   "lane": "Data Recipient System (OAuth client)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/lane/PHW.Lane.DataRecipient",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.D.2": {
+   "id": "PHW.D.2",
+   "name": "D2. Send dynamic client registration request (RFC 7591)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/node/PHW.D.2",
+   "lane": "Data Recipient System (OAuth client)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/lane/PHW.Lane.DataRecipient",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.D.9": {
+   "id": "PHW.D.9",
+   "name": "D9. Discover UDAP server metadata (SSRAA §2)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/node/PHW.D.9",
+   "lane": "Data Recipient System (OAuth client)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/lane/PHW.Lane.DataRecipient",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.D.10": {
+   "id": "PHW.D.10",
+   "name": "D10. Send UDAP registration request with signed software statement (SSRAA §3)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/node/PHW.D.10",
+   "lane": "Data Recipient System (OAuth client)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/lane/PHW.Lane.DataRecipient",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.D.3": {
+   "id": "PHW.D.3",
+   "name": "D3. Enter client by hand, scopes from the signed agreement text",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/node/PHW.D.3",
+   "lane": "Data Provider Administrator (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/lane/PHW.Lane.ProviderAdmin",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.D.4": {
+   "id": "PHW.D.4",
+   "name": "D4. Validate client key or certificate against the accepted trust anchor",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/node/PHW.D.4",
+   "lane": "Provider Authorization Server (administrator + decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/lane/PHW.Lane.AuthorizationServer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.D.5": {
+   "id": "PHW.D.5",
+   "name": "D5. Return trust list or certificate status",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/node/PHW.D.5",
+   "lane": "Trust Anchor (GDHCN or another accepted anchor)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/lane/PHW.Lane.TrustAnchor",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.D.7": {
+   "id": "PHW.D.7",
+   "name": "D7. Issue client_id (RFC 7591)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/node/PHW.D.7",
+   "lane": "Provider Authorization Server (administrator + decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/lane/PHW.Lane.AuthorizationServer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.D.8": {
+   "id": "PHW.D.8",
+   "name": "D8. Read authorization server metadata (RFC 8414)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/node/PHW.D.8",
+   "lane": "Data Recipient System (OAuth client)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.D/lane/PHW.Lane.DataRecipient",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

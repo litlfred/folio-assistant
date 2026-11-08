@@ -2735,6 +2735,169 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/holder",
+      "@type": "skos:Concept",
+      "prefLabel": "Holder",
+      "title": "Holder",
+      "notation": "holder",
+      "definition": "The person who holds a Personal Health Wallet, records consent, and presents verifiable health links and certificates. Specializes the ActorDefinition Holder (input/fsh/actors/actors.fsh).",
+      "altLabel": [
+        "Certificate Holder (person / Personal Health Wallet)",
+        "Holder (person / Personal Health Wallet)",
+        "VHL Holder (Patient / Personal Health Wallet)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/consent-recorder",
+      "@type": "skos:Concept",
+      "prefLabel": "Consent Recorder",
+      "title": "Consent Recorder",
+      "notation": "consent-recorder",
+      "definition": "The person or system that records a consent directive for the holder (IHE PCF Consent Recorder): the wallet itself, or a health worker on the holder's behalf.",
+      "altLabel": [
+        "PCF Consent Recorder (Wallet / VHL Sharer)",
+        "PCF Consent Recorder (wallet or health worker)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/consent-registry",
+      "@type": "skos:Concept",
+      "prefLabel": "Consent Registry",
+      "title": "Consent Registry",
+      "notation": "consent-registry",
+      "definition": "Holds consent directives and answers IHE PCF [ITI-108] Access Consent. Specializes the ActorDefinition ConsentRegistry (input/fsh/actors/actors.fsh).",
+      "altLabel": [
+        "PCF Consent Registry"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/vhl-sharer",
+      "@type": "skos:Concept",
+      "prefLabel": "VHL Sharer",
+      "title": "VHL Sharer",
+      "notation": "vhl-sharer",
+      "definition": "Holds the health information, generates verifiable health links, and enforces consent when a link is redeemed. Specializes the ActorDefinition Issuer (input/fsh/actors/actors.fsh).",
+      "altLabel": [
+        "VHL Sharer (enforcement and decision point)",
+        "VHL Sharer (grouped with PCF Consent Recorder)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/document-source",
+      "@type": "skos:Concept",
+      "prefLabel": "Document Source",
+      "title": "Document Source",
+      "notation": "document-source",
+      "definition": "The system that assembles a document about the holder before it is signed: the VHL Sharer when a document is shared, the Certificate Issuance Service when a certificate is issued. Adds the consent directives to it (process M).",
+      "altLabel": [
+        "Document source (VHL Sharer or Certificate Issuance Service)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/vhl-receiver",
+      "@type": "skos:Concept",
+      "prefLabel": "VHL Receiver",
+      "title": "VHL Receiver",
+      "notation": "vhl-receiver",
+      "definition": "Receives a verifiable health link, checks its signature against the trust list, and retrieves the information. Specializes the ActorDefinition Receiver (input/fsh/actors/actors.fsh).",
+      "altLabel": [
+        "VHL Receiver (Verifier / Relying Party)",
+        "VHL Receiver (receiving organisation or application)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/trust-anchor",
+      "@type": "skos:Concept",
+      "prefLabel": "Trust Anchor",
+      "title": "Trust Anchor",
+      "notation": "trust-anchor",
+      "definition": "Publishes the trust list of keys that participants use to check signatures. GDHCN is one possible anchor among others. Specializes the ActorDefinition TrustNetworkAnchor (input/fsh/actors/actors.fsh).",
+      "altLabel": [
+        "Trust Anchor (GDHCN or another accepted anchor)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/certificate-issuer",
+      "@type": "skos:Concept",
+      "prefLabel": "Certificate Issuer",
+      "title": "Certificate Issuer",
+      "notation": "certificate-issuer",
+      "definition": "A health worker or issuing system that issues a verifiable digital health certificate. Specializes the ActorDefinition Issuer (input/fsh/actors/actors.fsh).",
+      "altLabel": [
+        "Certificate Issuer (health worker or issuing system)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/certificate-verifier",
+      "@type": "skos:Concept",
+      "prefLabel": "Verifier",
+      "title": "Verifier",
+      "notation": "certificate-verifier",
+      "definition": "Checks a certificate and its status, with or without a status checking application. Specializes the ActorDefinition Receiver (input/fsh/actors/actors.fsh).",
+      "altLabel": [
+        "Verifier (with or without a status checking application)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/data-provider-administrator",
+      "@type": "skos:Concept",
+      "prefLabel": "Data Provider Administrator",
+      "title": "Data Provider Administrator",
+      "notation": "data-provider-administrator",
+      "definition": "The person at a data provider who registers clients under a data sharing agreement.",
+      "altLabel": [
+        "Data Provider Administrator (person)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/data-recipient-system",
+      "@type": "skos:Concept",
+      "prefLabel": "Data Recipient System",
+      "title": "Data Recipient System",
+      "notation": "data-recipient-system",
+      "definition": "A server that accesses data under a data sharing agreement (OAuth client) and performs the agreement's duties.",
+      "altLabel": [
+        "Data Recipient (duty performer)",
+        "Data Recipient System (OAuth client)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/provider-authorization-server",
+      "@type": "skos:Concept",
+      "prefLabel": "Provider Authorization Server",
+      "title": "Provider Authorization Server",
+      "notation": "provider-authorization-server",
+      "definition": "Registers clients and decides access under a data sharing agreement (policy decision and enforcement).",
+      "altLabel": [
+        "Policy Decision Point (permits())",
+        "Provider Authorization Server (administrator + decision point)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/auditor",
+      "@type": "skos:Concept",
+      "prefLabel": "Auditor",
+      "title": "Auditor",
+      "notation": "auditor",
+      "definition": "The person who reviews audit and provenance records under a data sharing agreement.",
+      "altLabel": [
+        "Auditor (person)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/archimate",
       "@type": "skos:Concept",
       "prefLabel": "Archimate",
@@ -3632,123 +3795,6 @@
         "cat-harness"
       ],
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/auditor",
-      "@type": "skos:Concept",
-      "prefLabel": "Auditor",
-      "notation": "auditor",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/certificate-issuer",
-      "@type": "skos:Concept",
-      "prefLabel": "Certificate Issuer",
-      "notation": "certificate-issuer",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/certificate-verifier",
-      "@type": "skos:Concept",
-      "prefLabel": "Verifier",
-      "notation": "certificate-verifier",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/consent-recorder",
-      "@type": "skos:Concept",
-      "prefLabel": "Consent Recorder",
-      "notation": "consent-recorder",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/consent-registry",
-      "@type": "skos:Concept",
-      "prefLabel": "Consent Registry",
-      "notation": "consent-registry",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/data-provider-administrator",
-      "@type": "skos:Concept",
-      "prefLabel": "Data Provider Administrator",
-      "notation": "data-provider-administrator",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/data-recipient-system",
-      "@type": "skos:Concept",
-      "prefLabel": "Data Recipient System",
-      "notation": "data-recipient-system",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/document-source",
-      "@type": "skos:Concept",
-      "prefLabel": "Document Source",
-      "notation": "document-source",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/holder",
-      "@type": "skos:Concept",
-      "prefLabel": "Holder",
-      "notation": "holder",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/provider-authorization-server",
-      "@type": "skos:Concept",
-      "prefLabel": "Provider Authorization Server",
-      "notation": "provider-authorization-server",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/trust-anchor",
-      "@type": "skos:Concept",
-      "prefLabel": "Trust Anchor",
-      "notation": "trust-anchor",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/vhl-receiver",
-      "@type": "skos:Concept",
-      "prefLabel": "VHL Receiver",
-      "notation": "vhl-receiver",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/vhl-sharer",
-      "@type": "skos:Concept",
-      "prefLabel": "VHL Sharer",
-      "notation": "vhl-sharer",
-      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
-      "deprecated": true,
-      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
     }
   ]
 }

@@ -229,8 +229,10 @@
         },
         {
           "kind": "business-processes",
-          "state": "no-directory",
-          "directories": [],
+          "state": "covered",
+          "directories": [
+            "smart-trust-phw/input/business-processes"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -238,7 +240,7 @@
           ],
           "typed": false,
           "adversarial": "never",
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "cache",
@@ -454,6 +456,7 @@
             "smart-base/schemas",
             "smart-base/scripts",
             "smart-base/templates",
+            "smart-trust-phw/tools",
             "who-iris/id-lookup",
             "who-iris/scripts"
           ],
@@ -1375,6 +1378,7 @@
             "folio-assistant-core/scenarios",
             "folio-assistant-sci/scenarios",
             "smart-base/scenarios",
+            "smart-trust-phw/scenarios",
             "who-iris/scenarios"
           ],
           "criteria": [
@@ -2058,7 +2062,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 23,
+      "count": 22,
       "entries": [
         {
           "kind": "archimate",
@@ -2074,13 +2078,6 @@
           "kind": "building-blocks",
           "criteria": 0,
           "gates": []
-        },
-        {
-          "kind": "business-processes",
-          "criteria": 0,
-          "gates": [
-            "bun run cat check:xml-comments"
-          ]
         },
         {
           "kind": "cdn-site",
@@ -2197,5 +2194,5 @@
       "entries": []
     }
   },
-  "total": 121
+  "total": 120
 }
