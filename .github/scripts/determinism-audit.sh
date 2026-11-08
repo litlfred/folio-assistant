@@ -91,7 +91,11 @@ if [ -n "$(git status --porcelain --untracked-files=normal)" ]; then
 fi
 
 # PREPARE (optional): a command run after every reset, before the marker, to
-# lay down what the reset removed and a producer reads (e.g. `state:mount`).
+# lay down what the reset removed and a producer reads. It must not read live
+# state: a `state:mount` here fetched the branch tips again before each run, so
+# a branch that moved between the runs read as a producer difference. Mount
+# such state once, BEFORE the audit, so the snapshot holds it and the reset
+# restores the same bytes for both runs (determinism-audit.yml does).
 # The snapshot: a private index over every file outside node_modules/ and
 # .cache/, ignored ones (the mounts) included. `snap` runs git against it.
 SNAP_INDEX="$OUT/snapshot.index"

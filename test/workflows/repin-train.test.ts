@@ -325,6 +325,18 @@ describe("the workflows", () => {
     expect(install).toBeLessThan(train.indexOf("git add -u"));
   });
 
+  test("after the pins move, the moved tools add newly declared directories, and only when they know how", () => {
+    const save = train.indexOf('cp index.config.json "$RUNNER_TEMP/index.config.before.json"');
+    const repin = train.indexOf("mount:repin:standing --summary-file");
+    const guard = train.indexOf("grep -q -- '--extend-from' cat-harness-tools/scripts/repin-standing.ts");
+    const extend = train.indexOf('mount:repin:standing --extend-from "$RUNNER_TEMP/index.config.before.json"');
+    expect(save).toBeGreaterThan(-1);
+    expect(save).toBeLessThan(repin);
+    expect(guard).toBeGreaterThan(repin);
+    expect(extend).toBeGreaterThan(guard);
+    expect(extend).toBeLessThan(train.indexOf("git add -u"));
+  });
+
   test("the train never commits workflow files, which its token may not push", () => {
     const restore = train.indexOf("git checkout -- .github/workflows");
     expect(restore).toBeGreaterThan(train.indexOf("mount:repin:standing --summary-file"));

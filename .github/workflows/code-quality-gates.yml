@@ -207,7 +207,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
 
       - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
         with:
@@ -463,7 +463,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -584,7 +584,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
 
       - name: Decide whether this tree's verdict already exists (bean qbco)
         id: decide
@@ -743,7 +743,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -1087,7 +1087,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
 
       # The same mount as the gates job, for the same reason one level down:
       # the test files that read the LIVE store (`bean-store-hygiene`,
@@ -1441,7 +1441,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
 
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
@@ -1560,15 +1560,19 @@ jobs:
       # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
       # a pass); on a push to main each gate is recorded. The records are
       # restored from main's run on the PR's base sha (nearest older one
-      # otherwise) and saved by this action's post-job step, which saves only
-      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      # otherwise, a cached-step WARM start: the cone re-checks every record
+      # against this tree before it skips anything) and saved from main by the
+      # save step before this job's verdict. A record is written only for a
+      # check that passed, so main saves even when another gate is red. See
+      # .github/scripts/ci-cone-prepare.sh.
       - name: Restore the CI cone records (bean 4rbc)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        uses: ./.github/actions/cached-step
         with:
-          path: build/ci-cone
-          key: ci-cone-v1-gates-kg-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
-          restore-keys: |
-            ci-cone-v1-gates-kg-
+          step: ci-cone-gates-kg
+          key: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          paths: build/ci-cone
+          trust: main-only
+          warm: "true"
       - name: Turn on the CI cone (bean 4rbc)
         run: bash .github/scripts/ci-cone-prepare.sh
 
@@ -1925,6 +1929,14 @@ jobs:
       - name: sci workflow security
         run: bun run cat check:workflows:security
 
+      # cat-harness-tools' gate that every test has a Gherkin Scenario and
+      # every Scenario names a test, over this repository's own tests and
+      # their Scenarios (folio-assistant#3019). Wired here by the same
+      # "no check script is unrun" finding (folio-assistant#2781); ported
+      # from folio-assistant#2985 with the same tools re-pin.
+      - name: every test has a Gherkin Scenario
+        run: bun run cat check:test-gherkin
+
       # The other half of the same claim: the rules are cited, AND the
       # instruction body beside them does not restate them uncited.
       #
@@ -2096,6 +2108,20 @@ jobs:
       - name: knowledge-graph audit
         run: bun run cat kg:audit:check
 
+      # The CI cone records this job wrote (bean 4rbc), saved from main only
+      # (cached-step main-only). Before the verdict, which must be last; a
+      # record exists only for a check that passed, so this runs whatever the
+      # job's other gates did.
+      - name: Save the CI cone records (bean 4rbc)
+        if: ${{ !cancelled() }}
+        uses: ./.github/actions/cached-step
+        with:
+          phase: save
+          step: ci-cone-gates-kg
+          key: ${{ github.sha }}
+          paths: build/ci-cone
+          trust: main-only
+
       # Q-PIPE-1 (#2899). `!cancelled()` so it runs after a red step too; it
       # fails when the record is incomplete, and on a PR when a failure is not
       # main's too (see `.github/scripts/cqg_judge.py`).
@@ -2169,7 +2195,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
@@ -2316,15 +2342,19 @@ jobs:
       # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
       # a pass); on a push to main each gate is recorded. The records are
       # restored from main's run on the PR's base sha (nearest older one
-      # otherwise) and saved by this action's post-job step, which saves only
-      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      # otherwise, a cached-step WARM start: the cone re-checks every record
+      # against this tree before it skips anything) and saved from main by the
+      # save step before this job's verdict. A record is written only for a
+      # check that passed, so main saves even when another gate is red. See
+      # .github/scripts/ci-cone-prepare.sh.
       - name: Restore the CI cone records (bean 4rbc)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        uses: ./.github/actions/cached-step
         with:
-          path: build/ci-cone
-          key: ci-cone-v1-gates-docs-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
-          restore-keys: |
-            ci-cone-v1-gates-docs-
+          step: ci-cone-gates-docs
+          key: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          paths: build/ci-cone
+          trust: main-only
+          warm: "true"
       - name: Turn on the CI cone (bean 4rbc)
         run: bash .github/scripts/ci-cone-prepare.sh
 
@@ -3096,6 +3126,20 @@ jobs:
       - name: translation index is current
         run: bun run cat translation:index:check
 
+      # The CI cone records this job wrote (bean 4rbc), saved from main only
+      # (cached-step main-only). Before the verdict, which must be last; a
+      # record exists only for a check that passed, so this runs whatever the
+      # job's other gates did.
+      - name: Save the CI cone records (bean 4rbc)
+        if: ${{ !cancelled() }}
+        uses: ./.github/actions/cached-step
+        with:
+          phase: save
+          step: ci-cone-gates-docs
+          key: ${{ github.sha }}
+          paths: build/ci-cone
+          trust: main-only
+
       # ── LAST ON PURPOSE, and this is the whole point of the placement ──────
       #
       # `translation:drift:check` is the one gate in this job that has been red
@@ -3198,7 +3242,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
 
       # `check:published-packages`, below, is the one gate in this job that
       # leaves TypeScript: `@litlfred/block-qa-schema` ships a Python half
@@ -3358,7 +3402,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts
@@ -3460,15 +3504,19 @@ jobs:
       # green run is SKIPPED ("SKIPPED — inputs unchanged since <sha>", never
       # a pass); on a push to main each gate is recorded. The records are
       # restored from main's run on the PR's base sha (nearest older one
-      # otherwise) and saved by this action's post-job step, which saves only
-      # a green job. See .github/scripts/ci-cone-prepare.sh.
+      # otherwise, a cached-step WARM start: the cone re-checks every record
+      # against this tree before it skips anything) and saved from main by the
+      # save step before this job's verdict. A record is written only for a
+      # check that passed, so main saves even when another gate is red. See
+      # .github/scripts/ci-cone-prepare.sh.
       - name: Restore the CI cone records (bean 4rbc)
-        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
+        uses: ./.github/actions/cached-step
         with:
-          path: build/ci-cone
-          key: ci-cone-v1-gates-unrun-${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
-          restore-keys: |
-            ci-cone-v1-gates-unrun-
+          step: ci-cone-gates-unrun
+          key: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.sha || github.sha }}
+          paths: build/ci-cone
+          trust: main-only
+          warm: "true"
       - name: Turn on the CI cone (bean 4rbc)
         run: bash .github/scripts/ci-cone-prepare.sh
 
@@ -4361,6 +4409,20 @@ jobs:
           bun run cat schema:viz
           bun run cat uploads:viz
 
+      # The CI cone records this job wrote (bean 4rbc), saved from main only
+      # (cached-step main-only). Before the verdict, which must be last; a
+      # record exists only for a check that passed, so this runs whatever the
+      # job's other gates did.
+      - name: Save the CI cone records (bean 4rbc)
+        if: ${{ !cancelled() }}
+        uses: ./.github/actions/cached-step
+        with:
+          phase: save
+          step: ci-cone-gates-unrun
+          key: ${{ github.sha }}
+          paths: build/ci-cone
+          trust: main-only
+
       # Q-PIPE-1 (#2899). `!cancelled()` so it runs after a red step too; it
       # fails when the record is incomplete, and on a PR when a failure is not
       # main's too (see `.github/scripts/cqg_judge.py`).
@@ -4683,7 +4745,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
         with:
           chromium: browser
 
@@ -4896,7 +4958,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
 
       - name: Mount the subgraphs kept on branches (bean 9c7h)
         # fsh-guts lives on cat/cat-harness/fsh-guts, not on main. Every reader
@@ -5101,7 +5163,7 @@ jobs:
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@9a4ccd9c7fbb089e58fbcdcdd0e0db7a404b50e2 # index.lock.json
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
 
       - name: Mount bootstrap and bootstrap-tools from the lock
         shell: bash  # gate-shell.sh is inside cat-harness, which this step mounts

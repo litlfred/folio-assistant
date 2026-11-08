@@ -66,6 +66,20 @@ describe("key", () => {
     expect(run("key", { ...base, KEY: "k", TRUST: "exact" }).code).toBe(2);
     expect(run("key", { ...base, KEY: "k", TRUST: "exact", PHASE: "save" }).code).toBe(0);
   });
+  test("warm is refused for exact and verdict, accepted for main-only", () => {
+    expect(run("key", { STEP: "s", KEY: "k", TRUST: "exact", PHASE: "restore", PATHS: "p", VERIFY: "true", WARM: "true" }).code).not.toBe(0);
+    expect(run("key", { STEP: "s", KEY: "k", TRUST: "verdict", PHASE: "restore", WARM: "true" }).code).not.toBe(0);
+    const ok = run("key", { STEP: "s", KEY: "k", TRUST: "main-only", PHASE: "restore", PATHS: "p", WARM: "true" });
+    expect(ok.code).toBe(0);
+    expect(ok.outs.key).toBe("cs1-s-k");
+  });
+
+  test("a main-only prefix restore is warm, never a hit", () => {
+    const r = run("decide", { STEP: "s", KEY: "cs1-s-k", TRUST: "main-only", PATHS: "p", DETERMINED: "true", EXACT_HIT: "false", MATCHED: "cs1-s-old" });
+    expect(r.outs.hit).toBe("false");
+    expect(r.outs.result).toBe("warm");
+  });
+
   test("a verdict caches no paths: its record is the output", () => {
     expect(run("key", { ...base, KEY: "k", TRUST: "verdict" }).code).toBe(2);
     const r = run("key", { ...base, KEY: "k", TRUST: "verdict", PATHS: "" });
@@ -169,9 +183,11 @@ describe("action.yml", () => {
     const ref = (action.runs.steps as Array<{ id?: string; if?: string }>).find((s) => s.id === "ref");
     expect(ref?.if).toContain("!(github.ref == 'refs/heads/main'");
   });
-  test("restores by prefix only for exact", () => {
+  test("restores by prefix only for exact, or for main-only that opts into warm", () => {
     const restore = action.runs.steps.find((s) => s.uses?.startsWith("actions/cache/restore"));
-    expect(restore?.with?.["restore-keys"]).toContain("inputs.trust == 'exact'");
+    expect(restore?.with?.["restore-keys"]).toBe(
+      "${{ (inputs.trust == 'exact' || (inputs.trust == 'main-only' && inputs.warm == 'true')) && steps.ns.outputs.prefix || '' }}",
+    );
   });
 });
 
