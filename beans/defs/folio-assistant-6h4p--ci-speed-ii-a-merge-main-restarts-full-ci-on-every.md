@@ -2,13 +2,13 @@
 # folio-assistant-6h4p
 $schema: bean/1.0.0
 title: 'CI speed II (a): merge-main restarts full CI on every labelled clean PR when main moves'
-status: todo
+status: in-progress
 type: task
 priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:15Z
-updated_at: 2026-11-05T23:28:34Z
+updated_at: 2026-11-08T07:03:00Z
 parent: folio-assistant-k3vv
 ---
 
@@ -31,3 +31,5 @@ _2026-11-05T11:47:29Z_ — **Owner ruling (card "Merge main", option 1):** agent
 _2026-11-05T14:38:58Z_ — Check-in: still unproven. merge-main push runs since #2947 (42012218063, 42016877441, 42017912916, 42022080188, 42035515935) printed no pick or skip line, so no opted-in PR existed for the conflicted-only rule to judge. The box stays open. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
 
 _2026-11-05T23:28:34Z_ — Still unproven. merge-main push runs 42079318182 (17:55Z) and 42126723318 (23:04Z) printed no pick or skip line, so no PR had opted in for the conflicted-only rule to judge. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
+
+_2026-11-08T07:03:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: inactive > 3h, completing verification/close-out in Round 4 drain.

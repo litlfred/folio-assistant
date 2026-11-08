@@ -8,7 +8,7 @@ priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T12:47:48Z
+updated_at: 2026-11-08T07:03:00Z
 parent: folio-assistant-k3vv
 ---
 
@@ -45,3 +45,5 @@ _2026-11-05T12:47:48Z_ — Early measurement (read-only, gh api run list) by htt
 | of which cancelled | 1.4 | 8.6 |
 
 The triggers #2950 targeted, /h before → after: Preview verify sweep [schedule] 3.88 → 0; Re-pin train verdict [schedule] 3.83 → 0; Staging publish [schedule] 3.75 → 0; Re-pin train verdict [workflow_run] 4.50 → 0; Feature Staging [push] 1.29 → 0; added: Scheduled sweeps 3.32 (5 ticks, one 15-min tick skipped by GitHub) + dispatched Re-pin verdict 0.66 + Feature Staging dispatch 0.66. Net ≈17.3 → ≈4.6 runner requests/h (−73 %, ≈ −300/day). Scheduled jobs: 15.0 → 7.9 jobs/h; runner-minutes 4.5 → 4.1/h (one 2.7-min Re-pin train run dominates the short window), per-job minutes rounded up 15.5 → 7.9/h. Billable timing API returns 0 ms (public repo), so minutes are from job start/end. The total went UP because PR traffic spiked after the merge (Code-quality gates [pull_request] 1.67 → 21.3/h; PR runs cancelled 0.6 → 7.3/h), not because of #2950. Sweeps logs show the dispatcher deciding correctly: 42018601119, 42020558167 (no work; #2948 conflict already previewed), 42028937014 (dispatched repin-train-verdict → 42029070188). Unmeasured yet: writer-records (before 82–133 min: 41915032726, 41920888208, 41938207169, 41995294681; after only 42022389370, skipped) and watchdog churn (CI health watchdog [workflow_run] 0.54 → 2.66/h, too few to judge). Verdict: HOLDS for the targeted triggers (−73 % of those requests); TOO EARLY for whole-repo runs/day, writer-records and watchdog — re-measure after 24 h on main.
+
+_2026-11-08T07:03:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: inactive > 3h, completing verification/close-out in Round 4 drain.

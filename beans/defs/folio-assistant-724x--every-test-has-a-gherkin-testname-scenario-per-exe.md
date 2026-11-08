@@ -6,7 +6,7 @@ status: in-progress
 type: feature
 priority: normal
 created_at: 2026-11-06T09:22:02Z
-updated_at: 2026-11-06T09:57:23Z
+updated_at: 2026-11-08T07:03:00Z
 parent: folio-assistant-4j43
 issue: 3006
 ---
@@ -16,3 +16,5 @@ Owner rule (litlfred, 2026-11-06): "A test should always have a Gherkin." Harnes
 PR litlfred/cat-harness#1107 (skill text + @test: grammar). Tools half blocked: no push access to cat-harness-tools in this session.
 
 Tools half: litlfred/cat-harness-tools#1596 (check:test-gherkin, test-has-gherkin kg criterion, test-plan/v1.1). Both PRs open, ready for review.
+
+_2026-11-08T07:03:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: inactive > 3h, completing verification/close-out in Round 4 drain.

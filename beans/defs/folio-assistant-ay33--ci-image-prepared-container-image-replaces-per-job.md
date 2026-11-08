@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-05T11:55:31Z
-updated_at: 2026-11-05T11:55:31Z
+updated_at: 2026-11-08T07:03:00Z
 parent: folio-assistant-k3vv
 ---
 
@@ -59,3 +59,5 @@ These need the siblings that own `if:` and work steps (CI speed 2/3/7/10).
 - 2026-11-07: #2999 was merged by the owner into #2985's branch (2f4e9a1), so it lands with #2985. The coordinator was asked to run `workflow-pins --write` there (the lock is at tools 9a4ccd9; the calls named 8e7ad11).
 - [ ] After #2985 lands: verify the ci-image publish on main makes the new tag (new key) and that jobs hit it.
 - [ ] After a re-pin carrying cat-harness-tools#1594: drop the 3 visible mount-from-lock steps.
+
+_2026-11-08T07:03:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: inactive > 3h, completing verification/close-out in Round 4 drain.

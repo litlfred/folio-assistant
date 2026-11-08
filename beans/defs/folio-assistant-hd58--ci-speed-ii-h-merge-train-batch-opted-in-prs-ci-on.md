@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T11:54:45Z
-updated_at: 2026-11-05T12:01:28Z
+updated_at: 2026-11-08T07:03:00Z
 parent: folio-assistant-k3vv
 ---
 
@@ -119,3 +119,5 @@ _2026-11-07T05:35Z_: #2997 merged 2026-11-06 10:30Z. The **first merge-train run
 ## Owner ruling, 2026-11-07T06:10Z (card, via the merge manager): "A. Yes, use the train"
 
 When the owner approves a folio-assistant PR that changes no workflow files, the merge manager labels it `merge-train` instead of merging it one by one. The train stacks the approved PRs, runs CI once and lands them together; a red batch is bisected. PRs that change workflows are still merged directly by the merge manager. The train session reports "landed: train #<n> (PRs …)" after each batch, and says when a batch bisects.
+
+_2026-11-08T07:03:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: inactive > 3h, completing verification/close-out in Round 4 drain.

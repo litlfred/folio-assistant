@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T12:36:36Z
+updated_at: 2026-11-08T07:03:00Z
 parent: folio-assistant-k3vv
 ---
 
@@ -53,3 +53,5 @@ _2026-11-05T11:18Z_ — #2952 merged: shards download ig-indexes (12–16 s → 
 _2026-11-05T12:35:29Z_ — litlfred/cat-harness-tools#1489 measured `state:mount` going from 48.5–58.8 s to 1.1–1.2 s per call, and Code-quality gates calls it in about 17 jobs. Reported by the analysis session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf; noted by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
 
 _2026-11-06T04:20Z_ (session https://claude.ai/code/session_01VQDpPd7y4nwxjHFm66CMKF): landed folio-assistant#2965 (`c37177e`, `.github/scripts/bundle-cache.sh`: the QA working copy and publish-time pages are keyed on a digest of the tree, the exact tool versions, every mounted state-branch tip and the qa-reports head, and reused from a trusted run that recorded the same digest) and #2966 (`d2f6726`: publish-pages folded into the qa-working-copy job, one setup and one runner wait fewer per run; `needs.publish-pages.*` → `needs.qa-working-copy.*`). Owner cards Q3 (merge the jobs), Q6 (land both), Q8 (merged by this session). Measured: misses cost 1–3 s per job; a hit needs the same tree AND unmoved state branches, which move every few minutes, so hits will be rare until keys narrow to traced reads (CI speed 14 is porting this onto `cached-step`). The QA working copy is not byte-reproducible across builds of one commit (17f6fa0a… vs 7ba8341b… at eaa6558), filed with CI speed 14's determinism audit. Main-push cache verdict: pending (run on d2f6726).
+
+_2026-11-08T07:03:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: inactive > 3h, completing verification/close-out in Round 4 drain.

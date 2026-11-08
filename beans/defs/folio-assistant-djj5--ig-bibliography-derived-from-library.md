@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-04T07:03:12Z
+updated_at: 2026-11-08T07:03:00Z
 tags:
     - references
     - library
@@ -108,3 +108,5 @@ _2026-11-04T22:21Z_ — folio-assistant#2941: main merged (8346f62); cat-harness
 _2026-11-04T23:38Z_ — folio-assistant#2941 MERGED (9537d71), green on all 35 checks: the index pins cat-harness-tools c807dc9 + who-iris 35f23d3. who-iris uploads/ is repository data end to end. Follow-up who-iris#179 drops the temporary index-ref. Told the train and #2926 sessions.
 
 _2026-11-05T00:28Z_ — who-iris#179 MERGED (1e5c01c): the temporary index-ref is gone, who-iris PRs are judged against folio-assistant main again. The who-iris uploads/ chain is complete: cat-harness-tools #1453, #1468, #1473; who-iris #176, #179; folio-assistant #2941.
+
+_2026-11-08T07:03:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: inactive > 3h, completing verification/close-out in Round 4 drain.
