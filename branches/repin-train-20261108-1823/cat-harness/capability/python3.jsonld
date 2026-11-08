@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1823/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1823/cat-harness/capability/python3.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1823/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1823",
+    "sha": "9dbe3ebbc7b12339feb9b9b5de19f5282d90a600",
+    "pr": "repin-train/20261108-1823",
+    "run": "42509814468"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1823/cat-harness/capability/python3",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Capability",
+      "localId": "python3",
+      "name": "Python 3",
+      "description": "Python 3 runtime with pip package manager.",
+      "detection": {
+        "method": "command",
+        "command": "python3 --version"
+      },
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/capability/python3"
+    }
+  ]
+}

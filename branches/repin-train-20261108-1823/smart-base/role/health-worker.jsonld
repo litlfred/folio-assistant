@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1823/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1823/smart-base/role/health-worker.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1823/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/role/health-worker.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1823",
+    "sha": "9dbe3ebbc7b12339feb9b9b5de19f5282d90a600",
+    "pr": "repin-train/20261108-1823",
+    "run": "42509814468"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/role/health-worker",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Health worker",
+      "title": "Health worker",
+      "notation": "health-worker",
+      "description": "The generic DAK persona who delivers care at the point of care and records it on a device: completes the DAK's SDC forms and acts on its decision-support guidance (`questionnaire-data-capture.bpmn`, `act-on-decision-support.bpmn`). A DAK's own health-worker roles (a vaccinator, a community health worker) carry these skills or inherit this role. WHO's DAK personas call this a health worker; the role is a lane, never a person.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "http://smart.who.int/base/skill/complete-sdc-questionnaire",
+        "http://smart.who.int/base/skill/review-decision-support-guidance",
+        "http://smart.who.int/base/skill/record-decision-rationale",
+        "http://smart.who.int/base/skill/inform-client",
+        "http://smart.who.int/base/skill/review-client-history"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/skills/ui/theming/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/package/theming",
+      "@type": "cat-harness:SkillPackage",
+      "name": "theming"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/create-sticky-note",
+      "@type": "bootstrap:Skill",
+      "name": "create-sticky-note",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e2c833a21fa9e33c04f710e8b9ecd1a344c931a1deb1533b6b9a1637d074fa55",
+        "bytes": 6964,
+        "sha256": "e2c833a21fa9e33c04f710e8b9ecd1a344c931a1deb1533b6b9a1637d074fa55"
+      },
+      "title": "Create a sticky note"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/site-presentation-assets",
+      "@type": "bootstrap:Skill",
+      "name": "site-presentation-assets",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/7080cee21a19d40d5078fae827fab430ab9c5665d4bcfb214de035a9b5a4027c",
+        "bytes": 4290,
+        "sha256": "7080cee21a19d40d5078fae827fab430ab9c5665d4bcfb214de035a9b5a4027c"
+      },
+      "title": "Site presentation assets — the node is the source, the stylesheet is a rendering"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-art-intake",
+      "@type": "bootstrap:Skill",
+      "name": "theme-art-intake",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/e96b1075868ae79df781a3c76034701a744939295a890a4f01e7a51bd772dd2a",
+        "bytes": 6008,
+        "sha256": "e96b1075868ae79df781a3c76034701a744939295a890a4f01e7a51bd772dd2a"
+      },
+      "title": "Theme art intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-artefacts",
+      "@type": "bootstrap:Skill",
+      "name": "theme-artefacts",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8993b2f0b2e7e25d3897132d1f64e05a962087a2b0697f860663711bff310b4e",
+        "bytes": 10593,
+        "sha256": "8993b2f0b2e7e25d3897132d1f64e05a962087a2b0697f860663711bff310b4e"
+      },
+      "title": "Per-artefact specialisation"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-contrast",
+      "@type": "bootstrap:Skill",
+      "name": "theme-contrast",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/371da63c8949701fd43cb9f110c06d157df2488451ddfa539b96fc4602144d9a",
+        "bytes": 3385,
+        "sha256": "371da63c8949701fd43cb9f110c06d157df2488451ddfa539b96fc4602144d9a"
+      },
+      "title": "Contrast: measured over the darkest thing that could be there"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-declaration",
+      "@type": "bootstrap:Skill",
+      "name": "theme-declaration",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/b6f859dfc0e80832952506c6a7bbebd0882d6eee2c41c8934ed107d1dca51114",
+        "bytes": 4676,
+        "sha256": "b6f859dfc0e80832952506c6a7bbebd0882d6eee2c41c8934ed107d1dca51114"
+      },
+      "title": "Declaring a theme"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-generation",
+      "@type": "bootstrap:Skill",
+      "name": "theme-generation",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ae436349cc1c8d03811563367ba4b4c0eec65ee52c7bb31a2b8478d1d2763d67",
+        "bytes": 3209,
+        "sha256": "ae436349cc1c8d03811563367ba4b4c0eec65ee52c7bb31a2b8478d1d2763d67"
+      },
+      "title": "Generating a theme's CSS"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theming",
+      "@type": "bootstrap:Skill",
+      "name": "theming",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/42375a2dd7aea1d5855e2e820ac992eb6932b1012d5fc5e6e7e67baca7fd49b5",
+        "bytes": 4584,
+        "sha256": "42375a2dd7aea1d5855e2e820ac992eb6932b1012d5fc5e6e7e67baca7fd49b5"
+      },
+      "title": "Theming, split on the stage it fails at"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/ui/theming",
+  "path": "skills/ui/theming/"
+}

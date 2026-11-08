@@ -1,0 +1,49 @@
+{
+  "resourceType" : "ValueSet",
+  "id" : "PHWImpliedConsentKind",
+  "text" : {
+    "status" : "extensions",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p class=\"res-header-id\"><b>Generated Narrative: ValueSet PHWImpliedConsentKind</b></p><a name=\"PHWImpliedConsentKind\"> </a><a name=\"hcPHWImpliedConsentKind\"> </a><ul><li>Include these codes as defined in <a href=\"http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActCode.html\"><code>http://terminology.hl7.org/CodeSystem/v3-ActCode</code></a><span title=\"Version is explicitly stated to be 11.0.0\"> version &#x1F4CD;11.0.0</span><table class=\"none\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td><td><b>Display</b></td><td><b>Definition</b></td></tr><tr><td><a href=\"http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActCode.html#v3-ActCode-IMPLIED\">IMPLIED</a></td><td>implied consent</td><td>A grantor's presumed assent to the grantee's terms of agreement is based on the grantor's behavior, which may result from not expressly assenting to the consent directive offered, or from having no right to assent or dissent offered by the grantee.<br/><br/>*Comment:* Implied or &quot;implicit&quot; consent occurs when the behavior of the grantor is understood by a reasonable person to signal agreement to the grantee's terms.<br/><br/>*Usage Note:* Implied consent with no opportunity to assent or dissent to certain terms is considered &quot;basic consent&quot;.<br/><br/>**Examples:** <br/><br/> *  Healthcare: A patient schedules an appointment with a provider, and either does not take the opportunity to expressly assent or dissent to the provider's consent directive, does not have an opportunity to do so, as in the case where emergency care is required, or simply behaves as though the patient \\[grantor\\] agrees to the rights granted to the provider \\[grantee\\] in an implicit consent directive.<br/> *  An injured and unconscious patient is deemed to have assented to emergency treatment by those permitted to do so under jurisdictional laws, e.g., Good Samaritan laws.<br/> *  Non-healthcare: Upon receiving a driver's license, the driver is deemed to have assented without explicitly consenting to undergoing field sobriety tests.<br/> *  A corporation that does business in a foreign nation is deemed to have deemed to have assented without explicitly consenting to abide by that nation's laws.</td></tr><tr><td><a href=\"http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActCode.html#v3-ActCode-IMPLIEDD\">IMPLIEDD</a></td><td>implied consent with opportunity to dissent</td><td>A grantor's presumed assent to the grantee's terms of agreement, which is based on the grantor's behavior, and includes a right to dissent to certain terms.<br/><br/>*Comment:* A grantor assenting to the grantee's terms of agreement may or may not exercise a right to dissent to grantor selected terms or to grantee's selected terms to which a grantor may dissent.<br/><br/>*Usage Note:* Implied or &quot;implicit&quot; consent with an &quot;opportunity to dissent&quot; occurs when the grantor's behavior is understood by a reasonable person to signal assent to the grantee's terms of agreement whether the grantor requests or the grantee approves further restrictions, is considered &quot;granular consent&quot;.<br/><br/>**Examples:** <br/><br/> *  Healthcare Examples: A healthcare provider deems a patient's assent to disclosure of health information to family members and friends, but offers an opportunity or permits the patient to dissent to such disclosures.<br/> *  A health information exchanges deems a patient to have assented to disclosure of health information for treatment purposes, but offers the patient an opportunity to dissents to disclosure to particular provider organizations.<br/> *  Non-healthcare Examples: A bank deems a banking customer's assent to specified collection, access, use, or disclosure of financial information as a requirement of holding a bank account, but provides the user an opportunity to limit third-party collection, access, use or disclosure of that information for marketing purposes.</td></tr><tr><td><a href=\"http://terminology.hl7.org/7.4.0/CodeSystem-v3-ActCode.html#v3-ActCode-NOPP\">NOPP</a></td><td>notice of privacy practices</td><td>An implied privacy consent directive or notification, which the data subject may or may not acknowledge. The notification specifies permitted actions, which may include access, use, or disclosure of any and all personal information. The notification specifies the scope of personal information, which may include de-identified information, and personal effects, such as biometrics, biospecimen or genetic material, that may be used to identify an individual in a registry or repository. The notification specifies the purposes for which personal information may be used such as treatment, payment, operations, research, information exchange, public health, disaster, quality and safety reporting; as required by law including court order, law enforcement, national security, military authorities; and for data analytics, marketing, and profiling.<br/><br/>*Usage Notes:* Map: An &quot;implied&quot; consent directive maps to ISO/TS 17975:2015(E) definition forImplied: Consent to Collect, Use and Disclose personal health information is implied by the actions or inactions of the individual and the circumstances under which it was implied&quot;.</td></tr></table></li></ul></div>"
+  },
+  "url" : "http://smart.who.int/trust-phw/ValueSet/PHWImpliedConsentKind",
+  "version" : "0.2.0-litlfred",
+  "name" : "PHWImpliedConsentKind",
+  "title" : "Kinds of implied consent (HL7 ActConsentDirective)",
+  "status" : "draft",
+  "experimental" : false,
+  "date" : "2026-11-08T17:15:03+00:00",
+  "publisher" : "WHO",
+  "contact" : [{
+    "name" : "WHO",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://who.int"
+    }]
+  }],
+  "description" : "The HL7 v3 ActConsentDirective codes for consent presumed from the holder's behaviour: implied consent, implied consent with opportunity to dissent, and notice of privacy practices. Each code's definition is HL7's (terminology.hl7.org, CodeSystem v3-ActCode).",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
+  "compose" : {
+    "include" : [{
+      "system" : "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+      "version" : "11.0.0",
+      "concept" : [{
+        "code" : "IMPLIED",
+        "display" : "implied consent"
+      },
+      {
+        "code" : "IMPLIEDD",
+        "display" : "implied consent with opportunity to dissent"
+      },
+      {
+        "code" : "NOPP",
+        "display" : "notice of privacy practices"
+      }]
+    }]
+  }
+}
