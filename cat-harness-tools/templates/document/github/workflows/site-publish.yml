@@ -1,0 +1,25 @@
+# Site publish (by hand) — runs the agent's own `stage-local.ts` on a GitHub
+# runner, from the steps this folio's instance declares under `site.build`.
+#
+# Written by `folio_init` from cat-harness-tools/templates/document/. The
+# steps are the platform's reusable
+# litlfred/cat-harness-tools/.github/workflows/folio-site-publish.yml. On main
+# it publishes the gh-pages root; on any other branch, branches/<branch>/.
+name: Site publish (by hand)
+
+on:
+  workflow_dispatch:
+    inputs:
+      plan:
+        description: "Only print what would run (--plan)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    uses: litlfred/cat-harness-tools/.github/workflows/folio-site-publish.yml@main
+    with:
+      plan: ${{ inputs.plan }}
