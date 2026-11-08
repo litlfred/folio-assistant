@@ -64,3 +64,5 @@ _2026-11-07T08:45Z_ — Owner (card in merge manager session ~08:43Z) "A. Allow 
 _2026-11-07T09:06Z_ — fa#3016 red (.jsonld siblings, 5611 stale) was a tools bug; draft tools#1631 (fd26d26) fixes libraryInstanceOf for library/corpus/. core#639 → dbad175 (3 manifests regenerated). ch#1032 → 1bbce61 (main merged, contains ea548f0). fa#3016 → 9dbcabf (on #2985 4dad168). Local gates pass at those pins. All draft; waiting on #2985.
 
 _2026-11-07T09:54Z_ — tools#1631 merged as c0374a8 (owner card in MM session). fa#3016 .jsonld green after core#639 fb9e15e (2 site nodes). ch#1032 marked ready at 1bbce61 (fast tier green, cat-harness queue 3); full tier judging. Sent "ready:" for #1631 earlier.
+
+_2026-11-08T08:02Z_ — merge manager: 07:30-08:01Z merged train fa#3034, smart-trust-phw#47, dth-hrh#105 (re-pin), tools#1604/#1606/#1602/#1675, smart-base#310, smart-trust#142, smart-trust-phw#33, fhir-harness#300. Mains red: fa (watchdog; fix tools#1683 awaits owner OK), cat-harness/core/bootstrap (JSON-LD publish; fix tools#1677 awaits owner). Held green: cat-harness#1133, #1135, fa#3014. Queue 47 at 08:00Z: swarm hold re-sent.
