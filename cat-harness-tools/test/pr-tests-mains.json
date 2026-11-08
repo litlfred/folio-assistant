@@ -1,0 +1,4 @@
+{
+  "_comment": "The instances pr-tests.yml takes at their main, at the commit its pin job reads, in place of folio-assistant's index lock. cat-harness, with bootstrap-tools and bootstrap, because cat-harness main is generated with them (see the workflow header). folio-assistant-core and fhir-harness, because this repository's main moves with theirs: a PR here that dropped the content/pipeline link (#473) needed fhir-harness main (fhir-harness#118), and one that declared a plugin slot (#468) needed the core main that fills it (core#160); under the lock both read as new failures until the index re-pinned. Test material, so it may name layers above this one (check:reference-direction's TEST MATERIAL rule); the workflow names none of them.",
+  "mains": ["cat-harness", "bootstrap-tools", "bootstrap", "folio-assistant-core", "folio-assistant-sci", "fhir-harness"]
+}

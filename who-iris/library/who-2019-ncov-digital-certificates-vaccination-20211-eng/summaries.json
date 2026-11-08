@@ -1,0 +1,785 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "who-2019-ncov-digital-certificates-vaccination-20211-eng",
+  "summaries": [
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-000",
+      "source": "sections/sec-000-1-introduction.md",
+      "source_hash": "2bff973d3589ab4f4fe4e7428744aa2ffa09ea1a1596cbf9ec5ac032c38a88a4",
+      "narrative": [
+        {
+          "text": "Introduces Section 1 by framing the global COVID-19 pandemic context and the need for countries to provide verifiable records of COVID-19 vaccination status that augment fraud- and loss-prone paper cards while respecting human rights, equity, ethical considerations, and data protection principles.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-001",
+      "source": "sections/sec-001-11-purpose-of-this-document.md",
+      "source_hash": "15fe0d2f045d2adcc29d86a7f62eb33ee140995d92db3b41506b9e113fc7b818",
+      "narrative": [
+        {
+          "text": "States the purpose of the document in Section 1.1: to provide a software-agnostic baseline set of requirements, a core data set, and a digital-signature approach based on free and open standards so Member States can design, adapt, and deploy interoperable DDCC:VS solutions in paper-plus-barcode or digital formats.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-002",
+      "source": "sections/sec-002-12-target-audience.md",
+      "source_hash": "2c13eafc90bb6e7416a13ebcad83d8e6db133fbfeebe5731609371afe5fc4a5b",
+      "narrative": [
+        {
+          "text": "Identifies the primary target audience in Section 1.2 as national authorities responsible for creating or overseeing COVID-19 digital vaccination certificate solutions, along with supporting government partners, international organizations, NGOs, local businesses, and trade associations.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-003",
+      "source": "sections/sec-003-13-scope.md",
+      "source_hash": "8ae6516ea1756179b3d00abc13ed5d504be76b3be11c2de32f791d42531ed83f",
+      "narrative": [
+        {
+          "text": "Defines the in-scope and out-of-scope boundaries in Section 1.3: in-scope elements cover ethical and data-protection principles, Continuity of Care and Proof of Vaccination use cases, the core data set, the HL7 FHIR implementation guide, and national trust framework considerations, whereas SARS-CoV-2 test and infection/recovery certificates, immunity-passport policy decisions, AEFI reporting, rollout monitoring, country-specific 2D barcode identity-binding algorithms, and selective disclosure functionality are out of scope.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-004",
+      "source": "sections/sec-004-14-assumptions.md",
+      "source_hash": "b3f6123cac633b5e19b87b383dfd8371528889d68434f64202f491b3ed97c567",
+      "narrative": [
+        {
+          "text": "Outlines the foundational assumptions in Section 1.4 regarding Member States' responsibilities in setting up and operating a DDCC:VS solution, including legal and human-rights compliance, preventing digital exclusion via paper-and-barcode support indexed by a Health Certificate Identifier (HCID), establishing a national Public Key Infrastructure (PKI) with root and document signer certificates (DSCs) not tied to individual health workers, and operating DDCC:VS Generation, Registry, and optional Repository services.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-005",
+      "source": "sections/sec-005-15-methods.md",
+      "source_hash": "b0d17d51e3dca327f752b58c3ccb67b93655c2c5f1144fefd79d4c412345fdd8",
+      "narrative": [
+        {
+          "text": "Describes the methods in Section 1.5 used to develop the guidance, highlighting the creation of the multisectoral Smart Vaccination Certificate Working Group and consultations with WHO Member States and partner organizations to ensure software-agnostic, globally implementable standards.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-006",
+      "source": "sections/sec-006-16-additional-who-guidance-documents.md",
+      "source_hash": "4b946603b42bb5706d727f7cf60f94ffc4794dec8e97cb8f81cb53268ae5b957",
+      "narrative": [
+        {
+          "text": "Lists related and baseline WHO guidance documents in Section 1.6 covering risk-based international travel, public health and social measures (PHSMs), International Health Regulations (2005) Emergency Committee statements, COVID-19 vaccination monitoring, home-based immunization records, and national vaccine deployment plans.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-007",
+      "source": "sections/sec-007-17-other-initiatives.md",
+      "source_hash": "febadcb8f8560211935bbc98e04d830c24b258c49c3906a9432eb2faa1c312eb",
+      "narrative": [
+        {
+          "text": "Notes in Section 1.7 that the DDCC:VS core data set guidance can be used to generate artefacts conformant with other international initiatives, such as the ICAO Visible Digital Seals for Non-Constrained Environments (VDS-NC) guidelines and the EU Digital COVID Certificate, and points to the WHO DDCC FHIR Implementation Guide.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-008",
+      "source": "sections/sec-008-2-ethical-considerations-and-data-protection-pri.md",
+      "source_hash": "72cb5757024001ea461efbe31db9b908de053c403151d1820e4ba98f6352e247",
+      "narrative": [
+        {
+          "text": "Introduces Section 2 by emphasizing that ethical considerations—such as equity and equitable access—and data protection principles must inform both the technical design criteria and national deployments of any DDCC:VS solution.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-009",
+      "source": "sections/sec-009-21-ethical-considerations-for-a-ddccvs.md",
+      "source_hash": "3aacb4527c91933ebe7b9e86826b44d2a605c714b006294a4bcaadcec8d49a90",
+      "narrative": [
+        {
+          "text": "Details the ethical considerations for designing and deploying a DDCC:VS in Section 2.1, examining public health objectives (promoting welfare, preventing health inequities and digital exclusion, and maintaining public trust), procedural values (transparency, inclusiveness, accountability, and responsiveness), ethical risks of 'health pass' uses amid scientific uncertainties and unequal vaccine access, and six core recommendations for domestic implementation.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-010",
+      "source": "sections/sec-010-22-data-protection-principles-for-a-ddccvs.md",
+      "source_hash": "895dd8ad5628e47dff8243a1b013ff93d31c3bcf5c9d76e44430703a7624b36a",
+      "narrative": [
+        {
+          "text": "Establishes seven fundamental data protection principles for DDCC:VS in Section 2.2 to guide national authorities and safeguard privacy and human rights: lawful basis, legitimate use and fair processing; transparency; purpose limitation and specification; proportionality, necessity and data minimization; confidentiality and security (including breach notification); data subject rights, complaint and legal redress; and independent oversight and accountability.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-011",
+      "source": "sections/sec-011-23-ddccvs-design-criteria.md",
+      "source_hash": "0ccf8ee72cf83c1b017816d24e4515a8fe7b8dafac8cf12a21d8513cc1edc61a",
+      "narrative": [
+        {
+          "text": "Introduces Section 2.3 by stating that the preceding ethical considerations and data protection principles directly informed the formulation of the DDCC:VS design criteria.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-012",
+      "source": "sections/sec-012-3-continuity-of-care-scenario.md",
+      "source_hash": "188cda5943a05cff53a60468c4f73b33ca4218c19d05442e3f471494af765a52",
+      "narrative": [
+        {
+          "text": "Lists the 11 DDCC:VS design criteria (completing Section 2.3, including preventing inequities, online/offline paper and digital accessibility, non-discrimination across formats, zero cost to vaccinated individuals, open standards without vendor lock-in, environmental sustainability, health-system integration, data minimization, anti-fraud mechanisms, and manual paper verification fallback) and introduces Section 3 on the Continuity of Care scenario.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-013",
+      "source": "sections/sec-013-31-key-settings-personas-and-digital-services.md",
+      "source_hash": "eecb356d37930690137a3ea2a9bd571fdfee2d97cbc74b33ca2fea8fab034eb8",
+      "narrative": [
+        {
+          "text": "Defines the physical settings (Care Site and Data Entry Site), key personas (Table 2: Subject of Care, DDCC:VS Holder, Vaccinator, Data Entry Personnel, and Public Health Authority), and core digital services (Table 3: Digital Health Solution and DDCC:VS Generation Service) for the Continuity of Care scenario in Section 3.1.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-014",
+      "source": "sections/sec-014-32-continuity-of-care-workflows-and-use-cases.md",
+      "source_hash": "03f330caef314fa4812bf0dc7d9fa7655063702442e9d96bcd02b50bb0459416",
+      "narrative": [
+        {
+          "text": "Describes the Continuity of Care workflows and use cases in Section 3.2 (illustrated in Figures 3–6 and Table 4), comparing three pathways—Paper First (UC001), Offline Digital (UC002), and Online Digital (UC003)—from care-site presentation and vaccine administration to paper-card HCID recording and HL7 FHIR digital certificate generation, and notes how the WHO DDCC FHIR Implementation Guide operationalizes these workflows.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-015",
+      "source": "sections/sec-015-33-functional-requirements-for-continuity-of-car.md",
+      "source_hash": "378be8a1d72e0b8caa0d195761610e272806ea37e9ff3fec701b59d2c869ba41",
+      "narrative": [
+        {
+          "text": "Presents Table 5 in Section 3.3, specifying 36 high-level functional requirements (`DDCC.FXNREQ.001` through `DDCC.FXNREQ.036`) across the Paper First (UC001), Offline Digital (UC002), and Online Digital (UC003) Continuity of Care use cases, covering patient identification, paper card issuance and replacement, HCID barcode association, offline data capture and validation, and FHIR generation and digital signing.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-016",
+      "source": "sections/sec-016-4-proof-of-vaccination-scenario.md",
+      "source_hash": "95928d8c725a2f76273a0c491a1d986ccaa651f0072ff86c7ce9b7c469446a99",
+      "narrative": [
+        {
+          "text": "Introduces Section 4 on the Proof of Vaccination scenario, explaining that it relies on a Public Health Authority having a trusted means to digitally sign an HL7 FHIR document representing the DDCC:VS core data set for purposes defined by Member States in compliance with their legal and policy frameworks.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-017",
+      "source": "sections/sec-017-41-key-settings-personas-and-digital-services.md",
+      "source_hash": "356fac1ff06b6d307df7fc180beffc23d51ca26b734f70306be710c58ad410f4",
+      "narrative": [
+        {
+          "text": "Defines the verification site setting, key personas (Table 6: DDCC:VS Holder, Verifier, National PHA, and International PHA), and digital services (Table 7: Health Certificate Identifier, Status Checking Application, DDCC:VS Generation Service, DDCC:VS Registry Service, and optional DDCC:VS Repository Service) for the Proof of Vaccination scenario in Section 4.1.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-018",
+      "source": "sections/sec-018-42-proof-of-vaccination-workflows-and-use-cases.md",
+      "source_hash": "81afbd6e46869104833d3a4eb0220056cf689f44e2e64b25c536bbb6e552f7b4",
+      "narrative": [
+        {
+          "text": "Details the Proof of Vaccination service relationships (Figure 7) and verification workflows in Section 4.2 (Figures 8–12 and Table 8), comparing four verification use cases—Manual Verification (UC004), Offline Cryptographic Verification (UC005), Online Status Check for a National DDCC:VS (UC006), and Online Status Check for an International DDCC:VS (UC007)—and noting their operationalization in the WHO DDCC FHIR Implementation Guide.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-019",
+      "source": "sections/sec-019-43-functional-requirements-for-proof-of-vaccinat.md",
+      "source_hash": "4e4d5fbbbe907e6f60866f252d773a807b6bd3fb39bf6e86570f841130ad0fcb",
+      "narrative": [
+        {
+          "text": "Presents Table 9 in Section 4.3, specifying functional requirements (`DDCC.FXNREQ.037` through `DDCC.FXNREQ.061`) across the four Proof of Vaccination verification use cases (UC004–UC007), covering anti-fraud markings on paper cards, barcode scanning, offline signature verification and logging, online registry queries, data minimization during verification, PKI and DSC maintenance, SMS-based checks, and cross-border PHA verification and fraud notification.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-020",
+      "source": "sections/sec-020-5-ddccvs-core-data-set.md",
+      "source_hash": "945894f9cc8be1afb6d78867f35c8e2846dda31b63bde413d8fc1a60eb076bab",
+      "narrative": [
+        {
+          "text": "Introduces Section 5 on the DDCC:VS core data set, explaining that it comprises the critical Subject of Care and vaccination-event data elements required for interoperability across the Continuity of Care and Proof of Vaccination scenarios, either used directly or mapped from existing terminologies, with a full data dictionary provided in Web Annex A.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-021",
+      "source": "sections/sec-021-51-core-data-set-principles.md",
+      "source_hash": "5b861a5a5998660439142fb9841b477ac8e10486863743ab79a794544f06a450",
+      "narrative": [
+        {
+          "text": "Outlines the core data set principles in Section 5.1—data minimization, open standards, implementability on both paper and digital formats, and integration with broader immunization information systems (EIRs, DHIS2, Vigiflow)—and recommends HL7 FHIR (based on the International Patient Summary) and ICD-11 as the preferred open standard and terminology system, with ICD-10, ATC, and SNOMED CT GPS mappings supported.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-022",
+      "source": "sections/sec-022-52-core-data-elements.md",
+      "source_hash": "70af50599902de82a2b478980a1b8d7bb9b5a8fb2641ebb332b54a2e5f3321d3",
+      "narrative": [
+        {
+          "text": "Defines the DDCC:VS core data elements in Section 5.2 across three tables: Table 10 (header section identifying the Subject of Care: name, date of birth, unique identifier, and sex), Table 11 (vaccination event data for each dose: vaccine/prophylaxis, brand, manufacturer or market authorization holder, batch number, vaccination date, valid-from date, dose number, total doses, country, administering centre, health worker signature or ID, targeted disease, and next-dose due date), and Table 12 (certificate metadata: issuer, HCID, certificate validity dates, and schema version). It also introduces Section 6 on the National Trust Architecture and PKI chain of trust (Figure 13) for signing and verifying a DDCC:VS.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-023",
+      "source": "sections/sec-023-61-signing-a-ddccvs.md",
+      "source_hash": "92c56edd153701f292b5aad6d9623b448db74489ea730c7a2cefdd8f6050d2cb",
+      "narrative": [
+        {
+          "text": "Explains the three-step process for digitally signing a DDCC:VS in Section 6.1 (illustrated in Figure 14): generating a root certificate key pair, signing Document Signer Certificate (DSC) key pairs with the root private key, and hashing the vaccination data and signing the document hash with the DSC private key.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-024",
+      "source": "sections/sec-024-62-verifying-a-ddccvs-signature.md",
+      "source_hash": "2bae48ca720db65e78fdca547dfec63be6e26a2cae80dcbaa004f418b3882fd1",
+      "narrative": [
+        {
+          "text": "Describes the four-step process for verifying a DDCC:VS digital signature in Section 6.2 (illustrated in Figure 15), where a Verifier computes the document hash, reads the signed hash, decrypts it using the DSC public key to confirm data integrity and signer authenticity, and validates the DSC signature using the PHA's root certificate public key.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-025",
+      "source": "sections/sec-025-63-trusting-a-ddccvs-signature.md",
+      "source_hash": "9d138c22815944a49dc8e554c9ef3f48b37570fe1b477d558811790842671e63",
+      "narrative": [
+        {
+          "text": "Explains the mathematical and operational basis for trusting a DDCC:VS signature in Section 6.3, noting how asymmetric cryptography guarantees authenticity and non-repudiation while PKI provides trusted public-key distribution and key revocation mechanisms.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-026",
+      "source": "sections/sec-026-7-national-governance-considerations.md",
+      "source_hash": "5fa42f8e4127d22e9f354da80ab30eb780f4c24d8b937f9325a64545103d9ee2",
+      "narrative": [
+        {
+          "text": "Outlines national governance considerations in Section 7 for operating a DDCC:VS trust framework at the PHA and Member State levels, comparing Root Certificate Authority and Master List approaches for sharing authorized DSCs and specifying policy requirements for certificate issuance, verification rules, revocation and remedy procedures, and cross-border data management and privacy protection.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-027",
+      "source": "sections/sec-027-8-implementation-considerations.md",
+      "source_hash": "483a3fc332276142294669bbc7a50651162a634217907ed95e155571fca02047",
+      "narrative": [
+        {
+          "text": "Introduces Section 8 on implementation considerations, contrasting two strategic approaches for Member States: deploying a short-term DDCC:VS solution with a defined sunset roadmap for the COVID-19 emergency versus building a long-term digital vaccination certificate infrastructure that supports routine immunization records and broader digital health initiatives.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-028",
+      "source": "sections/sec-028-81-considerations-before-deploying.md",
+      "source_hash": "944e63fe2b502baa9cca56ad4f9b1e74526a77b381c2c38ede452f3c79810830",
+      "narrative": [
+        {
+          "text": "Provides pre-deployment checklists and key questions in Section 8.1 organized by the WHO/ITU National eHealth Strategy Toolkit and Digital Implementation Investment Guide (DIIG) components: strategy and investment, infrastructure, legislation/policy/compliance, leadership and governance, workforce, services and applications, standards and interoperability, and evolving health content.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-029",
+      "source": "sections/sec-029-82-key-factors-to-consider-with-solution-develop.md",
+      "source_hash": "be28df5384e1fd732418a43ddcd96ad75e32b87d7f33555152fa01fe22686599",
+      "narrative": [
+        {
+          "text": "Details key factors for Public Health Authorities to consider when procuring and partnering with external solution developers in Section 8.2, including clear terms of reference, fixed-price versus time-and-materials contracts, realistic phased timelines, single supplier versus consortium models, measurable KPIs, supplier expertise and project management track records, communication and cultural alignment, long-term partnership potential, and intellectual property and software licensing rights.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-030",
+      "source": "sections/sec-030-83-cost-category-considerations.md",
+      "source_hash": "2e4e038feefeb87474e3f2a6d910a04d85942dcce2b14953b009df57a726aec0",
+      "narrative": [
+        {
+          "text": "Examines cost categories and budget drivers for short- and long-term DDCC:VS implementations in Section 8.3, presenting Table 13 across six lifecycle phases: ongoing governance and staffing, development and technology setup, deployment (hardware, testing, training, roll-out, and outreach), integration and interoperability, scaling (printing, human resources, IT licensing, and IT scalability), and sustained operations.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-031",
+      "source": "sections/sec-031-84-additional-resources-to-support-implementatio.md",
+      "source_hash": "2f68a2af79b023d3b11410b367d56af9fe2805abf5bc618ded01066ec6168d96",
+      "narrative": [
+        {
+          "text": "Lists additional resources to support DDCC:VS implementation in Section 8.4, including the WHO DDCC:VS HL7 FHIR Implementation Guide and core data dictionary, example implementations and compatible software (EU Digital COVID Certificate and Gateway, OpenSRP FHIR Core, India's DIVOC, OpenHIE DDCC Transactions Mediator), ICAO VDS-NC and OpenHIE specifications, the WHO DIIG, and WHO international travel guidance.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-032",
+      "source": "sections/sec-032-references.md",
+      "source_hash": "a97ae9b37505f56ea7a0bc675f33672052896b56885298058cce2629b07948c6",
+      "narrative": [
+        {
+          "text": "Provides the numbered bibliography of 40 references cited throughout the DDCC:VS technical specifications and implementation guidance.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-033",
+      "source": "sections/sec-033-annexes.md",
+      "source_hash": "145802ce2d635d28f77c9c797a302203bef78c221d7391ff9b72c5241679aa72",
+      "narrative": [
+        {
+          "text": "Presents the section divider and Annex 1 header introducing the annexes of the DDCC:VS guidance document.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-034",
+      "source": "sections/sec-034-1-illustrative-example-of-digital-documentation.md",
+      "source_hash": "1166147bb1b9d7e1a46ff702ebeb957d11c3775fbd0f273504a8556d3e55b4e7",
+      "narrative": [
+        {
+          "text": "Presents Annex 1, showing an illustrative example (adapted from Sonder Design) of an A6 booklet-style paper DDCC:VS vaccination card featuring a Health Certificate Identifier (HCID), QR codes, and inside/outside layouts (Figures A1.1 and A1.2).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-035",
+      "source": "sections/sec-035-2-business-process-symbols-used-in-workflows.md",
+      "source_hash": "199f68b9588b167ee2894fd740384c0bfb3fa5f0d38eed5ffb690632a783d0e4",
+      "narrative": [
+        {
+          "text": "Presents Annex 2 (Table A2.1), defining the standardized business process mapping symbols—pool, swim lane, start event, end event, activity/task, sequence flow, message flow, and gateway—used in the Continuity of Care and Proof of Vaccination workflow diagrams.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-036",
+      "source": "sections/sec-036-3-guiding-principles-for-mapping-the-who-family.md",
+      "source_hash": "8ae2804427383a3774df2cea64c4f69540f76e2a93ebeb9f686281f7d251b664",
+      "narrative": [
+        {
+          "text": "Presents Annex 3, setting out 15 guiding principles for mapping existing classifications and terminologies to ICD-11 and other WHO Family of International Classifications (WHO-FIC) standards, covering use-case definition, unidirectional single-purpose maps, transparent documentation, producer involvement, quality assurance and gold-standard usage validation, versioning and maintenance, manual and computational mapping workflows, equivalence and cardinality definitions, machine-readability, and mapping to the ICD-11 foundation component.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-037",
+      "source": "sections/sec-037-4-what-is-public-key-infrastructure-pki.md",
+      "source_hash": "86fa15b63fc60199b306d210a42238f42033e75bd7421cc5308cba010a3b9622",
+      "narrative": [
+        {
+          "text": "Presents Annex 4, providing an accessible primer on Public Key Infrastructure (PKI), public–private key pairs, X.509 digital certificates, and how certificate authorities, Document Signer Certificates (DSCs), and the DDCC:VS Registry Service work together to sign and cryptographically verify vaccination certificates.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-038",
+      "source": "sections/sec-038-5-non-functional-requirements.md",
+      "source_hash": "1b7cb03646e370c15689eb986e7ca3e6f58482c033063f893219ba8c0160cfe6",
+      "narrative": [
+        {
+          "text": "Presents Annex 5 (Table A5.1), specifying 64 generic non-functional requirements (`DDCC.NFXNREQ.001` through `DDCC.NFXNREQ.064`) for DDCC:VS digital solutions across 11 categories: accessibility, availability (SLAs), current and forecast capacity, disaster recovery/business continuity/resilience, performance/response time, security and privacy, regulation and compliance, reliability, horizontal and vertical scalability, supportability, usability, and data retention/archiving.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-039",
+      "source": "sections/sec-039-6-open-health-information-exchange-openhie-based.md",
+      "source_hash": "301c8fc9bb2220db8db44c2164b3ca63d822f6a8fffb8f77ea15a36fbc854af8",
+      "narrative": [
+        {
+          "text": "Presents Annex 6, illustrating an Open Health Information Exchange (OpenHIE)-based architectural blueprint (Figure A6.1) for point-of-care DDCC:VS issuance and describing how OpenHIE registries and repositories—Terminology Services, Client Registry, Facility Registry, Health Worker Registry, Product Catalogue, and Shared Health Record (SHR)—supply and persist DDCC:VS core data elements.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "block": "library/who-2019-ncov-digital-certificates-vaccination-20211-eng/blocks/prose-sec-front-matter",
+      "source": "sections/sec-front-matter.md",
+      "source_hash": "ac77f27a0bab88ded110809e1bbf8e55437e581a94e81bb70251dad51a9afb6c",
+      "narrative": [
+        {
+          "text": "Presents the front matter of the WHO interim guidance Digital Documentation of COVID-19 Certificates: Vaccination Status (DDCC:VS) — Technical Specifications and Implementation Guidance (27 August 2021, WHO/2019-nCoV/Digital_certificates/vaccination/2021.1), including copyright and licensing notices, the table of contents, acknowledgements, abbreviations, a glossary of technical and data-protection terms, and the Executive Summary. The Executive Summary defines the DDCC:VS as a digitally signed HL7 FHIR representation of COVID-19 vaccination events supporting two primary scenarios (Continuity of Care and Proof of Vaccination) across paper and digital formats without requiring a smartphone, and outlines the minimum policy, data, and service requirements (including Health Certificate Identifiers, a Generation Service, and a Registry Service).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://471661a6-34dc-46e5-8346-afccbb441c25"
+          },
+          "drafted_at": "2026-10-30"
+        }
+      ]
+    }
+  ]
+}
