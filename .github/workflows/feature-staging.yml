@@ -428,11 +428,11 @@ jobs:
       # Bun, the mounts index.lock.json pins, node_modules,
       # Chromium:
       # from the prepared image when one exists for this key, else mounted
-      # and installed (bean ay33, .github/actions/ci-setup). state:mount stays a step of its
+      # and installed (bean ay33, cat-harness-tools' shared ci-setup). state:mount stays a step of its
       # own:
       # the state branches move with every write, so no image holds them.
       - name: Set up from the prepared CI image (bean ay33)
-        uses: ./.github/actions/ci-setup
+        uses: litlfred/cat-harness-tools/.github/actions/ci-setup@4e79324d5d3637bbc592b657f71f1ec3b6b86797 # index.lock.json
         with:
           chromium: browser
 
