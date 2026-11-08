@@ -2,11 +2,11 @@
 # folio-assistant-ftpc
 $schema: bean/1.0.0
 title: 'dth-pc: drop flattened step/risks table text from prose pages'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-11-02T19:30:00Z
-updated_at: 2026-11-08T07:00:00Z
+updated_at: 2026-11-08T11:50:00Z
 parent: folio-assistant-dthl
 tags:
     - dth-pc
@@ -43,3 +43,5 @@ _2026-11-06T08:35:45Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3)
 _2026-11-07T16:20Z_ — Thread paused 11-02 19:34Z (usage limit). #18 merged 11-05 by the owner. Padding: #994's rule did not take effect on the #18 preview; cat-harness has since moved block icons to the right gutter with 1rem panel padding (fe6c98f, 11-06), so the ask now rides the next re-pin. #17 rebased to 69b0a5e and marked ready by the owner 11-06; CI red only on check:corpus-gate (platform crash: 2 mounts have id beans, dpi-h-ra.beans + dth-sc.beans, cat-harness-tools resolveBeanGraphNode) and check:bean-one-home (live stores; passes now). Commented on #17. Cards Q-FT-2, Q-FT-3 still open.
 
 _2026-11-08T07:00Z_ — Owner: Q-FT-2 B, Q-FT-3 A. #17 a050ec3 removes the 4 emptied blocks, tags merged into step tables (only t-ch03-step-2 gained tags). Card Q-FT-4 (merge #17) open. Q-FT-3: the check already exists, core 2ecd260 (dth-block-check prose rule, merged 11-06 by another session). Verified with core main's script: scaffold base flags all 12 pages, #17 head flags none. dth-pc's pinned core predates it and dth-pc does not run dth-block-check (24 other problems: missing DMN/BPMN companions etc.).
+
+_2026-11-08T11:50Z_ — Owner Q-FT-4 A (project chat 11:45Z). #17 merged 4776d0c into claude/dth-pc-scaffold; issue dth-pc#15 closed. Done. Left for later (not owed here): dth-pc does not yet run dth-block-check (24 other gaps); corpus-gate beans-mount crash in cat-harness-tools.
