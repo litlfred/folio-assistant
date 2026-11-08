@@ -297,4 +297,27 @@ _2026-11-08T15:30:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a3
   - `litlfred/cat-harness#1162` (`f94e32b72f68cff60435bdba3f0c3d8c58681166`, removes `diff.md` + `/diff` from `cat-harness`).
   - Note for Merge Manager: back-to-back atomic pair (identical to `#676` + `#1136`); `core#687` and `cat-harness#1162` each pass 100% of tests and typechecks, with only the cross-layer `diff` uniqueness (`skill:commands:check`) vs `folio-changeset -> diff` (`graph:check-tools`) check waiting on the other half to land.
 
+_2026-11-08T16:10:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a380-8dd5bf5cc0f3`, Round 7 second-wave update):
+- **2 more PRs merged by Merge Manager (`~16:00Z`):**
+  - `litlfred/cat-harness-tools#1717` (`qa-sweep-pr: also compare by check_suite`, closing `cat-harness-tools#1716`) — greened at `1eb0260929a2f0606b7b9e00d62ed1a7f31dc5fc` and merged at `32aaeba0`.
+  - `litlfred/folio-assistant-core#685` (`fix: render library-asset and external-reference detail pages`, closing `folio-assistant-core#682` & `#683`) — greened at `9d17eff4fc6da58fe7806a065d193475dd563c4d` and merged.
+- **15 more PRs greened, marked ready for review, labeled `ready-to-merge`, and commented `"ready: <sha>"` for Merge Manager:**
+  1. `litlfred/fhir-harness#314` (`fix: pass --site-root to link-Evidence-to-Requirements.py in site-generate`, closing `fhir-harness#313`): `ready: 8eeced277a16434960bc50a62acf167a459e84b9` (`#issuecomment-6724103864`).
+  2. `litlfred/fhir-harness#317` (`feat(fsh): narrative page lists for Actors, Requirements, CapabilityStatements and Obligations`, closing `fhir-harness#316`, stacked on `#314`): `ready: 972bcde3cd0c7b78e50336f3f2dc9fe05f5a9e5d` (`#issuecomment-6724722130`).
+  3. `litlfred/cat-harness#1155` (`fix(ui-core): give folder-row open chevron an explicit vertical transform`, closing `cat-harness#1154`): `ready: 67c9460b96929ecc7f631e7b382fc813a83ad8f9` (`#issuecomment-6724110216`).
+  4. `litlfred/cat-harness-tools#1718` (`fix(ui): give the folder-row open chevron an explicit vertical transform`, refs `cat-harness#1154`): `ready: aeeca18262dc4b3f8cd1c709a7079ee57c6eaee1` (`#issuecomment-6724110447`).
+  5. `litlfred/cat-harness-tools#1697` (`Compute keywords at site build; stop tracking keywords.json in git`, `cat-harness#1144` Step 1a — fixed `CodeQL` / `md-pipe-escape.test.ts` in `scripts/lib/keywords-page.ts:132`): `ready: d90a339ebd2eb6171535a9c0e56dfcbde6ccbee7` (`#issuecomment-6724417148`).
+  6. `litlfred/cat-harness#1146` (`Compute keywords at site build; stop tracking keywords.json in git`, `cat-harness#1144` Step 1b): `ready: 6f290dd88540ccb933f5386533ed48ce372af19b` (`#issuecomment-6724520810`).
+  7. `litlfred/folio-assistant-core#680` (`Stop requiring committed keywords.json for uploaded documents`, `cat-harness#1144` Step 1c): `ready: 2c21b1a25c275856f421e0c26b899b7d0fee40ca` (`#issuecomment-6724171071`).
+     - Step 2 removal PRs resolved & green in draft (ready to mark once Step 1 lands): `litlfred/cat-harness#1147` (`679eb3ad5b651aa843d22b31d08a679cbeb54742`, 65 `library/corpus/**/keywords.json` rename/delete conflicts resolved), `litlfred/folio-assistant-core#681` (`30b1dba18dd8df2f3d720b1a61e54bdb3430dba8`), and `litlfred/who-iris#201` (`48cc016bc0888d8172c3696b8f8e043d96377b4c`).
+  8. `litlfred/cat-harness#1163` (`fix(external-schemas): replace 20 placeholder descriptions in omg-bpmn-2.0.json`, fixing `cat-harness#1150` Item 1): `ready: 715163c6b7eb30d94944f1456241944dba30c958` (`#issuecomment-6724565850`).
+  9. `litlfred/cat-harness-tools#1726` (`fix(external-schemas): treat "An X." / "The X." as placeholder descriptions`, companion to `cat-harness#1163`): `ready: 391cefd467a6a82aacf2483315058badaa348e0c` (`#issuecomment-6724628496`).
+  10. `litlfred/smart-trust#171` (`fix(docs): fix English source typos and refresh gettext templates`, closing `smart-trust#149`): `ready: ba5e8aed0f79ee398f934534c3e6b603f2a8be61` (`#issuecomment-6724521807`).
+  11. `litlfred/cat-harness-tools#1720` (`fix(site): render only the top layer's pages on a release site`, closing `cat-harness-tools#1719` site-scope chain): `ready: 0b9ffb51cc1893a7d59071e831b495ffbdd4d5f0` (`#issuecomment-6724554275`).
+  12. `litlfred/cat-harness#1156` (`docs(ui-core): a release site renders only the top layer's pages`, closing `cat-harness-tools#1719` site-scope chain): `ready: 460117aaca6b7f47c91d1218cf36fc116ed8cff5` (`#issuecomment-6724554695`).
+  13. `litlfred/folio-assistant-core#686` (`fix(site): scope the content-object index and bib to the top layer`, closing `cat-harness-tools#1719` site-scope chain): `ready: e1422a665185789f9457e7f74cb31c6699a72e37` (`#issuecomment-6724555079`).
+  14. `litlfred/fhir-harness#315` (`fix(site): skip the IG fragment step when the top layer is not an IG`, closing `cat-harness-tools#1719` site-scope chain): `ready: a8c82d305d38df92beb740c6117969049ce21fb7` (`#issuecomment-6724555436`).
+  15. `litlfred/cat-harness-tools#1727` (`perf(kg-validate): memoize per-instance validators and directory maps`, fixing `smart-base#331` & `folio-assistant#3043` shard 2/4 `kg-validate-nested-instances.test.ts` 120s timeout: `198.2s -> 1.97s` ~100x speedup): `ready: 1f93380f6fc3f6f2b0836fe7ffbcfae507cdc814` (`#issuecomment-6724778152`).
+
+
 
