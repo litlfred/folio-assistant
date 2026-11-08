@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/cat-harness/schema/merge-review.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1227",
+    "sha": "4923f69bacb36f9444ac9a213e750401f1a986c4",
+    "pr": "repin-train/20261108-1227",
+    "run": "42480379202"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/cat-harness/schema/merge-review",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "merge-review",
+      "title": "merge-review",
+      "summary": "Agentic pre-merge review and would-have-blocked counterfactual schemas.",
+      "module": "schemas/sdlc/merge-review.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/merge-review"
+    }
+  ]
+}

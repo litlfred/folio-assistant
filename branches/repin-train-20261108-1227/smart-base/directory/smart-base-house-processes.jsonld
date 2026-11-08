@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/smart-base/directory/smart-base-house-processes.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-house-processes.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1227",
+    "sha": "4923f69bacb36f9444ac9a213e750401f1a986c4",
+    "pr": "repin-train/20261108-1227",
+    "run": "42480379202"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-house-processes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-house-processes",
+      "path": "processes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/processes"
+      ],
+      "description": "The BPMN this layer owns as house processes, under `content/` (as against `methodologies/processes/`, which holds methodologies adopted from the corpus): `l2-dak-authoring.bpmn`, whose tracks each call `l2-component-edit-review.bpmn` (the agent edits, checks, renders and stages one component while a person in its reviewing role reviews it alongside, never as a gate); `smart-guideline-end-to-end.bpmn`, use case to consuming application through the L1 KG, L2 and L3, with adjudication as QA rather than a gate, calling `l2-dak-authoring.bpmn` and `dak-l3-ig.bpmn` for its L2 and L3 stages; `dth-authoring.bpmn`, a Digital Transformation Handbook from sources to publication in seven stages, each ending in a milestone recorded on the work plan; `SGAuthoring.DAKLifecycle.bpmn`; `classify-and-code-content.bpmn`; and two point-of-care processes any DAK calls by call activity, `questionnaire-data-capture.bpmn` (a health worker completes an SDC form, the system extracts its resources) and `act-on-decision-support.bpmn` (the system applies a PlanDefinition, the health worker accepts or declines, may note why on a branch nothing waits for, and the care plan is updated). Skill refs this layer does not own resolve down through `fhir-harness`. cat-harness-tools' `render:bpmn` draws each beside its source (bean folio-assistant-akiq); folio-assistant's just-the-docs site, which mounts this directory, shows them.",
+      "readmePath": "processes/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

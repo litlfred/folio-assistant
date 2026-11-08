@@ -1,0 +1,39 @@
+{
+  "$ref": "#/definitions/Illustration",
+  "definitions": {
+    "Illustration": {
+      "type": "object",
+      "properties": {
+        "src": {
+          "description": "The image, relative to the instance root. It carries NO text: the step title and any caption are translatable page text, rendered from the step's `title` and `alt`.",
+          "type": "string",
+          "minLength": 1
+        },
+        "alt": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What the picture shows: translatable page text, rendered beside the image as its caption, never baked into it."
+        },
+        "prompt": {
+          "description": "The scene, as a prompt for an image generator, for when no picture exists yet. It asks for no readable text, signs or logos.",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "alt"
+      ],
+      "additionalProperties": false,
+      "description": "A step's picture, or the brief for drawing it. A picture carries no text; the title and caption are page text."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/IllustrationSchema.schema.json",
+  "title": "IllustrationSchema",
+  "description": "Generated from `IllustrationSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261108-1227",
+    "sha": "4923f69bacb36f9444ac9a213e750401f1a986c4",
+    "pr": "repin-train/20261108-1227",
+    "run": "42480379202"
+  }
+}

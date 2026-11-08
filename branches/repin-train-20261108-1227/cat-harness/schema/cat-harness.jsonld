@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/cat-harness/schema/cat-harness.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1227",
+    "sha": "4923f69bacb36f9444ac9a213e750401f1a986c4",
+    "pr": "repin-train/20261108-1227",
+    "run": "42480379202"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/cat-harness/schema/cat-harness",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "cat-harness",
+      "title": "cat-harness",
+      "summary": "The `CatHarness` declaration — what an instance IS, at its root.",
+      "module": "schemas/kg/cat-harness.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/cat-harness/tools/cat-harness-schema.jsonld"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/cat-harness"
+    }
+  ]
+}

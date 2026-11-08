@@ -1,0 +1,78 @@
+{
+  "$ref": "#/definitions/WorkshopSheet",
+  "definitions": {
+    "WorkshopSheet": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "size": {
+          "default": "A3",
+          "type": "string",
+          "enum": [
+            "A3",
+            "A4"
+          ]
+        },
+        "modules": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9][A-Za-z0-9.-]*$"
+          }
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "lines": {
+                "default": 2,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 12
+              }
+            },
+            "required": [
+              "label"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "assessmentStrip": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "modules"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/workshop/WorkshopSheetSchema.schema.json",
+  "title": "WorkshopSheetSchema",
+  "description": "Generated from `WorkshopSheetSchema` in schemas/process/workshop.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261108-1227",
+    "sha": "4923f69bacb36f9444ac9a213e750401f1a986c4",
+    "pr": "repin-train/20261108-1227",
+    "run": "42480379202"
+  }
+}

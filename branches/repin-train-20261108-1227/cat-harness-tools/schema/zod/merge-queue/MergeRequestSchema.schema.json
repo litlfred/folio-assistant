@@ -1,0 +1,92 @@
+{
+  "$ref": "#/definitions/MergeRequest",
+  "definitions": {
+    "MergeRequest": {
+      "type": "object",
+      "properties": {
+        "prUrl": {
+          "type": "string",
+          "pattern": "^https:\\/\\/github\\.com\\/[^/\\s]+\\/[^/\\s]+\\/pull\\/\\d+$"
+        },
+        "headSha": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "sessionUrl": {
+          "type": "string",
+          "pattern": "^https:\\/\\/claude\\.ai\\/code\\/session_[A-Za-z0-9]+$"
+        },
+        "changes": {
+          "type": "string",
+          "minLength": 1
+        },
+        "preview": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "url"
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri"
+                }
+              },
+              "required": [
+                "kind",
+                "url"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "kind": {
+                  "type": "string",
+                  "const": "none"
+                },
+                "reason": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "required": [
+                "kind",
+                "reason"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "lookFor": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fullTierGreen": {
+          "type": "boolean",
+          "const": true
+        }
+      },
+      "required": [
+        "prUrl",
+        "headSha",
+        "sessionUrl",
+        "changes",
+        "preview",
+        "fullTierGreen"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/merge-queue/MergeRequestSchema.schema.json",
+  "title": "MergeRequestSchema",
+  "description": "Generated from `MergeRequestSchema` in schemas/sdlc/merge-queue.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261108-1227",
+    "sha": "4923f69bacb36f9444ac9a213e750401f1a986c4",
+    "pr": "repin-train/20261108-1227",
+    "run": "42480379202"
+  }
+}

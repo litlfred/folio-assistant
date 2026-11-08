@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/bootstrap-tools/directory/bootstrap-tools-scenarios.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1227",
+    "sha": "4923f69bacb36f9444ac9a213e750401f1a986c4",
+    "pr": "repin-train/20261108-1227",
+    "run": "42480379202"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/bootstrap-tools/directory/bootstrap-tools-scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "bootstrap-tools-scenarios",
+      "path": "scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/scenarios"
+      ],
+      "title": "The toolset's Roles",
+      "description": "`roles.json`: the Roles the toolset's Processes bind their lanes to. The Site Publisher, who renders, deploys, checks and reports; and GitHub Pages, the host, acted upon.",
+      "readmePath": "scenarios/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1227/bootstrap-tools/directory/bootstrap-tools-scenarios",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/directory/bootstrap-tools-scenarios"
+    }
+  ]
+}

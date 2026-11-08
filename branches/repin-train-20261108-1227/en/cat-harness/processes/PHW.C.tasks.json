@@ -1,0 +1,216 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "PHW.C",
+ "markers": [
+  {
+   "id": "PHW.C.1",
+   "name": "C1. Present VHL payload to Receiver [ITI-YY4] Provide VHL",
+   "left": 21.22,
+   "top": 4.76,
+   "box": {
+    "left": 14.39,
+    "top": 11.31,
+    "width": 1.73,
+    "height": 2.86
+   }
+  },
+  {
+   "id": "PHW.C.2",
+   "name": "C2. Request Trust Anchor key list [ITI-YY2] Retrieve Trust List with DID",
+   "left": 21.22,
+   "top": 23.45,
+   "box": {
+    "left": 14.39,
+    "top": 30,
+    "width": 1.73,
+    "height": 2.86
+   }
+  },
+  {
+   "id": "PHW.C.3",
+   "name": "C3. Return signed trust list [ITI-YY2] (GDHCN or other Trust Anchor)",
+   "left": 21.22,
+   "top": 42.26,
+   "box": {
+    "left": 14.39,
+    "top": 48.81,
+    "width": 1.73,
+    "height": 2.86
+   }
+  },
+  {
+   "id": "PHW.C.4",
+   "name": "C4. Verify VHL signature & request manifest [ITI-YY5] Retrieve Manifest",
+   "left": 36.69,
+   "top": 23.45,
+   "box": {
+    "left": 29.5,
+    "top": 30,
+    "width": 1.73,
+    "height": 2.86
+   }
+  },
+  {
+   "id": "PHW.C.5",
+   "name": "C5. Query active patient Consent [ITI-108] Access Consent: Search",
+   "left": 36.69,
+   "top": 63.1,
+   "box": {
+    "left": 29.5,
+    "top": 69.64,
+    "width": 1.73,
+    "height": 2.86
+   }
+  },
+  {
+   "id": "PHW.C.6",
+   "name": "C6. Return active PCF Consent Bundle [ITI-108] Access Consent",
+   "left": 36.69,
+   "top": 85.36,
+   "box": {
+    "left": 29.5,
+    "top": 91.9,
+    "width": 1.73,
+    "height": 2.86
+   }
+  },
+  {
+   "id": "PHW.C.8",
+   "name": "C8. Return authorized manifest & documents [ITI-YY5] Retrieve Manifest (permit)",
+   "left": 75.9,
+   "top": 57.74,
+   "box": {
+    "left": 67.99,
+    "top": 64.05,
+    "width": 1.73,
+    "height": 2.86
+   }
+  },
+  {
+   "id": "PHW.C.9",
+   "name": "C9. Refuse disclosure with OperationOutcome [ITI-YY5] (deny or unknown)",
+   "left": 75.9,
+   "top": 69.64,
+   "box": {
+    "left": 67.99,
+    "top": 75.95,
+    "width": 1.73,
+    "height": 2.86
+   }
+  },
+  {
+   "id": "PHW.C.10",
+   "name": "C10. Process clinical documents or refusal notice [ITI-YY5] response",
+   "left": 91.73,
+   "top": 23.45,
+   "box": {
+    "left": 84.35,
+    "top": 30,
+    "width": 1.73,
+    "height": 2.86
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C",
+ "tasks": {
+  "PHW.C.1": {
+   "id": "PHW.C.1",
+   "name": "C1. Present VHL payload to Receiver [ITI-YY4] Provide VHL",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/node/PHW.C.1",
+   "stepHref": "PHW.C.html#step-PHW.C.1",
+   "lane": "VHL Holder (Patient / Personal Health Wallet)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/lane/PHW.Lane.Holder",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.C.2": {
+   "id": "PHW.C.2",
+   "name": "C2. Request Trust Anchor key list [ITI-YY2] Retrieve Trust List with DID",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/node/PHW.C.2",
+   "stepHref": "PHW.C.html#step-PHW.C.2",
+   "lane": "VHL Receiver (Verifier / Relying Party)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/lane/PHW.Lane.VHLReceiver",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.C.3": {
+   "id": "PHW.C.3",
+   "name": "C3. Return signed trust list [ITI-YY2] (GDHCN or other Trust Anchor)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/node/PHW.C.3",
+   "stepHref": "PHW.C.html#step-PHW.C.3",
+   "lane": "Trust Anchor (e.g. GDHCN, national, or regional anchor)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/lane/PHW.Lane.TrustAnchor",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.C.4": {
+   "id": "PHW.C.4",
+   "name": "C4. Verify VHL signature & request manifest [ITI-YY5] Retrieve Manifest",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/node/PHW.C.4",
+   "stepHref": "PHW.C.html#step-PHW.C.4",
+   "lane": "VHL Receiver (Verifier / Relying Party)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/lane/PHW.Lane.VHLReceiver",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.C.5": {
+   "id": "PHW.C.5",
+   "name": "C5. Query active patient Consent [ITI-108] Access Consent: Search",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/node/PHW.C.5",
+   "stepHref": "PHW.C.html#step-PHW.C.5",
+   "lane": "VHL Sharer (grouped with PCF Consent Authorization Server)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/lane/PHW.Lane.VHLSharer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.C.6": {
+   "id": "PHW.C.6",
+   "name": "C6. Return active PCF Consent Bundle [ITI-108] Access Consent",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/node/PHW.C.6",
+   "stepHref": "PHW.C.html#step-PHW.C.6",
+   "lane": "PCF Consent Registry",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/lane/PHW.Lane.ConsentRegistry",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.C.8": {
+   "id": "PHW.C.8",
+   "name": "C8. Return authorized manifest & documents [ITI-YY5] Retrieve Manifest (permit)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/node/PHW.C.8",
+   "stepHref": "PHW.C.html#step-PHW.C.8",
+   "lane": "VHL Sharer (grouped with PCF Consent Authorization Server)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/lane/PHW.Lane.VHLSharer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.C.9": {
+   "id": "PHW.C.9",
+   "name": "C9. Refuse disclosure with OperationOutcome [ITI-YY5] (deny or unknown)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/node/PHW.C.9",
+   "stepHref": "PHW.C.html#step-PHW.C.9",
+   "lane": "VHL Sharer (grouped with PCF Consent Authorization Server)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/lane/PHW.Lane.VHLSharer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.C.10": {
+   "id": "PHW.C.10",
+   "name": "C10. Process clinical documents or refusal notice [ITI-YY5] response",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/node/PHW.C.10",
+   "stepHref": "PHW.C.html#step-PHW.C.10",
+   "lane": "VHL Receiver (Verifier / Relying Party)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.C/lane/PHW.Lane.VHLReceiver",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

@@ -1,0 +1,28 @@
+{
+  "$ref": "#/definitions/DecisionFacts",
+  "definitions": {
+    "DecisionFacts": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string"
+      },
+      "additionalProperties": {
+        "type": [
+          "string",
+          "number",
+          "boolean"
+        ]
+      },
+      "description": "Facts for a DMN decision table. Scalar values only. Not admissible as a command-line argument."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/DecisionFactsSchema.schema.json",
+  "title": "DecisionFactsSchema",
+  "description": "Generated from `DecisionFactsSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261108-1227",
+    "sha": "4923f69bacb36f9444ac9a213e750401f1a986c4",
+    "pr": "repin-train/20261108-1227",
+    "run": "42480379202"
+  }
+}
