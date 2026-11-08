@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-06T08:35:33Z
+updated_at: 2026-11-08T07:10:00Z
 parent: folio-assistant-npuo
 tags:
     - document-structure
@@ -66,3 +66,5 @@ _2026-11-02T19:25Z_ — Re-pin train thread confirmed: will pin cat-harness-tool
 _2026-11-06T08:44Z_ — Resumed in Round 3 bean drain. `folio-assistant-core#622` is already merged (closing `#621`). `smart-ra`, `dth-sc`, and `dth-phc` are all pinned to `cat-harness-tools` `42cc850e` (2026-11-05, >= `8560fbe`). Rebased `claude/glossary-acronyms-nest` (`28ddcb2b93`) onto `smart-ra/main` and opened `litlfred/smart-ra#234`; rebased `litlfred/dth-sc#24` (`f02b1af0`) and `litlfred/dth-phc#33` (`33b4a24d`) onto their `main` branches and marked both ready for review. Waiting on full CI to merge all three.
 
 _2026-11-06T08:35:33Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
+
+_2026-11-08T07:10:00Z_ — `litlfred/smart-ra#234` (`28ddcb2b93`, merged as `c14618fdb9b8`, closing `#229`) and `litlfred/dth-phc#33` (`9cb61fb17ecd`, closing `#32`) are merged; only `litlfred/dth-sc#24` (`#23`, owned by the glossary thread) remains open.
