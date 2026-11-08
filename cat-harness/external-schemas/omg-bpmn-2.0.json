@@ -1,0 +1,169 @@
+{
+  "$schema": "folio-external-schema/v1",
+  "id": "omg-bpmn-2.0",
+  "authority": "OMG",
+  "title": "Business Process Model and Notation (BPMN)",
+  "version": "2.0",
+  "specUrl": "https://www.omg.org/spec/BPMN/2.0/",
+  "namespaces": [
+    "http://www.omg.org/spec/BPMN/20100524/MODEL",
+    "http://www.omg.org/spec/BPMN/20100524/MODEL#",
+    "http://www.omg.org/spec/BPMN/20100524/DI"
+  ],
+  "use": "conforms",
+  "terms": [
+    {
+      "term": "bpmn:assignment",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:callActivity",
+      "operative": "Reusable sub-process invocation referencing another diagram by QName."
+    },
+    {
+      "term": "bpmn:collaboration",
+      "operative": "Collaboration diagram container binding participants and message flows."
+    },
+    {
+      "term": "bpmn:dataInput",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:dataInputAssociation",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:dataInputRefs",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:dataOutputAssociation",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:dataStore",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:dataStoreReference",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:definitions",
+      "operative": "Root element of a BPMN diagram carrying namespaces and targetNamespace."
+    },
+    {
+      "term": "bpmn:documentation",
+      "operative": "Authored prose description attached to a process, lane, or activity."
+    },
+    {
+      "term": "bpmn:endEvent",
+      "operative": "Terminal node marking completion of a process execution path."
+    },
+    {
+      "term": "bpmn:exclusiveGateway",
+      "operative": "Conditional XOR decision branching or converging control flow."
+    },
+    {
+      "term": "bpmn:extensionElements",
+      "operative": "Extension container holding role bindings, skills, and preconditions."
+    },
+    {
+      "term": "bpmn:flowNodeRef",
+      "operative": "Reference connecting a process activity or gateway into a specific lane."
+    },
+    {
+      "term": "bpmn:from",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:globalScriptTask",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:globalTask",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:import",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:incoming",
+      "operative": "Incoming sequence flow connection entering an activity or gateway."
+    },
+    {
+      "term": "bpmn:inputSet",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:ioSpecification",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:lane",
+      "operative": "Process swimlane establishing the role persona responsible for activities."
+    },
+    {
+      "term": "bpmn:laneSet",
+      "operative": "Container partitioning a process into one or more participant swimlanes."
+    },
+    {
+      "term": "bpmn:multiInstanceLoopCharacteristics",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:outgoing",
+      "operative": "Outgoing sequence flow connection leaving an activity or gateway."
+    },
+    {
+      "term": "bpmn:outputSet",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:participant",
+      "operative": "Swimlane participant representing a collaboration role or system boundary."
+    },
+    {
+      "term": "bpmn:process",
+      "operative": "Top-level executable workflow definition containing activity flow nodes."
+    },
+    {
+      "term": "bpmn:resource",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:sequenceFlow",
+      "operative": "Directed transition connecting source and target flow nodes."
+    },
+    {
+      "term": "bpmn:serviceTask",
+      "operative": "Automated system task invoked during workflow execution."
+    },
+    {
+      "term": "bpmn:startEvent",
+      "operative": "Entry node initiating execution of a workflow process."
+    },
+    {
+      "term": "bpmn:targetRef",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:task",
+      "operative": "Base unit of atomic work within a business process flow."
+    },
+    {
+      "term": "bpmn:timerEventDefinition",
+      "operative": "Timer schedule trigger defining timeouts or delayed transitions."
+    },
+    {
+      "term": "bpmn:to",
+      "operative": "derived from the corpus; what this repository does with it is not yet described"
+    },
+    {
+      "term": "bpmn:userTask",
+      "operative": "Interactive step requiring explicit human or agent persona execution."
+    }
+  ],
+  "note": "The `20100524` in every namespace is BPMN 2.0's release date and is how the edition is identified in an instance document — the diagrams have carried it since the first one was drawn, and until 2026-09-20 nothing in this repository said which specification that was. `conforms` rather than `reads`: these are our instance documents, so a version bump is a migration of the corpus rather than a compatibility question.\n\nNo XSD is held and none is fetched — referenced, per the owner's \"dont need to materalize, but should reference specific version being used\". That means nothing validates a diagram structurally against OMG's schema; `check:workflows` and `kg:audit` check the things this repository cares about (lanes bind declared roles, activities name skills) and are not a substitute for it.\n\nThe `MODEL#` form is the RDF spelling of the same namespace: OMG publishes no RDF vocabulary for BPMN, so a graph that states a sequence flow's `sourceRef`/`targetRef` or a node's `incoming`/`outgoing` (kg-export, and bootstrap-tools' `export-graph.ts`) names BPMN's own attribute by appending `#` to its XML namespace — the model's name for the relation, rather than a second one minted here (owner, 2026-09-30, bean `xsqm`)."
+}

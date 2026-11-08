@@ -1,0 +1,412 @@
+---
+name: merge-manager-watcher
+description: >
+  The merge manager agent's watch loop: what wakes it, how often it looks,
+  how it tells whether it is the active merge manager, what it reads each
+  time, which process each reading sends it to (merge train, saturation
+  meta-merge, stalled-agent takeover), and how it keeps the swarm in step
+  with hold and done broadcasts. Use for "be the merge manager", "watch the
+  queue", "who merges", "the queue is stuck", and when starting or handing
+  over the merge-steward lane.
+user_invocable: true
+---
+
+# Merge manager watcher — the loop that runs the merge-steward role
+
+The merge manager is the agent that holds the
+[`merge-steward`](../../../scenarios/roles.json) role on one or more
+repositories (actor
+[`merge-manager`](../../../scenarios/actors/merge-manager.json)). The role
+says what the steward may decide. The skills say how: what lands next
+([`merge-queue`](merge-queue.md)), how it lands
+([`merge-to-main`](merge-to-main.md)), conflicts
+([`merge-conflict-patterns`](merge-conflict-patterns.md)), shared branches
+([`ref-stewardship`](ref-stewardship.md)), and full runners
+([`saturation-meta-merge`](saturation-meta-merge.md)). This page covers the
+loop that runs them: when to look, what to read, and where each reading leads.
+The process is
+[`sdlc/processes/merge-manager-watch.bpmn`](../../processes/merge-manager-watch.bpmn).
+It is one of two processes (owner ruling, 2026-11-07), split by phase so each
+fits a page:
+
+- [`merge-request.bpmn`](../../processes/merge-request.bpmn), the **sibling
+  session**'s side: find or elect the merge manager, send it the request,
+  and handle a merge manager that stalls;
+- `merge-manager-watch.bpmn`, the **merge steward**'s loop on this page,
+  with the **owner** lane below it for the batch card. The owner lane sits
+  next to the only lane it talks to.
+
+## The sibling's side: find the merge manager first
+
+A coding agent whose PR is ready to merge does not know whether a merge
+manager exists. It checks, in this order:
+
+1. **Is a merge manager active?** Read the latest `merge manager: <session
+   id>` announcement in the coordination group, then check that session is
+   live: active, and it answered within the stall window (§"Liveness and
+   stalls"). If so, send it the six-line merge request (below) and wait for
+   its acknowledgement.
+2. **If none is active, is one needed?** Measure it (§"When is a merge
+   manager needed?"). If not, the session manages its own PRs: it posts the
+   six lines in its own chat and asks the owner by card. It does not
+   announce itself to the others.
+3. **If one is needed, elect it with the siblings** by the fixed rule
+   (§"Am I the active merge manager?"). The winner announces itself and
+   takes the merge steward lane. Every other sibling notes the holder and
+   sends it the request.
+
+**Where the announcement lives, so all can use it.** The holder sends
+`merge manager: <session id>` to every sibling and the owner, and notes it
+durably on the coordination work item. A sibling started later reads the
+note, not anybody's memory. A hand-over or a lapse updates the note.
+
+## When is a merge manager needed?
+
+The lane is conditional (owner ruling, 2026-11-07: "merge manager needed if
+lots of conflicting CI runners causing merge slowdown"). It is needed while
+both of these hold:
+
+1. **Two or more active sessions have ready PRs in the same repositories.**
+2. **The merges are slowing each other down**, which shows as either of:
+   - the runners are contended: more than about 10 queued runs on a
+     repository (the pacing threshold in
+     [`continual-progress`](continual-progress.md) §"Pace the ready
+     marking"), or the oldest queued run is more than about 30 minutes old;
+   - PRs keep conflicting with or superseding each other: duplicate re-pins,
+     or rebases that invalidate each other's CI.
+
+When the condition stops holding (a quiet queue and few sessions), the lane
+lapses. The merge manager says so to every sibling and to the owner. Each
+session then merges its own green PRs with the owner's approval, by the
+normal rules (`merge-queue` §"When no Merge Manager is active"). The
+six-line merge request (below) still applies.
+
+## Am I the active merge manager?
+
+While the lane is needed, exactly one live session holds it on each
+repository. It holds the lane when the owner gave it the lane, when it was
+elected (below), or when it took the lane over from a stalled holder
+([`stalled-agent-triage`](stalled-agent-triage.md)) and told the owner. On
+taking the lane, it announces `merge manager: <session id>` to every sibling
+and to the owner, so that every sibling knows where to send PRs. On handing
+it over, it says to whom. A memory that one existed yesterday does not count,
+either way.
+
+**A lone session is its own merge manager** (owner ruling, 2026-11-07: "if
+single, can merge manage self"). When a session is the only active one in
+its coordination group, it queues its own PRs and asks the owner directly,
+with the same six-line merge request and the same card per batch. It needs
+no election and no hand-off. As soon as a second sibling becomes active, and
+the lane is needed, the election rule applies.
+
+**With no merge manager, the siblings elect one** (owner ruling, 2026-11-07:
+"if no merge manager, siblings self-determine which will play that role").
+No merge manager is active when none has announced itself, or when the last
+one has gone inactive. The owner does not have to appoint one. The rule is
+deterministic, so two sessions cannot both claim the lane:
+
+1. The active session that owns the P0 PR (the fix for a red main, or the
+   re-pin chain) takes the lane.
+2. With no P0 PR, the earliest-created active session in the coordination
+   group takes it (the `created_at` of `list_sessions`).
+3. With two P0 owners, the earlier-created of the two takes it.
+
+The elected session announces itself as above, and hands over explicitly
+when it stops. On 2026-11-07 the previous merge manager, merge-planning, went
+inactive without a hand-off, and the owner had to appoint one.
+
+### Liveness and stalls
+
+The merge manager, like any agent, may stall (owner ruling, 2026-11-07). So
+it has a liveness duty: it acknowledges each merge request within about 10
+minutes of receiving it (the role's `holding.heartbeatMinutes`; a request
+wakes it), and posts a heartbeat to the coordination group with each sweep.
+
+A sibling treats the lane as vacant when its request has no acknowledgement
+within about 30 minutes (`holding.stalledAfterMinutes`), or when the merge
+manager's session is inactive. It then runs
+[`stalled-agent-triage`](stalled-agent-triage.md): it tells the owner, and
+re-elects without the stalled session. The new holder announces itself,
+takes over the queue, and tells the owner. A stalled coding agent's PR is
+handled the same way, from the other side: the merge manager runs
+`stalled-agent-triage` on it (§"Where each reading leads").
+
+**Siblings send merge requests here, and the owner approves here** (owner
+ruling, 2026-11-07, card "Approvals", B: "all siblings should communicate
+merge requests to you. i will approve here. you queue/prioritize", and "all
+my approval is here, not in siblings"):
+
+- There is one merge manager session.
+- A sibling never merges its own PR. When the PR is ready, the sibling sends
+  the merge manager a merge request in the six-line format below.
+- The owner approves in the merge manager's session, with one card per batch
+  that names each PR. An approval the owner gives in a sibling's session does
+  not authorise a merge.
+- A pre-approved PR, one the owner said to "merge when green", needs no
+  second card.
+- The merge manager queues the PRs in priority order:
+  - **P0**: fixes for a red main, and the links of the re-pin chain;
+  - **P1**: work those unblock;
+  - **P2**: CI speed;
+  - **P3**: everything else.
+
+### The merge request: six lines
+
+Owner ruling, 2026-11-07: "anything that indicated to merge should have link
+to PR, claude session, explanation of changes, preview URL", and "put that in
+chat then ask to merge by card". A sibling's `ready:` message carries:
+
+1. the PR URL and the full 40-hex head SHA;
+2. the claude.ai session URL;
+3. an explanation of the changes, in 1-3 sentences;
+4. the rendered preview URL for that head (feature-staging's `branches/`
+   preview, or the layer's equivalent), confirmed rendered, or
+   `no preview: <reason>`;
+5. what to look for in the preview;
+6. `full tier green as judged` (rule 1 below). For a pin-only PR in a layer
+   repository, line 6 reads `pin-only: layer CI judges nothing (it mounts the
+   root's lock)`, because its "No new failures" job runs no tests or gates and
+   passes without judging anything. The evidence for those pins is the root's
+   own re-pin PR, not the layer's green check.
+
+The merge manager posts all six lines in its chat, then asks the owner by
+card. A request with no rendered preview and no reason goes back to the
+sibling.
+
+## What wakes it
+
+- **A timer, at the sweep's cadence** (§"The sweep"): every 10-15 minutes
+  while a P0 is in flight, every 30 minutes otherwise. This is a backstop,
+  not the main signal.
+- **A PR event** on a subscribed PR: ready for review, CI finished, review
+  submitted, merged or closed. Subscribe to every open non-draft PR in the
+  repositories it holds.
+- **A main run finishing**, green or red.
+- **A sibling's message**, for example "ready", "hold", or "done".
+
+Never poll in a loop inside a turn. End the turn and let the next event wake
+it.
+
+## What it reads each time (live, never stored)
+
+1. The open PRs: draft or ready, head SHA, mergeable state, owed checks, and
+   whether any open decision is waiting on the owner.
+2. The runner queue on each repository: queued and in-progress runs, and the
+   age of the oldest queued run.
+3. The latest main push run on each repository, and its verdict.
+4. The owners of the PRs: the last push or comment by each owning session.
+
+## The sweep
+
+Owner ruling, 2026-11-07 (card, about 07:55Z): the merge manager's sweep is
+documented and tooled.
+
+**Cadence.** Every 10-15 minutes while a P0 PR (a fix for a red main, or a
+link of the re-pin chain) is in flight; every 30 minutes otherwise. A PR
+event, a merge request or a main run finishing may start a sweep early.
+
+**One sweep**, in this order:
+
+1. Run `merge:watch` over every repository the lane holds. It makes the four
+   readings above, and judges each PR by every judge (rule 1 below):
+
+   ```
+   bun run cat merge:watch -- --config merge-watch.json --json
+   ```
+
+   Name the repositories with `--repo <owner/name>` (repeatable), `--repos
+   a,b,c`, or `--config <file.json>` (`{"repos": [...], "staleHours": 2}`).
+   `--stale-hours <n>` sets when a silent PR owner is flagged (default 2).
+   The layers whose re-pins need the owner's consent default to `smart-*`
+   (the WHO SMART upstream layers; an entry ending in `*` matches a
+   prefix). `--exclude-layer <name>` (repeatable) or a config's
+   `excludedLayers` replaces the default.
+   Per repository it prints:
+   - each PR's verdict, with a route flag: workflow changes go to a direct
+     merge, a folio-assistant PR to the merge train, a pin on an excluded
+     layer needs the owner's consent, and `superseded-by #N` marks a
+     duplicate;
+   - the runner queue: queued and in-progress runs, the oldest queued run's
+     age, by event;
+   - main's latest push verdict;
+   - each PR owner's last push or comment, with stale owners flagged;
+   - runner-relief candidates (§"Runner relief"). It only reports them,
+     and never lists a main push run that has started.
+
+   Its verdict is rule 1: every "No new failures" judge passes, each
+   shard's Q-PIPE-1 table lists 0 new failures, and any run queued or in
+   progress on the head blocks.
+2. Check each green request with `bun run cat merge:request:check -- <file|->`
+   (`--json` for machine output; exit 0 accepted, 1 refused, 2 could not
+   determine). It parses the six lines, and checks that the SHA is the PR's
+   current head and that the preview was built for that head. Send a
+   refused request back with the reason. Post each accepted request's six
+   lines in this chat.
+3. Ask the owner with **one** batch card for all of them, in priority order.
+   Leave off any PR in the pre-approval ledger (below).
+4. Land what is approved. A workflow PR, or a PR in a repository with no
+   train, merges through `merge:guard`. A folio-assistant PR that does not
+   change `.github/workflows/` gets the `merge-train` label (rule 8 below).
+5. Send `landed: <repo>#<n> <sha>` to each session that was waiting, or
+   `back: <repo>#<n> <reason>` for a PR that cannot land.
+6. Post the heartbeat, and re-arm the timer at the cadence above.
+
+**A helper may tabulate, never write.** A helper agent may run step 1 and
+tabulate the result (rule 6 below). It never posts, labels, merges,
+comments, closes or pushes. Steps 2-6 are the merge manager's.
+
+**The pre-approval ledger.** When the owner says "merge when green" for a
+named PR, the merge manager records it: the PR, the owner's words, and when.
+It keeps the record on the coordination work item, beside the
+`merge manager:` note, so a successor inherits it. A PR in the ledger needs
+no second card. It lands at the first sweep that finds it green, and then
+leaves the ledger. The ledger covers only the PRs it names. A standing
+instruction to "merge everything green" is rule 2's standing OK, not a
+ledger entry.
+
+## Where each reading leads
+
+| Reading | Process |
+|---|---|
+| A merge request for a PR that is all green (rule 1 below) but not yet approved | Post its six lines in chat, then put it on the owner's next batch card (§"The merge request: six lines"). A request with no rendered preview and no reason goes back |
+| The lane is no longer needed (§"When is a merge manager needed?") | Tell every sibling and the owner that the lane lapses; each session merges its own green PRs with the owner's approval |
+| An approved, all-green folio-assistant PR with no `.github/workflows/` change | `merge-train` (Process_MergeTrain): add the `merge-train` label instead of merging it (rule 8 below) |
+| An approved, all-green PR that changes `.github/workflows/`, or is in a repository with no train | Merge it directly through `merge:guard`. A workflow PR needs no approval beyond the batch card (owner ruling, 2026-11-07, card "Workflow PRs", A) |
+| Queued runs 60+ minutes old with nothing landed, or the owner says runners are full | First relieve the runners (§"Runner relief"). Then `saturation-meta-merge`: offer the card, never run without the owner's tap |
+| A PR whose owner has not pushed or answered for 2+ hours | `stalled-agent-triage`: tell the owner and take it over |
+| main red | The fix goes to main as its own PR first; when a dispatched `post-merge-regen` verify run says main is stale, a regen dispatched for the next PR commits the fix and that PR lands with priority (`merge-queue` §"Merge steward procedure: post-merge verification"). Trains wait for main to be green |
+| Nothing to do | End the turn with no message |
+
+## Merge-sweep rules (STRICT)
+
+1. **"All green" is exact.** It has three parts.
+   - **Finished.** Every check run on the head SHA has completed. Anything
+     queued or in progress blocks. Wait for every tier, e2e included. A merge
+     made before the last tier finished broke main (folio-assistant#2955).
+   - **Full tier.** The "No new failures" judge, or every full test shard,
+     ran. A draft or fast-tier-only pass never counts.
+   - **Green as judged, by every judge** (owner ruling, 2026-11-07). Where a
+     "No new failures" judge exists, its success is part of the verdict, but
+     an aggregate job covers only the parts it names. folio-assistant's
+     "Repository gates (hard)" is one such job. Each bun test shard carries
+     its own Q-PIPE-1 "no new failures" table, and each table must list 0
+     new failures. On 2026-11-06, folio-assistant#2985's aggregate was green
+     while 4 shards each reported a new failure. A red shard whose failures
+     are all main's known failures is fine when its table lists 0 new ones.
+     With no judge, each check must have concluded success, skipped or
+     neutral.
+
+   A cancelled job counts only when a later run of the same workflow on the
+   same head SHA passed the matching job (concurrency supersession). Merge
+   with `expectedHeadSha` set to the full 40-hex head SHA, never a short one.
+2. **Standing OK.** An owner instruction such as "merge everything green" is
+   an explicit OK for every PR that meets rule 1, until the owner withdraws
+   it. Merges still follow any stated chain order: a later PR in a chain
+   waits for the earlier one.
+3. **One PR per fix.** Before opening a fix or re-pin PR, search the open PRs
+   in that repository for the same files. If one exists, compare the diffs
+   and coordinate instead. If a duplicate is found later, the author of the
+   later PR closes it, after checking that the diffs are identical. While
+   main is red, one session owns the re-pin that fixes it, and says so to the
+   merge-planning session.
+4. **A re-pin is a cross-layer set.** Find every layer the change needs, a
+   main-red fix or any other, and pin them together in one re-pin, to the
+   current mains. Pins move only forward. Verify on a fresh mount
+   (`mount:remote --fresh`). A stale container mount gives false local
+   passes. The rules and an example are in
+   [`remote-mount`](../../../skills/kg/kg-core/remote-mount.md)
+   §"Re-pinning" (owner rulings, 2026-11-06, card "Pin target", A, and
+   2026-11-07).
+5. **Hand back private caches.** A PR that adds its own cache scheme instead
+   of the shared `cached-step` is held, not merged, and goes back to its
+   author. Cache-first CI, rule 1: every cache goes through `cached-step`.
+6. **Tabulation can be delegated.** A helper agent may tabulate the sweep
+   under these rules. The helper never touches the PRs the steward owns, and
+   never pushes, comments or closes.
+7. **The train's PRs are the train's.** A PR labelled `merge-train` or
+   `merge-train-batch` is landed by the merge train only, in a batch with one
+   main move and one main CI run. The sweep skips it, as `merge-main.yml`
+   does; every other PR that meets rule 1 merges as before. A sweep that
+   merges a labelled PR one at a time starves the train (owner ruling,
+   2026-11-06: "1. The train").
+8. **Approved PRs go through the train** (owner ruling, 2026-11-07, card
+   "Train", A). When the owner approves a folio-assistant PR that does not
+   change `.github/workflows/`, the merge manager adds the `merge-train`
+   label instead of merging it. The train lands a batch with one CI run.
+   Merging one PR at a time cost about 6.7 runs per merged PR. A PR that
+   changes workflows, and a PR in a repository with no train, merges
+   directly.
+9. **Stacks merge bottom-up** (owner ruling, 2026-11-07). A PR whose body
+   says `stacked on <repo>#<n>` waits for that PR. The merge manager lands
+   the base first, the stacked PR's owner retargets it onto main and
+   merges main in, and only then does it count as ready. A stacked
+   folio-assistant PR gets the `merge-train` label only after it has been
+   retargeted to main. A cross-layer stack waits until its pin names the
+   dependency's merge commit on main. The merge request lists the order,
+   and the batch card keeps it.
+10. **A re-pin PR holds only pins** (owner ruling, 2026-11-07: "keep repins
+    on own PR so easier to stack dependencies"). When the sweep finds a
+    re-pin PR (one that changes `index.config.json` or `index.lock.json`)
+    that also carries a feature, workflow logic or a fix, the merge manager
+    does not land it. It sends it back, and asks for the extra change to
+    be split onto a PR stacked on the re-pin, or into the layer that owns
+    the fix. Counter-example: folio-assistant#2985 carried #2999 and a
+    `caches:viz` gate line inside its re-pin. **Exception** (owner ruling,
+    2026-11-07, card "A. Allow the exception"): a change mutually dependent
+    with the re-pin, where neither passes alone, may share the PR when its
+    body says why (as a content layer's re-pin did on 2026-11-07). The
+    merge manager checks the reason; a change that only needs the new pins
+    still stacks.
+
+## Runner relief
+
+The merge manager enforces the pacing rule of
+[`continual-progress`](continual-progress.md) §"Pace the ready marking"
+(owner ruling, 2026-11-07, card "Cancel CI"). When the runners are
+saturated, it:
+
+- closes superseded or duplicate PRs, such as a re-pin whose commits another
+  open PR already carries, and cancels their runs;
+- cancels stale queued runs that never started, but never a main push run
+  that has started;
+- asks the owners of P3 PRs to return them to draft.
+
+## Keeping the swarm in step
+
+- **Hold.** Before any batch landing (a train or a meta-merge), message every
+  sibling that pushes to the repositories involved: what is about to land,
+  and "hold pushes, merges and run cancels here until done".
+- **Done.** After the landing, post "done" with what landed and what is still
+  open. Post it even when the owner chose not to go ahead. A hold with no
+  "done" is an outage.
+- **Hand back.** A PR that cannot land (conflict, protected path, red) goes
+  back to its owner with the reason, on the PR's own thread or work item. It is
+  never fixed inside the train.
+- **Report.** After every landing, report to the owner: what merged, the main
+  verdict on each repository, and any open decision. Keep it to one message.
+
+## Safety rules (STRICT)
+
+These come from the role; the watcher is the step that acts on them:
+
+- Merges happen only on the owner's explicit OK, given in the merge
+  manager's session. A tap on the batch card counts, and the card names each
+  PR. A standing OK counts for the PRs it covers (rule 2). A sibling's or
+  coordinator's request does not count, and neither does an approval the
+  owner gave in a sibling's session.
+- Never merge committee content, change sets (CS-), or held
+  `subscriptions/` trees. Never touch WHO or `smart-*` upstream repositories.
+- Never push `.github/workflows/` changes without the workflows permission.
+- Never cancel a main push run that has already started.
+- Never skip, disable or quarantine a test to get to green.
+
+## What this does not do yet
+
+- The timer is each session's own scheduled check-in. No workflow wakes the
+  merge manager yet.
+- `merge:watch` makes all four readings once its upgrade lands in the tools
+  layer and is re-pinned. Until then, the pinned version prints reading 1
+  only, and readings 2-4 are made by hand with `gh api`.
+- `merge:request:check` (step 2 of the sweep) arrives with the tools layer's
+  request check, which builds on its `parseMergeRequest`. Until it lands
+  and is re-pinned, the merge manager checks the six lines by reading them.
