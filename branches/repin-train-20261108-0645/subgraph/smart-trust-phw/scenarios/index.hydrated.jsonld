@@ -1,0 +1,41 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-trust-phw/scenarios/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/scenarios",
+      "@type": "bootstrap:Subgraph",
+      "contentSource": {
+        "declaredIn": "default",
+        "kind": "directory"
+      },
+      "description": "The roles the lanes of the business processes name (roles.json, each pointing to its ActorDefinition in input/fsh/actors/actors.fsh where one exists), and example people and systems that play them (actors/, each person with a meta.persona). tools/personas/gen_personas.ts writes the Generic Personas page from them. Every person is fictional.",
+      "fileCount": 0,
+      "holdsGraph": [
+        "bootstrap:graphTypology/scenarios"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/scenarios",
+      "name": "scenarios",
+      "path": "scenarios/",
+      "readmePath": "scenarios/README.md"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-trust-phw/scenarios/actors/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "bootstrap:graphTypology/scenarios"
+      ],
+      "name": "scenarios/actors",
+      "path": "scenarios/actors/"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/scenarios"
+  ],
+  "name": "scenarios",
+  "path": "scenarios/"
+}

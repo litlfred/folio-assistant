@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_Translation/node/Task_WriteUnofficial.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-0645",
+    "sha": "d2b1f670798fa1634dbd45aa27de06bd16680fa4",
+    "pr": "repin-train/20261108-0645",
+    "run": "42456091822"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_Translation/node/Task_WriteUnofficial",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Write status.json (unofficial)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_Translation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_Translation/lane/Lane_Platform",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/skill/translation-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/globalTask/GT_WriteTranslationStatus",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_Translation#flow/Flow_DriftNo",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_Translation#flow/Flow_PostQA_Accept"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_Translation#flow/Flow_Unofficial"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_WriteUnofficial"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_JsonLdDrift/node/Start_Change.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-0645",
+    "sha": "d2b1f670798fa1634dbd45aa27de06bd16680fa4",
+    "pr": "repin-train/20261108-0645",
+    "run": "42456091822"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_JsonLdDrift/node/Start_Change",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Pull request, push to main, or dispatch",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_JsonLdDrift",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_JsonLdDrift/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/process/Process_JsonLdDrift#flow/Flow_0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_JsonLdDrift/node/Start_Change"
+    }
+  ]
+}

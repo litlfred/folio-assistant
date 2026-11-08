@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/smart-base/role/point-of-care-system.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/role/point-of-care-system.jsonld",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
+    "pr": "3016/merge",
+    "run": "42456486300"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/role/point-of-care-system",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Point-of-care system",
+      "title": "Point-of-care system",
+      "notation": "point-of-care-system",
+      "description": "The app or EHR the health worker uses: renders the DAK's forms, extracts their resources, applies the DAK's decision tables (PlanDefinitions) and writes what the health worker accepted. Decides nothing clinical. A DAK's own systems (a CHW app, a clinic EHR) carry these skills or inherit this role.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [
+        "http://smart.who.int/base/skill/extract-questionnaire-response",
+        "http://smart.who.int/base/skill/apply-decision-support",
+        "http://smart.who.int/base/skill/activate-accepted-guidance"
+      ]
+    }
+  ]
+}

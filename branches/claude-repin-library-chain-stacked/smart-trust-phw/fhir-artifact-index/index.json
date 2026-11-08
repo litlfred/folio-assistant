@@ -3,17 +3,17 @@
   "id": "smart-trust-phw",
   "title": "smart.who.int.trust-phw — artefact index (from the IG Publisher AST cache)",
   "packageId": "smart.who.int.trust-phw",
-  "version": "0.1.0",
+  "version": "0.2.0-litlfred",
   "canonicalBase": "http://smart.who.int/trust-phw",
   "source": {
     "kind": "output",
     "of": "output-ast",
-    "revision": "a58cf1e4d4f51fd6dc7df44df20303b166879c36",
-    "readAt": "2026-11-07"
+    "revision": "95ea7698eb01e289f1333a61d9ce63dfec922061",
+    "readAt": "2026-11-08"
   },
   "provenance": {},
   "sidecarApi": "present",
-  "count": 64,
+  "count": 106,
   "artifacts": [
     {
       "key": "ActorDefinition/ConsentRegistry",
@@ -23,11 +23,19 @@
       "title": "Consent Registry",
       "description": "[IHE PCF Consent Registry](https://profiles.ihe.net/ITI/PCF/volume-1.html#153112-consent-registry) actor",
       "canonical": "http://smart.who.int/trust-phw/ActorDefinition/ConsentRegistry",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Actor Definitions",
       "profiles": [
         "http://smart.who.int/base/StructureDefinition/SGActor"
       ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "ActorDefinition"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-ConsentRegistry.json"
@@ -47,7 +55,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-ConsentRegistry.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -58,11 +66,19 @@
       "title": "Holder",
       "description": "Holder (person) of [Verifiable Health Certificate](https://smart.who.int/trust/concepts.html#verifiable-digital-health-certificate) or [Verifiable Health Link](https://profiles.ihe.net/ITI/VHL/index.html)",
       "canonical": "http://smart.who.int/trust-phw/ActorDefinition/Holder",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Actor Definitions",
       "profiles": [
         "http://smart.who.int/base/StructureDefinition/SGActor"
       ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "ActorDefinition"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-Holder.json"
@@ -82,7 +98,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-Holder.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -93,11 +109,19 @@
       "title": "Issuer",
       "description": "Issuer (system) of [Verifiable Health Certificate](https://smart.who.int/trust/concepts.html#verifiable-digital-health-certificate) or [Verifiable Health Link](https://profiles.ihe.net/ITI/VHL/index.html)",
       "canonical": "http://smart.who.int/trust-phw/ActorDefinition/Issuer",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Actor Definitions",
       "profiles": [
         "http://smart.who.int/base/StructureDefinition/SGActor"
       ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "ActorDefinition"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-Issuer.json"
@@ -117,7 +141,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-Issuer.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -128,11 +152,19 @@
       "title": "Receiver",
       "description": "Receiver (system) of [Verifiable Health Certificate](https://smart.who.int/trust/concepts.html#verifiable-digital-health-certificate) or [Verifiable Health Link](https://profiles.ihe.net/ITI/VHL/index.html)",
       "canonical": "http://smart.who.int/trust-phw/ActorDefinition/Receiver",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Actor Definitions",
       "profiles": [
         "http://smart.who.int/base/StructureDefinition/SGActor"
       ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "ActorDefinition"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-Receiver.json"
@@ -152,7 +184,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-Receiver.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -163,11 +195,19 @@
       "title": "Trust Network Anchor",
       "description": "Trust Anchor which receives and distributes PKI-material within a Trust Network",
       "canonical": "http://smart.who.int/trust-phw/ActorDefinition/TrustNetworkAnchor",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Actor Definitions",
       "profiles": [
         "http://smart.who.int/base/StructureDefinition/SGActor"
       ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "ActorDefinition"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-TrustNetworkAnchor.json"
@@ -187,7 +227,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-TrustNetworkAnchor.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -198,11 +238,19 @@
       "title": "Trust Network Participant",
       "description": "Trust Network Participant which publishes and or receives PKI-material within a Trust Network",
       "canonical": "http://smart.who.int/trust-phw/ActorDefinition/TrustNetworkParticipant",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Actor Definitions",
       "profiles": [
         "http://smart.who.int/base/StructureDefinition/SGActor"
       ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "ActorDefinition"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-TrustNetworkParticipant.json"
@@ -222,7 +270,44 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/ActorDefinition-TrustNetworkParticipant.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "Basic/DSAPermissionExample",
+      "resourceType": "Basic",
+      "id": "DSAPermissionExample",
+      "title": "DSAPermissionExample",
+      "category": "Other",
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "Permission",
+            "display": "Permission"
+          }
+        ]
+      },
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Basic-DSAPermissionExample.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Basic-DSAPermissionExample.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Basic-DSAPermissionExample.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Basic-DSAPermissionExample.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/Basic-DSAPermissionExample.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -250,7 +335,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Binary-DVCExample.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -281,7 +366,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Bundle-DVCDocExample.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -312,7 +397,38 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Bundle-DVCDocSDExample.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "Bundle/LinaSummaryWithConsent",
+      "resourceType": "Bundle",
+      "id": "LinaSummaryWithConsent",
+      "title": "LinaSummaryWithConsent",
+      "category": "Other",
+      "profiles": [
+        "http://smart.who.int/trust-phw/StructureDefinition/PHWDocumentWithConsent"
+      ],
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Bundle-LinaSummaryWithConsent.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Bundle-LinaSummaryWithConsent.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Bundle-LinaSummaryWithConsent.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Bundle-LinaSummaryWithConsent.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/Bundle-LinaSummaryWithConsent.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -323,7 +439,7 @@
       "title": "Relationship Status for Contact in Patient",
       "description": "Relationship Status for Contact in Patient",
       "canonical": "http://smart.who.int/trust-phw/CodeSystem/DVCRelationshipStatus",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Terminology: Code Systems",
       "published": {
         "json": {
@@ -344,7 +460,167 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DVCRelationshipStatus-ar",
+      "resourceType": "CodeSystem",
+      "id": "DVCRelationshipStatus-ar",
+      "name": "DVCRelationshipStatusAr",
+      "title": "حالة العلاقة بجهة الاتصال لدى المريض",
+      "description": "ملحق باللغة العربية (ar) لنظام الرموز DVCRelationshipStatus: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DVCRelationshipStatus-ar",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-ar.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-ar.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-ar.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-ar.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-ar.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DVCRelationshipStatus-es",
+      "resourceType": "CodeSystem",
+      "id": "DVCRelationshipStatus-es",
+      "name": "DVCRelationshipStatusEs",
+      "title": "DVCRelationshipStatus (es displays, unofficial)",
+      "description": "Unofficial Spanish displays for DVCRelationshipStatus: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DVCRelationshipStatus-es",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-es.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-es.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-es.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-es.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-es.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DVCRelationshipStatus-fr",
+      "resourceType": "CodeSystem",
+      "id": "DVCRelationshipStatus-fr",
+      "name": "DVCRelationshipStatusFr",
+      "title": "DVCRelationshipStatus (fr displays, unofficial)",
+      "description": "Unofficial French displays for DVCRelationshipStatus: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DVCRelationshipStatus-fr",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-fr.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-fr.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-fr.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-fr.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-fr.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DVCRelationshipStatus-ru",
+      "resourceType": "CodeSystem",
+      "id": "DVCRelationshipStatus-ru",
+      "name": "DVCRelationshipStatusRu",
+      "title": "DVCRelationshipStatus (ru displays, unofficial)",
+      "description": "Unofficial Russian displays for DVCRelationshipStatus: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DVCRelationshipStatus-ru",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-ru.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-ru.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-ru.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-ru.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-ru.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DVCRelationshipStatus-zh",
+      "resourceType": "CodeSystem",
+      "id": "DVCRelationshipStatus-zh",
+      "name": "DVCRelationshipStatusZh",
+      "title": "DVCRelationshipStatus — Chinese (zh) supplement",
+      "description": "Unofficial Simplified Chinese (zh) display designations for the DVCRelationshipStatus code system, drafted by an agent and not signed off by a human.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DVCRelationshipStatus-zh",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-zh.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-zh.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-zh.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-zh.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DVCRelationshipStatus-zh.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -355,7 +631,7 @@
       "title": "Disclosure Statements",
       "description": "Disclosure Statement Code System",
       "canonical": "http://smart.who.int/trust-phw/CodeSystem/DisclosureStatements",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Terminology: Code Systems",
       "published": {
         "json": {
@@ -376,7 +652,167 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DisclosureStatements-ar",
+      "resourceType": "CodeSystem",
+      "id": "DisclosureStatements-ar",
+      "name": "DisclosureStatementsAr",
+      "title": "بيانات الإفصاح",
+      "description": "ملحق باللغة العربية (ar) لنظام الرموز DisclosureStatements: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DisclosureStatements-ar",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-ar.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-ar.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-ar.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-ar.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-ar.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DisclosureStatements-es",
+      "resourceType": "CodeSystem",
+      "id": "DisclosureStatements-es",
+      "name": "DisclosureStatementsEs",
+      "title": "DisclosureStatements (es displays, unofficial)",
+      "description": "Unofficial Spanish displays for DisclosureStatements: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DisclosureStatements-es",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-es.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-es.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-es.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-es.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-es.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DisclosureStatements-fr",
+      "resourceType": "CodeSystem",
+      "id": "DisclosureStatements-fr",
+      "name": "DisclosureStatementsFr",
+      "title": "DisclosureStatements (fr displays, unofficial)",
+      "description": "Unofficial French displays for DisclosureStatements: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DisclosureStatements-fr",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-fr.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-fr.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-fr.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-fr.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-fr.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DisclosureStatements-ru",
+      "resourceType": "CodeSystem",
+      "id": "DisclosureStatements-ru",
+      "name": "DisclosureStatementsRu",
+      "title": "DisclosureStatements (ru displays, unofficial)",
+      "description": "Unofficial Russian displays for DisclosureStatements: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DisclosureStatements-ru",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-ru.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-ru.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-ru.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-ru.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-ru.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DisclosureStatements-zh",
+      "resourceType": "CodeSystem",
+      "id": "DisclosureStatements-zh",
+      "name": "DisclosureStatementsZh",
+      "title": "DisclosureStatements — Chinese (zh) supplement",
+      "description": "Unofficial Simplified Chinese (zh) display designations for the DisclosureStatements code system, drafted by an agent and not signed off by a human.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DisclosureStatements-zh",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-zh.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-zh.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-zh.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-zh.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DisclosureStatements-zh.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -387,7 +823,7 @@
       "title": "Smart Guidelines Documentation Section",
       "description": "CodeSystem for Smart Guidelines Documentation Section to autogenerate documentation from artifacts",
       "canonical": "http://smart.who.int/trust-phw/CodeSystem/DocumentationSections",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Terminology: Code Systems",
       "published": {
         "json": {
@@ -408,7 +844,263 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DocumentationSections-ar",
+      "resourceType": "CodeSystem",
+      "id": "DocumentationSections-ar",
+      "name": "DocumentationSectionsAr",
+      "title": "قسم توثيق إرشادات SMART",
+      "description": "ملحق باللغة العربية (ar) لنظام الرموز DocumentationSections: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DocumentationSections-ar",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-ar.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-ar.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-ar.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-ar.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-ar.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DocumentationSections-es",
+      "resourceType": "CodeSystem",
+      "id": "DocumentationSections-es",
+      "name": "DocumentationSectionsEs",
+      "title": "DocumentationSections (es displays, unofficial)",
+      "description": "Unofficial Spanish displays for DocumentationSections: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DocumentationSections-es",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-es.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-es.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-es.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-es.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-es.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DocumentationSections-fr",
+      "resourceType": "CodeSystem",
+      "id": "DocumentationSections-fr",
+      "name": "DocumentationSectionsFr",
+      "title": "DocumentationSections (fr displays, unofficial)",
+      "description": "Unofficial French displays for DocumentationSections: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DocumentationSections-fr",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-fr.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-fr.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-fr.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-fr.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-fr.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DocumentationSections-ru",
+      "resourceType": "CodeSystem",
+      "id": "DocumentationSections-ru",
+      "name": "DocumentationSectionsRu",
+      "title": "DocumentationSections (ru displays, unofficial)",
+      "description": "Unofficial Russian displays for DocumentationSections: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DocumentationSections-ru",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-ru.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-ru.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-ru.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-ru.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-ru.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/DocumentationSections-zh",
+      "resourceType": "CodeSystem",
+      "id": "DocumentationSections-zh",
+      "name": "DocumentationSectionsZh",
+      "title": "DocumentationSections — Chinese (zh) supplement",
+      "description": "Unofficial Simplified Chinese (zh) display designations for the DocumentationSections code system, drafted by an agent and not signed off by a human.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/DocumentationSections-zh",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-zh.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-zh.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-zh.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-zh.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-DocumentationSections-zh.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/HL-TYPE-es",
+      "resourceType": "CodeSystem",
+      "id": "HL-TYPE-es",
+      "name": "HLTYPEEs",
+      "title": "HL.TYPE (es displays, unofficial)",
+      "description": "Unofficial Spanish displays for HL.TYPE: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/HL-TYPE-es",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-es.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-es.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-es.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-es.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-es.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/HL-TYPE-fr",
+      "resourceType": "CodeSystem",
+      "id": "HL-TYPE-fr",
+      "name": "HLTYPEFr",
+      "title": "HL.TYPE (fr displays, unofficial)",
+      "description": "Unofficial French displays for HL.TYPE: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/HL-TYPE-fr",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-fr.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-fr.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-fr.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-fr.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-fr.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/HL-TYPE-ru",
+      "resourceType": "CodeSystem",
+      "id": "HL-TYPE-ru",
+      "name": "HLTYPERu",
+      "title": "HL.TYPE (ru displays, unofficial)",
+      "description": "Unofficial Russian displays for HL.TYPE: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/HL-TYPE-ru",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-ru.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-ru.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-ru.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-ru.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL-TYPE-ru.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -419,7 +1111,7 @@
       "title": "HL Type CodeSystem",
       "description": "CodeSystem for Health Link Type that has codes classifying type of Smart Health Link",
       "canonical": "http://smart.who.int/trust-phw/CodeSystem/HL.TYPE",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Terminology: Code Systems",
       "published": {
         "json": {
@@ -440,7 +1132,167 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL.TYPE.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/HL.TYPE-ar",
+      "resourceType": "CodeSystem",
+      "id": "HL.TYPE-ar",
+      "name": "HLTYPEAr",
+      "title": "نظام رموز أنواع الروابط الصحية (HL)",
+      "description": "ملحق باللغة العربية (ar) لنظام الرموز HL.TYPE: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/HL.TYPE-ar",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL.TYPE-ar.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL.TYPE-ar.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL.TYPE-ar.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL.TYPE-ar.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL.TYPE-ar.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/HL.TYPE-zh",
+      "resourceType": "CodeSystem",
+      "id": "HL.TYPE-zh",
+      "name": "HLTYPEZh",
+      "title": "HL.TYPE — Chinese (zh) supplement",
+      "description": "Unofficial Simplified Chinese (zh) display designations for the HL.TYPE code system, drafted by an agent and not signed off by a human.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/HL.TYPE-zh",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL.TYPE-zh.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL.TYPE-zh.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL.TYPE-zh.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL.TYPE-zh.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-HL.TYPE-zh.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/ICVP-Core-es",
+      "resourceType": "CodeSystem",
+      "id": "ICVP-Core-es",
+      "name": "ICVPCoreEs",
+      "title": "ICVP.Core (es displays, unofficial)",
+      "description": "Unofficial Spanish displays for ICVP.Core: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/ICVP-Core-es",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-es.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-es.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-es.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-es.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-es.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/ICVP-Core-fr",
+      "resourceType": "CodeSystem",
+      "id": "ICVP-Core-fr",
+      "name": "ICVPCoreFr",
+      "title": "ICVP.Core (fr displays, unofficial)",
+      "description": "Unofficial French displays for ICVP.Core: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/ICVP-Core-fr",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-fr.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-fr.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-fr.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-fr.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-fr.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/ICVP-Core-ru",
+      "resourceType": "CodeSystem",
+      "id": "ICVP-Core-ru",
+      "name": "ICVPCoreRu",
+      "title": "ICVP.Core (ru displays, unofficial)",
+      "description": "Unofficial Russian displays for ICVP.Core: an agent translation that no person has signed off.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/ICVP-Core-ru",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-ru.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-ru.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-ru.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-ru.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP-Core-ru.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -451,7 +1303,7 @@
       "title": "ICVP.Core CodeSystem for Data Elements",
       "description": "CodeSystem for ICVP.Core Data Elements from the Digital ICVP Core Data Dictionary",
       "canonical": "http://smart.who.int/trust-phw/CodeSystem/ICVP.Core",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Terminology: Code Systems",
       "published": {
         "json": {
@@ -472,7 +1324,71 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP.Core.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/ICVP.Core-ar",
+      "resourceType": "CodeSystem",
+      "id": "ICVP.Core-ar",
+      "name": "ICVPCoreAr",
+      "title": "نظام الرموز ICVP.Core لعناصر البيانات",
+      "description": "ملحق باللغة العربية (ar) لنظام الرموز ICVP.Core: تسميات كل مفهوم. ترجمة غير رسمية أعدّها وكيل آلي، دون مراجعة بشرية.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/ICVP.Core-ar",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP.Core-ar.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP.Core-ar.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP.Core-ar.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP.Core-ar.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP.Core-ar.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "CodeSystem/ICVP.Core-zh",
+      "resourceType": "CodeSystem",
+      "id": "ICVP.Core-zh",
+      "name": "ICVPCoreZh",
+      "title": "ICVP.Core — Chinese (zh) supplement",
+      "description": "Unofficial Simplified Chinese (zh) display designations for the ICVP.Core code system, drafted by an agent and not signed off by a human.",
+      "canonical": "http://smart.who.int/trust-phw/CodeSystem/ICVP.Core-zh",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Code Systems",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP.Core-zh.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP.Core-zh.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP.Core-zh.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP.Core-zh.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/CodeSystem-ICVP.Core-zh.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -483,7 +1399,7 @@
       "title": "ConceptMap to and from ICVP.Core Data Elements",
       "description": "Mapping to and from ICVP.Core Data Dictionary to other code systems.",
       "canonical": "http://smart.who.int/trust-phw/ConceptMap/ICVP.Core.ConceptMap",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Terminology: Concept Maps",
       "published": {
         "json": {
@@ -504,7 +1420,159 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/ConceptMap-ICVP.Core.ConceptMap.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "Consent/LinaExplicitConsent",
+      "resourceType": "Consent",
+      "id": "LinaExplicitConsent",
+      "title": "LinaExplicitConsent",
+      "category": "Other",
+      "profiles": [
+        "http://smart.who.int/trust-phw/StructureDefinition/PHWExplicitConsent"
+      ],
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-LinaExplicitConsent.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-LinaExplicitConsent.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-LinaExplicitConsent.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-LinaExplicitConsent.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/Consent-LinaExplicitConsent.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "Consent/LinaImpliedConsent",
+      "resourceType": "Consent",
+      "id": "LinaImpliedConsent",
+      "title": "LinaImpliedConsent",
+      "category": "Other",
+      "profiles": [
+        "http://smart.who.int/trust-phw/StructureDefinition/PHWImpliedConsent"
+      ],
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-LinaImpliedConsent.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-LinaImpliedConsent.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-LinaImpliedConsent.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-LinaImpliedConsent.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/Consent-LinaImpliedConsent.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "Consent/PilgrimConsentHostUse",
+      "resourceType": "Consent",
+      "id": "PilgrimConsentHostUse",
+      "title": "PilgrimConsentHostUse",
+      "category": "Other",
+      "profiles": [
+        "http://smart.who.int/trust-phw/StructureDefinition/PHWExplicitConsent"
+      ],
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-PilgrimConsentHostUse.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-PilgrimConsentHostUse.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-PilgrimConsentHostUse.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-PilgrimConsentHostUse.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/Consent-PilgrimConsentHostUse.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "Consent/PilgrimConsentOriginRelease",
+      "resourceType": "Consent",
+      "id": "PilgrimConsentOriginRelease",
+      "title": "PilgrimConsentOriginRelease",
+      "category": "Other",
+      "profiles": [
+        "http://smart.who.int/trust-phw/StructureDefinition/PHWExplicitConsent"
+      ],
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-PilgrimConsentOriginRelease.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-PilgrimConsentOriginRelease.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-PilgrimConsentOriginRelease.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Consent-PilgrimConsentOriginRelease.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/Consent-PilgrimConsentOriginRelease.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "DocumentReference/LinaWalletConfirmation",
+      "resourceType": "DocumentReference",
+      "id": "LinaWalletConfirmation",
+      "title": "LinaWalletConfirmation",
+      "category": "Other",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/DocumentReference-LinaWalletConfirmation.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/DocumentReference-LinaWalletConfirmation.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/DocumentReference-LinaWalletConfirmation.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/DocumentReference-LinaWalletConfirmation.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/DocumentReference-LinaWalletConfirmation.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -515,7 +1583,7 @@
       "title": "GDHCN Trust Network - Personal Health Wallet",
       "description": "Describes common workflows and specifications for usage of personal health wallets on the WHO GDHCN Trust Network",
       "canonical": "http://smart.who.int/trust-phw/ImplementationGuide/smart.who.int.trust-phw",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "profiles": [
         "http://smart.who.int/base/StructureDefinition/SGImplementationGuide"
       ],
@@ -535,7 +1603,7 @@
         "provenance": {
           "local": "fsh-generated/resources/ImplementationGuide-smart.who.int.trust-phw.json"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -564,7 +1632,65 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Organization-ExampleManufacturerOrg.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "Organization/HomeHIE",
+      "resourceType": "Organization",
+      "id": "HomeHIE",
+      "title": "HomeHIE",
+      "description": "Home Health Information Exchange (example)",
+      "category": "Other",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-HomeHIE.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-HomeHIE.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-HomeHIE.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-HomeHIE.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/Organization-HomeHIE.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "Organization/HostMoHExample",
+      "resourceType": "Organization",
+      "id": "HostMoHExample",
+      "title": "HostMoHExample",
+      "description": "Ministry of Health Saudi Arabia (example)",
+      "category": "Other",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-HostMoHExample.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-HostMoHExample.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-HostMoHExample.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-HostMoHExample.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/Organization-HostMoHExample.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -593,7 +1719,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Organization-InstituteI.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -622,35 +1748,92 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Organization-MinistryM.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
-      "key": "Permission/DSAPermissionExample",
-      "resourceType": "Permission",
-      "id": "DSAPermissionExample",
-      "title": "DSAPermissionExample",
+      "key": "Organization/OriginHIEExample",
+      "resourceType": "Organization",
+      "id": "OriginHIEExample",
+      "title": "OriginHIEExample",
+      "description": "Ministry of Health Malaysia Health Information Exchange (example)",
       "category": "Other",
       "published": {
         "json": {
-          "url": "https://litlfred.github.io/smart-trust-phw/Permission-DSAPermissionExample.json"
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-OriginHIEExample.json"
         },
         "xml": {
-          "url": "https://litlfred.github.io/smart-trust-phw/Permission-DSAPermissionExample.xml"
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-OriginHIEExample.xml"
         },
         "ttl": {
-          "url": "https://litlfred.github.io/smart-trust-phw/Permission-DSAPermissionExample.ttl"
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-OriginHIEExample.ttl"
         },
         "html": {
-          "url": "https://litlfred.github.io/smart-trust-phw/Permission-DSAPermissionExample.html"
+          "url": "https://litlfred.github.io/smart-trust-phw/Organization-OriginHIEExample.html"
         }
       },
       "materialization": {
         "state": "referenced",
         "provenance": {
-          "upstream": "https://litlfred.github.io/smart-trust-phw/Permission-DSAPermissionExample.html"
+          "upstream": "https://litlfred.github.io/smart-trust-phw/Organization-OriginHIEExample.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "Patient/LinaPatient",
+      "resourceType": "Patient",
+      "id": "LinaPatient",
+      "title": "LinaPatient",
+      "category": "Other",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Patient-LinaPatient.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Patient-LinaPatient.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Patient-LinaPatient.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Patient-LinaPatient.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/Patient-LinaPatient.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "Patient/PilgrimExample",
+      "resourceType": "Patient",
+      "id": "PilgrimExample",
+      "title": "PilgrimExample",
+      "category": "Other",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Patient-PilgrimExample.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Patient-PilgrimExample.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Patient-PilgrimExample.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/Patient-PilgrimExample.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/Patient-PilgrimExample.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -660,7 +1843,7 @@
       "title": "DVC Model Questionnaire",
       "description": "Questionnaire for DVC Logical Model with the WHO PreQual DB",
       "canonical": "http://smart.who.int/trust-phw/Questionnaire/PreQual",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Other",
       "profiles": [
         "http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-extr-smap"
@@ -684,7 +1867,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Questionnaire-PreQual.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -694,8 +1877,16 @@
       "title": "Accept mTLS",
       "description": "Accept an mTLS in order to conduct further transactions under a secure channel",
       "canonical": "http://smart.who.int/trust-phw/Requirements/accept-mtls-connection",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Formal Requirements",
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "Requirements"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/Requirements-accept-mtls-connection.json"
@@ -715,7 +1906,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Requirements-accept-mtls-connection.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -725,8 +1916,16 @@
       "title": "Distribute PKI material",
       "description": "Make received trust material available through a distrubution point to a Trust Network Participant",
       "canonical": "http://smart.who.int/trust-phw/Requirements/distribute-pki-material",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Formal Requirements",
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "Requirements"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/Requirements-distribute-pki-material.json"
@@ -746,7 +1945,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Requirements-distribute-pki-material.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -756,8 +1955,16 @@
       "title": "Initiate mTLS",
       "description": "Initiate an mTLS in order to conduct further transactions under a secure channel",
       "canonical": "http://smart.who.int/trust-phw/Requirements/initiate-mtls-connection",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Formal Requirements",
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "Requirements"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/Requirements-initiate-mtls-connection.json"
@@ -777,7 +1984,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Requirements-initiate-mtls-connection.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -787,8 +1994,16 @@
       "title": "Provide VHL or VDHC",
       "description": "Is able to provide a VHL authorization mechanism or a VDHC to a VHL Receiver",
       "canonical": "http://smart.who.int/trust-phw/Requirements/provide-a-vhl-to-a-receiver",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Formal Requirements",
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "Requirements"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/Requirements-provide-a-vhl-to-a-receiver.json"
@@ -808,7 +2023,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Requirements-provide-a-vhl-to-a-receiver.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -818,8 +2033,16 @@
       "title": "Publish PKI material",
       "description": "Publish trust material to a Trust Anchor",
       "canonical": "http://smart.who.int/trust-phw/Requirements/publish-pki-material",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Formal Requirements",
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "Requirements"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/Requirements-publish-pki-material.json"
@@ -839,7 +2062,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Requirements-publish-pki-material.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -849,8 +2072,16 @@
       "title": "Receive VHL or VDHC",
       "description": "Is able to receive a VHL authorization mechanism or a VDHC from a Holder",
       "canonical": "http://smart.who.int/trust-phw/Requirements/receive-a-vhl",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Formal Requirements",
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "Requirements"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/Requirements-receive-a-vhl.json"
@@ -870,7 +2101,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Requirements-receive-a-vhl.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -880,8 +2111,16 @@
       "title": "Receive PKI material",
       "description": "Receive trust material from a Trust Network Participant, for distribution within the Trust Network",
       "canonical": "http://smart.who.int/trust-phw/Requirements/receive-pki-material",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Formal Requirements",
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "Requirements"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/Requirements-receive-pki-material.json"
@@ -901,7 +2140,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Requirements-receive-pki-material.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -911,8 +2150,16 @@
       "title": "Retrieve PKI material",
       "description": "Retrieve PKI material from a distribution point",
       "canonical": "http://smart.who.int/trust-phw/Requirements/retrieve-pki-material",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Requirements: Formal Requirements",
+      "code": {
+        "coding": [
+          {
+            "system": "http://hl7.org/fhir/fhir-types",
+            "code": "Requirements"
+          }
+        ]
+      },
       "published": {
         "json": {
           "url": "https://litlfred.github.io/smart-trust-phw/Requirements-retrieve-pki-material.json"
@@ -932,7 +2179,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/Requirements-retrieve-pki-material.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -943,7 +2190,7 @@
       "title": "DVC Certificate - DVC Bundle for Digital Vaccine Certificates",
       "description": "Profile of the IPS Bundle for representing digital vaccination certificates ",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/Bundle-uv-ips-DVC",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -964,7 +2211,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-Bundle-uv-ips-DVC.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -975,7 +2222,7 @@
       "title": "DVC Certificate - IPS Bundle for WHO PreQual Databae",
       "description": "Profile of the IPS Bundle for representing digital vaccination certificates from WHO PreQual Databae",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/Bundle-uv-ips-PreQual",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -996,7 +2243,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-Bundle-uv-ips-PreQual.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1007,7 +2254,7 @@
       "title": "DVC Certificate - IPS Composition ",
       "description": "Profile of the IPS Composition for representing digital vaccination certificates with ",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/Composition-uv-ips-DVC",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1028,7 +2275,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-Composition-uv-ips-DVC.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1039,7 +2286,7 @@
       "title": "DVC Certificate - IPS Composition for WHO PreQual Database",
       "description": "Profile of the IPS Composition for representing digital vaccination certificates with WHO PreQual Database",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/Composition-uv-ips-PreQual",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1060,7 +2307,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-Composition-uv-ips-PreQual.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1071,7 +2318,7 @@
       "title": "DVC",
       "description": "Data elements for Digital Vaccination Certificate.",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVC",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "profiles": [
         "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablestructuredefinition",
@@ -1096,18 +2343,18 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVC.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
           "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVC.openapi.json",
           "localPath": "fhir-artifact-index/sidecars/StructureDefinition-DVC.openapi.json",
-          "bytes": 9871
+          "bytes": 9862
         },
         "schema": {
           "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVC.schema.json",
           "localPath": "fhir-artifact-index/sidecars/StructureDefinition-DVC.schema.json",
-          "bytes": 7609
+          "bytes": 7600
         }
       }
     },
@@ -1119,7 +2366,7 @@
       "title": "Digital Vaccination Certificate - Bundle",
       "description": "Digital Vaccination Certificate - Bundle",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCBundle",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1140,7 +2387,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCBundle.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1151,7 +2398,7 @@
       "title": "Digital Vaccination Certificate - Composition",
       "description": "Digital Vaccination Certificate - Composition",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCComposition",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1172,7 +2419,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCComposition.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1183,7 +2430,7 @@
       "title": "DVC Immunization",
       "description": "This profile represents a vaccination record for Digital Vaccine Certificates",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCImmunization",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1204,7 +2451,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCImmunization.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1215,7 +2462,7 @@
       "title": "DVC HCERT Payload",
       "description": "Minimal DVC payload for use within an HCERT Payload",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCMin",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "published": {
         "json": {
@@ -1236,7 +2483,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCMin.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
@@ -1259,7 +2506,7 @@
       "title": "DVCMinPreQual",
       "description": "DVC payload minimized  for use within an HCERT Payload with the WHO PreQual Vaccine Database",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCMinPreQual",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "published": {
         "json": {
@@ -1280,7 +2527,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCMinPreQual.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
@@ -1303,7 +2550,7 @@
       "title": "DVC HCert Vaccine Details (Minimal)",
       "description": "DVC Vaccine Details for a minimal DVC payload for use within an HCERT Payload",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCMinVaccineDetails",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "published": {
         "json": {
@@ -1324,7 +2571,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCMinVaccineDetails.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
@@ -1347,7 +2594,7 @@
       "title": "DVC HCERT Payload for PreQual DB",
       "description": "DVC payload for a minimal DVC for use within an HCERT Payload using the WHO PreQual Vaccine Database",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCMinVaccineDetailsPreQual",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "published": {
         "json": {
@@ -1368,7 +2615,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCMinVaccineDetailsPreQual.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
@@ -1391,7 +2638,7 @@
       "title": "DVC Patient",
       "description": "DVC Patient",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCPatient",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1412,7 +2659,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCPatient.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1423,7 +2670,7 @@
       "title": "PreQual",
       "description": "Data elements for the Digital Vaccine Certificate using WHO Vaccine PreQualification database",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCPreQual",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "profiles": [
         "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablestructuredefinition",
@@ -1448,18 +2695,18 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCPreQual.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
           "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCPreQual.openapi.json",
           "localPath": "fhir-artifact-index/sidecars/StructureDefinition-DVCPreQual.openapi.json",
-          "bytes": 10066
+          "bytes": 10057
         },
         "schema": {
           "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCPreQual.schema.json",
           "localPath": "fhir-artifact-index/sidecars/StructureDefinition-DVCPreQual.schema.json",
-          "bytes": 7715
+          "bytes": 7706
         }
       }
     },
@@ -1471,7 +2718,7 @@
       "title": "DVC with Selective Disclosure",
       "description": "DVC with Selective Disclosure",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCSD",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "published": {
         "json": {
@@ -1492,18 +2739,18 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCSD.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
           "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCSD.openapi.json",
           "localPath": "fhir-artifact-index/sidecars/StructureDefinition-DVCSD.openapi.json",
-          "bytes": 10729
+          "bytes": 10720
         },
         "schema": {
           "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCSD.schema.json",
           "localPath": "fhir-artifact-index/sidecars/StructureDefinition-DVCSD.schema.json",
-          "bytes": 8330
+          "bytes": 8321
         }
       }
     },
@@ -1515,7 +2762,7 @@
       "title": "DVC document Bundle with Selective Disclosure",
       "description": "DVC document Bundle with Selective Disclosure for each entry",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCSDBundle",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1536,7 +2783,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCSDBundle.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1547,7 +2794,7 @@
       "title": "Digital Vaccination Certificate - Composition",
       "description": "Digital Vaccination Certificate - Composition",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCSDComposition",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1568,7 +2815,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCSDComposition.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1579,7 +2826,7 @@
       "title": "DVC Immunization with Selective Disclosure",
       "description": "DVC Immunization with Selective Disclosure",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCSDImmunization",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1600,7 +2847,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCSDImmunization.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1611,7 +2858,7 @@
       "title": "DVC Patient with Selective Disclosure",
       "description": "DVC Patient with Selective Disclosure",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCSDPatient",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1632,7 +2879,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCSDPatient.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1643,7 +2890,7 @@
       "title": "DVC - Vaccine Details",
       "description": "Vaccine Data elements for the Digital Vaccination Certificates",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCVaccineDetails",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "profiles": [
         "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablestructuredefinition",
@@ -1668,7 +2915,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCVaccineDetails.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
@@ -1691,7 +2938,7 @@
       "title": "PreQual - Vaccine Details",
       "description": "Vaccine Data elements from the Pre Qual Database",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DVCVaccineDetailsPreQual",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "profiles": [
         "http://hl7.org/fhir/uv/crmi/StructureDefinition/crmi-shareablestructuredefinition",
@@ -1716,7 +2963,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DVCVaccineDetailsPreQual.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
@@ -1739,7 +2986,7 @@
       "title": "DoseNumberCodeableConcept",
       "description": "Dose Number",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/DoseNumberCodeableConcept",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Extension Definitions",
       "published": {
         "json": {
@@ -1760,7 +3007,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-DoseNumberCodeableConcept.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1771,7 +3018,7 @@
       "title": "Health Link Payload (DRAFT)",
       "description": "Health Link Payload (DRAFT)\n\nA Health Link URI is generated from this payload according to the algorithm documented [here](https://build.fhir.org/ig/HL7/smart-health-cards-and-links/links-specification.html#smart-health-links-sharing-application-generates-a-smart-health-link-uri)\n\n\n",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/HealthLinkPayload",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "published": {
         "json": {
@@ -1792,7 +3039,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-HealthLinkPayload.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
@@ -1815,7 +3062,7 @@
       "title": "DVC - Profile for Digital Vaccination Cards for Immunization for IPS.  Note that no Product Catalog has been set",
       "description": "This profile represents an IPS Immunization record that can be mapped onto a Digital Vaccine Certificates using the WHO PreQual Database",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/Immunization-uv-ips-DVC",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1836,7 +3083,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-Immunization-uv-ips-DVC.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1847,7 +3094,7 @@
       "title": "DVC - WHO PreQual Immunization for IPS",
       "description": "This profile represents an IPS Immunization record that can be mapped onto a Digital Vaccine Certificates using the WHO PreQual Database",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/Immunization-uv-ips-PreQual",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Resource Profiles",
       "published": {
         "json": {
@@ -1868,7 +3115,135 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-Immunization-uv-ips-PreQual.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "StructureDefinition/PHWConsent",
+      "resourceType": "StructureDefinition",
+      "id": "PHWConsent",
+      "name": "PHWConsent",
+      "title": "PHW Consent",
+      "description": "A privacy consent directive held for, and shown to, the holder of a Personal Health Wallet: an IHE PCF 1.1.0 Intermediate Consent whose policy is set by a trust domain. Either explicit (PHWExplicitConsent) or implied (PHWImpliedConsent). Trust-anchor neutral: GDHCN is one possible trust anchor among others.",
+      "canonical": "http://smart.who.int/trust-phw/StructureDefinition/PHWConsent",
+      "version": "0.2.0-litlfred",
+      "category": "Structures: Resource Profiles",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWConsent.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWConsent.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWConsent.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWConsent.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWConsent.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "StructureDefinition/PHWDocumentWithConsent",
+      "resourceType": "StructureDefinition",
+      "id": "PHWDocumentWithConsent",
+      "name": "PHWDocumentWithConsent",
+      "title": "IPS document that carries its consent directives",
+      "description": "An International Patient Summary document a Personal Health Wallet shares or an issuer issues, carrying the consent directives it is shared under, explicit or implied. Carrying them is optional (0..*); when they are carried, the Composition's Advance Directives section (LOINC 42348-3) lists them. The copy in the document is evidence for the receiver; the copy in the sharer's Consent Registry is the one enforced.",
+      "canonical": "http://smart.who.int/trust-phw/StructureDefinition/PHWDocumentWithConsent",
+      "version": "0.2.0-litlfred",
+      "category": "Structures: Resource Profiles",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWDocumentWithConsent.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWDocumentWithConsent.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWDocumentWithConsent.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWDocumentWithConsent.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWDocumentWithConsent.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "StructureDefinition/PHWExplicitConsent",
+      "resourceType": "StructureDefinition",
+      "id": "PHWExplicitConsent",
+      "name": "PHWExplicitConsent",
+      "title": "PHW Explicit Consent",
+      "description": "A consent the holder gave by their own act: on the wallet, or on a form a health worker recorded (process L). Categorized with an HL7 ActConsentDirective code (OPTIN, OPTINR, OPTOUT or OPTOUTE). The act is the evidence (source[x]). When the trust domain publishes consent codes, policyRule names the code and the version of its text the holder was shown; otherwise policy.uri names the IHE PCF implicit policy the consent changes.",
+      "canonical": "http://smart.who.int/trust-phw/StructureDefinition/PHWExplicitConsent",
+      "version": "0.2.0-litlfred",
+      "category": "Structures: Resource Profiles",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWExplicitConsent.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWExplicitConsent.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWExplicitConsent.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWExplicitConsent.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWExplicitConsent.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      }
+    },
+    {
+      "key": "StructureDefinition/PHWImpliedConsent",
+      "resourceType": "StructureDefinition",
+      "id": "PHWImpliedConsent",
+      "name": "PHWImpliedConsent",
+      "title": "PHW Implied Consent",
+      "description": "A consent the holder did not give by any act: categorized with an HL7 ActConsentDirective code (IMPLIED, IMPLIEDD or NOPP); the trust domain's default policy applies, normally an IHE PCF implicit policy (Volume 1 §1:53.2.1). Consent.policy names it, and the domain's published policy is the evidence (sourceAttachment). Carried in a document so that a receiver can see which policy the data was shared under.",
+      "canonical": "http://smart.who.int/trust-phw/StructureDefinition/PHWImpliedConsent",
+      "version": "0.2.0-litlfred",
+      "category": "Structures: Resource Profiles",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWImpliedConsent.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWImpliedConsent.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWImpliedConsent.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWImpliedConsent.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-PHWImpliedConsent.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1879,7 +3254,7 @@
       "title": "SGActorExt",
       "description": "Smart Guidelines Actor Reference extension",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/SGActorExt",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Extension Definitions",
       "published": {
         "json": {
@@ -1900,7 +3275,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-SGActorExt.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1911,7 +3286,7 @@
       "title": "SMART Health Link Payload (DRAFT)",
       "description": "SMART Health Link Payload (DRAFT)\n\nThis logical model constrains the Health Link Payload for a SMART Health Link\n\nA SMART Health Link URI is generated from this payload according to the algorithm documented [here](https://build.fhir.org/ig/HL7/smart-health-cards-and-links/links-specification.html#smart-health-links-sharing-application-generates-a-smart-health-link-uri)\n\n",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/SMARTHealthLinkPayload",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "published": {
         "json": {
@@ -1932,7 +3307,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-SMARTHealthLinkPayload.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
@@ -1955,7 +3330,7 @@
       "title": "SelectiveDisclosure",
       "description": "Guidance that a document signing service with selective disclosure support (e.g. SD-JWT) should perform a selective disclosure of the content of the containing node of the extension in the JSON representation of the FHIR instance.\n\nThe code value should be from a code system containing appropriate disclosure statements for the use case.  The disclosure statement should describe the content that is to be disclosed at that node.  For example a code such as 'disclose-date-of-birth' or 'disclose-vaccine-history'.\n",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/SelectiveDisclosure",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Extension Definitions",
       "published": {
         "json": {
@@ -1976,7 +3351,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-SelectiveDisclosure.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       }
     },
     {
@@ -1987,7 +3362,7 @@
       "title": "Smart Health Link (DRAFT)",
       "description": "Smart Health Link URI (DRAFT)\n\nLogical Model to represent a SMART Health Link as its URI.  It is generated from the content of the SMART Health Link Payload.\n\n\n",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/SmartHealthLink",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "published": {
         "json": {
@@ -2008,7 +3383,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-SmartHealthLink.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
@@ -2031,7 +3406,7 @@
       "title": "DVC Vaccine Details with Selective Disclosure",
       "description": "DVC Vaccine Details with Selective Disclosure",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/VaccineDetailsSD",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "published": {
         "json": {
@@ -2052,7 +3427,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-VaccineDetailsSD.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
@@ -2075,7 +3450,7 @@
       "title": "Verifiable Health Link Payload (DRAFT)",
       "description": "Verifiable Health Link Payload (DRAFT)\n\nThis logical model constrains the Health Link Payload for a Verifiable Health Link\n",
       "canonical": "http://smart.who.int/trust-phw/StructureDefinition/VerifiableHealthLinkPayload",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Structures: Logical Models",
       "published": {
         "json": {
@@ -2096,7 +3471,7 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/StructureDefinition-VerifiableHealthLinkPayload.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "openapi": {
@@ -2119,7 +3494,7 @@
       "title": "Relationship Status for Contact in Patient",
       "description": "Relationship Status for Contact in Patient",
       "canonical": "http://smart.who.int/trust-phw/ValueSet/DVCRelationshipStatus",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Terminology: Value Sets",
       "published": {
         "json": {
@@ -2140,13 +3515,13 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/ValueSet-DVCRelationshipStatus.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "displays": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DVCRelationshipStatus.displays.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-DVCRelationshipStatus.displays.json",
-          "bytes": 1659
+          "bytes": 1668
         },
         "jsonld": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DVCRelationshipStatus.jsonld",
@@ -2156,12 +3531,12 @@
         "openapi": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DVCRelationshipStatus.openapi.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-DVCRelationshipStatus.openapi.json",
-          "bytes": 2756
+          "bytes": 2765
         },
         "schema": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DVCRelationshipStatus.schema.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-DVCRelationshipStatus.schema.json",
-          "bytes": 1502
+          "bytes": 1511
         }
       }
     },
@@ -2173,7 +3548,7 @@
       "title": "DVC - Vaccines",
       "description": "This value set includes codes from ICD",
       "canonical": "http://smart.who.int/trust-phw/ValueSet/DVCVaccines",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Terminology: Value Sets",
       "published": {
         "json": {
@@ -2194,13 +3569,13 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/ValueSet-DVCVaccines.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "displays": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DVCVaccines.displays.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-DVCVaccines.displays.json",
-          "bytes": 10670
+          "bytes": 10679
         },
         "jsonld": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DVCVaccines.jsonld",
@@ -2210,12 +3585,12 @@
         "openapi": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DVCVaccines.openapi.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-DVCVaccines.openapi.json",
-          "bytes": 5460
+          "bytes": 5469
         },
         "schema": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DVCVaccines.schema.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-DVCVaccines.schema.json",
-          "bytes": 3674
+          "bytes": 3683
         }
       }
     },
@@ -2227,7 +3602,7 @@
       "title": "Disclosure Statements",
       "description": "Disclosure Statements value set",
       "canonical": "http://smart.who.int/trust-phw/ValueSet/DisclosureStatements",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Terminology: Value Sets",
       "published": {
         "json": {
@@ -2248,13 +3623,13 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/ValueSet-DisclosureStatements.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "displays": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DisclosureStatements.displays.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-DisclosureStatements.displays.json",
-          "bytes": 2630
+          "bytes": 2639
         },
         "jsonld": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DisclosureStatements.jsonld",
@@ -2264,12 +3639,12 @@
         "openapi": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DisclosureStatements.openapi.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-DisclosureStatements.openapi.json",
-          "bytes": 3209
+          "bytes": 3218
         },
         "schema": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-DisclosureStatements.schema.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-DisclosureStatements.schema.json",
-          "bytes": 1937
+          "bytes": 1946
         }
       }
     },
@@ -2281,7 +3656,7 @@
       "title": "HL.TYPE ValueSet ",
       "description": "ValueSet of HL Type Codes",
       "canonical": "http://smart.who.int/trust-phw/ValueSet/HL.TYPE",
-      "version": "0.1.0",
+      "version": "0.2.0-litlfred",
       "category": "Terminology: Value Sets",
       "published": {
         "json": {
@@ -2302,13 +3677,13 @@
         "provenance": {
           "upstream": "https://litlfred.github.io/smart-trust-phw/ValueSet-HL.TYPE.html"
         },
-        "note": "built at publish from a compiled AST that this checkout does not keep (source revision a58cf1e4d4f51fd6dc7df44df20303b166879c36)"
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
       },
       "sidecars": {
         "displays": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-HL.TYPE.displays.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-HL.TYPE.displays.json",
-          "bytes": 1598
+          "bytes": 1607
         },
         "jsonld": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-HL.TYPE.jsonld",
@@ -2318,12 +3693,120 @@
         "openapi": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-HL.TYPE.openapi.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-HL.TYPE.openapi.json",
-          "bytes": 2469
+          "bytes": 2478
         },
         "schema": {
           "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-HL.TYPE.schema.json",
           "localPath": "fhir-artifact-index/sidecars/ValueSet-HL.TYPE.schema.json",
-          "bytes": 1349
+          "bytes": 1358
+        }
+      }
+    },
+    {
+      "key": "ValueSet/PHWExplicitConsentKind",
+      "resourceType": "ValueSet",
+      "id": "PHWExplicitConsentKind",
+      "name": "PHWExplicitConsentKind",
+      "title": "Kinds of explicit consent (HL7 ActConsentDirective)",
+      "description": "The HL7 v3 ActConsentDirective codes for consent the holder gives by their own act: opt-in, opt-in with restrictions, opt-out, opt-out with exceptions. Each code's definition is HL7's (terminology.hl7.org, CodeSystem v3-ActCode).",
+      "canonical": "http://smart.who.int/trust-phw/ValueSet/PHWExplicitConsentKind",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Value Sets",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWExplicitConsentKind.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWExplicitConsentKind.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWExplicitConsentKind.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWExplicitConsentKind.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWExplicitConsentKind.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      },
+      "sidecars": {
+        "displays": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWExplicitConsentKind.displays.json",
+          "localPath": "fhir-artifact-index/sidecars/ValueSet-PHWExplicitConsentKind.displays.json",
+          "bytes": 1807
+        },
+        "jsonld": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWExplicitConsentKind.jsonld",
+          "localPath": "fhir-artifact-index/sidecars/ValueSet-PHWExplicitConsentKind.jsonld",
+          "bytes": 1020
+        },
+        "openapi": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWExplicitConsentKind.openapi.json",
+          "localPath": "fhir-artifact-index/sidecars/ValueSet-PHWExplicitConsentKind.openapi.json",
+          "bytes": 2851
+        },
+        "schema": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWExplicitConsentKind.schema.json",
+          "localPath": "fhir-artifact-index/sidecars/ValueSet-PHWExplicitConsentKind.schema.json",
+          "bytes": 1561
+        }
+      }
+    },
+    {
+      "key": "ValueSet/PHWImpliedConsentKind",
+      "resourceType": "ValueSet",
+      "id": "PHWImpliedConsentKind",
+      "name": "PHWImpliedConsentKind",
+      "title": "Kinds of implied consent (HL7 ActConsentDirective)",
+      "description": "The HL7 v3 ActConsentDirective codes for consent presumed from the holder's behaviour: implied consent, implied consent with opportunity to dissent, and notice of privacy practices. Each code's definition is HL7's (terminology.hl7.org, CodeSystem v3-ActCode).",
+      "canonical": "http://smart.who.int/trust-phw/ValueSet/PHWImpliedConsentKind",
+      "version": "0.2.0-litlfred",
+      "category": "Terminology: Value Sets",
+      "published": {
+        "json": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWImpliedConsentKind.json"
+        },
+        "xml": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWImpliedConsentKind.xml"
+        },
+        "ttl": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWImpliedConsentKind.ttl"
+        },
+        "html": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWImpliedConsentKind.html"
+        }
+      },
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWImpliedConsentKind.html"
+        },
+        "note": "built at publish from a compiled AST that this checkout does not keep (source revision 95ea7698eb01e289f1333a61d9ce63dfec922061)"
+      },
+      "sidecars": {
+        "displays": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWImpliedConsentKind.displays.json",
+          "localPath": "fhir-artifact-index/sidecars/ValueSet-PHWImpliedConsentKind.displays.json",
+          "bytes": 1792
+        },
+        "jsonld": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWImpliedConsentKind.jsonld",
+          "localPath": "fhir-artifact-index/sidecars/ValueSet-PHWImpliedConsentKind.jsonld",
+          "bytes": 992
+        },
+        "openapi": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWImpliedConsentKind.openapi.json",
+          "localPath": "fhir-artifact-index/sidecars/ValueSet-PHWImpliedConsentKind.openapi.json",
+          "bytes": 2813
+        },
+        "schema": {
+          "url": "https://litlfred.github.io/smart-trust-phw/ValueSet-PHWImpliedConsentKind.schema.json",
+          "localPath": "fhir-artifact-index/sidecars/ValueSet-PHWImpliedConsentKind.schema.json",
+          "bytes": 1537
         }
       }
     }
@@ -2331,7 +3814,7 @@
   "package": {
     "url": "https://litlfred.github.io/smart-trust-phw/package.tgz",
     "localPath": "fhir-artifact-index/package.tgz",
-    "bytes": 675200
+    "bytes": 780577
   },
   "fhirVersion": [
     "5.0.0"

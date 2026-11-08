@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/smart-base/process/Process_DthAuthoring/node/Task_PublicComments.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_PublicComments.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-0645",
+    "sha": "d2b1f670798fa1634dbd45aa27de06bd16680fa4",
+    "pr": "repin-train/20261108-0645",
+    "run": "42456091822"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_PublicComments",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Public comments",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "http://smart.who.int/base/role/feedback-provider",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Contributors",
+      "requires": [
+        "http://smart.who.int/base/skill/content-feedback"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F47"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F48"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

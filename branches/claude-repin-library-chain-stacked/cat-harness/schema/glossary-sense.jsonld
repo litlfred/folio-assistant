@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/schema/glossary-sense.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
+    "pr": "3016/merge",
+    "run": "42456486300"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/schema/glossary-sense",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "glossary-sense",
+      "title": "glossary-sense",
+      "summary": "**The glossary sense verdicts** of an instance: for a use of a glossary term",
+      "module": "schemas/kg/glossary-sense.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/glossary-sense"
+    }
+  ]
+}

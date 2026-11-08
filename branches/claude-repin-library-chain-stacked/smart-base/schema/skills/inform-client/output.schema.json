@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Inform Client Output",
+  "type": "object",
+  "required": [
+    "informed"
+  ],
+  "properties": {
+    "informed": {
+      "type": "boolean"
+    },
+    "handedOver": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$id": "http://smart.who.int/base/schema/skills/inform-client/output.schema.json",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
+    "pr": "3016/merge",
+    "run": "42456486300"
+  }
+}

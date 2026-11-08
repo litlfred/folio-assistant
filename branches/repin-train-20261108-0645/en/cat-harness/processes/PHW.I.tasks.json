@@ -1,0 +1,212 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "PHW.I",
+ "markers": [
+  {
+   "id": "PHW.I.1",
+   "name": "I1. Send Retrieve Manifest authenticated by the VHL option in use",
+   "left": 17.76,
+   "top": 6.9,
+   "box": {
+    "left": 14,
+    "top": 16.38,
+    "width": 0.93,
+    "height": 4.14
+   }
+  },
+  {
+   "id": "PHW.I.2",
+   "name": "I2. Authenticate the receiver against the trust list",
+   "left": 25.68,
+   "top": 43.1,
+   "box": {
+    "left": 21.91,
+    "top": 52.59,
+    "width": 0.93,
+    "height": 4.14
+   }
+  },
+  {
+   "id": "PHW.I.3",
+   "name": "I3. Return receiver key [ITI-YY2] Retrieve Trust List with DID",
+   "left": 25.68,
+   "top": 79.31,
+   "box": {
+    "left": 21.91,
+    "top": 88.79,
+    "width": 0.93,
+    "height": 4.14
+   }
+  },
+  {
+   "id": "PHW.I.5",
+   "name": "I5. Decide under every applicable agreement (process F)",
+   "left": 57.34,
+   "top": 31.9,
+   "box": {
+    "left": 53.57,
+    "top": 41.38,
+    "width": 0.93,
+    "height": 4.14
+   }
+  },
+  {
+   "id": "PHW.I.6",
+   "name": "I6. Return manifest and documents [ITI-YY5] /",
+   "left": 73.17,
+   "top": 31.9,
+   "box": {
+    "left": 69.4,
+    "top": 41.38,
+    "width": 0.93,
+    "height": 4.14
+   }
+  },
+  {
+   "id": "PHW.I.7",
+   "name": "I7. Refuse with OperationOutcome [ITI-YY5] (deny or unknown)",
+   "left": 73.17,
+   "top": 54.31,
+   "box": {
+    "left": 69.4,
+    "top": 63.79,
+    "width": 0.93,
+    "height": 4.14
+   }
+  },
+  {
+   "id": "PHW.I.8",
+   "name": "I8. Apply the normal VHL rules (no agreement applies)",
+   "left": 57.34,
+   "top": 54.31,
+   "box": {
+    "left": 53.57,
+    "top": 63.79,
+    "width": 0.93,
+    "height": 4.14
+   }
+  },
+  {
+   "id": "PHW.I.9",
+   "name": "I9. Send ATNA audit event citing the agreement [ITI-20] Record Audit Event",
+   "left": 81.08,
+   "top": 43.1,
+   "box": {
+    "left": 77.32,
+    "top": 52.59,
+    "width": 0.93,
+    "height": 4.14
+   }
+  },
+  {
+   "id": "PHW.I.11",
+   "name": "I11. Process documents or refusal [ITI-YY5] response",
+   "left": 89,
+   "top": 6.9,
+   "box": {
+    "left": 85.23,
+    "top": 16.38,
+    "width": 0.93,
+    "height": 4.14
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I",
+ "tasks": {
+  "PHW.I.1": {
+   "id": "PHW.I.1",
+   "name": "I1. Send Retrieve Manifest authenticated by the VHL option in use",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/node/PHW.I.1",
+   "lane": "VHL Receiver (receiving organisation or application)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/lane/PHW.Lane.VHLReceiver",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.I.2": {
+   "id": "PHW.I.2",
+   "name": "I2. Authenticate the receiver against the trust list",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/node/PHW.I.2",
+   "lane": "VHL Sharer (enforcement and decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/lane/PHW.Lane.VHLSharer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.I.3": {
+   "id": "PHW.I.3",
+   "name": "I3. Return receiver key [ITI-YY2] Retrieve Trust List with DID",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/node/PHW.I.3",
+   "lane": "Trust Anchor (GDHCN or another anchor)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/lane/PHW.Lane.TrustAnchor",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.I.5": {
+   "id": "PHW.I.5",
+   "name": "I5. Decide under every applicable agreement (process F)",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/node/PHW.I.5",
+   "lane": "VHL Sharer (enforcement and decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/lane/PHW.Lane.VHLSharer",
+   "skills": [],
+   "calls": {
+    "name": "F. Access Decision under a Data Sharing Agreement (DSA P11)",
+    "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.F",
+    "diagram": "PHW.F.html"
+   },
+   "binding": "unbound"
+  },
+  "PHW.I.6": {
+   "id": "PHW.I.6",
+   "name": "I6. Return manifest and documents [ITI-YY5] /",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/node/PHW.I.6",
+   "lane": "VHL Sharer (enforcement and decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/lane/PHW.Lane.VHLSharer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.I.7": {
+   "id": "PHW.I.7",
+   "name": "I7. Refuse with OperationOutcome [ITI-YY5] (deny or unknown)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/node/PHW.I.7",
+   "lane": "VHL Sharer (enforcement and decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/lane/PHW.Lane.VHLSharer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.I.8": {
+   "id": "PHW.I.8",
+   "name": "I8. Apply the normal VHL rules (no agreement applies)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/node/PHW.I.8",
+   "lane": "VHL Sharer (enforcement and decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/lane/PHW.Lane.VHLSharer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.I.9": {
+   "id": "PHW.I.9",
+   "name": "I9. Send ATNA audit event citing the agreement [ITI-20] Record Audit Event",
+   "type": "bpmn:SendTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/node/PHW.I.9",
+   "lane": "VHL Sharer (enforcement and decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/lane/PHW.Lane.VHLSharer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.I.11": {
+   "id": "PHW.I.11",
+   "name": "I11. Process documents or refusal [ITI-YY5] response",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/node/PHW.I.11",
+   "lane": "VHL Receiver (receiving organisation or application)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.I/lane/PHW.Lane.VHLReceiver",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

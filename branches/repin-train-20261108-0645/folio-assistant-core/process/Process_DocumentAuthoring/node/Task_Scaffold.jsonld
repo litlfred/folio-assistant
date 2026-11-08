@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Scaffold.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-0645",
+    "sha": "d2b1f670798fa1634dbd45aa27de06bd16680fa4",
+    "pr": "repin-train/20261108-0645",
+    "run": "42456091822"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Scaffold",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Scaffold the folio",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/folio-assistant-core/process/Process_DocumentAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/folio-assistant-core/process/Process_DocumentAuthoring/lane/Lane_Agent",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/folio-assistant-core/skill/document-structure"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/folio-assistant-core/process/Process_DocumentAuthoring#flow/A06"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/folio-assistant-core/process/Process_DocumentAuthoring#flow/A07"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0645/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DocumentAuthoring/node/Task_Scaffold"
+    }
+  ]
+}

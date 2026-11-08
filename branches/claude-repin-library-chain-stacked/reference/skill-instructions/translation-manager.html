@@ -317,7 +317,19 @@ you make once, here, not again in every block.</p><h3 id="3-translate"><a href="
 </h3><p>Translate with the term base open. Options, in order of preference:</p><ol><li><strong>Existing <code class="language-plaintext highlighter-rouge">.po</code> from SMART Base</strong> — if the DAK already has translations
 from Weblate/Crowdin, use them.</li><li><strong>FHIR/translation-utils</strong> — the <code class="language-plaintext highlighter-rouge">po-translate</code> CLI for batch machine
 translation via DeepL/Google Translate. Tags results <code class="language-plaintext highlighter-rouge"># fuzzy</code>.</li><li><strong>Agent translation</strong> — LLM translation of <code class="language-plaintext highlighter-rouge">.pot</code> → <code class="language-plaintext highlighter-rouge">.po</code>. Also tagged
-unofficial.</li><li><strong>Human translation</strong> — the gold standard.</li></ol><h3 id="4-inject-po--translated-markdown"><a href="#4-inject-po--translated-markdown" class="anchor-heading" aria-labelledby="4-inject-po--translated-markdown"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Inject (PO → translated Markdown)
+unofficial.</li><li><strong>Human translation</strong> — the gold standard.</li></ol><h4 id="modal-strength-a-recommendation-stays-a-recommendation"><a href="#modal-strength-a-recommendation-stays-a-recommendation" class="anchor-heading" aria-labelledby="modal-strength-a-recommendation-stays-a-recommendation"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Modal strength: a recommendation stays a recommendation
+  
+  
+</h4><p>A lowercase <strong>should</strong> is a recommendation, and its translation is the
+locale’s recommendation form, never its obligation form. Turning it into
+“must” strengthens the claim, and in a guide it then reads as a conformance
+rule. Lowercase <strong>must</strong>, <strong>shall</strong> and <strong>needs to</strong> are obligations. The
+uppercase BCP 14 keywords (RFC 2119, RFC 8174: MUST, SHALL, SHOULD, MAY) keep
+the fixed renderings the locale’s term base gives them.</p><div class="table-wrapper"><table><thead><tr><th>locale</th><th>should (recommendation)</th><th>must / shall (obligation)</th></tr></thead><tbody><tr><td>ar</td><td>ينبغي، يُستحسن</td><td>يجب</td></tr><tr><td>es</td><td>debería, se recomienda</td><td>debe</td></tr><tr><td>fr</td><td>devrait, il est recommandé de</td><td>doit</td></tr><tr><td>ru</td><td>следует, рекомендуется</td><td>должен</td></tr><tr><td>zh</td><td>应当, 宜, 建议</td><td>必须</td></tr></tbody></table></div><p>A brief may not normalise one into the other, for consistency or anything
+else. A lexical round-trip screen cannot see this shift either: the words of a
+back-translation overlap whether it says “should” or “must”. So the
+adjudicator reads every string whose source has a modal (see “What counts as
+drift”).</p><h3 id="4-inject-po--translated-markdown"><a href="#4-inject-po--translated-markdown" class="anchor-heading" aria-labelledby="4-inject-po--translated-markdown"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> 4. Inject (PO → translated Markdown)
   
   
 </h3><div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bun run pipeline/po-inject.ts <span class="nt">--locale</span> &lt;locale&gt; <span class="o">[</span><span class="nt">--chapter</span> &lt;<span class="nb">dir</span><span class="o">&gt;]</span>
@@ -534,7 +546,8 @@ here any more: <code class="language-plaintext highlighter-rouge">untaintedParti
 style review and every translation fails.</p><blockquote><p>Synonyms, articles and re-ordering are <strong>not</strong> drift. A claim added, dropped,
 weakened, strengthened or reversed <strong>is</strong>; so is a term of art swapped for
 something that means a different thing, and a named entity or quantifier
-moved.</p></blockquote><p>This is the part that does <strong>not</strong> generalise — the spine requires a <code class="language-plaintext highlighter-rouge">drift</code>
+moved.</p></blockquote><p>A modal is a claim’s strength: “should” read back as “must”, or “may” as
+“should”, <strong>is</strong> drift, however close the words are.</p><p>This is the part that does <strong>not</strong> generalise — the spine requires a <code class="language-plaintext highlighter-rouge">drift</code>
 statement and checks only that one exists, because “states what is not drift as
 well as what is” is a reading, and a gate pretending to measure it would be the
 defect the whole mechanism exists to stop.</p><h4 id="recording-it"><a href="#recording-it" class="anchor-heading" aria-labelledby="recording-it"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Recording it

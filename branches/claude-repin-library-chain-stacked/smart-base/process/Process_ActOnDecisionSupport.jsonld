@@ -1,0 +1,141 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/smart-base/process/Process_ActOnDecisionSupport.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_ActOnDecisionSupport.jsonld",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
+    "pr": "3016/merge",
+    "run": "42456486300"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Act on decision-support guidance",
+      "summary": "The point-of-care system applies one of the DAK's decision tables, published as a CPG-on-FHIR PlanDefinition, to one client ($apply) and shows the health worker what it proposes (a RequestGroup, or CDS Hooks cards).",
+      "description": "The point-of-care system applies one of the DAK's decision tables, published as a CPG-on-FHIR PlanDefinition, to one client ($apply) and shows the health worker what it proposes (a RequestGroup, or CDS Hooks cards). The health worker accepts or declines each action, one tap each, and the system makes the accepted requests active in the client's CarePlan; a declined action is never written. Recording why is OPTIONAL and never blocks: after the review a parallel split (Gateway_Fork) sends the main path on to the care plan and, separately, to Gateway_AddReason, which reads whether the health worker tapped \"add a reason\" while reviewing (false unless they did, so skipping is the default) and only then reaches the rationale task. The two paths end at their own end events and are never joined, so the care plan never waits for documentation. That is the simplest correct construct the harness executes: a non-interrupting boundary event on the review says the same thing, but the harness's interpreter does not run boundary events; an inclusive gateway would need a join the main path waits at; and a rationale task on the main path would make every run pass through it. The record, when made, is one FHIR Provenance. Skills: apply-decision-support, review-decision-support-guidance, record-decision-rationale, activate-accepted-guidance (package authoring-who-smart-guidelines).",
+      "enforcement": "advisory",
+      "sourcePath": "processes/content/act-on-decision-support.bpmn",
+      "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/act-on-decision-support.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/act-on-decision-support.svg",
+      "startNode": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Start_GuidanceDue"
+      ],
+      "nodeCount": 14,
+      "flowCount": 13,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D01",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Start_GuidanceDue",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Apply",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D02",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Apply",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_HasGuidance",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D03",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_HasGuidance",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Review",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D04",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_HasGuidance",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoGuidance",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D05",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Review",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D06",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Activate",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D07",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoChange",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "yes",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Rationale",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "no",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoReason",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D09",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Activate",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_Activated",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D10",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Rationale",
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_Noted",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

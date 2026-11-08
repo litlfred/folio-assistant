@@ -9,17 +9,41 @@
     }
   ],
   "$defs": {
+    "skills/activate-accepted-guidance/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/activate-accepted-guidance/input.schema.json"
+    },
+    "skills/activate-accepted-guidance/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/activate-accepted-guidance/output.schema.json"
+    },
+    "skills/apply-decision-support/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/apply-decision-support/input.schema.json"
+    },
+    "skills/apply-decision-support/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/apply-decision-support/output.schema.json"
+    },
     "skills/classify-and-code-content/input": {
       "$ref": "http://smart.who.int/base/schema/skills/classify-and-code-content/input.schema.json"
     },
     "skills/classify-and-code-content/output": {
       "$ref": "http://smart.who.int/base/schema/skills/classify-and-code-content/output.schema.json"
     },
+    "skills/complete-sdc-questionnaire/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/complete-sdc-questionnaire/input.schema.json"
+    },
+    "skills/complete-sdc-questionnaire/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/complete-sdc-questionnaire/output.schema.json"
+    },
     "skills/dak-l1-library/input": {
       "$ref": "http://smart.who.int/base/schema/skills/dak-l1-library/input.schema.json"
     },
     "skills/dak-l1-library/output": {
       "$ref": "http://smart.who.int/base/schema/skills/dak-l1-library/output.schema.json"
+    },
+    "skills/extract-questionnaire-response/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/extract-questionnaire-response/input.schema.json"
+    },
+    "skills/extract-questionnaire-response/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/extract-questionnaire-response/output.schema.json"
     },
     "skills/guideline-use-case/input": {
       "$ref": "http://smart.who.int/base/schema/skills/guideline-use-case/input.schema.json"
@@ -32,6 +56,12 @@
     },
     "skills/indicator-extraction/output": {
       "$ref": "http://smart.who.int/base/schema/skills/indicator-extraction/output.schema.json"
+    },
+    "skills/inform-client/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/inform-client/input.schema.json"
+    },
+    "skills/inform-client/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/inform-client/output.schema.json"
     },
     "skills/l2-dak-authoring/input": {
       "$ref": "http://smart.who.int/base/schema/skills/l2-dak-authoring/input.schema.json"
@@ -86,6 +116,24 @@
     },
     "skills/recommendation-scenarios/output": {
       "$ref": "http://smart.who.int/base/schema/skills/recommendation-scenarios/output.schema.json"
+    },
+    "skills/record-decision-rationale/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/record-decision-rationale/input.schema.json"
+    },
+    "skills/record-decision-rationale/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/record-decision-rationale/output.schema.json"
+    },
+    "skills/review-client-history/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/review-client-history/input.schema.json"
+    },
+    "skills/review-client-history/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/review-client-history/output.schema.json"
+    },
+    "skills/review-decision-support-guidance/input": {
+      "$ref": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/input.schema.json"
+    },
+    "skills/review-decision-support-guidance/output": {
+      "$ref": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/output.schema.json"
     },
     "skills/smart-guideline-end-to-end/input": {
       "$ref": "http://smart.who.int/base/schema/skills/smart-guideline-end-to-end/input.schema.json"
@@ -148,8 +196,8 @@
   "$comment": "Instance graph: http://smart.who.int/base/smart-base.jsonld",
   "staging": {
     "branch": "claude/repin-library-chain-stacked",
-    "sha": "251f8717eee7c005cb0fb669dd057632495fe86a",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
     "pr": "3016/merge",
-    "run": "42384030510"
+    "run": "42456486300"
   }
 }

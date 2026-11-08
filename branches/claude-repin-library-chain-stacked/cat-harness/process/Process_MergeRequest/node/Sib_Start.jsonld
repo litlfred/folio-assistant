@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeRequest/node/Sib_Start.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
+    "pr": "3016/merge",
+    "run": "42456486300"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeRequest/node/Sib_Start",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Feature work starts",
+      "nodeKind": "start",
+      "bpmnType": "bpmn:StartEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeRequest",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/sibling-session",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeRequest#flow/Flow_S1"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Start"
+    }
+  ]
+}

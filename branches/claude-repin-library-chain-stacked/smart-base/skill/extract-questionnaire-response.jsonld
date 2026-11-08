@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/smart-base/skill/extract-questionnaire-response.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/extract-questionnaire-response.jsonld",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
+    "pr": "3016/merge",
+    "run": "42456486300"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/extract-questionnaire-response",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "extract-questionnaire-response",
+      "title": "Extract resources from a questionnaire response",
+      "description": "The point-of-care system turns a completed QuestionnaireResponse into the FHIR resources it stands for, by the extraction its SDC Questionnaire declares (StructureMap-based, definition-based or observation-based $extract), and saves them. Input is the response and its Questionnaire; output is a transaction Bundle. Generic for any DAK form.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/extract-questionnaire-response.md",
+      "instructionLines": 59,
+      "inputSchema": "http://smart.who.int/base/schema/skills/extract-questionnaire-response/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/extract-questionnaire-response/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

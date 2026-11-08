@@ -1,325 +1,472 @@
 {
-  "against": "none",
+  "against": "46a8ffbce4b9c3782c2449fe9609811ac1a13afe",
   "skipped": 0,
-  "ran": 44,
+  "ran": 38,
   "reused": 0,
   "groups": [
     {
-      "cause": "",
-      "writtenBy": "-",
+      "cause": ".",
+      "writtenBy": "the commit",
       "reran": [
-        "handler:index",
-        "ig-index:build",
+        "uml:overview"
+      ],
+      "seconds": 330.31307153999995
+    },
+    {
+      "cause": "its script, imports or tools",
+      "writtenBy": "the commit",
+      "reran": [
         "smart-base:document-kinds",
-        "uml:overview",
         "subgraph:jsonld",
         "library:viz",
         "voices:viz",
-        "theme:viz",
         "uploads:viz",
         "document-kinds:viz",
         "skills:docs",
-        "node-kinds",
-        "node-kind:pages",
-        "bibliography:page",
-        "glossary:page",
-        "smart:pages",
-        "jsonld:contexts",
-        "smart-trust-phw:pages",
-        "smart-base:pages",
-        "smart-trust:pages",
-        "smart-base:l1-extraction:pages",
-        "tools:viz",
         "auto:docs",
-        "lsi:viz",
-        "translation:status",
-        "openapi:viz",
         "schema:viz",
+        "folio:viz",
+        "processes:viz"
+      ],
+      "seconds": 51.612453581999915
+    },
+    {
+      "cause": "cat-harness/cat-harness.json",
+      "writtenBy": "the commit",
+      "reran": [
+        "theme:viz",
+        "bibliography:page",
+        "smart-base:l1-extraction:pages",
+        "openapi:viz",
         "methodologies:viz",
-        "external-schemas:viz",
         "subscriptions:viz",
-        "docs:pages",
-        "docs:harness",
         "navbar:include",
         "kind:table",
         "avatars:css",
         "themes:css",
-        "folio:viz",
         "kg:viewer",
-        "state:visualizer",
-        "site:viz",
-        "slice:sqlite",
         "render:bpmn",
-        "processes:viz",
         "kind:json-schemas"
       ],
-      "seconds": 492.8341149050002
+      "seconds": 12.10626142600004
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 11.609968785000005
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (state-visualizer: today)",
+      "writtenBy": "-",
+      "reran": [
+        "state:visualizer"
+      ],
+      "seconds": 11.58251474600006
+    },
+    {
+      "cause": ".github",
+      "writtenBy": "the commit",
+      "reran": [
+        "jsonld:contexts",
+        "external-schemas:viz",
+        "docs:harness"
+      ],
+      "seconds": 10.358571605999954
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
+      "writtenBy": "-",
+      "reran": [
+        "tools:viz",
+        "docs:pages"
+      ],
+      "seconds": 3.987482206999906
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "writtenBy": "-",
+      "reran": [
+        "site:viz"
+      ],
+      "seconds": 1.5940121560000116
+    },
+    {
+      "cause": "cat-harness/AGENTS.md",
+      "writtenBy": "the commit",
+      "reran": [
+        "node-kinds"
+      ],
+      "seconds": 1.107540686000022
+    },
+    {
+      "cause": "not recorded: the writer reads smart-base/docs/assets and then rewrites it",
+      "writtenBy": "-",
+      "reran": [
+        "smart:pages"
+      ],
+      "seconds": 0.8759195520000067
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-base:pages"
+      ],
+      "seconds": 0.7903992770001059
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust:pages"
+      ],
+      "seconds": 0.7788559750000713
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust-phw:pages"
+      ],
+      "seconds": 0.5674813480000012
     }
   ],
   "writers": [
     {
       "writer": "auto:docs",
       "did": "ran",
-      "why": "",
-      "seconds": 6.923490959000075
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 6.333499771000002
     },
     {
       "writer": "avatars:css",
       "did": "ran",
-      "why": "",
-      "seconds": 0.09536394499999006
+      "why": "cat-harness/cat-harness.json changed (+2 more: cat-harness/package.json, folio-assistant-core/folio-assistant-core.json)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 0.10848261399997863
     },
     {
       "writer": "bibliography:page",
       "did": "ran",
-      "why": "",
-      "seconds": 0.4398379039999563
+      "why": "cat-harness/cat-harness.json changed (+244 more: cat-harness/library, cat-harness/library/README.md, cat-harness/library/conduct, cat-harness/library/conduct/agent-skill-best-practices---gemini-cli, cat-harness/library/conduct/agent-skill-best-practices---gemini-cli/manifest.jsonld, cat-harness/library/conduct/agent-skill-best-practices---gemini-cli/structure.json, cat-harness/library/conduct/agent-skills---google-antigravity-docs, and 237 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 0.47029265499999745
     },
     {
       "writer": "docs:harness",
       "did": "ran",
-      "why": "",
-      "seconds": 3.060930795000051
+      "why": ".github changed (+677 more: .github/actions, .github/actions/ci-setup, .github/actions/ci-setup/action.yml, .github/ci-image, .github/ci-image/Dockerfile, .github/ci-image/build.sh, .github/ci-image/fetch.sh, and 670 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github"
+      },
+      "seconds": 3.069061746999971
     },
     {
       "writer": "docs:pages",
       "did": "ran",
-      "why": "",
-      "seconds": 1.6890600460000569
+      "why": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
+      "seconds": 1.6254671949999173
     },
     {
       "writer": "document-kinds:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 0.6367358339999337
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.6542147340000374
     },
     {
       "writer": "external-schemas:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 4.649976359999972
+      "why": ".github changed (+11983 more: .github/actions, .github/actions/ci-setup, .github/actions/ci-setup/action.yml, .github/ci-image, .github/ci-image/Dockerfile, .github/ci-image/build.sh, .github/ci-image/fetch.sh, and 11976 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github"
+      },
+      "seconds": 5.92676806599996
     },
     {
       "writer": "folio:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 0.5002961020000511
-    },
-    {
-      "writer": "glossary:page",
-      "did": "ran",
-      "why": "",
-      "seconds": 11.304445620000013
-    },
-    {
-      "writer": "handler:index",
-      "did": "ran",
-      "why": "",
-      "seconds": 2.0272160809999913
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.5312511299999897
     },
     {
       "writer": "ig-index:build",
       "did": "ran",
-      "why": "",
-      "seconds": 15.829417845000018
+      "why": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "seconds": 11.609968785000005
     },
     {
       "writer": "jsonld:contexts",
       "did": "ran",
-      "why": "",
-      "seconds": 1.1938003000000026
+      "why": ".github changed (+6942 more: .github/actions, .github/actions/ci-setup, .github/ci-image, bootstrap, cat-harness/cat-harness.json, cat-harness/docs/assets/img, cat-harness/docs/assets/img/uml/overview/cat-harness, and 6935 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github"
+      },
+      "seconds": 1.362741793000023
     },
     {
       "writer": "kg:viewer",
       "did": "ran",
-      "why": "",
-      "seconds": 0.34246253599994814
+      "why": "cat-harness/cat-harness.json changed (+10 more: cat-harness/library, cat-harness/library/figure-descriptions.json, cat-harness/library/image-verdicts.json, cat-harness/library/library.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, and 3 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 0.3899799999999814
     },
     {
       "writer": "kind:json-schemas",
       "did": "ran",
-      "why": "",
-      "seconds": 0.9128875100000295
+      "why": "cat-harness/cat-harness.json changed (+13 more: cat-harness/library, cat-harness/library/figure-descriptions.json, cat-harness/library/image-verdicts.json, cat-harness/library/library.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, and 6 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 1.0763912469999632
     },
     {
       "writer": "kind:table",
       "did": "ran",
-      "why": "",
-      "seconds": 0.09094164400000591
+      "why": "cat-harness/cat-harness.json changed (+2 more: cat-harness/package.json, folio-assistant-core/folio-assistant-core.json)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 0.10233839299995452
     },
     {
       "writer": "library:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 3.671233139000018
-    },
-    {
-      "writer": "lsi:viz",
-      "did": "ran",
-      "why": "",
-      "seconds": 1.896049253999954
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 3.9216631919998908
     },
     {
       "writer": "methodologies:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 1.5115636180000147
+      "why": "cat-harness/cat-harness.json changed (+336 more: cat-harness/docs/assets/library/index.json, cat-harness/docs/en/cat-harness/library/cat-harness/arxiv-0909.4061v2/index.html, cat-harness/docs/en/cat-harness/library/cat-harness/arxiv-1603.07466v1/index.html, cat-harness/docs/en/cat-harness/library/cat-harness/arxiv-2106.12880v1/index.html, cat-harness/docs/en/cat-harness/library/cat-harness/arxiv-2202.02427v1/index.html, cat-harness/docs/en/cat-harness/library/cat-harness/arxiv-2203.02010v1/index.html, cat-harness/docs/en/cat-harness/library/cat-harness/arxiv-2312.07755v1/index.html, and 329 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 1.5435275339999934
     },
     {
       "writer": "navbar:include",
       "did": "ran",
-      "why": "",
-      "seconds": 0.10675782699999399
-    },
-    {
-      "writer": "node-kind:pages",
-      "did": "ran",
-      "why": "",
-      "seconds": 2.1260791050000116
+      "why": "cat-harness/cat-harness.json changed (+3 more: cat-harness/docs/_data/harness.json, cat-harness/package.json, folio-assistant-core/folio-assistant-core.json)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 0.14892260000004898
     },
     {
       "writer": "node-kinds",
       "did": "ran",
-      "why": "",
-      "seconds": 1.095519350000075
+      "why": "cat-harness/AGENTS.md changed (+14 more: cat-harness/cat-harness.json, cat-harness/library, cat-harness/library/figure-descriptions.json, cat-harness/library/image-verdicts.json, cat-harness/library/library.json, cat-harness/package.json, cat-harness/processes, and 7 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/AGENTS.md"
+      },
+      "seconds": 1.107540686000022
     },
     {
       "writer": "openapi:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 0.146087700999924
+      "why": "cat-harness/cat-harness.json changed (+3 more: cat-harness/package.json, folio-assistant-core/folio-assistant-core.json, index.lock.json)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 0.18277020899998025
     },
     {
       "writer": "processes:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 6.660961355999927
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 6.820392292000004
     },
     {
       "writer": "render:bpmn",
       "did": "ran",
-      "why": "",
-      "seconds": 5.717754492000094
+      "why": "cat-harness/cat-harness.json changed (+50 more: cat-harness/docs/process/crdm-methodology.md, cat-harness/library, cat-harness/library/figure-descriptions.json, cat-harness/library/image-verdicts.json, cat-harness/library/library.json, cat-harness/package.json, cat-harness/processes, and 43 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 6.374120327000041
     },
     {
       "writer": "schema:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 2.354421226999955
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 2.6712695339999626
     },
     {
       "writer": "site:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 1.9903528819999192
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 1.5940121560000116
     },
     {
       "writer": "skills:docs",
       "did": "ran",
-      "why": "",
-      "seconds": 4.814457143999985
-    },
-    {
-      "writer": "slice:sqlite",
-      "did": "ran",
-      "why": "",
-      "seconds": 9.581525634999968
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 5.241579558999976
     },
     {
       "writer": "smart-base:document-kinds",
       "did": "ran",
-      "why": "",
-      "seconds": 0.35478635999999825
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.9845426640000078
     },
     {
       "writer": "smart-base:l1-extraction:pages",
       "did": "ran",
-      "why": "",
-      "seconds": 0.5742257140000584
+      "why": "cat-harness/cat-harness.json changed (+12 more: cat-harness/library, cat-harness/library/figure-descriptions.json, cat-harness/library/image-verdicts.json, cat-harness/library/library.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, and 5 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 0.6385022480000043
     },
     {
       "writer": "smart-base:pages",
       "did": "ran",
-      "why": "",
-      "seconds": 0.7445625279999804
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "seconds": 0.7903992770001059
     },
     {
       "writer": "smart-trust-phw:pages",
       "did": "ran",
-      "why": "",
-      "seconds": 0.47648472000006586
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "seconds": 0.5674813480000012
     },
     {
       "writer": "smart-trust:pages",
       "did": "ran",
-      "why": "",
-      "seconds": 0.7768281260000076
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "seconds": 0.7788559750000713
     },
     {
       "writer": "smart:pages",
       "did": "ran",
-      "why": "",
-      "seconds": 0.6264988679999951
+      "why": "not recorded: the writer reads smart-base/docs/assets and then rewrites it",
+      "seconds": 0.8759195520000067
     },
     {
       "writer": "state:visualizer",
       "did": "ran",
-      "why": "",
-      "seconds": 11.903799746999983
+      "why": "not recorded: the run reached a traced input site (state-visualizer: today)",
+      "seconds": 11.58251474600006
     },
     {
       "writer": "subgraph:jsonld",
       "did": "ran",
-      "why": "",
-      "seconds": 20.362878131999985
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 21.96738400800002
     },
     {
       "writer": "subscriptions:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 0.15016156999999658
+      "why": "cat-harness/cat-harness.json changed (+3 more: cat-harness/package.json, folio-assistant-core/folio-assistant-core.json, index.config.json)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 0.17850362800003494
     },
     {
       "writer": "theme:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 0.4164927270000335
+      "why": "cat-harness/cat-harness.json changed (+12 more: cat-harness/library, cat-harness/library/figure-descriptions.json, cat-harness/library/image-verdicts.json, cat-harness/library/library.json, cat-harness/package.json, cat-harness/processes, cat-harness/processes/processes.json, and 5 others)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 0.45552717500005385
     },
     {
       "writer": "themes:css",
       "did": "ran",
-      "why": "",
-      "seconds": 0.3894502979998942
+      "why": "cat-harness/cat-harness.json changed (+3 more: cat-harness/package.json, folio-assistant-core/folio-assistant-core.json, folio-assistant-core/scripts)",
+      "cause": {
+        "kind": "path",
+        "path": "cat-harness/cat-harness.json"
+      },
+      "seconds": 0.4369027960000094
     },
     {
       "writer": "tools:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 2.469851628000033
-    },
-    {
-      "writer": "translation:status",
-      "did": "ran",
-      "why": "",
-      "seconds": 0.9079990160000744
+      "why": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
+      "seconds": 2.362015011999989
     },
     {
       "writer": "uml:overview",
       "did": "ran",
-      "why": "",
-      "seconds": 358.69609123000004
+      "why": ". changed (+3807 more: cat-harness/cat-harness.json, cat-harness/docs, cat-harness/docs/_data, cat-harness/docs/_data/provenance, cat-harness/docs/_data/provenance/docs-pages.json, cat-harness/docs/_data/provenance/skill-instructions.json, cat-harness/docs/_data/todo_listing.json, and 3800 others)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 330.31307153999995
     },
     {
       "writer": "uploads:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 1.9779722150000743
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 1.8376604479999514
     },
     {
       "writer": "voices:viz",
       "did": "ran",
-      "why": "",
-      "seconds": 0.6364058150000638
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.6489962500000839
     }
   ]
 }

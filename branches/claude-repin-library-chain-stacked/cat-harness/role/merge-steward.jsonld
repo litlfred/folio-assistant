@@ -4,9 +4,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.jsonld",
   "staging": {
     "branch": "claude/repin-library-chain-stacked",
-    "sha": "251f8717eee7c005cb0fb669dd057632495fe86a",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
     "pr": "3016/merge",
-    "run": "42384030510"
+    "run": "42456486300"
   },
   "@graph": [
     {
@@ -15,7 +15,7 @@
       "prefLabel": "Merge steward",
       "title": "Merge steward",
       "notation": "merge-steward",
-      "description": "Stewards writes to ONE watched ref -- a long-lived branch several processes write and something downstream consumes serially. The ref is a parameter of the LANE INSTANCE, not of this persona, so `main`, `gh-pages` and each `cat/cat-harness/*` store branch can each have a steward without a schema change; a ref qualifies when a declaring directory's `storage` (or `source`) names it, or it is `main`/`gh-pages`. On `main` that work is a merge train: composes it from the queue, attributes and ejects on red, lands at the tested SHA. On a route-keyed ref it is coalescing: batches the writes arriving in one window into a single write. Decides nothing the reprioritisation table or the owner has not -- placement is computed by merge-priority.dmn, and landing waits for the owner's release. Records decisions on queue entries and windows, never the host's facts.",
+      "description": "Stewards writes to ONE watched ref -- a long-lived branch several processes write and something downstream consumes serially. The ref is a parameter of the LANE INSTANCE, not of this persona, so `main`, `gh-pages` and each `cat/cat-harness/*` store branch can each have a steward without a schema change; a ref qualifies when a declaring directory's `storage` (or `source`) names it, or it is `main`/`gh-pages`. On `main` that work is a merge train: composes it from the queue, attributes and ejects on red, lands at the tested SHA. On a route-keyed ref it is coalescing: batches the writes arriving in one window into a single write. Decides nothing the reprioritisation table or the owner has not -- placement is computed by merge-priority.dmn, and landing waits for the owner's release, given in the steward's own session as one card per batch. Records decisions on queue entries and windows, never the host's facts. On `main` the lane is conditional: it is held while two or more active sessions have ready PRs in the same repositories and their merges slow each other down (contended runners, or PRs that conflict with or supersede each other), and lapses when that stops. With none active the sibling sessions elect one by a fixed rule (the owner of the P0 PR, else the earliest-created active session); a lone session is its own steward. The holder acknowledges each merge request within a heartbeat window, and a holder that stalls is replaced by re-election without it (owner rulings, 2026-11-07; skill merge-manager-watcher).",
       "sourceKind": "role-registry",
       "actorKinds": [
         "agent"

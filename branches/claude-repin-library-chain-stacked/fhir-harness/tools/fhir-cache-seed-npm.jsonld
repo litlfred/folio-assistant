@@ -359,9 +359,9 @@
   "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/fhir-harness.jsonld",
   "staging": {
     "branch": "claude/repin-library-chain-stacked",
-    "sha": "251f8717eee7c005cb0fb669dd057632495fe86a",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
     "pr": "3016/merge",
-    "run": "42384030510"
+    "run": "42456486300"
   },
   "@graph": [
     {
@@ -374,7 +374,7 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache <dir>] [--sushi-config <file>] [--mirror <dir|git-url>] [--template-repo <name=owner/repo>] [--site-repo <prefix=owner/repo[@branch]>] [--missing-out <file>] [--dry-run] [name#version ...]"
+        "shell": "bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache <dir>] [--sushi-config <file>] [--mirror <dir|git-url>] [--template-repo <name=owner/repo>] [--site-repo <prefix=owner/repo[@branch]>] [--lock <file>] [--missing-out <file>] [--dry-run] [name#version ...]"
       },
       "io": {
         "inputs": [
@@ -382,6 +382,12 @@
             "name": "sushi-config",
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
             "description": "Seed what this IG pins: its `dependencies:` and the core package for its `fhirVersion`.",
+            "required": false
+          },
+          {
+            "name": "lock",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath",
+            "description": "An IG's `fhir-packages.lock.json` (`packages`: name, version, `tarball` https URL, `integrity` sha512-/sha256- and/or hex `sha256`). Each package it pins is installed from that URL only, after every pinned hash matches; a mismatch is refused. Its dependencies are not followed: the lock lists them.",
             "required": false
           },
           {

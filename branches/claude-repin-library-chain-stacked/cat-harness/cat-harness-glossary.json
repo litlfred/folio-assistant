@@ -86,6 +86,7 @@
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SessionStateMachine/Lane_Human",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_ActivityLog/Lane_Operator",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_FeatureStaging/Lane_Human",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeManagerWatch/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Owner",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_RelatedWork/Lane_User",
@@ -209,6 +210,15 @@
       "label": "Human actor",
       "scopeNote": "The only lane whose actor cannot be a machine — `deletion-requires-confirmation` is not satisfied by a click, so H_Confirm must repeat the slug rather than approve generically, which is what stops a confirmation from an earlier run being replayed against a different preview. It precedes Start_Dispatch rather than following it, so the dispatch entry point cannot fire at all until this lane has acted.",
       "source": "cat-harness/sdlc/processes/feature-staging.bpmn"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeManagerWatch/Lane_Owner",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/user",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeManagerWatch",
+      "label": "Owner",
+      "scopeNote": "Approves in the merge manager's session only, one card per batch. An approval given in a sibling's session does not authorise a merge.",
+      "source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeToMain/Lane_Owner",
@@ -1611,6 +1621,7 @@
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_HandBackToDiscussion/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_BeanOpen/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRefusal/Lane_Owner",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRequest/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
         "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_SaturationMetaMerge/Lane_Sibling"
       ]
@@ -1643,6 +1654,15 @@
       "source": "cat-harness/sdlc/processes/merge-refusal.bpmn"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeRequest/Lane_Sibling",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
+      "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/sibling-session",
+      "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeRequest",
+      "label": "Sibling session",
+      "scopeNote": "Any coding agent with a PR ready to merge. It first checks whether a merge manager is active; if none is and one is needed, it elects one with its siblings by the fixed rule; a lone or lapsed session manages its own PRs. It never merges another session's PR, never pushes to another session's branch, and treats a merge manager that does not acknowledge within the stall window as stalled. It never waits for a dependency to merge: it stacks on the dependency PR and keeps working.",
+      "source": "cat-harness/sdlc/processes/merge-request.bpmn"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld#glossary-usage/Process_MergeTrain/Lane_Sibling",
       "@type": "https://litlfred.github.io/cat-harness/v0/ns/LaneUsage",
       "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/sibling-session",
@@ -1666,7 +1686,7 @@
       "prefLabel": "Merge steward",
       "title": "Merge steward",
       "notation": "merge-steward",
-      "definition": "Stewards writes to ONE watched ref -- a long-lived branch several processes write and something downstream consumes serially. The ref is a parameter of the LANE INSTANCE, not of this persona, so `main`, `gh-pages` and each `cat/cat-harness/*` store branch can each have a steward without a schema change; a ref qualifies when a declaring directory's `storage` (or `source`) names it, or it is `main`/`gh-pages`. On `main` that work is a merge train: composes it from the queue, attributes and ejects on red, lands at the tested SHA. On a route-keyed ref it is coalescing: batches the writes arriving in one window into a single write. Decides nothing the reprioritisation table or the owner has not -- placement is computed by merge-priority.dmn, and landing waits for the owner's release. Records decisions on queue entries and windows, never the host's facts.",
+      "definition": "Stewards writes to ONE watched ref -- a long-lived branch several processes write and something downstream consumes serially. The ref is a parameter of the LANE INSTANCE, not of this persona, so `main`, `gh-pages` and each `cat/cat-harness/*` store branch can each have a steward without a schema change; a ref qualifies when a declaring directory's `storage` (or `source`) names it, or it is `main`/`gh-pages`. On `main` that work is a merge train: composes it from the queue, attributes and ejects on red, lands at the tested SHA. On a route-keyed ref it is coalescing: batches the writes arriving in one window into a single write. Decides nothing the reprioritisation table or the owner has not -- placement is computed by merge-priority.dmn, and landing waits for the owner's release, given in the steward's own session as one card per batch. Records decisions on queue entries and windows, never the host's facts. On `main` the lane is conditional: it is held while two or more active sessions have ready PRs in the same repositories and their merges slow each other down (contended runners, or PRs that conflict with or supersede each other), and lapses when that stops. With none active the sibling sessions elect one by a fixed rule (the owner of the P0 PR, else the earliest-created active session); a lone session is its own steward. The holder acknowledges each merge request within a heartbeat window, and a holder that stalls is replaced by re-election without it (owner rulings, 2026-11-07; skill merge-manager-watcher).",
       "altLabel": [
         "Merging session"
       ],
@@ -1684,7 +1704,7 @@
       "ofConcept": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/merge-steward",
       "inProcess": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeManagerWatch",
       "label": "Merge steward",
-      "scopeNote": "The merge manager, holding the merge-steward role across one or more repositories. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, then routes to the process the queue needs (merge train, saturation meta-merge, stalled-agent takeover) or stays idle.",
+      "scopeNote": "The merge manager: the one session holding the merge-steward lane, by the owner's word, by election, or for its own PRs only. Each wake it reads the open PRs, the runner queue, main's verdict and who owns each PR, acknowledges requests within the heartbeat, then routes to the process the queue needs or stays idle. It hands over explicitly when it stops; like any agent it may stall, and the siblings then re-elect.",
       "source": "cat-harness/sdlc/processes/merge-manager-watch.bpmn"
     },
     {
@@ -2690,6 +2710,31 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/health-worker",
+      "@type": "skos:Concept",
+      "prefLabel": "Health worker",
+      "title": "Health worker",
+      "notation": "health-worker",
+      "definition": "The generic DAK persona who delivers care at the point of care and records it on a device: completes the DAK's SDC forms and acts on its decision-support guidance (`questionnaire-data-capture.bpmn`, `act-on-decision-support.bpmn`). A DAK's own health-worker roles (a vaccinator, a community health worker) carry these skills or inherit this role. WHO's DAK personas call this a health worker; the role is a lane, never a person.",
+      "altLabel": [
+        "Health worker (WHO PHC digital transformation handbook)",
+        "Healthcare Provider (SMART Base generic persona DAK.Persona.HealthcareProvider)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/point-of-care-system",
+      "@type": "skos:Concept",
+      "prefLabel": "Point-of-care system",
+      "title": "Point-of-care system",
+      "notation": "point-of-care-system",
+      "definition": "The app or EHR the health worker uses: renders the DAK's forms, extracts their resources, applies the DAK's decision tables (PlanDefinitions) and writes what the health worker accepted. Decides nothing clinical. A DAK's own systems (a CHW app, a clinic EHR) carry these skills or inherit this role.",
+      "altLabel": [
+        "Person-centred point of service system (PCPOSS, WHO PHC digital transformation handbook)"
+      ],
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/archimate",
       "@type": "skos:Concept",
       "prefLabel": "Archimate",
@@ -3589,22 +3634,121 @@
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/health-worker",
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/auditor",
       "@type": "skos:Concept",
-      "prefLabel": "Health worker",
-      "notation": "health-worker",
+      "prefLabel": "Auditor",
+      "notation": "auditor",
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
       "deprecated": true,
-      "changeNote": "Retired 2026-11-07: no swimlane in this instance derives this term."
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/point-of-care-system",
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/certificate-issuer",
       "@type": "skos:Concept",
-      "prefLabel": "Point-of-care system",
-      "notation": "point-of-care-system",
+      "prefLabel": "Certificate Issuer",
+      "notation": "certificate-issuer",
       "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
       "deprecated": true,
-      "changeNote": "Retired 2026-11-07: no swimlane in this instance derives this term."
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/certificate-verifier",
+      "@type": "skos:Concept",
+      "prefLabel": "Verifier",
+      "notation": "certificate-verifier",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/consent-recorder",
+      "@type": "skos:Concept",
+      "prefLabel": "Consent Recorder",
+      "notation": "consent-recorder",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/consent-registry",
+      "@type": "skos:Concept",
+      "prefLabel": "Consent Registry",
+      "notation": "consent-registry",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/data-provider-administrator",
+      "@type": "skos:Concept",
+      "prefLabel": "Data Provider Administrator",
+      "notation": "data-provider-administrator",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/data-recipient-system",
+      "@type": "skos:Concept",
+      "prefLabel": "Data Recipient System",
+      "notation": "data-recipient-system",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/document-source",
+      "@type": "skos:Concept",
+      "prefLabel": "Document Source",
+      "notation": "document-source",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/holder",
+      "@type": "skos:Concept",
+      "prefLabel": "Holder",
+      "notation": "holder",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/provider-authorization-server",
+      "@type": "skos:Concept",
+      "prefLabel": "Provider Authorization Server",
+      "notation": "provider-authorization-server",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/trust-anchor",
+      "@type": "skos:Concept",
+      "prefLabel": "Trust Anchor",
+      "notation": "trust-anchor",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/vhl-receiver",
+      "@type": "skos:Concept",
+      "prefLabel": "VHL Receiver",
+      "notation": "vhl-receiver",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/vhl-sharer",
+      "@type": "skos:Concept",
+      "prefLabel": "VHL Sharer",
+      "notation": "vhl-sharer",
+      "inScheme": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness-glossary.jsonld",
+      "deprecated": true,
+      "changeNote": "Retired 2026-11-08: no swimlane in this instance derives this term."
     }
   ]
 }

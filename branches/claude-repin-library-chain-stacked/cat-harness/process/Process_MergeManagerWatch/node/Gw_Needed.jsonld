@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeManagerWatch/node/Gw_Needed.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
+    "pr": "3016/merge",
+    "run": "42456486300"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeManagerWatch/node/Gw_Needed",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Still holding the lane?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeManagerWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/merge-steward",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/skill/merge-manager-watcher"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeManagerWatch#flow/Flow_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeManagerWatch#flow/Flow_19",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeManagerWatch#flow/Flow_20"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Gw_Needed"
+    }
+  ]
+}

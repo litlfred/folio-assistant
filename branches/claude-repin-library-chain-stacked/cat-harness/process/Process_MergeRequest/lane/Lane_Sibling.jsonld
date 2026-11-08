@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-library-chain-stacked",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
+    "pr": "3016/merge",
+    "run": "42456486300"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Sibling session",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/process/Process_MergeRequest",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/role/sibling-session",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-library-chain-stacked/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling"
+    }
+  ]
+}

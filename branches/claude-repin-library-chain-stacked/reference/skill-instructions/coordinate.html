@@ -424,7 +424,27 @@ surface may. So the line is <strong>checker vs. session</strong>, not owner vs. 
 A session repairing somebody’s milestone re-measures every line it rewrites,
 in a fresh container, by running the thing — and says which clause it could
 not verify.</p><p><strong>2. Crossing is permitted; colliding silently is not.</strong> Cross freely, but the
-crossing is what triggers this skill rather than what excuses skipping it.</p><h3 id="the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one"><a href="#the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one" class="anchor-heading" aria-labelledby="the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The collision surface is FILES, and it is predictable before you touch one
+crossing is what triggers this skill rather than what excuses skipping it.</p><p><strong>3. Crossing never means pushing to a sibling’s branch.</strong> Only the PR’s
+owner pushes to its branch. Send the owner the change instead
+(<a href="../../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a> §”One pusher per PR branch”,
+owner ruling, 2026-11-07).</p><p><strong>4. Merging goes through one session.</strong> While a merge manager is needed,
+siblings never merge their own PRs. Each sends the merge manager a six-line
+merge request (PR and head SHA, session URL, what changed, rendered preview,
+what to look for, <code class="language-plaintext highlighter-rouge">full tier green as judged</code>), and the owner approves only
+in the merge manager’s session. Find it first: the latest
+<code class="language-plaintext highlighter-rouge">merge manager: &lt;session id&gt;</code> announcement, noted on the coordination work
+item, names a live session. With none active, the siblings elect one by a fixed rule, and
+a lone session is its own. A merge manager that does not acknowledge within
+the stall window has stalled, and the siblings re-elect without it: see
+<a href="../../reference/skill-instructions/merge-manager-watcher.html"><code class="language-plaintext highlighter-rouge">merge-manager-watcher</code></a> §”The sibling’s side:
+find the merge manager first” and §”Liveness and stalls” (owner rulings,
+2026-11-07).</p><p><strong>5. Stack rather than wait.</strong> Work that needs a sibling’s unmerged PR
+starts now, stacked on that PR’s branch (or, across layers, on its head
+SHA), with <code class="language-plaintext highlighter-rouge">stacked on &lt;repo&gt;#&lt;n&gt;</code> in the body. Pull the sibling’s changes
+in by merging. A re-pin is its own PR, holding only pins: work that needs
+the new pins stacks on it. Never push to its branch: see
+<a href="../../reference/skill-instructions/continual-progress.html"><code class="language-plaintext highlighter-rouge">continual-progress</code></a> §”Stack instead of waiting”
+(owner ruling, 2026-11-07).</p><h3 id="the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one"><a href="#the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one" class="anchor-heading" aria-labelledby="the-collision-surface-is-files-and-it-is-predictable-before-you-touch-one"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The collision surface is FILES, and it is predictable before you touch one
   
   
 </h3><p>A work item scan finds sessions working the same <em>subject</em>. It does not find two
@@ -532,8 +552,8 @@ shared regression target. It turns “which way to row”
 into a checkable claim and prevents divergent re-derivations.</p></li><li><p><strong>Push-race coordination with background agents.</strong> When a background
 sub-agent and you both push to the same branch, wrap every push in a
 <code class="language-plaintext highlighter-rouge">fetch → rebase → retry</code> loop:
-<code class="language-plaintext highlighter-rouge">for i in 1 2 3 4; do git push &amp;&amp; break || { git fetch origin &lt;br&gt; -q;
-git rebase origin/&lt;br&gt;; sleep $((2**i)); }; done</code>. The agent’s commits
+<code class="language-plaintext highlighter-rouge">for i in 1 2 3 4; do git push &amp;&amp; break || { git fetch origin &lt;br&gt; -q; git rebase origin/&lt;br&gt;; sleep $((2**i)); }; done</code>.
+The agent’s commits
 may already be in your local history (shared working dir) — check
 <code class="language-plaintext highlighter-rouge">git log</code> before assuming a divergence.</p></li><li><p><strong>Billing-CI is noise — do not let it derail coordination.</strong> If CI
 fails setup-phase (≤5 s, simultaneous, no logs) on every push while

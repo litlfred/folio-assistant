@@ -5,9 +5,9 @@
   "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-build-pipeline.jsonld",
   "staging": {
     "branch": "claude/repin-library-chain-stacked",
-    "sha": "251f8717eee7c005cb0fb669dd057632495fe86a",
+    "sha": "db8faf3225f576b73fe8fb0d3d6fb79b22280661",
     "pr": "3016/merge",
-    "run": "42384030510"
+    "run": "42456486300"
   },
   "@graph": [
     {
@@ -17,7 +17,7 @@
       "title": "ig-build-pipeline",
       "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Owns what an IG reader may read: `contentTypes.ig.include` in the repository's `index.config.json`, and the legacy warning for a repository that declares none. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site.",
       "instructionsPath": "skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 445,
+      "instructionLines": 479,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
