@@ -713,7 +713,7 @@ jobs:
             echo "e2e-scope: affected=$1 — $2"
             exit 0
           }
-          base=$(git merge-base origin/main HEAD 2>/dev/null) || decide true "Could not find the merge base with \`main\`, so the e2e shards run."
+          base=$(git merge-base HEAD origin/main 2>/dev/null) || decide true "Could not find the merge base with \`main\`, so the e2e shards run."
           # `--no-renames`: a renamed file is listed as its old path deleted and
           # its new path added, so both paths are judged, as on a PR.
           if ! listing=$(git diff --name-only --no-renames "$base" HEAD); then
