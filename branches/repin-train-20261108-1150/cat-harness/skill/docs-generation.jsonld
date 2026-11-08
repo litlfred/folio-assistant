@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1150/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1150/cat-harness/skill/docs-generation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1150/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1150",
+    "sha": "ac976f44b12ff2e3b105da5070388cf80d1878fd",
+    "pr": "repin-train/20261108-1150",
+    "run": "42477505156"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1150/cat-harness/skill/docs-generation",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "docs-generation",
+      "title": "Docs generation",
+      "description": "How a checkout of this harness generates and publishes its docs site: regenerating derived references, composing the docs layers and each instance's site into one Jekyll source, building it with just-the-docs, the post-build passes, the TypeDoc API reference, the knowledge-graph export, and the full-replace publish to gh-pages and its branches/ previews.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1150/cat-harness/package/ui-core"
+      ],
+      "instructionsPath": "skills/ui/ui-core/docs-generation.md",
+      "instructionLines": 108,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1150/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/docs-generation"
+    }
+  ]
+}

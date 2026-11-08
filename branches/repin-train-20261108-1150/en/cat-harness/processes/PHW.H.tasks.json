@@ -1,0 +1,129 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "PHW.H",
+ "markers": [
+  {
+   "id": "PHW.H.1",
+   "name": "H1. Decide what to stop: revoke (final) or suspend (reversible)",
+   "left": 29.39,
+   "top": 6.56,
+   "box": {
+    "left": 23.16,
+    "top": 15.57,
+    "width": 1.53,
+    "height": 3.93
+   }
+  },
+  {
+   "id": "PHW.H.2",
+   "name": "H2. Set the grant's bit in the Bitstring Status List",
+   "left": 55.59,
+   "top": 31.15,
+   "box": {
+    "left": 49.36,
+    "top": 40.16,
+    "width": 1.53,
+    "height": 3.93
+   }
+  },
+  {
+   "id": "PHW.H.3",
+   "name": "H3. Revoke tokens and disable the client",
+   "left": 55.59,
+   "top": 55.74,
+   "box": {
+    "left": 49.36,
+    "top": 64.75,
+    "width": 1.53,
+    "height": 3.93
+   }
+  },
+  {
+   "id": "PHW.H.4",
+   "name": "H4. Remove key from trust list or revoke certificate (CRL)",
+   "left": 55.59,
+   "top": 80.33,
+   "box": {
+    "left": 49.36,
+    "top": 89.34,
+    "width": 1.53,
+    "height": 3.93
+   }
+  },
+  {
+   "id": "PHW.H.5",
+   "name": "H5. Record the revocation or suspension (process G)",
+   "left": 81.79,
+   "top": 6.56,
+   "box": {
+    "left": 75.56,
+    "top": 15.57,
+    "width": 1.53,
+    "height": 3.93
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.H",
+ "tasks": {
+  "PHW.H.1": {
+   "id": "PHW.H.1",
+   "name": "H1. Decide what to stop: revoke (final) or suspend (reversible)",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.H/node/PHW.H.1",
+   "stepHref": "PHW.H.html#step-PHW.H.1",
+   "lane": "Data Provider (decides)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.H/lane/PHW.Lane.DataProvider",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.H.2": {
+   "id": "PHW.H.2",
+   "name": "H2. Set the grant's bit in the Bitstring Status List",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.H/node/PHW.H.2",
+   "stepHref": "PHW.H.html#step-PHW.H.2",
+   "lane": "Grant Issuer (W3C Bitstring Status List)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.H/lane/PHW.Lane.GrantIssuer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.H.3": {
+   "id": "PHW.H.3",
+   "name": "H3. Revoke tokens and disable the client",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.H/node/PHW.H.3",
+   "stepHref": "PHW.H.html#step-PHW.H.3",
+   "lane": "Provider Authorization Server (administrator + decision point)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.H/lane/PHW.Lane.AuthorizationServer",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.H.4": {
+   "id": "PHW.H.4",
+   "name": "H4. Remove key from trust list or revoke certificate (CRL)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.H/node/PHW.H.4",
+   "stepHref": "PHW.H.html#step-PHW.H.4",
+   "lane": "Trust Anchor (GDHCN or another accepted anchor)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.H/lane/PHW.Lane.TrustAnchor",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.H.5": {
+   "id": "PHW.H.5",
+   "name": "H5. Record the revocation or suspension (process G)",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.H/node/PHW.H.5",
+   "stepHref": "PHW.H.html#step-PHW.H.5",
+   "lane": "Data Provider (decides)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.H/lane/PHW.Lane.DataProvider",
+   "skills": [],
+   "calls": {
+    "name": "G. Audit, Provenance and Duty Checks under a Data Sharing Agreement (DSA P12)",
+    "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.G",
+    "diagram": "PHW.G.html"
+   },
+   "binding": "unbound"
+  }
+ }
+}

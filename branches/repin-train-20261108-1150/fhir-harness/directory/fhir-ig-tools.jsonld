@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1150/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1150/fhir-harness/directory/fhir-ig-tools.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1150/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-tools.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1150",
+    "sha": "ac976f44b12ff2e3b105da5070388cf80d1878fd",
+    "pr": "repin-train/20261108-1150",
+    "run": "42477505156"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-tools",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "fhir-ig-tools",
+      "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/tools"
+      ],
+      "description": "The Tool nodes of the FHIR IG pipeline, one directory per Tool, each naming the script it invokes: the FSH dependency cone and the FHIR package cache and mirror; the IG AST (export, list, validity, plan, incremental build, diff, render, refresh, JSON-LD, pages); the IG sites and their data, pages, menu, releases and terminology index; the JSON Schema and JSON-LD surfaces; Questionnaire checks; the binary audit; and the two `Library` strippers. None is DAK-shaped: the strippers, for example, serve any IG depending on `hl7.fhir.uv.cql`, which produces oversized `Library` resources.",
+      "readmePath": "tools/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-tools"
+    }
+  ]
+}
