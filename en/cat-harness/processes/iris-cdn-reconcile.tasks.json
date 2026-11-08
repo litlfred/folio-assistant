@@ -94,6 +94,7 @@
    "name": "List every item id IRIS reports",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_ListAll",
+   "stepHref": "iris-cdn-reconcile.html#step-Task_ListAll",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
    "skills": [
@@ -191,6 +192,7 @@
    "name": "Compare with the ids the library holds",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Compare",
+   "stepHref": "iris-cdn-reconcile.html#step-Task_Compare",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
    "skills": [
@@ -288,6 +290,7 @@
    "name": "Treat the listing as faulty; escalate",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Escalate",
+   "stepHref": "iris-cdn-reconcile.html#step-Task_Escalate",
    "lane": "IRIS CDN Exporter (agent)",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Exporter",
    "skills": [
@@ -321,6 +324,7 @@
    "name": "Re-check each missing item by id",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_Recheck",
+   "stepHref": "iris-cdn-reconcile.html#step-Task_Recheck",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
    "skills": [
@@ -418,6 +422,7 @@
    "name": "Mark confirmed items withdrawn (keep bytes)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Task_MarkWithdrawn",
+   "stepHref": "iris-cdn-reconcile.html#step-Task_MarkWithdrawn",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
    "skills": [
@@ -515,6 +520,7 @@
    "name": "Rebuild the whole graph (sorted output)",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_Rebuild",
+   "stepHref": "iris-cdn-reconcile.html#step-Call_Rebuild",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
    "skills": [
@@ -621,6 +627,7 @@
    "name": "Sign and publish the release",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/node/Call_SignPublish",
+   "stepHref": "iris-cdn-reconcile.html#step-Call_SignPublish",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnReconcile/lane/Lane_Pipeline",
    "skills": [

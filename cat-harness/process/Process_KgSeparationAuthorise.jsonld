@@ -1,0 +1,70 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/cat-harness.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
+      "name": "Authorise the extraction",
+      "summary": "Reports what would move, with sizes and what breaks, and asks the administrator to authorise the extraction; the gateway after the ask reads the answer.",
+      "description": "Reports what would move, with sizes and what breaks, and asks the administrator to authorise the extraction; the gateway after the ask reads the answer. Called by kg-separation and sub-kg-lifecycle (bpmn-authoring: a question is a gateway, never a task).",
+      "enforcement": "strict",
+      "sourcePath": "processes/kg/kg-separation-authorise.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/kg/kg-separation-authorise.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/kg-separation-authorise.svg",
+      "startNode": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise/node/Start_Authorise"
+      ],
+      "nodeCount": 6,
+      "flowCount": 5,
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
+        "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise#flow/F1",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise/node/Start_Authorise",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise/node/Task_Propose",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise#flow/F2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise/node/Task_Propose",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise/node/Task_Authorise",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise#flow/F3",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise/node/Task_Authorise",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise/node/GW_Authorised",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise#flow/F4",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "authorised",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise/node/GW_Authorised",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise/node/End_Authorised",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise#flow/F5",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "declined",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise/node/GW_Authorised",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationAuthorise/node/End_NotAuthorised",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    }
+  ]
+}

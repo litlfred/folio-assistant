@@ -142,6 +142,7 @@
    "name": "Name the substrate, pin a full commit SHA",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Pin",
+   "stepHref": "subscribe-kg.html#step-Task_Pin",
    "lane": "Subscriber (the folio's owner)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_0",
    "skills": [
@@ -207,6 +208,7 @@
    "name": "Fetch and validate the pinned declaration",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Validate",
+   "stepHref": "subscribe-kg.html#step-Task_Validate",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
    "skills": [
@@ -260,6 +262,7 @@
    "name": "Record why it is not a substrate; write no entry",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Refuse",
+   "stepHref": "subscribe-kg.html#step-Task_Refuse",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
    "skills": [
@@ -313,6 +316,7 @@
    "name": "Write the entry and cache the declaration",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Record",
+   "stepHref": "subscribe-kg.html#step-Task_Record",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
    "skills": [
@@ -366,6 +370,7 @@
    "name": "Refresh the held part",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_Refresh",
+   "stepHref": "subscribe-kg.html#step-Call_Refresh",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
    "skills": [
@@ -424,6 +429,7 @@
    "name": "Move the entry's ref and re-cache the declaration",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_RePin",
+   "stepHref": "subscribe-kg.html#step-Task_RePin",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
    "skills": [
@@ -477,6 +483,7 @@
    "name": "Review what the substrate offers",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Review",
+   "stepHref": "subscribe-kg.html#step-Task_Review",
    "lane": "Subscriber (the folio's owner)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_0",
    "skills": [
@@ -542,6 +549,7 @@
    "name": "Choose subgraphs, the asset policy, harnesses",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Choose",
+   "stepHref": "subscribe-kg.html#step-Task_Choose",
    "lane": "Subscriber (the folio's owner)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_0",
    "skills": [
@@ -607,6 +615,7 @@
    "name": "Materialise the part",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Call_Materialize",
+   "stepHref": "subscribe-kg.html#step-Call_Materialize",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
    "skills": [
@@ -665,6 +674,7 @@
    "name": "Instantiate the harness: write its config",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Instantiate",
+   "stepHref": "subscribe-kg.html#step-Task_Instantiate",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
    "skills": [
@@ -722,6 +732,7 @@
    "name": "Record how each part of the walk ended",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/node/Task_Summarise",
+   "stepHref": "subscribe-kg.html#step-Task_Summarise",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubscribeKg/lane/Lane_1",
    "skills": [

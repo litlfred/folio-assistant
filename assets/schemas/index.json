@@ -2465,6 +2465,13 @@
       "isTest": false
     },
     {
+      "module": "cat-harness-tools/schemas/sdlc/script-table.test.ts",
+      "instance": "cat-harness-tools",
+      "name": "script-table.test",
+      "graphNode": "undeclared",
+      "isTest": true
+    },
+    {
       "module": "cat-harness-tools/schemas/sdlc/script-table.ts",
       "instance": "cat-harness-tools",
       "name": "script-table",
@@ -86674,6 +86681,13 @@
           "optional": true,
           "array": false,
           "doc": "The entry exactly as the citing document prints it, when no citation"
+        },
+        {
+          "name": "sources",
+          "type": "z.array(ReferenceSourceSchema).optional()",
+          "optional": true,
+          "array": true,
+          "doc": "Every place the work can be read, beyond `URL`: alternates, mirrors, repository records. Not CSL."
         }
       ],
       "extendsNames": [],
@@ -86682,7 +86696,8 @@
         "folio-assistant-core/schemas/reference.ts#CslDateSchema",
         "folio-assistant-core/schemas/reference.ts#CslNameSchema",
         "folio-assistant-core/schemas/reference.ts#ReferenceKeySchema",
-        "folio-assistant-core/schemas/reference.ts#ReferenceProvenanceSchema"
+        "folio-assistant-core/schemas/reference.ts#ReferenceProvenanceSchema",
+        "folio-assistant-core/schemas/reference.ts#ReferenceSourceSchema"
       ],
       "unresolved": [],
       "external": [
@@ -86720,6 +86735,56 @@
       "refs": [],
       "unresolved": [],
       "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/reference.ts#ReferenceSource",
+      "name": "ReferenceSource",
+      "module": "folio-assistant-core/schemas/reference.ts",
+      "kind": "type-alias",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "folio-assistant-core/schemas/reference.ts#ReferenceSourceSchema",
+      "name": "ReferenceSourceSchema",
+      "module": "folio-assistant-core/schemas/reference.ts",
+      "kind": "zod-object",
+      "doc": "One place a work can be read: its publisher's page, a repository record",
+      "fields": [
+        {
+          "name": "url",
+          "type": "z.string().min(1)",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "label",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What a reader sees for the link."
+        },
+        {
+          "name": "kind",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "What kind of place it is: `canonical`, `repository`, `pinned`, `handle`, `doi`, `arxiv`, `mirror`."
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [
+        "z"
+      ],
       "exported": true
     },
     {
@@ -105206,6 +105271,14 @@
       "kind": "field",
       "optional": true,
       "array": false
+    },
+    {
+      "from": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema",
+      "to": "folio-assistant-core/schemas/reference.ts#ReferenceSourceSchema",
+      "via": "sources",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "folio-assistant-core/schemas/reference.ts#StandaloneReferenceInput",

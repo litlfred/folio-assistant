@@ -82,6 +82,7 @@
    "name": "Build the test run",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_BuildRun",
+   "stepHref": "qa-report-signing.html#step-Task_BuildRun",
    "lane": "Validation and QA (mechanical + agents)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Qa",
    "skills": [
@@ -123,6 +124,7 @@
    "name": "Resolve the performer's reach",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_ResolveReach",
+   "stepHref": "qa-report-signing.html#step-Task_ResolveReach",
    "lane": "Validation and QA (mechanical + agents)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Qa",
    "skills": [
@@ -160,6 +162,7 @@
    "name": "Sign over the API",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_ApiSign",
+   "stepHref": "qa-report-signing.html#step-Task_ApiSign",
    "lane": "Attestation service (API)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Api",
    "skills": [
@@ -189,6 +192,7 @@
    "name": "Sign as release authority",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_HumanSign",
+   "stepHref": "qa-report-signing.html#step-Task_HumanSign",
    "lane": "Human signer",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Human",
    "skills": [
@@ -246,6 +250,7 @@
    "name": "Record which route signed it",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_RecordAttestation",
+   "stepHref": "qa-report-signing.html#step-Task_RecordAttestation",
    "lane": "Validation and QA (mechanical + agents)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Qa",
    "skills": [
@@ -283,6 +288,7 @@
    "name": "Store the signed report on qa-reports",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_StoreSigned",
+   "stepHref": "qa-report-signing.html#step-Task_StoreSigned",
    "lane": "Validation and QA (mechanical + agents)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Qa",
    "skills": [

@@ -166,6 +166,7 @@
    "name": "Regenerate harness projections (CI)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_RegenProjections",
+   "stepHref": "merge-to-main.html#step-Task_RegenProjections",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Pipeline",
    "skills": [
@@ -263,6 +264,7 @@
    "name": "Read the head's evidence, live",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_ReadEvidence",
+   "stepHref": "merge-to-main.html#step-Task_ReadEvidence",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [
@@ -312,6 +314,7 @@
    "name": "No CI: run the repo's own gates locally",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_LocalGates",
+   "stepHref": "merge-to-main.html#step-Task_LocalGates",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [
@@ -361,6 +364,7 @@
    "name": "Hand it back",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Call_HandBack",
+   "stepHref": "merge-to-main.html#step-Call_HandBack",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [
@@ -415,6 +419,7 @@
    "name": "Find the owner's authorisation for THIS merge",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_ReadAuthorisation",
+   "stepHref": "merge-to-main.html#step-Task_ReadAuthorisation",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [
@@ -464,6 +469,7 @@
    "name": "Put the merge to the owner",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Ask",
+   "stepHref": "merge-to-main.html#step-Task_Ask",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [
@@ -518,6 +524,7 @@
    "name": "Merge, hold or refuse",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_OwnerDecides",
+   "stepHref": "merge-to-main.html#step-Task_OwnerDecides",
    "lane": "Owner",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Owner",
    "skills": [
@@ -583,6 +590,7 @@
    "name": "Record who authorised, when, and the quote",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_RecordAuthorisation",
+   "stepHref": "merge-to-main.html#step-Task_RecordAuthorisation",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [
@@ -632,6 +640,7 @@
    "name": "Merge, pinned to the evaluated head",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Merge",
+   "stepHref": "merge-to-main.html#step-Task_Merge",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [
@@ -681,6 +690,7 @@
    "name": "Confirm main's CI on the merge commit",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_ConfirmBase",
+   "stepHref": "merge-to-main.html#step-Task_ConfirmBase",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [
@@ -730,6 +740,7 @@
    "name": "Rebuild and republish the repository's site",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Republish",
+   "stepHref": "merge-to-main.html#step-Task_Republish",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [
@@ -779,6 +790,7 @@
    "name": "Re-pin downstream mounts, as PRs",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Repin",
+   "stepHref": "merge-to-main.html#step-Task_Repin",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [
@@ -828,6 +840,7 @@
    "name": "Note the bean, summarise on the issue",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/node/Task_Report",
+   "stepHref": "merge-to-main.html#step-Task_Report",
    "lane": "Merging session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeToMain/lane/Lane_Merger",
    "skills": [

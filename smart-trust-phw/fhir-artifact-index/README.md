@@ -9,7 +9,7 @@ generated: "scripts/subgraph-readmes.ts of the bootstrap toolset (https://github
 
 The artefact index for smart-trust-phw. fhir-harness's `ig-index:build` writes `index.json`, `menu.json`, `releases.json` and `package.tgz` at publish from the IG's AST; they are not committed. `ig-identity.json` and the README are.
 
-Part of [GDHCN Trust Network - Personal Health Wallet](../README.md) 0.1.0, declared as `smart-trust-phw-artifact-index`, holding `fhir-artifact-index`.
+Part of [GDHCN Trust Network - Personal Health Wallet](../README.md) 0.2.0, declared as `smart-trust-phw-artifact-index`, holding `fhir-artifact-index`.
 
 | file | what it is | used by |
 |---|---|---|

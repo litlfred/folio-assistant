@@ -82,6 +82,7 @@
    "name": "Draw the sample",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Sample",
+   "stepHref": "translation-round-trip.html#step-Task_RT_Sample",
    "lane": "Locale translator",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Translator",
    "skills": [
@@ -107,6 +108,7 @@
    "name": "Record could not dispatch",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_RecordNA",
+   "stepHref": "translation-round-trip.html#step-Task_RT_RecordNA",
    "lane": "Locale translator",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Translator",
    "skills": [
@@ -132,6 +134,7 @@
    "name": "Back-translate the target text",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_BackTranslate",
+   "stepHref": "translation-round-trip.html#step-Task_RT_BackTranslate",
    "lane": "Back-translator",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Back",
    "skills": [
@@ -161,6 +164,7 @@
    "name": "Pre-screen every pair",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_PreScreen",
+   "stepHref": "translation-round-trip.html#step-Task_RT_PreScreen",
    "lane": "Round-trip adjudicator",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
    "skills": [
@@ -236,6 +240,7 @@
    "name": "Read and rule each flagged pair",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Rule",
+   "stepHref": "translation-round-trip.html#step-Task_RT_Rule",
    "lane": "Round-trip adjudicator",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
    "skills": [
@@ -315,6 +320,7 @@
    "name": "Record both witnesses",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Record",
+   "stepHref": "translation-round-trip.html#step-Task_RT_Record",
    "lane": "Round-trip adjudicator",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
    "skills": [

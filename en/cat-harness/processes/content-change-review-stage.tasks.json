@@ -58,6 +58,7 @@
    "name": "Build staging site",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_BuildStaging",
+   "stepHref": "content-change-review-stage.html#step-Task_BuildStaging",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/lane/Lane_Pipeline",
    "skills": [
@@ -155,6 +156,7 @@
    "name": "Deploy to branches/<slug>/",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_DeployStaging",
+   "stepHref": "content-change-review-stage.html#step-Task_DeployStaging",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/lane/Lane_Pipeline",
    "skills": [
@@ -252,6 +254,7 @@
    "name": "Comment staging URL on PR",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_CommentPR",
+   "stepHref": "content-change-review-stage.html#step-Task_CommentPR",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/lane/Lane_Pipeline",
    "skills": [
@@ -353,6 +356,7 @@
    "name": "Open the branch-watch bean",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/node/Task_WatchBranchCI",
+   "stepHref": "content-change-review-stage.html#step-Task_WatchBranchCI",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewStage/lane/Lane_Pipeline",
    "skills": [

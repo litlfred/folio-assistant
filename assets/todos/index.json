@@ -199,37 +199,6 @@
     }
   ],
   "processes": {
-    "Process_NarrativeReview": [
-      "Process_CriterionAdjudication",
-      "Process_VoiceReview"
-    ],
-    "Process_Review": [
-      "Process_CodeReview",
-      "Process_NarrativeCodeReview",
-      "Process_NarrativeReview"
-    ],
-    "Process_VoiceReview": [
-      "Process_CriterionAdjudication"
-    ],
-    "Process_CopyIntoFolio": [],
-    "Process_GraphDetanglement": [
-      "Process_AskThePerson"
-    ],
-    "Process_KgSeparation": [
-      "Process_AskThePerson",
-      "Process_PublishVerification",
-      "Process_UpstreamAdoption"
-    ],
-    "Process_KgToPortal": [],
-    "Process_MountDependency": [],
-    "Process_MountSubgraph": [],
-    "Process_NamedQueryExecution": [],
-    "Process_NQuadsDistribution": [],
-    "Process_CodeReview": [],
-    "Process_SliceSqlitePublish": [],
-    "Process_SubKgLifecycle": [
-      "Process_AskThePerson"
-    ],
     "Process_ContentAcquisition": [
       "Process_AskThePerson"
     ],
@@ -261,6 +230,51 @@
     "Process_TranslationRoundTrip": [],
     "Process_Translation": [
       "Process_Adjudication"
+    ],
+    "Process_NarrativeReview": [
+      "Process_CriterionAdjudication",
+      "Process_VoiceReview"
+    ],
+    "Process_Review": [
+      "Process_CodeReview",
+      "Process_NarrativeCodeReview",
+      "Process_NarrativeReview"
+    ],
+    "Process_VoiceReview": [
+      "Process_CriterionAdjudication"
+    ],
+    "Process_CopyIntoFolio": [],
+    "Process_GraphDetanglement": [
+      "Process_AskThePerson"
+    ],
+    "Process_KgSeparationAuthorise": [
+      "Process_AskThePerson"
+    ],
+    "Process_KgSeparationCutover": [],
+    "Process_KgSeparationMove": [
+      "Process_PublishVerification",
+      "Process_UpstreamAdoption"
+    ],
+    "Process_KgSeparationPrepare": [],
+    "Process_KgSeparation": [
+      "Process_AskThePerson",
+      "Process_KgSeparationAuthorise",
+      "Process_KgSeparationCutover",
+      "Process_KgSeparationMove",
+      "Process_KgSeparationPrepare"
+    ],
+    "Process_KgToPortal": [],
+    "Process_MountDependency": [],
+    "Process_MountSubgraph": [],
+    "Process_NamedQueryExecution": [],
+    "Process_NQuadsDistribution": [],
+    "Process_CodeReview": [],
+    "Process_SliceSqlitePublish": [],
+    "Process_SubKgLifecycle": [
+      "Process_AskThePerson",
+      "Process_KgSeparationAuthorise",
+      "Process_KgSeparationCutover",
+      "Process_KgSeparationMove"
     ],
     "Process_ActorRoleAdministration": [
       "Process_CodeChangeReview"
@@ -436,7 +450,9 @@
     "Process_IgAstCache": [],
     "Process_IgAstDeltaReview": [],
     "Process_IgIncremental": [],
-    "Process_L3Fhir": [],
+    "Process_L3Fhir": [
+      "Process_PublishExtractedStatements"
+    ],
     "Process_QuestionnaireWireframeReview": [
       "Process_WireframeDesignReview"
     ],
@@ -542,7 +558,8 @@
     "Process_PaperAuthoring": [
       "Process_BeanClose",
       "Process_BeanOpen",
-      "Process_FolioReviewPublish"
+      "Process_FolioReviewPublish",
+      "Process_PublishExtractedStatements"
     ],
     "Process_LeanDocsPublish": [],
     "Process_DIIG": [

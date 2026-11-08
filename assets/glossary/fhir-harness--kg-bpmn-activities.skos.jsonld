@@ -566,7 +566,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "`ig-cache restore`: the IG's AST and the Publisher's terminology cache (`input-cache/txcache/`). Exit 0 usable, 1 miss, 2 environment error, 3 present but unusable (corrupt or mismatched, such as a moved toolchain)."
+          "@value": "`ig-cache restore`: the IG's AST and the Publisher's terminology cache (`input-cache/txcache/`). Exit 0 usable, 1 miss, 2 environment error, 3 present but unusable (corrupt or mismatched, such as a moved toolchain). The cache restored is the declared `fhir-ast` cache (`caches/fhir-ast.cache.json`), whose component process is `ig-ast-cache.bpmn`: this task is that component's verify, run inside the incremental build."
         }
       ],
       "skos:notation": "Task_Restore",
@@ -586,7 +586,7 @@
       ],
       "skos:definition": [
         {
-          "@value": "Only a green build of main or a release seeds. Seed writes to the -test branch, verifies a restore from a clean clone, then promotes."
+          "@value": "Only a green build of main or a release seeds. Seed writes to the -test branch, verifies a restore from a clean clone, then promotes. This is the save of the declared `fhir-ast` cache (`caches/fhir-ast.cache.json`), under its save policy: the default branch only."
         }
       ],
       "skos:notation": "Task_Seed",
@@ -651,6 +651,26 @@
       ],
       "skos:notation": "Task_Validate",
       "dcterms:source": "fhir-harness/processes/content/ig-incremental-build.bpmn#Task_Validate",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities/process_l3fhir.call_publishstatements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/fhir-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish extracted statements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The IG draws on library sources; every statement extracted from them is published as pages of the IG and in the shared extraction viewer, each linked to its library entry and section, before the IG Publisher builds the site. The sub-process is core's, the same for every content type: this IG supplies only the page look (its pages' table class) and registers the pages in its own menu. The generated pages are checked for staleness in CI."
+        }
+      ],
+      "skos:notation": "Call_PublishStatements",
+      "dcterms:source": "fhir-harness/processes/content/l3-fhir-pipeline.bpmn#Call_PublishStatements",
       "skos:note": "candidate"
     },
     {

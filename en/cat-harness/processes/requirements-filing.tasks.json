@@ -106,6 +106,7 @@
    "name": "Classify filing mode, concern group, and req:<slug> ID",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_ClassifyFiling",
+   "stepHref": "requirements-filing.html#step-A_ClassifyFiling",
    "lane": "Authoring Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/lane/Lane_Agent",
    "skills": [
@@ -349,6 +350,7 @@
    "name": "git mv proposal to docs/requirements/<slug>.md and record proposedIn",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_PromoteOrUpdate",
+   "stepHref": "requirements-filing.html#step-A_PromoteOrUpdate",
    "lane": "Authoring Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/lane/Lane_Agent",
    "skills": [
@@ -592,6 +594,7 @@
    "name": "Bind Requirement front matter, statements, and 3-axis lineage",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_BindFrontMatter",
+   "stepHref": "requirements-filing.html#step-A_BindFrontMatter",
    "lane": "Authoring Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/lane/Lane_Agent",
    "skills": [
@@ -829,6 +832,7 @@
    "name": "Mark the record superseded or retired",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_UpdateLifecycle",
+   "stepHref": "requirements-filing.html#step-A_UpdateLifecycle",
    "lane": "Authoring Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/lane/Lane_Agent",
    "skills": [
@@ -1066,6 +1070,7 @@
    "name": "Organise entry in docs/requirements/index.md by concern group & status",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_UpdateIndex",
+   "stepHref": "requirements-filing.html#step-A_UpdateIndex",
    "lane": "Authoring Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/lane/Lane_Agent",
    "skills": [
@@ -1309,6 +1314,7 @@
    "name": "Run the requirements check",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_RunCheck",
+   "stepHref": "requirements-filing.html#step-A_RunCheck",
    "lane": "Authoring Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/lane/Lane_Agent",
    "skills": [
@@ -1546,6 +1552,7 @@
    "name": "Review the filed requirement, sign off",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/BA_ReviewFiling",
+   "stepHref": "requirements-filing.html#step-BA_ReviewFiling",
    "lane": "BA / Feature Requestor",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/lane/Lane_BA",
    "skills": [
@@ -1632,6 +1639,7 @@
    "name": "Record the sign-off and set the stage",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/node/A_RecordFilingSignoff",
+   "stepHref": "requirements-filing.html#step-A_RecordFilingSignoff",
    "lane": "Authoring Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RequirementsFiling/lane/Lane_Agent",
    "skills": [

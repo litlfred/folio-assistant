@@ -166,6 +166,7 @@
    "name": "Request certification of the system against plan P",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_Request",
+   "stepHref": "test-plan-execution.html#step-A_Request",
    "lane": "Requester / system under test",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Requester",
    "skills": [
@@ -191,6 +192,7 @@
    "name": "Resolve the plan",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_ResolvePlan",
+   "stepHref": "test-plan-execution.html#step-A_ResolvePlan",
    "lane": "Tester",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Tester",
    "skills": [
@@ -228,6 +230,7 @@
    "name": "Bind the test data",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_BindData",
+   "stepHref": "test-plan-execution.html#step-A_BindData",
    "lane": "Tester",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Tester",
    "skills": [
@@ -265,6 +268,7 @@
    "name": "Execute every case, or skip it with a reason",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_Execute",
+   "stepHref": "test-plan-execution.html#step-A_Execute",
    "lane": "Tester",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Tester",
    "skills": [
@@ -306,6 +310,7 @@
    "name": "Write the test run and the test report",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_WriteRun",
+   "stepHref": "test-plan-execution.html#step-A_WriteRun",
    "lane": "Tester",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Tester",
    "skills": [
@@ -343,6 +348,7 @@
    "name": "Re-execute a sample, blind to the tester's verdicts",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_ReExecuteSample",
+   "stepHref": "test-plan-execution.html#step-A_ReExecuteSample",
    "lane": "Untainted checker",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Checker",
    "skills": [
@@ -376,6 +382,7 @@
    "name": "Record the certification decision",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_RecordCertification",
+   "stepHref": "test-plan-execution.html#step-A_RecordCertification",
    "lane": "Certifier",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Certifier",
    "skills": [
@@ -405,6 +412,7 @@
    "name": "Record the refusal, with the failing cases",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_RecordRefusal",
+   "stepHref": "test-plan-execution.html#step-A_RecordRefusal",
    "lane": "Certifier",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Certifier",
    "skills": [
@@ -434,6 +442,7 @@
    "name": "Record why it could not be decided",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_RecordUndetermined",
+   "stepHref": "test-plan-execution.html#step-A_RecordUndetermined",
    "lane": "Certifier",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Certifier",
    "skills": [
@@ -463,6 +472,7 @@
    "name": "Sign the certification",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_Sign",
+   "stepHref": "test-plan-execution.html#step-Call_Sign",
    "lane": "Attestation service",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Attestation",
    "skills": [
@@ -497,6 +507,7 @@
    "name": "File the signed certification",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/A_FileCertification",
+   "stepHref": "test-plan-execution.html#step-A_FileCertification",
    "lane": "Attestation service",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Attestation",
    "skills": [
@@ -526,6 +537,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_BeanOpen",
+   "stepHref": "test-plan-execution.html#step-Call_BeanOpen",
    "lane": "Requester / system under test",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Requester",
    "skills": [
@@ -556,6 +568,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/Call_BeanClose",
+   "stepHref": "test-plan-execution.html#step-Call_BeanClose",
    "lane": "Attestation service",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/lane/Lane_Attestation",
    "skills": [

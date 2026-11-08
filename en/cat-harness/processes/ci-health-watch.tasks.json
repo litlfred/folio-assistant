@@ -34,6 +34,7 @@
    "name": "Run check:ci-health, WRITING the report file",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Task_Check",
+   "stepHref": "ci-health-watch.html#step-Task_Check",
    "lane": "Scheduled log sweep",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
    "skills": [
@@ -131,6 +132,7 @@
    "name": "Report the verdict on the tracking issue",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/node/Call_Watch",
+   "stepHref": "ci-health-watch.html#step-Call_Watch",
    "lane": "Scheduled log sweep",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CiHealth/lane/Lane_Ci",
    "skills": [],

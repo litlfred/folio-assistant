@@ -10,8 +10,8 @@
       "summary": "Did the meaning survive the translation? The untainted round trip on a sample of one locale's strings, with the two parties kept apart: a back-translator who sees only the target text, and an adjudicator who sees only the source and the back-translation.",
       "description": "Did the meaning survive the translation? The untainted round trip on a sample of one locale's strings, with the two parties kept apart: a back-translator who sees only the target text, and an adjudicator who sees only the source and the back-translation.\n\nYou are in this process when `multi-locale-translation` or `translation-refresh` calls it, after the deterministic gates have passed. It is the translation instance of `untainted-verification`: the producer (the locale translator) draws the sample and never writes the verdict; the back-translator renders and rules on nothing; the adjudicator rules. `GT_RoundTripQa` in `translation-workflow` is the same check drawn as one step; this diagram draws its parties, because the separation between them is what makes the result a measurement.\n\nA first run samples every diagram label, the personas and scenarios, and a seeded random fraction of the rest; a refresh samples only the strings it changed. The third state is drawn: when two separate parties cannot be dispatched, the producer records \"could not dispatch\" with a reason, and that is never a pass.",
       "enforcement": "advisory",
-      "sourcePath": "processes/library/translation-round-trip.bpmn",
-      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/library/translation-round-trip.bpmn",
+      "sourcePath": "library/processes/translation-round-trip.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/library/processes/translation-round-trip.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/translation-round-trip.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Start_RT"
@@ -23,7 +23,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/w3c-xsd11-structures"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_1",
@@ -31,7 +31,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Start_RT",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Sample",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_2",
@@ -39,7 +39,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Sample",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Gateway_RT_Dispatch",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_Yes",
@@ -48,7 +48,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Gateway_RT_Dispatch",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_BackTranslate",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_No",
@@ -57,7 +57,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Gateway_RT_Dispatch",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_RecordNA",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_NA",
@@ -65,7 +65,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_RecordNA",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/End_RT_NA",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_3",
@@ -73,7 +73,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_BackTranslate",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_PreScreen",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_4",
@@ -81,7 +81,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_PreScreen",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Rule",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_5",
@@ -89,7 +89,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Rule",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Record",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_6",
@@ -97,7 +97,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Record",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/End_RT_Ruled",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     }
   ]
 }

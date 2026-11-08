@@ -94,6 +94,7 @@
    "name": "Build the queue, grouped by owner",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_BuildQueue",
+   "stepHref": "bean-drain.html#step-Drain_BuildQueue",
    "lane": "Queue keeper",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/lane/Lane_QueueKeeper",
    "skills": [
@@ -440,6 +441,7 @@
    "name": "Take the next bean",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_TakeNext",
+   "stepHref": "bean-drain.html#step-Drain_TakeNext",
    "lane": "Drainer",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/lane/Lane_Drainer",
    "skills": [
@@ -677,6 +679,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Open",
+   "stepHref": "bean-drain.html#step-Drain_Open",
    "lane": "Drainer",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/lane/Lane_Drainer",
    "skills": [
@@ -919,6 +922,7 @@
    "name": "Mark it skip on the queue",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Skip",
+   "stepHref": "bean-drain.html#step-Drain_Skip",
    "lane": "Drainer",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/lane/Lane_Drainer",
    "skills": [
@@ -1156,6 +1160,7 @@
    "name": "Work the bean (PR at the first commit)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Work",
+   "stepHref": "bean-drain.html#step-Drain_Work",
    "lane": "Drainer",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/lane/Lane_Drainer",
    "skills": [
@@ -1393,6 +1398,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Close",
+   "stepHref": "bean-drain.html#step-Drain_Close",
    "lane": "Drainer",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/lane/Lane_Drainer",
    "skills": [
@@ -1635,6 +1641,7 @@
    "name": "Refill from the deepest queue",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/node/Drain_Refill",
+   "stepHref": "bean-drain.html#step-Drain_Refill",
    "lane": "Queue keeper",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanDrain/lane/Lane_QueueKeeper",
    "skills": [

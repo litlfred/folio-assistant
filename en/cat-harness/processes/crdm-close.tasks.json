@@ -70,6 +70,7 @@
    "name": "Feature sign-off on issue",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/S_FeatureSignoff",
+   "stepHref": "crdm-close.html#step-S_FeatureSignoff",
    "lane": "Stakeholders",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_Stakeholders",
    "skills": [],
@@ -85,6 +86,7 @@
    "name": "Confirm all criteria met",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/BA_Confirm",
+   "stepHref": "crdm-close.html#step-BA_Confirm",
    "lane": "BA / Feature Requestor",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_BA",
    "skills": [
@@ -171,6 +173,7 @@
    "name": "Record the sign-off attestation",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/A_RecordSignoff",
+   "stepHref": "crdm-close.html#step-A_RecordSignoff",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_Agent",
    "skills": [
@@ -412,6 +415,7 @@
    "name": "Land the feature's PRs",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/Call_MergeToMain",
+   "stepHref": "crdm-close.html#step-Call_MergeToMain",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_Agent",
    "skills": [
@@ -654,6 +658,7 @@
    "name": "Close issue ONLY on BA authorisation",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/node/A_Close",
+   "stepHref": "crdm-close.html#step-A_Close",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Close/lane/Lane_Agent",
    "skills": [

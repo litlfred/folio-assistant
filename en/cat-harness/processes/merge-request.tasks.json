@@ -118,6 +118,7 @@
    "name": "Merge manager for its own PRs",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Self",
+   "stepHref": "merge-request.html#step-Sib_Self",
    "lane": "Sibling session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
    "skills": [],
@@ -143,6 +144,7 @@
    "name": "Elect the merge manager with the siblings",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Elect",
+   "stepHref": "merge-request.html#step-Sib_Elect",
    "lane": "Sibling session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
    "skills": [
@@ -168,6 +170,7 @@
    "name": "Announce and note the merge manager",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Announce",
+   "stepHref": "merge-request.html#step-Sib_Announce",
    "lane": "Sibling session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
    "skills": [
@@ -193,6 +196,7 @@
    "name": "Send the six-line merge request",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Send",
+   "stepHref": "merge-request.html#step-Sib_Send",
    "lane": "Sibling session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
    "skills": [
@@ -218,6 +222,7 @@
    "name": "Stalled-agent triage",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_CallStalled",
+   "stepHref": "merge-request.html#step-Sib_CallStalled",
    "lane": "Sibling session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
    "skills": [],
@@ -243,6 +248,7 @@
    "name": "Merge manager watch",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_CallWatch",
+   "stepHref": "merge-request.html#step-Sib_CallWatch",
    "lane": "Sibling session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
    "skills": [],
@@ -268,6 +274,7 @@
    "name": "Stack on it and keep working",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Stack",
+   "stepHref": "merge-request.html#step-Sib_Stack",
    "lane": "Sibling session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
    "skills": [
@@ -293,6 +300,7 @@
    "name": "When the base lands, retarget",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Retarget",
+   "stepHref": "merge-request.html#step-Sib_Retarget",
    "lane": "Sibling session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
    "skills": [
@@ -318,6 +326,7 @@
    "name": "Make the PR ready",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/node/Sib_Ready",
+   "stepHref": "merge-request.html#step-Sib_Ready",
    "lane": "Sibling session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRequest/lane/Lane_Sibling",
    "skills": [

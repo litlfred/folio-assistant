@@ -363,10 +363,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/da3ca528562a7f0516d296f58d6c2ff6174e0069",
-  "sourceCommitSha": "da3ca528562a7f0516d296f58d6c2ff6174e0069",
-  "sourceTree": "c84b72bdb2dcc9844dadea7548e0242b3f6cb637",
-  "sourceCommitAt": "2026-11-08T07:42:36+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c00df6bfa29626e089cb4d4ae29d671bae1b6bec",
+  "sourceCommitSha": "c00df6bfa29626e089cb4d4ae29d671bae1b6bec",
+  "sourceTree": "2dff9db927e55aea58f9057905b1506633f5f591",
+  "sourceCommitAt": "2026-11-08T14:25:47+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
@@ -15467,9 +15467,9 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-templates"
     },
     {
-      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-library",
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/library",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
-      "name": "core-library",
+      "name": "library",
       "path": "library/",
       "contentSource": {
         "kind": "directory",
@@ -15478,10 +15478,10 @@
       "holdsGraph": [
         "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library"
       ],
-      "description": "L1 source content this LAYER owns — the publications core's own vocabulary and methods are derived FROM, one `<bib-slug>/` per ingested document. Declared rather than borrowed because a method is placed by OWNERSHIP (`methodology-adoption` §4): a paper core's methodology cites from another instance's library would not lift out with it. Holds Doc-Researcher (`arxiv-2510.21603v1`), the C2PA Technical Specification 2.5 (`c2pa-2026-specification-2-5`, CC-BY-4.0) and the DSpace 7 REST Contract (`dspace-7-rest-contract`, BSD-3-Clause). `ingest-document.ts` refuses to guess a destination when several are declared. `dependents: skip` because these are THIS layer's sources; a downstream folio's library is its own.",
+      "description": "L1 source content this LAYER owns — the publications core's own vocabulary and methods are derived FROM, one `<bib-slug>/` per ingested document. Declared rather than borrowed because a method is placed by OWNERSHIP (`methodology-adoption` §4): a paper core's methodology cites from another instance's library would not lift out with it. Holds Doc-Researcher (`arxiv-2510.21603v1`), the C2PA Technical Specification 2.5 (`c2pa-2026-specification-2-5`, CC-BY-4.0) and the DSpace 7 REST Contract (`dspace-7-rest-contract`, BSD-3-Clause). `ingest-document.ts` refuses to guess a destination when several are declared. `dependents: skip` because these are THIS layer's sources; a downstream folio's library is its own. The id is the CONVENTIONAL `library` since 2026-11-04 (owner, card 'Library rule' option 1): cat-harness's corpus became opt-in inside its `library` sub-graph, so the convention a layer above inherits — a `library/` of its own, by id and relative path (bean `wwi6`) — now comes from this layer, the one that owns content, as this entry's earlier text on cat-harness said it should. It was `core-library` until then, so as not to shadow the harness's entry.",
       "readmePath": "library/README.md",
       "fileCount": 0,
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-library"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/library"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-methodologies",

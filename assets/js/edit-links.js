@@ -786,6 +786,12 @@
     "html.fa-bp .block-actions>.ba-trigger .ba-n{top:-4px;right:-6px;font-size:9px;padding:0 3px}" +
     "html.fa-bp .block-actions:hover>.ba-trigger,html.fa-bp .ba-trigger:focus-visible,html.fa-bp .ba-trigger[aria-expanded=true],html.fa-bp :hover>.block-actions>.ba-trigger,html.fa-bp p:has(+.fa-blk:hover)>.block-actions>.ba-trigger" + ON +
     "html.fa-bp .block-actions:hover>.ba-bookmark,html.fa-bp .ba-bookmark:focus-visible,html.fa-bp .ba-bookmark[aria-pressed=true],html.fa-bp :hover>.block-actions>.ba-bookmark,html.fa-bp p:has(+.fa-blk:hover)>.block-actions>.ba-bookmark" + ON +
+    // Owner, 2026-11-08: "pin icon does not get highlighted on hover". A
+    // pressed 🔖 is always in full colour, so hovering it changed nothing.
+    // Every gutter icon now lights a tinted tile under the pointer, pressed
+    // or not, so the one you are about to press is always the one that shows.
+    "html.fa-bp .block-actions>.ba-trigger,html.fa-bp .block-actions>.ba-bookmark,html.fa-bp .main-content .anchor-heading{border-radius:5px;transition:background-color .12s}" +
+    "html.fa-bp .block-actions>.ba-trigger:hover,html.fa-bp .block-actions>.ba-bookmark:hover,html.fa-bp .main-content .anchor-heading:hover{opacity:1;filter:none;background:color-mix(in srgb,var(--link,#0b5cad) 18%,transparent)}" +
     "html.fa-bp .main-content .anchor-heading svg{visibility:visible;opacity:.35;filter:grayscale(1)}" +
     "html.fa-bp .main-content .fa-hot>.anchor-heading svg,html.fa-bp .main-content :hover>.anchor-heading svg,html.fa-bp .main-content .anchor-heading:focus svg" + ON +
     ".fa-block-panel .bp-copy{font:inherit;font-size:.82rem;margin:.1rem .35rem .3rem 0;padding:.3rem .6rem;border:1px solid #8886;border-radius:6px;background:none;color:inherit;cursor:pointer}" +

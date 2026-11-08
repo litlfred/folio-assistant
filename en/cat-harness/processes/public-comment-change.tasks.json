@@ -58,6 +58,7 @@
    "name": "Edit the document as decided, on a feature branch",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Task_AuthorEdits",
+   "stepHref": "public-comment-change.html#step-Task_AuthorEdits",
    "lane": "Author (human or agentic)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Author",
    "skills": [
@@ -123,6 +124,7 @@
    "name": "Review the change set on its staging preview",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/CallActivity_ChangeSet",
+   "stepHref": "public-comment-change.html#step-CallActivity_ChangeSet",
    "lane": "Change set — feature branch and staging",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Pipeline",
    "skills": [
@@ -225,6 +227,7 @@
    "name": "QA gate: check dispositions against the people and the pull request",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Task_QaGate",
+   "stepHref": "public-comment-change.html#step-Task_QaGate",
    "lane": "QA reviewer (independent)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_QaReviewer",
    "skills": [
@@ -308,6 +311,7 @@
    "name": "Mark incorporated when the change set merges",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/node/Task_Incorporate",
+   "stepHref": "public-comment-change.html#step-Task_Incorporate",
    "lane": "Change set — feature branch and staging",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange/lane/Lane_Pipeline",
    "skills": [

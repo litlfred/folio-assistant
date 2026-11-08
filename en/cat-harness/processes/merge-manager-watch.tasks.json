@@ -118,6 +118,7 @@
    "name": "Approve the batch card",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Owner_Approve",
+   "stepHref": "merge-manager-watch.html#step-Owner_Approve",
    "lane": "Owner",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Owner",
    "skills": [
@@ -183,6 +184,7 @@
    "name": "Read the queue, acknowledge requests",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Read",
+   "stepHref": "merge-manager-watch.html#step-Task_Read",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
    "skills": [
@@ -232,6 +234,7 @@
    "name": "Announce the hand-over or the lapse",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Lapse",
+   "stepHref": "merge-manager-watch.html#step-Task_Lapse",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
    "skills": [
@@ -281,6 +284,7 @@
    "name": "Relieve the runners",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Relieve",
+   "stepHref": "merge-manager-watch.html#step-Task_Relieve",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
    "skills": [
@@ -330,6 +334,7 @@
    "name": "Saturation meta-merge",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Call_Meta",
+   "stepHref": "merge-manager-watch.html#step-Call_Meta",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
    "skills": [],
@@ -379,6 +384,7 @@
    "name": "Post the request in chat, then the batch card",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Card",
+   "stepHref": "merge-manager-watch.html#step-Task_Card",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
    "skills": [
@@ -428,6 +434,7 @@
    "name": "Merge train",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Call_Train",
+   "stepHref": "merge-manager-watch.html#step-Call_Train",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
    "skills": [],
@@ -477,6 +484,7 @@
    "name": "Merge it through merge:guard",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Task_Direct",
+   "stepHref": "merge-manager-watch.html#step-Task_Direct",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
    "skills": [
@@ -526,6 +534,7 @@
    "name": "Stalled-agent triage",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/node/Call_Stalled",
+   "stepHref": "merge-manager-watch.html#step-Call_Stalled",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeManagerWatch/lane/Lane_Steward",
    "skills": [],

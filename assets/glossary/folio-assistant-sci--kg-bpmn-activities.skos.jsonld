@@ -114,6 +114,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_paperauthoring.call_publishstatements",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Publish extracted statements"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The paper draws on library sources; every statement quoted or extracted from them is published in an appendix page of the paper and in the shared extraction viewer, each linked to its library entry and section, before the paper is rendered. These pages are EXPOSITION about sources, never part of a proof: nothing published here enters a formal statement or its Lean sibling. The sub-process is core's, the same for every content type; the paper supplies only the page look."
+        }
+      ],
+      "skos:notation": "Call_PublishStatements",
+      "dcterms:source": "folio-assistant-sci/processes/content/authoring-a-paper.bpmn#Call_PublishStatements",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-sci/v0/ns/glossary/kg-bpmn-activities/process_paperauthoring.call_reviewpublish",
       "@type": "skos:Concept",
       "skos:inScheme": {

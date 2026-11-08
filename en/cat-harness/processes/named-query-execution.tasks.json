@@ -94,6 +94,7 @@
    "name": "Validate Arguments against Parameter Schema",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_ValidateParams",
+   "stepHref": "named-query-execution.html#step-A_ValidateParams",
    "lane": "Query Caller (CLI / MCP / Web)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Caller",
    "skills": [
@@ -331,6 +332,7 @@
    "name": "Reject Request with ValidationError",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_RejectInvalidArgs",
+   "stepHref": "named-query-execution.html#step-A_RejectInvalidArgs",
    "lane": "Query Caller (CLI / MCP / Web)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Caller",
    "skills": [
@@ -568,6 +570,7 @@
    "name": "Check Graph Availability Guard (requiredSubgraphs)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_CheckSubgraphs",
+   "stepHref": "named-query-execution.html#step-A_CheckSubgraphs",
    "lane": "Universal Query Engine Runtime",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
    "skills": [
@@ -665,6 +668,7 @@
    "name": "Fetch & Ingest Missing Subgraphs (.nq.gz)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_FetchPartitions",
+   "stepHref": "named-query-execution.html#step-A_FetchPartitions",
    "lane": "Universal Query Engine Runtime",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
    "skills": [
@@ -762,6 +766,7 @@
    "name": "Raise MissingPartitionError (Fail-Closed Guard)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_RaiseMissingPartition",
+   "stepHref": "named-query-execution.html#step-A_RaiseMissingPartition",
    "lane": "Universal Query Engine Runtime",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
    "skills": [
@@ -859,6 +864,7 @@
    "name": "Bind Typed Parameters & Execute SPARQL",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_BindExecute",
+   "stepHref": "named-query-execution.html#step-A_BindExecute",
    "lane": "Universal Query Engine Runtime",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
    "skills": [
@@ -956,6 +962,7 @@
    "name": "Format Universal Result Response Envelope",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/node/A_FormatResponse",
+   "stepHref": "named-query-execution.html#step-A_FormatResponse",
    "lane": "Universal Query Engine Runtime",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NamedQueryExecution/lane/Lane_Engine",
    "skills": [

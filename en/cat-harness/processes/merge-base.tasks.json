@@ -106,6 +106,7 @@
    "name": "Merge the base in, without committing",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/node/Task_Merge",
+   "stepHref": "merge-base.html#step-Task_Merge",
    "lane": "merge:main command",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/lane/Lane_Command",
    "skills": [
@@ -203,6 +204,7 @@
    "name": "Classify every conflicted path against the declared patterns",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/node/Task_Classify",
+   "stepHref": "merge-base.html#step-Task_Classify",
    "lane": "merge:main command",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/lane/Lane_Command",
    "skills": [
@@ -300,6 +302,7 @@
    "name": "Resolve each by its declared strategy",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/node/Task_Resolve",
+   "stepHref": "merge-base.html#step-Task_Resolve",
    "lane": "merge:main command",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/lane/Lane_Command",
    "skills": [
@@ -397,6 +400,7 @@
    "name": "Regenerate, asking every CI gate",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/node/Task_Regen",
+   "stepHref": "merge-base.html#step-Task_Regen",
    "lane": "merge:main command",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/lane/Lane_Command",
    "skills": [
@@ -494,6 +498,7 @@
    "name": "Commit the merge",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/node/Task_Commit",
+   "stepHref": "merge-base.html#step-Task_Commit",
    "lane": "merge:main command",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/lane/Lane_Command",
    "skills": [
@@ -591,6 +596,7 @@
    "name": "Abort, restore the tree, list what was refused",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/node/Task_Abort",
+   "stepHref": "merge-base.html#step-Task_Abort",
    "lane": "merge:main command",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/lane/Lane_Command",
    "skills": [
@@ -688,6 +694,7 @@
    "name": "Resolve by hand, then regenerate",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/node/Task_ByHand",
+   "stepHref": "merge-base.html#step-Task_ByHand",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/lane/Lane_Agent",
    "skills": [
@@ -925,6 +932,7 @@
    "name": "Report what the run found, once",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/node/Task_Report",
+   "stepHref": "merge-base.html#step-Task_Report",
    "lane": "merge:main command",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeBase/lane/Lane_Command",
    "skills": [

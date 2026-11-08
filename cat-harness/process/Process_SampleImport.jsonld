@@ -9,8 +9,8 @@
       "name": "Sample import into a structured data store",
       "summary": "The SDLC for testing an import of a SAMPLE of a remote source into a knowledge graph or other structured store.",
       "enforcement": "strict",
-      "sourcePath": "processes/library/sample-import.bpmn",
-      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/library/sample-import.bpmn",
+      "sourcePath": "library/processes/sample-import.bpmn",
+      "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/library/processes/sample-import.bpmn",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/sample-import.svg",
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/StartEvent_Proposed",
@@ -22,7 +22,7 @@
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
       ],
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_1",
@@ -30,7 +30,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/StartEvent_Proposed",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Scope",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_2",
@@ -38,7 +38,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Scope",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Call_Materialize",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_3",
@@ -46,7 +46,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Call_Materialize",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Gateway_Materialized",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_4",
@@ -55,7 +55,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Gateway_Materialized",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Gateway_Permanent",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_5",
@@ -64,7 +64,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Gateway_Materialized",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/EndEvent_Refused",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_6",
@@ -73,7 +73,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Gateway_Permanent",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Library",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_7",
@@ -82,7 +82,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Gateway_Permanent",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Trial",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_8",
@@ -90,7 +90,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Library",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_ImportTest",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_9",
@@ -98,7 +98,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Trial",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_ImportTest",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_10",
@@ -106,7 +106,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_ImportTest",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Gateway_Passed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_11",
@@ -115,7 +115,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Gateway_Passed",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/EndEvent_Imported",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_12",
@@ -124,7 +124,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Gateway_Passed",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_RecordFindings",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_13",
@@ -132,7 +132,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_RecordFindings",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/EndEvent_Failed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_14",
@@ -140,7 +140,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/StartEvent_Upstream",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Call_Refresh",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport#flow/Flow_15",
@@ -148,7 +148,7 @@
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Call_Refresh",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/EndEvent_Refreshed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph"
     }
   ]
 }

@@ -154,6 +154,7 @@
    "name": "Scope the delta pinned → candidate",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/A_Scope",
+   "stepHref": "upstream-version-adoption.html#step-A_Scope",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Agent",
    "skills": [
@@ -391,6 +392,7 @@
    "name": "Impact analysis what of ours binds it",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/A_Impact",
+   "stepHref": "upstream-version-adoption.html#step-A_Impact",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Agent",
    "skills": [
@@ -628,6 +630,7 @@
    "name": "MVP: build the candidate on a staging branch",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/Task_Mvp",
+   "stepHref": "upstream-version-adoption.html#step-Task_Mvp",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Build",
    "skills": [
@@ -725,6 +728,7 @@
    "name": "Run the row's gates tests · e2e · site-links",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/Task_Gates",
+   "stepHref": "upstream-version-adoption.html#step-Task_Gates",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Build",
    "skills": [
@@ -822,6 +826,7 @@
    "name": "Post the MVP evidence staging URL + gate results",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/A_Evidence",
+   "stepHref": "upstream-version-adoption.html#step-A_Evidence",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Agent",
    "skills": [
@@ -1059,6 +1064,7 @@
    "name": "Review the MVP against what we bind to",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/R_Review",
+   "stepHref": "upstream-version-adoption.html#step-R_Review",
    "lane": "Reviewer / SME",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Review",
    "skills": [
@@ -1120,6 +1126,7 @@
    "name": "Options analysis adopt · hold · decline",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/Call_OptionsAnalysis",
+   "stepHref": "upstream-version-adoption.html#step-Call_OptionsAnalysis",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Agent",
    "skills": [],
@@ -1357,6 +1364,7 @@
    "name": "Adopt, hold or decline",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/PM_Decide",
+   "stepHref": "upstream-version-adoption.html#step-PM_Decide",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Publication",
    "skills": [
@@ -1419,6 +1427,7 @@
    "name": "Move the pin and open the PR",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/A_ApplyPin",
+   "stepHref": "upstream-version-adoption.html#step-A_ApplyPin",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Agent",
    "skills": [
@@ -1656,6 +1665,7 @@
    "name": "Record the hold or the decline",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/A_RecordOutcome",
+   "stepHref": "upstream-version-adoption.html#step-A_RecordOutcome",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Agent",
    "skills": [
@@ -1893,6 +1903,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/Call_BeanOpen",
+   "stepHref": "upstream-version-adoption.html#step-Call_BeanOpen",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Agent",
    "skills": [
@@ -2135,6 +2146,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/node/Call_BeanClose",
+   "stepHref": "upstream-version-adoption.html#step-Call_BeanClose",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamAdoption/lane/Lane_Agent",
    "skills": [

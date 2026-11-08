@@ -70,6 +70,7 @@
    "name": "Extract the text layer",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_ExtractText",
+   "stepHref": "ingest-extract-structure.html#step-Task_ExtractText",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
    "skills": [
@@ -123,6 +124,7 @@
    "name": "OCR to ocr/page-*.txt",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Ocr",
+   "stepHref": "ingest-extract-structure.html#step-Task_Ocr",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
    "skills": [
@@ -176,6 +178,7 @@
    "name": "Split into sections/*.md with doc_brief front-matter",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Sections",
+   "stepHref": "ingest-extract-structure.html#step-Task_Sections",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
    "skills": [
@@ -229,6 +232,7 @@
    "name": "Write structure.json",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Structure",
+   "stepHref": "ingest-extract-structure.html#step-Task_Structure",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
    "skills": [
@@ -282,6 +286,7 @@
    "name": "Extract claim candidates",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/node/Task_Candidates",
+   "stepHref": "ingest-extract-structure.html#step-Task_Candidates",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ExtractStructure/lane/Lane_0",
    "skills": [

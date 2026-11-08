@@ -190,6 +190,7 @@
    "name": "Read each queued PR's live facts",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_ReadLive",
+   "stepHref": "merge-train.html#step-Task_ReadLive",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
@@ -245,6 +246,7 @@
    "name": "Take the next PR in queue order",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_TakeNext",
+   "stepHref": "merge-train.html#step-Task_TakeNext",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
@@ -300,6 +302,7 @@
    "name": "Admit it to the train, record the train id",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Admit",
+   "stepHref": "merge-train.html#step-Task_Admit",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
@@ -355,6 +358,7 @@
    "name": "Hand it back",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_HandBack",
+   "stepHref": "merge-train.html#step-Call_HandBack",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
@@ -409,6 +413,7 @@
    "name": "Fix the PR, then re-signal ready",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_SiblingFix",
+   "stepHref": "merge-train.html#step-Task_SiblingFix",
    "lane": "Sibling session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Sibling",
    "skills": [
@@ -434,6 +439,7 @@
    "name": "Find members with no CI on their head",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_ChecksPresent",
+   "stepHref": "merge-train.html#step-Call_ChecksPresent",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Pipeline",
    "skills": [
@@ -536,6 +542,7 @@
    "name": "Merge each member onto the base",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_MergeMembers",
+   "stepHref": "merge-train.html#step-Call_MergeMembers",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Pipeline",
    "skills": [
@@ -638,6 +645,7 @@
    "name": "Run the gate set on the train",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_Gates",
+   "stepHref": "merge-train.html#step-Call_Gates",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Pipeline",
    "skills": [
@@ -740,6 +748,7 @@
    "name": "Retry a declared-flaky gate once",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_RetryFlaky",
+   "stepHref": "merge-train.html#step-Task_RetryFlaky",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Pipeline",
    "skills": [
@@ -837,6 +846,7 @@
    "name": "Attribute the failure: each member's own CI first",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Attribute",
+   "stepHref": "merge-train.html#step-Task_Attribute",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
@@ -892,6 +902,7 @@
    "name": "Bisect the train",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Bisect",
+   "stepHref": "merge-train.html#step-Task_Bisect",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
@@ -947,6 +958,7 @@
    "name": "Eject the culprit, record why",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Eject",
+   "stepHref": "merge-train.html#step-Task_Eject",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
@@ -1002,6 +1014,7 @@
    "name": "Hand the culprit back",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_EjectHandBack",
+   "stepHref": "merge-train.html#step-Call_EjectHandBack",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
@@ -1056,6 +1069,7 @@
    "name": "Land each member",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Call_MergeToMain",
+   "stepHref": "merge-train.html#step-Call_MergeToMain",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Steward",
    "skills": [
@@ -1110,6 +1124,7 @@
    "name": "Place it by hand, with a reason",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/node/Task_Override",
+   "stepHref": "merge-train.html#step-Task_Override",
    "lane": "Owner",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeTrain/lane/Lane_Owner",
    "skills": [

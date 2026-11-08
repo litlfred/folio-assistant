@@ -118,6 +118,7 @@
    "name": "Read the cursor of the last published run",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_ReadCursor",
+   "stepHref": "iris-cdn-nightly.html#step-Task_ReadCursor",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
    "skills": [
@@ -215,6 +216,7 @@
    "name": "List items changed since the cursor",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_ListChanged",
+   "stepHref": "iris-cdn-nightly.html#step-Task_ListChanged",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
    "skills": [
@@ -312,6 +314,7 @@
    "name": "Fetch the changed records and bitstream lists",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_FetchChanged",
+   "stepHref": "iris-cdn-nightly.html#step-Task_FetchChanged",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
    "skills": [
@@ -413,6 +416,7 @@
    "name": "Fetch only bitstreams whose checksum changed",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_FetchNewBytes",
+   "stepHref": "iris-cdn-nightly.html#step-Task_FetchNewBytes",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
    "skills": [
@@ -510,6 +514,7 @@
    "name": "Write canonical records into the library",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_WriteRecords",
+   "stepHref": "iris-cdn-nightly.html#step-Task_WriteRecords",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
    "skills": [
@@ -607,6 +612,7 @@
    "name": "Rebuild the whole graph (sorted output)",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Call_Rebuild",
+   "stepHref": "iris-cdn-nightly.html#step-Call_Rebuild",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
    "skills": [
@@ -713,6 +719,7 @@
    "name": "Sign and publish the release",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Call_SignPublish",
+   "stepHref": "iris-cdn-nightly.html#step-Call_SignPublish",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
    "skills": [
@@ -815,6 +822,7 @@
    "name": "Commit the advanced cursor",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_AdvanceCursor",
+   "stepHref": "iris-cdn-nightly.html#step-Task_AdvanceCursor",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Pipeline",
    "skills": [
@@ -912,6 +920,7 @@
    "name": "Review the run report; open beans for anomalies",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/node/Task_Review",
+   "stepHref": "iris-cdn-nightly.html#step-Task_Review",
    "lane": "IRIS CDN Exporter (agent)",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnNightly/lane/Lane_Exporter",
    "skills": [

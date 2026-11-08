@@ -1830,7 +1830,7 @@
         }
       ],
       "skos:notation": "A_Accept",
-      "dcterms:source": "cat-harness/processes/library/content-acquisition.bpmn#A_Accept",
+      "dcterms:source": "cat-harness/library/processes/content-acquisition.bpmn#A_Accept",
       "skos:note": "candidate"
     },
     {
@@ -1850,7 +1850,7 @@
         }
       ],
       "skos:notation": "A_Ask",
-      "dcterms:source": "cat-harness/processes/library/content-acquisition.bpmn#A_Ask",
+      "dcterms:source": "cat-harness/library/processes/content-acquisition.bpmn#A_Ask",
       "skos:note": "candidate"
     },
     {
@@ -1870,7 +1870,7 @@
         }
       ],
       "skos:notation": "A_PointToUpload",
-      "dcterms:source": "cat-harness/processes/library/content-acquisition.bpmn#A_PointToUpload",
+      "dcterms:source": "cat-harness/library/processes/content-acquisition.bpmn#A_PointToUpload",
       "skos:note": "candidate"
     },
     {
@@ -1890,7 +1890,7 @@
         }
       ],
       "skos:notation": "A_Route",
-      "dcterms:source": "cat-harness/processes/library/content-acquisition.bpmn#A_Route",
+      "dcterms:source": "cat-harness/library/processes/content-acquisition.bpmn#A_Route",
       "skos:note": "candidate"
     },
     {
@@ -1910,7 +1910,7 @@
         }
       ],
       "skos:notation": "P_Respond",
-      "dcterms:source": "cat-harness/processes/library/content-acquisition.bpmn#P_Respond",
+      "dcterms:source": "cat-harness/library/processes/content-acquisition.bpmn#P_Respond",
       "skos:note": "candidate"
     },
     {
@@ -1930,7 +1930,7 @@
         }
       ],
       "skos:notation": "P_Upload",
-      "dcterms:source": "cat-harness/processes/library/content-acquisition.bpmn#P_Upload",
+      "dcterms:source": "cat-harness/library/processes/content-acquisition.bpmn#P_Upload",
       "skos:note": "candidate"
     },
     {
@@ -2110,7 +2110,7 @@
         }
       ],
       "skos:notation": "Task_EditDirectly",
-      "dcterms:source": "cat-harness/processes/library/copy-out-materialized.bpmn#Task_EditDirectly",
+      "dcterms:source": "cat-harness/library/processes/copy-out-materialized.bpmn#Task_EditDirectly",
       "skos:note": "candidate"
     },
     {
@@ -2130,7 +2130,7 @@
         }
       ],
       "skos:notation": "Task_Land",
-      "dcterms:source": "cat-harness/processes/library/copy-out-materialized.bpmn#Task_Land",
+      "dcterms:source": "cat-harness/library/processes/copy-out-materialized.bpmn#Task_Land",
       "skos:note": "candidate"
     },
     {
@@ -2150,7 +2150,7 @@
         }
       ],
       "skos:notation": "Task_ReadSource",
-      "dcterms:source": "cat-harness/processes/library/copy-out-materialized.bpmn#Task_ReadSource",
+      "dcterms:source": "cat-harness/library/processes/copy-out-materialized.bpmn#Task_ReadSource",
       "skos:note": "candidate"
     },
     {
@@ -2170,7 +2170,7 @@
         }
       ],
       "skos:notation": "Task_RecordProvenance",
-      "dcterms:source": "cat-harness/processes/library/copy-out-materialized.bpmn#Task_RecordProvenance",
+      "dcterms:source": "cat-harness/library/processes/copy-out-materialized.bpmn#Task_RecordProvenance",
       "skos:note": "candidate"
     },
     {
@@ -2190,7 +2190,7 @@
         }
       ],
       "skos:notation": "Task_VerifySourceUntouched",
-      "dcterms:source": "cat-harness/processes/library/copy-out-materialized.bpmn#Task_VerifySourceUntouched",
+      "dcterms:source": "cat-harness/library/processes/copy-out-materialized.bpmn#Task_VerifySourceUntouched",
       "skos:note": "candidate"
     },
     {
@@ -4205,7 +4205,7 @@
         }
       ],
       "skos:notation": "Task_AppendDisclaimer",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_AppendDisclaimer",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_AppendDisclaimer",
       "skos:note": "candidate"
     },
     {
@@ -4225,7 +4225,7 @@
         }
       ],
       "skos:notation": "Task_AssignTranslator",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_AssignTranslator",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_AssignTranslator",
       "skos:note": "candidate"
     },
     {
@@ -4245,7 +4245,7 @@
         }
       ],
       "skos:notation": "Task_CheckCompleteness",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_CheckCompleteness",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_CheckCompleteness",
       "skos:note": "candidate"
     },
     {
@@ -4259,13 +4259,8 @@
           "@value": "Extract the POT"
         }
       ],
-      "skos:definition": [
-        {
-          "@value": "Scan the source content and write the translatable strings to .pot files at the configured granularity: segment prose by paragraph, shield what must not be translated (math, code, labels, Lean companions) as placeholders, normalise whitespace, and extract metadata such as titles, alt text and captions. Tool: the translation_extract MCP tool."
-        }
-      ],
       "skos:notation": "Task_ExtractPOT",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_ExtractPOT",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_ExtractPOT",
       "skos:note": "candidate"
     },
     {
@@ -4285,7 +4280,7 @@
         }
       ],
       "skos:notation": "Task_IdentifyContent",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_IdentifyContent",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_IdentifyContent",
       "skos:note": "candidate"
     },
     {
@@ -4299,13 +4294,8 @@
           "@value": "Inject the PO"
         }
       ],
-      "skos:definition": [
-        {
-          "@value": "Read the .po file and the source .md, substitute msgstr for msgid, unshield the placeholders, and write the translated .md to translations/<locale>/. Check structure (paragraph count, heading levels) and completeness (no empty msgstr), and lint (doubled punctuation, orphaned placeholders). Tool: the translation_inject MCP tool."
-        }
-      ],
       "skos:notation": "Task_InjectPO",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_InjectPO",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_InjectPO",
       "skos:note": "candidate"
     },
     {
@@ -4325,7 +4315,7 @@
         }
       ],
       "skos:notation": "Task_PrepareGlossary",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_PrepareGlossary",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_PrepareGlossary",
       "skos:note": "candidate"
     },
     {
@@ -4345,7 +4335,7 @@
         }
       ],
       "skos:notation": "Task_ReceiveAssignment",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_ReceiveAssignment",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_ReceiveAssignment",
       "skos:note": "candidate"
     },
     {
@@ -4365,7 +4355,7 @@
         }
       ],
       "skos:notation": "Task_RequestMoreWork",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_RequestMoreWork",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_RequestMoreWork",
       "skos:note": "candidate"
     },
     {
@@ -4385,7 +4375,7 @@
         }
       ],
       "skos:notation": "Task_ReturnForCorrection",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_ReturnForCorrection",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_ReturnForCorrection",
       "skos:note": "candidate"
     },
     {
@@ -4401,11 +4391,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original. It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool. No gateway follows: drift or clean, the translation goes to Task_SMEReview with the findings attached. Which of two readings is right is a human call (translation-manager, \"route drift to a human reviewer\"), and every translation in this workflow is reviewed and signed off anyway, so a clean result is evidence for the reviewer and never a way around them. The findings include `translation:glossary:check`'s: every glossary term translated against the locale term base, fixed before sign-off, with its glossary section in the KG QA report."
+          "@value": "No gateway follows: drift or clean, the translation goes to Task_SMEReview with the findings attached. Which of two readings is right is a human call (translation-manager, \"route drift to a human reviewer\"), and every translation in this workflow is reviewed and signed off anyway, so a clean result is evidence for the reviewer and never a way around them. The findings include `translation:glossary:check`'s: every glossary term translated against the locale term base, fixed before sign-off, with its glossary section in the KG QA report."
         }
       ],
       "skos:notation": "Task_RoundTripQA",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_RoundTripQA",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_RoundTripQA",
       "skos:note": "candidate"
     },
     {
@@ -4425,7 +4415,7 @@
         }
       ],
       "skos:notation": "Task_Signoff",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_Signoff",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_Signoff",
       "skos:note": "candidate"
     },
     {
@@ -4445,7 +4435,7 @@
         }
       ],
       "skos:notation": "Task_SMEReview",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_SMEReview",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_SMEReview",
       "skos:note": "candidate"
     },
     {
@@ -4465,7 +4455,7 @@
         }
       ],
       "skos:notation": "Task_SubmitPO",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_SubmitPO",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_SubmitPO",
       "skos:note": "candidate"
     },
     {
@@ -4485,7 +4475,7 @@
         }
       ],
       "skos:notation": "Task_TranslateInTool",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_TranslateInTool",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_TranslateInTool",
       "skos:note": "candidate"
     },
     {
@@ -4499,13 +4489,8 @@
           "@value": "Write status.json (official)"
         }
       ],
-      "skos:definition": [
-        {
-          "@value": "Record the translation's standing in translations/<locale>/status.json. The `official` input says which: `false` records it as unofficial ({ official: false, generatedBy, generatedAt }), usable but shown with a warning badge; `true` records the human sign-off with the SHA-256 of the source .md, so a later change to the source marks it stale."
-        }
-      ],
       "skos:notation": "Task_WriteStatus",
-      "dcterms:source": "cat-harness/processes/library/human-translation-workflow.bpmn#Task_WriteStatus",
+      "dcterms:source": "cat-harness/library/processes/human-translation-workflow.bpmn#Task_WriteStatus",
       "skos:note": "candidate"
     },
     {
@@ -4525,7 +4510,7 @@
         }
       ],
       "skos:notation": "Task_CatalogueReference",
-      "dcterms:source": "cat-harness/processes/library/document-ingestion.bpmn#Task_CatalogueReference",
+      "dcterms:source": "cat-harness/library/processes/document-ingestion.bpmn#Task_CatalogueReference",
       "skos:note": "candidate"
     },
     {
@@ -4545,7 +4530,7 @@
         }
       ],
       "skos:notation": "Task_ExtractMetadata",
-      "dcterms:source": "cat-harness/processes/library/document-ingestion.bpmn#Task_ExtractMetadata",
+      "dcterms:source": "cat-harness/library/processes/document-ingestion.bpmn#Task_ExtractMetadata",
       "skos:note": "candidate"
     },
     {
@@ -4565,7 +4550,7 @@
         }
       ],
       "skos:notation": "Task_Place",
-      "dcterms:source": "cat-harness/processes/library/document-ingestion.bpmn#Task_Place",
+      "dcterms:source": "cat-harness/library/processes/document-ingestion.bpmn#Task_Place",
       "skos:note": "candidate"
     },
     {
@@ -4585,7 +4570,7 @@
         }
       ],
       "skos:notation": "Task_PlaceInLibrary",
-      "dcterms:source": "cat-harness/processes/library/document-ingestion.bpmn#Task_PlaceInLibrary",
+      "dcterms:source": "cat-harness/library/processes/document-ingestion.bpmn#Task_PlaceInLibrary",
       "skos:note": "candidate"
     },
     {
@@ -4709,23 +4694,83 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_authorise",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.call_authorise",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
       },
       "skos:prefLabel": [
         {
-          "@value": "9 · Authorise the extraction"
+          "@value": "Authorise the extraction"
         }
       ],
       "skos:definition": [
         {
-          "@value": "A repository cut changes the substrate every other process binds to; that is a person's decision. Declining leaves the graph declared, detangled, isolated and split in place."
+          "@value": "Report what moves and ask the administrator. A repository cut changes the substrate every other process binds to; that is a person's decision."
         }
       ],
-      "skos:notation": "Task_Authorise",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Authorise",
+      "skos:notation": "Call_Authorise",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Call_Authorise",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.call_cutover",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Cut over"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Retire the parent's copy and measure the cutover until it is complete or cannot be shown complete."
+        }
+      ],
+      "skos:notation": "Call_Cutover",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Call_Cutover",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.call_move",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Move it into its repositories"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Create the repositories, drain, seed, consume additively, release, and check every identifier dereferences."
+        }
+      ],
+      "skos:notation": "Call_Move",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Call_Move",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.call_prepare",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Prepare it to stand alone"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Identity, hosted output, the content-tools split, the publication plan, and the standalone rehearsal."
+        }
+      ],
+      "skos:notation": "Call_Prepare",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Call_Prepare",
       "skos:note": "candidate"
     },
     {
@@ -4749,86 +4794,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_consume",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "11 · Parent consumes, additively"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The parent pins the pair (a commit while staging, a version once released) — a code dependency as a `source.remote` instance in its root `index.config.json` (remote-mount skill), never a submodule — repoints its imports, and keeps its own copy until it is green with the dependency declared."
-        }
-      ],
-      "skos:notation": "Task_Consume",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Consume",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_create",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Create the repositories"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The owner creates the content and tools repositories and their Pages. Nothing is committed to them before this."
-        }
-      ],
-      "skos:notation": "Task_Create",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Create",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_cutover",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "13 · Cutover: retire the parent's copy"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. It retires the parent's copy, frozen, never refreshed and never rendered, rather than deleting it. Where the copy goes is the sub-kg-lifecycle skill's stage 13; this diagram does not name that store, because the published graph must not."
-        }
-      ],
-      "skos:notation": "Task_Cutover",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Cutover",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_cutovercheck",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Measure the cutover: separation:cutover:check"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Run `bun run cat separation:cutover:check --site` in the SEPARATED repository (Tool `separation-cutover-check`). Six conditions, each decided by an existing gate and none assumed: every declared layer mounted at its pin; every path a declaration names resolves (`check:declaration-resolution` — directories, assets, visualisers, needs); no wiring still names the monorepo (`livesAt`, a submodule, a reusable workflow, a path into the old checkout); no import or reference against the layer order; and the site builds from the mounts alone. A finding inside a mounted layer is upstream's and is listed, not counted."
-        }
-      ],
-      "skos:notation": "Task_CutoverCheck",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_CutoverCheck",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_decide",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -4836,7 +4801,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Separate this graph?"
+          "@value": "Ask whether to separate it"
         }
       ],
       "skos:definition": [
@@ -4856,7 +4821,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "1–3 · Declare, detangle, isolate"
+          "@value": "Declare, detangle, isolate"
         }
       ],
       "skos:definition": [
@@ -4866,66 +4831,6 @@
       ],
       "skos:notation": "Task_Detangle",
       "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Detangle",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_drain",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Drain: land, close or re-target the open PRs"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Work the PRs `seed:ready` named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight. Fix a red rehearsal or a discovery miss where it is. Nothing is seeded from here; it goes back to the gateway, which re-asks."
-        }
-      ],
-      "skos:notation": "Task_Drain",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Drain",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_hosted",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "5 · Move harness output about it to the host"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "QA verdicts, translation templates, the exported graph and the glossary ledger are harness output ABOUT the graph: they live with the harness (kgQaHomeFor, translationsHomeFor). The content keeps only what its own checks need; the leak test's pending list is empty. The one exception is a separated layer that declares a `qa` directory of its own with `storage`: its verdicts are its own repository's, published to that repository's qa-reports branch (step 10), and read by a host at the commit it pins."
-        }
-      ],
-      "skos:notation": "Task_Hosted",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Hosted",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_identity",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "4 · Identity: version, iriBase, nodeSchemas"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The declaration carries name, version, iriBase, needs and nodeSchemas. A base move is `bun run iri:sync -- --from <old base>`, once; then `iri:sync:check` and `check:node-iris` are green."
-        }
-      ],
-      "skos:notation": "Task_Identity",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Identity",
       "skos:note": "candidate"
     },
     {
@@ -4949,27 +4854,27 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_plan",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationauthorise.task_authorise",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
       },
       "skos:prefLabel": [
         {
-          "@value": "7 · Plan publication"
+          "@value": "Ask to authorise the extraction"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Every identifier the content mints is a file some step publishes: /v<major>/, for what programs read and pages people read alike; the exact release is the pin's. Name collisions between published files are resolved here."
+          "@value": "A repository cut changes the substrate every other process binds to; that is a person's decision. Declining leaves the graph declared, detangled, isolated and split in place."
         }
       ],
-      "skos:notation": "Task_Plan",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Plan",
+      "skos:notation": "Task_Authorise",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-authorise.bpmn#Task_Authorise",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_propose",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationauthorise.task_propose",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
@@ -4985,38 +4890,138 @@
         }
       ],
       "skos:notation": "Task_Propose",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Propose",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-authorise.bpmn#Task_Propose",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_rehearse",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationcutover.task_cutover",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
       },
       "skos:prefLabel": [
         {
-          "@value": "8 · Rehearse standalone"
+          "@value": "Cutover: retire the parent's copy"
         }
       ],
       "skos:definition": [
         {
-          "@value": "Copy the content and the tools alone into a temporary directory, with nothing else on the path, and run the tools' checks there. An empty tree must exit non-zero, so a rehearsal over nothing cannot pass."
+          "@value": "The one commit worth reverting, made only after the parent consumes the release and every identifier dereferences. It retires the parent's copy, frozen, never refreshed and never rendered, rather than deleting it. Where the copy goes is the sub-kg-lifecycle skill's stage 13; this diagram does not name that store, because the published graph must not."
         }
       ],
-      "skos:notation": "Task_Rehearse",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Rehearse",
+      "skos:notation": "Task_Cutover",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-cutover.bpmn#Task_Cutover",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_release",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationcutover.task_cutovercheck",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
       },
       "skos:prefLabel": [
         {
-          "@value": "12 · First release"
+          "@value": "Measure the cutover: separation:cutover:check"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Run `bun run cat separation:cutover:check --site` in the SEPARATED repository (Tool `separation-cutover-check`). Six conditions, each decided by an existing gate and none assumed: every declared layer mounted at its pin; every path a declaration names resolves (`check:declaration-resolution` — directories, assets, visualisers, needs); no wiring still names the monorepo (`livesAt`, a submodule, a reusable workflow, a path into the old checkout); no import or reference against the layer order; and the site builds from the mounts alone. A finding inside a mounted layer is upstream's and is listed, not counted."
+        }
+      ],
+      "skos:notation": "Task_CutoverCheck",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-cutover.bpmn#Task_CutoverCheck",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationmove.task_consume",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Parent consumes, additively"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The parent pins the pair (a commit while staging, a version once released) — a code dependency as a `source.remote` instance in its root `index.config.json` (remote-mount skill), never a submodule — repoints its imports, and keeps its own copy until it is green with the dependency declared."
+        }
+      ],
+      "skos:notation": "Task_Consume",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-move.bpmn#Task_Consume",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationmove.task_create",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Create the repositories"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The owner creates the content and tools repositories and their Pages. Nothing is committed to them before this."
+        }
+      ],
+      "skos:notation": "Task_Create",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-move.bpmn#Task_Create",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationmove.task_drain",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Drain: land, close or re-target the open PRs"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Work the PRs `seed:ready` named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight. Fix a red rehearsal or a discovery miss where it is. Nothing is seeded from here; it goes back to the gateway, which re-asks."
+        }
+      ],
+      "skos:notation": "Task_Drain",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-move.bpmn#Task_Drain",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationmove.task_freshclone",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Verify on a fresh clone"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`bun run cat sub-kg:verify-clone --repo <owner>/<name> --ref <branch>` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. Nothing in a seed runs standalone until the seam is re-pointed, so a missing module shows here."
+        }
+      ],
+      "skos:notation": "Task_FreshClone",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-move.bpmn#Task_FreshClone",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationmove.task_release",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "First release"
         }
       ],
       "skos:definition": [
@@ -5025,18 +5030,38 @@
         }
       ],
       "skos:notation": "Task_Release",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Release",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-move.bpmn#Task_Release",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_seed",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationmove.task_repoint",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
       },
       "skos:prefLabel": [
         {
-          "@value": "10 · Seed both repositories"
+          "@value": "Re-point: livesAt, seam, mount or subscription"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "In the new repository `livesAt` goes (absent means it sits at the root of `repository`) and `platform.ts` points at where the platform now is. The host consumes it as a remote mount (a `source.remote` instance in its root `index.config.json`) if it imports its code, or a subscription if it only reads its content, pinned to a commit while staging. Additive: the host keeps its copy."
+        }
+      ],
+      "skos:notation": "Task_Repoint",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-move.bpmn#Task_Repoint",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationmove.task_seed",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Seed both repositories"
         }
       ],
       "skos:definition": [
@@ -5045,31 +5070,11 @@
         }
       ],
       "skos:notation": "Task_Seed",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Seed",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-move.bpmn#Task_Seed",
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_split",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "6 · Split content from tools"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Create <name>-tools as a sibling directory and move the code: the Zod source, the generators, the README and diagram writers, the content checks. Cut its import cone to its own files and declared packages. Both start at the content's version."
-        }
-      ],
-      "skos:notation": "Task_Split",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Split",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparation.task_verify",
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationmove.task_verify",
       "@type": "skos:Concept",
       "skos:inScheme": {
         "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
@@ -5085,7 +5090,107 @@
         }
       ],
       "skos:notation": "Task_Verify",
-      "dcterms:source": "cat-harness/processes/kg/kg-separation.bpmn#Task_Verify",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-move.bpmn#Task_Verify",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationprepare.task_hosted",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Move harness output about it to the host"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "QA verdicts, translation templates, the exported graph and the glossary ledger are harness output ABOUT the graph: they live with the harness (kgQaHomeFor, translationsHomeFor). The content keeps only what its own checks need; the leak test's pending list is empty. The one exception is a separated layer that declares a `qa` directory of its own with `storage`: its verdicts are its own repository's, published to that repository's qa-reports branch (step 10), and read by a host at the commit it pins."
+        }
+      ],
+      "skos:notation": "Task_Hosted",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-prepare.bpmn#Task_Hosted",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationprepare.task_identity",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Identity: version, iriBase, nodeSchemas"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The declaration carries name, version, iriBase, needs and nodeSchemas. A base move is `bun run iri:sync -- --from <old base>`, once; then `iri:sync:check` and `check:node-iris` are green."
+        }
+      ],
+      "skos:notation": "Task_Identity",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-prepare.bpmn#Task_Identity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationprepare.task_plan",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Plan publication"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every identifier the content mints is a file some step publishes: /v<major>/, for what programs read and pages people read alike; the exact release is the pin's. Name collisions between published files are resolved here."
+        }
+      ],
+      "skos:notation": "Task_Plan",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-prepare.bpmn#Task_Plan",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationprepare.task_rehearse",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Rehearse standalone"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Copy the content and the tools alone into a temporary directory, with nothing else on the path, and run the tools' checks there. An empty tree must exit non-zero, so a rehearsal over nothing cannot pass."
+        }
+      ],
+      "skos:notation": "Task_Rehearse",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-prepare.bpmn#Task_Rehearse",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_kgseparationprepare.task_split",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Split content from tools"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Create <name>-tools as a sibling directory and move the code: the Zod source, the generators, the README and diagram writers, the content checks. Cut its import cone to its own files and declared packages. Both start at the content's version."
+        }
+      ],
+      "skos:notation": "Task_Split",
+      "dcterms:source": "cat-harness/processes/kg/kg-separation-prepare.bpmn#Task_Split",
       "skos:note": "candidate"
     },
     {
@@ -5305,7 +5410,7 @@
         }
       ],
       "skos:notation": "Task_AnswerGates",
-      "dcterms:source": "cat-harness/processes/library/materialize-remote.bpmn#Task_AnswerGates",
+      "dcterms:source": "cat-harness/library/processes/materialize-remote.bpmn#Task_AnswerGates",
       "skos:note": "candidate"
     },
     {
@@ -5325,7 +5430,7 @@
         }
       ],
       "skos:notation": "Task_Declare",
-      "dcterms:source": "cat-harness/processes/library/materialize-remote.bpmn#Task_Declare",
+      "dcterms:source": "cat-harness/library/processes/materialize-remote.bpmn#Task_Declare",
       "skos:note": "candidate"
     },
     {
@@ -5345,7 +5450,7 @@
         }
       ],
       "skos:notation": "Task_Enumerate",
-      "dcterms:source": "cat-harness/processes/library/materialize-remote.bpmn#Task_Enumerate",
+      "dcterms:source": "cat-harness/library/processes/materialize-remote.bpmn#Task_Enumerate",
       "skos:note": "candidate"
     },
     {
@@ -5365,7 +5470,7 @@
         }
       ],
       "skos:notation": "Task_Fetch",
-      "dcterms:source": "cat-harness/processes/library/materialize-remote.bpmn#Task_Fetch",
+      "dcterms:source": "cat-harness/library/processes/materialize-remote.bpmn#Task_Fetch",
       "skos:note": "candidate"
     },
     {
@@ -5385,7 +5490,7 @@
         }
       ],
       "skos:notation": "Task_Purpose",
-      "dcterms:source": "cat-harness/processes/library/materialize-remote.bpmn#Task_Purpose",
+      "dcterms:source": "cat-harness/library/processes/materialize-remote.bpmn#Task_Purpose",
       "skos:note": "candidate"
     },
     {
@@ -5405,7 +5510,7 @@
         }
       ],
       "skos:notation": "Task_Size",
-      "dcterms:source": "cat-harness/processes/library/materialize-remote.bpmn#Task_Size",
+      "dcterms:source": "cat-harness/library/processes/materialize-remote.bpmn#Task_Size",
       "skos:note": "candidate"
     },
     {
@@ -5425,7 +5530,7 @@
         }
       ],
       "skos:notation": "Task_StayRef",
-      "dcterms:source": "cat-harness/processes/library/materialize-remote.bpmn#Task_StayRef",
+      "dcterms:source": "cat-harness/library/processes/materialize-remote.bpmn#Task_StayRef",
       "skos:note": "candidate"
     },
     {
@@ -6745,7 +6850,7 @@
         }
       ],
       "skos:notation": "A_Integrate",
-      "dcterms:source": "cat-harness/processes/library/methodology-from-source.bpmn#A_Integrate",
+      "dcterms:source": "cat-harness/library/processes/methodology-from-source.bpmn#A_Integrate",
       "skos:note": "candidate"
     },
     {
@@ -6765,7 +6870,7 @@
         }
       ],
       "skos:notation": "A_Origin",
-      "dcterms:source": "cat-harness/processes/library/methodology-from-source.bpmn#A_Origin",
+      "dcterms:source": "cat-harness/library/processes/methodology-from-source.bpmn#A_Origin",
       "skos:note": "candidate"
     },
     {
@@ -6785,7 +6890,7 @@
         }
       ],
       "skos:notation": "A_Place",
-      "dcterms:source": "cat-harness/processes/library/methodology-from-source.bpmn#A_Place",
+      "dcterms:source": "cat-harness/library/processes/methodology-from-source.bpmn#A_Place",
       "skos:note": "candidate"
     },
     {
@@ -6805,7 +6910,7 @@
         }
       ],
       "skos:notation": "A_Render",
-      "dcterms:source": "cat-harness/processes/library/methodology-from-source.bpmn#A_Render",
+      "dcterms:source": "cat-harness/library/processes/methodology-from-source.bpmn#A_Render",
       "skos:note": "candidate"
     },
     {
@@ -6825,7 +6930,7 @@
         }
       ],
       "skos:notation": "A_Tools",
-      "dcterms:source": "cat-harness/processes/library/methodology-from-source.bpmn#A_Tools",
+      "dcterms:source": "cat-harness/library/processes/methodology-from-source.bpmn#A_Tools",
       "skos:note": "candidate"
     },
     {
@@ -6845,7 +6950,7 @@
         }
       ],
       "skos:notation": "Call_Ingest",
-      "dcterms:source": "cat-harness/processes/library/methodology-from-source.bpmn#Call_Ingest",
+      "dcterms:source": "cat-harness/library/processes/methodology-from-source.bpmn#Call_Ingest",
       "skos:note": "candidate"
     },
     {
@@ -6865,7 +6970,7 @@
         }
       ],
       "skos:notation": "Call_RelatedWork",
-      "dcterms:source": "cat-harness/processes/library/methodology-from-source.bpmn#Call_RelatedWork",
+      "dcterms:source": "cat-harness/library/processes/methodology-from-source.bpmn#Call_RelatedWork",
       "skos:note": "candidate"
     },
     {
@@ -6880,7 +6985,7 @@
         }
       ],
       "skos:notation": "O_Review",
-      "dcterms:source": "cat-harness/processes/library/methodology-from-source.bpmn#O_Review",
+      "dcterms:source": "cat-harness/library/processes/methodology-from-source.bpmn#O_Review",
       "skos:note": "candidate"
     },
     {
@@ -7140,7 +7245,7 @@
         }
       ],
       "skos:notation": "Call_ML_RoundTrip",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Call_ML_RoundTrip",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Call_ML_RoundTrip",
       "skos:note": "candidate"
     },
     {
@@ -7156,11 +7261,11 @@
       ],
       "skos:definition": [
         {
-          "@value": "Scan the source content and write the translatable strings to .pot files at the configured granularity: segment prose by paragraph, shield what must not be translated (math, code, labels, Lean companions) as placeholders, normalise whitespace, and extract metadata such as titles, alt text and captions. Tool: the translation_extract MCP tool. Once, for every locale: the `.pot` templates for the pages, the diagrams (`translate-bpmn --extract`) and the glossary schemes, each by the instance's own extractor. A locale that would need a different template is a defect in the extraction, not a reason to extract again."
+          "@value": "Once, for every locale: the `.pot` templates for the pages, the diagrams (`translate-bpmn --extract`) and the glossary schemes, each by the instance's own extractor. A locale that would need a different template is a defect in the extraction, not a reason to extract again."
         }
       ],
       "skos:notation": "Task_ML_Extract",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Extract",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Extract",
       "skos:note": "candidate"
     },
     {
@@ -7180,7 +7285,7 @@
         }
       ],
       "skos:notation": "Task_ML_FixDrift",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_FixDrift",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_FixDrift",
       "skos:note": "candidate"
     },
     {
@@ -7200,7 +7305,7 @@
         }
       ],
       "skos:notation": "Task_ML_Gates",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Gates",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Gates",
       "skos:note": "candidate"
     },
     {
@@ -7220,7 +7325,7 @@
         }
       ],
       "skos:notation": "Task_ML_Glossary",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Glossary",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Glossary",
       "skos:note": "candidate"
     },
     {
@@ -7240,7 +7345,7 @@
         }
       ],
       "skos:notation": "Task_ML_LocalePR",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_LocalePR",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_LocalePR",
       "skos:note": "candidate"
     },
     {
@@ -7260,7 +7365,7 @@
         }
       ],
       "skos:notation": "Task_ML_Merge",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Merge",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Merge",
       "skos:note": "candidate"
     },
     {
@@ -7280,7 +7385,7 @@
         }
       ],
       "skos:notation": "Task_ML_QAReport",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_QAReport",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_QAReport",
       "skos:note": "candidate"
     },
     {
@@ -7300,7 +7405,7 @@
         }
       ],
       "skos:notation": "Task_ML_Scope",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Scope",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Scope",
       "skos:note": "candidate"
     },
     {
@@ -7320,7 +7425,7 @@
         }
       ],
       "skos:notation": "Task_ML_SourceIssue",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_SourceIssue",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_SourceIssue",
       "skos:note": "candidate"
     },
     {
@@ -7340,7 +7445,7 @@
         }
       ],
       "skos:notation": "Task_ML_SourcePR",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_SourcePR",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_SourcePR",
       "skos:note": "candidate"
     },
     {
@@ -7360,7 +7465,7 @@
         }
       ],
       "skos:notation": "Task_ML_Translate",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Translate",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Translate",
       "skos:note": "candidate"
     },
     {
@@ -7380,7 +7485,7 @@
         }
       ],
       "skos:notation": "Task_ML_Watcher",
-      "dcterms:source": "cat-harness/processes/library/multi-locale-translation.bpmn#Task_ML_Watcher",
+      "dcterms:source": "cat-harness/library/processes/multi-locale-translation.bpmn#Task_ML_Watcher",
       "skos:note": "candidate"
     },
     {
@@ -8400,7 +8505,7 @@
         }
       ],
       "skos:notation": "Task_Adjudicate",
-      "dcterms:source": "cat-harness/processes/library/refresh-materialized.bpmn#Task_Adjudicate",
+      "dcterms:source": "cat-harness/library/processes/refresh-materialized.bpmn#Task_Adjudicate",
       "skos:note": "candidate"
     },
     {
@@ -8420,7 +8525,7 @@
         }
       ],
       "skos:notation": "Task_Apply",
-      "dcterms:source": "cat-harness/processes/library/refresh-materialized.bpmn#Task_Apply",
+      "dcterms:source": "cat-harness/library/processes/refresh-materialized.bpmn#Task_Apply",
       "skos:note": "candidate"
     },
     {
@@ -8440,7 +8545,7 @@
         }
       ],
       "skos:notation": "Task_Fixity",
-      "dcterms:source": "cat-harness/processes/library/refresh-materialized.bpmn#Task_Fixity",
+      "dcterms:source": "cat-harness/library/processes/refresh-materialized.bpmn#Task_Fixity",
       "skos:note": "candidate"
     },
     {
@@ -8460,7 +8565,7 @@
         }
       ],
       "skos:notation": "Task_KeepLocal",
-      "dcterms:source": "cat-harness/processes/library/refresh-materialized.bpmn#Task_KeepLocal",
+      "dcterms:source": "cat-harness/library/processes/refresh-materialized.bpmn#Task_KeepLocal",
       "skos:note": "candidate"
     },
     {
@@ -8480,7 +8585,7 @@
         }
       ],
       "skos:notation": "Task_Local",
-      "dcterms:source": "cat-harness/processes/library/refresh-materialized.bpmn#Task_Local",
+      "dcterms:source": "cat-harness/library/processes/refresh-materialized.bpmn#Task_Local",
       "skos:note": "candidate"
     },
     {
@@ -8500,7 +8605,7 @@
         }
       ],
       "skos:notation": "Task_Reconcile",
-      "dcterms:source": "cat-harness/processes/library/refresh-materialized.bpmn#Task_Reconcile",
+      "dcterms:source": "cat-harness/library/processes/refresh-materialized.bpmn#Task_Reconcile",
       "skos:note": "candidate"
     },
     {
@@ -8520,7 +8625,7 @@
         }
       ],
       "skos:notation": "Task_RecordConflict",
-      "dcterms:source": "cat-harness/processes/library/refresh-materialized.bpmn#Task_RecordConflict",
+      "dcterms:source": "cat-harness/library/processes/refresh-materialized.bpmn#Task_RecordConflict",
       "skos:note": "candidate"
     },
     {
@@ -8540,7 +8645,7 @@
         }
       ],
       "skos:notation": "Task_Upstream",
-      "dcterms:source": "cat-harness/processes/library/refresh-materialized.bpmn#Task_Upstream",
+      "dcterms:source": "cat-harness/library/processes/refresh-materialized.bpmn#Task_Upstream",
       "skos:note": "candidate"
     },
     {
@@ -9175,7 +9280,7 @@
         }
       ],
       "skos:notation": "Call_Materialize",
-      "dcterms:source": "cat-harness/processes/library/sample-import.bpmn#Call_Materialize",
+      "dcterms:source": "cat-harness/library/processes/sample-import.bpmn#Call_Materialize",
       "skos:note": "candidate"
     },
     {
@@ -9195,7 +9300,7 @@
         }
       ],
       "skos:notation": "Call_Refresh",
-      "dcterms:source": "cat-harness/processes/library/sample-import.bpmn#Call_Refresh",
+      "dcterms:source": "cat-harness/library/processes/sample-import.bpmn#Call_Refresh",
       "skos:note": "candidate"
     },
     {
@@ -9215,7 +9320,7 @@
         }
       ],
       "skos:notation": "Task_ImportTest",
-      "dcterms:source": "cat-harness/processes/library/sample-import.bpmn#Task_ImportTest",
+      "dcterms:source": "cat-harness/library/processes/sample-import.bpmn#Task_ImportTest",
       "skos:note": "candidate"
     },
     {
@@ -9235,7 +9340,7 @@
         }
       ],
       "skos:notation": "Task_Library",
-      "dcterms:source": "cat-harness/processes/library/sample-import.bpmn#Task_Library",
+      "dcterms:source": "cat-harness/library/processes/sample-import.bpmn#Task_Library",
       "skos:note": "candidate"
     },
     {
@@ -9255,7 +9360,7 @@
         }
       ],
       "skos:notation": "Task_RecordFindings",
-      "dcterms:source": "cat-harness/processes/library/sample-import.bpmn#Task_RecordFindings",
+      "dcterms:source": "cat-harness/library/processes/sample-import.bpmn#Task_RecordFindings",
       "skos:note": "candidate"
     },
     {
@@ -9275,7 +9380,7 @@
         }
       ],
       "skos:notation": "Task_Scope",
-      "dcterms:source": "cat-harness/processes/library/sample-import.bpmn#Task_Scope",
+      "dcterms:source": "cat-harness/library/processes/sample-import.bpmn#Task_Scope",
       "skos:note": "candidate"
     },
     {
@@ -9295,7 +9400,7 @@
         }
       ],
       "skos:notation": "Task_Trial",
-      "dcterms:source": "cat-harness/processes/library/sample-import.bpmn#Task_Trial",
+      "dcterms:source": "cat-harness/library/processes/sample-import.bpmn#Task_Trial",
       "skos:note": "candidate"
     },
     {
@@ -10074,6 +10179,66 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.call_authorise",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Authorise the move"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Report what would move and how it undoes, and ask the owner to create the repository. Declining leaves it staged, ready to leave."
+        }
+      ],
+      "skos:notation": "Call_Authorise",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Call_Authorise",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.call_cutover",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Cut over"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Freeze the in-repo copy in the kept trashcan and measure the cutover until it is complete or cannot be shown complete."
+        }
+      ],
+      "skos:notation": "Call_Cutover",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Call_Cutover",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.call_move",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "Move it into its repository"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Create the repository, drain, copy the staged contents in, re-point the declaration, verify a fresh clone, then consume, release and check every identifier dereferences."
+        }
+      ],
+      "skos:notation": "Call_Move",
+      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Call_Move",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_brief",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -10094,26 +10259,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_confirmcreate",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "7 · Owner confirms: create the repository"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Creating a repository is visible outside this one and is not undone by a revert. Numbered options, recommended first: (1) the owner creates it and says when it exists, (2) the agent creates it, only with that permission, (3) not yet. Default if there is no answer: (3), nothing is created. Non-relaxable."
-        }
-      ],
-      "skos:notation": "Task_ConfirmCreate",
-      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_ConfirmCreate",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_confirmcutover",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -10121,7 +10266,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "12 · Owner confirms: freeze the in-repo copy"
+          "@value": "Ask to freeze the in-repo copy"
         }
       ],
       "skos:definition": [
@@ -10134,46 +10279,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_createrepo",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "8 · Create the repository"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "The owner creates the repository, or authorises the agent that has the permission to; when that agent is in another environment, the hand-over is one work item and one sentence (agent-handoff). The new repository is read before anything is written to it: empty is a fact to check, not to assume."
-        }
-      ],
-      "skos:notation": "Task_CreateRepo",
-      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_CreateRepo",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_cutover",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "13 · Cutover: freeze the copy in the kept trashcan"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Only on the owner's answer (1) at step 12. The in-repo directory moves, as one relocation, under separated/<name>/ in the kept trashcan, on its own branch (a plain mv, git rm --cached, state:push; the trashcan skill says how), with ONE note carrying movedFrom, movedOn, the new repository and the commit the copy matches. Frozen: never refreshed, never rendered; a reader wanting the live content follows the note to the new repository. On main this is one revertable commit removing the directory."
-        }
-      ],
-      "skos:notation": "Task_Cutover",
-      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Cutover",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_decideleave",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -10181,7 +10286,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "Should it leave now?"
+          "@value": "Ask whether it should leave now"
         }
       ],
       "skos:definition": [
@@ -10201,7 +10306,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "1 · Declare it in place, with its seam"
+          "@value": "Declare it in place, with its seam"
         }
       ],
       "skos:definition": [
@@ -10214,46 +10319,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_drain",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "Drain: land, close or re-target the open PRs"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Work the PRs `seed:ready` named until the source settles: land or close the heavy movers and the next layer's PRs, bring the layer's open PRs to five or fewer, and finish any move in flight. Fix a red rehearsal or a discovery miss where it is. Nothing is seeded from here; it goes back to the gateway, which re-asks."
-        }
-      ],
-      "skos:notation": "Task_Drain",
-      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Drain",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_freshclone",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "11 · Verify on a fresh clone"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "`bun run cat sub-kg:verify-clone --repo <owner>/<name> --ref <branch>` (Tool sub-kg-verify-clone): clone into an empty scratch directory with submodules and any sibling it needs, install, and run its own gates. Green, red or unknown, and unknown is never green. Nothing in a seed runs standalone until the seam is re-pointed, so a missing module shows here."
-        }
-      ],
-      "skos:notation": "Task_FreshClone",
-      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_FreshClone",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_grow",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -10261,7 +10326,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "2 · Grow it in place"
+          "@value": "Grow it in place"
         }
       ],
       "skos:definition": [
@@ -10281,7 +10346,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "3 · Push generic down first"
+          "@value": "Push generic down first"
         }
       ],
       "skos:definition": [
@@ -10301,7 +10366,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "5 · Rehearse self-contained"
+          "@value": "Rehearse self-contained"
         }
       ],
       "skos:definition": [
@@ -10314,46 +10379,6 @@
       "skos:note": "candidate"
     },
     {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_repoint",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "10 · Re-point: livesAt, seam, mount or subscription"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "In the new repository `livesAt` goes (absent means it sits at the root of `repository`) and `platform.ts` points at where the platform now is. The host consumes it as a remote mount (a `source.remote` instance in its root `index.config.json`) if it imports its code, or a subscription if it only reads its content, pinned to a commit while staging. Additive: the host keeps its copy."
-        }
-      ],
-      "skos:notation": "Task_Repoint",
-      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Repoint",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_report",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "6 · Report what would move, and how it undoes"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "Before the first outward-facing step the agent reports: the files and bytes that would move, the history that comes with them, what in the host changes, and how each step is undone. It never creates a repository on its own initiative."
-        }
-      ],
-      "skos:notation": "Task_Report",
-      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Report",
-      "skos:note": "candidate"
-    },
-    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_seam",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -10361,7 +10386,7 @@
       },
       "skos:prefLabel": [
         {
-          "@value": "4 · Route every climb through platform.ts"
+          "@value": "Route every climb through platform.ts"
         }
       ],
       "skos:definition": [
@@ -10371,26 +10396,6 @@
       ],
       "skos:notation": "Task_Seam",
       "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Seam",
-      "skos:note": "candidate"
-    },
-    {
-      "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities/process_subkglifecycle.task_seed",
-      "@type": "skos:Concept",
-      "skos:inScheme": {
-        "@id": "https://litlfred.github.io/cat-harness/v0/ns/glossary/kg-bpmn-activities"
-      },
-      "skos:prefLabel": [
-        {
-          "@value": "9 · Copy the staged contents in, with history"
-        }
-      ],
-      "skos:definition": [
-        {
-          "@value": "`git subtree split --prefix=<name>` in the host, then the split branch added to the new repository on a branch, as a draft pull request, never straight to main. The new repository's own root files are a second commit, so the copy stays byte-identical and reviewable."
-        }
-      ],
-      "skos:notation": "Task_Seed",
-      "dcterms:source": "cat-harness/processes/kg/sub-kg-lifecycle.bpmn#Task_Seed",
       "skos:note": "candidate"
     },
     {
@@ -10410,7 +10415,7 @@
         }
       ],
       "skos:notation": "Call_Materialize",
-      "dcterms:source": "cat-harness/processes/library/subscribe-kg.bpmn#Call_Materialize",
+      "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Call_Materialize",
       "skos:note": "candidate"
     },
     {
@@ -10430,7 +10435,7 @@
         }
       ],
       "skos:notation": "Call_Refresh",
-      "dcterms:source": "cat-harness/processes/library/subscribe-kg.bpmn#Call_Refresh",
+      "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Call_Refresh",
       "skos:note": "candidate"
     },
     {
@@ -10450,7 +10455,7 @@
         }
       ],
       "skos:notation": "Task_Choose",
-      "dcterms:source": "cat-harness/processes/library/subscribe-kg.bpmn#Task_Choose",
+      "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Task_Choose",
       "skos:note": "candidate"
     },
     {
@@ -10470,7 +10475,7 @@
         }
       ],
       "skos:notation": "Task_Instantiate",
-      "dcterms:source": "cat-harness/processes/library/subscribe-kg.bpmn#Task_Instantiate",
+      "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Task_Instantiate",
       "skos:note": "candidate"
     },
     {
@@ -10490,7 +10495,7 @@
         }
       ],
       "skos:notation": "Task_Pin",
-      "dcterms:source": "cat-harness/processes/library/subscribe-kg.bpmn#Task_Pin",
+      "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Task_Pin",
       "skos:note": "candidate"
     },
     {
@@ -10510,7 +10515,7 @@
         }
       ],
       "skos:notation": "Task_Record",
-      "dcterms:source": "cat-harness/processes/library/subscribe-kg.bpmn#Task_Record",
+      "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Task_Record",
       "skos:note": "candidate"
     },
     {
@@ -10530,7 +10535,7 @@
         }
       ],
       "skos:notation": "Task_Refuse",
-      "dcterms:source": "cat-harness/processes/library/subscribe-kg.bpmn#Task_Refuse",
+      "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Task_Refuse",
       "skos:note": "candidate"
     },
     {
@@ -10550,7 +10555,7 @@
         }
       ],
       "skos:notation": "Task_RePin",
-      "dcterms:source": "cat-harness/processes/library/subscribe-kg.bpmn#Task_RePin",
+      "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Task_RePin",
       "skos:note": "candidate"
     },
     {
@@ -10570,7 +10575,7 @@
         }
       ],
       "skos:notation": "Task_Review",
-      "dcterms:source": "cat-harness/processes/library/subscribe-kg.bpmn#Task_Review",
+      "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Task_Review",
       "skos:note": "candidate"
     },
     {
@@ -10590,7 +10595,7 @@
         }
       ],
       "skos:notation": "Task_Summarise",
-      "dcterms:source": "cat-harness/processes/library/subscribe-kg.bpmn#Task_Summarise",
+      "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Task_Summarise",
       "skos:note": "candidate"
     },
     {
@@ -10610,7 +10615,7 @@
         }
       ],
       "skos:notation": "Task_Validate",
-      "dcterms:source": "cat-harness/processes/library/subscribe-kg.bpmn#Task_Validate",
+      "dcterms:source": "cat-harness/library/processes/subscribe-kg.bpmn#Task_Validate",
       "skos:note": "candidate"
     },
     {
@@ -11375,7 +11380,7 @@
         }
       ],
       "skos:notation": "Task_Adjudicate",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_Adjudicate",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_Adjudicate",
       "skos:note": "candidate"
     },
     {
@@ -11395,7 +11400,7 @@
         }
       ],
       "skos:notation": "Task_EditTranslation",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_EditTranslation",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_EditTranslation",
       "skos:note": "candidate"
     },
     {
@@ -11415,7 +11420,7 @@
         }
       ],
       "skos:notation": "Task_GlossaryCheck",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_GlossaryCheck",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_GlossaryCheck",
       "skos:note": "candidate"
     },
     {
@@ -11429,13 +11434,8 @@
           "@value": "Inject translations (PO → Markdown)"
         }
       ],
-      "skos:definition": [
-        {
-          "@value": "Read the .po file and the source .md, substitute msgstr for msgid, unshield the placeholders, and write the translated .md to translations/<locale>/. Check structure (paragraph count, heading levels) and completeness (no empty msgstr), and lint (doubled punctuation, orphaned placeholders). Tool: the translation_inject MCP tool."
-        }
-      ],
       "skos:notation": "Task_PoInject",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_PoInject",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_PoInject",
       "skos:note": "candidate"
     },
     {
@@ -11449,13 +11449,8 @@
           "@value": "Extract translatable strings (POT)"
         }
       ],
-      "skos:definition": [
-        {
-          "@value": "Scan the source content and write the translatable strings to .pot files at the configured granularity: segment prose by paragraph, shield what must not be translated (math, code, labels, Lean companions) as placeholders, normalise whitespace, and extract metadata such as titles, alt text and captions. Tool: the translation_extract MCP tool."
-        }
-      ],
       "skos:notation": "Task_PotExtract",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_PotExtract",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_PotExtract",
       "skos:note": "candidate"
     },
     {
@@ -11469,13 +11464,8 @@
           "@value": "Round-trip translation QA (back-translate)"
         }
       ],
-      "skos:definition": [
-        {
-          "@value": "Back-translate the target-language .md into the source language and compare the meaning with the original. It catches semantic drift and terminology misses that a forward-only fluency check cannot see, and tells the two apart. Tool: the translation_validate MCP tool."
-        }
-      ],
       "skos:notation": "Task_RoundTripQA",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_RoundTripQA",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_RoundTripQA",
       "skos:note": "candidate"
     },
     {
@@ -11495,7 +11485,7 @@
         }
       ],
       "skos:notation": "Task_Signoff",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_Signoff",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_Signoff",
       "skos:note": "candidate"
     },
     {
@@ -11515,7 +11505,7 @@
         }
       ],
       "skos:notation": "Task_StalenessCheck",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_StalenessCheck",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_StalenessCheck",
       "skos:note": "candidate"
     },
     {
@@ -11535,7 +11525,7 @@
         }
       ],
       "skos:notation": "Task_TermBase",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_TermBase",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_TermBase",
       "skos:note": "candidate"
     },
     {
@@ -11555,7 +11545,7 @@
         }
       ],
       "skos:notation": "Task_Translate",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_Translate",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_Translate",
       "skos:note": "candidate"
     },
     {
@@ -11569,13 +11559,8 @@
           "@value": "Write status.json (official)"
         }
       ],
-      "skos:definition": [
-        {
-          "@value": "Record the translation's standing in translations/<locale>/status.json. The `official` input says which: `false` records it as unofficial ({ official: false, generatedBy, generatedAt }), usable but shown with a warning badge; `true` records the human sign-off with the SHA-256 of the source .md, so a later change to the source marks it stale."
-        }
-      ],
       "skos:notation": "Task_WriteOfficial",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_WriteOfficial",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_WriteOfficial",
       "skos:note": "candidate"
     },
     {
@@ -11589,13 +11574,8 @@
           "@value": "Write status.json (unofficial)"
         }
       ],
-      "skos:definition": [
-        {
-          "@value": "Record the translation's standing in translations/<locale>/status.json. The `official` input says which: `false` records it as unofficial ({ official: false, generatedBy, generatedAt }), usable but shown with a warning badge; `true` records the human sign-off with the SHA-256 of the source .md, so a later change to the source marks it stale."
-        }
-      ],
       "skos:notation": "Task_WriteUnofficial",
-      "dcterms:source": "cat-harness/processes/library/translation-workflow.bpmn#Task_WriteUnofficial",
+      "dcterms:source": "cat-harness/library/processes/translation-workflow.bpmn#Task_WriteUnofficial",
       "skos:note": "candidate"
     },
     {
@@ -11615,7 +11595,7 @@
         }
       ],
       "skos:notation": "Call_TR_RoundTrip",
-      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Call_TR_RoundTrip",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Call_TR_RoundTrip",
       "skos:note": "candidate"
     },
     {
@@ -11635,7 +11615,7 @@
         }
       ],
       "skos:notation": "Task_TR_ColdStart",
-      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_ColdStart",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_ColdStart",
       "skos:note": "candidate"
     },
     {
@@ -11655,7 +11635,7 @@
         }
       ],
       "skos:notation": "Task_TR_Detect",
-      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Detect",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Detect",
       "skos:note": "candidate"
     },
     {
@@ -11675,7 +11655,7 @@
         }
       ],
       "skos:notation": "Task_TR_Gates",
-      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Gates",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Gates",
       "skos:note": "candidate"
     },
     {
@@ -11695,7 +11675,7 @@
         }
       ],
       "skos:notation": "Task_TR_Merge",
-      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Merge",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Merge",
       "skos:note": "candidate"
     },
     {
@@ -11715,7 +11695,7 @@
         }
       ],
       "skos:notation": "Task_TR_MergeLocales",
-      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_MergeLocales",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_MergeLocales",
       "skos:note": "candidate"
     },
     {
@@ -11735,7 +11715,7 @@
         }
       ],
       "skos:notation": "Task_TR_Report",
-      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Report",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Report",
       "skos:note": "candidate"
     },
     {
@@ -11755,7 +11735,7 @@
         }
       ],
       "skos:notation": "Task_TR_SourceIssue",
-      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_SourceIssue",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_SourceIssue",
       "skos:note": "candidate"
     },
     {
@@ -11775,7 +11755,7 @@
         }
       ],
       "skos:notation": "Task_TR_Templates",
-      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Templates",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Templates",
       "skos:note": "candidate"
     },
     {
@@ -11795,7 +11775,7 @@
         }
       ],
       "skos:notation": "Task_TR_Translate",
-      "dcterms:source": "cat-harness/processes/library/translation-refresh.bpmn#Task_TR_Translate",
+      "dcterms:source": "cat-harness/library/processes/translation-refresh.bpmn#Task_TR_Translate",
       "skos:note": "candidate"
     },
     {
@@ -11815,7 +11795,7 @@
         }
       ],
       "skos:notation": "Task_RT_BackTranslate",
-      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_BackTranslate",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_BackTranslate",
       "skos:note": "candidate"
     },
     {
@@ -11835,7 +11815,7 @@
         }
       ],
       "skos:notation": "Task_RT_PreScreen",
-      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_PreScreen",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_PreScreen",
       "skos:note": "candidate"
     },
     {
@@ -11855,7 +11835,7 @@
         }
       ],
       "skos:notation": "Task_RT_Record",
-      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_Record",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_Record",
       "skos:note": "candidate"
     },
     {
@@ -11875,7 +11855,7 @@
         }
       ],
       "skos:notation": "Task_RT_RecordNA",
-      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_RecordNA",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_RecordNA",
       "skos:note": "candidate"
     },
     {
@@ -11895,7 +11875,7 @@
         }
       ],
       "skos:notation": "Task_RT_Rule",
-      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_Rule",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_Rule",
       "skos:note": "candidate"
     },
     {
@@ -11915,7 +11895,7 @@
         }
       ],
       "skos:notation": "Task_RT_Sample",
-      "dcterms:source": "cat-harness/processes/library/translation-round-trip.bpmn#Task_RT_Sample",
+      "dcterms:source": "cat-harness/library/processes/translation-round-trip.bpmn#Task_RT_Sample",
       "skos:note": "candidate"
     },
     {

@@ -106,6 +106,7 @@
    "name": "Compose the hand-back and post it in own thread",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Compose",
+   "stepHref": "hand-back-to-discussion.html#step-S_Compose",
    "lane": "Sibling",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Sibling",
    "skills": [
@@ -135,6 +136,7 @@
    "name": "Mirror it to the feedback channel",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Mirror",
+   "stepHref": "hand-back-to-discussion.html#step-S_Mirror",
    "lane": "Sibling",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Sibling",
    "skills": [
@@ -160,6 +162,7 @@
    "name": "Hand it back to the discussion agent",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_HandBack",
+   "stepHref": "hand-back-to-discussion.html#step-S_HandBack",
    "lane": "Sibling",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Sibling",
    "skills": [
@@ -185,6 +188,7 @@
    "name": "Post it in the discussion",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_Inform",
+   "stepHref": "hand-back-to-discussion.html#step-D_Inform",
    "lane": "Discussion agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Discussion",
    "skills": [
@@ -531,6 +535,7 @@
    "name": "Ask the person",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_Ask",
+   "stepHref": "hand-back-to-discussion.html#step-D_Ask",
    "lane": "Discussion agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Discussion",
    "skills": [
@@ -886,6 +891,7 @@
    "name": "Route the answer back, quoted",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_RouteBack",
+   "stepHref": "hand-back-to-discussion.html#step-D_RouteBack",
    "lane": "Discussion agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Discussion",
    "skills": [
@@ -1232,6 +1238,7 @@
    "name": "Mark every copy answered",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/D_MarkAnswered",
+   "stepHref": "hand-back-to-discussion.html#step-D_MarkAnswered",
    "lane": "Discussion agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Discussion",
    "skills": [
@@ -1578,6 +1585,7 @@
    "name": "Act on the answer",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/node/S_Act",
+   "stepHref": "hand-back-to-discussion.html#step-S_Act",
    "lane": "Sibling",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_HandBackToDiscussion/lane/Lane_Sibling",
    "skills": [

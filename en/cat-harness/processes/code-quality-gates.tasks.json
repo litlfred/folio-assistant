@@ -118,6 +118,7 @@
    "name": "Verdict reuse: tree already green? (NOT A GATE)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_VerdictReuse",
+   "stepHref": "code-quality-gates.html#step-Task_VerdictReuse",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
@@ -215,6 +216,7 @@
    "name": "QA working copy, built once (NOT A GATE)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_QaWorkingCopy",
+   "stepHref": "code-quality-gates.html#step-Task_QaWorkingCopy",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
@@ -312,6 +314,7 @@
    "name": "Import hygiene (HARD) and advisories (WARN-ONLY)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_Hygiene",
+   "stepHref": "code-quality-gates.html#step-Task_Hygiene",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
@@ -409,6 +412,7 @@
    "name": "TypeScript: lint, types and tests (HARD)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_TypeScript",
+   "stepHref": "code-quality-gates.html#step-Task_TypeScript",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
@@ -506,6 +510,7 @@
    "name": "End-to-end + accessibility (HARD)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_E2E",
+   "stepHref": "code-quality-gates.html#step-Task_E2E",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
@@ -603,6 +608,7 @@
    "name": "Repository gates (HARD)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_RepositoryGates",
+   "stepHref": "code-quality-gates.html#step-Task_RepositoryGates",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
@@ -700,6 +706,7 @@
    "name": "Registered gates that never run (HARD)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_UnrunGates",
+   "stepHref": "code-quality-gates.html#step-Task_UnrunGates",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
@@ -797,6 +804,7 @@
    "name": "Skill-registration chain (UNMASKED)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_SkillChain",
+   "stepHref": "code-quality-gates.html#step-Task_SkillChain",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [
@@ -894,6 +902,7 @@
    "name": "Publish QA results (not a gate)",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_QaPublish",
+   "stepHref": "code-quality-gates.html#step-Task_QaPublish",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
    "skills": [

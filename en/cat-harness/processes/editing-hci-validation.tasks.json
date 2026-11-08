@@ -214,6 +214,7 @@
    "name": "Describe the intended change",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_DescribeChange",
+   "stepHref": "editing-hci-validation.html#step-Task_DescribeChange",
    "lane": "Editor / author (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Editor",
    "skills": [],
@@ -274,6 +275,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ClaimBean",
+   "stepHref": "editing-hci-validation.html#step-Task_ClaimBean",
    "lane": "Authoring agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
    "skills": [
@@ -516,6 +518,7 @@
    "name": "Gather and verify the evidence",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/CallActivity_Evidence",
+   "stepHref": "editing-hci-validation.html#step-CallActivity_Evidence",
    "lane": "Editor / author (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Editor",
    "skills": [],
@@ -581,6 +584,7 @@
    "name": "Draft the block edit",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_DraftEdit",
+   "stepHref": "editing-hci-validation.html#step-Task_DraftEdit",
    "lane": "Authoring agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
    "skills": [
@@ -822,6 +826,7 @@
    "name": "Schema and constraint checks",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_SchemaValidate",
+   "stepHref": "editing-hci-validation.html#step-Task_SchemaValidate",
    "lane": "Mechanical validation (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Mechanical",
    "skills": [
@@ -859,6 +864,7 @@
    "name": "Syntax, spelling and links",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_SyntaxSpell",
+   "stepHref": "editing-hci-validation.html#step-Task_SyntaxSpell",
    "lane": "Mechanical validation (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Mechanical",
    "skills": [
@@ -896,6 +902,7 @@
    "name": "Build and QA gates",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_BuildGates",
+   "stepHref": "editing-hci-validation.html#step-Task_BuildGates",
    "lane": "Mechanical validation (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Mechanical",
    "skills": [
@@ -933,6 +940,7 @@
    "name": "Agent review of the change",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_AgentReview",
+   "stepHref": "editing-hci-validation.html#step-Task_AgentReview",
    "lane": "Non-mechanical validation (review agent or SME)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_NonMechanical",
    "skills": [
@@ -994,6 +1002,7 @@
    "name": "Human / SME review",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_SmeReview",
+   "stepHref": "editing-hci-validation.html#step-Task_SmeReview",
    "lane": "Non-mechanical validation (review agent or SME)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_NonMechanical",
    "skills": [
@@ -1055,6 +1064,7 @@
    "name": "Collate findings into a report",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_CollateFindings",
+   "stepHref": "editing-hci-validation.html#step-Task_CollateFindings",
    "lane": "HCI validation pipeline (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Pipeline",
    "skills": [
@@ -1100,6 +1110,7 @@
    "name": "Log findings on the bean",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_LogFindings",
+   "stepHref": "editing-hci-validation.html#step-Task_LogFindings",
    "lane": "Authoring agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
    "skills": [
@@ -1337,6 +1348,7 @@
    "name": "Review the findings",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ReviewFindings",
+   "stepHref": "editing-hci-validation.html#step-Task_ReviewFindings",
    "lane": "Editor / author (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Editor",
    "skills": [
@@ -1410,6 +1422,7 @@
    "name": "Options analysis accept · revise · discard",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Call_OptionsAnalysis",
+   "stepHref": "editing-hci-validation.html#step-Call_OptionsAnalysis",
    "lane": "Authoring agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
    "skills": [],
@@ -1647,6 +1660,7 @@
    "name": "Record the decision and audit note",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_RecordDecision",
+   "stepHref": "editing-hci-validation.html#step-Task_RecordDecision",
    "lane": "Editor / author (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Editor",
    "skills": [
@@ -1712,6 +1726,7 @@
    "name": "Revise the proposed change",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ReviseEdit",
+   "stepHref": "editing-hci-validation.html#step-Task_ReviseEdit",
    "lane": "Authoring agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
    "skills": [
@@ -1953,6 +1968,7 @@
    "name": "Commit into the corpus",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_Commit",
+   "stepHref": "editing-hci-validation.html#step-Task_Commit",
    "lane": "Authoring agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
    "skills": [
@@ -2190,6 +2206,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/Task_ResolveBean",
+   "stepHref": "editing-hci-validation.html#step-Task_ResolveBean",
    "lane": "Authoring agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/lane/Lane_Agent",
    "skills": [

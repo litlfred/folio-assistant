@@ -10,13 +10,15 @@
       "nodeKind": "end",
       "bpmnType": "bpmn:EndEvent",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation",
-      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
-      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/lane/Lane_Pipeline",
+      "performedBy": "https://litlfred.github.io/folio-assistant/cat-harness/role/administrator",
+      "inLane": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/lane/Lane_Admin",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/F16"
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/F10",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/F16",
+        "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation#flow/F19"
       ],
       "outgoing": [],
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"

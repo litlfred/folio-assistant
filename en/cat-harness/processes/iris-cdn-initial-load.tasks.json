@@ -130,6 +130,7 @@
    "name": "State scope and budget, with denominators",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_StateBudget",
    "lane": "Owner",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
    "skills": [
@@ -195,6 +196,7 @@
    "name": "Plan batches by community and collection",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_PlanBatches",
    "lane": "IRIS CDN Exporter (agent)",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
    "skills": [
@@ -232,6 +234,7 @@
    "name": "Harvest a batch of item records (REST)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_HarvestBatch",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
    "skills": [
@@ -333,6 +336,7 @@
    "name": "Fetch bitstreams not already held",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_FetchBitstreams",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
    "skills": [
@@ -430,6 +434,7 @@
    "name": "Store bytes under SHA-256 (skip if held)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_StoreBytes",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
    "skills": [
@@ -527,6 +532,7 @@
    "name": "Commit the batch checkpoint",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_Checkpoint",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
    "skills": [
@@ -624,6 +630,7 @@
    "name": "Quarantine and report the mismatch",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_Quarantine",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
    "skills": [
@@ -721,6 +728,7 @@
    "name": "Build the graph partitions",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph",
+   "stepHref": "iris-cdn-initial-load.html#step-Call_BuildGraph",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
    "skills": [
@@ -827,6 +835,7 @@
    "name": "Sign and publish the release",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish",
+   "stepHref": "iris-cdn-initial-load.html#step-Call_SignPublish",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
    "skills": [
@@ -929,6 +938,7 @@
    "name": "Review the load report; open beans for gaps",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_ReviewLoad",
    "lane": "IRIS CDN Exporter (agent)",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
    "skills": [

@@ -94,6 +94,7 @@
    "name": "Phase 5: Create beans",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/A_CreateBeans",
+   "stepHref": "crdm-signoff.html#step-A_CreateBeans",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/lane/Lane_Agent",
    "skills": [
@@ -331,6 +332,7 @@
    "name": "Sign off on requirements",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/BA_Signoff",
+   "stepHref": "crdm-signoff.html#step-BA_Signoff",
    "lane": "BA / Feature Requestor",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/lane/Lane_BA",
    "skills": [
@@ -417,6 +419,7 @@
    "name": "Record the sign-off attestation",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/A_RecordSignoff",
+   "stepHref": "crdm-signoff.html#step-A_RecordSignoff",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/lane/Lane_Agent",
    "skills": [
@@ -658,6 +661,7 @@
    "name": "Announce the branch on the issue",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/A_AnnounceBranch",
+   "stepHref": "crdm-signoff.html#step-A_AnnounceBranch",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/lane/Lane_Agent",
    "skills": [
@@ -911,6 +915,7 @@
    "name": "Offer KG destinations for the agreed set",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/A_OfferKg",
+   "stepHref": "crdm-signoff.html#step-A_OfferKg",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/lane/Lane_Agent",
    "skills": [
@@ -1148,6 +1153,7 @@
    "name": "Choose a destination, or none",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/BA_ChooseKg",
+   "stepHref": "crdm-signoff.html#step-BA_ChooseKg",
    "lane": "BA / Feature Requestor",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/lane/Lane_BA",
    "skills": [
@@ -1234,6 +1240,7 @@
    "name": "Run placement, file a bean",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/node/A_RecordKg",
+   "stepHref": "crdm-signoff.html#step-A_RecordKg",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CRDM_Signoff/lane/Lane_Agent",
    "skills": [

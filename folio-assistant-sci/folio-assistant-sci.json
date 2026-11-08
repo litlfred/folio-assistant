@@ -363,19 +363,19 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/da3ca528562a7f0516d296f58d6c2ff6174e0069",
-  "sourceCommitSha": "da3ca528562a7f0516d296f58d6c2ff6174e0069",
-  "sourceTree": "c84b72bdb2dcc9844dadea7548e0242b3f6cb637",
-  "sourceCommitAt": "2026-11-08T07:42:36+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c00df6bfa29626e089cb4d4ae29d671bae1b6bec",
+  "sourceCommitSha": "c00df6bfa29626e089cb4d4ae29d671bae1b6bec",
+  "sourceTree": "2dff9db927e55aea58f9057905b1506633f5f591",
+  "sourceCommitAt": "2026-11-08T14:25:47+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
     "Skill": 70,
     "Decision": 1,
     "Process": 3,
-    "SequenceFlow": 26,
+    "SequenceFlow": 27,
     "Lane": 8,
-    "ProcessNode": 27,
+    "ProcessNode": 28,
     "GraphTypology": 24,
     "Role": 4,
     "Subgraph": 25,
@@ -403,7 +403,7 @@
       "name": "latex-authoring",
       "title": "latex-authoring",
       "instructionsPath": "skills/content/authoring-math/latex-authoring.md",
-      "instructionLines": 56,
+      "instructionLines": 66,
       "inputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/schema/skills/latex-authoring/input.schema.json",
       "outputSchema": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/schema/skills/latex-authoring/output.schema.json",
       "hasInstructions": true,
@@ -1661,8 +1661,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/StartEvent_NewPaper"
       ],
-      "nodeCount": 16,
-      "flowCount": 17,
+      "nodeCount": 17,
+      "flowCount": 18,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
     },
     {
@@ -1762,6 +1762,14 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
       "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Validate",
+      "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_PublishStatements",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
+      "from": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_PublishStatements",
       "to": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Render",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
     },
@@ -2086,6 +2094,28 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_PublishStatements",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Publish extracted statements",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/skill/publish-extracted-statements"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12b"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/directory/sci-processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Render",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Render PDF and HTML",
@@ -2100,7 +2130,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12"
+        "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A12b"
       ],
       "outgoing": [
         "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring#flow/A13"

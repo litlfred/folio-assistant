@@ -111,15 +111,19 @@
    }
   }
  ],
+ "processHref": "complete-initialization.html",
  "tasks": {
   "A_ReadDeclarations": {
    "id": "A_ReadDeclarations",
    "name": "Read the declaration, and each one it needs",
    "type": "bpmn:Task",
+   "stepHref": "complete-initialization.html#step-A_ReadDeclarations",
    "lane": "Bootstrapping Agent",
+   "laneHref": "complete-initialization.html#lane-Lane_BootstrappingAgent",
    "skills": [
     {
-     "name": "bootstrap-kg-navigation"
+     "name": "bootstrap-kg-navigation",
+     "href": "../../../en/cat-harness/processes/skills/bootstrap-kg-navigation.html"
     }
    ],
    "role": {
@@ -128,31 +132,40 @@
     "title": "Bootstrapping Agent",
     "skills": [
      {
-      "name": "bootstrap-kg-navigation"
+      "name": "bootstrap-kg-navigation",
+      "href": "../../../en/cat-harness/processes/skills/bootstrap-kg-navigation.html"
      },
      {
-      "name": "confirm-harness"
+      "name": "confirm-harness",
+      "href": "../../../en/cat-harness/processes/skills/confirm-harness.html"
      },
      {
-      "name": "discussion"
+      "name": "discussion",
+      "href": "../../../en/cat-harness/processes/skills/discussion.html"
      },
      {
-      "name": "human-agent-discussion"
+      "name": "human-agent-discussion",
+      "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
      },
      {
-      "name": "initialization-steps"
+      "name": "initialization-steps",
+      "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
      },
      {
-      "name": "log-message"
+      "name": "log-message",
+      "href": "../../../en/cat-harness/processes/skills/log-message.html"
      },
      {
-      "name": "publish-documents"
+      "name": "publish-documents",
+      "href": "../../../en/cat-harness/processes/skills/publish-documents.html"
      },
      {
-      "name": "publish-site"
+      "name": "publish-site",
+      "href": "../../../en/cat-harness/processes/skills/publish-site.html"
      },
      {
-      "name": "root-readme"
+      "name": "root-readme",
+      "href": "../../../en/cat-harness/processes/skills/root-readme.html"
      }
     ]
    }
@@ -161,13 +174,17 @@
    "id": "A_CheckDocuments",
    "name": "Check the JSON Schemas and JSON-LD are at their IRIs",
    "type": "bpmn:Task",
+   "stepHref": "complete-initialization.html#step-A_CheckDocuments",
    "lane": "Bootstrapping Agent",
+   "laneHref": "complete-initialization.html#lane-Lane_BootstrappingAgent",
    "skills": [
     {
-     "name": "publish-documents"
+     "name": "publish-documents",
+     "href": "../../../en/cat-harness/processes/skills/publish-documents.html"
     },
     {
-     "name": "initialization-steps"
+     "name": "initialization-steps",
+     "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
     }
    ],
    "role": {
@@ -176,31 +193,40 @@
     "title": "Bootstrapping Agent",
     "skills": [
      {
-      "name": "bootstrap-kg-navigation"
+      "name": "bootstrap-kg-navigation",
+      "href": "../../../en/cat-harness/processes/skills/bootstrap-kg-navigation.html"
      },
      {
-      "name": "confirm-harness"
+      "name": "confirm-harness",
+      "href": "../../../en/cat-harness/processes/skills/confirm-harness.html"
      },
      {
-      "name": "discussion"
+      "name": "discussion",
+      "href": "../../../en/cat-harness/processes/skills/discussion.html"
      },
      {
-      "name": "human-agent-discussion"
+      "name": "human-agent-discussion",
+      "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
      },
      {
-      "name": "initialization-steps"
+      "name": "initialization-steps",
+      "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
      },
      {
-      "name": "log-message"
+      "name": "log-message",
+      "href": "../../../en/cat-harness/processes/skills/log-message.html"
      },
      {
-      "name": "publish-documents"
+      "name": "publish-documents",
+      "href": "../../../en/cat-harness/processes/skills/publish-documents.html"
      },
      {
-      "name": "publish-site"
+      "name": "publish-site",
+      "href": "../../../en/cat-harness/processes/skills/publish-site.html"
      },
      {
-      "name": "root-readme"
+      "name": "root-readme",
+      "href": "../../../en/cat-harness/processes/skills/root-readme.html"
      }
     ]
    }
@@ -209,10 +235,13 @@
    "id": "A_ListSteps",
    "name": "List the steps the declarations name",
    "type": "bpmn:Task",
+   "stepHref": "complete-initialization.html#step-A_ListSteps",
    "lane": "Bootstrapping Agent",
+   "laneHref": "complete-initialization.html#lane-Lane_BootstrappingAgent",
    "skills": [
     {
-     "name": "initialization-steps"
+     "name": "initialization-steps",
+     "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
     }
    ],
    "role": {
@@ -221,31 +250,40 @@
     "title": "Bootstrapping Agent",
     "skills": [
      {
-      "name": "bootstrap-kg-navigation"
+      "name": "bootstrap-kg-navigation",
+      "href": "../../../en/cat-harness/processes/skills/bootstrap-kg-navigation.html"
      },
      {
-      "name": "confirm-harness"
+      "name": "confirm-harness",
+      "href": "../../../en/cat-harness/processes/skills/confirm-harness.html"
      },
      {
-      "name": "discussion"
+      "name": "discussion",
+      "href": "../../../en/cat-harness/processes/skills/discussion.html"
      },
      {
-      "name": "human-agent-discussion"
+      "name": "human-agent-discussion",
+      "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
      },
      {
-      "name": "initialization-steps"
+      "name": "initialization-steps",
+      "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
      },
      {
-      "name": "log-message"
+      "name": "log-message",
+      "href": "../../../en/cat-harness/processes/skills/log-message.html"
      },
      {
-      "name": "publish-documents"
+      "name": "publish-documents",
+      "href": "../../../en/cat-harness/processes/skills/publish-documents.html"
      },
      {
-      "name": "publish-site"
+      "name": "publish-site",
+      "href": "../../../en/cat-harness/processes/skills/publish-site.html"
      },
      {
-      "name": "root-readme"
+      "name": "root-readme",
+      "href": "../../../en/cat-harness/processes/skills/root-readme.html"
      }
     ]
    }
@@ -254,10 +292,13 @@
    "id": "A_CheckStep",
    "name": "Check it",
    "type": "bpmn:Task",
+   "stepHref": "complete-initialization.html#step-A_CheckStep",
    "lane": "Bootstrapping Agent",
+   "laneHref": "complete-initialization.html#lane-Lane_BootstrappingAgent",
    "skills": [
     {
-     "name": "initialization-steps"
+     "name": "initialization-steps",
+     "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
     }
    ],
    "role": {
@@ -266,31 +307,40 @@
     "title": "Bootstrapping Agent",
     "skills": [
      {
-      "name": "bootstrap-kg-navigation"
+      "name": "bootstrap-kg-navigation",
+      "href": "../../../en/cat-harness/processes/skills/bootstrap-kg-navigation.html"
      },
      {
-      "name": "confirm-harness"
+      "name": "confirm-harness",
+      "href": "../../../en/cat-harness/processes/skills/confirm-harness.html"
      },
      {
-      "name": "discussion"
+      "name": "discussion",
+      "href": "../../../en/cat-harness/processes/skills/discussion.html"
      },
      {
-      "name": "human-agent-discussion"
+      "name": "human-agent-discussion",
+      "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
      },
      {
-      "name": "initialization-steps"
+      "name": "initialization-steps",
+      "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
      },
      {
-      "name": "log-message"
+      "name": "log-message",
+      "href": "../../../en/cat-harness/processes/skills/log-message.html"
      },
      {
-      "name": "publish-documents"
+      "name": "publish-documents",
+      "href": "../../../en/cat-harness/processes/skills/publish-documents.html"
      },
      {
-      "name": "publish-site"
+      "name": "publish-site",
+      "href": "../../../en/cat-harness/processes/skills/publish-site.html"
      },
      {
-      "name": "root-readme"
+      "name": "root-readme",
+      "href": "../../../en/cat-harness/processes/skills/root-readme.html"
      }
     ]
    }
@@ -299,13 +349,17 @@
    "id": "A_PerformStep",
    "name": "Do it, then check again",
    "type": "bpmn:Task",
+   "stepHref": "complete-initialization.html#step-A_PerformStep",
    "lane": "Bootstrapping Agent",
+   "laneHref": "complete-initialization.html#lane-Lane_BootstrappingAgent",
    "skills": [
     {
-     "name": "initialization-steps"
+     "name": "initialization-steps",
+     "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
     },
     {
-     "name": "publish-site"
+     "name": "publish-site",
+     "href": "../../../en/cat-harness/processes/skills/publish-site.html"
     }
    ],
    "role": {
@@ -314,31 +368,40 @@
     "title": "Bootstrapping Agent",
     "skills": [
      {
-      "name": "bootstrap-kg-navigation"
+      "name": "bootstrap-kg-navigation",
+      "href": "../../../en/cat-harness/processes/skills/bootstrap-kg-navigation.html"
      },
      {
-      "name": "confirm-harness"
+      "name": "confirm-harness",
+      "href": "../../../en/cat-harness/processes/skills/confirm-harness.html"
      },
      {
-      "name": "discussion"
+      "name": "discussion",
+      "href": "../../../en/cat-harness/processes/skills/discussion.html"
      },
      {
-      "name": "human-agent-discussion"
+      "name": "human-agent-discussion",
+      "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
      },
      {
-      "name": "initialization-steps"
+      "name": "initialization-steps",
+      "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
      },
      {
-      "name": "log-message"
+      "name": "log-message",
+      "href": "../../../en/cat-harness/processes/skills/log-message.html"
      },
      {
-      "name": "publish-documents"
+      "name": "publish-documents",
+      "href": "../../../en/cat-harness/processes/skills/publish-documents.html"
      },
      {
-      "name": "publish-site"
+      "name": "publish-site",
+      "href": "../../../en/cat-harness/processes/skills/publish-site.html"
      },
      {
-      "name": "root-readme"
+      "name": "root-readme",
+      "href": "../../../en/cat-harness/processes/skills/root-readme.html"
      }
     ]
    }
@@ -347,10 +410,13 @@
    "id": "A_FollowStated",
    "name": "Follow it, and say that you did",
    "type": "bpmn:Task",
+   "stepHref": "complete-initialization.html#step-A_FollowStated",
    "lane": "Bootstrapping Agent",
+   "laneHref": "complete-initialization.html#lane-Lane_BootstrappingAgent",
    "skills": [
     {
-     "name": "initialization-steps"
+     "name": "initialization-steps",
+     "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
     }
    ],
    "role": {
@@ -359,31 +425,40 @@
     "title": "Bootstrapping Agent",
     "skills": [
      {
-      "name": "bootstrap-kg-navigation"
+      "name": "bootstrap-kg-navigation",
+      "href": "../../../en/cat-harness/processes/skills/bootstrap-kg-navigation.html"
      },
      {
-      "name": "confirm-harness"
+      "name": "confirm-harness",
+      "href": "../../../en/cat-harness/processes/skills/confirm-harness.html"
      },
      {
-      "name": "discussion"
+      "name": "discussion",
+      "href": "../../../en/cat-harness/processes/skills/discussion.html"
      },
      {
-      "name": "human-agent-discussion"
+      "name": "human-agent-discussion",
+      "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
      },
      {
-      "name": "initialization-steps"
+      "name": "initialization-steps",
+      "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
      },
      {
-      "name": "log-message"
+      "name": "log-message",
+      "href": "../../../en/cat-harness/processes/skills/log-message.html"
      },
      {
-      "name": "publish-documents"
+      "name": "publish-documents",
+      "href": "../../../en/cat-harness/processes/skills/publish-documents.html"
      },
      {
-      "name": "publish-site"
+      "name": "publish-site",
+      "href": "../../../en/cat-harness/processes/skills/publish-site.html"
      },
      {
-      "name": "root-readme"
+      "name": "root-readme",
+      "href": "../../../en/cat-harness/processes/skills/root-readme.html"
      }
     ]
    }
@@ -392,13 +467,17 @@
    "id": "A_AskPerson",
    "name": "Ask the person",
    "type": "bpmn:CallActivity",
+   "stepHref": "complete-initialization.html#step-A_AskPerson",
    "lane": "Bootstrapping Agent",
+   "laneHref": "complete-initialization.html#lane-Lane_BootstrappingAgent",
    "skills": [
     {
-     "name": "human-agent-discussion"
+     "name": "human-agent-discussion",
+     "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
     },
     {
-     "name": "publish-site"
+     "name": "publish-site",
+     "href": "../../../en/cat-harness/processes/skills/publish-site.html"
     }
    ],
    "calls": {
@@ -412,31 +491,40 @@
     "title": "Bootstrapping Agent",
     "skills": [
      {
-      "name": "bootstrap-kg-navigation"
+      "name": "bootstrap-kg-navigation",
+      "href": "../../../en/cat-harness/processes/skills/bootstrap-kg-navigation.html"
      },
      {
-      "name": "confirm-harness"
+      "name": "confirm-harness",
+      "href": "../../../en/cat-harness/processes/skills/confirm-harness.html"
      },
      {
-      "name": "discussion"
+      "name": "discussion",
+      "href": "../../../en/cat-harness/processes/skills/discussion.html"
      },
      {
-      "name": "human-agent-discussion"
+      "name": "human-agent-discussion",
+      "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
      },
      {
-      "name": "initialization-steps"
+      "name": "initialization-steps",
+      "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
      },
      {
-      "name": "log-message"
+      "name": "log-message",
+      "href": "../../../en/cat-harness/processes/skills/log-message.html"
      },
      {
-      "name": "publish-documents"
+      "name": "publish-documents",
+      "href": "../../../en/cat-harness/processes/skills/publish-documents.html"
      },
      {
-      "name": "publish-site"
+      "name": "publish-site",
+      "href": "../../../en/cat-harness/processes/skills/publish-site.html"
      },
      {
-      "name": "root-readme"
+      "name": "root-readme",
+      "href": "../../../en/cat-harness/processes/skills/root-readme.html"
      }
     ]
    }
@@ -445,10 +533,13 @@
    "id": "A_RecordStep",
    "name": "Record the step in its state",
    "type": "bpmn:Task",
+   "stepHref": "complete-initialization.html#step-A_RecordStep",
    "lane": "Bootstrapping Agent",
+   "laneHref": "complete-initialization.html#lane-Lane_BootstrappingAgent",
    "skills": [
     {
-     "name": "initialization-steps"
+     "name": "initialization-steps",
+     "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
     }
    ],
    "role": {
@@ -457,31 +548,40 @@
     "title": "Bootstrapping Agent",
     "skills": [
      {
-      "name": "bootstrap-kg-navigation"
+      "name": "bootstrap-kg-navigation",
+      "href": "../../../en/cat-harness/processes/skills/bootstrap-kg-navigation.html"
      },
      {
-      "name": "confirm-harness"
+      "name": "confirm-harness",
+      "href": "../../../en/cat-harness/processes/skills/confirm-harness.html"
      },
      {
-      "name": "discussion"
+      "name": "discussion",
+      "href": "../../../en/cat-harness/processes/skills/discussion.html"
      },
      {
-      "name": "human-agent-discussion"
+      "name": "human-agent-discussion",
+      "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
      },
      {
-      "name": "initialization-steps"
+      "name": "initialization-steps",
+      "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
      },
      {
-      "name": "log-message"
+      "name": "log-message",
+      "href": "../../../en/cat-harness/processes/skills/log-message.html"
      },
      {
-      "name": "publish-documents"
+      "name": "publish-documents",
+      "href": "../../../en/cat-harness/processes/skills/publish-documents.html"
      },
      {
-      "name": "publish-site"
+      "name": "publish-site",
+      "href": "../../../en/cat-harness/processes/skills/publish-site.html"
      },
      {
-      "name": "root-readme"
+      "name": "root-readme",
+      "href": "../../../en/cat-harness/processes/skills/root-readme.html"
      }
     ]
    }
@@ -490,10 +590,13 @@
    "id": "A_Report",
    "name": "Report every step",
    "type": "bpmn:CallActivity",
+   "stepHref": "complete-initialization.html#step-A_Report",
    "lane": "Bootstrapping Agent",
+   "laneHref": "complete-initialization.html#lane-Lane_BootstrappingAgent",
    "skills": [
     {
-     "name": "log-message"
+     "name": "log-message",
+     "href": "../../../en/cat-harness/processes/skills/log-message.html"
     }
    ],
    "calls": {
@@ -507,31 +610,40 @@
     "title": "Bootstrapping Agent",
     "skills": [
      {
-      "name": "bootstrap-kg-navigation"
+      "name": "bootstrap-kg-navigation",
+      "href": "../../../en/cat-harness/processes/skills/bootstrap-kg-navigation.html"
      },
      {
-      "name": "confirm-harness"
+      "name": "confirm-harness",
+      "href": "../../../en/cat-harness/processes/skills/confirm-harness.html"
      },
      {
-      "name": "discussion"
+      "name": "discussion",
+      "href": "../../../en/cat-harness/processes/skills/discussion.html"
      },
      {
-      "name": "human-agent-discussion"
+      "name": "human-agent-discussion",
+      "href": "../../../en/cat-harness/processes/skills/human-agent-discussion.html"
      },
      {
-      "name": "initialization-steps"
+      "name": "initialization-steps",
+      "href": "../../../en/cat-harness/processes/skills/initialization-steps.html"
      },
      {
-      "name": "log-message"
+      "name": "log-message",
+      "href": "../../../en/cat-harness/processes/skills/log-message.html"
      },
      {
-      "name": "publish-documents"
+      "name": "publish-documents",
+      "href": "../../../en/cat-harness/processes/skills/publish-documents.html"
      },
      {
-      "name": "publish-site"
+      "name": "publish-site",
+      "href": "../../../en/cat-harness/processes/skills/publish-site.html"
      },
      {
-      "name": "root-readme"
+      "name": "root-readme",
+      "href": "../../../en/cat-harness/processes/skills/root-readme.html"
      }
     ]
    }

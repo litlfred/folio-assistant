@@ -34,6 +34,7 @@
    "name": "Build the doc-gen4 render over the warm cache",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Build",
+   "stepHref": "lean-docs-publish.html#step-Task_Build",
    "lane": "Lean toolchain",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Lean",
    "skills": [
@@ -67,6 +68,7 @@
    "name": "Stage the render under the site and rail every page",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/node/Task_Publish",
+   "stepHref": "lean-docs-publish.html#step-Task_Publish",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_LeanDocsPublish/lane/Lane_Build",
    "skills": [

@@ -166,6 +166,7 @@
    "name": "Set locales, scope and merge window",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Scope",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Scope",
    "lane": "Owner",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Owner",
    "skills": [],
@@ -226,6 +227,7 @@
    "name": "Extract every template once",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Extract",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Extract",
    "lane": "Source-language lead",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
    "skills": [
@@ -259,6 +261,7 @@
    "name": "Merge the one source PR to main",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourcePR",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_SourcePR",
    "lane": "Source-language lead",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
    "skills": [
@@ -288,6 +291,7 @@
    "name": "Schedule the refresh watcher",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Watcher",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Watcher",
    "lane": "Source-language lead",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
    "skills": [
@@ -317,6 +321,7 @@
    "name": "Translate one locale",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Translate",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Translate",
    "lane": "Locale translator (one per locale)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
    "skills": [
@@ -342,6 +347,7 @@
    "name": "File the source errors as one issue",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourceIssue",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_SourceIssue",
    "lane": "Source-language lead",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
    "skills": [
@@ -371,6 +377,7 @@
    "name": "Run the deterministic gates",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Gates",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Gates",
    "lane": "Locale translator (one per locale)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
    "skills": [
@@ -396,6 +403,7 @@
    "name": "Untainted round trip on a sample",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Call_ML_RoundTrip",
+   "stepHref": "multi-locale-translation.html#step-Call_ML_RoundTrip",
    "lane": "Locale translator (one per locale)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
    "skills": [],
@@ -421,6 +429,7 @@
    "name": "Check glossary consistency",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Glossary",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Glossary",
    "lane": "Locale translator (one per locale)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
    "skills": [
@@ -446,6 +455,7 @@
    "name": "Write the locale's QA report",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_QAReport",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_QAReport",
    "lane": "Locale translator (one per locale)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
    "skills": [
@@ -471,6 +481,7 @@
    "name": "Open the locale PR to main",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_LocalePR",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_LocalePR",
    "lane": "Locale translator (one per locale)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
    "skills": [
@@ -496,6 +507,7 @@
    "name": "Fix each drift on the PR",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_FixDrift",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_FixDrift",
    "lane": "Locale translator (one per locale)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
    "skills": [
@@ -521,6 +533,7 @@
    "name": "Validate and merge in the window",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Merge",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Merge",
    "lane": "Source-language lead",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
    "skills": [

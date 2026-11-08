@@ -1,0 +1,20 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/auditor.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/smart-trust-phw.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/auditor",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Auditor",
+      "title": "Auditor",
+      "notation": "auditor",
+      "description": "The person who reviews audit and provenance records under a data sharing agreement.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": []
+    }
+  ]
+}

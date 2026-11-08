@@ -106,6 +106,7 @@
    "name": "Read the pin registry upstream-pins.json",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Task_ReadPins",
+   "stepHref": "upstream-pin-watch.html#step-Task_ReadPins",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/lane/Lane_Ci",
    "skills": [
@@ -203,6 +204,7 @@
    "name": "List upstream releases and compare to the pin",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Task_QueryUpstream",
+   "stepHref": "upstream-pin-watch.html#step-Task_QueryUpstream",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/lane/Lane_Ci",
    "skills": [
@@ -300,6 +302,7 @@
    "name": "Close the tracking issue",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Task_CloseIssue",
+   "stepHref": "upstream-pin-watch.html#step-Task_CloseIssue",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/lane/Lane_Ci",
    "skills": [
@@ -397,6 +400,7 @@
    "name": "Open or EDIT the one tracking issue",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Task_TrackIssue",
+   "stepHref": "upstream-pin-watch.html#step-Task_TrackIssue",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/lane/Lane_Ci",
    "skills": [
@@ -494,6 +498,7 @@
    "name": "Pick up the stale pin",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/A_PickUp",
+   "stepHref": "upstream-pin-watch.html#step-A_PickUp",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/lane/Lane_Agent",
    "skills": [
@@ -731,6 +736,7 @@
    "name": "Adopt the version bump",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Call_Adopt",
+   "stepHref": "upstream-pin-watch.html#step-Call_Adopt",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/lane/Lane_Agent",
    "skills": [
@@ -973,6 +979,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Call_BeanOpen",
+   "stepHref": "upstream-pin-watch.html#step-Call_BeanOpen",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/lane/Lane_Agent",
    "skills": [
@@ -1215,6 +1222,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/node/Call_BeanClose",
+   "stepHref": "upstream-pin-watch.html#step-Call_BeanClose",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_UpstreamPinWatch/lane/Lane_Agent",
    "skills": [

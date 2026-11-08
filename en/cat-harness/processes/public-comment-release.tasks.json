@@ -94,6 +94,7 @@
    "name": "Agree the release date and comment period",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_AgreeReleaseDate",
+   "stepHref": "public-comment-release.html#step-Task_AgreeReleaseDate",
    "lane": "Review committee and editor",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Committee",
    "skills": [
@@ -131,6 +132,7 @@
    "name": "Build the public comment release",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_BuildPcRelease",
+   "stepHref": "public-comment-release.html#step-Task_BuildPcRelease",
    "lane": "Release build and archive (pipeline)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Pipeline",
    "skills": [
@@ -228,6 +230,7 @@
    "name": "Set up the comment channels, with instructions and links",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_SetUpChannels",
+   "stepHref": "public-comment-release.html#step-Task_SetUpChannels",
    "lane": "Editor",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Editor",
    "skills": [
@@ -315,6 +318,7 @@
    "name": "Write the announcement, with links",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_WriteAnnouncement",
+   "stepHref": "public-comment-release.html#step-Task_WriteAnnouncement",
    "lane": "Editor",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Editor",
    "skills": [
@@ -398,6 +402,7 @@
    "name": "Distribute to the public",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_Distribute",
+   "stepHref": "public-comment-release.html#step-Task_Distribute",
    "lane": "Review committee and editor",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Committee",
    "skills": [
@@ -435,6 +440,7 @@
    "name": "Public comment on the release",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/node/CallActivity_PublicComment",
+   "stepHref": "public-comment-release.html#step-CallActivity_PublicComment",
    "lane": "Editor",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Editor",
    "skills": [
@@ -519,6 +525,7 @@
    "name": "Archive the release with the review",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/node/Task_ArchiveRelease",
+   "stepHref": "public-comment-release.html#step-Task_ArchiveRelease",
    "lane": "Release build and archive (pipeline)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentRelease/lane/Lane_Pipeline",
    "skills": [

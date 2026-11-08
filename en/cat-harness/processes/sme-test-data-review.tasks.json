@@ -58,6 +58,7 @@
    "name": "Prepare the worked case: input, logic, output",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_PrepareWorkedCase",
+   "stepHref": "sme-test-data-review.html#step-Task_PrepareWorkedCase",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/lane/Lane_Prepare",
    "skills": [
@@ -295,6 +296,7 @@
    "name": "Prepare the cohort: inputs, expected and computed",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_PrepareCohort",
+   "stepHref": "sme-test-data-review.html#step-Task_PrepareCohort",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/lane/Lane_Prepare",
    "skills": [
@@ -532,6 +534,7 @@
    "name": "Judge whether the case or cohort is right",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_SmeJudge",
+   "stepHref": "sme-test-data-review.html#step-Task_SmeJudge",
    "lane": "Clinical / scientific SME",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/lane/Lane_SME",
    "skills": [],
@@ -598,6 +601,7 @@
    "name": "Record the SME's verdict and rationale",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_RecordCaseVerdict",
+   "stepHref": "sme-test-data-review.html#step-Task_RecordCaseVerdict",
    "lane": "Tester",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/lane/Lane_Record",
    "skills": [

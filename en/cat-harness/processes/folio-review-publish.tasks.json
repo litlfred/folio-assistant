@@ -46,6 +46,7 @@
    "name": "Review and record feedback",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Review",
+   "stepHref": "folio-review-publish.html#step-Task_Review",
    "lane": "Reviewer",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Reviewer",
    "skills": [
@@ -111,6 +112,7 @@
    "name": "Publish",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Task_Publish",
+   "stepHref": "folio-review-publish.html#step-Task_Publish",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Build",
    "skills": [
@@ -208,6 +210,7 @@
    "name": "Contributor feedback",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/node/Call_ContributorFeedback",
+   "stepHref": "folio-review-publish.html#step-Call_ContributorFeedback",
    "lane": "Authoring Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_FolioReviewPublish/lane/Lane_Committee",
    "skills": [

@@ -130,6 +130,7 @@
    "name": "Compare main vs staging",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_CompareBeforeAfter",
+   "stepHref": "content-change-review-committee.html#step-Task_CompareBeforeAfter",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Reviewer",
    "skills": [
@@ -199,6 +200,7 @@
    "name": "Ingest tagged review comments",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_IngestComments",
+   "stepHref": "content-change-review-committee.html#step-Task_IngestComments",
    "lane": "Review Coordinator",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Coordinator",
    "skills": [
@@ -236,6 +238,7 @@
    "name": "Slice the change and assign reviewers",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_SliceAndAssign",
+   "stepHref": "content-change-review-committee.html#step-Task_SliceAndAssign",
    "lane": "Review Coordinator",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Coordinator",
    "skills": [
@@ -281,6 +284,7 @@
    "name": "Review each slice",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Call_ReviewSlices",
+   "stepHref": "content-change-review-committee.html#step-Call_ReviewSlices",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Reviewer",
    "skills": [
@@ -351,6 +355,7 @@
    "name": "Withdraw a review comment",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_WithdrawComment",
+   "stepHref": "content-change-review-committee.html#step-Task_WithdrawComment",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Reviewer",
    "skills": [
@@ -412,6 +417,7 @@
    "name": "Adjudicate the disagreement",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Call_Adjudication",
+   "stepHref": "content-change-review-committee.html#step-Call_Adjudication",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Reviewer",
    "skills": [
@@ -478,6 +484,7 @@
    "name": "Review the editorial dependencies",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_ReviewUses",
+   "stepHref": "content-change-review-committee.html#step-Task_ReviewUses",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Reviewer",
    "skills": [
@@ -539,6 +546,7 @@
    "name": "Review impact assessment",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_ReviewImpact",
+   "stepHref": "content-change-review-committee.html#step-Task_ReviewImpact",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Reviewer",
    "skills": [
@@ -600,6 +608,7 @@
    "name": "Request changes",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_RequestChanges",
+   "stepHref": "content-change-review-committee.html#step-Task_RequestChanges",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Reviewer",
    "skills": [
@@ -665,6 +674,7 @@
    "name": "Approve",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/node/Task_Approve",
+   "stepHref": "content-change-review-committee.html#step-Task_Approve",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewCommittee/lane/Lane_Reviewer",
    "skills": [

@@ -5,24 +5,21 @@
   "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
   "hasMember": [
     {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library",
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
       "@type": "bootstrap:Subgraph",
-      "name": "library"
+      "name": "library-graph",
+      "title": "Library"
     }
   ],
   "hasSubgraph": [
-    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/conduct/",
-    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/content/",
-    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/kg/",
-    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/library/",
-    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/process/",
-    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/sdlc/",
-    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/tools/",
-    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/ui/"
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/corpus/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/skills/"
   ],
   "holdsGraph": [
-    "cat-harness:graphTypology/library"
+    "cat-harness:graphTypology/cat-harness"
   ],
   "name": "library",
-  "path": "library/"
+  "path": "library/",
+  "title": "Library"
 }

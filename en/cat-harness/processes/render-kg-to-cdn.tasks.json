@@ -58,6 +58,7 @@
    "name": "Determine which CDN, the root URL and the Subgraphs",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/node/Task_Resolve",
+   "stepHref": "render-kg-to-cdn.html#step-Task_Resolve",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/lane/Lane_Ci",
    "skills": [
@@ -155,6 +156,7 @@
    "name": "Render and push to GitHub Pages",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/node/Call_GitHubPages",
+   "stepHref": "render-kg-to-cdn.html#step-Call_GitHubPages",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/lane/Lane_Ci",
    "skills": [
@@ -252,6 +254,7 @@
    "name": "Render and push with that CDN's own Tool",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/node/Call_ToolSubprocess",
+   "stepHref": "render-kg-to-cdn.html#step-Call_ToolSubprocess",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/lane/Lane_Ci",
    "skills": [
@@ -349,6 +352,7 @@
    "name": "Report the push: status and message",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/node/Task_Report",
+   "stepHref": "render-kg-to-cdn.html#step-Task_Report",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RenderKgToCdn/lane/Lane_Ci",
    "skills": [

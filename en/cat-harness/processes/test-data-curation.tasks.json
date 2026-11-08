@@ -118,6 +118,7 @@
    "name": "Classify data set: fixed (curated) or generated (recipe)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_ClassifySet",
+   "stepHref": "test-data-curation.html#step-Task_ClassifySet",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
    "skills": [
@@ -355,6 +356,7 @@
    "name": "Author the fixed test data set",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_CurateFixed",
+   "stepHref": "test-data-curation.html#step-Task_CurateFixed",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
    "skills": [
@@ -592,6 +594,7 @@
    "name": "SME review of cases or cohorts",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_SmeReview",
+   "stepHref": "test-data-curation.html#step-Call_SmeReview",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
    "skills": [
@@ -834,6 +837,7 @@
    "name": "Determine the content type and its specialisation",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_DetermineSpecialisation",
+   "stepHref": "test-data-curation.html#step-Task_DetermineSpecialisation",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
    "skills": [
@@ -1071,6 +1075,7 @@
    "name": "Synthesise the recipe with that specialisation",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_ContentTypeSpecialisation",
+   "stepHref": "test-data-curation.html#step-Call_ContentTypeSpecialisation",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
    "skills": [
@@ -1308,6 +1313,7 @@
    "name": "Write the generated-data recipe",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_WriteRecipe",
+   "stepHref": "test-data-curation.html#step-Task_WriteRecipe",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
    "skills": [
@@ -1545,6 +1551,7 @@
    "name": "Verify file self-identifies by $schema and kind and bind into test plan",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Task_VerifySelfIdentifying",
+   "stepHref": "test-data-curation.html#step-Task_VerifySelfIdentifying",
    "lane": "Tester",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Tester",
    "skills": [
@@ -1582,6 +1589,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanOpen",
+   "stepHref": "test-data-curation.html#step-Call_BeanOpen",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Author",
    "skills": [
@@ -1824,6 +1832,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/node/Call_BeanClose",
+   "stepHref": "test-data-curation.html#step-Call_BeanClose",
    "lane": "Tester",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestDataCuration/lane/Lane_Tester",
    "skills": [

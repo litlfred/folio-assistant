@@ -82,6 +82,7 @@
    "name": "Find the footprint",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Footprint",
+   "stepHref": "stalled-agent-triage.html#step-A_Footprint",
    "lane": "Triage agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
    "skills": [
@@ -319,6 +320,7 @@
    "name": "Collect or reconstruct a handover report per agent",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Collect",
+   "stepHref": "stalled-agent-triage.html#step-A_Collect",
    "lane": "Triage agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
    "skills": [
@@ -556,6 +558,7 @@
    "name": "Consolidate into 2-4 themes, with a recommendation each",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Consolidate",
+   "stepHref": "stalled-agent-triage.html#step-A_Consolidate",
    "lane": "Triage agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
    "skills": [
@@ -793,6 +796,7 @@
    "name": "Decide each theme",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/U_Decide",
+   "stepHref": "stalled-agent-triage.html#step-U_Decide",
    "lane": "User",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_User",
    "skills": [],
@@ -858,6 +862,7 @@
    "name": "Record the triage and claim the picked-up work",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/A_Record",
+   "stepHref": "stalled-agent-triage.html#step-A_Record",
    "lane": "Triage agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Triage",
    "skills": [
@@ -1095,6 +1100,7 @@
    "name": "Re-route open PRs that lost their driver",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/node/S_Reroute",
+   "stepHref": "stalled-agent-triage.html#step-S_Reroute",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_StalledAgentTriage/lane/Lane_Steward",
    "skills": [

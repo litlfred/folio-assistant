@@ -82,6 +82,7 @@
    "name": "Identify the agent Tool(s) acting here",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/node/Task_IdentifyTools",
+   "stepHref": "secure-agent-permissions.html#step-Task_IdentifyTools",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/lane/Lane_Agent",
    "skills": [
@@ -319,6 +320,7 @@
    "name": "Compare what the processes need with what is granted",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/node/Task_ReadGrants",
+   "stepHref": "secure-agent-permissions.html#step-Task_ReadGrants",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/lane/Lane_Agent",
    "skills": [
@@ -556,6 +558,7 @@
    "name": "Explain each missing permission, with the exact config diff",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/node/Task_Explain",
+   "stepHref": "secure-agent-permissions.html#step-Task_Explain",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/lane/Lane_Agent",
    "skills": [
@@ -793,6 +796,7 @@
    "name": "Grant, narrow or refuse each",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/node/Task_OwnerGrants",
+   "stepHref": "secure-agent-permissions.html#step-Task_OwnerGrants",
    "lane": "Owner",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/lane/Lane_Owner",
    "skills": [
@@ -858,6 +862,7 @@
    "name": "Record each answer: who, when, scope, the quote",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/node/Task_RecordGrant",
+   "stepHref": "secure-agent-permissions.html#step-Task_RecordGrant",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/lane/Lane_Agent",
    "skills": [
@@ -1095,6 +1100,7 @@
    "name": "Write it through the Tool's adapter",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/node/Task_WriteConfig",
+   "stepHref": "secure-agent-permissions.html#step-Task_WriteConfig",
    "lane": "Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SecureAgentPermissions/lane/Lane_Agent",
    "skills": [

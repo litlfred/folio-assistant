@@ -34,6 +34,7 @@
    "name": "Run the health checks, keeping the report either way",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Task_Check",
+   "stepHref": "repository-health-watch.html#step-Task_Check",
    "lane": "Scheduled log sweep",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
    "skills": [
@@ -131,6 +132,7 @@
    "name": "Report the verdict on the tracking issue",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/node/Call_Watch",
+   "stepHref": "repository-health-watch.html#step-Call_Watch",
    "lane": "Scheduled log sweep",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_RepoHealth/lane/Lane_Ci",
    "skills": [],

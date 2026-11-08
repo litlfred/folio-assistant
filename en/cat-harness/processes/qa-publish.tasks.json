@@ -94,6 +94,7 @@
    "name": "Derive the key",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/node/Task_DeriveKey",
+   "stepHref": "qa-publish.html#step-Task_DeriveKey",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/lane/Lane_Ci",
    "skills": [
@@ -191,6 +192,7 @@
    "name": "Build the entry",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/node/Task_BuildEntry",
+   "stepHref": "qa-publish.html#step-Task_BuildEntry",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/lane/Lane_Ci",
    "skills": [
@@ -288,6 +290,7 @@
    "name": "Splice onto the tip and push (never -f)",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/node/Task_SpliceAndPush",
+   "stepHref": "qa-publish.html#step-Task_SpliceAndPush",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/lane/Lane_Ci",
    "skills": [
@@ -385,6 +388,7 @@
    "name": "Back off",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/node/Task_Backoff",
+   "stepHref": "qa-publish.html#step-Task_Backoff",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/lane/Lane_Ci",
    "skills": [
@@ -482,6 +486,7 @@
    "name": "Read every PR's state",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/node/Task_ReadPrStates",
+   "stepHref": "qa-publish.html#step-Task_ReadPrStates",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/lane/Lane_Ci",
    "skills": [
@@ -579,6 +584,7 @@
    "name": "Plan the prune",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/node/Task_PlanPrune",
+   "stepHref": "qa-publish.html#step-Task_PlanPrune",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/lane/Lane_Ci",
    "skills": [
@@ -676,6 +682,7 @@
    "name": "Commit a tip without the pruned entries",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/node/Task_ApplyPrune",
+   "stepHref": "qa-publish.html#step-Task_ApplyPrune",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaPublish/lane/Lane_Ci",
    "skills": [

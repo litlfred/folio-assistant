@@ -106,6 +106,7 @@
    "name": "Log task-start",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_LogStart",
+   "stepHref": "activity-log.html#step-A_LogStart",
    "lane": "Agent (this session)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/lane/Lane_Agent",
    "skills": [
@@ -343,6 +344,7 @@
    "name": "Do the work",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_DoWork",
+   "stepHref": "activity-log.html#step-A_DoWork",
    "lane": "Agent (this session)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/lane/Lane_Agent",
    "skills": [],
@@ -575,6 +577,7 @@
    "name": "Log a message or an error",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_LogMessage",
+   "stepHref": "activity-log.html#step-A_LogMessage",
    "lane": "Agent (this session)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/lane/Lane_Agent",
    "skills": [
@@ -812,6 +815,7 @@
    "name": "Log task-end",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_LogEnd",
+   "stepHref": "activity-log.html#step-A_LogEnd",
    "lane": "Agent (this session)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/lane/Lane_Agent",
    "skills": [
@@ -1049,6 +1053,7 @@
    "name": "Persist the log to the data store",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_PersistLog",
+   "stepHref": "activity-log.html#step-A_PersistLog",
    "lane": "Agent (this session)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/lane/Lane_Agent",
    "skills": [
@@ -1286,6 +1291,7 @@
    "name": "Report the capture state",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_ReportCaptureState",
+   "stepHref": "activity-log.html#step-A_ReportCaptureState",
    "lane": "Agent (this session)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/lane/Lane_Agent",
    "skills": [
@@ -1523,6 +1529,7 @@
    "name": "Discard one entry by id",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_EmptyOne",
+   "stepHref": "activity-log.html#step-A_EmptyOne",
    "lane": "Log operator (human)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/lane/Lane_Operator",
    "skills": [
@@ -1588,6 +1595,7 @@
    "name": "Discard all entries, or a whole session",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/node/A_EmptyAll",
+   "stepHref": "activity-log.html#step-A_EmptyAll",
    "lane": "Log operator (human)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_ActivityLog/lane/Lane_Operator",
    "skills": [

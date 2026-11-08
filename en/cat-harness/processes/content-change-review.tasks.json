@@ -142,6 +142,7 @@
    "name": "Describe the desired change",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_DescribeChange",
+   "stepHref": "content-change-review.html#step-Task_DescribeChange",
    "lane": "Content Author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Author",
    "skills": [],
@@ -202,6 +203,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_BeanOpen",
+   "stepHref": "content-change-review.html#step-Call_BeanOpen",
    "lane": "Folio-Assistant Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
    "skills": [
@@ -444,6 +446,7 @@
    "name": "Make the change",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_MakeChange",
+   "stepHref": "content-change-review.html#step-Call_MakeChange",
    "lane": "Folio-Assistant Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
    "skills": [
@@ -686,6 +689,7 @@
    "name": "Stage the change",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_StageChange",
+   "stepHref": "content-change-review.html#step-Call_StageChange",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Pipeline",
    "skills": [
@@ -788,6 +792,7 @@
    "name": "Review staged rendering",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_ReviewStaging",
+   "stepHref": "content-change-review.html#step-Task_ReviewStaging",
    "lane": "Content Author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Author",
    "skills": [
@@ -853,6 +858,7 @@
    "name": "Request further revisions",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_RequestRevision",
+   "stepHref": "content-change-review.html#step-Task_RequestRevision",
    "lane": "Content Author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Author",
    "skills": [
@@ -918,6 +924,7 @@
    "name": "Iterate on author feedback",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_Iterate",
+   "stepHref": "content-change-review.html#step-Task_Iterate",
    "lane": "Folio-Assistant Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
    "skills": [
@@ -1159,6 +1166,7 @@
    "name": "Submit to review committee",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Task_SubmitForReview",
+   "stepHref": "content-change-review.html#step-Task_SubmitForReview",
    "lane": "Content Author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Author",
    "skills": [
@@ -1224,6 +1232,7 @@
    "name": "Review the change",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_CommitteeReview",
+   "stepHref": "content-change-review.html#step-Call_CommitteeReview",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Reviewer",
    "skills": [
@@ -1290,6 +1299,7 @@
    "name": "Merge and publish",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_Publish",
+   "stepHref": "content-change-review.html#step-Call_Publish",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Pipeline",
    "skills": [
@@ -1392,6 +1402,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/node/Call_BeanClose",
+   "stepHref": "content-change-review.html#step-Call_BeanClose",
    "lane": "Folio-Assistant Agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReview/lane/Lane_Agent",
    "skills": [

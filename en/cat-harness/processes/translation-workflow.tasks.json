@@ -154,6 +154,7 @@
    "name": "Extract translatable strings (POT)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_PotExtract",
+   "stepHref": "translation-workflow.html#step-Task_PotExtract",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
    "skills": [
@@ -395,6 +396,7 @@
    "name": "Build and review the locale term base",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_TermBase",
+   "stepHref": "translation-workflow.html#step-Task_TermBase",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
    "skills": [
@@ -632,6 +634,7 @@
    "name": "Produce translation (PO file)",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_Translate",
+   "stepHref": "translation-workflow.html#step-Task_Translate",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
    "skills": [
@@ -869,6 +872,7 @@
    "name": "Inject translations (PO → Markdown)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_PoInject",
+   "stepHref": "translation-workflow.html#step-Task_PoInject",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
    "skills": [
@@ -1110,6 +1114,7 @@
    "name": "Round-trip translation QA (back-translate)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_RoundTripQA",
+   "stepHref": "translation-workflow.html#step-Task_RoundTripQA",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
    "skills": [
@@ -1351,6 +1356,7 @@
    "name": "Check glossary terms (translation:glossary:check)",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_GlossaryCheck",
+   "stepHref": "translation-workflow.html#step-Task_GlossaryCheck",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
    "skills": [
@@ -1588,6 +1594,7 @@
    "name": "Adjudicate the flagged passage (human)",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_Adjudicate",
+   "stepHref": "translation-workflow.html#step-Task_Adjudicate",
    "lane": "Human reviewer / adjudicator",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Reviewer",
    "skills": [
@@ -1672,6 +1679,7 @@
    "name": "Edit the flagged passage and re-inject",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_EditTranslation",
+   "stepHref": "translation-workflow.html#step-Task_EditTranslation",
    "lane": "Human reviewer / adjudicator",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Reviewer",
    "skills": [
@@ -1747,6 +1755,7 @@
    "name": "Write status.json (unofficial)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_WriteUnofficial",
+   "stepHref": "translation-workflow.html#step-Task_WriteUnofficial",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
    "skills": [
@@ -1991,6 +2000,7 @@
    "name": "Sign off translation (human adjudicator)",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_Signoff",
+   "stepHref": "translation-workflow.html#step-Task_Signoff",
    "lane": "Human reviewer / adjudicator",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Reviewer",
    "skills": [
@@ -2066,6 +2076,7 @@
    "name": "Write status.json (official)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_WriteOfficial",
+   "stepHref": "translation-workflow.html#step-Task_WriteOfficial",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
    "skills": [
@@ -2310,6 +2321,7 @@
    "name": "Check staleness (source hash)",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/node/Task_StalenessCheck",
+   "stepHref": "translation-workflow.html#step-Task_StalenessCheck",
    "lane": "Agent / platform (automated)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Translation/lane/Lane_Platform",
    "skills": [

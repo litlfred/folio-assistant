@@ -202,6 +202,7 @@
    "name": "Detect the interaction modality",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_DetectModality",
+   "stepHref": "getting-started.html#step-Task_DetectModality",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
@@ -517,6 +518,7 @@
    "name": "Read the repository facts",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReadFacts",
+   "stepHref": "getting-started.html#step-Task_ReadFacts",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
@@ -832,6 +834,7 @@
    "name": "Choose from the offered options",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_AskIntent",
+   "stepHref": "getting-started.html#step-Task_AskIntent",
    "lane": "User (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_User",
    "skills": [
@@ -901,6 +904,7 @@
    "name": "Scan the repo for content worth importing",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ScanRepo",
+   "stepHref": "getting-started.html#step-Task_ScanRepo",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
@@ -1220,6 +1224,7 @@
    "name": "Choose what the harness reads",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ChooseHarnessed",
+   "stepHref": "getting-started.html#step-Task_ChooseHarnessed",
    "lane": "User (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_User",
    "skills": [
@@ -1294,6 +1299,7 @@
    "name": "Import what, where, and who does it",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ConfirmImport",
+   "stepHref": "getting-started.html#step-Task_ConfirmImport",
    "lane": "User (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_User",
    "skills": [
@@ -1363,6 +1369,7 @@
    "name": "Create the repository",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_CreateRepo",
+   "stepHref": "getting-started.html#step-Task_CreateRepo",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
@@ -1678,6 +1685,7 @@
    "name": "Scaffold the folio (folio_init)",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_Scaffold",
+   "stepHref": "getting-started.html#step-Task_Scaffold",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
@@ -1993,6 +2001,7 @@
    "name": "Seed the work plan",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_SeedPlan",
+   "stepHref": "getting-started.html#step-Task_SeedPlan",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
@@ -2308,6 +2317,7 @@
    "name": "Provision gh-pages",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ProvisionGhPages",
+   "stepHref": "getting-started.html#step-Task_ProvisionGhPages",
    "lane": "Publish — GitHub Pages",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
    "skills": [
@@ -2333,6 +2343,7 @@
    "name": "Start the Pages build and derive the URL",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_PagesBootstrap",
+   "stepHref": "getting-started.html#step-Task_PagesBootstrap",
    "lane": "Publish — GitHub Pages",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
    "skills": [
@@ -2358,6 +2369,7 @@
    "name": "Hand over the live link",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportUrl",
+   "stepHref": "getting-started.html#step-Task_ReportUrl",
    "lane": "Publish — GitHub Pages",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
    "skills": [
@@ -2383,6 +2395,7 @@
    "name": "Say where it will be",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportPending",
+   "stepHref": "getting-started.html#step-Task_ReportPending",
    "lane": "Publish — GitHub Pages",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
    "skills": [
@@ -2408,6 +2421,7 @@
    "name": "Say it could not be confirmed",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Task_ReportUnknown",
+   "stepHref": "getting-started.html#step-Task_ReportUnknown",
    "lane": "Publish — GitHub Pages",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
    "skills": [
@@ -2433,6 +2447,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Call_BeanOpen",
+   "stepHref": "getting-started.html#step-Call_BeanOpen",
    "lane": "Onboarding agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Agent",
    "skills": [
@@ -2753,6 +2768,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/node/Call_BeanClose",
+   "stepHref": "getting-started.html#step-Call_BeanClose",
    "lane": "Publish — GitHub Pages",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GettingStarted/lane/Lane_Publish",
    "skills": [

@@ -94,6 +94,7 @@
    "name": "Write the slice definition",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/A_Define",
+   "stepHref": "slice-sqlite-publish.html#step-A_Define",
    "lane": "Platform authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/lane/Lane_Author",
    "skills": [
@@ -434,6 +435,7 @@
    "name": "Build it locally and measure the file",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/A_Measure",
+   "stepHref": "slice-sqlite-publish.html#step-A_Measure",
    "lane": "Platform authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/lane/Lane_Author",
    "skills": [
@@ -774,6 +776,7 @@
    "name": "Report the measurement; ship nothing",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/A_Report",
+   "stepHref": "slice-sqlite-publish.html#step-A_Report",
    "lane": "Platform authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/lane/Lane_Author",
    "skills": [
@@ -1114,6 +1117,7 @@
    "name": "Wire it: gate, deploy line, search, tests",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/A_Wire",
+   "stepHref": "slice-sqlite-publish.html#step-A_Wire",
    "lane": "Platform authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/lane/Lane_Author",
    "skills": [
@@ -1454,6 +1458,7 @@
    "name": "Gate every slice: slice:sqlite:check",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/A_Check",
+   "stepHref": "slice-sqlite-publish.html#step-A_Check",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/lane/Lane_Ci",
    "skills": [
@@ -1551,6 +1556,7 @@
    "name": "Build each slice into _site at deploy",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/A_Deploy",
+   "stepHref": "slice-sqlite-publish.html#step-A_Deploy",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/lane/Lane_Ci",
    "skills": [
@@ -1648,6 +1654,7 @@
    "name": "Search the published slice in a browser",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/node/A_Verify",
+   "stepHref": "slice-sqlite-publish.html#step-A_Verify",
    "lane": "Platform authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SliceSqlitePublish/lane/Lane_Author",
    "skills": [

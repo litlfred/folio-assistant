@@ -363,24 +363,46 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/da3ca528562a7f0516d296f58d6c2ff6174e0069",
-  "sourceCommitSha": "da3ca528562a7f0516d296f58d6c2ff6174e0069",
-  "sourceTree": "c84b72bdb2dcc9844dadea7548e0242b3f6cb637",
-  "sourceCommitAt": "2026-11-08T07:42:36+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c00df6bfa29626e089cb4d4ae29d671bae1b6bec",
+  "sourceCommitSha": "c00df6bfa29626e089cb4d4ae29d671bae1b6bec",
+  "sourceTree": "2dff9db927e55aea58f9057905b1506633f5f591",
+  "sourceCommitAt": "2026-11-08T14:25:47+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "this instance declares no `canonicalUrl`, and §3.4's record is `{packageId, version, uri}` — `canonicalUrl` is what plays `uri`, so the record cannot be expressed rather than being withheld on purpose",
   "counts": {
-    "GraphTypology": 7,
-    "Subgraph": 6,
+    "GraphTypology": 10,
+    "Role": 13,
+    "Subgraph": 9,
     "Asset": 2
   },
   "@graph": [
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/business-processes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
+      "name": "business-processes",
+      "renderable": false,
+      "summary": "BPMN that describes work as content (a guideline's business processes), drawn by the processes viewer and never run."
+    },
+    {
+      "@id": "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
+      "name": "scenarios",
+      "renderable": false,
+      "summary": "A Subgraph of Roles: the responsibilities an Actor takes on, and who takes them on."
+    },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/docs",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "docs",
       "renderable": true,
       "summary": "Documentation ABOUT the knowledge graph — how the harness works, what its directories hold, how a process runs. Rendered by the plain just-the-docs pipeline. Distinct from `folio`, which is content an author CREATES using the graph; the difference is the SUBJECT, not the format. An L1 library's catalogue is `library/`; a note about it is a `folio`; the page explaining how ingestion works is `docs`."
+    },
+    {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
+      "name": "code",
+      "renderable": false,
+      "summary": "Source code -- the modules, scripts and entry points an instance holds. Declared so that code is scannable at all: an undeclared file is one no checker has a reason to look at. Being declared here says nothing about whether a Tool node claims it, which is a separate question and a separate axis."
     },
     {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/library",
@@ -423,6 +445,178 @@
       "name": "catalogue",
       "renderable": false,
       "summary": "A remote catalogue modelled by reference — communities, collections and items of a corpus the instance does not hold. Every node declares whether its bytes are here (`materialized`), elsewhere (`referenced`) or unestablished (`unknown`), with no default. Distinct from `library`, which is content that IS here."
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/holder",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Holder",
+      "title": "Holder",
+      "notation": "holder",
+      "description": "The person who holds a Personal Health Wallet, records consent, and presents verifiable health links and certificates. Specializes the ActorDefinition Holder (input/fsh/actors/actors.fsh).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/consent-recorder",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Consent Recorder",
+      "title": "Consent Recorder",
+      "notation": "consent-recorder",
+      "description": "The person or system that records a consent directive for the holder (IHE PCF Consent Recorder): the wallet itself, or a health worker on the holder's behalf.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "system"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/consent-registry",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Consent Registry",
+      "title": "Consent Registry",
+      "notation": "consent-registry",
+      "description": "Holds consent directives and answers IHE PCF [ITI-108] Access Consent. Specializes the ActorDefinition ConsentRegistry (input/fsh/actors/actors.fsh).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/vhl-sharer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "VHL Sharer",
+      "title": "VHL Sharer",
+      "notation": "vhl-sharer",
+      "description": "Holds the health information, generates verifiable health links, and enforces consent when a link is redeemed. Specializes the ActorDefinition Issuer (input/fsh/actors/actors.fsh).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/document-source",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Document Source",
+      "title": "Document Source",
+      "notation": "document-source",
+      "description": "The system that assembles a document about the holder before it is signed: the VHL Sharer when a document is shared, the Certificate Issuance Service when a certificate is issued. Adds the consent directives to it (process M).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/vhl-receiver",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "VHL Receiver",
+      "title": "VHL Receiver",
+      "notation": "vhl-receiver",
+      "description": "Receives a verifiable health link, checks its signature against the trust list, and retrieves the information. Specializes the ActorDefinition Receiver (input/fsh/actors/actors.fsh).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/trust-anchor",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Trust Anchor",
+      "title": "Trust Anchor",
+      "notation": "trust-anchor",
+      "description": "Publishes the trust list of keys that participants use to check signatures. GDHCN is one possible anchor among others. Specializes the ActorDefinition TrustNetworkAnchor (input/fsh/actors/actors.fsh).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/certificate-issuer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Certificate Issuer",
+      "title": "Certificate Issuer",
+      "notation": "certificate-issuer",
+      "description": "A health worker or issuing system that issues a verifiable digital health certificate. Specializes the ActorDefinition Issuer (input/fsh/actors/actors.fsh).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "system"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/certificate-verifier",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Verifier",
+      "title": "Verifier",
+      "notation": "certificate-verifier",
+      "description": "Checks a certificate and its status, with or without a status checking application. Specializes the ActorDefinition Receiver (input/fsh/actors/actors.fsh).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "system"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/data-provider-administrator",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Data Provider Administrator",
+      "title": "Data Provider Administrator",
+      "notation": "data-provider-administrator",
+      "description": "The person at a data provider who registers clients under a data sharing agreement.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/data-recipient-system",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Data Recipient System",
+      "title": "Data Recipient System",
+      "notation": "data-recipient-system",
+      "description": "A server that accesses data under a data sharing agreement (OAuth client) and performs the agreement's duties.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/provider-authorization-server",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Provider Authorization Server",
+      "title": "Provider Authorization Server",
+      "notation": "provider-authorization-server",
+      "description": "Registers clients and decides access under a data sharing agreement (policy decision and enforcement).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": []
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/auditor",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Auditor",
+      "title": "Auditor",
+      "notation": "auditor",
+      "description": "The person who reviews audit and provenance records under a data sharing agreement.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": []
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-ast",
@@ -526,6 +720,57 @@
       "readmePath": "catalogue/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/smart-trust-phw-catalogue"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/business-processes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "business-processes",
+      "path": "input/business-processes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/business-processes"
+      ],
+      "description": "The guide's business processes PHW.A to PHW.K (BPMN 2.0), the IG source the IG Publisher renders; the processes viewer draws them for this instance. Each is drawn to input/images/PHW.<id>.svg by tools/render-bpmn/render_bpmn.ts (bootstrap-tools' renderer); CI fails when a drawing is stale. Never edit a drawing: change the BPMN.",
+      "readmePath": "input/business-processes/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/business-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/tools",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "tools",
+      "path": "tools/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "This instance's generators, each with a --check that CI runs: render-bpmn draws input/business-processes/*.bpmn into input/images/; personas writes input/pagecontent/personas.md from scenarios/. The site is published by the harness's stage-local.ts --fresh.",
+      "readmePath": "tools/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/tools"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "scenarios",
+      "path": "scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/scenarios"
+      ],
+      "description": "The roles the lanes of the business processes name (roles.json, each pointing to its ActorDefinition in input/fsh/actors/actors.fsh where one exists), and example people and systems that play them (actors/, each person with a meta.persona). tools/personas/gen_personas.ts writes the Generic Personas page from them. Every person is fictional.",
+      "readmePath": "scenarios/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/scenarios"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/smart-trust-phw/asset/agent-instructions",

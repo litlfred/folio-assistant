@@ -70,6 +70,7 @@
    "name": "Edit it in place — it is your own content",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_EditDirectly",
+   "stepHref": "copy-out-materialized.html#step-Task_EditDirectly",
    "lane": "Reader (any actor)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Reader",
    "skills": [
@@ -135,6 +136,7 @@
    "name": "Read the original — and write nothing",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_ReadSource",
+   "stepHref": "copy-out-materialized.html#step-Task_ReadSource",
    "lane": "Source graph — read-only",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Source",
    "skills": [
@@ -168,6 +170,7 @@
    "name": "Land the bytes in the copier's own folio/",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_Land",
+   "stepHref": "copy-out-materialized.html#step-Task_Land",
    "lane": "Copier's own folio/",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Folio",
    "skills": [
@@ -233,6 +236,7 @@
    "name": "Record what this is a copy of",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_RecordProvenance",
+   "stepHref": "copy-out-materialized.html#step-Task_RecordProvenance",
    "lane": "Copier's own folio/",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Folio",
    "skills": [
@@ -298,6 +302,7 @@
    "name": "Verify the ORIGINAL still hashes to its digest",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/Task_VerifySourceUntouched",
+   "stepHref": "copy-out-materialized.html#step-Task_VerifySourceUntouched",
    "lane": "Verification",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Verify",
    "skills": [

@@ -106,6 +106,7 @@
    "name": "Write the BagIt tag files (sorted, no dates)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_BuildBag",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
    "skills": [
@@ -203,6 +204,7 @@
    "name": "Diff against the published manifest",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_Diff",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
    "skills": [
@@ -300,6 +302,7 @@
    "name": "Store new objects (never overwrite)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_Upload",
    "lane": "Release signer",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
    "skills": [
@@ -335,6 +338,7 @@
    "name": "Sign each changed item manifest (ES256)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_SignItems",
    "lane": "Release signer",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
    "skills": [
@@ -370,6 +374,7 @@
    "name": "Sign the release tag manifest (ES256)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_Sign",
    "lane": "Release signer",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
    "skills": [
@@ -405,6 +410,7 @@
    "name": "Commit tag files and signature, last",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_PublishTags",
    "lane": "Release signer",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
    "skills": [
@@ -440,6 +446,7 @@
    "name": "Resolve did:web; verify JWS and digests",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_Verify",
    "lane": "Verifier",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
    "skills": [
@@ -465,6 +472,7 @@
    "name": "Revert to the previous release",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_Revert",
    "lane": "Verifier",
    "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
    "skills": [

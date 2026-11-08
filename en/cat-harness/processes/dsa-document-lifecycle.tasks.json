@@ -322,6 +322,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpen",
+   "stepHref": "dsa-document-lifecycle.html#step-Call_BeanOpen",
    "lane": "Author and policy author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
    "skills": [
@@ -392,6 +393,7 @@
    "name": "P1.1 · Agree the terms",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AgreeTerms",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_AgreeTerms",
    "lane": "Parties and signatories (provider, recipient)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
    "skills": [],
@@ -407,6 +409,7 @@
    "name": "P1.2 · Write the legal text",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_WriteText",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_WriteText",
    "lane": "Author and policy author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
    "skills": [
@@ -480,6 +483,7 @@
    "name": "P1.2a · Record the legal basis",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_RecordLegalBasis",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_RecordLegalBasis",
    "lane": "Author and policy author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
    "skills": [
@@ -545,6 +549,7 @@
    "name": "P1.2b · Draft the plain summary",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_PlainSummary",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_PlainSummary",
    "lane": "Author and policy author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
    "skills": [
@@ -610,6 +615,7 @@
    "name": "P1.3 · Derive the ODRL 2.2 Agreement",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DeriveOdrl",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_DeriveOdrl",
    "lane": "Author and policy author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
    "skills": [],
@@ -670,6 +676,7 @@
    "name": "P1.4 · Check the ODRL against the text",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_CheckOdrl",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_CheckOdrl",
    "lane": "Reviewer (legal, policy)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
    "skills": [
@@ -731,6 +738,7 @@
    "name": "P1.5 · Split public terms from private annexes",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SplitAnnexes",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_SplitAnnexes",
    "lane": "Author and policy author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
    "skills": [],
@@ -791,6 +799,7 @@
    "name": "Review the draft agreement",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Review",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_Review",
    "lane": "Reviewer (legal, policy)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Reviewer",
    "skills": [
@@ -856,6 +865,7 @@
    "name": "Public comment on the template",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_PublicComment",
+   "stepHref": "dsa-document-lifecycle.html#step-Call_PublicComment",
    "lane": "Public review (commenters, review committee, editor)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_PublicReview",
    "skills": [
@@ -898,6 +908,7 @@
    "name": "Render the text to HTML and PDF",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Render",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_Render",
    "lane": "Build pipeline (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build",
    "skills": [
@@ -995,6 +1006,7 @@
    "name": "P1.6 · Sign",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Sign",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_Sign",
    "lane": "Parties and signatories (provider, recipient)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
    "skills": [],
@@ -1010,6 +1022,7 @@
    "name": "P2.1 · Assign version and fixed URL",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_AssignVersion",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_AssignVersion",
    "lane": "Publisher (data provider's publication manager)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
    "skills": [
@@ -1071,6 +1084,7 @@
    "name": "P2.2 · Record each file's SHA-256",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Hash",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_Hash",
    "lane": "Publisher (data provider's publication manager)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
    "skills": [
@@ -1128,6 +1142,7 @@
    "name": "P2.2a · Hash the plain summary",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_HashSummary",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_HashSummary",
    "lane": "Publisher (data provider's publication manager)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
    "skills": [
@@ -1185,6 +1200,7 @@
    "name": "P2.2b · State the URL and hash to cite",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_ConsentCitation",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_ConsentCitation",
    "lane": "Publisher (data provider's publication manager)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
    "skills": [
@@ -1242,6 +1258,7 @@
    "name": "P2.3 · Make the ODRL cite the text",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_OdrlCitesText",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_OdrlCitesText",
    "lane": "Author and policy author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
    "skills": [
@@ -1307,6 +1324,7 @@
    "name": "Publish the version at its URL",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Publish",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_Publish",
    "lane": "Build pipeline (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Build",
    "skills": [
@@ -1404,6 +1422,7 @@
    "name": "P2.4–5 · Write the DCAT 3 record",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_Catalogue",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_Catalogue",
    "lane": "Publisher (data provider's publication manager)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
    "skills": [
@@ -1461,6 +1480,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanOpenChange",
+   "stepHref": "dsa-document-lifecycle.html#step-Call_BeanOpenChange",
    "lane": "Author and policy author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
    "skills": [
@@ -1531,6 +1551,7 @@
    "name": "Decide: amend, renew or end",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideChange",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_DecideChange",
    "lane": "Parties and signatories (provider, recipient)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
    "skills": [],
@@ -1546,6 +1567,7 @@
    "name": "P14.2 · Decide what happens to existing grants",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_DecideGrants",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_DecideGrants",
    "lane": "Parties and signatories (provider, recipient)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
    "skills": [],
@@ -1561,6 +1583,7 @@
    "name": "P14.3 · New consent needed",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_NewConsentNeeded",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_NewConsentNeeded",
    "lane": "Parties and signatories (provider, recipient)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
    "skills": [],
@@ -1576,6 +1599,7 @@
    "name": "P14.5 · Set the status to ended",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_SetStatus",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_SetStatus",
    "lane": "Publisher (data provider's publication manager)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Publisher",
    "skills": [
@@ -1633,6 +1657,7 @@
    "name": "Revoke grants and start end-of-agreement duties",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Task_EndDuties",
+   "stepHref": "dsa-document-lifecycle.html#step-Task_EndDuties",
    "lane": "Parties and signatories (provider, recipient)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Parties",
    "skills": [],
@@ -1648,6 +1673,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/node/Call_BeanCloseEnded",
+   "stepHref": "dsa-document-lifecycle.html#step-Call_BeanCloseEnded",
    "lane": "Author and policy author",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DsaDocumentLifecycle/lane/Lane_Author",
    "skills": [

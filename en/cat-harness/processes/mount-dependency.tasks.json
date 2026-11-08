@@ -82,6 +82,7 @@
    "name": "Declare the mount: harness, repository, pin",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_DeclareMount",
+   "stepHref": "mount-dependency.html#step-Task_DeclareMount",
    "lane": "Downstream author",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Author",
    "skills": [
@@ -151,6 +152,7 @@
    "name": "Resolve the closure at the pin",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_ResolveClosure",
+   "stepHref": "mount-dependency.html#step-Task_ResolveClosure",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Pipeline",
    "skills": [
@@ -248,6 +250,7 @@
    "name": "Mount each instance at its declared path",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_MountInstances",
+   "stepHref": "mount-dependency.html#step-Task_MountInstances",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Pipeline",
    "skills": [
@@ -345,6 +348,7 @@
    "name": "Write the lock",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_WriteLock",
+   "stepHref": "mount-dependency.html#step-Task_WriteLock",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Pipeline",
    "skills": [
@@ -442,6 +446,7 @@
    "name": "Re-render the agent surface",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_RenderAgentSurface",
+   "stepHref": "mount-dependency.html#step-Task_RenderAgentSurface",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Pipeline",
    "skills": [
@@ -543,6 +548,7 @@
    "name": "Check disk against lock against declaration",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/node/Task_CheckAgainstLock",
+   "stepHref": "mount-dependency.html#step-Task_CheckAgainstLock",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MountDependency/lane/Lane_Pipeline",
    "skills": [

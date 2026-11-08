@@ -16,8 +16,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/StartEvent_ModelReady"
       ],
-      "nodeCount": 11,
-      "flowCount": 12,
+      "nodeCount": 12,
+      "flowCount": 13,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
     },
     {
@@ -101,6 +101,14 @@
       "name": "yes",
       "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
       "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Gateway_QcPass",
+      "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Call_PublishStatements",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C11b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
+      "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Call_PublishStatements",
       "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_IgPublisher",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
     },

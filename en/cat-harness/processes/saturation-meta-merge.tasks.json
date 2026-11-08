@@ -106,6 +106,7 @@
    "name": "Broadcast the hold to siblings",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Hold",
+   "stepHref": "saturation-meta-merge.html#step-Task_Hold",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Steward",
    "skills": [
@@ -155,6 +156,7 @@
    "name": "Hold, and name the heads to merge",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_SibHold",
+   "stepHref": "saturation-meta-merge.html#step-Task_SibHold",
    "lane": "Sibling session",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Sibling",
    "skills": [
@@ -180,6 +182,7 @@
    "name": "Dry-run, then ask the owner naming every PR",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Ask",
+   "stepHref": "saturation-meta-merge.html#step-Task_Ask",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Steward",
    "skills": [
@@ -229,6 +232,7 @@
    "name": "Choose A, B, C or D",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Owner",
+   "stepHref": "saturation-meta-merge.html#step-Task_Owner",
    "lane": "Owner",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Owner",
    "skills": [],
@@ -289,6 +293,7 @@
    "name": "Cancel queued PR runs; build, push, merge",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Land",
+   "stepHref": "saturation-meta-merge.html#step-Task_Land",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Steward",
    "skills": [
@@ -338,6 +343,7 @@
    "name": "Post done to every held sibling",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Done",
+   "stepHref": "saturation-meta-merge.html#step-Task_Done",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Steward",
    "skills": [
@@ -387,6 +393,7 @@
    "name": "Run main's checks",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_MainRun",
+   "stepHref": "saturation-meta-merge.html#step-Task_MainRun",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Pipeline",
    "skills": [],
@@ -479,6 +486,7 @@
    "name": "Report what landed and main's verdict",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Report",
+   "stepHref": "saturation-meta-merge.html#step-Task_Report",
    "lane": "Merge steward",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Steward",
    "skills": [

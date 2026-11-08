@@ -58,6 +58,7 @@
    "name": "Collect each statement with its source section",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_Collect",
+   "stepHref": "publish-extracted-statements.html#step-Task_Collect",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
    "skills": [
@@ -111,6 +112,7 @@
    "name": "Render them in the artifact's own pages",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderArtifact",
+   "stepHref": "publish-extracted-statements.html#step-Task_RenderArtifact",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
    "skills": [
@@ -164,6 +166,7 @@
    "name": "Publish them in the shared viewer",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderViewer",
+   "stepHref": "publish-extracted-statements.html#step-Task_RenderViewer",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
    "skills": [
@@ -217,6 +220,7 @@
    "name": "Check pages are current, links resolve",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_CheckCurrent",
+   "stepHref": "publish-extracted-statements.html#step-Task_CheckCurrent",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
    "skills": [

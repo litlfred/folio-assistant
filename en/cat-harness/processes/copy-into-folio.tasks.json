@@ -106,6 +106,7 @@
    "name": "Select upstream asset and target folio",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_ChooseAsset",
+   "stepHref": "copy-into-folio.html#step-Task_ChooseAsset",
    "lane": "Folio author",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/lane/Lane_Author",
    "skills": [
@@ -171,6 +172,7 @@
    "name": "Probe write capability",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_ProbeWriteCapability",
+   "stepHref": "copy-into-folio.html#step-Task_ProbeWriteCapability",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/lane/Lane_Agent",
    "skills": [
@@ -408,6 +410,7 @@
    "name": "Browse in place, emit a KgAsset snippet",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_InspectReadOnly",
+   "stepHref": "copy-into-folio.html#step-Task_InspectReadOnly",
    "lane": "Folio author",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/lane/Lane_Author",
    "skills": [
@@ -473,6 +476,7 @@
    "name": "Read the upstream asset (no writes)",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_ReadUpstreamAsset",
+   "stepHref": "copy-into-folio.html#step-Task_ReadUpstreamAsset",
    "lane": "Source knowledge graph — read-only",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/lane/Lane_Source",
    "skills": [
@@ -506,6 +510,7 @@
    "name": "Copy asset into target folio and declare in assets[]",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_CopyAndDeclareAsset",
+   "stepHref": "copy-into-folio.html#step-Task_CopyAndDeclareAsset",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/lane/Lane_Agent",
    "skills": [
@@ -747,6 +752,7 @@
    "name": "Stamp the asset's source",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_StampAssetSource",
+   "stepHref": "copy-into-folio.html#step-Task_StampAssetSource",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/lane/Lane_Agent",
    "skills": [
@@ -988,6 +994,7 @@
    "name": "Validate the asset and provenance",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_ValidateDeclaredAsset",
+   "stepHref": "copy-into-folio.html#step-Task_ValidateDeclaredAsset",
    "lane": "Validation pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/lane/Lane_Validate",
    "skills": [
@@ -1025,6 +1032,7 @@
    "name": "Edit, comment or raise todos on the folio's copy",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/node/Task_WorkOnCopy",
+   "stepHref": "copy-into-folio.html#step-Task_WorkOnCopy",
    "lane": "Folio author",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyIntoFolio/lane/Lane_Author",
    "skills": [

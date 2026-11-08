@@ -58,6 +58,7 @@
    "name": "Merge, on explicit confirmation",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Task_Merge",
+   "stepHref": "content-change-review-publish.html#step-Task_Merge",
    "lane": "Review Committee",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Reviewer",
    "skills": [
@@ -119,6 +120,7 @@
    "name": "Remove branches/<slug>/",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Task_CleanupStaging",
+   "stepHref": "content-change-review-publish.html#step-Task_CleanupStaging",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Pipeline",
    "skills": [
@@ -216,6 +218,7 @@
    "name": "Rebuild main site",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Task_RebuildMain",
+   "stepHref": "content-change-review-publish.html#step-Task_RebuildMain",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Pipeline",
    "skills": [
@@ -313,6 +316,7 @@
    "name": "Note the main-branch watch",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/node/Task_WatchMainCI",
+   "stepHref": "content-change-review-publish.html#step-Task_WatchMainCI",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ContentChangeReviewPublish/lane/Lane_Pipeline",
    "skills": [

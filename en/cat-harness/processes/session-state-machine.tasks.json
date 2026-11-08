@@ -106,6 +106,7 @@
    "name": "Establish who is acting",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/node/A_IdentifyActor",
+   "stepHref": "session-state-machine.html#step-A_IdentifyActor",
    "lane": "Agent (playing the machine)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/lane/Lane_Machine",
    "skills": [
@@ -343,6 +344,7 @@
    "name": "Ask who is acting",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/node/A_AskWhoIsActing",
+   "stepHref": "session-state-machine.html#step-A_AskWhoIsActing",
    "lane": "Human actor",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/lane/Lane_Human",
    "skills": [
@@ -413,6 +415,7 @@
    "name": "Open the session record",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/node/A_OpenSession",
+   "stepHref": "session-state-machine.html#step-A_OpenSession",
    "lane": "Agent (playing the machine)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/lane/Lane_Machine",
    "skills": [
@@ -650,6 +653,7 @@
    "name": "Secure the agent's permissions",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/node/Call_SecurePermissions",
+   "stepHref": "session-state-machine.html#step-Call_SecurePermissions",
    "lane": "Agent (playing the machine)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/lane/Lane_Machine",
    "skills": [
@@ -892,6 +896,7 @@
    "name": "Take in the turn",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/node/A_ReadTurn",
+   "stepHref": "session-state-machine.html#step-A_ReadTurn",
    "lane": "Agent (playing the machine)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/lane/Lane_Machine",
    "skills": [],
@@ -1124,6 +1129,7 @@
    "name": "Refresh `updatedAt` only",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/node/A_Touch",
+   "stepHref": "session-state-machine.html#step-A_Touch",
    "lane": "Agent (playing the machine)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/lane/Lane_Machine",
    "skills": [
@@ -1361,6 +1367,7 @@
    "name": "Write what changed",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/node/A_UpdateSession",
+   "stepHref": "session-state-machine.html#step-A_UpdateSession",
    "lane": "Agent (playing the machine)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/lane/Lane_Machine",
    "skills": [
@@ -1598,6 +1605,7 @@
    "name": "Close the session",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/node/A_CloseSession",
+   "stepHref": "session-state-machine.html#step-A_CloseSession",
    "lane": "Agent (playing the machine)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SessionStateMachine/lane/Lane_Machine",
    "skills": [

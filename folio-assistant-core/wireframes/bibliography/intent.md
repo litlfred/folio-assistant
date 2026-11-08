@@ -15,7 +15,9 @@ On the index (`<route>/`):
 - the export of every reference shown: BibTeX, CSL-JSON, RIS and Dublin Core / BIBO JSON-LD, as files beside the page;
 - a "By sub-graph" line linking each declared directory's page, with its count;
 - a filter box with a live count;
-- per reference, in an ordered list: the citation (up to three authors then "et al.", year, title, container, volume, issue, pages, publisher); its key as a link to its own anchor; its provenance (`catalogue` or `authored`); its DOI or URL; its ISBN; the source file it was read from; where the library holds it; and its own export as BibTeX, RIS and CSL-JSON downloads.
+- per reference, in an ordered list: the citation (up to three authors then "et al.", year, title, container, volume, issue, pages, publisher); its key as a link to its own page (`<route>/<sub-graph>/<key>/`, a slash address with no `#`), which a click opens in the right-side panel; its provenance (`catalogue` or `authored`); its DOI or URL; its ISBN; the source file it was read from; where the library holds it; and its own export as BibTeX, RIS and CSL-JSON downloads.
+
+On each reference's own page (`<route>/<sub-graph>/<key>/`; for a library item, its asset page): every bibliographic field, every place the work can be read (its URL, DOI, arXiv page, repository and pinned copy, DSpace handles), where it sits in the KG, and its export. An entry with no title shows its citation as the source printed it.
 
 On each sub-graph's page (`<route>/<sub-graph>/`): the directory, its instance and kind, a link back to all references, the same four exports over that directory alone, and the filter and list.
 

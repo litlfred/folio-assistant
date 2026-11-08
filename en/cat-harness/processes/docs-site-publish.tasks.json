@@ -142,6 +142,7 @@
    "name": "Run the release security gate",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_SecurityGate",
+   "stepHref": "docs-site-publish.html#step-Task_SecurityGate",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
    "skills": [
@@ -239,6 +240,7 @@
    "name": "Regenerate every derived reference from its source",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Regenerate",
+   "stepHref": "docs-site-publish.html#step-Task_Regenerate",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
    "skills": [],
@@ -331,6 +333,7 @@
    "name": "Compose each instance's site [its Tool]",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_InstanceSites",
+   "stepHref": "docs-site-publish.html#step-Call_InstanceSites",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
    "skills": [
@@ -428,6 +431,7 @@
    "name": "Build the Jekyll site and the API reference",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Build",
+   "stepHref": "docs-site-publish.html#step-Task_Build",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
    "skills": [],
@@ -520,6 +524,7 @@
    "name": "Export the knowledge graph and its schema",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Export",
+   "stepHref": "docs-site-publish.html#step-Task_Export",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
    "skills": [],
@@ -612,6 +617,7 @@
    "name": "Verify the export",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Verify",
+   "stepHref": "docs-site-publish.html#step-Call_Verify",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
    "skills": [
@@ -714,6 +720,7 @@
    "name": "Restore the OPEN PRs' staging previews",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Restore",
+   "stepHref": "docs-site-publish.html#step-Task_Restore",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
    "skills": [
@@ -811,6 +818,7 @@
    "name": "Push to the CDN (full replace)",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Publish",
+   "stepHref": "docs-site-publish.html#step-Task_Publish",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
    "skills": [
@@ -913,6 +921,7 @@
    "name": "Judge the built-site checks",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_Judge",
+   "stepHref": "docs-site-publish.html#step-Task_Judge",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
    "skills": [],
@@ -1005,6 +1014,7 @@
    "name": "Close the publication manager's alert, if open",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Task_CloseAlert",
+   "stepHref": "docs-site-publish.html#step-Task_CloseAlert",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
    "skills": [],
@@ -1097,6 +1107,7 @@
    "name": "Alert the publication manager",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/node/Call_Alert",
+   "stepHref": "docs-site-publish.html#step-Call_Alert",
    "lane": "CI/CD Pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_DocsSite/lane/Lane_Ci",
    "skills": [

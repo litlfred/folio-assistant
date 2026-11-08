@@ -2902,6 +2902,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/reference.referencenodeschema.sources",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceNodeSchema.sources"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "Every place the work can be read, beyond `URL`: alternates, mirrors, repository records. Not CSL."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceNodeSchema.sources",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/reference.referencesourceschema.kind",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceSourceSchema.kind"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What kind of place it is: `canonical`, `repository`, `pinned`, `handle`, `doi`, `arxiv`, `mirror`."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceSourceSchema.kind",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/reference.referencesourceschema.label",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "ReferenceSourceSchema.label"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "What a reader sees for the link."
+        }
+      ],
+      "dcterms:source": "folio-assistant-core/schemas/reference.ts#ReferenceSourceSchema.label",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant-core/v0/ns/glossary/kg-schema-fields/reference.standalonereferenceinput.raw",
       "@type": "skos:Concept",
       "skos:inScheme": {

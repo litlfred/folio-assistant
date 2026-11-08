@@ -82,6 +82,7 @@
    "name": "Archive → greppable contents manifest",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Archive",
+   "stepHref": "ingest-derive-content.html#step-Task_Archive",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
    "skills": [
@@ -135,6 +136,7 @@
    "name": "File info, sizes, hashes, timestamps, mimetype",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_TechMeta",
+   "stepHref": "ingest-derive-content.html#step-Task_TechMeta",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
    "skills": [
@@ -188,6 +190,7 @@
    "name": "Narrative description per image, localized",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Image",
+   "stepHref": "ingest-derive-content.html#step-Task_Image",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
    "skills": [
@@ -241,6 +244,7 @@
    "name": "Transcribe and translate audio",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Audio",
+   "stepHref": "ingest-derive-content.html#step-Task_Audio",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
    "skills": [
@@ -294,6 +298,7 @@
    "name": "Sheet names, headers, shape, narrative",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Tabular",
+   "stepHref": "ingest-derive-content.html#step-Task_Tabular",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
    "skills": [
@@ -347,6 +352,7 @@
    "name": "Cite the author of every narrative",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Provenance",
+   "stepHref": "ingest-derive-content.html#step-Task_Provenance",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
    "skills": [

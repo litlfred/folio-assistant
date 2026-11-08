@@ -154,6 +154,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_ClaimBean",
+   "stepHref": "code-change-review.html#step-Task_ClaimBean",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
    "skills": [
@@ -396,6 +397,7 @@
    "name": "Branch, and announce it",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_BranchAndAnnounce",
+   "stepHref": "code-change-review.html#step-Task_BranchAndAnnounce",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
    "skills": [
@@ -633,6 +635,7 @@
    "name": "Make the change",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Implement",
+   "stepHref": "code-change-review.html#step-Task_Implement",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
    "skills": [
@@ -870,6 +873,7 @@
    "name": "Run the platform's own gates",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_RunGates",
+   "stepHref": "code-change-review.html#step-Task_RunGates",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
    "skills": [
@@ -1107,6 +1111,7 @@
    "name": "Commit, push, open the PR",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_CommitAndOpenPR",
+   "stepHref": "code-change-review.html#step-Task_CommitAndOpenPR",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
    "skills": [
@@ -1352,6 +1357,7 @@
    "name": "Root-cause the failure",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Diagnose",
+   "stepHref": "code-change-review.html#step-Task_Diagnose",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
    "skills": [
@@ -1589,6 +1595,7 @@
    "name": "Address the review",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_AddressReview",
+   "stepHref": "code-change-review.html#step-Task_AddressReview",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
    "skills": [
@@ -1826,6 +1833,7 @@
    "name": "Prepare the merge, and watch it through",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_PrepareMerge",
+   "stepHref": "code-change-review.html#step-Task_PrepareMerge",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
    "skills": [
@@ -2068,6 +2076,7 @@
    "name": "Record what was done",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_CloseBean",
+   "stepHref": "code-change-review.html#step-Task_CloseBean",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
    "skills": [
@@ -2305,6 +2314,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_ArchiveBean",
+   "stepHref": "code-change-review.html#step-Task_ArchiveBean",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Agent",
    "skills": [
@@ -2547,6 +2557,7 @@
    "name": "Run the gates against the merge of head into base",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_RunCI",
+   "stepHref": "code-change-review.html#step-Task_RunCI",
    "lane": "CI/CD pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Pipeline",
    "skills": [],
@@ -2639,6 +2650,7 @@
    "name": "Review the change",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/node/Task_Review",
+   "stepHref": "code-change-review.html#step-Task_Review",
    "lane": "Code reviewer",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeChangeReview/lane/Lane_Reviewer",
    "skills": [

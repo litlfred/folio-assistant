@@ -166,6 +166,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_OpenReleaseBean",
+   "stepHref": "draft-to-publication.html#step-Task_OpenReleaseBean",
    "lane": "Build pipeline (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
    "skills": [
@@ -268,6 +269,7 @@
    "name": "Build the draft publication",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_BuildDraft",
+   "stepHref": "draft-to-publication.html#step-Task_BuildDraft",
    "lane": "Build pipeline (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
    "skills": [
@@ -365,6 +367,7 @@
    "name": "Run publication QA gates",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_PublicationQa",
+   "stepHref": "draft-to-publication.html#step-Task_PublicationQa",
    "lane": "Build pipeline (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Build",
    "skills": [
@@ -466,6 +469,7 @@
    "name": "Editing and HCI validation",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/CallActivity_Editing",
+   "stepHref": "draft-to-publication.html#step-CallActivity_Editing",
    "lane": "Editors + authoring agents",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Editors",
    "skills": [
@@ -554,6 +558,7 @@
    "name": "Circulate the draft",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_CirculateDraft",
+   "stepHref": "draft-to-publication.html#step-Task_CirculateDraft",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
    "skills": [
@@ -615,6 +620,7 @@
    "name": "Release for public comment",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/CallActivity_PublicComment",
+   "stepHref": "draft-to-publication.html#step-CallActivity_PublicComment",
    "lane": "Public review (commenters, review committee, editor)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PublicReview",
    "skills": [
@@ -657,6 +663,7 @@
    "name": "Review the draft publication",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_ReviewDraft",
+   "stepHref": "draft-to-publication.html#step-Task_ReviewDraft",
    "lane": "Review team (content · QC · technical officer)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_ReviewTeam",
    "skills": [
@@ -722,6 +729,7 @@
    "name": "Clinical or scientific sign-off",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_SmeSignoff",
+   "stepHref": "draft-to-publication.html#step-Task_SmeSignoff",
    "lane": "Clinical / scientific SMEs",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_Sme",
    "skills": [
@@ -797,6 +805,7 @@
    "name": "Open beans for the change requests",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_OpenChangeBeans",
+   "stepHref": "draft-to-publication.html#step-Task_OpenChangeBeans",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
    "skills": [
@@ -858,6 +867,7 @@
    "name": "Authorise the release",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_AuthorizeRelease",
+   "stepHref": "draft-to-publication.html#step-Task_AuthorizeRelease",
    "lane": "Programme manager (release authority)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_ProgMgr",
    "skills": [
@@ -911,6 +921,7 @@
    "name": "Version, tag and publish",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_PublishRelease",
+   "stepHref": "draft-to-publication.html#step-Task_PublishRelease",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
    "skills": [
@@ -972,6 +983,7 @@
    "name": "Close the release beans",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_CloseReleaseBeans",
+   "stepHref": "draft-to-publication.html#step-Task_CloseReleaseBeans",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
    "skills": [
@@ -1029,6 +1041,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/node/Task_ArchiveReleaseBean",
+   "stepHref": "draft-to-publication.html#step-Task_ArchiveReleaseBean",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Publication/lane/Lane_PubMgr",
    "skills": [

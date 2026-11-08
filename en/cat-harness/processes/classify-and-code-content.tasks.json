@@ -70,6 +70,7 @@
    "name": "Identify slots and proposed exclusions",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/node/Task_IdentifySlots",
+   "stepHref": "classify-and-code-content.html#step-Task_IdentifySlots",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
    "skills": [
@@ -323,6 +324,7 @@
    "name": "Run reuse-first lookup and record candidates",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/node/Task_LookupAndCode",
+   "stepHref": "classify-and-code-content.html#step-Task_LookupAndCode",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
    "skills": [
@@ -580,6 +582,7 @@
    "name": "Stage codings, warnings and exclusions for review",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/node/Task_StageForReview",
+   "stepHref": "classify-and-code-content.html#step-Task_StageForReview",
    "lane": "Authoring agent",
    "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/lane/Lane_Agent",
    "skills": [
@@ -821,6 +824,7 @@
    "name": "Check exclusions against page and sign",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/node/Task_ReviewExclusions",
+   "stepHref": "classify-and-code-content.html#step-Task_ReviewExclusions",
    "lane": "L1 extraction reviewer (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/lane/Lane_ExtractionReviewer",
    "skills": [
@@ -919,6 +923,7 @@
    "name": "Adjudicate slot codings and glossary candidates",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/node/Task_ReviewCodings",
+   "stepHref": "classify-and-code-content.html#step-Task_ReviewCodings",
    "lane": "Terminologist / ontologist reviewer (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ClassifyAndCodeContent/lane/Lane_Terminologist",
    "skills": [

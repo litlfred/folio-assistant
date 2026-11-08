@@ -58,6 +58,7 @@
    "name": "Check before you create (exact-title search)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_CheckExists",
+   "stepHref": "bean-open.html#step-Open_CheckExists",
    "lane": "Agent (this session)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/lane/Lane_Agent",
    "skills": [
@@ -295,6 +296,7 @@
    "name": "Create the bean (agent CLI, not an engine op)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Create",
+   "stepHref": "bean-open.html#step-Open_Create",
    "lane": "Agent (this session)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/lane/Lane_Agent",
    "skills": [
@@ -532,6 +534,7 @@
    "name": "Leave it alone (coordinate instead)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_LeaveAlone",
+   "stepHref": "bean-open.html#step-Open_LeaveAlone",
    "lane": "Sibling session or human (not yours to close)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/lane/Lane_Sibling",
    "skills": [
@@ -557,6 +560,7 @@
    "name": "Claim it (status: in-progress)",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/node/Open_Claim",
+   "stepHref": "bean-open.html#step-Open_Claim",
    "lane": "Agent (this session)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen/lane/Lane_Agent",
    "skills": [

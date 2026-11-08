@@ -18,10 +18,11 @@ A SUB-PROCESS, never an entry point.
 - Skill: `log-message`.
 - What: Five required strings — timestamp, actor, process, task, message — and one optional markdown body.
 - Record it: `workflow_complete` with `node: "A_Compose"`.
-- next: → `GW_Complete` (All five present?)
+- next: → `GW_Complete` (Required fields: all five present?)
 
-### Decide — All five present? (`GW_Complete`)
+### Decide — Required fields: all five present? (`GW_Complete`)
 
+- Checks the composed message against the five required fields of the log-message skill (skills/log-message.md, table "The message"): timestamp, actor, process, task and message.
 - Call `workflow_complete` with `node: "GW_Complete"` and `outcome` set to the label that holds:
   - «no» → `End_NotLogged` (Not recorded — say so)
   - «yes» → `A_Record` (Record it where a person can read it)

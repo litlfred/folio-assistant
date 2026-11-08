@@ -58,6 +58,7 @@
    "name": "Place it in uploads/ by a declared route",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion/node/Task_Place",
+   "stepHref": "document-ingestion.html#step-Task_Place",
    "lane": "Contributor (human or agent)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion/lane/Lane_0",
    "skills": [
@@ -123,6 +124,7 @@
    "name": "Extract its metadata into the KG",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion/node/Task_ExtractMetadata",
+   "stepHref": "document-ingestion.html#step-Task_ExtractMetadata",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion/lane/Lane_1",
    "skills": [
@@ -176,6 +178,7 @@
    "name": "Place the asset in library/<slug>/",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion/node/Task_PlaceInLibrary",
+   "stepHref": "document-ingestion.html#step-Task_PlaceInLibrary",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion/lane/Lane_1",
    "skills": [
@@ -229,6 +232,7 @@
    "name": "Record it in library/ as referenced",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion/node/Task_CatalogueReference",
+   "stepHref": "document-ingestion.html#step-Task_CatalogueReference",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Ingestion/lane/Lane_1",
    "skills": [

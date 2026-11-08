@@ -94,6 +94,7 @@
    "name": "Scope the sample: items, store, permanence",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Scope",
+   "stepHref": "sample-import.html#step-Task_Scope",
    "lane": "Contributor (human or agent)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_0",
    "skills": [
@@ -159,6 +160,7 @@
    "name": "Materialize remote content (the five gates)",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Call_Materialize",
+   "stepHref": "sample-import.html#step-Call_Materialize",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_1",
    "skills": [
@@ -221,6 +223,7 @@
    "name": "Land it in library/",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Library",
+   "stepHref": "sample-import.html#step-Task_Library",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_1",
    "skills": [
@@ -274,6 +277,7 @@
    "name": "Keep it as a trial: the unpublished trashcan",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_Trial",
+   "stepHref": "sample-import.html#step-Task_Trial",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_1",
    "skills": [
@@ -327,6 +331,7 @@
    "name": "Import into the store, and test the import",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_ImportTest",
+   "stepHref": "sample-import.html#step-Task_ImportTest",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_1",
    "skills": [
@@ -380,6 +385,7 @@
    "name": "Record what failed",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Task_RecordFindings",
+   "stepHref": "sample-import.html#step-Task_RecordFindings",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_1",
    "skills": [
@@ -433,6 +439,7 @@
    "name": "Refresh materialized content",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/node/Call_Refresh",
+   "stepHref": "sample-import.html#step-Call_Refresh",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SampleImport/lane/Lane_1",
    "skills": [

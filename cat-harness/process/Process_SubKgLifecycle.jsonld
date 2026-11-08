@@ -8,7 +8,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "A sub-KG is staged in place, then leaves for its own repository",
       "summary": "Create a knowledge graph inside a harnessed repository as an instance of its own, grow it there, and when it should leave, stage it for separation and move it whole into a new repository.",
-      "description": "Create a knowledge graph inside a harnessed repository as an instance of its own, grow it there, and when it should leave, stage it for separation and move it whole into a new repository. Declared in place with a planned `repository` and a `livesAt` saying where it sits today; staged by one import seam (`<name>/platform.ts`), the separation guard and a self-contained rehearsal; then, each behind an explicit owner confirmation, the repository is created, the staged contents are copied in with their history, the declaration is re-pointed, a fresh clone is verified, and the in-repo copy is frozen in the kept trashcan.\n\nThe light sibling of kg-separation, which splits a graph into a content and a tools repository; this moves a data instance whole, and shares kg-separation's seeding gateway and decision table.",
+      "description": "Create a knowledge graph inside a harnessed repository as an instance of its own, grow it there, and when it should leave, stage it for separation and move it whole into a new repository. Declared in place with a planned `repository` and a `livesAt` saying where it sits today; staged by one import seam (`<name>/platform.ts`), the separation guard and a self-contained rehearsal; then, each behind an explicit owner confirmation, the repository is created, the staged contents are copied in with their history, the declaration is re-pointed, a fresh clone is verified, and the in-repo copy is frozen in the kept trashcan.\n\nThe light sibling of kg-separation, which splits a graph into a content and a tools repository; this moves a data instance whole, and shares kg-separation's seeding gateway and decision table. DRAWN IN PHASES (owner, 2026-11-08, Q-B1-3 A): it keeps its own grow-in-place and staging steps, and calls the authorise, move and cut-over phases it shares with kg-separation.",
       "enforcement": "strict",
       "sourcePath": "processes/kg/sub-kg-lifecycle.bpmn",
       "sourceUrl": "https://github.com/litlfred/cat-harness/blob/main/processes/kg/sub-kg-lifecycle.bpmn",
@@ -16,8 +16,8 @@
       "startNode": [
         "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Start_Wanted"
       ],
-      "nodeCount": 28,
-      "flowCount": 31,
+      "nodeCount": 25,
+      "flowCount": 27,
       "conformsTo": [
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-bpmn-2.0",
         "https://litlfred.github.io/folio-assistant/cat-harness/externalSchema/omg-dd-1.0"
@@ -57,11 +57,19 @@
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F31",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_DecideLeave",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Leave",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F4",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "stay",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_DecideLeave",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Leave",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/End_Stays",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
@@ -70,7 +78,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "leave",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_DecideLeave",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Leave",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_PushDown",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
@@ -140,127 +148,67 @@
       "name": "green",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
       "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Alone",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_Report",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_Authorise",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F14",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_Report",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_ConfirmCreate",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_Authorise",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Authorised",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F15",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "not yet",
+      "name": "declined",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_ConfirmCreate",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Authorised",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/End_Declined",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F16",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "confirmed",
+      "name": "authorised",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_ConfirmCreate",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_CreateRepo",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Authorised",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_Move",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F17",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_CreateRepo",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_SeedReady",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_Move",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Moved",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F18",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "not yet",
+      "name": "verified",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_SeedReady",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_Drain",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Moved",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_ConfirmCutover",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F19",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_Drain",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_SeedReady",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F20",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "unknown",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_SeedReady",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/End_SeedUnknown",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F21",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "settled",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_SeedReady",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_Seed",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F22",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_Seed",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_Repoint",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F23",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_Repoint",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_FreshClone",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F24",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "red",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Fresh",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_Repoint",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F25",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_FreshClone",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Fresh",
-      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
-    },
-    {
-      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F26",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "could not run",
-      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Fresh",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/End_FreshUnknown",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Moved",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/End_PhaseUnknown",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F27",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "green",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Fresh",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_ConfirmCutover",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_ConfirmCutover",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Freeze",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
@@ -268,7 +216,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "keep",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_ConfirmCutover",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Freeze",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/End_Kept",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
@@ -277,16 +225,34 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "name": "freeze",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_ConfirmCutover",
-      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_Cutover",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_Freeze",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_Cutover",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F30",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
-      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Task_Cutover",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/Call_Cutover",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_CutOver",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F32",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "complete",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_CutOver",
       "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/End_Separated",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle#flow/F33",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "name": "could not determine",
+      "partOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle",
+      "from": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/GW_CutOver",
+      "to": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/node/End_PhaseUnknown",
       "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness/directory/processes"
     }
   ]

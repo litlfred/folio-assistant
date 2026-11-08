@@ -106,6 +106,7 @@
    "name": "Publish the version with its change notes",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_ChangeNotes",
+   "stepHref": "guideline-updates.html#step-Task_ChangeNotes",
    "lane": "Guideline publisher",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Publisher",
    "skills": [
@@ -163,6 +164,7 @@
    "name": "Map the affected layers in order",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_MapCone",
+   "stepHref": "guideline-updates.html#step-Task_MapCone",
    "lane": "Re-pin steward and build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
    "skills": [
@@ -212,6 +214,7 @@
    "name": "Open the re-pin for the next ready layer",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_OpenRepin",
+   "stepHref": "guideline-updates.html#step-Task_OpenRepin",
    "lane": "Re-pin steward and build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
    "skills": [
@@ -261,6 +264,7 @@
    "name": "Compare old, new and our adaptations",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Impact",
+   "stepHref": "guideline-updates.html#step-Task_Impact",
    "lane": "Adaptation team (human or agentic)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation",
    "skills": [
@@ -342,6 +346,7 @@
    "name": "Review the impact with stakeholders",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Review",
+   "stepHref": "guideline-updates.html#step-Task_Review",
    "lane": "Adaptation committee (policy, clinical, programme)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee",
    "skills": [
@@ -367,6 +372,7 @@
    "name": "Decide each adaptation: keep, revise or retire",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Decide",
+   "stepHref": "guideline-updates.html#step-Task_Decide",
    "lane": "Adaptation committee (policy, clinical, programme)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Committee",
    "skills": [
@@ -392,6 +398,7 @@
    "name": "Revise the adaptations as decided",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Revise",
+   "stepHref": "guideline-updates.html#step-Task_Revise",
    "lane": "Adaptation team (human or agentic)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Adaptation",
    "skills": [
@@ -478,6 +485,7 @@
    "name": "Merge the re-pin with its decided revisions",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/node/Task_Merge",
+   "stepHref": "guideline-updates.html#step-Task_Merge",
    "lane": "Re-pin steward and build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_GuidelineUpdates/lane/Lane_Steward",
    "skills": [

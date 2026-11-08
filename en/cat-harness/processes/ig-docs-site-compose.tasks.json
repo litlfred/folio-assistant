@@ -58,6 +58,7 @@
    "name": "Build each IG's artefact index",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Indexes",
+   "stepHref": "ig-docs-site-compose.html#step-Task_Indexes",
    "lane": "Host docs site build (CI runner)",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
    "skills": [
@@ -155,6 +156,7 @@
    "name": "Generate each IG instance's artefact pages",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Pages",
+   "stepHref": "ig-docs-site-compose.html#step-Task_Pages",
    "lane": "Host docs site build (CI runner)",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
    "skills": [
@@ -252,6 +254,7 @@
    "name": "Clone each IG at its recorded commit and stage it",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_Stage",
+   "stepHref": "ig-docs-site-compose.html#step-Task_Stage",
    "lane": "Host docs site build (CI runner)",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
    "skills": [
@@ -353,6 +356,7 @@
    "name": "Compose each staged IG into the host source",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/node/Task_ComposeInto",
+   "stepHref": "ig-docs-site-compose.html#step-Task_ComposeInto",
    "lane": "Host docs site build (CI runner)",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgDocsSiteCompose/lane/Lane_Build",
    "skills": [

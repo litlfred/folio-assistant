@@ -82,6 +82,7 @@
    "name": "Write dublin-core.jsonld (the record of truth)",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Dublin",
+   "stepHref": "ingest-build-l1-kg.html#step-Task_Dublin",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
    "skills": [
@@ -135,6 +136,7 @@
    "name": "Write manifest.jsonld referencing it",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Manifest",
+   "stepHref": "ingest-build-l1-kg.html#step-Task_Manifest",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
    "skills": [
@@ -188,6 +190,7 @@
    "name": "Record assets[] — local path or remote URL",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Assets",
+   "stepHref": "ingest-build-l1-kg.html#step-Task_Assets",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
    "skills": [
@@ -241,6 +244,7 @@
    "name": "Bind the folder to its bibliography slug",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Bind",
+   "stepHref": "ingest-build-l1-kg.html#step-Task_Bind",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
    "skills": [
@@ -294,6 +298,7 @@
    "name": "Read glossary and abbreviations into candidate terms",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Glossary",
+   "stepHref": "ingest-build-l1-kg.html#step-Task_Glossary",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
    "skills": [
@@ -347,6 +352,7 @@
    "name": "Link L1 nodes into the corpus graph",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/node/Task_Link",
+   "stepHref": "ingest-build-l1-kg.html#step-Task_Link",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BuildL1Kg/lane/Lane_0",
    "skills": [

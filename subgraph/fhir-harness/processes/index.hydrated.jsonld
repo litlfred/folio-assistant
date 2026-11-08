@@ -1354,10 +1354,10 @@
           "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l3-fhir-pipeline.svg",
           "description": "How an L3 FHIR Implementation Guide is authored in FSH, built with SUSHI, the validator and the IG Publisher, reviewed and published, starting from a source model that is ready. Generic: what produces the source model is the layer above's own process, which maps its model and then calls Process_L3Fhir. This one names no such model.",
           "enforcement": "advisory",
-          "flowCount": 12,
+          "flowCount": 13,
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
           "name": "L3 FHIR IG pipeline",
-          "nodeCount": 11,
+          "nodeCount": 12,
           "sourcePath": "processes/content/l3-fhir-pipeline.bpmn",
           "sourceUrl": "https://github.com/litlfred/fhir-harness/blob/main/processes/content/l3-fhir-pipeline.bpmn",
           "startNode": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/StartEvent_ModelReady",
@@ -1445,6 +1445,14 @@
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
           "name": "yes",
           "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
+          "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Call_PublishStatements"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C11b",
+          "@type": "bootstrap:SequenceFlow",
+          "from": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Call_PublishStatements",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
           "to": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_IgPublisher"
         },
         {
@@ -1494,6 +1502,22 @@
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
           "name": "QC reviewer",
           "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Call_PublishStatements",
+          "@type": "bootstrap:ProcessNode",
+          "bpmnType": "bpmn:CallActivity",
+          "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
+          "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
+          "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C11",
+          "name": "Publish extracted statements",
+          "nodeKind": "activity",
+          "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C11b",
+          "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
+          "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+          "relaxable": true,
+          "requires": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/publish-extracted-statements",
+          "touchesWorkPlan": false
         },
         {
           "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/EndEvent_IgPublished",
@@ -1585,7 +1609,7 @@
           "bpmnType": "bpmn:ServiceTask",
           "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
           "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes",
-          "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C11",
+          "incoming": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C11b",
           "name": "IG Publisher build",
           "nodeKind": "activity",
           "outgoing": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir#flow/C12",

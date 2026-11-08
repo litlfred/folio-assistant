@@ -46,6 +46,7 @@
    "name": "Ask whether each open PR head has a run",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Sweep",
+   "stepHref": "pr-checks-present.html#step-Task_Sweep",
    "lane": "Scheduled log sweep",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
    "skills": [
@@ -143,6 +144,7 @@
    "name": "Report the verdict on the tracking issue",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Call_Watch",
+   "stepHref": "pr-checks-present.html#step-Call_Watch",
    "lane": "Scheduled log sweep",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
    "skills": [],
@@ -240,6 +242,7 @@
    "name": "Comment once per PR and head",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/node/Task_Comment",
+   "stepHref": "pr-checks-present.html#step-Task_Comment",
    "lane": "Scheduled log sweep",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_PrChecksPresent/lane/Lane_Ci",
    "skills": [

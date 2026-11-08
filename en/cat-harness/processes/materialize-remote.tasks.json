@@ -94,6 +94,7 @@
    "name": "Declare the purpose: working or archival",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Purpose",
+   "stepHref": "materialize-remote.html#step-Task_Purpose",
    "lane": "Contributor (human or agent)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_0",
    "skills": [
@@ -159,6 +160,7 @@
    "name": "Enumerate the source descriptor",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Enumerate",
+   "stepHref": "materialize-remote.html#step-Task_Enumerate",
    "lane": "Ingestion engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
@@ -212,6 +214,7 @@
    "name": "Size the take and the whole",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Size",
+   "stepHref": "materialize-remote.html#step-Task_Size",
    "lane": "Ingestion engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
@@ -265,6 +268,7 @@
    "name": "Answer the other four gates",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_AnswerGates",
+   "stepHref": "materialize-remote.html#step-Task_AnswerGates",
    "lane": "Ingestion engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
@@ -318,6 +322,7 @@
    "name": "Fetch, and record fixity",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Fetch",
+   "stepHref": "materialize-remote.html#step-Task_Fetch",
    "lane": "Ingestion engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
@@ -371,6 +376,7 @@
    "name": "Declare the node materialized",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_Declare",
+   "stepHref": "materialize-remote.html#step-Task_Declare",
    "lane": "Ingestion engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [
@@ -424,6 +430,7 @@
    "name": "Leave it referenced, record why",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/node/Task_StayRef",
+   "stepHref": "materialize-remote.html#step-Task_StayRef",
    "lane": "Ingestion engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MaterializeRemote/lane/Lane_1",
    "skills": [

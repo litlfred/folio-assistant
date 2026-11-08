@@ -190,6 +190,7 @@
    "name": "Basic ingestion (harness)",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_Basic",
+   "stepHref": "l1-document-ingestion.html#step-CallActivity_Basic",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -248,6 +249,7 @@
    "name": "Detect media type, mint a doc id",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Detect",
+   "stepHref": "l1-document-ingestion.html#step-Task_Detect",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -301,6 +303,7 @@
    "name": "Establish the licence from the upload",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Licence",
+   "stepHref": "l1-document-ingestion.html#step-Task_Licence",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -354,6 +357,7 @@
    "name": "Extract structure",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_Extract",
+   "stepHref": "l1-document-ingestion.html#step-CallActivity_Extract",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -412,6 +416,7 @@
    "name": "Derive content from the assets",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_Derive",
+   "stepHref": "l1-document-ingestion.html#step-CallActivity_Derive",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -470,6 +475,7 @@
    "name": "Ingest the theme",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_IngestTheme",
+   "stepHref": "l1-document-ingestion.html#step-CallActivity_IngestTheme",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -528,6 +534,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Call_BeanOpen",
+   "stepHref": "l1-document-ingestion.html#step-Call_BeanOpen",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -586,6 +593,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Call_BeanClose",
+   "stepHref": "l1-document-ingestion.html#step-Call_BeanClose",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -644,6 +652,7 @@
    "name": "Build the L1 knowledge graph",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_BuildKg",
+   "stepHref": "l1-document-ingestion.html#step-CallActivity_BuildKg",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -702,6 +711,7 @@
    "name": "L1 completeness gate",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_Gate",
+   "stepHref": "l1-document-ingestion.html#step-CallActivity_Gate",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -760,6 +770,7 @@
    "name": "Record the gap as a bean",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_OpenBean",
+   "stepHref": "l1-document-ingestion.html#step-Task_OpenBean",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -813,6 +824,7 @@
    "name": "Move into library/<bib-slug>/",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Promote",
+   "stepHref": "l1-document-ingestion.html#step-Task_Promote",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -866,6 +878,7 @@
    "name": "Publish the extracted statements with source links",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/CallActivity_PublishStatements",
+   "stepHref": "l1-document-ingestion.html#step-CallActivity_PublishStatements",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -924,6 +937,7 @@
    "name": "Queue prose blocks for summary",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_SummaryQueue",
+   "stepHref": "l1-document-ingestion.html#step-Task_SummaryQueue",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [
@@ -977,6 +991,7 @@
    "name": "Available to cite as an L1 source",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/node/Task_Citeable",
+   "stepHref": "l1-document-ingestion.html#step-Task_Citeable",
    "lane": "Ingestion Engine (agent, runs unattended)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_L1DocumentIngestion/lane/Lane_1",
    "skills": [

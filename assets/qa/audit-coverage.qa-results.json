@@ -2,7 +2,7 @@
   "$schema": "qa-results/v1",
   "producer": {
     "script": "cat-harness-tools/scripts/audit-coverage.ts",
-    "script_hash": "b536c5af5d8d"
+    "script_hash": "714d44513ab7"
   },
   "subject": {
     "kind": "audit-coverage",
@@ -10,7 +10,7 @@
   },
   "families": {
     "coverage-measured": {
-      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 97 of 97 declared kind(s), 279 gate(s), 108 criteria.",
+      "summary": "Every declared kind with its four counts and its state. Not findings: the measurement itself, so the committed record answers \"what audits this kind\" without rerunning anything. The file COUNTS are printed rather than recorded — a census moves on any commit and a gate keyed on it is stale by default; `hasFiles` carries the only thing it decides. 97 of 97 declared kind(s), 280 gate(s), 108 criteria.",
       "count": 97,
       "entries": [
         {
@@ -229,8 +229,10 @@
         },
         {
           "kind": "business-processes",
-          "state": "no-directory",
-          "directories": [],
+          "state": "covered",
+          "directories": [
+            "smart-trust-phw/input/business-processes"
+          ],
           "criteria": [],
           "subjectKinds": [],
           "gates": [
@@ -238,13 +240,14 @@
           ],
           "typed": false,
           "adversarial": "never",
-          "hasFiles": false
+          "hasFiles": true
         },
         {
           "kind": "cache",
           "state": "covered",
           "directories": [
-            "cat-harness-tools/caches"
+            "cat-harness-tools/caches",
+            "fhir-harness/caches"
           ],
           "criteria": [],
           "subjectKinds": [],
@@ -263,6 +266,7 @@
             "cat-harness-tools/schemas",
             "cat-harness/archimate",
             "cat-harness/folio-render",
+            "cat-harness/library",
             "cat-harness/openapi",
             "cat-harness/schemas",
             "cat-harness/sdlc",
@@ -453,6 +457,7 @@
             "smart-base/schemas",
             "smart-base/scripts",
             "smart-base/templates",
+            "smart-trust-phw/tools",
             "who-iris/id-lookup",
             "who-iris/scripts"
           ],
@@ -959,7 +964,7 @@
           "kind": "library",
           "state": "covered",
           "directories": [
-            "cat-harness/library",
+            "cat-harness/library/corpus",
             "fhir-harness/library",
             "folio-assistant-core/library",
             "folio-assistant-sci/library",
@@ -1144,6 +1149,7 @@
           "directories": [
             "bootstrap-tools/processes",
             "bootstrap/processes",
+            "cat-harness/library/processes",
             "cat-harness/processes",
             "cat-harness/sdlc/processes",
             "fhir-harness/processes",
@@ -1285,7 +1291,8 @@
             "bun run cat lsi:viz:check",
             "bun run cat p2:refusals:check",
             "bun run cat qa:attestations:migrate:check",
-            "bun run cat translation:block-qa:check"
+            "bun run cat translation:block-qa:check",
+            "bun run cat translation:page-qa:check"
           ],
           "typed": true,
           "adversarial": "never",
@@ -1373,6 +1380,7 @@
             "folio-assistant-core/scenarios",
             "folio-assistant-sci/scenarios",
             "smart-base/scenarios",
+            "smart-trust-phw/scenarios",
             "who-iris/scenarios"
           ],
           "criteria": [
@@ -1478,6 +1486,7 @@
             "bootstrap-tools/skills",
             "bootstrap/skills",
             "cat-harness-tools/skills",
+            "cat-harness/library/skills",
             "cat-harness/sdlc/skills",
             "cat-harness/skills",
             "cat-harness/work-plan/skills",
@@ -1821,6 +1830,7 @@
             "bun run cat translation:drift:check",
             "bun run cat translation:index:check",
             "bun run cat translation:obsolete:check",
+            "bun run cat translation:page-qa:check",
             "bun run cat translation:status:check"
           ],
           "typed": true,
@@ -2055,7 +2065,7 @@
     },
     "kinds-no-directory": {
       "summary": "No instance declares a directory of this kind — a nested kind reached through its parent (`bean-defs` inside `beans/`), or one this repository does not have. Recorded so it cannot be read as a coverage gap, and so a kind that LOSES its directory shows up.",
-      "count": 23,
+      "count": 22,
       "entries": [
         {
           "kind": "archimate",
@@ -2071,13 +2081,6 @@
           "kind": "building-blocks",
           "criteria": 0,
           "gates": []
-        },
-        {
-          "kind": "business-processes",
-          "criteria": 0,
-          "gates": [
-            "bun run cat check:xml-comments"
-          ]
         },
         {
           "kind": "cdn-site",
@@ -2184,7 +2187,7 @@
       "entries": []
     },
     "kinds-unaudited": {
-      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 279 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
+      "summary": "A declared kind whose directories hold files that NOTHING reaches — no kg-audit criterion, no gate declaring @covers, and no declared validator. All 280 gate(s) have declared, so this is a verdict rather than an upper bound (bean `3srh`).",
       "count": 0,
       "entries": []
     },
@@ -2194,5 +2197,5 @@
       "entries": []
     }
   },
-  "total": 121
+  "total": 120
 }

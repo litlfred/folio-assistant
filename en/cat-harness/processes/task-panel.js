@@ -44,8 +44,14 @@
     panel.textContent = "";
     var close = el("button", "pt-close", "\u00d7"); close.type = "button"; close.setAttribute("aria-label", "Close");
     close.onclick = function () { hide(); }; panel.appendChild(close);
-    var task = obj(t.type.replace(/^bpmn:/, ""), link({ name: t.name, href: t.href }), "task");
-    task.appendChild(el("div", "pt-attr", "id = " + t.id));
+    // The title opens the step's description below the drawing; the step's
+    // own page, where it has one, is its id.
+    var title = link({ name: t.name, href: t.stepHref || t.href });
+    if (t.stepHref) title.onclick = function () { hide(); };
+    var task = obj(t.type.replace(/^bpmn:/, ""), title, "task");
+    var idl = el("div", "pt-attr", "id = ");
+    if (t.stepHref && t.href) idl.appendChild(link({ name: t.id, href: t.href })); else idl.appendChild(document.createTextNode(t.id));
+    task.appendChild(idl);
     if (t.lane) {
       var ln = el("div", "pt-attr", "lane = "); ln.appendChild(link({ name: t.lane, href: t.laneHref }));
       // The lane is a partition; the Role it names is who acts (owner,
