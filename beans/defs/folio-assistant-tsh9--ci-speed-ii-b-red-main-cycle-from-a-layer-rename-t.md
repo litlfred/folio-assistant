@@ -2,13 +2,13 @@
 # folio-assistant-tsh9
 $schema: bean/1.0.0
 title: 'CI speed II (b): red-main cycle from a layer rename; two-phase move rule'
-status: in-progress
+status: completed
 type: task
 priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:26:16Z
-updated_at: 2026-11-05T18:35:01Z
+updated_at: 2026-11-08T07:07:30Z
 parent: folio-assistant-k3vv
 ---
 
@@ -29,8 +29,8 @@ For a rename of a path that other layers link to:
 So the order in which layers re-pin stops mattering. Belongs in cat-harness (an sdlc skill plus the link checks).
 
 ## Done when
-- [ ] #2946 merged and main green on its gates
-- [ ] the two-phase move rule written as a skill and enforced by the link checks (old and new accepted during the window)
+- [x] #2946 merged and main green on its gates
+- [x] the two-phase move rule written as a skill and enforced by the link checks (old and new accepted during the window)
 
 _2026-11-05T08:40:00Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk from the CI-speed analysis of session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf.
 
@@ -61,3 +61,5 @@ _2026-11-05T18:01:39Z_ — The two-phase move rule has landed: the skill in litl
 _2026-11-05T18:04:36Z_ — Extension to four more link checkers: litlfred/cat-harness-tools#1540 (based on main after #1492). Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
 
 _2026-11-05T18:35:01Z_ — litlfred/cat-harness-tools#1540 merged as da5aaee (owner approved): four more checkers honour declared moves. The two-phase move rule is in: the skill (cat-harness#1043), check:subgraphs and state:push (#1492), and the link and command-path checkers (#1540). Left as a candidate: check:agents-claims. Still open on this item: "#2946 merged and main green". #2946 has merged; main green waits on folio-assistant#2954. Session https://claude.ai/code/session_01VQDpPejdhwKpDJHfgEBPTk.
+
+_2026-11-08T07:07:30Z_ — Completed: `litlfred/folio-assistant#2946` (`28593a7`), `litlfred/cat-harness#1043` (`d9f08ff`, skill `two-phase-move`), `litlfred/cat-harness-tools#1492` (`5803bff`), `litlfred/cat-harness-tools#1540` (`da5aaee`), and `litlfred/folio-assistant#2985` (`da3ca528562a`, `2026-11-08T06:42:36Z`) are all merged on `origin/main`, and `folio-assistant` `main` is green (`82 pass`).

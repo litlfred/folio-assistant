@@ -2,11 +2,11 @@
 # folio-assistant-pqlh
 $schema: bean/1.0.0
 title: 'Re-pin trains: keep bootstrap checklists in step with the train''s bootstrap pin'
-status: in-progress
+status: completed
 type: task
 priority: normal
 created_at: 2026-11-06T05:55:06Z
-updated_at: 2026-11-06T08:35:57Z
+updated_at: 2026-11-08T07:07:30Z
 parent: folio-assistant-k3vv
 ---
 
@@ -17,3 +17,5 @@ Structural fix for cause 1 of the 2026-11-06 train failures: cat-harness commits
 - [x] Implemented in cat-harness-tools#1570 (merged df04aaa, 2026-11-06) (repin-standing alignToHeldPins; instances below the harness follow the harness's own lock). Then re-pin fa's tools at or after it; a train moving bootstrap alone no longer fails bpmn:checklist:check
 
 _2026-11-06T08:35:57Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
+
+_2026-11-08T07:07:30Z_ — Completed: `litlfred/cat-harness-tools#1570` merged on `origin/main` as `df04aaa` (`2026-11-06`) and reached `litlfred/folio-assistant` `main` via `#2985` (`da3ca528562a`, `2026-11-08T06:42:36Z`, pinning `cat-harness-tools` `9afa699` >= `df04aaa` and `bootstrap` `12fa6d5`).

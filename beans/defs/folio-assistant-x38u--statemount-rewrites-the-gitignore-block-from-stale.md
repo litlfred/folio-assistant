@@ -2,10 +2,10 @@
 # folio-assistant-x38u
 $schema: bean/1.0.0
 title: state:mount rewrites the .gitignore block from stale layer mounts without --id
-status: in-progress
+status: completed
 type: bug
 created_at: 2026-11-05T13:21:54Z
-updated_at: 2026-11-06T08:36:33Z
+updated_at: 2026-11-08T07:07:30Z
 parent: folio-assistant-4j43
 ---
 
@@ -14,8 +14,10 @@ Every fresh folio-assistant session: the container's instance mounts are older t
 ## Done when
 - [x] cat-harness-tools: syncStateIgnores is skipped when layer mounts do not match the lock, with or without --id; test added (cat-harness-tools#1515)
 - [x] PR merged in cat-harness-tools (fd997d6, 2026-11-05)
-- [ ] reaches folio-assistant through the next re-pin train (not done here)
+- [x] reaches folio-assistant through the next re-pin train (not done here)
 
 PR: https://github.com/litlfred/cat-harness-tools/pull/1515
 
 _2026-11-06T08:36:33Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
+
+_2026-11-08T07:07:30Z_ — Completed: `litlfred/cat-harness-tools#1515` (`fd997d6`, `2026-11-05`) is merged and reached `litlfred/folio-assistant` `main` via `#2985` (`da3ca528562a`, `2026-11-08T06:42:36Z`, pinning `cat-harness-tools` `9afa699` >= `fd997d6`).

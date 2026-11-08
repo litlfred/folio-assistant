@@ -2,14 +2,14 @@
 # folio-assistant-bx4c
 $schema: bean/1.0.0
 title: mount:remote re-render writes into mounted instances, breaking mount:lock:check
-status: in-progress
+status: completed
 type: bug
 priority: normal
 tags:
     - mounts
     - cat-harness-tools
 created_at: 2026-11-05T08:53:21Z
-updated_at: 2026-11-06T06:08:30Z
+updated_at: 2026-11-08T07:07:30Z
 parent: folio-assistant-rwmf
 ---
 
@@ -38,3 +38,5 @@ _2026-11-05_: The symptom, cat-harness's stale committed surface, is being fixed
 _2026-11-06T05:39:55Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
 
 _2026-11-06T06:08:30Z_ — Implemented in https://github.com/litlfred/cat-harness-tools/pull/1573 (`agy/bean-bx4c-mount-remote-no-write`, commit `0166367f`): `gen-skill-commands.ts` and `agent-memory.ts` never write inside mounted instances (`isMountedInstance`), render only the index's own surface, and report stale committed surfaces in mounted layers naming the layer.
+
+_2026-11-08T07:07:30Z_ — Completed: `litlfred/cat-harness-tools#1573` merged on `origin/main` as `9a4ccd9c7fbb` (`2026-11-07T05:31:51Z`) and re-pinned into `litlfred/folio-assistant` in `#2985` (`da3ca528562a`, `2026-11-08T06:42:36Z`).
