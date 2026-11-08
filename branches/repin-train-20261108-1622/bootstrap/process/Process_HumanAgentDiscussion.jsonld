@@ -1,0 +1,195 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion",
+      "@type": "bootstrap:Process",
+      "label": "Human–agent discussion",
+      "summary": "A REUSABLE SUB-PROCESS, never an entry point.",
+      "description": "A REUSABLE SUB-PROCESS, never an entry point. Every diagram in bootstrap that needs something only a person can supply — a choice, a judgement, a step only they have the rights to perform — reaches it through a call activity with calledElement=\"Process_HumanAgentDiscussion\", rather than drawing its own asking. One way of asking, drawn once: a caller that draws its own has a second answer to \"how do I ask\", free to drift from this one.\n\nBEFORE ANY QUESTION, THE ASKER DETERMINES WHERE IT IS: the CONTEXT, the ROLES, and the PROCESS and TASK (or that it is idle). Each is a task, declared below as a precondition of the first question.\n\nWHAT CANNOT BE DETERMINED IS ASKED FIRST, with no default; the caller's question waits, counted.\n\nTHE ORDER IS THE PROCESS: context, then options, then a recommendation and what happens with no answer, then one question. A question the reader cannot answer without opening anything is not ready.\n\nA DEFAULT is applied only when the CALLER allows one, and is recorded as assumed, never as the person's answer. Otherwise silence ends as unsettled.\n\nSYMMETRIC IN ITS PARTICIPANTS. The answering lane is a person or a sibling agent that already holds the answer; the record says which, because the two are evidence of different weight.\n\nNO work-plan element, and isExecutable is false, for the reasons initialize-harness gives.",
+      "source": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/processes/human-agent-discussion.bpmn",
+      "depiction": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/processes/human-agent-discussion.svg",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/directory/processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_1",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/Start_HumanAgentDiscussion",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineContext",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_10",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "no answer",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_DefaultAllowed",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_11",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "yes",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_DefaultAllowed",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_ApplyDefault",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_12",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "no",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_DefaultAllowed",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_RecordUnsettled",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_13",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "declined",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_RecordUnsettled",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_14",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_RecordAnswer",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_WhichQuestion",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_15",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_ApplyDefault",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/End_Defaulted",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_16",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_RecordUnsettled",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/End_Unsettled",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_2",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_GiveContext",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_LayOutOptions",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_3",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_LayOutOptions",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_Recommend",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_4",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_Recommend",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_PutQuestion",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_5",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_PutQuestion",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_Answer",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_6",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_Answer",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_7",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "settles it",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_RecordAnswer",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_8",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "unclear",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_WhatCameBack",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_FollowUp",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_9",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_FollowUp",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_Answer",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_P1",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineContext",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineRoles",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_P2",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineRoles",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineProcess",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_P3",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineProcess",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_Determined",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_P4",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "yes",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_Determined",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_GiveContext",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_P5",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "no",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_Determined",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_AskUndeterminedFirst",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_P6",
+      "@type": "bootstrap:SequenceFlow",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_AskUndeterminedFirst",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_GiveContext",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_P7",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "the caller's",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_WhichQuestion",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/End_Answered",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion#flow/SF_HAD_P8",
+      "@type": "bootstrap:SequenceFlow",
+      "label": "a precondition: determine again",
+      "sourceRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/GW_WhichQuestion",
+      "targetRef": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineContext",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/bootstrap/process/Process_HumanAgentDiscussion"
+    }
+  ]
+}

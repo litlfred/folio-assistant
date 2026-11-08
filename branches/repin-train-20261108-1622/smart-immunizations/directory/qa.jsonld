@@ -1,0 +1,33 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/smart-immunizations/smart-immunizations.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/smart-immunizations/directory/qa.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/smart-immunizations/smart-immunizations.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1622",
+    "sha": "8657825ba5fec0015410c2457c781f5229a1e385",
+    "pr": "repin-train/20261108-1622",
+    "run": "42499691836"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/smart-immunizations/directory/qa",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "qa",
+      "path": "test/results/",
+      "contentSource": {
+        "@id": "https://github.com/litlfred/smart-immunizations/tree/cat/cat-harness/qa-reports",
+        "kind": "branch",
+        "branch": "cat/cat-harness/qa-reports",
+        "keyedBy": "commit",
+        "declaredIn": "storage"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/qa"
+      ],
+      "description": "What auditing this instance produced: one QA verdict sidecar per audited subject, among them the check:l1-complete verdict of each library/ entry. Stored on the cat/cat-harness/qa-reports branch keyed by commit, so the working copy is not a record: a consumer reads a verdict as unknown until it names the commit it is about. `qa` is a perInstance graph typology: these verdicts are about this instance's nodes.",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1622/smart-immunizations/directory/qa",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/qa"
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "$ref": "#/definitions/FhirConsentStatus",
+  "definitions": {
+    "FhirConsentStatus": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "proposed",
+        "active",
+        "rejected",
+        "inactive",
+        "entered-in-error"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/iti-108-consent-client/FhirConsentStatusSchema.schema.json",
+  "title": "FhirConsentStatusSchema",
+  "description": "Generated from `FhirConsentStatusSchema` in schemas/iti-108-consent-client.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261108-1622",
+    "sha": "8657825ba5fec0015410c2457c781f5229a1e385",
+    "pr": "repin-train/20261108-1622",
+    "run": "42499691836"
+  }
+}

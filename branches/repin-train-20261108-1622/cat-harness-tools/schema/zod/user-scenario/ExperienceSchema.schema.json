@@ -1,0 +1,41 @@
+{
+  "$ref": "#/definitions/Experience",
+  "definitions": {
+    "Experience": {
+      "type": "object",
+      "properties": {
+        "actor": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9-]*$"
+        },
+        "doing": {
+          "type": "string",
+          "minLength": 1
+        },
+        "feeling": {
+          "type": "string",
+          "minLength": 1
+        },
+        "emotion": {
+          "type": "integer",
+          "minimum": -2,
+          "maximum": 2
+        }
+      },
+      "required": [
+        "actor",
+        "doing"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/user-scenario/ExperienceSchema.schema.json",
+  "title": "ExperienceSchema",
+  "description": "Generated from `ExperienceSchema` in schemas/process/user-scenario.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261108-1622",
+    "sha": "8657825ba5fec0015410c2457c781f5229a1e385",
+    "pr": "repin-train/20261108-1622",
+    "run": "42499691836"
+  }
+}
