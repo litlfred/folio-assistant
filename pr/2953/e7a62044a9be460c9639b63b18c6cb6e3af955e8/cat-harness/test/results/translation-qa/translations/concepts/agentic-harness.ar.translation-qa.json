@@ -1,0 +1,96 @@
+{
+  "$schema": "translation-qa/v1",
+  "label": "trans:ar/concepts/agentic-harness",
+  "locale": "ar",
+  "paths": {
+    "pot": "translations/ar/concepts/agentic-harness.pot"
+  },
+  "po": "translations/ar/concepts/agentic-harness.po",
+  "source_hashes": {
+    "pot": "73742425f966",
+    "po": "27177d26a831"
+  },
+  "criteria": {
+    "translation-coverage": [
+      {
+        "field_hash": {
+          "pot": "73742425f966",
+          "po": "27177d26a831"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "6ea41c942da1",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_tree": "a1a509360d78adf89284b28fc039b18bd160d10a",
+        "severity": "minor",
+        "metrics": {
+          "translated": 164,
+          "total": 232,
+          "pct": 71
+        },
+        "notes": "68 of 232 strings carry no translation in this locale."
+      }
+    ],
+    "translation-terms-preserved": [
+      {
+        "field_hash": {
+          "pot": "73742425f966",
+          "po": "27177d26a831"
+        },
+        "result": "warn",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "6ea41c942da1",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_tree": "a1a509360d78adf89284b28fc039b18bd160d10a",
+        "severity": "minor",
+        "evidence": [
+          {
+            "text": "PR — absent from: \"انضباط التثبيت وطلبات السحب\""
+          }
+        ],
+        "metrics": {
+          "checked": 164,
+          "missing": 1,
+          "missing_strict": 0,
+          "missing_acronyms": 1,
+          "glossary_broken": 0,
+          "glossary_resolved": 0
+        },
+        "notes": "1 acronym(s) from the source do not appear verbatim in the translation and no glossary entry speaks for them. That is right for one the target language localises — WHO is OMS in French — and wrong for one silently dropped, and this check cannot tell the two apart. Add them to translations/ar/glossary.po: a pinned msgstr says what the term must become, and a \"#, localised\" flag says it is rendered in the target language without pinning how."
+      }
+    ],
+    "translation-not-echo": [
+      {
+        "field_hash": {
+          "pot": "73742425f966",
+          "po": "27177d26a831"
+        },
+        "result": "pass",
+        "reviewer": {
+          "kind": "script",
+          "id": "pipeline/translation-block-qa.ts",
+          "actor": "ci-pipeline",
+          "version": "v1",
+          "script_hash": "6ea41c942da1",
+          "script_commit_sha": "unknown"
+        },
+        "reviewed_tree": "a1a509360d78adf89284b28fc039b18bd160d10a",
+        "metrics": {
+          "echoed": 0,
+          "translated": 164
+        }
+      }
+    ],
+    "translation-semantic-roundtrip": []
+  }
+}
