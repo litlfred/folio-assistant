@@ -6,7 +6,7 @@ status: completed
 type: task
 priority: normal
 created_at: 2026-10-31T20:35:18Z
-updated_at: 2026-11-02T08:00:00Z
+updated_at: 2026-11-08T09:30:00Z
 parent: folio-assistant-dthl
 ---
 
@@ -29,3 +29,4 @@ Needs the owner's OK before any PR. Source: litlfred/dth-phc#1 section 8 (L1-L12
 Owner OK 2026-10-31 20:48Z (option A). Added to smart-base#249 at 2153414; completes when #249 merges.
 
 _2026-11-02T08:00:00Z_ — Completed. Owner merged litlfred/smart-base#249 (`e4e4ee1`) on 2026-11-02 07:54Z after Q-ING-1 A; its base litlfred/smart-base#244 landed as `60250de`. #249 also added three rules from the PHC Fig. 13 work: a flattened PDF table goes back into a table in the L1 (litlfred/who-iris#157), coverage is regenerated with every L1 repin (litlfred/dth-phc#5), and texts cite by title or number, never by raw id. The gate fix it needed is litlfred/cat-harness-tools#1362 (`61400ac`).
+Completed: smart-base#249 merged.
