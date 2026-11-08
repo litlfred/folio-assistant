@@ -75,7 +75,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           ref: main
-          fetch-depth: 0
+          # One commit, not the whole history: most runs only judge, land or
+          # report, which reads the API and never git history. A full-history
+          # checkout took 28 min on the first run (2026-11-06, run 42206640400).
+          # The build step deepens it, and only when it builds.
+          fetch-depth: 1
           persist-credentials: false
       - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
         with:
@@ -126,6 +130,10 @@ jobs:
           set -uo pipefail
           git config user.name "merge-train[bot]"
           git config user.email "merge-train@users.noreply.github.com"
+          # The checkout is shallow; merging the members needs their merge
+          # bases with main, so main's history is fetched here, only on a build.
+          git fetch -q --unshallow --no-tags origin +refs/heads/main:refs/remotes/origin/main \
+            || { echo "::error::could not deepen the checkout to main's history"; exit 1; }
           stamp=$(date -u +%Y%m%d-%H%M)
           branch="merge-train/$stamp"
           # Exit 1 is "built, but something needs a person" (a refused member,
