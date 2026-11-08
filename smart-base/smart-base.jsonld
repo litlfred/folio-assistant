@@ -363,14 +363,14 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/46a8ffbce4b9c3782c2449fe9609811ac1a13afe",
-  "sourceCommitSha": "46a8ffbce4b9c3782c2449fe9609811ac1a13afe",
-  "sourceTree": "f5a1cf9652db8ce827f1a4b2823cbda8ecffd56c",
-  "sourceCommitAt": "2026-11-07T21:39:46+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/da3ca528562a7f0516d296f58d6c2ff6174e0069",
+  "sourceCommitSha": "da3ca528562a7f0516d296f58d6c2ff6174e0069",
+  "sourceTree": "c84b72bdb2dcc9844dadea7548e0242b3f6cb637",
+  "sourceCommitAt": "2026-11-08T07:42:36+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
-    "Skill": 33,
+    "Skill": 35,
     "Process": 10,
     "SequenceFlow": 192,
     "Lane": 30,
@@ -697,6 +697,21 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
     },
     {
+      "@id": "http://smart.who.int/base/skill/review-client-history",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "review-client-history",
+      "title": "Review the client's history",
+      "description": "A health worker reads the client's history as their device shows it (an International Patient Summary, imported records, or a paper card and what the client reports) and takes into account what bears on today's care, weighing each item by where it came from: verified, unverified or reported. Input is the records with their provenance; output is what the health worker relies on.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/review-client-history.md",
+      "instructionLines": 46,
+      "inputSchema": "http://smart.who.int/base/schema/skills/review-client-history/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/review-client-history/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
       "@id": "http://smart.who.int/base/skill/l2-dak-authoring",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
       "name": "l2-dak-authoring",
@@ -803,6 +818,21 @@
       "instructionLines": 56,
       "inputSchema": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/input.schema.json",
       "outputSchema": "http://smart.who.int/base/schema/skills/review-decision-support-guidance/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    },
+    {
+      "@id": "http://smart.who.int/base/skill/inform-client",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "inform-client",
+      "title": "Inform the client",
+      "description": "A health worker tells the client (or caregiver) what was decided and what happens next, in words and, where the DAK gives one, on a slip or card: a referral, a return date, a result. Input is what to tell and the client's language; output is that the client was told, and what they were handed. Generic for any DAK step that ends with the client being informed.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/inform-client.md",
+      "instructionLines": 42,
+      "inputSchema": "http://smart.who.int/base/schema/skills/inform-client/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/inform-client/output.schema.json",
       "hasInstructions": true,
       "hasIOContract": true,
       "ambiguous": false,
@@ -6897,7 +6927,9 @@
       "hasSkill": [
         "http://smart.who.int/base/skill/complete-sdc-questionnaire",
         "http://smart.who.int/base/skill/review-decision-support-guidance",
-        "http://smart.who.int/base/skill/record-decision-rationale"
+        "http://smart.who.int/base/skill/record-decision-rationale",
+        "http://smart.who.int/base/skill/inform-client",
+        "http://smart.who.int/base/skill/review-client-history"
       ]
     },
     {

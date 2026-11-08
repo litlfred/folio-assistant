@@ -194,7 +194,19 @@ name itself exactly in its own <code class="language-plaintext highlighter-rouge
 “missing”, never as a wrong package. The copy here holds no such table: the
 caller maps each prefix with <code class="language-plaintext highlighter-rouge">--site-repo &lt;prefix&gt;=&lt;owner/repo&gt;[@branch]</code>,
 none by default, because which publishers exist is not something fhir-harness
-may know.</p><h2 id="the-measurement-that-justifies-the-work"><a href="#the-measurement-that-justifies-the-work" class="anchor-heading" aria-labelledby="the-measurement-that-justifies-the-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The measurement that justifies the work
+may know.</p><p><strong>An IG’s package lock.</strong> An IG that pins its FHIR packages commits a
+<code class="language-plaintext highlighter-rouge">fhir-packages.lock.json</code> at its root, in the format of this layer’s
+<code class="language-plaintext highlighter-rouge">scripts/sushi/fhir-packages.lock.json</code>: <code class="language-plaintext highlighter-rouge">{"packages": [{"name", "version",
+"tarball", "integrity"}]}</code>, where <code class="language-plaintext highlighter-rouge">tarball</code> is an exact https URL (a
+commit-pinned one for a package a site repository publishes) and <code class="language-plaintext highlighter-rouge">integrity</code> is
+<code class="language-plaintext highlighter-rouge">sha512-&lt;base64&gt;</code> or <code class="language-plaintext highlighter-rouge">sha256-&lt;base64&gt;</code>; a hex <code class="language-plaintext highlighter-rouge">sha256</code> may be given instead or
+as well, and every hash given must match. <code class="language-plaintext highlighter-rouge">--lock &lt;file&gt;</code> installs each pinned
+package from its URL only, refuses one whose bytes or <code class="language-plaintext highlighter-rouge">package.json</code> do not
+match, and does not follow its dependencies, so the lock lists the IG’s
+packages in full. <code class="language-plaintext highlighter-rouge">ig-ast-refresh.yml</code> (input <code class="language-plaintext highlighter-rouge">package-lock</code>, default
+<code class="language-plaintext highlighter-rouge">fhir-packages.lock.json</code>) and <code class="language-plaintext highlighter-rouge">ig-ast-build.sh</code> (<code class="language-plaintext highlighter-rouge">--package-lock</code>) run it before
+SUSHI and the Publisher, so neither fetches a package the lock pins. A package’s
+URL is named in the lock, never derived from its name.</p><h2 id="the-measurement-that-justifies-the-work"><a href="#the-measurement-that-justifies-the-work" class="anchor-heading" aria-labelledby="the-measurement-that-justifies-the-work"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The measurement that justifies the work
   
   
 </h2><p>Using the Publisher’s current metadata exports as an AST proxy across two real

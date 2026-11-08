@@ -153,7 +153,9 @@ spec rather than flags, because those are free text, and free text is never a
 command-line word.</p><p>A spec names one or more <strong>statement lists</strong> (<code class="language-plaintext highlighter-rouge">folio-extracted-statements/v1</code>,
 <a href="https://github.com/litlfred/folio-assistant/blob/main/folio-assistant-core/schemas/extracted-statement.ts"><code class="language-plaintext highlighter-rouge">schemas/extracted-statement.ts</code></a>):
 each statement’s <code class="language-plaintext highlighter-rouge">id</code>, its text verbatim, its <code class="language-plaintext highlighter-rouge">kind</code> and <code class="language-plaintext highlighter-rouge">status</code> as the
-extraction records them, and its <code class="language-plaintext highlighter-rouge">source</code>, a library reference with either a
+extraction records them, optionally the id of the statement it was
+<code class="language-plaintext highlighter-rouge">derivedFrom</code> (a scenario candidate written from a recommendation names it,
+and the page shows a “Derived from” column), and its <code class="language-plaintext highlighter-rouge">source</code>, a library reference with either a
 <code class="language-plaintext highlighter-rouge">sectionId</code> or the <code class="language-plaintext highlighter-rouge">page</code> (or slide) it was read from. With only a page, the
 section is the one that starts latest at or before it. When several sections
 start on that page (a one-page poster), the label names only the page. The front

@@ -12,13 +12,19 @@
         "none": true
       },
       "invoke": {
-        "shell": "bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache <dir>] [--sushi-config <file>] [--mirror <dir|git-url>] [--template-repo <name=owner/repo>] [--site-repo <prefix=owner/repo[@branch]>] [--missing-out <file>] [--dry-run] [name#version ...]"
+        "shell": "bun run fhir-harness/scripts/fhir-cache-seed-npm.ts [--cache <dir>] [--sushi-config <file>] [--mirror <dir|git-url>] [--template-repo <name=owner/repo>] [--site-repo <prefix=owner/repo[@branch]>] [--lock <file>] [--missing-out <file>] [--dry-run] [name#version ...]"
       },
       "io": {
         "inputs": [
           {
             "description": "Seed what this IG pins: its `dependencies:` and the core package for its `fhirVersion`.",
             "name": "sushi-config",
+            "required": false,
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
+          },
+          {
+            "description": "An IG's `fhir-packages.lock.json` (`packages`: name, version, `tarball` https URL, `integrity` sha512-/sha256- and/or hex `sha256`). Each package it pins is installed from that URL only, after every pinned hash matches; a mismatch is refused. Its dependencies are not followed: the lock lists them.",
+            "name": "lock",
             "required": false,
             "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/FilesystemPath"
           },

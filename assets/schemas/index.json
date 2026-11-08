@@ -83059,6 +83059,13 @@
           "doc": "Its review state, as the extraction records it: published as is."
         },
         {
+          "name": "derivedFrom",
+          "type": "z.string().min(1).optional()",
+          "optional": true,
+          "array": false,
+          "doc": "The id of the statement this one was derived from, when it was: a"
+        },
+        {
           "name": "source",
           "type": "StatementSourceSchema",
           "optional": false,

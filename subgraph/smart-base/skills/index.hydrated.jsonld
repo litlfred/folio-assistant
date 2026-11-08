@@ -299,6 +299,26 @@
               "title": "indicator-extraction"
             },
             {
+              "@id": "http://smart.who.int/base/skill/inform-client",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "A health worker tells the client (or caregiver) what was decided and what happens next, in words and, where the DAK gives one, on a slip or card: a referral, a return date, a result. Input is what to tell and the client's language; output is that the client was told, and what they were handed. Generic for any DAK step that ends with the client being informed.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+              "inputSchema": "http://smart.who.int/base/schema/skills/inform-client/input.schema.json",
+              "instructionLines": 42,
+              "instructionsPath": "skills/content/authoring-who-smart-guidelines/inform-client.md",
+              "name": "inform-client",
+              "outputSchema": "http://smart.who.int/base/schema/skills/inform-client/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/de929732b4216fc718725cf4e3f667c04e534cedc1156f06eb9f1803f960f445",
+                "bytes": 1747,
+                "sha256": "de929732b4216fc718725cf4e3f667c04e534cedc1156f06eb9f1803f960f445"
+              },
+              "title": "Inform the client"
+            },
+            {
               "@id": "http://smart.who.int/base/skill/l2-component-edit-review",
               "@type": "bootstrap:Skill",
               "ambiguous": false,
@@ -533,6 +553,26 @@
                 "sha256": "c6212865b5b556d81f82b578c1ad94a2073fd643aa4f0a4b78967db9c04fa8c4"
               },
               "title": "Record a decision rationale (optional)"
+            },
+            {
+              "@id": "http://smart.who.int/base/skill/review-client-history",
+              "@type": "bootstrap:Skill",
+              "ambiguous": false,
+              "description": "A health worker reads the client's history as their device shows it (an International Patient Summary, imported records, or a paper card and what the client reports) and takes into account what bears on today's care, weighing each item by where it came from: verified, unverified or reported. Input is the records with their provenance; output is what the health worker relies on.",
+              "hasIOContract": true,
+              "hasInstructions": true,
+              "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills",
+              "inputSchema": "http://smart.who.int/base/schema/skills/review-client-history/input.schema.json",
+              "instructionLines": 46,
+              "instructionsPath": "skills/content/authoring-who-smart-guidelines/review-client-history.md",
+              "name": "review-client-history",
+              "outputSchema": "http://smart.who.int/base/schema/skills/review-client-history/output.schema.json",
+              "payload": {
+                "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/ce640319263a3af0ff133acf773ae4b287fb9e697062bff2ced35afe28fa212f",
+                "bytes": 2009,
+                "sha256": "ce640319263a3af0ff133acf773ae4b287fb9e697062bff2ced35afe28fa212f"
+              },
+              "title": "Review the client's history"
             },
             {
               "@id": "http://smart.who.int/base/skill/review-decision-support-guidance",
