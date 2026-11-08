@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/skill/theme-generation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "ee3a8e86672a450cdbafe55ebf9b27d460c237db",
+    "pr": "2953/merge",
+    "run": "42506688955"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/skill/theme-generation",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "theme-generation",
+      "title": "Generating a theme's CSS",
+      "description": "Turning a declared theme into CSS — `bun run cat themes:css` — and the single consumer-side failure this stage exists to stop: a theme with no CSS rule falls back to an opaque surface and paints over its own art.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/package/theming"
+      ],
+      "instructionsPath": "skills/ui/theming/theme-generation.md",
+      "instructionLines": 73,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/theme-generation"
+    }
+  ]
+}

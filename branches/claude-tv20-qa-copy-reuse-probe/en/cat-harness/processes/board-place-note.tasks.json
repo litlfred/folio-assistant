@@ -1,0 +1,171 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_BoardPlaceNote",
+ "markers": [
+  {
+   "id": "A_CreateNote",
+   "name": "Write the note into the folio — with no coordinate",
+   "left": 43.55,
+   "top": 10.98,
+   "box": {
+    "left": 35.75,
+    "top": 34.15,
+    "width": 2.58,
+    "height": 5.85
+   }
+  },
+  {
+   "id": "A_Place",
+   "name": "Record x,y for this note on THIS board",
+   "left": 63.98,
+   "top": 59.76,
+   "box": {
+    "left": 56.18,
+    "top": 82.93,
+    "width": 2.58,
+    "height": 5.85
+   }
+  },
+  {
+   "id": "A_SweepOrphans",
+   "name": "Sweep positions whose note is gone",
+   "left": 85.48,
+   "top": 59.76,
+   "box": {
+    "left": 77.69,
+    "top": 82.93,
+    "width": 2.58,
+    "height": 5.85
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote",
+ "tasks": {
+  "A_CreateNote": {
+   "id": "A_CreateNote",
+   "name": "Write the note into the folio — with no coordinate",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/node/A_CreateNote",
+   "stepHref": "board-place-note.html#step-A_CreateNote",
+   "lane": "Author",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "board-diagram-interchange",
+     "href": "../../../en/cat-harness/processes/skills/board-diagram-interchange.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../en/cat-harness/processes/skills/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "A_Place": {
+   "id": "A_Place",
+   "name": "Record x,y for this note on THIS board",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/node/A_Place",
+   "stepHref": "board-place-note.html#step-A_Place",
+   "lane": "Layout layer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/lane/Lane_Layer",
+   "skills": [
+    {
+     "name": "board-diagram-interchange",
+     "href": "../../../en/cat-harness/processes/skills/board-diagram-interchange.html"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     }
+    ]
+   }
+  },
+  "A_SweepOrphans": {
+   "id": "A_SweepOrphans",
+   "name": "Sweep positions whose note is gone",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/node/A_SweepOrphans",
+   "stepHref": "board-place-note.html#step-A_SweepOrphans",
+   "lane": "Layout layer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_BoardPlaceNote/lane/Lane_Layer",
+   "skills": [
+    {
+     "name": "board-diagram-interchange",
+     "href": "../../../en/cat-harness/processes/skills/board-diagram-interchange.html"
+    }
+   ],
+   "role": {
+    "name": "corpus",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/corpus",
+    "title": "Corpus",
+    "skills": [
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     }
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,678 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_PublicComment",
+ "markers": [
+  {
+   "id": "Task_Ingest",
+   "name": "Ingest and place each comment",
+   "left": 16.79,
+   "top": 19.88,
+   "box": {
+    "left": 11.5,
+    "top": 31.06,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Triage",
+   "name": "Triage: confirm the anchor, type and priority",
+   "left": 16.79,
+   "top": 36.82,
+   "box": {
+    "left": 11.5,
+    "top": 48,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_ProposeChangeSets",
+   "name": "Propose change-sets, as records with no issue yet",
+   "left": 35.77,
+   "top": 19.88,
+   "box": {
+    "left": 30.47,
+    "top": 31.06,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_GroupChangeSets",
+   "name": "Agree each change-set's requirements on its issue",
+   "left": 44.53,
+   "top": 55.65,
+   "box": {
+    "left": 39.23,
+    "top": 66.82,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_RerouteChangeSet",
+   "name": "Re-route to another committee",
+   "left": 55.11,
+   "top": 55.65,
+   "box": {
+    "left": 49.82,
+    "top": 66.82,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Assign",
+   "name": "Assign to committee members",
+   "left": 55.11,
+   "top": 36.82,
+   "box": {
+    "left": 49.82,
+    "top": 48,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_CommitteeRecommends",
+   "name": "Recommend a decision, with a rationale",
+   "left": 66.06,
+   "top": 55.65,
+   "box": {
+    "left": 60.77,
+    "top": 66.82,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_EditorDecides",
+   "name": "Decide, weighing the recommendations",
+   "left": 66.06,
+   "top": 73.53,
+   "box": {
+    "left": 60.77,
+    "top": 84.71,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "CallActivity_MakeChange",
+   "name": "Make the change, check it and merge it",
+   "left": 89.42,
+   "top": 73.53,
+   "box": {
+    "left": 84.12,
+    "top": 84.71,
+    "width": 1.75,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Withdraw",
+   "name": "Record the withdrawal",
+   "left": 68.98,
+   "top": 2.94,
+   "box": {
+    "left": 63.69,
+    "top": 14.12,
+    "width": 1.75,
+    "height": 2.82
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment",
+ "tasks": {
+  "Task_Ingest": {
+   "id": "Task_Ingest",
+   "name": "Ingest and place each comment",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Ingest",
+   "stepHref": "public-comment.html#step-Task_Ingest",
+   "lane": "Intake agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Intake",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../en/cat-harness/processes/skills/public-comment.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../en/cat-harness/processes/skills/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../en/cat-harness/processes/skills/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../en/cat-harness/processes/skills/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../en/cat-harness/processes/skills/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../en/cat-harness/processes/skills/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../en/cat-harness/processes/skills/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "Task_Triage": {
+   "id": "Task_Triage",
+   "name": "Triage: confirm the anchor, type and priority",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Triage",
+   "stepHref": "public-comment.html#step-Task_Triage",
+   "lane": "Review coordinator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Coordinator",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../en/cat-harness/processes/skills/public-comment.html"
+    }
+   ],
+   "role": {
+    "name": "review-coordinator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
+    "title": "Review coordinator",
+    "skills": [
+     {
+      "name": "rendered-impact",
+      "href": "../../../en/cat-harness/processes/skills/rendered-impact.html"
+     },
+     {
+      "name": "review-heatmap",
+      "href": "../../../en/cat-harness/processes/skills/review-heatmap.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../en/cat-harness/processes/skills/visual-diff.html"
+     }
+    ]
+   }
+  },
+  "Task_ProposeChangeSets": {
+   "id": "Task_ProposeChangeSets",
+   "name": "Propose change-sets, as records with no issue yet",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_ProposeChangeSets",
+   "stepHref": "public-comment.html#step-Task_ProposeChangeSets",
+   "lane": "Intake agent",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Intake",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../en/cat-harness/processes/skills/public-comment.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../en/cat-harness/processes/skills/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../en/cat-harness/processes/skills/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../en/cat-harness/processes/skills/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../en/cat-harness/processes/skills/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../en/cat-harness/processes/skills/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../en/cat-harness/processes/skills/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "Task_GroupChangeSets": {
+   "id": "Task_GroupChangeSets",
+   "name": "Agree each change-set's requirements on its issue",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_GroupChangeSets",
+   "stepHref": "public-comment.html#step-Task_GroupChangeSets",
+   "lane": "Review committee",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Committee",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../en/cat-harness/processes/skills/public-comment.html"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../en/cat-harness/processes/skills/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../en/cat-harness/processes/skills/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../en/cat-harness/processes/skills/narrative-asserts-code.html"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../en/cat-harness/processes/skills/rendered-impact.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../en/cat-harness/processes/skills/visual-diff.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../en/cat-harness/processes/skills/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_RerouteChangeSet": {
+   "id": "Task_RerouteChangeSet",
+   "name": "Re-route to another committee",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_RerouteChangeSet",
+   "stepHref": "public-comment.html#step-Task_RerouteChangeSet",
+   "lane": "Review committee",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Committee",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../en/cat-harness/processes/skills/public-comment.html"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../en/cat-harness/processes/skills/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../en/cat-harness/processes/skills/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../en/cat-harness/processes/skills/narrative-asserts-code.html"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../en/cat-harness/processes/skills/rendered-impact.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../en/cat-harness/processes/skills/visual-diff.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../en/cat-harness/processes/skills/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_Assign": {
+   "id": "Task_Assign",
+   "name": "Assign to committee members",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Assign",
+   "stepHref": "public-comment.html#step-Task_Assign",
+   "lane": "Review coordinator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Coordinator",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../en/cat-harness/processes/skills/public-comment.html"
+    }
+   ],
+   "role": {
+    "name": "review-coordinator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/review-coordinator",
+    "title": "Review coordinator",
+    "skills": [
+     {
+      "name": "rendered-impact",
+      "href": "../../../en/cat-harness/processes/skills/rendered-impact.html"
+     },
+     {
+      "name": "review-heatmap",
+      "href": "../../../en/cat-harness/processes/skills/review-heatmap.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../en/cat-harness/processes/skills/visual-diff.html"
+     }
+    ]
+   }
+  },
+  "Task_CommitteeRecommends": {
+   "id": "Task_CommitteeRecommends",
+   "name": "Recommend a decision, with a rationale",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_CommitteeRecommends",
+   "stepHref": "public-comment.html#step-Task_CommitteeRecommends",
+   "lane": "Review committee",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Committee",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../en/cat-harness/processes/skills/public-comment.html"
+    }
+   ],
+   "role": {
+    "name": "reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/reviewer",
+    "title": "Reviewer / SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../en/cat-harness/processes/skills/adjudication.html"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../en/cat-harness/processes/skills/content-feedback.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../en/cat-harness/processes/skills/narrative-asserts-code.html"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../en/cat-harness/processes/skills/rendered-impact.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../en/cat-harness/processes/skills/visual-diff.html"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../en/cat-harness/processes/skills/voice-overlay-review.html"
+     }
+    ]
+   }
+  },
+  "Task_EditorDecides": {
+   "id": "Task_EditorDecides",
+   "name": "Decide, weighing the recommendations",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_EditorDecides",
+   "stepHref": "public-comment.html#step-Task_EditorDecides",
+   "lane": "Editor",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Editor",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../en/cat-harness/processes/skills/public-comment.html"
+    }
+   ],
+   "role": {
+    "name": "editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+    "title": "Editor",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html",
+      "via": "author"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html",
+      "via": "author"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html",
+      "via": "author"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html",
+      "via": "author"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html",
+      "via": "author"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../en/cat-harness/processes/skills/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "CallActivity_MakeChange": {
+   "id": "CallActivity_MakeChange",
+   "name": "Make the change, check it and merge it",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/CallActivity_MakeChange",
+   "stepHref": "public-comment.html#step-CallActivity_MakeChange",
+   "lane": "Editor",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Editor",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../en/cat-harness/processes/skills/public-comment.html"
+    }
+   ],
+   "calls": {
+    "name": "Make a decided public comment change",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicCommentChange",
+    "diagram": "public-comment-change.html"
+   },
+   "role": {
+    "name": "editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+    "title": "Editor",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html",
+      "via": "author"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html",
+      "via": "author"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html",
+      "via": "author"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html",
+      "via": "author"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html",
+      "via": "author"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../en/cat-harness/processes/skills/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_Withdraw": {
+   "id": "Task_Withdraw",
+   "name": "Record the withdrawal",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/node/Task_Withdraw",
+   "stepHref": "public-comment.html#step-Task_Withdraw",
+   "lane": "Public commenter",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Commenter",
+   "skills": [
+    {
+     "name": "public-comment",
+     "href": "../../../en/cat-harness/processes/skills/public-comment.html"
+    }
+   ],
+   "role": {
+    "name": "feedback-provider",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/feedback-provider",
+    "title": "Feedback provider",
+    "skills": [
+     {
+      "name": "content-feedback",
+      "href": "../../../en/cat-harness/processes/skills/content-feedback.html"
+     },
+     {
+      "name": "todo-review",
+      "href": "../../../en/cat-harness/processes/skills/todo-review.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../en/cat-harness/processes/skills/wireframe-design-review.html"
+     }
+    ]
+   }
+  }
+ }
+}

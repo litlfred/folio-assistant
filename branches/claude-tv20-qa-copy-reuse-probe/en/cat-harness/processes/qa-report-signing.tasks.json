@@ -1,0 +1,321 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_QaReportSigning",
+ "markers": [
+  {
+   "id": "Task_BuildRun",
+   "name": "Build the test run",
+   "left": 19.45,
+   "top": 35.8,
+   "box": {
+    "left": 15.06,
+    "top": 53.79,
+    "width": 1.45,
+    "height": 4.55
+   }
+  },
+  {
+   "id": "Task_ResolveReach",
+   "name": "Resolve the performer's reach",
+   "left": 32.79,
+   "top": 35.8,
+   "box": {
+    "left": 28.39,
+    "top": 53.79,
+    "width": 1.45,
+    "height": 4.55
+   }
+  },
+  {
+   "id": "Task_ApiSign",
+   "name": "Sign over the API",
+   "left": 52.42,
+   "top": 3.22,
+   "box": {
+    "left": 48.03,
+    "top": 21.21,
+    "width": 1.45,
+    "height": 4.55
+   }
+  },
+  {
+   "id": "Task_HumanSign",
+   "name": "Sign as release authority",
+   "left": 52.42,
+   "top": 74.05,
+   "box": {
+    "left": 48.03,
+    "top": 92.05,
+    "width": 1.45,
+    "height": 4.55
+   }
+  },
+  {
+   "id": "Task_RecordAttestation",
+   "name": "Record which route signed it",
+   "left": 73.64,
+   "top": 35.8,
+   "box": {
+    "left": 69.24,
+    "top": 53.79,
+    "width": 1.45,
+    "height": 4.55
+   }
+  },
+  {
+   "id": "Task_StoreSigned",
+   "name": "Store the signed report on qa-reports",
+   "left": 86.06,
+   "top": 35.8,
+   "box": {
+    "left": 81.67,
+    "top": 53.79,
+    "width": 1.45,
+    "height": 4.55
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning",
+ "tasks": {
+  "Task_BuildRun": {
+   "id": "Task_BuildRun",
+   "name": "Build the test run",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_BuildRun",
+   "stepHref": "qa-report-signing.html#step-Task_BuildRun",
+   "lane": "Validation and QA (mechanical + agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Qa",
+   "skills": [
+    {
+     "name": "qa-report-signing",
+     "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html"
+    },
+    {
+     "name": "content-test",
+     "href": "../../../en/cat-harness/processes/skills/content-test.html"
+    }
+   ],
+   "role": {
+    "name": "validation-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline",
+    "title": "Validation pipeline",
+    "skills": [
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     }
+    ]
+   }
+  },
+  "Task_ResolveReach": {
+   "id": "Task_ResolveReach",
+   "name": "Resolve the performer's reach",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_ResolveReach",
+   "stepHref": "qa-report-signing.html#step-Task_ResolveReach",
+   "lane": "Validation and QA (mechanical + agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Qa",
+   "skills": [
+    {
+     "name": "qa-report-signing",
+     "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html"
+    }
+   ],
+   "role": {
+    "name": "validation-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline",
+    "title": "Validation pipeline",
+    "skills": [
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     }
+    ]
+   }
+  },
+  "Task_ApiSign": {
+   "id": "Task_ApiSign",
+   "name": "Sign over the API",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_ApiSign",
+   "stepHref": "qa-report-signing.html#step-Task_ApiSign",
+   "lane": "Attestation service (API)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Api",
+   "skills": [
+    {
+     "name": "qa-report-signing",
+     "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html"
+    }
+   ],
+   "role": {
+    "name": "attestation-service",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/attestation-service",
+    "title": "Attestation service",
+    "skills": [
+     {
+      "name": "qa-report-signing",
+      "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html"
+     },
+     {
+      "name": "test-plan-execution",
+      "href": "../../../en/cat-harness/processes/skills/test-plan-execution.html"
+     }
+    ]
+   }
+  },
+  "Task_HumanSign": {
+   "id": "Task_HumanSign",
+   "name": "Sign as release authority",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_HumanSign",
+   "stepHref": "qa-report-signing.html#step-Task_HumanSign",
+   "lane": "Human signer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Human",
+   "skills": [
+    {
+     "name": "qa-report-signing",
+     "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../en/cat-harness/processes/skills/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../en/cat-harness/processes/skills/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     }
+    ]
+   }
+  },
+  "Task_RecordAttestation": {
+   "id": "Task_RecordAttestation",
+   "name": "Record which route signed it",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_RecordAttestation",
+   "stepHref": "qa-report-signing.html#step-Task_RecordAttestation",
+   "lane": "Validation and QA (mechanical + agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Qa",
+   "skills": [
+    {
+     "name": "qa-report-signing",
+     "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html"
+    }
+   ],
+   "role": {
+    "name": "validation-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline",
+    "title": "Validation pipeline",
+    "skills": [
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     }
+    ]
+   }
+  },
+  "Task_StoreSigned": {
+   "id": "Task_StoreSigned",
+   "name": "Store the signed report on qa-reports",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/node/Task_StoreSigned",
+   "stepHref": "qa-report-signing.html#step-Task_StoreSigned",
+   "lane": "Validation and QA (mechanical + agents)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_QaReportSigning/lane/Lane_Qa",
+   "skills": [
+    {
+     "name": "qa-reports",
+     "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+    }
+   ],
+   "role": {
+    "name": "validation-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/validation-pipeline",
+    "title": "Validation pipeline",
+    "skills": [
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     }
+    ]
+   }
+  }
+ }
+}

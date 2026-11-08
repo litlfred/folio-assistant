@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/tool-types/WorkbookPath.schema.json",
+  "title": "WorkbookPath",
+  "type": "string",
+  "minLength": 1,
+  "pattern": "^[A-Za-z0-9._][A-Za-z0-9._/-]*$",
+  "description": "A repository path to a spreadsheet workbook.",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "ee3a8e86672a450cdbafe55ebf9b27d460c237db",
+    "pr": "2953/merge",
+    "run": "42506688955"
+  }
+}

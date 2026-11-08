@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/skill/publish-extracted-statements.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "ee3a8e86672a450cdbafe55ebf9b27d460c237db",
+    "pr": "2953/merge",
+    "run": "42506688955"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/skill/publish-extracted-statements",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "publish-extracted-statements",
+      "title": "Publish extracted statements with source links",
+      "description": "The standard step of adding source documents to a folio's working artifact: every statement extracted from a library source is published readably in the artifact's own pages AND in the shared extraction viewer, each with a link to its library entry and to the section it came from, and CI fails when the generated pages are stale. Generic across content types; each type's adapter says only how its pages look. Executable form: `processes/library/publish-extracted-statements.bpmn`.",
+      "instructionsPath": "skills/library/ingestion/publish-extracted-statements.md",
+      "instructionLines": 135,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements"
+    }
+  ]
+}

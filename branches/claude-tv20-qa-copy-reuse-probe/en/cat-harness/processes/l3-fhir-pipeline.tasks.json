@@ -1,0 +1,692 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_L3Fhir",
+ "markers": [
+  {
+   "id": "Task_AuthorFsh",
+   "name": "Author FSH profiles",
+   "left": 25.63,
+   "top": 2.35,
+   "box": {
+    "left": 21.95,
+    "top": 13.53,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Sushi",
+   "name": "Compile FSH to FHIR JSON",
+   "left": 33.76,
+   "top": 37.65,
+   "box": {
+    "left": 30.08,
+    "top": 48.82,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Validate",
+   "name": "Validate against profiles",
+   "left": 41.88,
+   "top": 37.65,
+   "box": {
+    "left": 38.2,
+    "top": 48.82,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_QcGates",
+   "name": "QC gates",
+   "left": 58.12,
+   "top": 55.29,
+   "box": {
+    "left": 54.44,
+    "top": 66.47,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_QcBeans",
+   "name": "File QC findings as beans",
+   "left": 74.62,
+   "top": 21.76,
+   "box": {
+    "left": 70.69,
+    "top": 29.41,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Call_PublishStatements",
+   "name": "Publish extracted statements",
+   "left": 70.3,
+   "top": 37.65,
+   "box": {
+    "left": 66.62,
+    "top": 48.82,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_IgPublisher",
+   "name": "IG Publisher build",
+   "left": 82.49,
+   "top": 37.65,
+   "box": {
+    "left": 78.81,
+    "top": 48.82,
+    "width": 1.22,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_PublishIg",
+   "name": "Publish the IG site",
+   "left": 90.61,
+   "top": 72.94,
+   "box": {
+    "left": 86.93,
+    "top": 84.12,
+    "width": 1.22,
+    "height": 2.82
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir",
+ "tasks": {
+  "Task_AuthorFsh": {
+   "id": "Task_AuthorFsh",
+   "name": "Author FSH profiles",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_AuthorFsh",
+   "stepHref": "l3-fhir-pipeline.html#step-Task_AuthorFsh",
+   "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Modeller",
+   "skills": [
+    {
+     "name": "l3-fhir-authoring",
+     "href": "../../../en/cat-harness/processes/skills/l3-fhir-authoring.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": [
+     {
+      "name": "fhir-questionnaire-wireframe",
+      "href": "../../../en/cat-harness/processes/skills/fhir-questionnaire-wireframe.html"
+     },
+     {
+      "name": "l3-fhir-authoring",
+      "href": "../../../en/cat-harness/processes/skills/l3-fhir-authoring.html"
+     },
+     {
+      "name": "pcf-consent",
+      "href": "../../../en/cat-harness/processes/skills/pcf-consent.html"
+     }
+    ]
+   }
+  },
+  "Task_Sushi": {
+   "id": "Task_Sushi",
+   "name": "Compile FSH to FHIR JSON",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_Sushi",
+   "stepHref": "l3-fhir-pipeline.html#step-Task_Sushi",
+   "lane": "Build pipeline — SUSHI · validator · IG Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "l3-fhir-authoring",
+     "href": "../../../en/cat-harness/processes/skills/l3-fhir-authoring.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Validate": {
+   "id": "Task_Validate",
+   "name": "Validate against profiles",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_Validate",
+   "stepHref": "l3-fhir-pipeline.html#step-Task_Validate",
+   "lane": "Build pipeline — SUSHI · validator · IG Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "fhir-validation",
+     "href": "../../../en/cat-harness/processes/skills/fhir-validation.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_QcGates": {
+   "id": "Task_QcGates",
+   "name": "QC gates",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_QcGates",
+   "stepHref": "l3-fhir-pipeline.html#step-Task_QcGates",
+   "lane": "QC reviewer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Qc",
+   "skills": [
+    {
+     "name": "quality-control",
+     "href": "../../../en/cat-harness/processes/skills/quality-control.html"
+    }
+   ],
+   "role": {
+    "name": "qc-reviewer",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/qc-reviewer",
+    "title": "QC reviewer",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../en/cat-harness/processes/skills/adjudication.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../en/cat-harness/processes/skills/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "evidence-review",
+      "href": "../../../en/cat-harness/processes/skills/evidence-review.html"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../en/cat-harness/processes/skills/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../en/cat-harness/processes/skills/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "untainted-verification",
+      "href": "../../../en/cat-harness/processes/skills/untainted-verification.html"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../en/cat-harness/processes/skills/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../en/cat-harness/processes/skills/voice-overlay-review.html",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "Task_QcBeans": {
+   "id": "Task_QcBeans",
+   "name": "File QC findings as beans",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_QcBeans",
+   "stepHref": "l3-fhir-pipeline.html#step-Task_QcBeans",
+   "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Modeller",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": [
+     {
+      "name": "fhir-questionnaire-wireframe",
+      "href": "../../../en/cat-harness/processes/skills/fhir-questionnaire-wireframe.html"
+     },
+     {
+      "name": "l3-fhir-authoring",
+      "href": "../../../en/cat-harness/processes/skills/l3-fhir-authoring.html"
+     },
+     {
+      "name": "pcf-consent",
+      "href": "../../../en/cat-harness/processes/skills/pcf-consent.html"
+     }
+    ]
+   }
+  },
+  "Call_PublishStatements": {
+   "id": "Call_PublishStatements",
+   "name": "Publish extracted statements",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Call_PublishStatements",
+   "stepHref": "l3-fhir-pipeline.html#step-Call_PublishStatements",
+   "lane": "Build pipeline — SUSHI · validator · IG Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "publish-extracted-statements",
+     "href": "../../../en/cat-harness/processes/skills/publish-extracted-statements.html"
+    }
+   ],
+   "calls": {
+    "name": "Publish extracted statements with source links",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
+    "diagram": "publish-extracted-statements.html"
+   },
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_IgPublisher": {
+   "id": "Task_IgPublisher",
+   "name": "IG Publisher build",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_IgPublisher",
+   "stepHref": "l3-fhir-pipeline.html#step-Task_IgPublisher",
+   "lane": "Build pipeline — SUSHI · validator · IG Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "ig-publication",
+     "href": "../../../en/cat-harness/processes/skills/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_PublishIg": {
+   "id": "Task_PublishIg",
+   "name": "Publish the IG site",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_PublishIg",
+   "stepHref": "l3-fhir-pipeline.html#step-Task_PublishIg",
+   "lane": "Publication manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_PubMgr",
+   "skills": [
+    {
+     "name": "content-publish",
+     "href": "../../../en/cat-harness/processes/skills/content-publish.html"
+    },
+    {
+     "name": "ig-publication",
+     "href": "../../../en/cat-harness/processes/skills/ig-publication.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../en/cat-harness/processes/skills/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../en/cat-harness/processes/skills/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     }
+    ]
+   }
+  }
+ }
+}

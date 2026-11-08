@@ -1,0 +1,741 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_KgToPortal",
+ "markers": [
+  {
+   "id": "D_Constraints",
+   "name": "State the constraints, with denominators",
+   "left": 18.79,
+   "top": 56.71,
+   "box": {
+    "left": 13.73,
+    "top": 62.62,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "E_Scope",
+   "name": "Decide what may leave the repository",
+   "left": 30.35,
+   "top": 42.75,
+   "box": {
+    "left": 25.29,
+    "top": 48.66,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "A_Select",
+   "name": "Cut the subgraph that leaves",
+   "left": 29.48,
+   "top": 1.83,
+   "box": {
+    "left": 25.29,
+    "top": 12.03,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "A_Serialize",
+   "name": "Serialize to JSON-LD",
+   "left": 40.46,
+   "top": 1.83,
+   "box": {
+    "left": 36.27,
+    "top": 12.03,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "A_Package",
+   "name": "Package with digests",
+   "left": 52.31,
+   "top": 3.76,
+   "box": {
+    "left": 47.25,
+    "top": 9.67,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "S_Sign",
+   "name": "Sign the package and/or each asset",
+   "left": 68.21,
+   "top": 22.72,
+   "box": {
+    "left": 64.02,
+    "top": 32.92,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "E_HumanEyes",
+   "name": "Human eyes on the rendered artefact",
+   "left": 69.08,
+   "top": 42.75,
+   "box": {
+    "left": 64.02,
+    "top": 48.66,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "D_Undetermined",
+   "name": "Record the decision as still open",
+   "left": 88.73,
+   "top": 56.71,
+   "box": {
+    "left": 83.67,
+    "top": 62.62,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "A_Distribute",
+   "name": "Publish to the origin (a cache may front it)",
+   "left": 77.17,
+   "top": 69.82,
+   "box": {
+    "left": 72.98,
+    "top": 80.02,
+    "width": 1.39,
+    "height": 2.58
+   }
+  },
+  {
+   "id": "P_Verify",
+   "name": "Verify what arrived against what was signed",
+   "left": 77.17,
+   "top": 85.28,
+   "box": {
+    "left": 72.98,
+    "top": 95.49,
+    "width": 1.39,
+    "height": 2.58
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal",
+ "tasks": {
+  "D_Constraints": {
+   "id": "D_Constraints",
+   "name": "State the constraints, with denominators",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/D_Constraints",
+   "stepHref": "kg-to-portal.html#step-D_Constraints",
+   "lane": "Deployment owner",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Deployment",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../en/cat-harness/processes/skills/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../en/cat-harness/processes/skills/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../en/cat-harness/processes/skills/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     }
+    ]
+   }
+  },
+  "E_Scope": {
+   "id": "E_Scope",
+   "name": "Decide what may leave the repository",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/E_Scope",
+   "stepHref": "kg-to-portal.html#step-E_Scope",
+   "lane": "Editorial",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Editorial",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../en/cat-harness/processes/skills/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+    "title": "Editor",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html",
+      "via": "author"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html",
+      "via": "author"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html",
+      "via": "author"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html",
+      "via": "author"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html",
+      "via": "author"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../en/cat-harness/processes/skills/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "A_Select": {
+   "id": "A_Select",
+   "name": "Cut the subgraph that leaves",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Select",
+   "stepHref": "kg-to-portal.html#step-A_Select",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../en/cat-harness/processes/skills/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "A_Serialize": {
+   "id": "A_Serialize",
+   "name": "Serialize to JSON-LD",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Serialize",
+   "stepHref": "kg-to-portal.html#step-A_Serialize",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "kg-export",
+     "href": "../../../en/cat-harness/processes/skills/kg-export.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "A_Package": {
+   "id": "A_Package",
+   "name": "Package with digests",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Package",
+   "stepHref": "kg-to-portal.html#step-A_Package",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../en/cat-harness/processes/skills/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "S_Sign": {
+   "id": "S_Sign",
+   "name": "Sign the package and/or each asset",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/S_Sign",
+   "stepHref": "kg-to-portal.html#step-S_Sign",
+   "lane": "Attestation (GDHCN / WHO SMART Trust)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Attestation",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../en/cat-harness/processes/skills/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "attestation-service",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/attestation-service",
+    "title": "Attestation service",
+    "skills": [
+     {
+      "name": "qa-report-signing",
+      "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html"
+     },
+     {
+      "name": "test-plan-execution",
+      "href": "../../../en/cat-harness/processes/skills/test-plan-execution.html"
+     }
+    ]
+   }
+  },
+  "E_HumanEyes": {
+   "id": "E_HumanEyes",
+   "name": "Human eyes on the rendered artefact",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/E_HumanEyes",
+   "stepHref": "kg-to-portal.html#step-E_HumanEyes",
+   "lane": "Editorial",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Editorial",
+   "skills": [
+    {
+     "name": "continual-progress",
+     "href": "../../../en/cat-harness/processes/skills/continual-progress.html"
+    }
+   ],
+   "role": {
+    "name": "editor",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/editor",
+    "title": "Editor",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html",
+      "via": "author"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html",
+      "via": "author"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html",
+      "via": "author"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html",
+      "via": "author"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html",
+      "via": "author"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html",
+      "via": "author"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html",
+      "via": "author"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../en/cat-harness/processes/skills/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "D_Undetermined": {
+   "id": "D_Undetermined",
+   "name": "Record the decision as still open",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/D_Undetermined",
+   "stepHref": "kg-to-portal.html#step-D_Undetermined",
+   "lane": "Deployment owner",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Deployment",
+   "skills": [
+    {
+     "name": "decision-audit",
+     "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+    }
+   ],
+   "role": {
+    "name": "publication-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publication-manager",
+    "title": "Publication manager",
+    "skills": [
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "instance-publication",
+      "href": "../../../en/cat-harness/processes/skills/instance-publication.html"
+     },
+     {
+      "name": "package-release",
+      "href": "../../../en/cat-harness/processes/skills/package-release.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     }
+    ]
+   }
+  },
+  "A_Distribute": {
+   "id": "A_Distribute",
+   "name": "Publish to the origin (a cache may front it)",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/A_Distribute",
+   "stepHref": "kg-to-portal.html#step-A_Distribute",
+   "lane": "Publish target",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Target",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../en/cat-harness/processes/skills/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "publish-target",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/publish-target",
+    "title": "Publish target",
+    "skills": [
+     {
+      "name": "getting-started",
+      "href": "../../../en/cat-harness/processes/skills/getting-started.html"
+     }
+    ]
+   }
+  },
+  "P_Verify": {
+   "id": "P_Verify",
+   "name": "Verify what arrived against what was signed",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/node/P_Verify",
+   "stepHref": "kg-to-portal.html#step-P_Verify",
+   "lane": "Portal (external consumer)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgToPortal/lane/Lane_Portal",
+   "skills": [
+    {
+     "name": "kg-to-portal",
+     "href": "../../../en/cat-harness/processes/skills/kg-to-portal.html"
+    }
+   ],
+   "role": {
+    "name": "external-registry",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry",
+    "title": "External registry",
+    "skills": [
+     {
+      "name": "external-registry-contract",
+      "href": "../../../en/cat-harness/processes/skills/external-registry-contract.html"
+     }
+    ]
+   }
+  }
+ }
+}

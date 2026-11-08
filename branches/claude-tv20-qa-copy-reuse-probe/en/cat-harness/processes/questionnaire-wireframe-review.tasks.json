@@ -1,0 +1,752 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_QuestionnaireWireframeReview",
+ "markers": [
+  {
+   "id": "Task_Read",
+   "name": "Read the built Questionnaire JSON",
+   "left": 14.71,
+   "top": 4.35,
+   "box": {
+    "left": 10.83,
+    "top": 18.12,
+    "width": 1.28,
+    "height": 3.48
+   }
+  },
+  {
+   "id": "Task_Render",
+   "name": "Render the wireframe and the LHC-Forms view",
+   "left": 24.33,
+   "top": 4.35,
+   "box": {
+    "left": 20.45,
+    "top": 18.12,
+    "width": 1.28,
+    "height": 3.48
+   }
+  },
+  {
+   "id": "Task_Screens",
+   "name": "Screenshots, web and mobile",
+   "left": 33.96,
+   "top": 28.99,
+   "box": {
+    "left": 30.08,
+    "top": 42.75,
+    "width": 1.28,
+    "height": 3.48
+   }
+  },
+  {
+   "id": "Task_Fidelity",
+   "name": "Check field for field",
+   "left": 48.93,
+   "top": 28.99,
+   "box": {
+    "left": 45.05,
+    "top": 42.75,
+    "width": 1.28,
+    "height": 3.48
+   }
+  },
+  {
+   "id": "Call_Review",
+   "name": "Design review",
+   "left": 58.56,
+   "top": 53.62,
+   "box": {
+    "left": 54.68,
+    "top": 67.39,
+    "width": 1.28,
+    "height": 3.48
+   }
+  },
+  {
+   "id": "Task_Stage",
+   "name": "Stage the renderings",
+   "left": 68.18,
+   "top": 28.99,
+   "box": {
+    "left": 64.3,
+    "top": 42.75,
+    "width": 1.28,
+    "height": 3.48
+   }
+  },
+  {
+   "id": "Task_AskReview",
+   "name": "Ask for review with deep links",
+   "left": 77.81,
+   "top": 4.35,
+   "box": {
+    "left": 73.93,
+    "top": 18.12,
+    "width": 1.28,
+    "height": 3.48
+   }
+  },
+  {
+   "id": "Task_ReviewStaged",
+   "name": "Review the staged form and wireframe",
+   "left": 87.43,
+   "top": 78.26,
+   "box": {
+    "left": 83.56,
+    "top": 92.03,
+    "width": 1.28,
+    "height": 3.48
+   }
+  },
+  {
+   "id": "Task_Triage",
+   "name": "Triage the change request",
+   "left": 96.52,
+   "top": 4.35,
+   "box": {
+    "left": 92.65,
+    "top": 18.12,
+    "width": 1.28,
+    "height": 3.48
+   }
+  },
+  {
+   "id": "Task_Apply",
+   "name": "Apply it to the other side",
+   "left": 87.43,
+   "top": 4.35,
+   "box": {
+    "left": 83.56,
+    "top": 18.12,
+    "width": 1.28,
+    "height": 3.48
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
+ "tasks": {
+  "Task_Read": {
+   "id": "Task_Read",
+   "name": "Read the built Questionnaire JSON",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Read",
+   "stepHref": "questionnaire-wireframe-review.html#step-Task_Read",
+   "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe",
+     "href": "../../../en/cat-harness/processes/skills/fhir-questionnaire-wireframe.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": [
+     {
+      "name": "fhir-questionnaire-wireframe",
+      "href": "../../../en/cat-harness/processes/skills/fhir-questionnaire-wireframe.html"
+     },
+     {
+      "name": "l3-fhir-authoring",
+      "href": "../../../en/cat-harness/processes/skills/l3-fhir-authoring.html"
+     },
+     {
+      "name": "pcf-consent",
+      "href": "../../../en/cat-harness/processes/skills/pcf-consent.html"
+     }
+    ]
+   }
+  },
+  "Task_Render": {
+   "id": "Task_Render",
+   "name": "Render the wireframe and the LHC-Forms view",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Render",
+   "stepHref": "questionnaire-wireframe-review.html#step-Task_Render",
+   "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe",
+     "href": "../../../en/cat-harness/processes/skills/fhir-questionnaire-wireframe.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": [
+     {
+      "name": "fhir-questionnaire-wireframe",
+      "href": "../../../en/cat-harness/processes/skills/fhir-questionnaire-wireframe.html"
+     },
+     {
+      "name": "l3-fhir-authoring",
+      "href": "../../../en/cat-harness/processes/skills/l3-fhir-authoring.html"
+     },
+     {
+      "name": "pcf-consent",
+      "href": "../../../en/cat-harness/processes/skills/pcf-consent.html"
+     }
+    ]
+   }
+  },
+  "Task_Screens": {
+   "id": "Task_Screens",
+   "name": "Screenshots, web and mobile",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Screens",
+   "stepHref": "questionnaire-wireframe-review.html#step-Task_Screens",
+   "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "wireframe-design-review",
+     "href": "../../../en/cat-harness/processes/skills/wireframe-design-review.html",
+     "methodologies": [
+      {
+       "name": "wiregen",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/wiregen/"
+      }
+     ]
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Fidelity": {
+   "id": "Task_Fidelity",
+   "name": "Check field for field",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Fidelity",
+   "stepHref": "questionnaire-wireframe-review.html#step-Task_Fidelity",
+   "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe",
+     "href": "../../../en/cat-harness/processes/skills/fhir-questionnaire-wireframe.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Call_Review": {
+   "id": "Call_Review",
+   "name": "Design review",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Call_Review",
+   "stepHref": "questionnaire-wireframe-review.html#step-Call_Review",
+   "lane": "Business analyst — design review",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_BA",
+   "skills": [
+    {
+     "name": "wireframe-design-review",
+     "href": "../../../en/cat-harness/processes/skills/wireframe-design-review.html",
+     "methodologies": [
+      {
+       "name": "wiregen",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/wiregen/"
+      }
+     ]
+    }
+   ],
+   "calls": {
+    "name": "Wireframe design review",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_WireframeDesignReview",
+    "diagram": "wireframe-design-review.html"
+   },
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "crdm-impact-analysis",
+      "href": "../../../en/cat-harness/processes/skills/crdm-impact-analysis.html"
+     },
+     {
+      "name": "crdm-needs-assessment",
+      "href": "../../../en/cat-harness/processes/skills/crdm-needs-assessment.html"
+     },
+     {
+      "name": "crdm-recorded-walkthrough",
+      "href": "../../../en/cat-harness/processes/skills/crdm-recorded-walkthrough.html"
+     },
+     {
+      "name": "crdm-requirements-template",
+      "href": "../../../en/cat-harness/processes/skills/crdm-requirements-template.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../en/cat-harness/processes/skills/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "data-modelling",
+      "href": "../../../en/cat-harness/processes/skills/data-modelling.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../en/cat-harness/processes/skills/opening-brief.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../en/cat-harness/processes/skills/wireframe-design-review.html"
+     }
+    ]
+   }
+  },
+  "Task_Stage": {
+   "id": "Task_Stage",
+   "name": "Stage the renderings",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Stage",
+   "stepHref": "questionnaire-wireframe-review.html#step-Task_Stage",
+   "lane": "Build pipeline — rendering, screenshots, fidelity",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
+   "skills": [
+    {
+     "name": "feature-staging",
+     "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_AskReview": {
+   "id": "Task_AskReview",
+   "name": "Ask for review with deep links",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_AskReview",
+   "stepHref": "questionnaire-wireframe-review.html#step-Task_AskReview",
+   "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+   "skills": [
+    {
+     "name": "staging-review",
+     "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": [
+     {
+      "name": "fhir-questionnaire-wireframe",
+      "href": "../../../en/cat-harness/processes/skills/fhir-questionnaire-wireframe.html"
+     },
+     {
+      "name": "l3-fhir-authoring",
+      "href": "../../../en/cat-harness/processes/skills/l3-fhir-authoring.html"
+     },
+     {
+      "name": "pcf-consent",
+      "href": "../../../en/cat-harness/processes/skills/pcf-consent.html"
+     }
+    ]
+   }
+  },
+  "Task_ReviewStaged": {
+   "id": "Task_ReviewStaged",
+   "name": "Review the staged form and wireframe",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_ReviewStaged",
+   "stepHref": "questionnaire-wireframe-review.html#step-Task_ReviewStaged",
+   "lane": "Clinical reviewer — the staged form",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Clinical",
+   "skills": [
+    {
+     "name": "fhir-questionnaire-wireframe",
+     "href": "../../../en/cat-harness/processes/skills/fhir-questionnaire-wireframe.html"
+    }
+   ],
+   "role": {
+    "name": "clinical-sme",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/clinical-sme",
+    "title": "Clinical / scientific SME",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../en/cat-harness/processes/skills/adjudication.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../en/cat-harness/processes/skills/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../en/cat-harness/processes/skills/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../en/cat-harness/processes/skills/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../en/cat-harness/processes/skills/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../en/cat-harness/processes/skills/voice-overlay-review.html",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "Task_Triage": {
+   "id": "Task_Triage",
+   "name": "Triage the change request",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Triage",
+   "stepHref": "questionnaire-wireframe-review.html#step-Task_Triage",
+   "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+   "skills": [
+    {
+     "name": "content-feedback",
+     "href": "../../../en/cat-harness/processes/skills/content-feedback.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": [
+     {
+      "name": "fhir-questionnaire-wireframe",
+      "href": "../../../en/cat-harness/processes/skills/fhir-questionnaire-wireframe.html"
+     },
+     {
+      "name": "l3-fhir-authoring",
+      "href": "../../../en/cat-harness/processes/skills/l3-fhir-authoring.html"
+     },
+     {
+      "name": "pcf-consent",
+      "href": "../../../en/cat-harness/processes/skills/pcf-consent.html"
+     }
+    ]
+   }
+  },
+  "Task_Apply": {
+   "id": "Task_Apply",
+   "name": "Apply it to the other side",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Apply",
+   "stepHref": "questionnaire-wireframe-review.html#step-Task_Apply",
+   "lane": "FHIR modeller",
+   "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Modeller",
+   "skills": [
+    {
+     "name": "l3-fhir-authoring",
+     "href": "../../../en/cat-harness/processes/skills/l3-fhir-authoring.html"
+    }
+   ],
+   "role": {
+    "name": "fhir-modeller",
+    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+    "title": "FHIR modeller",
+    "skills": [
+     {
+      "name": "fhir-questionnaire-wireframe",
+      "href": "../../../en/cat-harness/processes/skills/fhir-questionnaire-wireframe.html"
+     },
+     {
+      "name": "l3-fhir-authoring",
+      "href": "../../../en/cat-harness/processes/skills/l3-fhir-authoring.html"
+     },
+     {
+      "name": "pcf-consent",
+      "href": "../../../en/cat-harness/processes/skills/pcf-consent.html"
+     }
+    ]
+   }
+  }
+ }
+}

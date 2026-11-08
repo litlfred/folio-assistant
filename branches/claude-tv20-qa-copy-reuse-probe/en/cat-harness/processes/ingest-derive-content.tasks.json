@@ -1,0 +1,405 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_DeriveContent",
+ "markers": [
+  {
+   "id": "Task_Archive",
+   "name": "Archive → greppable contents manifest",
+   "left": 48.05,
+   "top": 1.28,
+   "box": {
+    "left": 39.98,
+    "top": 17.24,
+    "width": 1.89,
+    "height": 6.84
+   }
+  },
+  {
+   "id": "Task_TechMeta",
+   "name": "File info, sizes, hashes, timestamps, mimetype",
+   "left": 46.87,
+   "top": 27.64,
+   "box": {
+    "left": 39.98,
+    "top": 43.3,
+    "width": 1.89,
+    "height": 6.84
+   }
+  },
+  {
+   "id": "Task_Image",
+   "name": "Narrative description per image, localized",
+   "left": 45.69,
+   "top": 32.76,
+   "box": {
+    "left": 39.98,
+    "top": 59.83,
+    "width": 1.89,
+    "height": 6.84
+   }
+  },
+  {
+   "id": "Task_Audio",
+   "name": "Transcribe and translate audio",
+   "left": 48.05,
+   "top": 56.98,
+   "box": {
+    "left": 39.98,
+    "top": 72.65,
+    "width": 1.89,
+    "height": 6.84
+   }
+  },
+  {
+   "id": "Task_Tabular",
+   "name": "Sheet names, headers, shape, narrative",
+   "left": 48.05,
+   "top": 75.21,
+   "box": {
+    "left": 39.98,
+    "top": 91.45,
+    "width": 1.89,
+    "height": 6.84
+   }
+  },
+  {
+   "id": "Task_Provenance",
+   "name": "Cite the author of every narrative",
+   "left": 75.6,
+   "top": 32.76,
+   "box": {
+    "left": 69.89,
+    "top": 59.83,
+    "width": 1.89,
+    "height": 6.84
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent",
+ "tasks": {
+  "Task_Archive": {
+   "id": "Task_Archive",
+   "name": "Archive → greppable contents manifest",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Archive",
+   "stepHref": "ingest-derive-content.html#step-Task_Archive",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../en/cat-harness/processes/skills/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../en/cat-harness/processes/skills/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../en/cat-harness/processes/skills/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../en/cat-harness/processes/skills/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../en/cat-harness/processes/skills/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../en/cat-harness/processes/skills/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "Task_TechMeta": {
+   "id": "Task_TechMeta",
+   "name": "File info, sizes, hashes, timestamps, mimetype",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_TechMeta",
+   "stepHref": "ingest-derive-content.html#step-Task_TechMeta",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../en/cat-harness/processes/skills/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../en/cat-harness/processes/skills/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../en/cat-harness/processes/skills/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../en/cat-harness/processes/skills/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../en/cat-harness/processes/skills/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../en/cat-harness/processes/skills/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "Task_Image": {
+   "id": "Task_Image",
+   "name": "Narrative description per image, localized",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Image",
+   "stepHref": "ingest-derive-content.html#step-Task_Image",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../en/cat-harness/processes/skills/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../en/cat-harness/processes/skills/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../en/cat-harness/processes/skills/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../en/cat-harness/processes/skills/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../en/cat-harness/processes/skills/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../en/cat-harness/processes/skills/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "Task_Audio": {
+   "id": "Task_Audio",
+   "name": "Transcribe and translate audio",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Audio",
+   "stepHref": "ingest-derive-content.html#step-Task_Audio",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../en/cat-harness/processes/skills/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../en/cat-harness/processes/skills/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../en/cat-harness/processes/skills/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../en/cat-harness/processes/skills/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../en/cat-harness/processes/skills/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../en/cat-harness/processes/skills/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "Task_Tabular": {
+   "id": "Task_Tabular",
+   "name": "Sheet names, headers, shape, narrative",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Tabular",
+   "stepHref": "ingest-derive-content.html#step-Task_Tabular",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../en/cat-harness/processes/skills/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../en/cat-harness/processes/skills/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../en/cat-harness/processes/skills/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../en/cat-harness/processes/skills/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../en/cat-harness/processes/skills/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../en/cat-harness/processes/skills/upload-naming.html"
+     }
+    ]
+   }
+  },
+  "Task_Provenance": {
+   "id": "Task_Provenance",
+   "name": "Cite the author of every narrative",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/node/Task_Provenance",
+   "stepHref": "ingest-derive-content.html#step-Task_Provenance",
+   "lane": "Ingestion Engine (agent, runs unattended)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeriveContent/lane/Lane_0",
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    }
+   ],
+   "role": {
+    "name": "ingestion-agent",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/ingestion-agent",
+    "title": "Ingestion engine",
+    "skills": [
+     {
+      "name": "asset-extraction",
+      "href": "../../../en/cat-harness/processes/skills/asset-extraction.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "library-ingestion",
+      "href": "../../../en/cat-harness/processes/skills/library-ingestion.html"
+     },
+     {
+      "name": "materialize-on-demand",
+      "href": "../../../en/cat-harness/processes/skills/materialize-on-demand.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     },
+     {
+      "name": "theme-art-intake",
+      "href": "../../../en/cat-harness/processes/skills/theme-art-intake.html"
+     },
+     {
+      "name": "theme-ui-review",
+      "href": "../../../en/cat-harness/processes/skills/theme-ui-review.html"
+     },
+     {
+      "name": "upload-naming",
+      "href": "../../../en/cat-harness/processes/skills/upload-naming.html"
+     }
+    ]
+   }
+  }
+ }
+}

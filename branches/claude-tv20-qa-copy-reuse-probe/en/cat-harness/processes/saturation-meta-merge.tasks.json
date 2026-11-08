@@ -1,0 +1,531 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_SaturationMetaMerge",
+ "markers": [
+  {
+   "id": "Task_Hold",
+   "name": "Broadcast the hold to siblings",
+   "left": 27.69,
+   "top": 32.35,
+   "box": {
+    "left": 22.12,
+    "top": 43.53,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_SibHold",
+   "name": "Hold, and name the heads to merge",
+   "left": 27.69,
+   "top": 4.12,
+   "box": {
+    "left": 22.12,
+    "top": 15.29,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Ask",
+   "name": "Dry-run, then ask the owner naming every PR",
+   "left": 39.23,
+   "top": 32.35,
+   "box": {
+    "left": 33.65,
+    "top": 43.53,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Owner",
+   "name": "Choose A, B, C or D",
+   "left": 39.23,
+   "top": 60.59,
+   "box": {
+    "left": 33.65,
+    "top": 71.76,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Land",
+   "name": "Cancel queued PR runs; build, push, merge",
+   "left": 62.31,
+   "top": 41.76,
+   "box": {
+    "left": 56.73,
+    "top": 52.94,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Done",
+   "name": "Post done to every held sibling",
+   "left": 73.85,
+   "top": 32.35,
+   "box": {
+    "left": 68.27,
+    "top": 43.53,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_MainRun",
+   "name": "Run main's checks",
+   "left": 96.92,
+   "top": 81.76,
+   "box": {
+    "left": 91.35,
+    "top": 92.94,
+    "width": 1.85,
+    "height": 2.82
+   }
+  },
+  {
+   "id": "Task_Report",
+   "name": "Report what landed and main's verdict",
+   "left": 96.92,
+   "top": 32.35,
+   "box": {
+    "left": 91.35,
+    "top": 43.53,
+    "width": 1.85,
+    "height": 2.82
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge",
+ "tasks": {
+  "Task_Hold": {
+   "id": "Task_Hold",
+   "name": "Broadcast the hold to siblings",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Hold",
+   "stepHref": "saturation-meta-merge.html#step-Task_Hold",
+   "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Steward",
+   "skills": [
+    {
+     "name": "merge-manager-watcher",
+     "href": "../../../en/cat-harness/processes/skills/merge-manager-watcher.html"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns",
+      "href": "../../../en/cat-harness/processes/skills/merge-conflict-patterns.html"
+     },
+     {
+      "name": "merge-manager-watcher",
+      "href": "../../../en/cat-harness/processes/skills/merge-manager-watcher.html"
+     },
+     {
+      "name": "merge-queue",
+      "href": "../../../en/cat-harness/processes/skills/merge-queue.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../en/cat-harness/processes/skills/merge-to-main.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "ref-stewardship",
+      "href": "../../../en/cat-harness/processes/skills/ref-stewardship.html"
+     },
+     {
+      "name": "saturation-meta-merge",
+      "href": "../../../en/cat-harness/processes/skills/saturation-meta-merge.html"
+     }
+    ]
+   }
+  },
+  "Task_SibHold": {
+   "id": "Task_SibHold",
+   "name": "Hold, and name the heads to merge",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_SibHold",
+   "stepHref": "saturation-meta-merge.html#step-Task_SibHold",
+   "lane": "Sibling session",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Sibling",
+   "skills": [
+    {
+     "name": "saturation-meta-merge",
+     "href": "../../../en/cat-harness/processes/skills/saturation-meta-merge.html"
+    }
+   ],
+   "role": {
+    "name": "sibling-session",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/sibling-session",
+    "title": "Sibling session",
+    "skills": [
+     {
+      "name": "bean-coordination",
+      "href": "../../../en/cat-harness/processes/skills/bean-coordination.html"
+     }
+    ]
+   }
+  },
+  "Task_Ask": {
+   "id": "Task_Ask",
+   "name": "Dry-run, then ask the owner naming every PR",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Ask",
+   "stepHref": "saturation-meta-merge.html#step-Task_Ask",
+   "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Steward",
+   "skills": [
+    {
+     "name": "ask-the-person",
+     "href": "../../../en/cat-harness/processes/skills/ask-the-person.html"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns",
+      "href": "../../../en/cat-harness/processes/skills/merge-conflict-patterns.html"
+     },
+     {
+      "name": "merge-manager-watcher",
+      "href": "../../../en/cat-harness/processes/skills/merge-manager-watcher.html"
+     },
+     {
+      "name": "merge-queue",
+      "href": "../../../en/cat-harness/processes/skills/merge-queue.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../en/cat-harness/processes/skills/merge-to-main.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "ref-stewardship",
+      "href": "../../../en/cat-harness/processes/skills/ref-stewardship.html"
+     },
+     {
+      "name": "saturation-meta-merge",
+      "href": "../../../en/cat-harness/processes/skills/saturation-meta-merge.html"
+     }
+    ]
+   }
+  },
+  "Task_Owner": {
+   "id": "Task_Owner",
+   "name": "Choose A, B, C or D",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Owner",
+   "stepHref": "saturation-meta-merge.html#step-Task_Owner",
+   "lane": "Owner",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Owner",
+   "skills": [],
+   "role": {
+    "name": "user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../en/cat-harness/processes/skills/adjudication.html"
+     },
+     {
+      "name": "agent-permissions",
+      "href": "../../../en/cat-harness/processes/skills/agent-permissions.html"
+     },
+     {
+      "name": "dispatch-agent",
+      "href": "../../../en/cat-harness/processes/skills/dispatch-agent.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../en/cat-harness/processes/skills/folio-init.html"
+     },
+     {
+      "name": "getting-started",
+      "href": "../../../en/cat-harness/processes/skills/getting-started.html"
+     },
+     {
+      "name": "interaction-modality",
+      "href": "../../../en/cat-harness/processes/skills/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../en/cat-harness/processes/skills/merge-to-main.html"
+     },
+     {
+      "name": "repo-conversion",
+      "href": "../../../en/cat-harness/processes/skills/repo-conversion.html"
+     }
+    ]
+   }
+  },
+  "Task_Land": {
+   "id": "Task_Land",
+   "name": "Cancel queued PR runs; build, push, merge",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Land",
+   "stepHref": "saturation-meta-merge.html#step-Task_Land",
+   "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Steward",
+   "skills": [
+    {
+     "name": "saturation-meta-merge",
+     "href": "../../../en/cat-harness/processes/skills/saturation-meta-merge.html"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns",
+      "href": "../../../en/cat-harness/processes/skills/merge-conflict-patterns.html"
+     },
+     {
+      "name": "merge-manager-watcher",
+      "href": "../../../en/cat-harness/processes/skills/merge-manager-watcher.html"
+     },
+     {
+      "name": "merge-queue",
+      "href": "../../../en/cat-harness/processes/skills/merge-queue.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../en/cat-harness/processes/skills/merge-to-main.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "ref-stewardship",
+      "href": "../../../en/cat-harness/processes/skills/ref-stewardship.html"
+     },
+     {
+      "name": "saturation-meta-merge",
+      "href": "../../../en/cat-harness/processes/skills/saturation-meta-merge.html"
+     }
+    ]
+   }
+  },
+  "Task_Done": {
+   "id": "Task_Done",
+   "name": "Post done to every held sibling",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Done",
+   "stepHref": "saturation-meta-merge.html#step-Task_Done",
+   "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Steward",
+   "skills": [
+    {
+     "name": "merge-manager-watcher",
+     "href": "../../../en/cat-harness/processes/skills/merge-manager-watcher.html"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns",
+      "href": "../../../en/cat-harness/processes/skills/merge-conflict-patterns.html"
+     },
+     {
+      "name": "merge-manager-watcher",
+      "href": "../../../en/cat-harness/processes/skills/merge-manager-watcher.html"
+     },
+     {
+      "name": "merge-queue",
+      "href": "../../../en/cat-harness/processes/skills/merge-queue.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../en/cat-harness/processes/skills/merge-to-main.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "ref-stewardship",
+      "href": "../../../en/cat-harness/processes/skills/ref-stewardship.html"
+     },
+     {
+      "name": "saturation-meta-merge",
+      "href": "../../../en/cat-harness/processes/skills/saturation-meta-merge.html"
+     }
+    ]
+   }
+  },
+  "Task_MainRun": {
+   "id": "Task_MainRun",
+   "name": "Run main's checks",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_MainRun",
+   "stepHref": "saturation-meta-merge.html#step-Task_MainRun",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Pipeline",
+   "skills": [],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Report": {
+   "id": "Task_Report",
+   "name": "Report what landed and main's verdict",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/node/Task_Report",
+   "stepHref": "saturation-meta-merge.html#step-Task_Report",
+   "lane": "Merge steward",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SaturationMetaMerge/lane/Lane_Steward",
+   "skills": [
+    {
+     "name": "merge-to-main",
+     "href": "../../../en/cat-harness/processes/skills/merge-to-main.html"
+    }
+   ],
+   "role": {
+    "name": "merge-steward",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/merge-steward",
+    "title": "Merge steward",
+    "skills": [
+     {
+      "name": "merge-conflict-patterns",
+      "href": "../../../en/cat-harness/processes/skills/merge-conflict-patterns.html"
+     },
+     {
+      "name": "merge-manager-watcher",
+      "href": "../../../en/cat-harness/processes/skills/merge-manager-watcher.html"
+     },
+     {
+      "name": "merge-queue",
+      "href": "../../../en/cat-harness/processes/skills/merge-queue.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../en/cat-harness/processes/skills/merge-to-main.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "ref-stewardship",
+      "href": "../../../en/cat-harness/processes/skills/ref-stewardship.html"
+     },
+     {
+      "name": "saturation-meta-merge",
+      "href": "../../../en/cat-harness/processes/skills/saturation-meta-merge.html"
+     }
+    ]
+   }
+  }
+ }
+}

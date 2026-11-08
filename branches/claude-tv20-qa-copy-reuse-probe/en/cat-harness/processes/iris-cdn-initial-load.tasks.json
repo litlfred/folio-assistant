@@ -1,0 +1,928 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_IrisCdnInitialLoad",
+ "markers": [
+  {
+   "id": "Task_StateBudget",
+   "name": "State scope and budget, with denominators",
+   "left": 15.81,
+   "top": 3.72,
+   "box": {
+    "left": 12.56,
+    "top": 9.57,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_PlanBatches",
+   "name": "Plan batches by community and collection",
+   "left": 22.87,
+   "top": 18.62,
+   "box": {
+    "left": 19.62,
+    "top": 24.47,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_HarvestBatch",
+   "name": "Harvest a batch of item records (REST)",
+   "left": 29.38,
+   "top": 31.6,
+   "box": {
+    "left": 26.68,
+    "top": 41.7,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_FetchBitstreams",
+   "name": "Fetch bitstreams not already held",
+   "left": 36.44,
+   "top": 31.6,
+   "box": {
+    "left": 33.75,
+    "top": 41.7,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_StoreBytes",
+   "name": "Store bytes under SHA-256 (skip if held)",
+   "left": 51.12,
+   "top": 63.3,
+   "box": {
+    "left": 47.87,
+    "top": 69.15,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_Checkpoint",
+   "name": "Commit the batch checkpoint",
+   "left": 58.18,
+   "top": 78.19,
+   "box": {
+    "left": 54.93,
+    "top": 84.04,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_Quarantine",
+   "name": "Quarantine and report the mismatch",
+   "left": 57.63,
+   "top": 46.28,
+   "box": {
+    "left": 54.93,
+    "top": 56.38,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Call_BuildGraph",
+   "name": "Build the graph partitions",
+   "left": 75.1,
+   "top": 31.6,
+   "box": {
+    "left": 72.4,
+    "top": 41.7,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Call_SignPublish",
+   "name": "Sign and publish the release",
+   "left": 82.16,
+   "top": 31.6,
+   "box": {
+    "left": 79.46,
+    "top": 41.7,
+    "width": 0.89,
+    "height": 2.55
+   }
+  },
+  {
+   "id": "Task_ReviewLoad",
+   "name": "Review the load report; open beans for gaps",
+   "left": 89.78,
+   "top": 18.62,
+   "box": {
+    "left": 86.53,
+    "top": 24.47,
+    "width": 0.89,
+    "height": 2.55
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad",
+ "tasks": {
+  "Task_StateBudget": {
+   "id": "Task_StateBudget",
+   "name": "State scope and budget, with denominators",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StateBudget",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_StateBudget",
+   "lane": "Owner",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Owner",
+   "skills": [
+    {
+     "name": "iris-cdn-exporter",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-exporter.html"
+    }
+   ],
+   "role": {
+    "name": "iris-cdn-owner",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-owner",
+    "title": "IRIS CDN owner",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html",
+      "via": "programme-manager"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html",
+      "via": "programme-manager"
+     },
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../en/cat-harness/processes/skills/iris-cdn-exporter.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html",
+      "via": "programme-manager"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html",
+      "via": "programme-manager"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html",
+      "via": "programme-manager"
+     }
+    ]
+   }
+  },
+  "Task_PlanBatches": {
+   "id": "Task_PlanBatches",
+   "name": "Plan batches by community and collection",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_PlanBatches",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_PlanBatches",
+   "lane": "IRIS CDN Exporter (agent)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
+   "skills": [
+    {
+     "name": "iris-cdn-exporter",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-exporter.html"
+    },
+    {
+     "name": "iris-dspace",
+     "href": "../../../en/cat-harness/processes/skills/iris-dspace.html"
+    }
+   ],
+   "role": {
+    "name": "iris-cdn-exporter",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
+    "title": "IRIS CDN Exporter",
+    "skills": [
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../en/cat-harness/processes/skills/iris-cdn-exporter.html"
+     },
+     {
+      "name": "iris-dspace",
+      "href": "../../../en/cat-harness/processes/skills/iris-dspace.html"
+     },
+     {
+      "name": "iris-rest-feed",
+      "href": "../../../en/cat-harness/processes/skills/iris-rest-feed.html"
+     }
+    ]
+   }
+  },
+  "Task_HarvestBatch": {
+   "id": "Task_HarvestBatch",
+   "name": "Harvest a batch of item records (REST)",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_HarvestBatch",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_HarvestBatch",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "iris-rest-feed",
+     "href": "../../../en/cat-harness/processes/skills/iris-rest-feed.html"
+    },
+    {
+     "name": "iris-dspace",
+     "href": "../../../en/cat-harness/processes/skills/iris-dspace.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_FetchBitstreams": {
+   "id": "Task_FetchBitstreams",
+   "name": "Fetch bitstreams not already held",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_FetchBitstreams",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_FetchBitstreams",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "iris-cdn-exporter",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-exporter.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_StoreBytes": {
+   "id": "Task_StoreBytes",
+   "name": "Store bytes under SHA-256 (skip if held)",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_StoreBytes",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_StoreBytes",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "iris-cdn-exporter",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-exporter.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Checkpoint": {
+   "id": "Task_Checkpoint",
+   "name": "Commit the batch checkpoint",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Checkpoint",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_Checkpoint",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "iris-cdn-exporter",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-exporter.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Quarantine": {
+   "id": "Task_Quarantine",
+   "name": "Quarantine and report the mismatch",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_Quarantine",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_Quarantine",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "iris-cdn-exporter",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-exporter.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Call_BuildGraph": {
+   "id": "Call_BuildGraph",
+   "name": "Build the graph partitions",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_BuildGraph",
+   "stepHref": "iris-cdn-initial-load.html#step-Call_BuildGraph",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "iris-oxigraph",
+     "href": "../../../en/cat-harness/processes/skills/iris-oxigraph.html"
+    },
+    {
+     "name": "nquads-distribution",
+     "href": "../../../en/cat-harness/processes/skills/nquads-distribution.html"
+    }
+   ],
+   "calls": {
+    "name": "Package and distribute partitioned W3C N-Quads and named queries",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_NQuadsDistribution",
+    "diagram": "nquads-distribution.html"
+   },
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Call_SignPublish": {
+   "id": "Call_SignPublish",
+   "name": "Sign and publish the release",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Call_SignPublish",
+   "stepHref": "iris-cdn-initial-load.html#step-Call_SignPublish",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "iris-cdn-signing",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+    }
+   ],
+   "calls": {
+    "name": "Sign and publish an IRIS CDN release",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+    "diagram": "iris-cdn-sign-publish.html"
+   },
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_ReviewLoad": {
+   "id": "Task_ReviewLoad",
+   "name": "Review the load report; open beans for gaps",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/node/Task_ReviewLoad",
+   "stepHref": "iris-cdn-initial-load.html#step-Task_ReviewLoad",
+   "lane": "IRIS CDN Exporter (agent)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnInitialLoad/lane/Lane_Exporter",
+   "skills": [
+    {
+     "name": "iris-cdn-exporter",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-exporter.html"
+    }
+   ],
+   "role": {
+    "name": "iris-cdn-exporter",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter",
+    "title": "IRIS CDN Exporter",
+    "skills": [
+     {
+      "name": "iris-cdn-exporter",
+      "href": "../../../en/cat-harness/processes/skills/iris-cdn-exporter.html"
+     },
+     {
+      "name": "iris-dspace",
+      "href": "../../../en/cat-harness/processes/skills/iris-dspace.html"
+     },
+     {
+      "name": "iris-rest-feed",
+      "href": "../../../en/cat-harness/processes/skills/iris-rest-feed.html"
+     }
+    ]
+   }
+  }
+ }
+}

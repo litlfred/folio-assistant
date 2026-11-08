@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/process/Process_PublicComment/lane/Lane_Intake.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "ee3a8e86672a450cdbafe55ebf9b27d460c237db",
+    "pr": "2953/merge",
+    "run": "42506688955"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/process/Process_PublicComment/lane/Lane_Intake",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Intake agent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/process/Process_PublicComment",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/role/ingestion-agent",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublicComment/lane/Lane_Intake"
+    }
+  ]
+}

@@ -1,0 +1,562 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_MultiLocaleTranslation",
+ "markers": [
+  {
+   "id": "Task_ML_Scope",
+   "name": "Set locales, scope and merge window",
+   "left": 18.89,
+   "top": 2.82,
+   "box": {
+    "left": 13.52,
+    "top": 16.2,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_ML_Extract",
+   "name": "Extract every template once",
+   "left": 30,
+   "top": 25.35,
+   "box": {
+    "left": 24.63,
+    "top": 38.73,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_ML_SourcePR",
+   "name": "Merge the one source PR to main",
+   "left": 41.11,
+   "top": 25.35,
+   "box": {
+    "left": 35.74,
+    "top": 38.73,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_ML_Watcher",
+   "name": "Schedule the refresh watcher",
+   "left": 52.22,
+   "top": 25.35,
+   "box": {
+    "left": 46.85,
+    "top": 38.73,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_ML_Translate",
+   "name": "Translate one locale",
+   "left": 63.33,
+   "top": 48.59,
+   "box": {
+    "left": 57.96,
+    "top": 61.97,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_ML_SourceIssue",
+   "name": "File the source errors as one issue",
+   "left": 71.85,
+   "top": 25.35,
+   "box": {
+    "left": 66.48,
+    "top": 38.73,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_ML_Gates",
+   "name": "Run the deterministic gates",
+   "left": 80.37,
+   "top": 48.59,
+   "box": {
+    "left": 75,
+    "top": 61.97,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Call_ML_RoundTrip",
+   "name": "Untainted round trip on a sample",
+   "left": 97.41,
+   "top": 48.59,
+   "box": {
+    "left": 92.04,
+    "top": 61.97,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_ML_Glossary",
+   "name": "Check glossary consistency",
+   "left": 97.41,
+   "top": 72.54,
+   "box": {
+    "left": 92.04,
+    "top": 85.92,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_ML_QAReport",
+   "name": "Write the locale's QA report",
+   "left": 85.56,
+   "top": 72.54,
+   "box": {
+    "left": 80.19,
+    "top": 85.92,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_ML_LocalePR",
+   "name": "Open the locale PR to main",
+   "left": 73.7,
+   "top": 72.54,
+   "box": {
+    "left": 68.33,
+    "top": 85.92,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_ML_FixDrift",
+   "name": "Fix each drift on the PR",
+   "left": 54.44,
+   "top": 72.54,
+   "box": {
+    "left": 49.07,
+    "top": 85.92,
+    "width": 1.78,
+    "height": 3.38
+   }
+  },
+  {
+   "id": "Task_ML_Merge",
+   "name": "Validate and merge in the window",
+   "left": 18.89,
+   "top": 25.35,
+   "box": {
+    "left": 13.52,
+    "top": 38.73,
+    "width": 1.78,
+    "height": 3.38
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation",
+ "tasks": {
+  "Task_ML_Scope": {
+   "id": "Task_ML_Scope",
+   "name": "Set locales, scope and merge window",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Scope",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Scope",
+   "lane": "Owner",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Owner",
+   "skills": [],
+   "role": {
+    "name": "user",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/user",
+    "title": "User",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../en/cat-harness/processes/skills/adjudication.html"
+     },
+     {
+      "name": "agent-permissions",
+      "href": "../../../en/cat-harness/processes/skills/agent-permissions.html"
+     },
+     {
+      "name": "dispatch-agent",
+      "href": "../../../en/cat-harness/processes/skills/dispatch-agent.html"
+     },
+     {
+      "name": "folio-init",
+      "href": "../../../en/cat-harness/processes/skills/folio-init.html"
+     },
+     {
+      "name": "getting-started",
+      "href": "../../../en/cat-harness/processes/skills/getting-started.html"
+     },
+     {
+      "name": "interaction-modality",
+      "href": "../../../en/cat-harness/processes/skills/interaction-modality.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "kg-subscription",
+      "href": "../../../en/cat-harness/processes/skills/kg-subscription.html"
+     },
+     {
+      "name": "materialize-remote",
+      "href": "../../../en/cat-harness/processes/skills/materialize-remote.html"
+     },
+     {
+      "name": "merge-to-main",
+      "href": "../../../en/cat-harness/processes/skills/merge-to-main.html"
+     },
+     {
+      "name": "repo-conversion",
+      "href": "../../../en/cat-harness/processes/skills/repo-conversion.html"
+     }
+    ]
+   }
+  },
+  "Task_ML_Extract": {
+   "id": "Task_ML_Extract",
+   "name": "Extract every template once",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Extract",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Extract",
+   "lane": "Source-language lead",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "shared": {
+    "id": "GT_ExtractPot",
+    "type": "bpmn:GlobalTask"
+   },
+   "role": {
+    "name": "translation-source-lead",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-source-lead",
+    "title": "Source-language lead",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "translation-refresh",
+      "href": "../../../en/cat-harness/processes/skills/translation-refresh.html"
+     }
+    ]
+   }
+  },
+  "Task_ML_SourcePR": {
+   "id": "Task_ML_SourcePR",
+   "name": "Merge the one source PR to main",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourcePR",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_SourcePR",
+   "lane": "Source-language lead",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "translation-source-lead",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-source-lead",
+    "title": "Source-language lead",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "translation-refresh",
+      "href": "../../../en/cat-harness/processes/skills/translation-refresh.html"
+     }
+    ]
+   }
+  },
+  "Task_ML_Watcher": {
+   "id": "Task_ML_Watcher",
+   "name": "Schedule the refresh watcher",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Watcher",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Watcher",
+   "lane": "Source-language lead",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+   "skills": [
+    {
+     "name": "translation-refresh",
+     "href": "../../../en/cat-harness/processes/skills/translation-refresh.html"
+    }
+   ],
+   "role": {
+    "name": "translation-source-lead",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-source-lead",
+    "title": "Source-language lead",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "translation-refresh",
+      "href": "../../../en/cat-harness/processes/skills/translation-refresh.html"
+     }
+    ]
+   }
+  },
+  "Task_ML_Translate": {
+   "id": "Task_ML_Translate",
+   "name": "Translate one locale",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Translate",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Translate",
+   "lane": "Locale translator (one per locale)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "locale-translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+    "title": "Locale translator",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_ML_SourceIssue": {
+   "id": "Task_ML_SourceIssue",
+   "name": "File the source errors as one issue",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_SourceIssue",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_SourceIssue",
+   "lane": "Source-language lead",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "translation-source-lead",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-source-lead",
+    "title": "Source-language lead",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "translation-refresh",
+      "href": "../../../en/cat-harness/processes/skills/translation-refresh.html"
+     }
+    ]
+   }
+  },
+  "Task_ML_Gates": {
+   "id": "Task_ML_Gates",
+   "name": "Run the deterministic gates",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Gates",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Gates",
+   "lane": "Locale translator (one per locale)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "locale-translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+    "title": "Locale translator",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     }
+    ]
+   }
+  },
+  "Call_ML_RoundTrip": {
+   "id": "Call_ML_RoundTrip",
+   "name": "Untainted round trip on a sample",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Call_ML_RoundTrip",
+   "stepHref": "multi-locale-translation.html#step-Call_ML_RoundTrip",
+   "lane": "Locale translator (one per locale)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+   "skills": [],
+   "calls": {
+    "name": "Translation round trip (untainted)",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
+    "diagram": "translation-round-trip.html"
+   },
+   "role": {
+    "name": "locale-translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+    "title": "Locale translator",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_ML_Glossary": {
+   "id": "Task_ML_Glossary",
+   "name": "Check glossary consistency",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Glossary",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Glossary",
+   "lane": "Locale translator (one per locale)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "locale-translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+    "title": "Locale translator",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_ML_QAReport": {
+   "id": "Task_ML_QAReport",
+   "name": "Write the locale's QA report",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_QAReport",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_QAReport",
+   "lane": "Locale translator (one per locale)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "locale-translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+    "title": "Locale translator",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_ML_LocalePR": {
+   "id": "Task_ML_LocalePR",
+   "name": "Open the locale PR to main",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_LocalePR",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_LocalePR",
+   "lane": "Locale translator (one per locale)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "locale-translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+    "title": "Locale translator",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_ML_FixDrift": {
+   "id": "Task_ML_FixDrift",
+   "name": "Fix each drift on the PR",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_FixDrift",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_FixDrift",
+   "lane": "Locale translator (one per locale)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Translator",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "locale-translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+    "title": "Locale translator",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_ML_Merge": {
+   "id": "Task_ML_Merge",
+   "name": "Validate and merge in the window",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Merge",
+   "stepHref": "multi-locale-translation.html#step-Task_ML_Merge",
+   "lane": "Source-language lead",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "translation-source-lead",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/translation-source-lead",
+    "title": "Source-language lead",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "translation-refresh",
+      "href": "../../../en/cat-harness/processes/skills/translation-refresh.html"
+     }
+    ]
+   }
+  }
+ }
+}

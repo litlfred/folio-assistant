@@ -1,0 +1,209 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_ActOnDecisionSupport",
+ "markers": [
+  {
+   "id": "Task_Apply",
+   "name": "Apply the PlanDefinition",
+   "left": 33.15,
+   "top": 11.36,
+   "box": {
+    "left": 24.44,
+    "top": 23.86,
+    "width": 2.7,
+    "height": 5.45
+   }
+  },
+  {
+   "id": "Task_Review",
+   "name": "Accept or decline the guidance",
+   "left": 47.75,
+   "top": 52.27,
+   "box": {
+    "left": 39.04,
+    "top": 64.77,
+    "width": 2.7,
+    "height": 5.45
+   }
+  },
+  {
+   "id": "Task_Activate",
+   "name": "Update the care plan",
+   "left": 84.83,
+   "top": 11.36,
+   "box": {
+    "left": 76.12,
+    "top": 23.86,
+    "width": 2.7,
+    "height": 5.45
+   }
+  },
+  {
+   "id": "Task_Rationale",
+   "name": "Note the reason (optional)",
+   "left": 67.98,
+   "top": 73.86,
+   "box": {
+    "left": 59.27,
+    "top": 86.36,
+    "width": 2.7,
+    "height": 5.45
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport",
+ "tasks": {
+  "Task_Apply": {
+   "id": "Task_Apply",
+   "name": "Apply the PlanDefinition",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport/node/Task_Apply",
+   "stepHref": "act-on-decision-support.html#step-Task_Apply",
+   "lane": "Point-of-care system",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport/lane/Lane_System",
+   "skills": [
+    {
+     "name": "apply-decision-support",
+     "href": "../../../en/cat-harness/processes/skills/apply-decision-support.html"
+    }
+   ],
+   "role": {
+    "name": "point-of-care-system",
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/role/point-of-care-system",
+    "title": "Point-of-care system",
+    "skills": [
+     {
+      "name": "activate-accepted-guidance",
+      "href": "../../../en/cat-harness/processes/skills/activate-accepted-guidance.html"
+     },
+     {
+      "name": "apply-decision-support",
+      "href": "../../../en/cat-harness/processes/skills/apply-decision-support.html"
+     },
+     {
+      "name": "extract-questionnaire-response",
+      "href": "../../../en/cat-harness/processes/skills/extract-questionnaire-response.html"
+     }
+    ]
+   }
+  },
+  "Task_Review": {
+   "id": "Task_Review",
+   "name": "Accept or decline the guidance",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport/node/Task_Review",
+   "stepHref": "act-on-decision-support.html#step-Task_Review",
+   "lane": "Health worker",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+   "skills": [
+    {
+     "name": "review-decision-support-guidance",
+     "href": "../../../en/cat-harness/processes/skills/review-decision-support-guidance.html"
+    }
+   ],
+   "role": {
+    "name": "health-worker",
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/role/health-worker",
+    "title": "Health worker",
+    "skills": [
+     {
+      "name": "complete-sdc-questionnaire",
+      "href": "../../../en/cat-harness/processes/skills/complete-sdc-questionnaire.html"
+     },
+     {
+      "name": "inform-client",
+      "href": "../../../en/cat-harness/processes/skills/inform-client.html"
+     },
+     {
+      "name": "record-decision-rationale",
+      "href": "../../../en/cat-harness/processes/skills/record-decision-rationale.html"
+     },
+     {
+      "name": "review-client-history",
+      "href": "../../../en/cat-harness/processes/skills/review-client-history.html"
+     },
+     {
+      "name": "review-decision-support-guidance",
+      "href": "../../../en/cat-harness/processes/skills/review-decision-support-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_Activate": {
+   "id": "Task_Activate",
+   "name": "Update the care plan",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport/node/Task_Activate",
+   "stepHref": "act-on-decision-support.html#step-Task_Activate",
+   "lane": "Point-of-care system",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport/lane/Lane_System",
+   "skills": [
+    {
+     "name": "activate-accepted-guidance",
+     "href": "../../../en/cat-harness/processes/skills/activate-accepted-guidance.html"
+    }
+   ],
+   "role": {
+    "name": "point-of-care-system",
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/role/point-of-care-system",
+    "title": "Point-of-care system",
+    "skills": [
+     {
+      "name": "activate-accepted-guidance",
+      "href": "../../../en/cat-harness/processes/skills/activate-accepted-guidance.html"
+     },
+     {
+      "name": "apply-decision-support",
+      "href": "../../../en/cat-harness/processes/skills/apply-decision-support.html"
+     },
+     {
+      "name": "extract-questionnaire-response",
+      "href": "../../../en/cat-harness/processes/skills/extract-questionnaire-response.html"
+     }
+    ]
+   }
+  },
+  "Task_Rationale": {
+   "id": "Task_Rationale",
+   "name": "Note the reason (optional)",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport/node/Task_Rationale",
+   "stepHref": "act-on-decision-support.html#step-Task_Rationale",
+   "lane": "Health worker",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+   "skills": [
+    {
+     "name": "record-decision-rationale",
+     "href": "../../../en/cat-harness/processes/skills/record-decision-rationale.html"
+    }
+   ],
+   "role": {
+    "name": "health-worker",
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/role/health-worker",
+    "title": "Health worker",
+    "skills": [
+     {
+      "name": "complete-sdc-questionnaire",
+      "href": "../../../en/cat-harness/processes/skills/complete-sdc-questionnaire.html"
+     },
+     {
+      "name": "inform-client",
+      "href": "../../../en/cat-harness/processes/skills/inform-client.html"
+     },
+     {
+      "name": "record-decision-rationale",
+      "href": "../../../en/cat-harness/processes/skills/record-decision-rationale.html"
+     },
+     {
+      "name": "review-client-history",
+      "href": "../../../en/cat-harness/processes/skills/review-client-history.html"
+     },
+     {
+      "name": "review-decision-support-guidance",
+      "href": "../../../en/cat-harness/processes/skills/review-decision-support-guidance.html"
+     }
+    ]
+   }
+  }
+ }
+}

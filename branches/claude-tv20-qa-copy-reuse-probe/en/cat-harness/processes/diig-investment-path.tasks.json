@@ -1,0 +1,773 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_DIIG",
+ "markers": [
+  {
+   "id": "A_FormTeam",
+   "name": "Form the team and establish goals",
+   "left": 22.9,
+   "top": 16.28,
+   "box": {
+    "left": 19.72,
+    "top": 29.07,
+    "width": 0.92,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "A_MapCurrentState",
+   "name": "Map the current state and confirm bottlenecks",
+   "left": 30.2,
+   "top": 65.12,
+   "box": {
+    "left": 27.03,
+    "top": 77.91,
+    "width": 0.92,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "A_PrioritizeBottlenecks",
+   "name": "Prioritize, and map to health system challenges",
+   "left": 37.51,
+   "top": 65.12,
+   "box": {
+    "left": 34.34,
+    "top": 77.91,
+    "width": 0.92,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "A_DetermineInterventions",
+   "name": "Determine appropriate digital health interventions",
+   "left": 44.82,
+   "top": 65.12,
+   "box": {
+    "left": 41.64,
+    "top": 77.91,
+    "width": 0.92,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "A_PlanImplementation",
+   "name": "Plan the implementation",
+   "left": 55.97,
+   "top": 16.28,
+   "box": {
+    "left": 52.8,
+    "top": 29.07,
+    "width": 0.92,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "A_LinkEnterpriseArchitecture",
+   "name": "Link to the enterprise architecture",
+   "left": 63.28,
+   "top": 65.12,
+   "box": {
+    "left": 60.1,
+    "top": 77.91,
+    "width": 0.92,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "A_DevelopBudget",
+   "name": "Develop a budget",
+   "left": 70.58,
+   "top": 16.28,
+   "box": {
+    "left": 67.41,
+    "top": 29.07,
+    "width": 0.92,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "A_MonitorAndUseData",
+   "name": "Monitor, and use data effectively",
+   "left": 77.89,
+   "top": 16.28,
+   "box": {
+    "left": 74.72,
+    "top": 29.07,
+    "width": 0.92,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "A_ValueProposition",
+   "name": "Make the value proposition and set next steps",
+   "left": 89.04,
+   "top": 16.28,
+   "box": {
+    "left": 85.87,
+    "top": 29.07,
+    "width": 0.92,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "left": 11.36,
+   "top": 16.28,
+   "box": {
+    "left": 8.57,
+    "top": 29.07,
+    "width": 0.92,
+    "height": 5.58
+   }
+  },
+  {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "left": 95.58,
+   "top": 16.28,
+   "box": {
+    "left": 92.79,
+    "top": 29.07,
+    "width": 0.92,
+    "height": 5.58
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG",
+ "tasks": {
+  "A_FormTeam": {
+   "id": "A_FormTeam",
+   "name": "Form the team and establish goals",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_FormTeam",
+   "stepHref": "diig-investment-path.html#step-A_FormTeam",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [
+    {
+     "name": "methodology-adoption",
+     "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "A_MapCurrentState": {
+   "id": "A_MapCurrentState",
+   "name": "Map the current state and confirm bottlenecks",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_MapCurrentState",
+   "stepHref": "diig-investment-path.html#step-A_MapCurrentState",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
+   "skills": [
+    {
+     "name": "methodology-adoption",
+     "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "crdm-impact-analysis",
+      "href": "../../../en/cat-harness/processes/skills/crdm-impact-analysis.html"
+     },
+     {
+      "name": "crdm-needs-assessment",
+      "href": "../../../en/cat-harness/processes/skills/crdm-needs-assessment.html"
+     },
+     {
+      "name": "crdm-recorded-walkthrough",
+      "href": "../../../en/cat-harness/processes/skills/crdm-recorded-walkthrough.html"
+     },
+     {
+      "name": "crdm-requirements-template",
+      "href": "../../../en/cat-harness/processes/skills/crdm-requirements-template.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../en/cat-harness/processes/skills/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "data-modelling",
+      "href": "../../../en/cat-harness/processes/skills/data-modelling.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../en/cat-harness/processes/skills/opening-brief.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../en/cat-harness/processes/skills/wireframe-design-review.html"
+     }
+    ]
+   }
+  },
+  "A_PrioritizeBottlenecks": {
+   "id": "A_PrioritizeBottlenecks",
+   "name": "Prioritize, and map to health system challenges",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_PrioritizeBottlenecks",
+   "stepHref": "diig-investment-path.html#step-A_PrioritizeBottlenecks",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
+   "skills": [
+    {
+     "name": "methodology-adoption",
+     "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "crdm-impact-analysis",
+      "href": "../../../en/cat-harness/processes/skills/crdm-impact-analysis.html"
+     },
+     {
+      "name": "crdm-needs-assessment",
+      "href": "../../../en/cat-harness/processes/skills/crdm-needs-assessment.html"
+     },
+     {
+      "name": "crdm-recorded-walkthrough",
+      "href": "../../../en/cat-harness/processes/skills/crdm-recorded-walkthrough.html"
+     },
+     {
+      "name": "crdm-requirements-template",
+      "href": "../../../en/cat-harness/processes/skills/crdm-requirements-template.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../en/cat-harness/processes/skills/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "data-modelling",
+      "href": "../../../en/cat-harness/processes/skills/data-modelling.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../en/cat-harness/processes/skills/opening-brief.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../en/cat-harness/processes/skills/wireframe-design-review.html"
+     }
+    ]
+   }
+  },
+  "A_DetermineInterventions": {
+   "id": "A_DetermineInterventions",
+   "name": "Determine appropriate digital health interventions",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_DetermineInterventions",
+   "stepHref": "diig-investment-path.html#step-A_DetermineInterventions",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
+   "skills": [
+    {
+     "name": "methodology-adoption",
+     "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "crdm-impact-analysis",
+      "href": "../../../en/cat-harness/processes/skills/crdm-impact-analysis.html"
+     },
+     {
+      "name": "crdm-needs-assessment",
+      "href": "../../../en/cat-harness/processes/skills/crdm-needs-assessment.html"
+     },
+     {
+      "name": "crdm-recorded-walkthrough",
+      "href": "../../../en/cat-harness/processes/skills/crdm-recorded-walkthrough.html"
+     },
+     {
+      "name": "crdm-requirements-template",
+      "href": "../../../en/cat-harness/processes/skills/crdm-requirements-template.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../en/cat-harness/processes/skills/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "data-modelling",
+      "href": "../../../en/cat-harness/processes/skills/data-modelling.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../en/cat-harness/processes/skills/opening-brief.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../en/cat-harness/processes/skills/wireframe-design-review.html"
+     }
+    ]
+   }
+  },
+  "A_PlanImplementation": {
+   "id": "A_PlanImplementation",
+   "name": "Plan the implementation",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_PlanImplementation",
+   "stepHref": "diig-investment-path.html#step-A_PlanImplementation",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [
+    {
+     "name": "methodology-adoption",
+     "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "A_LinkEnterpriseArchitecture": {
+   "id": "A_LinkEnterpriseArchitecture",
+   "name": "Link to the enterprise architecture",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_LinkEnterpriseArchitecture",
+   "stepHref": "diig-investment-path.html#step-A_LinkEnterpriseArchitecture",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_BusinessAnalyst",
+   "skills": [
+    {
+     "name": "methodology-adoption",
+     "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+    }
+   ],
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "crdm-impact-analysis",
+      "href": "../../../en/cat-harness/processes/skills/crdm-impact-analysis.html"
+     },
+     {
+      "name": "crdm-needs-assessment",
+      "href": "../../../en/cat-harness/processes/skills/crdm-needs-assessment.html"
+     },
+     {
+      "name": "crdm-recorded-walkthrough",
+      "href": "../../../en/cat-harness/processes/skills/crdm-recorded-walkthrough.html"
+     },
+     {
+      "name": "crdm-requirements-template",
+      "href": "../../../en/cat-harness/processes/skills/crdm-requirements-template.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../en/cat-harness/processes/skills/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "data-modelling",
+      "href": "../../../en/cat-harness/processes/skills/data-modelling.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../en/cat-harness/processes/skills/opening-brief.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../en/cat-harness/processes/skills/wireframe-design-review.html"
+     }
+    ]
+   }
+  },
+  "A_DevelopBudget": {
+   "id": "A_DevelopBudget",
+   "name": "Develop a budget",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_DevelopBudget",
+   "stepHref": "diig-investment-path.html#step-A_DevelopBudget",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [
+    {
+     "name": "methodology-adoption",
+     "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "A_MonitorAndUseData": {
+   "id": "A_MonitorAndUseData",
+   "name": "Monitor, and use data effectively",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_MonitorAndUseData",
+   "stepHref": "diig-investment-path.html#step-A_MonitorAndUseData",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [
+    {
+     "name": "methodology-adoption",
+     "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "A_ValueProposition": {
+   "id": "A_ValueProposition",
+   "name": "Make the value proposition and set next steps",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/A_ValueProposition",
+   "stepHref": "diig-investment-path.html#step-A_ValueProposition",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [
+    {
+     "name": "methodology-adoption",
+     "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanOpen": {
+   "id": "Call_BeanOpen",
+   "name": "Open the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/Call_BeanOpen",
+   "stepHref": "diig-investment-path.html#step-Call_BeanOpen",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [
+    {
+     "name": "bean-coordination",
+     "href": "../../../en/cat-harness/processes/skills/bean-coordination.html"
+    }
+   ],
+   "calls": {
+    "name": "Open the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanOpen",
+    "diagram": "bean-open.html"
+   },
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "Call_BeanClose": {
+   "id": "Call_BeanClose",
+   "name": "Close the bean",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/node/Call_BeanClose",
+   "stepHref": "diig-investment-path.html#step-Call_BeanClose",
+   "lane": "Programme manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_DIIG/lane/Lane_ProgrammeManager",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+    }
+   ],
+   "calls": {
+    "name": "Close the bean",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_BeanClose",
+    "diagram": "bean-close.html"
+   },
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  }
+ }
+}

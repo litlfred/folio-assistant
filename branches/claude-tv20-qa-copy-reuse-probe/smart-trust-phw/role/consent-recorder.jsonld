@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/smart-trust-phw/role/consent-recorder.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "ee3a8e86672a450cdbafe55ebf9b27d460c237db",
+    "pr": "2953/merge",
+    "run": "42506688955"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/smart-trust-phw/role/consent-recorder",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Consent Recorder",
+      "title": "Consent Recorder",
+      "notation": "consent-recorder",
+      "description": "The person or system that records a consent directive for the holder (IHE PCF Consent Recorder): the wallet itself, or a health worker on the holder's behalf.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person",
+        "system"
+      ],
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/consent-recorder"
+    }
+  ]
+}

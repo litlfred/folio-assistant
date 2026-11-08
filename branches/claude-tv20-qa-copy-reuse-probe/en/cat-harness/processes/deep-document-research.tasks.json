@@ -1,0 +1,161 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_DeepDocumentResearch",
+ "markers": [
+  {
+   "id": "A_Plan",
+   "name": "Filter the corpus, choose the granularity, decompose the question",
+   "left": 28.03,
+   "top": 21.79,
+   "box": {
+    "left": 23.41,
+    "top": 46.15,
+    "width": 1.53,
+    "height": 6.15
+   }
+  },
+  {
+   "id": "A_Search",
+   "name": "Retrieve for each sub-question",
+   "left": 42.68,
+   "top": 21.79,
+   "box": {
+    "left": 38.06,
+    "top": 46.15,
+    "width": 1.53,
+    "height": 6.15
+   }
+  },
+  {
+   "id": "A_Refine",
+   "name": "Deduplicate, and keep what is actually relevant",
+   "left": 57.01,
+   "top": 21.79,
+   "box": {
+    "left": 52.39,
+    "top": 46.15,
+    "width": 1.53,
+    "height": 6.15
+   }
+  },
+  {
+   "id": "A_Report",
+   "name": "Synthesise, cite to a location, and say what was not found",
+   "left": 79.94,
+   "top": 21.79,
+   "box": {
+    "left": 75.32,
+    "top": 46.15,
+    "width": 1.53,
+    "height": 6.15
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch",
+ "tasks": {
+  "A_Plan": {
+   "id": "A_Plan",
+   "name": "Filter the corpus, choose the granularity, decompose the question",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/node/A_Plan",
+   "stepHref": "deep-document-research.html#step-A_Plan",
+   "lane": "Deep researcher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/lane/Lane_DeepResearcher",
+   "skills": [
+    {
+     "name": "deep-document-research",
+     "href": "../../../en/cat-harness/processes/skills/deep-document-research.html"
+    }
+   ],
+   "role": {
+    "name": "deep-researcher",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
+    "title": "Deep researcher",
+    "skills": [
+     {
+      "name": "deep-document-research",
+      "href": "../../../en/cat-harness/processes/skills/deep-document-research.html"
+     }
+    ]
+   }
+  },
+  "A_Search": {
+   "id": "A_Search",
+   "name": "Retrieve for each sub-question",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/node/A_Search",
+   "stepHref": "deep-document-research.html#step-A_Search",
+   "lane": "Deep researcher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/lane/Lane_DeepResearcher",
+   "skills": [
+    {
+     "name": "deep-document-research",
+     "href": "../../../en/cat-harness/processes/skills/deep-document-research.html"
+    }
+   ],
+   "role": {
+    "name": "deep-researcher",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
+    "title": "Deep researcher",
+    "skills": [
+     {
+      "name": "deep-document-research",
+      "href": "../../../en/cat-harness/processes/skills/deep-document-research.html"
+     }
+    ]
+   }
+  },
+  "A_Refine": {
+   "id": "A_Refine",
+   "name": "Deduplicate, and keep what is actually relevant",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/node/A_Refine",
+   "stepHref": "deep-document-research.html#step-A_Refine",
+   "lane": "Deep researcher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/lane/Lane_DeepResearcher",
+   "skills": [
+    {
+     "name": "deep-document-research",
+     "href": "../../../en/cat-harness/processes/skills/deep-document-research.html"
+    }
+   ],
+   "role": {
+    "name": "deep-researcher",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
+    "title": "Deep researcher",
+    "skills": [
+     {
+      "name": "deep-document-research",
+      "href": "../../../en/cat-harness/processes/skills/deep-document-research.html"
+     }
+    ]
+   }
+  },
+  "A_Report": {
+   "id": "A_Report",
+   "name": "Synthesise, cite to a location, and say what was not found",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/node/A_Report",
+   "stepHref": "deep-document-research.html#step-A_Report",
+   "lane": "Deep researcher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_DeepDocumentResearch/lane/Lane_DeepResearcher",
+   "skills": [
+    {
+     "name": "deep-document-research",
+     "href": "../../../en/cat-harness/processes/skills/deep-document-research.html"
+    }
+   ],
+   "role": {
+    "name": "deep-researcher",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/deep-researcher",
+    "title": "Deep researcher",
+    "skills": [
+     {
+      "name": "deep-document-research",
+      "href": "../../../en/cat-harness/processes/skills/deep-document-research.html"
+     }
+    ]
+   }
+  }
+ }
+}

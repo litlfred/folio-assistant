@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/schema/tile-count.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/tv20-qa-copy-reuse-probe",
+    "sha": "ee3a8e86672a450cdbafe55ebf9b27d460c237db",
+    "pr": "2953/merge",
+    "run": "42506688955"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/schema/tile-count",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "tile-count",
+      "title": "tile-count",
+      "summary": "The number a graph tile shows, DECLARED BY THE PROJECTION.",
+      "module": "schemas/ui/tile-count.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-tv20-qa-copy-reuse-probe/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tile-count"
+    }
+  ]
+}

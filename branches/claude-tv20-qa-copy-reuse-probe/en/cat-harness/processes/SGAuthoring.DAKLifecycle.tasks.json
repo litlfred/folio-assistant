@@ -1,0 +1,393 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_Planning",
+ "markers": [
+  {
+   "id": "Task_Scoping",
+   "name": "Define DAK scope, purpose, and target audience",
+   "left": 10.27,
+   "top": 2.33,
+   "box": {
+    "left": 8.15,
+    "top": 5.53,
+    "width": 0.66,
+    "height": 1.4
+   }
+  },
+  {
+   "id": "Task_FormTeam",
+   "name": "Form DAK development team and define RASCI matrix",
+   "left": 14.93,
+   "top": 2.33,
+   "box": {
+    "left": 12.81,
+    "top": 5.53,
+    "width": 0.66,
+    "height": 1.4
+   }
+  },
+  {
+   "id": "Task_EstablishProcess",
+   "name": "Establish development process (Agile/Scrum) and tooling",
+   "left": 19.59,
+   "top": 2.33,
+   "box": {
+    "left": 17.47,
+    "top": 5.53,
+    "width": 0.66,
+    "height": 1.4
+   }
+  },
+  {
+   "id": "Task_GatherDocs",
+   "name": "Gather source documents (guidelines, registers, policies)",
+   "left": 24.25,
+   "top": 2.33,
+   "box": {
+    "left": 22.12,
+    "top": 5.53,
+    "width": 0.66,
+    "height": 1.4
+   }
+  },
+  {
+   "id": "Task_PlanTimeline",
+   "name": "Draft project roadmap, backlog, and sprint cadence",
+   "left": 28.9,
+   "top": 2.33,
+   "box": {
+    "left": 26.78,
+    "top": 5.53,
+    "width": 0.66,
+    "height": 1.4
+   }
+  },
+  {
+   "id": "Task_PlanConsultations",
+   "name": "Plan SME consultation schedule and format",
+   "left": 33.56,
+   "top": 2.33,
+   "box": {
+    "left": 31.44,
+    "top": 5.53,
+    "width": 0.66,
+    "height": 1.4
+   }
+  },
+  {
+   "id": "Task_AssignWork",
+   "name": "Assign work and begin sprint cycle",
+   "left": 38.22,
+   "top": 2.33,
+   "box": {
+    "left": 36.1,
+    "top": 5.53,
+    "width": 0.66,
+    "height": 1.4
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning",
+ "tasks": {
+  "Task_Scoping": {
+   "id": "Task_Scoping",
+   "name": "Define DAK scope, purpose, and target audience",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/node/Task_Scoping",
+   "stepHref": "SGAuthoring.DAKLifecycle.html#step-Task_Scoping",
+   "lane": "Programme Manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/lane/Lane_Planning",
+   "skills": [
+    {
+     "name": "content-plan",
+     "href": "../../../en/cat-harness/processes/skills/content-plan.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "Task_FormTeam": {
+   "id": "Task_FormTeam",
+   "name": "Form DAK development team and define RASCI matrix",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/node/Task_FormTeam",
+   "stepHref": "SGAuthoring.DAKLifecycle.html#step-Task_FormTeam",
+   "lane": "Programme Manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/lane/Lane_Planning",
+   "skills": [
+    {
+     "name": "raci",
+     "href": "../../../en/cat-harness/processes/skills/raci.html",
+     "methodologies": [
+      {
+       "name": "raci",
+       "href": "../../../en/cat-harness/methodologies/cat-harness/raci/"
+      }
+     ]
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "Task_EstablishProcess": {
+   "id": "Task_EstablishProcess",
+   "name": "Establish development process (Agile/Scrum) and tooling",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/node/Task_EstablishProcess",
+   "stepHref": "SGAuthoring.DAKLifecycle.html#step-Task_EstablishProcess",
+   "lane": "Programme Manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/lane/Lane_Planning",
+   "skills": [
+    {
+     "name": "methodology-adoption",
+     "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "Task_GatherDocs": {
+   "id": "Task_GatherDocs",
+   "name": "Gather source documents (guidelines, registers, policies)",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/node/Task_GatherDocs",
+   "stepHref": "SGAuthoring.DAKLifecycle.html#step-Task_GatherDocs",
+   "lane": "Programme Manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/lane/Lane_Planning",
+   "skills": [
+    {
+     "name": "dak-l1-library",
+     "href": "../../../en/cat-harness/processes/skills/dak-l1-library.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "Task_PlanTimeline": {
+   "id": "Task_PlanTimeline",
+   "name": "Draft project roadmap, backlog, and sprint cadence",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/node/Task_PlanTimeline",
+   "stepHref": "SGAuthoring.DAKLifecycle.html#step-Task_PlanTimeline",
+   "lane": "Programme Manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/lane/Lane_Planning",
+   "skills": [
+    {
+     "name": "release-epic-planning",
+     "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "Task_PlanConsultations": {
+   "id": "Task_PlanConsultations",
+   "name": "Plan SME consultation schedule and format",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/node/Task_PlanConsultations",
+   "stepHref": "SGAuthoring.DAKLifecycle.html#step-Task_PlanConsultations",
+   "lane": "Programme Manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/lane/Lane_Planning",
+   "skills": [
+    {
+     "name": "content-plan",
+     "href": "../../../en/cat-harness/processes/skills/content-plan.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  },
+  "Task_AssignWork": {
+   "id": "Task_AssignWork",
+   "name": "Assign work and begin sprint cycle",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/node/Task_AssignWork",
+   "stepHref": "SGAuthoring.DAKLifecycle.html#step-Task_AssignWork",
+   "lane": "Programme Manager",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_Planning/lane/Lane_Planning",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+    }
+   ],
+   "role": {
+    "name": "programme-manager",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/programme-manager",
+    "title": "Programme manager",
+    "skills": [
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../en/cat-harness/processes/skills/decision-methodology-selector.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../en/cat-harness/processes/skills/methodology-adoption.html"
+     },
+     {
+      "name": "release-epic-planning",
+      "href": "../../../en/cat-harness/processes/skills/release-epic-planning.html"
+     },
+     {
+      "name": "release-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/release-lifecycle.html"
+     }
+    ]
+   }
+  }
+ }
+}

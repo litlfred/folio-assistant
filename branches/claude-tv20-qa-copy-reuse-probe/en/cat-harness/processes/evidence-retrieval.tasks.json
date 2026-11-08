@@ -1,0 +1,597 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_EvidenceRetrieval",
+ "markers": [
+  {
+   "id": "Task_ReviewExisting",
+   "name": "Review the existing guidance",
+   "left": 14.77,
+   "top": 45.56,
+   "box": {
+    "left": 12.16,
+    "top": 56.52,
+    "width": 0.86,
+    "height": 2.77
+   }
+  },
+  {
+   "id": "Task_FramePico",
+   "name": "Frame the question as PICO",
+   "left": 22.7,
+   "top": 45.56,
+   "box": {
+    "left": 20.09,
+    "top": 56.52,
+    "width": 0.86,
+    "height": 2.77
+   }
+  },
+  {
+   "id": "Task_L1Sources",
+   "name": "Search trusted L1 sources",
+   "left": 36.04,
+   "top": 55.36,
+   "box": {
+    "left": 33.42,
+    "top": 66.32,
+    "width": 0.86,
+    "height": 2.77
+   }
+  },
+  {
+   "id": "Task_L2L3Content",
+   "name": "Search trusted L2 and L3 content",
+   "left": 36.04,
+   "top": 24.8,
+   "box": {
+    "left": 33.42,
+    "top": 35.76,
+    "width": 0.86,
+    "height": 2.77
+   }
+  },
+  {
+   "id": "Task_DataRepos",
+   "name": "Query data repositories and statistical datasets",
+   "left": 36.04,
+   "top": 1.96,
+   "box": {
+    "left": 33.42,
+    "top": 12.92,
+    "width": 0.86,
+    "height": 2.77
+   }
+  },
+  {
+   "id": "Task_VerifyAuthority",
+   "name": "Verify authority against the registry",
+   "left": 50.09,
+   "top": 4.04,
+   "box": {
+    "left": 47.48,
+    "top": 14.99,
+    "width": 0.86,
+    "height": 2.77
+   }
+  },
+  {
+   "id": "Task_RecordUnverified",
+   "name": "Open a bean for the unverified citation",
+   "left": 64.14,
+   "top": 72.84,
+   "box": {
+    "left": 60.45,
+    "top": 81.6,
+    "width": 0.86,
+    "height": 2.77
+   }
+  },
+  {
+   "id": "Task_AppraiseGrade",
+   "name": "Appraise and grade the body of evidence",
+   "left": 68.11,
+   "top": 45.56,
+   "box": {
+    "left": 65.5,
+    "top": 56.52,
+    "width": 0.86,
+    "height": 2.77
+   }
+  },
+  {
+   "id": "Task_RecordGap",
+   "name": "Record the evidence gap",
+   "left": 82.16,
+   "top": 72.84,
+   "box": {
+    "left": 78.47,
+    "top": 81.6,
+    "width": 0.86,
+    "height": 2.77
+   }
+  },
+  {
+   "id": "Task_AttachEvidence",
+   "name": "Attach the evidence",
+   "left": 86.13,
+   "top": 45.56,
+   "box": {
+    "left": 83.51,
+    "top": 56.52,
+    "width": 0.86,
+    "height": 2.77
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval",
+ "tasks": {
+  "Task_ReviewExisting": {
+   "id": "Task_ReviewExisting",
+   "name": "Review the existing guidance",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_ReviewExisting",
+   "stepHref": "evidence-retrieval.html#step-Task_ReviewExisting",
+   "lane": "Author / guideline developer (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "content-review",
+     "href": "../../../en/cat-harness/processes/skills/content-review.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../en/cat-harness/processes/skills/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_FramePico": {
+   "id": "Task_FramePico",
+   "name": "Frame the question as PICO",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_FramePico",
+   "stepHref": "evidence-retrieval.html#step-Task_FramePico",
+   "lane": "Author / guideline developer (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "content-author",
+     "href": "../../../en/cat-harness/processes/skills/content-author.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../en/cat-harness/processes/skills/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_L1Sources": {
+   "id": "Task_L1Sources",
+   "name": "Search trusted L1 sources",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L1Sources",
+   "stepHref": "evidence-retrieval.html#step-Task_L1Sources",
+   "lane": "Evidence agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Agent",
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    }
+   ],
+   "role": {
+    "name": "evidence-agent",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
+    "title": "Evidence agent",
+    "skills": [
+     {
+      "name": "document-intake",
+      "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+     }
+    ]
+   }
+  },
+  "Task_L2L3Content": {
+   "id": "Task_L2L3Content",
+   "name": "Search trusted L2 and L3 content",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_L2L3Content",
+   "stepHref": "evidence-retrieval.html#step-Task_L2L3Content",
+   "lane": "Evidence agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Agent",
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    },
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    },
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    }
+   ],
+   "role": {
+    "name": "evidence-agent",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
+    "title": "Evidence agent",
+    "skills": [
+     {
+      "name": "document-intake",
+      "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+     }
+    ]
+   }
+  },
+  "Task_DataRepos": {
+   "id": "Task_DataRepos",
+   "name": "Query data repositories and statistical datasets",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_DataRepos",
+   "stepHref": "evidence-retrieval.html#step-Task_DataRepos",
+   "lane": "Evidence agent (system)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Agent",
+   "skills": [
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    },
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    },
+    {
+     "name": "document-intake",
+     "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+    }
+   ],
+   "role": {
+    "name": "evidence-agent",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent",
+    "title": "Evidence agent",
+    "skills": [
+     {
+      "name": "document-intake",
+      "href": "../../../en/cat-harness/processes/skills/document-intake.html"
+     }
+    ]
+   }
+  },
+  "Task_VerifyAuthority": {
+   "id": "Task_VerifyAuthority",
+   "name": "Verify authority against the registry",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_VerifyAuthority",
+   "stepHref": "evidence-retrieval.html#step-Task_VerifyAuthority",
+   "lane": "Trusted registries and observatories (external)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Trusted",
+   "skills": [
+    {
+     "name": "registry-authority-contract",
+     "href": "../../../en/cat-harness/processes/skills/registry-authority-contract.html"
+    }
+   ],
+   "role": {
+    "name": "external-registry",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/external-registry",
+    "title": "External registry",
+    "skills": [
+     {
+      "name": "external-registry-contract",
+      "href": "../../../en/cat-harness/processes/skills/external-registry-contract.html"
+     }
+    ]
+   }
+  },
+  "Task_RecordUnverified": {
+   "id": "Task_RecordUnverified",
+   "name": "Open a bean for the unverified citation",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordUnverified",
+   "stepHref": "evidence-retrieval.html#step-Task_RecordUnverified",
+   "lane": "Author / guideline developer (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../en/cat-harness/processes/skills/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_AppraiseGrade": {
+   "id": "Task_AppraiseGrade",
+   "name": "Appraise and grade the body of evidence",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_AppraiseGrade",
+   "stepHref": "evidence-retrieval.html#step-Task_AppraiseGrade",
+   "lane": "Author / guideline developer (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "evidence-appraisal",
+     "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../en/cat-harness/processes/skills/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_RecordGap": {
+   "id": "Task_RecordGap",
+   "name": "Record the evidence gap",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_RecordGap",
+   "stepHref": "evidence-retrieval.html#step-Task_RecordGap",
+   "lane": "Author / guideline developer (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "todo-manager",
+     "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../en/cat-harness/processes/skills/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_AttachEvidence": {
+   "id": "Task_AttachEvidence",
+   "name": "Attach the evidence",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/node/Task_AttachEvidence",
+   "stepHref": "evidence-retrieval.html#step-Task_AttachEvidence",
+   "lane": "Author / guideline developer (person)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_EvidenceRetrieval/lane/Lane_Author",
+   "skills": [
+    {
+     "name": "content-author",
+     "href": "../../../en/cat-harness/processes/skills/content-author.html"
+    }
+   ],
+   "role": {
+    "name": "author",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/author",
+    "title": "Author",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/bpmn-authoring.html"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../en/cat-harness/processes/skills/dmn-authoring.html"
+     },
+     {
+      "name": "evidence-appraisal",
+      "href": "../../../en/cat-harness/processes/skills/evidence-appraisal.html"
+     },
+     {
+      "name": "kg-affordances",
+      "href": "../../../en/cat-harness/processes/skills/kg-affordances.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "voice-authoring-guidance",
+      "href": "../../../en/cat-harness/processes/skills/voice-authoring-guidance.html"
+     }
+    ]
+   }
+  }
+ }
+}

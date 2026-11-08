@@ -1,0 +1,489 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_IrisCdnSignPublish",
+ "markers": [
+  {
+   "id": "Task_BuildBag",
+   "name": "Write the BagIt tag files (sorted, no dates)",
+   "left": 17.01,
+   "top": 1.57,
+   "box": {
+    "left": 14,
+    "top": 10.37,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_Diff",
+   "name": "Diff against the published manifest",
+   "left": 24.9,
+   "top": 1.57,
+   "box": {
+    "left": 21.89,
+    "top": 10.37,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_Upload",
+   "name": "Store new objects (never overwrite)",
+   "left": 41.29,
+   "top": 42.13,
+   "box": {
+    "left": 37.66,
+    "top": 47.22,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_SignItems",
+   "name": "Sign each changed item manifest (ES256)",
+   "left": 48.55,
+   "top": 27.5,
+   "box": {
+    "left": 45.54,
+    "top": 36.3,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_Sign",
+   "name": "Sign the release tag manifest (ES256)",
+   "left": 56.43,
+   "top": 27.5,
+   "box": {
+    "left": 53.42,
+    "top": 36.3,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_PublishTags",
+   "name": "Commit tag files and signature, last",
+   "left": 64.94,
+   "top": 55.09,
+   "box": {
+    "left": 61.31,
+    "top": 60.19,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_Verify",
+   "name": "Resolve did:web; verify JWS and digests",
+   "left": 72.2,
+   "top": 66.39,
+   "box": {
+    "left": 69.19,
+    "top": 75.19,
+    "width": 1,
+    "height": 2.22
+   }
+  },
+  {
+   "id": "Task_Revert",
+   "name": "Revert to the previous release",
+   "left": 87.97,
+   "top": 79.17,
+   "box": {
+    "left": 84.96,
+    "top": 87.96,
+    "width": 1,
+    "height": 2.22
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish",
+ "tasks": {
+  "Task_BuildBag": {
+   "id": "Task_BuildBag",
+   "name": "Write the BagIt tag files (sorted, no dates)",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_BuildBag",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_BuildBag",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "iris-cdn-signing",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Diff": {
+   "id": "Task_Diff",
+   "name": "Diff against the published manifest",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Diff",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_Diff",
+   "lane": "Build pipeline",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Pipeline",
+   "skills": [
+    {
+     "name": "iris-cdn-signing",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+    }
+   ],
+   "role": {
+    "name": "build-pipeline",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/build-pipeline",
+    "title": "Build pipeline",
+    "skills": [
+     {
+      "name": "ci-health",
+      "href": "../../../en/cat-harness/processes/skills/ci-health.html"
+     },
+     {
+      "name": "compiled-artefact-cache",
+      "href": "../../../en/cat-harness/processes/skills/compiled-artefact-cache.html"
+     },
+     {
+      "name": "content-test",
+      "href": "../../../en/cat-harness/processes/skills/content-test.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../en/cat-harness/processes/skills/content-validate.html"
+     },
+     {
+      "name": "feature-staging",
+      "href": "../../../en/cat-harness/processes/skills/feature-staging.html"
+     },
+     {
+      "name": "harness-projections",
+      "href": "../../../en/cat-harness/processes/skills/harness-projections.html"
+     },
+     {
+      "name": "kg-separation",
+      "href": "../../../en/cat-harness/processes/skills/kg-separation.html"
+     },
+     {
+      "name": "platform-gates",
+      "href": "../../../en/cat-harness/processes/skills/platform-gates.html"
+     },
+     {
+      "name": "prepare-merge",
+      "href": "../../../en/cat-harness/processes/skills/prepare-merge.html"
+     },
+     {
+      "name": "publish-verification",
+      "href": "../../../en/cat-harness/processes/skills/publish-verification.html"
+     },
+     {
+      "name": "qa-reports",
+      "href": "../../../en/cat-harness/processes/skills/qa-reports.html"
+     },
+     {
+      "name": "remote-mount",
+      "href": "../../../en/cat-harness/processes/skills/remote-mount.html"
+     },
+     {
+      "name": "render-kg-to-cdn",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-cdn.html"
+     },
+     {
+      "name": "sub-kg-lifecycle",
+      "href": "../../../en/cat-harness/processes/skills/sub-kg-lifecycle.html"
+     },
+     {
+      "name": "todo-manager",
+      "href": "../../../en/cat-harness/processes/skills/todo-manager.html"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "upstream-version-adoption",
+      "href": "../../../en/cat-harness/processes/skills/upstream-version-adoption.html"
+     },
+     {
+      "name": "watch",
+      "href": "../../../en/cat-harness/processes/skills/watch.html"
+     }
+    ]
+   }
+  },
+  "Task_Upload": {
+   "id": "Task_Upload",
+   "name": "Store new objects (never overwrite)",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Upload",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_Upload",
+   "lane": "Release signer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
+   "skills": [
+    {
+     "name": "iris-cdn-exporter",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-exporter.html"
+    }
+   ],
+   "role": {
+    "name": "release-signer",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+    "title": "Release signer",
+    "skills": [
+     {
+      "name": "iris-cdn-signing",
+      "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html",
+      "via": "attestation-service"
+     },
+     {
+      "name": "test-plan-execution",
+      "href": "../../../en/cat-harness/processes/skills/test-plan-execution.html",
+      "via": "attestation-service"
+     }
+    ]
+   }
+  },
+  "Task_SignItems": {
+   "id": "Task_SignItems",
+   "name": "Sign each changed item manifest (ES256)",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_SignItems",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_SignItems",
+   "lane": "Release signer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
+   "skills": [
+    {
+     "name": "iris-cdn-signing",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+    }
+   ],
+   "role": {
+    "name": "release-signer",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+    "title": "Release signer",
+    "skills": [
+     {
+      "name": "iris-cdn-signing",
+      "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html",
+      "via": "attestation-service"
+     },
+     {
+      "name": "test-plan-execution",
+      "href": "../../../en/cat-harness/processes/skills/test-plan-execution.html",
+      "via": "attestation-service"
+     }
+    ]
+   }
+  },
+  "Task_Sign": {
+   "id": "Task_Sign",
+   "name": "Sign the release tag manifest (ES256)",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Sign",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_Sign",
+   "lane": "Release signer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
+   "skills": [
+    {
+     "name": "iris-cdn-signing",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+    }
+   ],
+   "role": {
+    "name": "release-signer",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+    "title": "Release signer",
+    "skills": [
+     {
+      "name": "iris-cdn-signing",
+      "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html",
+      "via": "attestation-service"
+     },
+     {
+      "name": "test-plan-execution",
+      "href": "../../../en/cat-harness/processes/skills/test-plan-execution.html",
+      "via": "attestation-service"
+     }
+    ]
+   }
+  },
+  "Task_PublishTags": {
+   "id": "Task_PublishTags",
+   "name": "Commit tag files and signature, last",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_PublishTags",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_PublishTags",
+   "lane": "Release signer",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Signer",
+   "skills": [
+    {
+     "name": "iris-cdn-signing",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+    }
+   ],
+   "role": {
+    "name": "release-signer",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/release-signer",
+    "title": "Release signer",
+    "skills": [
+     {
+      "name": "iris-cdn-signing",
+      "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+     },
+     {
+      "name": "qa-report-signing",
+      "href": "../../../en/cat-harness/processes/skills/qa-report-signing.html",
+      "via": "attestation-service"
+     },
+     {
+      "name": "test-plan-execution",
+      "href": "../../../en/cat-harness/processes/skills/test-plan-execution.html",
+      "via": "attestation-service"
+     }
+    ]
+   }
+  },
+  "Task_Verify": {
+   "id": "Task_Verify",
+   "name": "Resolve did:web; verify JWS and digests",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Verify",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_Verify",
+   "lane": "Verifier",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+   "skills": [
+    {
+     "name": "iris-cdn-signing",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+    }
+   ],
+   "role": {
+    "name": "verifier",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
+    "title": "IRIS CDN verifier",
+    "skills": [
+     {
+      "name": "iris-cdn-signing",
+      "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+     }
+    ]
+   }
+  },
+  "Task_Revert": {
+   "id": "Task_Revert",
+   "name": "Revert to the previous release",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/Task_Revert",
+   "stepHref": "iris-cdn-sign-publish.html#step-Task_Revert",
+   "lane": "Verifier",
+   "laneHref": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+   "skills": [
+    {
+     "name": "iris-cdn-signing",
+     "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+    }
+   ],
+   "role": {
+    "name": "verifier",
+    "href": "https://litlfred.github.io/folio-assistant/who-iris/role/verifier",
+    "title": "IRIS CDN verifier",
+    "skills": [
+     {
+      "name": "iris-cdn-signing",
+      "href": "../../../en/cat-harness/processes/skills/iris-cdn-signing.html"
+     }
+    ]
+   }
+  }
+ }
+}

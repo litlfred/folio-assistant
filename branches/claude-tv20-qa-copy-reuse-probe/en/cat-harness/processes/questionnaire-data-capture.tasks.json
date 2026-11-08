@@ -1,0 +1,109 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_QuestionnaireDataCapture",
+ "markers": [
+  {
+   "id": "Task_Complete",
+   "name": "Complete the form",
+   "left": 39.61,
+   "top": 13.16,
+   "box": {
+    "left": 29.55,
+    "top": 27.63,
+    "width": 3.12,
+    "height": 6.32
+   }
+  },
+  {
+   "id": "Task_Extract",
+   "name": "Extract and save the resources",
+   "left": 75.97,
+   "top": 60.53,
+   "box": {
+    "left": 65.91,
+    "top": 75,
+    "width": 3.12,
+    "height": 6.32
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_QuestionnaireDataCapture",
+ "tasks": {
+  "Task_Complete": {
+   "id": "Task_Complete",
+   "name": "Complete the form",
+   "type": "bpmn:UserTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_QuestionnaireDataCapture/node/Task_Complete",
+   "stepHref": "questionnaire-data-capture.html#step-Task_Complete",
+   "lane": "Health worker",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_QuestionnaireDataCapture/lane/Lane_HealthWorker",
+   "skills": [
+    {
+     "name": "complete-sdc-questionnaire",
+     "href": "../../../en/cat-harness/processes/skills/complete-sdc-questionnaire.html"
+    }
+   ],
+   "role": {
+    "name": "health-worker",
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/role/health-worker",
+    "title": "Health worker",
+    "skills": [
+     {
+      "name": "complete-sdc-questionnaire",
+      "href": "../../../en/cat-harness/processes/skills/complete-sdc-questionnaire.html"
+     },
+     {
+      "name": "inform-client",
+      "href": "../../../en/cat-harness/processes/skills/inform-client.html"
+     },
+     {
+      "name": "record-decision-rationale",
+      "href": "../../../en/cat-harness/processes/skills/record-decision-rationale.html"
+     },
+     {
+      "name": "review-client-history",
+      "href": "../../../en/cat-harness/processes/skills/review-client-history.html"
+     },
+     {
+      "name": "review-decision-support-guidance",
+      "href": "../../../en/cat-harness/processes/skills/review-decision-support-guidance.html"
+     }
+    ]
+   }
+  },
+  "Task_Extract": {
+   "id": "Task_Extract",
+   "name": "Extract and save the resources",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_QuestionnaireDataCapture/node/Task_Extract",
+   "stepHref": "questionnaire-data-capture.html#step-Task_Extract",
+   "lane": "Point-of-care system",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_QuestionnaireDataCapture/lane/Lane_System",
+   "skills": [
+    {
+     "name": "extract-questionnaire-response",
+     "href": "../../../en/cat-harness/processes/skills/extract-questionnaire-response.html"
+    }
+   ],
+   "role": {
+    "name": "point-of-care-system",
+    "href": "https://litlfred.github.io/folio-assistant/smart-base/role/point-of-care-system",
+    "title": "Point-of-care system",
+    "skills": [
+     {
+      "name": "activate-accepted-guidance",
+      "href": "../../../en/cat-harness/processes/skills/activate-accepted-guidance.html"
+     },
+     {
+      "name": "apply-decision-support",
+      "href": "../../../en/cat-harness/processes/skills/apply-decision-support.html"
+     },
+     {
+      "name": "extract-questionnaire-response",
+      "href": "../../../en/cat-harness/processes/skills/extract-questionnaire-response.html"
+     }
+    ]
+   }
+  }
+ }
+}

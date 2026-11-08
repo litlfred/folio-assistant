@@ -1,0 +1,395 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_TranslationRoundTrip",
+ "markers": [
+  {
+   "id": "Task_RT_Sample",
+   "name": "Draw the sample",
+   "left": 27.6,
+   "top": 5.77,
+   "box": {
+    "left": 20.05,
+    "top": 24.04,
+    "width": 2.5,
+    "height": 4.62
+   }
+  },
+  {
+   "id": "Task_RT_RecordNA",
+   "name": "Record could not dispatch",
+   "left": 54.69,
+   "top": 5.77,
+   "box": {
+    "left": 47.14,
+    "top": 24.04,
+    "width": 2.5,
+    "height": 4.62
+   }
+  },
+  {
+   "id": "Task_RT_BackTranslate",
+   "name": "Back-translate the target text",
+   "left": 39.58,
+   "top": 38.46,
+   "box": {
+    "left": 32.03,
+    "top": 56.73,
+    "width": 2.5,
+    "height": 4.62
+   }
+  },
+  {
+   "id": "Task_RT_PreScreen",
+   "name": "Pre-screen every pair",
+   "left": 56.77,
+   "top": 71.15,
+   "box": {
+    "left": 49.22,
+    "top": 89.42,
+    "width": 2.5,
+    "height": 4.62
+   }
+  },
+  {
+   "id": "Task_RT_Rule",
+   "name": "Read and rule each flagged pair",
+   "left": 73.44,
+   "top": 71.15,
+   "box": {
+    "left": 65.89,
+    "top": 89.42,
+    "width": 2.5,
+    "height": 4.62
+   }
+  },
+  {
+   "id": "Task_RT_Record",
+   "name": "Record both witnesses",
+   "left": 90.1,
+   "top": 71.15,
+   "box": {
+    "left": 82.55,
+    "top": 89.42,
+    "width": 2.5,
+    "height": 4.62
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip",
+ "tasks": {
+  "Task_RT_Sample": {
+   "id": "Task_RT_Sample",
+   "name": "Draw the sample",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Sample",
+   "stepHref": "translation-round-trip.html#step-Task_RT_Sample",
+   "lane": "Locale translator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Translator",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "locale-translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+    "title": "Locale translator",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_RT_RecordNA": {
+   "id": "Task_RT_RecordNA",
+   "name": "Record could not dispatch",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_RecordNA",
+   "stepHref": "translation-round-trip.html#step-Task_RT_RecordNA",
+   "lane": "Locale translator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Translator",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "locale-translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/locale-translator",
+    "title": "Locale translator",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     }
+    ]
+   }
+  },
+  "Task_RT_BackTranslate": {
+   "id": "Task_RT_BackTranslate",
+   "name": "Back-translate the target text",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_BackTranslate",
+   "stepHref": "translation-round-trip.html#step-Task_RT_BackTranslate",
+   "lane": "Back-translator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Back",
+   "skills": [
+    {
+     "name": "untainted-verification",
+     "href": "../../../en/cat-harness/processes/skills/untainted-verification.html"
+    }
+   ],
+   "role": {
+    "name": "back-translator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/back-translator",
+    "title": "Back-translator",
+    "skills": [
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "untainted-verification",
+      "href": "../../../en/cat-harness/processes/skills/untainted-verification.html"
+     }
+    ]
+   }
+  },
+  "Task_RT_PreScreen": {
+   "id": "Task_RT_PreScreen",
+   "name": "Pre-screen every pair",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_PreScreen",
+   "stepHref": "translation-round-trip.html#step-Task_RT_PreScreen",
+   "lane": "Round-trip adjudicator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
+   "skills": [
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "round-trip-adjudicator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/round-trip-adjudicator",
+    "title": "Round-trip adjudicator",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../en/cat-harness/processes/skills/adjudication.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../en/cat-harness/processes/skills/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../en/cat-harness/processes/skills/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../en/cat-harness/processes/skills/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "untainted-verification",
+      "href": "../../../en/cat-harness/processes/skills/untainted-verification.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../en/cat-harness/processes/skills/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../en/cat-harness/processes/skills/voice-overlay-review.html",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "Task_RT_Rule": {
+   "id": "Task_RT_Rule",
+   "name": "Read and rule each flagged pair",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Rule",
+   "stepHref": "translation-round-trip.html#step-Task_RT_Rule",
+   "lane": "Round-trip adjudicator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
+   "skills": [
+    {
+     "name": "untainted-verification",
+     "href": "../../../en/cat-harness/processes/skills/untainted-verification.html"
+    },
+    {
+     "name": "translation-manager",
+     "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+    }
+   ],
+   "role": {
+    "name": "round-trip-adjudicator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/round-trip-adjudicator",
+    "title": "Round-trip adjudicator",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../en/cat-harness/processes/skills/adjudication.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../en/cat-harness/processes/skills/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../en/cat-harness/processes/skills/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../en/cat-harness/processes/skills/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "untainted-verification",
+      "href": "../../../en/cat-harness/processes/skills/untainted-verification.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../en/cat-harness/processes/skills/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../en/cat-harness/processes/skills/voice-overlay-review.html",
+      "via": "reviewer"
+     }
+    ]
+   }
+  },
+  "Task_RT_Record": {
+   "id": "Task_RT_Record",
+   "name": "Record both witnesses",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/Task_RT_Record",
+   "stepHref": "translation-round-trip.html#step-Task_RT_Record",
+   "lane": "Round-trip adjudicator",
+   "laneHref": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
+   "skills": [
+    {
+     "name": "untainted-verification",
+     "href": "../../../en/cat-harness/processes/skills/untainted-verification.html"
+    }
+   ],
+   "role": {
+    "name": "round-trip-adjudicator",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/round-trip-adjudicator",
+    "title": "Round-trip adjudicator",
+    "skills": [
+     {
+      "name": "adjudication",
+      "href": "../../../en/cat-harness/processes/skills/adjudication.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "content-feedback",
+      "href": "../../../en/cat-harness/processes/skills/content-feedback.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "content-review",
+      "href": "../../../en/cat-harness/processes/skills/content-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../en/cat-harness/processes/skills/decision-audit.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "narrative-asserts-code",
+      "href": "../../../en/cat-harness/processes/skills/narrative-asserts-code.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "rendered-impact",
+      "href": "../../../en/cat-harness/processes/skills/rendered-impact.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../en/cat-harness/processes/skills/staging-review.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "translation-manager",
+      "href": "../../../en/cat-harness/processes/skills/translation-manager.html"
+     },
+     {
+      "name": "untainted-verification",
+      "href": "../../../en/cat-harness/processes/skills/untainted-verification.html",
+      "via": "adjudicator"
+     },
+     {
+      "name": "visual-diff",
+      "href": "../../../en/cat-harness/processes/skills/visual-diff.html",
+      "via": "reviewer"
+     },
+     {
+      "name": "voice-overlay-review",
+      "href": "../../../en/cat-harness/processes/skills/voice-overlay-review.html",
+      "via": "reviewer"
+     }
+    ]
+   }
+  }
+ }
+}
