@@ -1,0 +1,19 @@
+---
+doc_id: c2pa-2026-specification-2-5
+doc_title: "Content Credentials : C2PA Technical Specification, version 2.5"
+section_id: s345-16-3-2-5-fragmented-bmff-entity-diagram
+section_title: "16.3.2.5. Fragmented BMFF Entity Diagram"
+file: "build/site/specifications/2.5/specs/C2PA_Specification.html.md"
+lines: 5285-5293
+source_sha256: ff401df19d1fde8c
+granularity: heading
+---
+##### 16.3.2.5. Fragmented BMFF Entity Diagram
+
+[Figure 15, “Fragmented BMFF Entity Diagram”](#bmff-entity-diagram) shows the relationship for C2PA objects comprising a fragmented BMFF manifest.
+
+![Fragmented BMFF Entity Diagram](https://kroki.io/plantuml/svg/eNqdVsFu4zYQPZtfMXAKBChgC-2hBzUIkOw2bQ5uD0nRw3axoKWRRIQiVZKO413k33eGlGQpDhKgBgyQw-GbNzOPY4tz-POv-99yQBNUOIDyIA1IraSHyjootPReXPhw0Hgp4u6jkrWTLXwTkI7jij_nIENwarsLyDAltBgaW_rh-Maa8MFqgt3qHQ7Wa1k81M7uTJnODqi13YsRM8Uwsh1uNChLdGNUAMa9U18RfvpltE2CPSqrMcy9OR_YWl325mfB32dxkfWpioXGGk0pFosf4UprcKhlUNb4RnWUnUPwytQ7LR3sjEaiaEODbq88nXRYqEphuv27QzSglaGqOOwceio2YLvFssQyK4iPVMZH32sqzIkr7R-wJEOFDk2ByfUenwIoA1mmAjWs8FlGBZeGiHRMVGpAjS0BkD9l0ucjFufQqBKB2BJRG0aDNAdi1ZEKQkOp-fV6LRbxpFCu0NhvkkvL_J2PcPLRqhI6Z7cUz8NehYbAak2cC2f3pCREDuMflOkka4czDIcOwTpSiGB-UX5X3mMA0t7y3pEs4MzArVFBUX5fY_XhDmtOaUntX3Djip87-aWvd_Fla58g2f8NvI5Uup3rLHVl2UqjKvRhSfXj3BYfqPQExjfE4nnGwsVoFGTxUQY5XMiyDQZZkiXL-Ibob1xvbm7-kL6J1JnSuqHdettWVWS6wKdC7zzLRxAQE5S6Hpbsy-ssa9E9aPz0mdBpHzV_DLKJhxvZxSjJddXKbtk_hZ1R_-3wNkm6h9a2kHpuKuiphamBmUy2igrOuUxtzBD9p8_MZqjSpq_mXbD0GJjSYIFoSolfFUE94nByrOOtqR2WirCGM59K-hI-oQwdichj-7RU7Wxzp2ojw45diKmYqurGyaicubpG61nbS-p1Qb0qp9iBEzFNArMs5l1jRaz-d-vYxFWY2rIsNYeqR5GNDfSybQe2ehH9m_jbp0c_BIsjuo9Cd6BStBfsUVjnsAhwJAqVs228LS62l3OF924X2faS5qKTh_XIxKm6CSdc8nxIhFjdE-a4pflClaO2w75RRdNLHgJNUKFRVokZTS1TeqZMg4qmS9_D98OmSlHQfxqayJRIMvTMEYaBqwIMUzk9zkdJc9kzIpegZ0UDz1YxaNRnyPP5k1itVpcvXslZzb8FvwYa3XlcQg7H-S-OOs9zHjsJYhwub96Guczz_IdTJQ9oR1W8jcmUZgnk-fw9wzTFd7MbHAll9p4jynHovg0zVCPPk-wShTGh9y9P9DC-hBnGxH7Gf1QSGK8Ia_oj_Iqo9SnYYH4T6ztnwQlz?id=bmff-entity-diagram)
+
+Figure 15. Fragmented BMFF Entity Diagram
+
+<a id="bmff-validation"></a>
