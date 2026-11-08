@@ -60,17 +60,20 @@ on:
   # No `paths:` filter. The TypeScript job is the gate for the whole repo, and
   # a filter is how a gate stops covering the file that broke it.
   #
-  # DRAFTS RUN THE FAST TIER ONLY (owner, 2026-10-23, "1y"; bean `dft1`). On a
-  # draft PR only `hygiene` and `typescript-static` (lint and types) run. The
-  # QA working copy, the publish-time pages, the `bun test` shards, every
-  # repository-gate part, the e2e shards, the skill chain and `qa-publish` are
-  # skipped, and the `Repository gates (hard)` roll-up passes with "draft: full
-  # tier skipped". `ready_for_review` is listed so the full tier runs as soon
-  # as the PR is marked ready. A draft's green run is never the newest run on a
-  # head merge-guard judges. The list keeps GitHub's three default types, so
-  # `workflow-events.ts` still counts this workflow as REQUIRED, not
-  # conditional: cat-harness-tools must be pinned at or after its bean-`dft1`
-  # change (cat-harness-tools#616) before this lands.
+  # NON-RELEASE PRs RUN THE FAST TIER ONLY (release-gated CI, owner, card
+  # Q-CIB-4 A, 2026-11-08: "CI not gate on non-release merge to main";
+  # cat-harness#1158). This replaces the 2026-10-23 draft rule (bean `dft1`).
+  # On a PR without the `release` label, draft or ready, only `hygiene` and
+  # `typescript-static` (lint and types) run. The QA working copy, the
+  # publish-time pages, the `bun test` shards, every repository-gate part, the
+  # e2e shards, the skill chain and `qa-publish` are skipped, and the
+  # `Repository gates (hard)` roll-up passes with "fast tier". The full tier
+  # runs on a push to main, a merge group, a dispatch of main, and a PR
+  # labelled `release` (add the label, then push: `labeled` is not a trigger).
+  # A dispatch on any other branch (merge-main's stand-in for a held run) is
+  # the fast tier too. merge-guard's check 5 treats CI on a non-release merge
+  # as advisory. The list keeps GitHub's three default types, so
+  # `workflow-events.ts` still counts this workflow as REQUIRED.
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
   # The MERGE QUEUE — bean `nytj`. A pull_request run tests the PR merged with
@@ -560,7 +563,7 @@ jobs:
     # `success`, so a later lookup passes over it to the run that asked. The
     # Q-PIPE-1 check below is kept for every event. Skipped on a draft, whose
     # run skips those eight jobs anyway.
-    if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request') && github.event.pull_request.draft != true }}
+    if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request') && (github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) }}
     runs-on: ubuntu-latest
     timeout-minutes: 8
     permissions:
@@ -731,7 +734,7 @@ jobs:
         id: scope
         # Never fails the verdict-reuse job: no answer leaves `affected` empty, so the shards run.
         continue-on-error: true
-        if: ${{ github.event_name == 'pull_request' && github.event.action != 'ready_for_review' && github.event.pull_request.draft != true }}
+        if: ${{ github.event_name == 'pull_request' && github.event.action != 'ready_for_review' && (github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) }}
         env:
           INERT: '^(\.github/workflows/[^/]+\.ya?ml|\.github/(scripts|actions|pages-jekyll)/.+|\.github/dependabot\.yml|\.github/lake-packages\.json|test/workflows/[^/]+|\.mcp\.json)$'
           ALWAYS: '^\.github/workflows/code-quality-gates\.yml$'
@@ -855,7 +858,7 @@ jobs:
     # Not a gate: it judges nothing. A failed build still fails the run,
     # because `typescript-test` runs `if: !cancelled()` and goes red at its
     # first step that reads this job's result.
-    if: ${{ github.event.pull_request.draft != true }}
+    if: ${{ (github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) }}
     runs-on: ubuntu-latest
     timeout-minutes: 45
     # `actions: read` lists and downloads another run's bundle (`bundle-cache.sh`).
@@ -1178,7 +1181,7 @@ jobs:
     # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
     # before it restores either bundle.
     needs: [qa-working-copy, verdict-reuse]
-    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true }}
+    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && (github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -1480,7 +1483,7 @@ jobs:
           # workflow_dispatch) carries no pull_request payload and is never a
           # draft, which the expression states rather than leaves to how
           # `null == true` evaluates.
-          DRAFT: ${{ github.event_name == 'pull_request' && github.event.pull_request.draft == true }}
+          DRAFT: ${{ !(github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) }}
         # No `gate-shell.sh` here: this job never checks out, so the wrapper
         # does not exist for it. It needs none — the diagnosis is already in
         # the env vars, so it writes its own summary and WHICH part failed
@@ -1488,7 +1491,7 @@ jobs:
         run: |
           echo "kg: $KG   docs: $DOCS   standalone: $STANDALONE   skills: $SKILLS   reused: $REUSED   draft: $DRAFT"
           if [ "$DRAFT" = "true" ]; then
-            echo "draft: full tier skipped; the repository gates run when the PR is marked ready for review" | tee -a "$GITHUB_STEP_SUMMARY"
+            echo "fast tier: the repository gates run on main, on a dispatch of main, and on a PR labelled \`release\` (release-gated CI, owner, card Q-CIB-4 A, 2026-11-08)" | tee -a "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
           if [ "$STANDALONE" = "skipped" ] && [ "$REUSED" = "true" ]; then
@@ -1532,7 +1535,7 @@ jobs:
     # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
     # before it restores either bundle.
     needs: [qa-working-copy]
-    if: ${{ !cancelled() && github.event.pull_request.draft != true }}
+    if: ${{ !cancelled() && (github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -2286,7 +2289,7 @@ jobs:
     # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
     # before it restores either bundle.
     needs: [qa-working-copy]
-    if: ${{ !cancelled() && github.event.pull_request.draft != true }}
+    if: ${{ !cancelled() && (github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -3333,7 +3336,7 @@ jobs:
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
     needs: verdict-reuse
-    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true }}
+    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && (github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -3493,7 +3496,7 @@ jobs:
     # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
     # before it restores either bundle.
     needs: [qa-working-copy]
-    if: ${{ !cancelled() && github.event.pull_request.draft != true }}
+    if: ${{ !cancelled() && (github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -4700,7 +4703,7 @@ jobs:
     # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
     # before it restores either bundle.
     needs: [verdict-reuse, qa-working-copy]
-    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true && needs.verdict-reuse.outputs.affected != 'false' }}
+    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && (github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) && needs.verdict-reuse.outputs.affected != 'false' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -4927,7 +4930,7 @@ jobs:
     # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
     # before it restores either bundle.
     needs: [qa-working-copy]
-    if: ${{ !cancelled() && github.event.pull_request.draft != true }}
+    if: ${{ !cancelled() && (github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) }}
     runs-on: ubuntu-latest
     # EVERY `run:` step in this job goes through `gate-shell.sh`, which on a
     # non-zero exit appends the step and the tail of its output to
@@ -5127,7 +5130,7 @@ jobs:
     # validation. A fork PR's publish is skipped by `qa:publish --github`
     # itself, as before.
     needs: [gates-kg, gates-docs, qa-working-copy]
-    if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') && github.event.pull_request.draft != true }}
+    if: ${{ always() && (github.event_name == 'push' || github.event_name == 'pull_request') && (github.event_name == 'push' || github.event_name == 'merge_group' || (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') || contains(github.event.pull_request.labels.*.name, 'release')) }}
     runs-on: ubuntu-latest
     permissions:
       contents: write

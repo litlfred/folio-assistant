@@ -150,7 +150,7 @@ describe("the shards honour it, and everything else still runs them", () => {
   test("the scope step runs on PR pushes only, never on ready_for_review or a draft", () => {
     expect(step.if).toContain("github.event_name == 'pull_request'");
     expect(step.if).toContain("github.event.action != 'ready_for_review'");
-    expect(step.if).toContain("github.event.pull_request.draft != true");
+    expect(step.if).toContain("contains(github.event.pull_request.labels.*.name, 'release')");
   });
 
   test("the scope steps never fail the verdict-reuse job: no answer runs the shards", () => {
