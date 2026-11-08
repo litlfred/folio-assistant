@@ -1,0 +1,38 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/process/Process_KgSeparationMove/node/Task_Repoint.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/process/Process_KgSeparationMove/node/Task_Repoint",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Re-point: livesAt, seam, mount or subscription",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/process/Process_KgSeparationMove",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/role/platform-authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/process/Process_KgSeparationMove/lane/Lane_Platform",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/skill/sub-kg-lifecycle",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/skill/upstream-version-adoption"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/process/Process_KgSeparationMove#flow/F7",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/process/Process_KgSeparationMove#flow/F13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/process/Process_KgSeparationMove#flow/F11"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparationMove/node/Task_Repoint"
+    }
+  ]
+}

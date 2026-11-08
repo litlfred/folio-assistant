@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/skill/work-plan-restructure.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/skill/work-plan-restructure",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "work-plan-restructure",
+      "title": "Restructuring a work plan — a reviewed plan, not a bulk edit",
+      "description": "Reorganise a work plan that has outgrown one-bean-at-a-time repair — session logs typed as epics, duplicate families, generated template work items, stale claims, unparented work — through a reviewed PLAN rather than in bulk. The taxonomy is stated as data, a dry-run plan lists one row per work item (action, new parent, new status, evidence, note) with its before-state so the plan is its own inverse, the owner approves it by class or by row, and the apply is batched and reversible. Scrap, never delete. Read before changing the parent, type or status of more than a handful of work items at once.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/package/work-plan"
+      ],
+      "instructionsPath": "work-plan/skills/work-plan/work-plan-restructure.md",
+      "instructionLines": 160,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-restructure"
+    }
+  ]
+}

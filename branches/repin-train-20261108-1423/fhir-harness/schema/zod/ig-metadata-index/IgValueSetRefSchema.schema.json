@@ -1,0 +1,35 @@
+{
+  "$ref": "#/definitions/IgValueSetRef",
+  "definitions": {
+    "IgValueSetRef": {
+      "type": "object",
+      "properties": {
+        "valueSet": {
+          "type": "string",
+          "minLength": 1
+        },
+        "codeSystems": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "valueSet",
+        "codeSystems"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/zod/ig-metadata-index/IgValueSetRefSchema.schema.json",
+  "title": "IgValueSetRefSchema",
+  "description": "Generated from `IgValueSetRefSchema` in schemas/ig-metadata-index.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/who-iris/role/iris-cdn-exporter.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/who-iris/role/iris-cdn-exporter",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "IRIS CDN Exporter",
+      "title": "IRIS CDN Exporter",
+      "notation": "iris-cdn-exporter",
+      "description": "The agent role. It plans, reviews and reports; it does not hold the signing key, and it never pushes to a WHO repository.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/who-iris/skill/iris-cdn-exporter",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/who-iris/skill/iris-dspace",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/who-iris/skill/iris-rest-feed"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/role/iris-cdn-exporter"
+    }
+  ]
+}

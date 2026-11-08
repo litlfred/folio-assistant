@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/skill/ig-publisher-service-contract.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/ig-publisher-service-contract",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "ig-publisher-service-contract",
+      "title": "IG publisher + validator — the role's contract",
+      "description": "The contract the `ig-publisher-service` role is held to: what the JVM services an IG build shells out to must produce, and how a caller tells a pass from a run that never happened. A mechanical role's skill is a contract to test against, not instructions to read.",
+      "instructionsPath": "skills/content/fhir-ig-authoring/ig-publisher-service-contract.md",
+      "instructionLines": 47,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-ig-skills"
+    }
+  ]
+}

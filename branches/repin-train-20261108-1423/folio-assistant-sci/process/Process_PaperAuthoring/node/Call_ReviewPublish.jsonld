@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_ReviewPublish.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_ReviewPublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Review and publish",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-sci/process/Process_PaperAuthoring",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-sci/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-sci/skill/content-review"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-sci/process/Process_PaperAuthoring#flow/A13"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-sci/process/Process_PaperAuthoring#flow/A14"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_ReviewPublish"
+    }
+  ]
+}

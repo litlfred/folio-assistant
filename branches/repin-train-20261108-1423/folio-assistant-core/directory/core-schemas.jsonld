@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/directory/core-schemas.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/directory/core-schemas",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "core-schemas",
+      "path": "schemas/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/schemas",
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "description": "The schemas of the content layer's Node Kinds.",
+      "readmePath": "schemas/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/directory/core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-schemas"
+    }
+  ]
+}

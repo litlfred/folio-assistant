@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/role/terminologist.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/role/terminologist",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Terminologist",
+      "title": "Terminologist",
+      "notation": "terminologist",
+      "description": "Owns coded concepts and value sets — the vocabulary a DAK is expressed in.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/skill/code-lists",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/skill/vocabulary-authority"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/role/terminologist"
+    }
+  ]
+}

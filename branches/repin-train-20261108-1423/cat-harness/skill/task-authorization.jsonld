@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/skill/task-authorization.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/skill/task-authorization",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "task-authorization",
+      "title": "Task authorization — four questions before every task",
+      "description": "The check every BPMN task execution runs before anything is recorded: is the actor authenticated, assigned to the role the lane binds, authorized by an ODRL policy to perform the task, and allowed access to the content it acts on? One generic check in the engine rather than a step drawn in some diagrams; strict, with GitHub as the authenticator. Also how the HTTP routes ask the same policies. Triggers on: may this actor, who may perform, authorization, authentication, access rights, permission check, RBAC, rbac.ts, workflow_complete refused, not eligible for role.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/task-authorization.md",
+      "instructionLines": 323,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/task-authorization"
+    }
+  ]
+}

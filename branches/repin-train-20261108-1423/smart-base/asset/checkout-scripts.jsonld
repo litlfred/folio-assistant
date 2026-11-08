@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/asset/checkout-scripts.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/asset/checkout-scripts.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/asset/checkout-scripts",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Asset",
+      "name": "checkout-scripts",
+      "path": "package.json",
+      "assetRole": "checkout-scripts",
+      "title": "package.json — smart-base",
+      "description": "The checkout scripts this instance's code runs, under `checkoutScripts`, each relative to the downstream checkout root. A downstream that mounts this instance reads them with `bun run cat` and `check:script-placement` only while this file's sha256 matches the mount lock."
+    }
+  ]
+}

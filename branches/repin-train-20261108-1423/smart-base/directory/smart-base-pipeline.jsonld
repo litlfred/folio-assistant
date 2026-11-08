@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/directory/smart-base-pipeline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-pipeline.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-pipeline",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-pipeline",
+      "path": "pipeline/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "`pipeline/qa-checkers-dak.ts`, the automated DAK checkers `qa-checkers/` names (`DAK_AUTOMATED_CHECKERS`). Declared so a remote mount brings it.",
+      "readmePath": "pipeline/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-pipeline"
+    }
+  ]
+}

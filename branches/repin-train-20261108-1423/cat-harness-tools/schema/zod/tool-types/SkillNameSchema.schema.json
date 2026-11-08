@@ -1,0 +1,20 @@
+{
+  "$ref": "#/definitions/SkillName",
+  "definitions": {
+    "SkillName": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "A skill name, e.g. todo-manager"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/tool-types/SkillNameSchema.schema.json",
+  "title": "SkillNameSchema",
+  "description": "Generated from `SkillNameSchema` in schemas/tools/tool-types.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  }
+}

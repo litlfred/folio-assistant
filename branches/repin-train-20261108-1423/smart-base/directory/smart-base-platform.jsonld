@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/directory/smart-base-platform.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-platform.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-platform",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-platform",
+      "path": "platform/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "The import seam: `platform/index.ts` re-exports every platform symbol this instance uses, so re-pointing the platform is an edit in this directory only; `platform/schema.ts` carries the symbols of the files the platform loads by glob (`themes/`, `schemas/`, `pipeline/qa-checkers-*`), so the checks that load them do not pull the IG-site code into their closure. Declared because a remote mount brings declared directories only.",
+      "readmePath": "platform/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-platform"
+    }
+  ]
+}

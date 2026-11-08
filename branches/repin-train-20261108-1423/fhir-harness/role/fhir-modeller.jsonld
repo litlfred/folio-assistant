@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/role/fhir-modeller.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "FHIR modeller",
+      "title": "FHIR modeller",
+      "notation": "fhir-modeller",
+      "description": "Authors the L3 profiles, extensions and examples an IG is built from.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "person"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/l3-fhir-authoring",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-questionnaire-wireframe",
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/pcf-consent"
+      ]
+    }
+  ]
+}

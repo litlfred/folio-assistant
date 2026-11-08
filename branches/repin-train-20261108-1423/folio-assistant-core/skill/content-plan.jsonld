@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/skill/content-plan.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/skill/content-plan",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "content-plan",
+      "title": "Content Planning",
+      "instructionsPath": "skills/content/content-lifecycle-ext/content-plan.md",
+      "instructionLines": 34,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/schema/skills/content-plan/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/schema/skills/content-plan/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/content-plan"
+    }
+  ]
+}

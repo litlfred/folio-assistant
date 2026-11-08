@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Fidelity.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Fidelity.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/node/Task_Fidelity",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Check field for field",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview/lane/Lane_Build",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-questionnaire-wireframe"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_5"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_QuestionnaireWireframeReview#flow/Flow_7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    }
+  ]
+}

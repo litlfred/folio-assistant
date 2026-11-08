@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/process/Process_Editing/node/CallActivity_Evidence.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/process/Process_Editing/node/CallActivity_Evidence",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Gather and verify the evidence",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/process/Process_Editing",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/role/author",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/process/Process_Editing/lane/Lane_Editor",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/process/Process_EvidenceRetrieval",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/process/Process_Editing#flow/Flow_03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/process/Process_Editing#flow/Flow_Evidence"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_Editing/node/CallActivity_Evidence"
+    }
+  ]
+}

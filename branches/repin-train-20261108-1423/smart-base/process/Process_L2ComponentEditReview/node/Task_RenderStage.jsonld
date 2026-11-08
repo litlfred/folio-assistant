@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/process/Process_L2ComponentEditReview/node/Task_RenderStage.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Task_RenderStage.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2ComponentEditReview/node/Task_RenderStage",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Render, stage, before/after",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "http://smart.who.int/base/process/Process_L2ComponentEditReview",
+      "performedBy": "http://smart.who.int/base/role/authoring-agent",
+      "inLane": "http://smart.who.int/base/process/Process_L2ComponentEditReview/lane/Lane_Agent",
+      "requires": [
+        "http://smart.who.int/base/skill/before-after-preview",
+        "http://smart.who.int/base/skill/feature-staging"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R04"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2ComponentEditReview#flow/R05"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/fhir-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/process/Process_IgIncremental/node/EndEvent_Findings.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1423/fhir-harness/fhir-harness.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/EndEvent_Findings.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1423",
+    "sha": "0b83b6bd935f923b3552306cc2a192f9eed91a9e",
+    "pr": "repin-train/20261108-1423",
+    "run": "42489672303"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/node/EndEvent_Findings",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Findings back to the author",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental",
+      "performedBy": "https://litlfred.github.io/folio-assistant/fhir-harness/role/fhir-modeller",
+      "inLane": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental/lane/Lane_Author",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_IgIncremental#flow/F12"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    }
+  ]
+}
