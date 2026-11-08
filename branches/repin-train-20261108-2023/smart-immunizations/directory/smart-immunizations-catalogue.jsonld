@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/smart-immunizations/smart-immunizations.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/smart-immunizations/directory/smart-immunizations-catalogue.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/smart-immunizations/smart-immunizations.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-2023",
+    "sha": "f9346dd58cd9b0ec55601a2a5ec47f126871c3e4",
+    "pr": "repin-train/20261108-2023",
+    "run": "42519932804"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/smart-immunizations/directory/smart-immunizations-catalogue",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-immunizations-catalogue",
+      "path": "catalogue/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/catalogue"
+      ],
+      "description": "Qualified Dublin Core (`folio-dublin-core/v1`) and catalogue node (`folio-catalogue-node/v1`) records of the works this IG cites that are not ingested. Each is a `referenced` item whose record is the IG's bibliography entry for it, keyed by the citation (`#ref-<slug>`). A capture of a work, when one exists, is kept in the repository's `uploads/` data store, which is not part of the KG. `bun run cat check:catalogue` verifies every node and metadataRef.",
+      "readmePath": "catalogue/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/smart-immunizations/directory/smart-immunizations-catalogue",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-immunizations/directory/smart-immunizations-catalogue"
+    }
+  ]
+}

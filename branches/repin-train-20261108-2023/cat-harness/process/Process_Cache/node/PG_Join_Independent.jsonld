@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/process/Process_Cache/node/PG_Join_Independent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-2023",
+    "sha": "f9346dd58cd9b0ec55601a2a5ec47f126871c3e4",
+    "pr": "repin-train/20261108-2023",
+    "run": "42519932804"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/process/Process_Cache/node/PG_Join_Independent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "PG_Join_Independent",
+      "nodeKind": "parallel",
+      "bpmnType": "bpmn:ParallelGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/process/Process_Cache",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/process/Process_Cache/lane/Lane_Ci",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/process/Process_Cache#flow/f60",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/process/Process_Cache#flow/f61",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/process/Process_Cache#flow/f62",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/process/Process_Cache#flow/f63"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/process/Process_Cache#flow/f7"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_Cache/node/PG_Join_Independent"
+    }
+  ]
+}

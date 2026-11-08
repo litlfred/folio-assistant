@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/smart-trust-phw/directory/business-processes.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-2023",
+    "sha": "f9346dd58cd9b0ec55601a2a5ec47f126871c3e4",
+    "pr": "repin-train/20261108-2023",
+    "run": "42519932804"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/smart-trust-phw/directory/business-processes",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "business-processes",
+      "path": "input/business-processes/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/business-processes"
+      ],
+      "description": "The guide's business processes PHW.A to PHW.K (BPMN 2.0), the IG source the IG Publisher renders; the processes viewer draws them for this layer. Each is drawn to input/images/PHW.<id>.svg by tools/render-bpmn/render_bpmn.ts (bootstrap-tools' renderer); CI fails when a drawing is stale. Never edit a drawing: change the BPMN.",
+      "readmePath": "input/business-processes/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/smart-trust-phw/directory/business-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/directory/business-processes"
+    }
+  ]
+}

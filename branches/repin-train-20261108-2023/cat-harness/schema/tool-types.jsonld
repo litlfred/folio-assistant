@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/schema/tool-types.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-2023",
+    "sha": "f9346dd58cd9b0ec55601a2a5ec47f126871c3e4",
+    "pr": "repin-train/20261108-2023",
+    "run": "42519932804"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/schema/tool-types",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "tool-types",
+      "title": "tool-types",
+      "summary": "The shared I/O type vocabulary Tool ports reference.",
+      "module": "schemas/tools/tool-types.ts",
+      "maintainedBy": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/tools/tool-types-schema.jsonld"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-2023/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/tool-types"
+    }
+  ]
+}
