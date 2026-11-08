@@ -142,6 +142,7 @@
    "name": "Plan the paper",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Plan",
+   "stepHref": "authoring-a-paper.html#step-Task_Plan",
    "lane": "Author (person)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Author",
    "skills": [
@@ -207,6 +208,7 @@
    "name": "Open the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanOpen",
+   "stepHref": "authoring-a-paper.html#step-Call_BeanOpen",
    "lane": "Work plan (beans)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_WorkPlan",
    "skills": [
@@ -245,6 +247,7 @@
    "name": "Seed the work plan",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_SeedPlan",
+   "stepHref": "authoring-a-paper.html#step-Task_SeedPlan",
    "lane": "Work plan (beans)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_WorkPlan",
    "skills": [
@@ -278,6 +281,7 @@
    "name": "Scaffold the folio repo",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Scaffold",
+   "stepHref": "authoring-a-paper.html#step-Task_Scaffold",
    "lane": "Authoring agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Agent",
    "skills": [
@@ -515,6 +519,7 @@
    "name": "Author blocks",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_AuthorBlocks",
+   "stepHref": "authoring-a-paper.html#step-Task_AuthorBlocks",
    "lane": "Authoring agent (system)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Agent",
    "skills": [
@@ -752,6 +757,7 @@
    "name": "Formalise in Lean",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Formalize",
+   "stepHref": "authoring-a-paper.html#step-Task_Formalize",
    "lane": "Lean toolchain (lean-mcp)",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Lean",
    "skills": [
@@ -789,6 +795,7 @@
    "name": "Validate",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Validate",
+   "stepHref": "authoring-a-paper.html#step-Task_Validate",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
    "skills": [
@@ -886,6 +893,7 @@
    "name": "Publish extracted statements",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_PublishStatements",
+   "stepHref": "authoring-a-paper.html#step-Call_PublishStatements",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
    "skills": [
@@ -988,6 +996,7 @@
    "name": "Render PDF and HTML",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Task_Render",
+   "stepHref": "authoring-a-paper.html#step-Task_Render",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
    "skills": [
@@ -1085,6 +1094,7 @@
    "name": "Review and publish",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_ReviewPublish",
+   "stepHref": "authoring-a-paper.html#step-Call_ReviewPublish",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
    "skills": [
@@ -1187,6 +1197,7 @@
    "name": "Close the bean",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/node/Call_BeanClose",
+   "stepHref": "authoring-a-paper.html#step-Call_BeanClose",
    "lane": "Build pipeline",
    "laneHref": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Build",
    "skills": [

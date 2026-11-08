@@ -363,10 +363,10 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/396e795c7de6efc32e6d0d4a7c4e5e6854d7c9ec",
-  "sourceCommitSha": "396e795c7de6efc32e6d0d4a7c4e5e6854d7c9ec",
-  "sourceTree": "c575f3316e9adc4f52fa02cebca1839d0ac9b30c",
-  "sourceCommitAt": "2026-11-08T07:58:48Z",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/6d5b3f374f7c2359c4ce5c736918f31607e9ff1a",
+  "sourceCommitSha": "6d5b3f374f7c2359c4ce5c736918f31607e9ff1a",
+  "sourceTree": "ae2eacf82117309140159fd286868d94e204fbc1",
+  "sourceCommitAt": "2026-11-08T11:24:02Z",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "1 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
@@ -375,9 +375,9 @@
     "SequenceFlow": 81,
     "Lane": 19,
     "ProcessNode": 81,
-    "GraphTypology": 14,
+    "GraphTypology": 15,
     "Role": 2,
-    "Subgraph": 15,
+    "Subgraph": 16,
     "Asset": 3,
     "Tool": 35
   },
@@ -511,7 +511,7 @@
       "title": "ig-build-pipeline",
       "description": "The bare FHIR IG pipeline — FSH to SUSHI to the IG Publisher to a pages branch, with no pre-processing and no post-processing. What this layer runs, what it emits, and the list of things it deliberately refuses to know about. Owns the AST cache lifecycle: an IG site is built from the AST on its cache branch, the publish refuses a stale one, and the reusable `ig-ast-refresh.yml` is the one writer. Owns what an IG reader may read: `contentTypes.ig.include` in the repository's `index.config.json`, and the legacy warning for a repository that declares none. Read before adding anything to fhir-harness, before onboarding, converting or changing the workflows of an IG repository, and before publishing an IG site.",
       "instructionsPath": "skills/fhir-ig-base/ig-build-pipeline.md",
-      "instructionLines": 479,
+      "instructionLines": 502,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -615,7 +615,7 @@
       "title": "ig-ast-delta",
       "description": "List and view what changed between two IG ASTs, check whether an AST is still valid for the IG's current inputs, and render the delta as just-the-docs pages that carry the provisional mark. Read before trusting a cached AST, before reviewing an incremental IG build, and before rendering anything from a cache.",
       "instructionsPath": "skills/fhir-ig-base/ig-ast-delta.md",
-      "instructionLines": 213,
+      "instructionLines": 217,
       "hasInstructions": true,
       "hasIOContract": false,
       "ambiguous": false,
@@ -3352,6 +3352,13 @@
       "summary": "L1 source content — one `<bib-slug>/` per ingested document, holding `sections/*.md`, `structure.json` and, where the source was scanned, `ocr/page-NNN.txt`. Every knowledge-graph reference to a source resolves through here, never to a loose path or a bare URL."
     },
     {
+      "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cache",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
+      "name": "cache",
+      "renderable": false,
+      "summary": "CI caches -- one `cache/1.0.0` node per cache a layer declares: key recipe, trust class, location, producer, consumers, save policy, verify and budget. Never the entries; the stored key, size and hit rate come from the daily cache report, so staleness is computed, never claimed."
+    },
+    {
       "@id": "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/software-library",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/GraphTypology",
       "name": "software-library",
@@ -3573,6 +3580,24 @@
       "readmePath": "processes/README.md",
       "fileCount": 0,
       "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-processes"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-caches",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "fhir-harness-caches",
+      "path": "caches/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cache"
+      ],
+      "title": "CI caches",
+      "description": "The caches this layer declares (cache-first CI, rule 6): one `cache/1.0.0` node per cache this layer's workflows and scripts hold. `fhir-ast.cache.json` is the IG AST branch store, whose component process is `processes/content/ig-ast-cache.bpmn`; `fhir-ig-tooling`, `fhir-cat-mount` and `ig-site-mount-template` are the Actions caches of the AST refresh and the IG site template. Staleness is computed by cat-harness-tools' `caches:viz`, never stated here.",
+      "readmePath": "caches/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/fhir-harness-caches"
     },
     {
       "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/directory/scenarios",
@@ -5601,8 +5626,8 @@
   ],
   "staging": {
     "branch": "claude/repin-library-chain-stacked",
-    "sha": "396e795c7de6efc32e6d0d4a7c4e5e6854d7c9ec",
+    "sha": "6d5b3f374f7c2359c4ce5c736918f31607e9ff1a",
     "pr": "3016/merge",
-    "run": "42460953692"
+    "run": "42475580076"
   }
 }

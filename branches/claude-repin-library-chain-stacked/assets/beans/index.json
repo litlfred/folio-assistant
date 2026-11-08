@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 30,
+      "count": 28,
       "unit": "open beans"
     }
   },
@@ -83,14 +83,14 @@
     {
       "id": "folio-assistant-3v2t",
       "title": "Cross-layer derived files are built at publish, not committed in one layer (owner option b, 2026-11-05)",
-      "status": "todo",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-4j43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T00:00:00Z",
-      "updatedAt": "2026-11-05T00:00:00Z",
+      "updatedAt": "2026-11-08T08:40:00Z",
       "preview": "## Why\n\nA file committed in one layer but derived from several layers goes stale whenever ANOTHER layer is re-pinned. The layer that holds it changed nothing; its own CI is green at the index's pins; and the next re-pin train turns red on it. The re-pin train work of 2026-11-03/04 hit this repeatedly:\n\n- `docs/prov-qaqc/index.md` (cat-harness), from the workflow-instance records on the index's sta",
       "file": "beans/defs/folio-assistant-3v2t--cross-layer-derived-files-are-built-at-publish-no.md"
     },
@@ -104,7 +104,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T06:50:00Z",
-      "updatedAt": "2026-11-03T07:13:38Z",
+      "updatedAt": "2026-11-08T08:47:00Z",
       "preview": "Drain of the open issues, PRs and beans in the three harness repos, plan A (owner card Q-HDR-1 A, 2026-11-02 06:44Z). Analysis and plan: https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr\n\nCounted 06:45Z: 15 issues, 13 PRs, 20 open beans; 35 in scope after leaving out paused and committee/DTH items (cat-harness#686; beans amom, oz9e, 17iw, 9hxd, fvec, r29x, nvhg, dthl, cysv, ls3t, max2, llxa).\n\nRul",
       "file": "beans/defs/folio-assistant-4j43--harness-drain-2026-11-02-cat-harness-tools-fhir-harness.md"
     },
@@ -139,14 +139,14 @@
     {
       "id": "folio-assistant-69lr",
       "title": "CI speed II (c3): publish-time QA witnesses stamp the commit, so main never reuses a PR's pages",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-k3vv",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T12:07:57Z",
-      "updatedAt": "2026-11-05T12:55:20Z",
+      "updatedAt": "2026-11-08T08:35:00Z",
       "preview": "Owner card 2026-11-05 (Q1, option 2), session https://claude.ai/code/session_01VQDpPd7y4nwxjHFm66CMKF.\n\n## Evidence\ndocs-site's `publish-pages-reuse.sh` reused 0 of its last 10 main pushes (runs 42012108207, 41992492871, 41935168285, 41911603382, 41837926868, …): every time \"pages name the PR run\", e.g. `cat-harness/test/results/witnesses/concepts-harnessed-kg-overview/slide-03.block.json`, `conce",
       "file": "beans/defs/folio-assistant-69lr--ci-speed-ii-c3-publish-time-qa-witnesses-stamp-the.md"
     },
@@ -300,7 +300,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:19:32Z",
-      "updatedAt": "2026-11-05T13:19:32Z",
+      "updatedAt": "2026-11-08T08:38:00Z",
       "preview": "Every CI step is a pure function of its inputs. The primitive is `.github/actions/cached-step` (litlfred/folio-assistant#2972).\n\n- **Trust classes:**\n  - (a) entries that can be verified exactly: committers may publish them with `cache:publish`, and CI only verifies them;\n  - (b) verdicts, which go through #2957 and #2958;\n  - (c) main-only entries.\n- **Daily report:** the hit-rate and budget repo",
       "file": "beans/defs/folio-assistant-9ml4--cache-first-ci-one-cached-step-primitive-derived-k.md"
     },
@@ -797,29 +797,29 @@
     {
       "id": "folio-assistant-k3vv",
       "title": "CI speed II (2026-11-05): restarts on main moves, red-main cycle, setup duplication",
-      "status": "todo",
+      "status": "in-progress",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T08:25:48Z",
-      "updatedAt": "2026-11-05T08:25:48Z",
+      "updatedAt": "2026-11-08T08:35:00Z",
       "preview": "CI-speed analysis of 2026-11-05 by session https://claude.ai/code/session_01VQDpPffYARDQ8juksAZScf (owner litlfred asked for it). Successor to the archived `cisp` epic (2026-10-15), two of whose children closed without being done (see c1, c2).\n\nThe three biggest costs found:\n\n1. **Restarts when main moves.** merge-main merged main into every labelled clean PR on each push to main, so every such PR",
       "file": "beans/defs/folio-assistant-k3vv--ci-speed-ii-2026-11-05-restarts-on-main-moves-red.md"
     },
     {
       "id": "folio-assistant-k6dz",
       "title": "Split the 23 oversized harness BPMN diagrams into phases",
-      "status": "todo",
+      "status": "in-progress",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-06T05:31:14Z",
-      "updatedAt": "2026-11-06T05:31:14Z",
-      "preview": "Follow-up to litlfred/cat-harness#990 (owner card 2026-11-06, \"1. Merge on green\"). After #990 none of the 57 harness diagrams has an overlap finding, but 23 still fail `bpmn:detangle --check` on `diagram-too-wide`, `diagram-too-tall` or `lane-order`. These are size budgets, not overlaps. The widest are kg-separation (5798 px), sub-kg-lifecycle (4329), human-translation-workflow (3876) and subscri",
+      "updatedAt": "2026-11-08T08:41:00Z",
+      "preview": "Follow-up to litlfred/cat-harness#990 (`bb3a42b1`, owner card 2026-11-06, \"1. Merge on green\"). After #990 none of the 57 harness diagrams had an overlap finding, while 23 still failed `bpmn:detangle --check` on `diagram-too-wide`, `diagram-too-tall` or `lane-order`. These are size budgets, not overlaps. The widest are `kg-separation` (5798 px), `sub-kg-lifecycle` (4329), `human-translation-workfl",
       "file": "beans/defs/folio-assistant-k6dz--split-oversized-bpmn-diagrams.md"
     },
     {
@@ -876,7 +876,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-10-31T20:35:18Z",
-      "updatedAt": "2026-11-02T08:00:00Z",
+      "updatedAt": "2026-11-08T09:30:00Z",
       "preview": "Owner, 2026-10-31 (card \"A. Both\" on the PHC workplan thread): pass the section 9 proposals of litlfred/dth-phc#1 to their owners as beans. This one belongs with smart-base#249 (thread \"Update DTH and review processes from recent work\").\n\nAdd to the `dth-l1-to-l2-ingest` skill (smart-base `skills/`), as rules:\n\n- [x] Link blocks through the glossary: a block's md shows a `**Concepts:**` line built",
       "file": "beans/defs/folio-assistant-ls3t--dth-l1-to-l2-ingest-skill-add-the-lessons-from-dth.md"
     },
@@ -1463,18 +1463,18 @@
         "status": "in-progress",
         "epics": 3,
         "total": 63,
-        "closed": 43,
-        "open": 20,
-        "inProgress": 9,
-        "todo": 11,
+        "closed": 45,
+        "open": 18,
+        "inProgress": 10,
+        "todo": 8,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.6825396825396826
+        "share": 0.7142857142857143
       }
     ],
     "orphanOpen": 9,
-    "openTotal": 30,
-    "coveredOpen": 20,
+    "openTotal": 28,
+    "coveredOpen": 18,
     "duplicateIds": 0
   }
 }

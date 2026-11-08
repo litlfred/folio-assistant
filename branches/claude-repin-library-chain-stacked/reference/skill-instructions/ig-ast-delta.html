@@ -223,7 +223,11 @@ window.addEventListener('resize',measure);window.addEventListener('load',measure
   
 </h1><blockquote><p>Skill id: <code class="language-plaintext highlighter-rouge">ig-ast-delta</code> · Package: <code class="language-plaintext highlighter-rouge">fhir-ig-base</code> · Instance:
 <code class="language-plaintext highlighter-rouge">fhir-harness</code></p><p>An instance of the general compiled-artefact-cache pattern; the shared
-contract is cat-harness’s <code class="language-plaintext highlighter-rouge">compiled-artefact-cache</code> skill.</p></blockquote><p>An <strong>IG AST</strong> is a per-resource dump of what one IG Publisher build held in
+contract is cat-harness’s <code class="language-plaintext highlighter-rouge">compiled-artefact-cache</code> skill. The AST’s cache
+is declared once, as the <code class="language-plaintext highlighter-rouge">cache/1.0.0</code> node
+<a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/caches/fhir-ast.cache.json"><code class="language-plaintext highlighter-rouge">caches/fhir-ast.cache.json</code></a>: its
+verify is <code class="language-plaintext highlighter-rouge">validity</code> below, and its staleness is computed by <code class="language-plaintext highlighter-rouge">caches:viz</code>
+(see <a href="../../reference/skill-instructions/ig-build-pipeline.html"><code class="language-plaintext highlighter-rouge">ig-build-pipeline</code></a> §”The AST cache lifecycle”).</p></blockquote><p>An <strong>IG AST</strong> is a per-resource dump of what one IG Publisher build held in
 memory. It is written by the <code class="language-plaintext highlighter-rouge">ast-export</code> library, which is built <strong>on top
 of</strong> the Publisher rather than inside it
 (<a href="https://github.com/litlfred/fhir-ig-publisher/tree/claude/ast-export"><code class="language-plaintext highlighter-rouge">litlfred/fhir-ig-publisher@claude/ast-export</code></a>,

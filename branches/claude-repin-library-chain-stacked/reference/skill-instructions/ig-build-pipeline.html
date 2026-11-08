@@ -287,7 +287,26 @@ each page holds, and the QA over the nodes, is
 <a href="../../reference/skill-instructions/ig-render-jekyll.html"><code class="language-plaintext highlighter-rouge">ig-render-jekyll</code></a> §”Thin pages, the default”.</p><h2 id="the-ast-cache-lifecycle-an-ig-site-is-built-from-the-ast"><a href="#the-ast-cache-lifecycle-an-ig-site-is-built-from-the-ast" class="anchor-heading" aria-labelledby="the-ast-cache-lifecycle-an-ig-site-is-built-from-the-ast"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> The AST cache lifecycle: an IG site is built from the AST
   
   
-</h2><p>Process: <a href="../../en/cat-harness/processes/ig-ast-cache.html"><code class="language-plaintext highlighter-rouge">ig-ast-cache.bpmn</code></a>.</p><p>Terms:</p><ul><li><strong>AST</strong>: the per-resource dump the IG Publisher AST exporter writes
+</h2><p>Process: <a href="../../en/cat-harness/processes/ig-ast-cache.html"><code class="language-plaintext highlighter-rouge">ig-ast-cache.bpmn</code></a>.</p><p><strong>The declared cache.</strong> The cache branch is the <code class="language-plaintext highlighter-rouge">cache/1.0.0</code> node
+<a href="https://github.com/litlfred/folio-assistant/blob/main/fhir-harness/caches/fhir-ast.cache.json"><code class="language-plaintext highlighter-rouge">caches/fhir-ast.cache.json</code></a> (cache-first
+CI, rule 6), and <code class="language-plaintext highlighter-rouge">ig-ast-cache.bpmn</code> is its component of the harness’s one
+optional cache process: <code class="language-plaintext highlighter-rouge">Task_Restore</code> and <code class="language-plaintext highlighter-rouge">GW_Valid</code> are the component’s
+verify, and <code class="language-plaintext highlighter-rouge">Task_Seed</code> is its save. The dispatched AST refresh
+(<code class="language-plaintext highlighter-rouge">Task_Dispatch</code>, <code class="language-plaintext highlighter-rouge">Task_Export</code>, on the Java runner) stays this cache’s own
+save path. The node carries the key recipe (<code class="language-plaintext highlighter-rouge">ig-ast.ts digest</code>), the
+producer, the consumers, the save policy and the uses. The stored key against
+the key today’s inputs imply, and so whether the cache is stale, is computed
+by cat-harness-tools’ <code class="language-plaintext highlighter-rouge">caches:viz</code>, never written here. <strong>Only a step that
+builds or renders an IG restores it</strong> (owner, 2026-11-05: <em>“not all
+rendering/CI/merge processes need all caches. be optimal”</em>). A test shard,
+a gate or a merge job never does.</p><p>The node’s <code class="language-plaintext highlighter-rouge">materializes</code> (<code class="language-plaintext highlighter-rouge">output-ast/</code>, <code class="language-plaintext highlighter-rouge">input-cache/txcache/</code>) is how a
+plan decides that: a target needs this cache when what it reads touches those
+paths. Its <code class="language-plaintext highlighter-rouge">needs</code> is <code class="language-plaintext highlighter-rouge">layers-ref</code>, so the layers are restored first. Every
+restore, verify and refresh prints one line in cached-step’s format,
+<code class="language-plaintext highlighter-rouge">**cached-step </code>ig-ast<code class="language-plaintext highlighter-rouge">: hit|warm|miss** (exact) — &lt;why&gt;. Key </code><key>`.`
+(`ig-ast.ts cache-line`). `warm` means the refresh applied a delta over an
+older AST. The key is the input digest: it is derived from the content of
+the inputs, so a merge or rebase that leaves them alone keeps it.</key></p><p>Terms:</p><ul><li><strong>AST</strong>: the per-resource dump the IG Publisher AST exporter writes
 (<code class="language-plaintext highlighter-rouge">output-ast/</code>; formats in <a href="../../reference/skill-instructions/ig-ast-delta.html"><code class="language-plaintext highlighter-rouge">ig-ast-delta</code></a>).</li><li><strong>Cache branch</strong>: <code class="language-plaintext highlighter-rouge">cat/fhir-harness/fhir-ast/&lt;package id&gt;</code> on the IG’s own
 repository, one orphan commit holding the AST, the Publisher’s
 <code class="language-plaintext highlighter-rouge">expansions.json</code> and its <code class="language-plaintext highlighter-rouge">txcache/</code>. <code class="language-plaintext highlighter-rouge">&lt;package id&gt;</code> is <code class="language-plaintext highlighter-rouge">sushi-config.yaml</code>’s
