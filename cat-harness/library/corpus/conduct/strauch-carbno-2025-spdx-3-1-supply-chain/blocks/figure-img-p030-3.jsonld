@@ -1,0 +1,95 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/strauch-carbno-2025-spdx-3-1-supply-chain/blocks/figure-img-p030-3",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p030-3.png",
+  "pageStart": 30,
+  "pageEnd": 30,
+  "narrative": [
+    {
+      "text": "A screenshot of a graph-editor canvas showing two TransportActions in sequence. TransportAction 'Transport to Train' has a 'dropoffLocation' edge to PhysicalLocation 'Load Terminal #4'; TransportAction 'Train To Siding 341A' has a 'pickupLocation' edge to 'Load Terminal #4' and a 'dropoffLocation' edge to PhysicalLocation 'Siding 341A'. Each TransportAction has its own Relationship 'hasInput', 'hasOutput' and 'performedBy' nodes; BulkHardware 'Graphite' (gold) is reached by 'to' edges from those relationships and has a 'bulkQuantity' edge leaving the top of the view. 'Transport to Train' is performed by Organization 'Safe Trucking LTD', and 'Train To Siding 341A' by Organization 'KJ Trains LTD'. Two 'ResponsibilityChange...' nodes (truncated) carry 'previous', 'current' and 'responsibilityChangedOn' edges; one is expanded to show 'responsibilityCategory*' = 'ownership' and actionStartTime and actionEndTime fields with values beginning '2025-08-27'. A Relationship 'isLocatedAt' links PhysicalLocation 'Siding 341A' to Organization 'Carbon Graph Inc'.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+      },
+      "drafted_at": "2026-10-03",
+      "lang": "en"
+    },
+    {
+      "text": "Capture d'écran d'un canevas d'éditeur de graphes montrant deux TransportAction consécutives. TransportAction « Transport to Train » possède une arête « dropoffLocation » vers PhysicalLocation « Load Terminal #4 » ; TransportAction « Train To Siding 341A » possède une arête « pickupLocation » vers « Load Terminal #4 » et une arête « dropoffLocation » vers PhysicalLocation « Siding 341A ». Chaque TransportAction possède ses propres nœuds Relationship « hasInput », « hasOutput » et « performedBy » ; BulkHardware « Graphite » (doré) est atteint par des arêtes « to » provenant de ces relations et possède une arête « bulkQuantity » qui sort par le haut de la vue. « Transport to Train » est exécutée par l'Organization « Safe Trucking LTD », et « Train To Siding 341A » par l'Organization « KJ Trains LTD ». Deux nœuds « ResponsibilityChange... » (tronqués) portent des arêtes « previous », « current » et « responsibilityChangedOn » ; l'un est développé pour afficher « responsibilityCategory* » = « ownership » ainsi que les champs actionStartTime et actionEndTime dont les valeurs commencent par « 2025-08-27 ». Une Relationship « isLocatedAt » relie PhysicalLocation « Siding 341A » à l'Organization « Carbon Graph Inc ».",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://97ee5591-2752-4fa2-8e96-eeba7d1d3046"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "fr"
+    },
+    {
+      "text": "Captura de pantalla de un lienzo de editor de grafos que muestra dos TransportActions en secuencia. TransportAction «Transport to Train» tiene una arista «dropoffLocation» hacia PhysicalLocation «Load Terminal #4»; TransportAction «Train To Siding 341A» tiene una arista «pickupLocation» hacia «Load Terminal #4» y una arista «dropoffLocation» hacia PhysicalLocation «Siding 341A». Cada TransportAction tiene sus propios nodos Relationship «hasInput», «hasOutput» y «performedBy»; a BulkHardware «Graphite» (dorado) llegan aristas «to» desde esas relaciones y de él sale una arista «bulkQuantity» por la parte superior de la vista. «Transport to Train» es realizada por la Organization «Safe Trucking LTD», y «Train To Siding 341A» por la Organization «KJ Trains LTD». Dos nodos «ResponsibilityChange...» (truncados) llevan aristas «previous», «current» y «responsibilityChangedOn»; uno está desplegado para mostrar «responsibilityCategory*» = «ownership» y los campos actionStartTime y actionEndTime con valores que comienzan por «2025-08-27». Una Relationship «isLocatedAt» enlaza PhysicalLocation «Siding 341A» con la Organization «Carbon Graph Inc».",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://97ee5591-2752-4fa2-8e96-eeba7d1d3046"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "es"
+    },
+    {
+      "text": "لقطة شاشة للوحة محرر مخططات بيانية تُظهر عقدتي TransportAction متتاليتين. تمتلك TransportAction «Transport to Train» حافة «dropoffLocation» إلى PhysicalLocation «Load Terminal #4»؛ وتمتلك TransportAction «Train To Siding 341A» حافة «pickupLocation» إلى «Load Terminal #4» وحافة «dropoffLocation» إلى PhysicalLocation «Siding 341A». ولكل TransportAction عُقَد Relationship خاصة بها هي «hasInput» و«hasOutput» و«performedBy»؛ ويتم الوصول إلى BulkHardware «Graphite» (باللون الذهبي) عبر حواف «to» من تلك العلاقات، وتخرج منه حافة «bulkQuantity» من أعلى المشهد. وتنفذ Organization «Safe Trucking LTD» الإجراء «Transport to Train»، بينما تنفذ Organization «KJ Trains LTD» الإجراء «Train To Siding 341A». وتحمل عقدتان بعنوان «ResponsibilityChange...» (مقتطعتان) حواف «previous» و«current» و«responsibilityChangedOn»؛ وإحداهما موسّعة لتُظهر «responsibilityCategory*» = «ownership» وحقلي actionStartTime وactionEndTime بقيم تبدأ بـ «2025-08-27». وتربط Relationship «isLocatedAt» بين PhysicalLocation «Siding 341A» وOrganization «Carbon Graph Inc».",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://97ee5591-2752-4fa2-8e96-eeba7d1d3046"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "ar"
+    },
+    {
+      "text": "Снимок экрана холста редактора графов, показывающий два последовательных узла TransportAction. От TransportAction «Transport to Train» идёт ребро «dropoffLocation» к PhysicalLocation «Load Terminal #4»; от TransportAction «Train To Siding 341A» идёт ребро «pickupLocation» к «Load Terminal #4» и ребро «dropoffLocation» к PhysicalLocation «Siding 341A». У каждого TransportAction есть собственные узлы Relationship «hasInput», «hasOutput» и «performedBy»; к BulkHardware «Graphite» (золотистый) ведут рёбра «to» от этих отношений, а ребро «bulkQuantity» уходит за верхний край области просмотра. Действие «Transport to Train» выполняется Organization «Safe Trucking LTD», а «Train To Siding 341A» — Organization «KJ Trains LTD». Два узла «ResponsibilityChange...» (обрезаны) имеют рёбра «previous», «current» и «responsibilityChangedOn»; один из них развёрнут и показывает «responsibilityCategory*» = «ownership», а также поля actionStartTime и actionEndTime со значениями, начинающимися с «2025-08-27». Узел Relationship «isLocatedAt» связывает PhysicalLocation «Siding 341A» с Organization «Carbon Graph Inc».",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://97ee5591-2752-4fa2-8e96-eeba7d1d3046"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "ru"
+    },
+    {
+      "text": "显示两个连续 TransportAction 的图编辑器画布截图。TransportAction“Transport to Train”有一条连向 PhysicalLocation“Load Terminal #4”的“dropoffLocation”边；TransportAction“Train To Siding 341A”有一条连向“Load Terminal #4”的“pickupLocation”边和一条连向 PhysicalLocation“Siding 341A”的“dropoffLocation”边。每个 TransportAction 各有其自己的 Relationship“hasInput”、“hasOutput”和“performedBy”节点；BulkHardware“Graphite”（金色）由来自这些关系的“to”边指向，并有一条“bulkQuantity”边延伸出视图顶部。“Transport to Train”由 Organization“Safe Trucking LTD”执行，“Train To Siding 341A”由 Organization“KJ Trains LTD”执行。两个“ResponsibilityChange...”节点（截断）带有“previous”、“current”和“responsibilityChangedOn”边；其中一个展开显示“responsibilityCategory*” = “ownership”以及值以“2025-08-27”开头的 actionStartTime 和 actionEndTime 字段。Relationship“isLocatedAt”将 PhysicalLocation“Siding 341A”链接到 Organization“Carbon Graph Inc”。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://97ee5591-2752-4fa2-8e96-eeba7d1d3046"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/strauch-carbno-2025-spdx-3-1-supply-chain/sections/sec-000",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/strauch-carbno-2025-spdx-3-1-supply-chain/manifest.jsonld",
+  "provenance": "ingested"
+}
