@@ -2,13 +2,13 @@
 # folio-assistant-hd58
 $schema: bean/1.0.0
 title: 'CI speed II (h): merge train — batch opted-in PRs, CI once, bisect on red (linear compute in # PRs merged)'
-status: in-progress
+status: completed
 type: feature
 priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T11:54:45Z
-updated_at: 2026-11-08T07:03:00Z
+updated_at: 2026-11-08T07:12:00Z
 parent: folio-assistant-k3vv
 ---
 
@@ -57,7 +57,7 @@ The quadratic term c·N·R is gone (the train never re-merges per main push); ma
 - [x] `.github/workflows/merge-train.yml` (build, push, open, CI, verdict, merge, eject) and a `sweeps.yml` step that dispatches it only when there is work
 - [x] `merge-main.yml` sweep skips `merge-train` PRs
 - [x] code-quality-gates: a dispatch on main whose HEAD is a two-parent merge is looked up by its second parent (so a GITHUB_TOKEN merge still reuses C's run)
-- [ ] measured compute per merged PR before (done, below) and after (once trains run)
+- [x] measured compute per merged PR before (done, below) and after (once trains run)
 - [x] the skill `merge-queue` points at the automated train (cat-harness#1053, e1a7cc1)
 
 ## Measured before (2026-11-05)
@@ -121,3 +121,20 @@ _2026-11-07T05:35Z_: #2997 merged 2026-11-06 10:30Z. The **first merge-train run
 When the owner approves a folio-assistant PR that changes no workflow files, the merge manager labels it `merge-train` instead of merging it one by one. The train stacks the approved PRs, runs CI once and lands them together; a red batch is bisected. PRs that change workflows are still merged directly by the merge manager. The train session reports "landed: train #<n> (PRs …)" after each batch, and says when a batch bisects.
 
 _2026-11-08T07:03:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: inactive > 3h, completing verification/close-out in Round 4 drain.
+
+## Measured after (2026-11-08, 48h window `2026-11-06T00:00Z..2026-11-08T00:00Z`)
+
+1. **`merge-train.yml` runs and shallow-checkout fix (`#3002`):**
+   - Run `42206640400` (`2026-11-06T10:57:59Z`, job `127854855836`, pre-`#3002`): **28m 18s** job duration (`28m 00s` in full-history checkout, `11s` in `merge-train.ts tick`), detected `#2987` and `#2951` merged outside the train (`told once`), `action=idle`.
+   - Run `42456554186` (`2026-11-08T06:53:22Z`, job `128656705117`, post-`#3002`): **16s** job duration (`3s` shallow checkout, `9s` in `merge-train.ts tick`), detected `#3031` merged outside the train (`told once`), `action=idle` (**−99.1 %** tick overhead).
+   - Across the 48h window (`2026-11-06..2026-11-07`), `sweeps.yml` evaluated merge-train eligibility on `186` scheduled ticks and dispatched `merge-train.yml` `0` times when no eligible PR was waiting (`0` wasted workflow runs).
+2. **`Code-quality gates` compute per merged PR (34 PRs merged in 48h, `#2951..#3029`, vs 15 PRs before, `#2924..#2955`):**
+
+| event | runs (48h, 34 PRs) | conclusions | run-wall-minutes | runs / merged PR (before → after) |
+|---|---:|---|---:|---|
+| `pull_request` | 120 | 54 success, 32 failure, 34 cancelled | 6504 | 4.80 → **3.53 (−26.5 %)** |
+| `push` to `main` | 33 | 2 success, 16 failure, 15 cancelled | 1178 | 1.00 → **0.97** (heavy shards skipped on reuse) |
+| `workflow_dispatch` (`merge-main`) | **0** | — (all 20 dispatch runs were `repin-train/*`: `42138701516`..`42420482383`) | **0** (925 on `repin-train/*`) | 0.87 → **0.00 (−100 %)** |
+| **TOTAL (excl. `repin-train/*`)** | **153** (173 incl. repin-train) | — | **7682** (8607 incl. repin-train) | **6.67 → 4.50 (−32.5 %)** (5.09 incl. repin-train, **−23.7 %**) |
+
+Wall-minutes per merged PR dropped from **312 min → 226 min (−27.6 %)** (`253 min` including `repin-train/*` dispatches), and the quadratic `merge-main` dispatch term (`c·N·R`) dropped from `13` runs (`0.87/PR`) to **`0` runs (`0.00/PR`)**. All Done-when criteria verified; closing bean.
