@@ -81,11 +81,34 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
+          cp index.config.json "$RUNNER_TEMP/index.config.before.json"
           bun run cat mount:repin:standing --summary-file "$RUNNER_TEMP/repin.md"
+          # Step 4a, from the tools the move brought (owner 2026-11-07, option 1):
+          # the step above ran main's pinned tools, which may predate 4a, so a
+          # layer's newly declared directory would never join its explicit
+          # mount list and the pin that brings 4a could never move. Run only
+          # when the mounted tools know `--extend-from`: an older script would
+          # read the flag as nothing and re-plan the whole re-pin. Report-only:
+          # what it cannot add, the train's own checks report.
+          if grep -q -- '--extend-from' cat-harness-tools/scripts/repin-standing.ts; then
+            bun run cat mount:repin:standing --extend-from "$RUNNER_TEMP/index.config.before.json" --summary-file "$RUNNER_TEMP/repin.md" \
+              || echo "::warning::newly declared directories could not all be added; the train's checks say which are missing"
+          fi
           # A moved layer can change its workspace package.json, and every CI
           # job installs with --frozen-lockfile, so the train carries the
           # refreshed bun.lock with its pins (train #2876 failed without it).
           bun install
+          # The root README.md and AGENTS.md are rendered from the declarations
+          # of the instances the index names (`index:render`, owner 2026-10-09),
+          # so a moved layer whose declaration changed leaves them stale and
+          # `index:render:check` fails the train (#3020: smart-trust-phw's
+          # description). The README's links need the IG pages, which need
+          # the IG indexes. Report-only: a render that cannot run here leaves
+          # the train to say which file is stale.
+          if ! { bun run cat ig-index:build && bun run cat index:render; }; then
+            echo "::warning::index:render could not run; the train carries the root files as main has them"
+            git checkout -- README.md AGENTS.md CLAUDE.md GEMINI.md
+          fi
           # The re-pin can rewrite the litlfred/*@sha calls in .github/workflows
           # (check:workflow-pins, tools#1353). The train's token may not push
           # workflow files (owner, Q-PIN-6 C), so those bumps come as their own
