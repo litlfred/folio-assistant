@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/smart-base/skill/complete-sdc-questionnaire.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/complete-sdc-questionnaire.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1023",
+    "sha": "6c8527f84a9652ad954b24d95e3d7fc7b79f4aeb",
+    "pr": "repin-train/20261108-1023",
+    "run": "42471255828"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/complete-sdc-questionnaire",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "complete-sdc-questionnaire",
+      "title": "Complete an SDC questionnaire",
+      "description": "A health worker (or a client, on their own device) completes a FHIR R4 Questionnaire conforming to Structured Data Capture as their device renders it, and the result is a QuestionnaireResponse. Generic for any DAK form: a registration, a visit, a referral. Input is the Questionnaire as rendered, with any pre-populated answers; output is the completed QuestionnaireResponse.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/complete-sdc-questionnaire.md",
+      "instructionLines": 80,
+      "inputSchema": "http://smart.who.int/base/schema/skills/complete-sdc-questionnaire/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/complete-sdc-questionnaire/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/schema/lean-packages.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1023",
+    "sha": "6c8527f84a9652ad954b24d95e3d7fc7b79f4aeb",
+    "pr": "repin-train/20261108-1023",
+    "run": "42471255828"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/schema/lean-packages",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "lean-packages",
+      "title": "lean-packages",
+      "summary": "The `lean.ref` grammar and the package registry it resolves against.",
+      "module": "schemas/lean-packages.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/lean-packages"
+    }
+  ]
+}

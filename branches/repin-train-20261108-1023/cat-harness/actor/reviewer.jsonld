@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/actor/reviewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1023",
+    "sha": "6c8527f84a9652ad954b24d95e3d7fc7b79f4aeb",
+    "pr": "repin-train/20261108-1023",
+    "run": "42471255828"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/actor/reviewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Actor",
+      "localId": "reviewer",
+      "actorKind": "person",
+      "title": "Reviewer",
+      "description": "A person who reads a change and judges it. Acting as `reviewer` does not carry the authority to accept — that is the editor's lane.",
+      "hasCapability": [],
+      "mayTakeRole": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/role/reviewer",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/role/narrative-reviewer",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/role/feedback-provider"
+      ],
+      "permissionName": [
+        "review-comments"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/actor/reviewer"
+    }
+  ]
+}

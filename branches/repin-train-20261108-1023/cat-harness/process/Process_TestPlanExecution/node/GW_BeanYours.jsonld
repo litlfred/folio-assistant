@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/process/Process_TestPlanExecution/node/GW_BeanYours.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1023",
+    "sha": "6c8527f84a9652ad954b24d95e3d7fc7b79f4aeb",
+    "pr": "repin-train/20261108-1023",
+    "run": "42471255828"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/process/Process_TestPlanExecution/node/GW_BeanYours",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Bean claimed?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/process/Process_TestPlanExecution",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/role/test-requester",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/process/Process_TestPlanExecution/lane/Lane_Requester",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_1",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/process/Process_TestPlanExecution#flow/SF_Bean_3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1023/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TestPlanExecution/node/GW_BeanYours"
+    }
+  ]
+}
