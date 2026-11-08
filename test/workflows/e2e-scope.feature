@@ -85,7 +85,7 @@ Feature: The e2e shards run on a PR push unless every changed file is one they c
     Given the scope step's if in the verdict-reuse job
     Then it contains "github.event_name == 'pull_request'"
     And it contains "github.event.action != 'ready_for_review'"
-    And it contains "github.event.pull_request.draft != true"
+    And it contains "contains(github.event.pull_request.labels.*.name, 'release')"
 
   @test:test/workflows/e2e-scope.test.ts::the_shards_honour_it,_and_everything_else_still_runs_them::the_scope_steps_never_fail_the_verdict-reuse_job:_no_answer_runs_the_shards
   Scenario: The scope steps never fail the verdict-reuse job, and no answer runs the shards
