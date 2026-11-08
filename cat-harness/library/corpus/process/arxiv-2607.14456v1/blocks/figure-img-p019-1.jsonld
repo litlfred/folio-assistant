@@ -1,0 +1,94 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p019-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p019-1.png",
+  "pageStart": 19,
+  "pageEnd": 19,
+  "narrative": [
+    {
+      "text": "Figure 10, the News workflow. It receives a data_source_plan and an expanded_query_set, validates the payloads, initialises a run context with run_id and timestamps, loads provider config and API credentials, selects providers, builds base query parameters (keywords, date range, regions) and applies source-specific constraints (rate limits, page size, caps). It then sends a request to provider 1 and asks \"Response success?\". On success it parses the payload, asks whether it contains articles, extracts and normalises the article fields (title, url, source, timestamp, language), filters unsupported languages and appends to a collection buffer; \"Is there a next page token?\" and \"Can request next page?\" form the pagination loop back to the request. On failure it increments error_count and records the error. \"More providers to query?\" loops through \"Select next provider\" and \"Update metrics for provider switch\" back to the top; the No branch closes open sessions, builds the unified raw_news_articles structure, attaches run metadata, persists metrics to a monitoring API, builds a run summary and emits a summary event.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-09-23",
+      "lang": "en"
+    },
+    {
+      "text": "Figure 10, le workflow News. Il reçoit un data_source_plan et un expanded_query_set, valide les charges utiles, initialise un contexte d'exécution avec run_id et horodatages, charge la configuration des fournisseurs et les identifiants d'API, sélectionne les fournisseurs, construit les paramètres de requête de base (mots-clés, plage de dates, régions) et applique les contraintes propres à chaque source (limites de débit, taille de page, plafonds). Il envoie ensuite une requête au fournisseur 1 et demande « Response success? ». En cas de succès, il analyse la charge utile, demande si elle contient des articles, extrait et normalise les champs d'article (title, url, source, timestamp, language), filtre les langues non prises en charge et ajoute au tampon de collecte ; « Is there a next page token? » et « Can request next page? » forment la boucle de pagination vers la requête. En cas d'échec, il incrémente error_count et enregistre l'erreur. « More providers to query? » boucle par « Select next provider » et « Update metrics for provider switch » vers le haut ; la branche No ferme les sessions ouvertes, construit la structure unifiée raw_news_articles, joint les métadonnées d'exécution, persiste les métriques vers une API de supervision, construit un résumé d'exécution et émet un événement de résumé.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "fr"
+    },
+    {
+      "text": "Figura 10, el flujo News. Recibe un data_source_plan y un expanded_query_set, valida las cargas, inicializa un contexto de ejecución con run_id y marcas de tiempo, carga la configuración de proveedores y las credenciales de API, selecciona proveedores, construye los parámetros de consulta base (palabras clave, rango de fechas, regiones) y aplica restricciones propias de cada fuente (límites de tasa, tamaño de página, topes). Luego envía una solicitud al proveedor 1 y pregunta «Response success?». Si tiene éxito, analiza la carga, pregunta si contiene artículos, extrae y normaliza sus campos (title, url, source, timestamp, language), filtra los idiomas no admitidos y los añade a un búfer de recogida; «Is there a next page token?» y «Can request next page?» forman el bucle de paginación hacia la solicitud. Si falla, incrementa error_count y registra el error. «More providers to query?» vuelve al inicio pasando por «Select next provider» y «Update metrics for provider switch»; la rama No cierra las sesiones abiertas, construye la estructura unificada raw_news_articles, adjunta los metadatos de ejecución, guarda las métricas en una API de monitorización, construye un resumen de ejecución y emite un evento de resumen.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "es"
+    },
+    {
+      "text": "الشكل 10، سير عمل News. يتلقى data_source_plan وexpanded_query_set، ويتحقق من الحمولات، ويهيّئ سياق تشغيل مع run_id وطوابع زمنية، ويحمّل إعدادات المزوّدين وبيانات اعتماد API، ويختار المزوّدين، ويبني معاملات الاستعلام الأساسية (الكلمات المفتاحية، ونطاق التاريخ، والمناطق)، ويطبّق قيود كل مصدر (حدود المعدّل، وحجم الصفحة، والسقوف). ثم يرسل طلبًا إلى المزوّد 1 ويسأل «Response success?». عند النجاح يحلّل الحمولة، ويسأل هل تحتوي مقالات، ويستخرج حقول المقالات ويوحّدها (title، url، source، timestamp، language)، ويرشّح اللغات غير المدعومة، ويضيفها إلى مخزن التجميع؛ وتشكّل «Is there a next page token?» و«Can request next page?» حلقة الترقيم عائدةً إلى الطلب. وعند الفشل يزيد error_count ويسجّل الخطأ. وتعود «More providers to query?» إلى الأعلى عبر «Select next provider» و«Update metrics for provider switch»؛ ويغلق فرع No الجلسات المفتوحة، ويبني البنية الموحّدة raw_news_articles، ويرفق بيانات التشغيل الوصفية، ويحفظ المقاييس في API للمراقبة، ويبني ملخص التشغيل، ويطلق حدث الملخص.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ar"
+    },
+    {
+      "text": "Рисунок 10, процесс News. Он получает data_source_plan и expanded_query_set, проверяет полезные нагрузки, инициализирует контекст запуска с run_id и отметками времени, загружает конфигурацию поставщиков и учётные данные API, выбирает поставщиков, строит базовые параметры запроса (ключевые слова, диапазон дат, регионы) и применяет ограничения конкретных источников (лимиты частоты, размер страницы, предельные значения). Затем отправляет запрос поставщику 1 и спрашивает «Response success?». При успехе разбирает нагрузку, спрашивает, есть ли в ней статьи, извлекает и нормализует поля статей (title, url, source, timestamp, language), отбрасывает неподдерживаемые языки и добавляет в буфер сбора; «Is there a next page token?» и «Can request next page?» образуют цикл постраничной загрузки обратно к запросу. При неудаче увеличивает error_count и записывает ошибку. «More providers to query?» возвращает наверх через «Select next provider» и «Update metrics for provider switch»; ветка No закрывает открытые сессии, строит единую структуру raw_news_articles, прикрепляет метаданные запуска, сохраняет метрики в API мониторинга, формирует сводку запуска и отправляет событие сводки.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ru"
+    },
+    {
+      "text": "图 10，News 工作流。它接收 data_source_plan 和 expanded_query_set，校验载荷，用 run_id 和时间戳初始化运行上下文，加载提供方配置和 API 凭据，选择提供方，构建基础查询参数（关键词、日期范围、地区），并应用各来源的约束（速率限制、页大小、上限）。然后向提供方 1 发送请求并询问“Response success?”。成功时解析载荷，询问是否包含文章，提取并规范化文章字段（title、url、source、timestamp、language），过滤不支持的语言并追加到收集缓冲区；“Is there a next page token?”和“Can request next page?”构成返回请求的分页循环。失败时 error_count 加一并记录错误。“More providers to query?”经“Select next provider”和“Update metrics for provider switch”回到顶部；No 分支关闭打开的会话，构建统一的 raw_news_articles 结构，附加运行元数据，将指标持久化到监控 API，生成运行摘要并发出摘要事件。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-019",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/arxiv-2607.14456v1/manifest.jsonld",
+  "provenance": "ingested"
+}

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.D.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.D.Collaboration">
+    <bpmn:participant id="PHW.D.Participant" name="D. Register a Server Client under a Data Sharing Agreement (DSA P4)" processRef="PHW.D" />
+  </bpmn:collaboration>
+  <bpmn:process id="PHW.D" name="D. Register a Server Client under a Data Sharing Agreement (DSA P4)" isExecutable="false">
+    <bpmn:documentation>Registers the data recipient's server as an OAuth client of the data provider. The client is registered dynamically, by RFC 7591 or by UDAP Dynamic Client Registration as profiled by HL7 SSRAA (X.509 certificate-based, which fits a national X.509 PKI as the trust anchor), or it is entered by an administrator. It authenticates with mutual TLS (RFC 8705) or a JWT client assertion (RFC 7523; on the UDAP route, `private_key_jwt` with an `x5c` certificate chain, SSRAA §5.2), using a key published under a trust anchor the agreement accepts, and the server records which agreement versions the client may act under. Trust-anchor neutral: WHO GDHCN is one accepted anchor among others (a national X.509 PKI, the party's own did:web, or a local list); UDAP, as profiled by HL7 SSRAA (Security for Scalable Registration, Authentication, and Authorization IG), is approved for X.509 certificate-based registration and authentication (owner, 2026-10-30 20:28Z), and OpenID Federation is out of scope. Source: the data sharing agreement (DSA) process analysis for litlfred/folio-assistant#2702, §2 and §4.</bpmn:documentation>
+    <bpmn:laneSet id="PHW.D.LaneSet">
+      <bpmn:lane id="PHW.Lane.DataRecipient" name="Data Recipient System (OAuth client)">
+        <bpmn:documentation>The data recipient's server: the ODRL `assignee` of the agreement (ODRL 2.2 §2.1.3) and the OAuth client (RFC 6749 §1.1 (section from standing knowledge, unverified)).</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.D.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.D.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.D.Gateway1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.D.2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.D.9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.D.10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.D.8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.D.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.ProviderAdmin" name="Data Provider Administrator (person)">
+        <bpmn:documentation>A person at the data provider who configures systems by hand. This is the only route when the agreement is document-only (a signed PDF with no ODRL).</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.D.3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.AuthorizationServer" name="Provider Authorization Server (administrator + decision point)">
+        <bpmn:documentation>The provider's OAuth authorization server (RFC 6749 §1.1 (section from standing knowledge, unverified)). In NIST SP 800-207 terms it is the policy administrator. It is grouped with the policy decision point that runs process F.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.D.4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.D.6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.D.7</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.TrustAnchor" name="Trust Anchor (GDHCN or another accepted anchor)">
+        <bpmn:documentation>Any trust anchor the agreement accepts. Trust-anchor neutral: WHO GDHCN is one accepted anchor among others (a national X.509 PKI, the party's own did:web, or a local list); UDAP, as profiled by HL7 SSRAA (Security for Scalable Registration, Authentication, and Authorization IG), is approved for X.509 certificate-based registration and authentication (owner, 2026-10-30 20:28Z), and OpenID Federation is out of scope.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.D.5</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.D.Start" name="Agreement signed; recipient will call the provider&apos;s API">
+      <bpmn:documentation>Trigger: a data sharing agreement is signed, and the recipient's server will call the provider's API under it (DSA P4).</bpmn:documentation>
+      <bpmn:outgoing>PHW.D.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="PHW.D.1" name="D1. Prepare client key or certificate under an accepted trust anchor">
+      <bpmn:documentation>The recipient uses a key pair or X.509 certificate already published under a trust anchor the agreement accepts (DSA P3). Trust-anchor neutral: WHO GDHCN is one accepted anchor among others (a national X.509 PKI, the party's own did:web, or a local list); UDAP, as profiled by HL7 SSRAA (Security for Scalable Registration, Authentication, and Authorization IG), is approved for X.509 certificate-based registration and authentication (owner, 2026-10-30 20:28Z), and OpenID Federation is out of scope.</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.D.Flow2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="PHW.D.Gateway1" name="Registration route?">
+      <bpmn:documentation>Dynamic registration by RFC 7591, dynamic registration by UDAP as profiled by HL7 SSRAA (§3), or registration by an administrator. Each is valid. UDAP fits a recipient whose certificate is issued under a national X.509 PKI, or another X.509 trust community, that the agreement accepts. Only the administrator route exists for a document-only agreement.</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.D.Flow3</bpmn:outgoing>
+      <bpmn:outgoing>PHW.D.Flow4</bpmn:outgoing>
+      <bpmn:outgoing>PHW.D.Flow12</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="PHW.D.2" name="D2. Send dynamic client registration request (RFC 7591)">
+      <bpmn:documentation>Client registration request (RFC 7591 §3.1 (section from standing knowledge, unverified)). For `private_key_jwt`, the metadata carries `jwks` or `jwks_uri` (RFC 7523 §2.2 (section from standing knowledge, unverified)). For mutual TLS, it carries `tls_client_auth` and the certificate subject (RFC 8705 §2.1 (section from standing knowledge, unverified)). RFC 7592 (registration management) is Experimental and needs owner approval before use.</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow3</bpmn:incoming>
+      <bpmn:outgoing>PHW.D.Flow5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.D.9" name="D9. Discover UDAP server metadata (SSRAA §2)">
+      <bpmn:documentation>UDAP route. The client sends `GET {baseURL}/.well-known/udap` to the provider's FHIR server, without client authentication (HL7 SSRAA 2.0.0 §2.1). The response is UDAP metadata as per UDAP Server Metadata STU1 §1, with the elements of SSRAA §2.2 (for example `udap_versions_supported`, `registration_endpoint`, `token_endpoint`, `udap_certifications_required`) and the `signed_metadata` JWT of SSRAA §2.3, which the client validates against its trust community. A `404 Not Found` means the server does not support UDAP. Where the server serves more than one trust community, SSRAA §2.4 applies. UDAP approved by the owner, 2026-10-30 20:28Z.</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow12</bpmn:incoming>
+      <bpmn:outgoing>PHW.D.Flow13</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.D.10" name="D10. Send UDAP registration request with signed software statement (SSRAA §3)">
+      <bpmn:documentation>UDAP route. The client POSTs `software_statement`, optional `certifications`, and `udap` = `1` to the `registration_endpoint` (HL7 SSRAA 2.0.0 §3.2.3; UDAP Dynamic Client Registration STU1 §2). The software statement is a JWT signed with the private key of the client's X.509 certificate, which is carried in the `x5c` header (SSRAA §3.1, §7.1.3). Its claims are those of SSRAA §3.1: `iss` and `sub` (the client URI, which SHALL match a uniformResourceIdentifier Subject Alternative Name in the certificate), `aud`, `exp` (at most 5 minutes after `iat`), `iat`, `jti`, `client_name`, `contacts`, `grant_types` (`client_credentials` for a server client), `token_endpoint_auth_method` = `private_key_jwt`, and `scope`. Certifications and endorsements are optional unless the server lists them in `udap_certifications_required` (SSRAA §3.3; UDAP Certifications and Endorsements for Client Applications STU1). A later request with the same `iss` from the same trust community modifies the registration, and an empty `grant_types` cancels it (SSRAA §3.4).</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow13</bpmn:incoming>
+      <bpmn:outgoing>PHW.D.Flow14</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:userTask id="PHW.D.3" name="D3. Enter client by hand, scopes from the signed agreement text">
+      <bpmn:documentation>Document-only route (and always allowed): the administrator registers the `client_id`, the mTLS certificate or JWKS, and scopes that match what the agreement allows. The change record cites the agreement's fixed-version URL and its SHA-256.</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow4</bpmn:incoming>
+      <bpmn:outgoing>PHW.D.Flow6</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="PHW.D.4" name="D4. Validate client key or certificate against the accepted trust anchor">
+      <bpmn:documentation>The authorization server checks that the client's key or certificate chains to, or is listed by, a trust anchor the agreement accepts: a DID document (did:web), an RFC 5280 certification path (§6 (section from standing knowledge, unverified)), or a local list. On the UDAP route it validates the registration request as per UDAP Dynamic Client Registration STU1 §4, as HL7 SSRAA 2.0.0 §3.2.3 requires: the software statement's JWT payload and signature, the `x5c` certificate chain to an anchor of the trust community (for example a national X.509 PKI), and the requested registration parameters.</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow5</bpmn:incoming>
+      <bpmn:incoming>PHW.D.Flow6</bpmn:incoming>
+      <bpmn:incoming>PHW.D.Flow14</bpmn:incoming>
+      <bpmn:outgoing>PHW.D.Flow7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.D.5" name="D5. Return trust list or certificate status">
+      <bpmn:documentation>The trust anchor serves its signed trust list or certificate revocation list. GDHCN: `did:web:tng-cdn.who.int:v2:trustlist` with a `JsonWebSignature2020` proof. X.509: CRL (RFC 5280 §5 (section from standing knowledge, unverified)).</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow7</bpmn:incoming>
+      <bpmn:outgoing>PHW.D.Flow8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:businessRuleTask id="PHW.D.6" name="D6. Record which agreement versions the client may act under">
+      <bpmn:documentation>The server stores, for this `client_id`, the fixed-version URL(s) of the agreement(s) it may act under. The fixed-version URL is the ODRL `uid`, the same value a client puts in RFC 9396 `identifier` (§2.2, process E). GAP: no RFC 7591 metadata field and no SSRAA software statement claim holds this, so it is the server's own configuration. On the UDAP route the record can be keyed by the certificate's Subject Alternative Name URI (the software statement `iss`), which SSRAA §3.4 says identifies one application and its operator over time, as well as by the `client_id`. No field is invented.</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow8</bpmn:incoming>
+      <bpmn:outgoing>PHW.D.Flow9</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:serviceTask id="PHW.D.7" name="D7. Issue client_id (RFC 7591)">
+      <bpmn:documentation>Client information response with the `client_id` (RFC 7591 §3.2.1 (section from standing knowledge, unverified)), or the administrator hands it over. On the UDAP route the response is `201 Created` as per UDAP Dynamic Client Registration STU1 §5.1, or an error as per §5.2 (HL7 SSRAA 2.0.0 §3.2.3); a modification returns the same `client_id`, usually with `200 OK` (SSRAA §3.4).</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow9</bpmn:incoming>
+      <bpmn:outgoing>PHW.D.Flow10</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.D.8" name="D8. Read authorization server metadata (RFC 8414)">
+      <bpmn:documentation>The client reads the server's metadata (RFC 8414 §3 (section from standing knowledge, unverified)): token endpoint, supported client authentication methods and DPoP signing algorithms. On the UDAP route the endpoints were already read from the UDAP metadata in D9, and the client authenticates at the token endpoint with a `private_key_jwt` Authentication Token carrying `x5c` and, for `client_credentials`, the `hl7-b2b` extension (SSRAA §5.2.1, §5.2.2).</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow10</bpmn:incoming>
+      <bpmn:outgoing>PHW.D.Flow11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="PHW.D.End" name="Client registered under the agreement">
+      <bpmn:documentation>The recipient holds a `client_id` bound to its key and to the agreement version(s) recorded in D6.</bpmn:documentation>
+      <bpmn:incoming>PHW.D.Flow11</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="PHW.D.Flow1" sourceRef="PHW.D.Start" targetRef="PHW.D.1" />
+    <bpmn:sequenceFlow id="PHW.D.Flow2" sourceRef="PHW.D.1" targetRef="PHW.D.Gateway1" />
+    <bpmn:sequenceFlow id="PHW.D.Flow3" name="dynamic (RFC 7591)" sourceRef="PHW.D.Gateway1" targetRef="PHW.D.2" />
+    <bpmn:sequenceFlow id="PHW.D.Flow4" name="by administrator" sourceRef="PHW.D.Gateway1" targetRef="PHW.D.3" />
+    <bpmn:sequenceFlow id="PHW.D.Flow5" name="RFC 7591" sourceRef="PHW.D.2" targetRef="PHW.D.4" />
+    <bpmn:sequenceFlow id="PHW.D.Flow6" sourceRef="PHW.D.3" targetRef="PHW.D.4" />
+    <bpmn:sequenceFlow id="PHW.D.Flow7" sourceRef="PHW.D.4" targetRef="PHW.D.5" />
+    <bpmn:sequenceFlow id="PHW.D.Flow8" sourceRef="PHW.D.5" targetRef="PHW.D.6" />
+    <bpmn:sequenceFlow id="PHW.D.Flow9" sourceRef="PHW.D.6" targetRef="PHW.D.7" />
+    <bpmn:sequenceFlow id="PHW.D.Flow10" name="client_id" sourceRef="PHW.D.7" targetRef="PHW.D.8" />
+    <bpmn:sequenceFlow id="PHW.D.Flow11" sourceRef="PHW.D.8" targetRef="PHW.D.End" />
+    <bpmn:sequenceFlow id="PHW.D.Flow12" name="dynamic (UDAP, SSRAA)" sourceRef="PHW.D.Gateway1" targetRef="PHW.D.9" />
+    <bpmn:sequenceFlow id="PHW.D.Flow13" sourceRef="PHW.D.9" targetRef="PHW.D.10" />
+    <bpmn:sequenceFlow id="PHW.D.Flow14" name="software statement (x5c)" sourceRef="PHW.D.10" targetRef="PHW.D.4" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.D.Diagram">
+    <bpmndi:BPMNPlane id="PHW.D.Plane" bpmnElement="PHW.D.Collaboration">
+      <bpmndi:BPMNShape id="PHW.D.Participant_di" bpmnElement="PHW.D.Participant" isHorizontal="true"><dc:Bounds x="120" y="60" width="1965" height="660" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.DataRecipient_di" bpmnElement="PHW.Lane.DataRecipient" isHorizontal="true"><dc:Bounds x="150" y="60" width="1935" height="210" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.ProviderAdmin_di" bpmnElement="PHW.Lane.ProviderAdmin" isHorizontal="true"><dc:Bounds x="150" y="270" width="1935" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.AuthorizationServer_di" bpmnElement="PHW.Lane.AuthorizationServer" isHorizontal="true"><dc:Bounds x="150" y="420" width="1935" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.TrustAnchor_di" bpmnElement="PHW.Lane.TrustAnchor" isHorizontal="true"><dc:Bounds x="150" y="570" width="1935" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.Start_di" bpmnElement="PHW.D.Start"><dc:Bounds x="267" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.1_di" bpmnElement="PHW.D.1"><dc:Bounds x="405" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.Gateway1_di" bpmnElement="PHW.D.Gateway1" isMarkerVisible="true"><dc:Bounds x="670" y="110" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.2_di" bpmnElement="PHW.D.2"><dc:Bounds x="815" y="185" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.9_di" bpmnElement="PHW.D.9"><dc:Bounds x="815" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.10_di" bpmnElement="PHW.D.10"><dc:Bounds x="1020" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.3_di" bpmnElement="PHW.D.3"><dc:Bounds x="815" y="305" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.4_di" bpmnElement="PHW.D.4"><dc:Bounds x="1020" y="455" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.5_di" bpmnElement="PHW.D.5"><dc:Bounds x="1020" y="605" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.6_di" bpmnElement="PHW.D.6"><dc:Bounds x="1225" y="455" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.7_di" bpmnElement="PHW.D.7"><dc:Bounds x="1430" y="455" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.8_di" bpmnElement="PHW.D.8"><dc:Bounds x="1635" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.D.End_di" bpmnElement="PHW.D.End"><dc:Bounds x="1907" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.D.Flow1_di" bpmnElement="PHW.D.Flow1">
+        <di:waypoint x="303" y="135" />
+        <di:waypoint x="405" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow2_di" bpmnElement="PHW.D.Flow2">
+        <di:waypoint x="575" y="135" />
+        <di:waypoint x="670" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow3_di" bpmnElement="PHW.D.Flow3">
+        <di:waypoint x="720" y="135" />
+        <di:waypoint x="760" y="135" />
+        <di:waypoint x="760" y="225" />
+        <di:waypoint x="815" y="225" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow4_di" bpmnElement="PHW.D.Flow4">
+        <di:waypoint x="695" y="160" />
+        <di:waypoint x="695" y="345" />
+        <di:waypoint x="815" y="345" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow5_di" bpmnElement="PHW.D.Flow5">
+        <di:waypoint x="985" y="225" />
+        <di:waypoint x="1005" y="225" />
+        <di:waypoint x="1005" y="495" />
+        <di:waypoint x="1020" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow6_di" bpmnElement="PHW.D.Flow6">
+        <di:waypoint x="985" y="345" />
+        <di:waypoint x="1005" y="345" />
+        <di:waypoint x="1005" y="495" />
+        <di:waypoint x="1020" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow7_di" bpmnElement="PHW.D.Flow7">
+        <di:waypoint x="1105" y="535" />
+        <di:waypoint x="1105" y="605" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow8_di" bpmnElement="PHW.D.Flow8">
+        <di:waypoint x="1190" y="645" />
+        <di:waypoint x="1210" y="645" />
+        <di:waypoint x="1210" y="495" />
+        <di:waypoint x="1225" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow9_di" bpmnElement="PHW.D.Flow9">
+        <di:waypoint x="1395" y="495" />
+        <di:waypoint x="1430" y="495" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow10_di" bpmnElement="PHW.D.Flow10">
+        <di:waypoint x="1600" y="495" />
+        <di:waypoint x="1620" y="495" />
+        <di:waypoint x="1620" y="135" />
+        <di:waypoint x="1635" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow11_di" bpmnElement="PHW.D.Flow11">
+        <di:waypoint x="1805" y="135" />
+        <di:waypoint x="1907" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow12_di" bpmnElement="PHW.D.Flow12">
+        <di:waypoint x="720" y="135" />
+        <di:waypoint x="815" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow13_di" bpmnElement="PHW.D.Flow13">
+        <di:waypoint x="985" y="135" />
+        <di:waypoint x="1020" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.D.Flow14_di" bpmnElement="PHW.D.Flow14">
+        <di:waypoint x="1105" y="175" />
+        <di:waypoint x="1105" y="455" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
