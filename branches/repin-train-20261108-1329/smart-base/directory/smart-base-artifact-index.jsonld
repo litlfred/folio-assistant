@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1329/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1329/smart-base/directory/smart-base-artifact-index.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-1329/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-artifact-index.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-1329",
+    "sha": "bf593b23973ffb37d8780ec099120a78d924b4a6",
+    "pr": "repin-train/20261108-1329",
+    "run": "42485201085"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-artifact-index",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-artifact-index",
+      "path": "fhir-artifact-index/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/fhir-artifact-index"
+      ],
+      "description": "The IG's artefact index. `index.json`, `menu.json`, `releases.json`, `package.tgz` and `sidecars/` are not committed: fhir-harness's `ig-index:build` writes them at publish from the IG's AST (`builtAtPublish`; `sidecars/` via this layer's `ig-site:sidecars` step). Committed here: `upstream-report-CDHIv1toCDHIv2.md` and `README.md`. The four CDHI/CDSC ConceptMaps (the v1-to-v2 crosswalks and the two hierarchy maps) are indexed `referenced`: the index says where they are and holds none of their rows; materializing one is `materialize-remote.bpmn`. The IG template's chrome (`chrome.json`) lives in `themes/`.",
+      "readmePath": "fhir-artifact-index/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-artifact-index"
+    }
+  ]
+}

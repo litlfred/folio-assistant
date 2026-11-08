@@ -1,0 +1,101 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "PHW.M",
+ "markers": [
+  {
+   "id": "PHW.M.1",
+   "name": "M1. Search active Consents for the holder [ITI-108] Access Consent",
+   "left": 43.57,
+   "top": 14.29,
+   "box": {
+    "left": 37.55,
+    "top": 30,
+    "width": 1.38,
+    "height": 6.86
+   }
+  },
+  {
+   "id": "PHW.M.2",
+   "name": "M2. Return the active Consents",
+   "left": 56.46,
+   "top": 62.86,
+   "box": {
+    "left": 50.44,
+    "top": 78.57,
+    "width": 1.38,
+    "height": 6.86
+   }
+  },
+  {
+   "id": "PHW.M.3",
+   "name": "M3. Add the explicit Consents, or the trust domain's default as an implied Consent",
+   "left": 69.35,
+   "top": 14.29,
+   "box": {
+    "left": 63.33,
+    "top": 30,
+    "width": 1.38,
+    "height": 6.86
+   }
+  },
+  {
+   "id": "PHW.M.4",
+   "name": "M4. List them in the Advance Directives section",
+   "left": 82.24,
+   "top": 14.29,
+   "box": {
+    "left": 76.22,
+    "top": 30,
+    "width": 1.38,
+    "height": 6.86
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.M",
+ "tasks": {
+  "PHW.M.1": {
+   "id": "PHW.M.1",
+   "name": "M1. Search active Consents for the holder [ITI-108] Access Consent",
+   "type": "bpmn:SendTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.M/node/PHW.M.1",
+   "stepHref": "PHW.M.html#step-PHW.M.1",
+   "lane": "Document source (VHL Sharer or Certificate Issuance Service)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.M/lane/PHW.Lane.DocumentSource",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.M.2": {
+   "id": "PHW.M.2",
+   "name": "M2. Return the active Consents",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.M/node/PHW.M.2",
+   "stepHref": "PHW.M.html#step-PHW.M.2",
+   "lane": "PCF Consent Registry",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.M/lane/PHW.Lane.ConsentRegistry",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.M.3": {
+   "id": "PHW.M.3",
+   "name": "M3. Add the explicit Consents, or the trust domain's default as an implied Consent",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.M/node/PHW.M.3",
+   "stepHref": "PHW.M.html#step-PHW.M.3",
+   "lane": "Document source (VHL Sharer or Certificate Issuance Service)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.M/lane/PHW.Lane.DocumentSource",
+   "skills": [],
+   "binding": "unbound"
+  },
+  "PHW.M.4": {
+   "id": "PHW.M.4",
+   "name": "M4. List them in the Advance Directives section",
+   "type": "bpmn:ServiceTask",
+   "href": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.M/node/PHW.M.4",
+   "stepHref": "PHW.M.html#step-PHW.M.4",
+   "lane": "Document source (VHL Sharer or Certificate Issuance Service)",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-trust-phw/process/PHW.M/lane/PHW.Lane.DocumentSource",
+   "skills": [],
+   "binding": "unbound"
+  }
+ }
+}

@@ -1,0 +1,275 @@
+{
+ "$schema": "process-task-panel/v1",
+ "process": "Process_RenderKgToGitHubPages",
+ "markers": [
+  {
+   "id": "A_ResolveInputs",
+   "name": "Resolve the Subgraphs and the root URL",
+   "left": 18.72,
+   "top": 23.58,
+   "box": {
+    "left": 13.83,
+    "top": 33.96,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_Provision",
+   "name": "Make sure gh-pages exists and Pages serves it",
+   "left": 18.72,
+   "top": 72.64,
+   "box": {
+    "left": 13.83,
+    "top": 83.02,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_Stage",
+   "name": "Stage the rendering",
+   "left": 29.89,
+   "top": 23.58,
+   "box": {
+    "left": 25,
+    "top": 33.96,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_CheckStaged",
+   "name": "Check what was staged",
+   "left": 41.06,
+   "top": 23.58,
+   "box": {
+    "left": 36.17,
+    "top": 33.96,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_Deploy",
+   "name": "Deploy the rendering",
+   "left": 57.26,
+   "top": 72.64,
+   "box": {
+    "left": 52.37,
+    "top": 83.02,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_CheckServed",
+   "name": "Check what is served",
+   "left": 67.88,
+   "top": 23.58,
+   "box": {
+    "left": 62.99,
+    "top": 33.96,
+    "width": 1.34,
+    "height": 4.53
+   }
+  },
+  {
+   "id": "A_Report",
+   "name": "Report the push: status and message",
+   "left": 79.05,
+   "top": 23.58,
+   "box": {
+    "left": 74.16,
+    "top": 33.96,
+    "width": 1.34,
+    "height": 4.53
+   }
+  }
+ ],
+ "processHref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages",
+ "tasks": {
+  "A_ResolveInputs": {
+   "id": "A_ResolveInputs",
+   "name": "Resolve the Subgraphs and the root URL",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_ResolveInputs",
+   "stepHref": "render-kg-to-github-pages.html#step-A_ResolveInputs",
+   "lane": "Site Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages",
+     "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+    }
+   ],
+   "role": {
+    "name": "site-publisher",
+    "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/role/site-publisher",
+    "title": "Site Publisher",
+    "skills": [
+     {
+      "name": "render-kg-to-github-pages",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+     }
+    ]
+   }
+  },
+  "A_Provision": {
+   "id": "A_Provision",
+   "name": "Make sure gh-pages exists and Pages serves it",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_Provision",
+   "stepHref": "render-kg-to-github-pages.html#step-A_Provision",
+   "lane": "GitHub Pages",
+   "laneHref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages",
+     "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+    }
+   ],
+   "role": {
+    "name": "github-pages",
+    "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/role/github-pages",
+    "title": "GitHub Pages",
+    "skills": [
+     {
+      "name": "github-pages",
+      "href": "../../../en/cat-harness/processes/skills/github-pages.html"
+     }
+    ]
+   }
+  },
+  "A_Stage": {
+   "id": "A_Stage",
+   "name": "Stage the rendering",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_Stage",
+   "stepHref": "render-kg-to-github-pages.html#step-A_Stage",
+   "lane": "Site Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages",
+     "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+    }
+   ],
+   "role": {
+    "name": "site-publisher",
+    "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/role/site-publisher",
+    "title": "Site Publisher",
+    "skills": [
+     {
+      "name": "render-kg-to-github-pages",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+     }
+    ]
+   }
+  },
+  "A_CheckStaged": {
+   "id": "A_CheckStaged",
+   "name": "Check what was staged",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_CheckStaged",
+   "stepHref": "render-kg-to-github-pages.html#step-A_CheckStaged",
+   "lane": "Site Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages",
+     "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+    }
+   ],
+   "role": {
+    "name": "site-publisher",
+    "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/role/site-publisher",
+    "title": "Site Publisher",
+    "skills": [
+     {
+      "name": "render-kg-to-github-pages",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+     }
+    ]
+   }
+  },
+  "A_Deploy": {
+   "id": "A_Deploy",
+   "name": "Deploy the rendering",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_Deploy",
+   "stepHref": "render-kg-to-github-pages.html#step-A_Deploy",
+   "lane": "GitHub Pages",
+   "laneHref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages",
+     "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+    }
+   ],
+   "role": {
+    "name": "github-pages",
+    "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/role/github-pages",
+    "title": "GitHub Pages",
+    "skills": [
+     {
+      "name": "github-pages",
+      "href": "../../../en/cat-harness/processes/skills/github-pages.html"
+     }
+    ]
+   }
+  },
+  "A_CheckServed": {
+   "id": "A_CheckServed",
+   "name": "Check what is served",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_CheckServed",
+   "stepHref": "render-kg-to-github-pages.html#step-A_CheckServed",
+   "lane": "Site Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages",
+     "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+    }
+   ],
+   "role": {
+    "name": "site-publisher",
+    "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/role/site-publisher",
+    "title": "Site Publisher",
+    "skills": [
+     {
+      "name": "render-kg-to-github-pages",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+     }
+    ]
+   }
+  },
+  "A_Report": {
+   "id": "A_Report",
+   "name": "Report the push: status and message",
+   "type": "bpmn:Task",
+   "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/node/A_Report",
+   "stepHref": "render-kg-to-github-pages.html#step-A_Report",
+   "lane": "Site Publisher",
+   "laneHref": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_SitePublisher",
+   "skills": [
+    {
+     "name": "render-kg-to-github-pages",
+     "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+    }
+   ],
+   "role": {
+    "name": "site-publisher",
+    "href": "https://litlfred.github.io/folio-assistant/bootstrap-tools/role/site-publisher",
+    "title": "Site Publisher",
+    "skills": [
+     {
+      "name": "render-kg-to-github-pages",
+      "href": "../../../en/cat-harness/processes/skills/render-kg-to-github-pages.html"
+     }
+    ]
+   }
+  }
+ }
+}

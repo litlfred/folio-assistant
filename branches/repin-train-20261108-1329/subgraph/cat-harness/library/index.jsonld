@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness/directory/library-graph",
+      "@type": "bootstrap:Subgraph",
+      "name": "library-graph",
+      "title": "Library"
+    }
+  ],
+  "hasSubgraph": [
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/corpus/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/processes/",
+    "https://litlfred.github.io/folio-assistant/subgraph/cat-harness/library/skills/"
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/cat-harness"
+  ],
+  "name": "library",
+  "path": "library/",
+  "title": "Library"
+}
