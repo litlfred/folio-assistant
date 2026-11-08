@@ -6,7 +6,7 @@ status: in-progress
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-03T07:13:38Z
+updated_at: 2026-11-08T08:47:00Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -136,3 +136,26 @@ _2026-11-03T00:41:16Z_ — Written by the drain session https://claude.ai/code/s
 _2026-11-03T07:13:38Z_ — Re-opened (owner, 2026-11-03, card "1. Re-open 4j43"): it was completed at window close with 5 children still open (drnh, gzgh, fbmk, rbib, sbpn), so `check:bean-rollup` failed in every layer's CI ("completed with 5 open children"). It closes when they do. Session https://claude.ai/code/session_01EucfRp9ycxtZrrBKaipNy5.
 
 _2026-11-07T16:05Z_ — FINAL. Merge window ended 2026-11-03 00:40Z; the 10-minute report chain and its backstop (scheduled task "Harness drain report backstop") are now off. End state: 29 of 35 drained. Still open: tools#1299 (waits on the fa re-pin train / owner's Q-SLASH-8 command), beans pga6 and nbp9 (todo; nbp9 is the owner's), fwtz, and the umbrella beans rwmf and yj32. Open PRs in the three repos now number 18 (12 green, 1 running, 5 red), all opened after the window by other threads; this drain did not touch them. A new drain needs a fresh go-ahead from the owner.
+
+## Child status checklist (2026-11-08 — 16 of 18 completed)
+
+- [x] `folio-assistant-8bm7` — Phase 1: `fhir-harness` `main` finishes a check run and turns green (`completed`)
+- [x] `folio-assistant-eaa6` — Phase 2: harness close-outs (`tools#962`, `#1299`, `#400`, `#1259`; `completed`)
+- [x] `folio-assistant-o161` — Phase 3: take over stalled harness PRs (`tools#1129`, `tools#1359`, `cat-harness#932`; `completed`)
+- [x] `folio-assistant-gzgh` — Phase 4: watch owned harness PRs land and close paired issues (`completed`, all 10 PRs merged and paired issues closed)
+- [x] `folio-assistant-c1ev` — Phase 5: harness bean tidy-up (`6fez`, `fwtz`, `p7mb`, `iirv`; `completed`)
+- [x] `folio-assistant-fbmk` — Folio bookmarks and pinned blocks (`completed`: `cat-harness#984` `ea6ace8`, `cat-harness-tools#1412` `109b850`, `cat-harness#1060` `35031e3cffe3`, `cat-harness-tools#1528` `55b19257830d`; `#982` and `#985` closed)
+- [x] `folio-assistant-rbib` — `dpi-h-ra` footnote citations to KG bibliography (`completed`: `smart-ra#232` `140ddd17cb9f` and `smart-ra#233` `eac7354a275f` merged; `#231` closed)
+- [x] `folio-assistant-sbpn` — `smart-ra` block panel (`completed`: `folio-assistant-core#612` `04784f38afb8`, `#616` `3c13890e8ce4`, `#620` `fd225d816575`; `cat-harness-tools#1411` `c6e3d1b9b1c2`; `cat-harness#981` `615da9742735`, `#994` `356ca7a7b071` merged; `tools#1410` closed)
+- [x] `folio-assistant-2lfx` — Provenance footer and audit-coverage page on every document page (`completed`)
+- [x] `folio-assistant-3v2t` — Cross-layer derived files built at publish (`completed`)
+- [x] `folio-assistant-70hd` — `cat-harness`-file checks run only in the repo that commits the files (`completed`)
+- [x] `folio-assistant-724x` — Every test has a Gherkin `@test:<name>` Scenario (`completed`)
+- [x] `folio-assistant-evtx` — Re-pin train `20261106-0425` five new failures (`completed`)
+- [x] `folio-assistant-jstq` — Fresh containers start with instance mounts older than `index.lock.json` (`completed`)
+- [x] `folio-assistant-nikw` — `regen-writers.test.ts` reads `cat-harness/docs/assets/img/workflows` (`completed`)
+- [x] `folio-assistant-x38u` — `state:mount` rewrites `.gitignore` block from stale layer mounts (`completed`)
+- [ ] `folio-assistant-f1nc` — Library chain: `library/` becomes a named sub-graph (`in-progress`: `tools#1479` `2cee88d7` and `tools#1631` `c0374a8` merged; `cat-harness#1032` → `folio-assistant-core#639` → `folio-assistant#3016` in flight)
+- [ ] `folio-assistant-drnh` — Merge-window drain handover bean (`in-progress`)
+
+_2026-11-08T08:47:00Z_ — R5-Lane-4 audit: 16 of 18 children of `4j43` are now `completed` (`fbmk`, `rbib`, `sbpn`, `gzgh`, `3v2t`, `2lfx`, `70hd`, `724x`, `8bm7`, `c1ev`, `eaa6`, `evtx`, `jstq`, `nikw`, `o161`, `x38u`), and `cat-harness-tools#1299`, `#1378`, `#1379`, and `#1356` are closed on `origin/main` evidence. Only `f1nc` (active library chain) and `drnh` (active drain coordinator log) remain `in-progress`. Also closed superseded draft PR `litlfred/bootstrap-tools#65` (superseded by `bootstrap-tools#66` `fe7d9ca27679`, closing `smart-base#272`), and updated stalled (>48h) PR `litlfred/folio-assistant-core#653` (`1bb9e6756eaef7fa3e952f82d36618c67a8327a0`: merged `origin/main` now that `cat-harness-tools#1555` `2deb870` and `#1557` `fa70022` are pinned, plus added the missing Gherkin Scenario for `scripts/publish-extracted-statements.test.ts:158` so `check:test-gherkin` passes 1,397/1,397 tests) and marked `#653` ready for review.
