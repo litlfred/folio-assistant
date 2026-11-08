@@ -562,12 +562,15 @@ jobs:
     # run skips those eight jobs anyway.
     if: ${{ (github.event_name == 'push' || github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request') && github.event.pull_request.draft != true }}
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     permissions:
       contents: read
       actions: read
       checks: read
+      pull-requests: read
     outputs:
+      # The e2e scope (below): `false` only when every changed file is INERT.
+      affected: ${{ steps.dispatch-scope.outputs.affected || steps.scope.outputs.affected }}
       # `true` only when `inherited` confirms it too (Q-PIPE-1, #2899).
       reuse: ${{ steps.decide.outputs.reuse == 'true' && steps.inherited.outputs.reuse == 'true' && 'true' || 'false' }}
       run_id: ${{ steps.decide.outputs.run_id }}
@@ -629,6 +632,140 @@ jobs:
           REPO: ${{ github.repository }}
           RUN_ID: ${{ steps.decide.outputs.run_id }}
         run: python3 .github/scripts/cqg_judge.py reuse-check
+
+      # ── End-to-end scope: can this PR change what the e2e shards test? ──
+      # Was its own job, `e2e-scope`; folded in here so the e2e shards wait for
+      # one runner fewer (Q-CIB-1, 2026-11-08). Its rule, unchanged:
+      #
+      # Owner, 2026-10-23: cut CI time. The three e2e shards are the largest
+      # cost in this workflow (about 42 runner-minutes a run), and a PR that
+      # changes only another workflow, a workflow test or the Lean cache action
+      # cannot change anything they exercise. So on a `pull_request` push this
+      # job lists the PR's changed files and answers `affected=false` ONLY when EVERY
+      # one of them (and every renamed file's old path) is in `INERT` below and
+      # none is in `ALWAYS`. Every other answer, and every failure to answer, is
+      # `affected=true`.
+      #
+      # ## How `INERT` was decided — what the shards read
+      #
+      # The shards serve the whole checkout (`test/test-server.mjs`) and build
+      # what they serve from it: `derive:publish` and every declared
+      # `builtAtPublish` writer, `kg-export`, `kg-viewer` and the specs
+      # themselves. The import closure of those (about 300 modules, 2026-10-23)
+      # reads ONE file under `.github/workflows/` — this one
+      # (`lib/gates-workflow.ts`, for the QA working copy) — and nothing under
+      # `test/workflows/`, `.github/scripts/`, `.github/actions/`,
+      # `.github/pages-jekyll/`, `dependabot.yml`, `lake-packages.json` or
+      # `.mcp.json`. Those are `INERT`. The other workflows render the real site
+      # (`docs-site`, `feature-staging`, `publish`), but the shards never run
+      # them, so a change there is tested by those workflows' own runs, not here.
+      #
+      # Deliberately NOT inert, because something the shards run reads them:
+      # the pins (`index.lock.json`, `index.config.json`), `package.json`,
+      # `bun.lock`, `bunfig.toml`, `.github/mount-from-lock.sh`, `uploads/`
+      # (the library pages), `.claude/` (the skills `kg-export` reads), root
+      # `*.md` files, `.gitignore`, `.gitattributes`, and any path not listed —
+      # a new kind of file runs the shards until somebody shows it cannot matter.
+      #
+      # ## What always runs everything
+      #
+      # This job runs only on a non-draft `pull_request` push that is not
+      # `ready_for_review`, and on a `workflow_dispatch` of a branch other than
+      # `main`. A `ready_for_review` run, a push to `main`, a dispatch on `main`
+      # and a `merge_group` skip this job, its output is empty, and the shards
+      # run (`!= 'false'` in their `if:`), so marking a PR ready always runs the
+      # full tier once.
+      #
+      # A dispatch on a branch is merge-main's (and repin-train's) way to judge a
+      # commit it pushed with a token that starts no `pull_request` run. It used
+      # to run all three shards whatever the branch changed (measured
+      # 2026-11-05: every dispatch run ran them). Now its changed files are the
+      # branch's diff against `main`'s merge base, read from git, and judged by
+      # the same `INERT` / `ALWAYS` rule. A PR run that skipped the shards
+      # never lets `main` reuse its verdict: `verdict-reuse.sh` requires all three
+      # shards to have concluded `success`, so the merge's push to `main` runs
+      # them.
+      #
+      # The changed files are the PR's whole diff against its base, not the last
+      # push's, so a later push that touches only `INERT` files still runs the
+      # shards when an earlier commit of the PR changed a pin.
+      # A dispatch: the history without file contents (a tree diff needs no
+      # blobs), so the merge base with `main` can be found.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        if: ${{ github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main' }}
+        with:
+          path: e2e-history
+          fetch-depth: 0
+          filter: blob:none
+      - name: Decide from the dispatched branch's diff against main
+        id: dispatch-scope
+        # Never fails the verdict-reuse job: no answer leaves `affected` empty, so the shards run.
+        continue-on-error: true
+        if: ${{ github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main' }}
+        working-directory: e2e-history
+        env:
+          INERT: '^(\.github/workflows/[^/]+\.ya?ml|\.github/(scripts|actions|pages-jekyll)/.+|\.github/dependabot\.yml|\.github/lake-packages\.json|test/workflows/[^/]+|\.mcp\.json)$'
+          ALWAYS: '^\.github/workflows/code-quality-gates\.yml$'
+        run: |
+          decide() {
+            echo "affected=$1" >> "$GITHUB_OUTPUT"
+            printf '### End-to-end scope: affected=%s\n\n%s\n' "$1" "$2" >> "$GITHUB_STEP_SUMMARY"
+            echo "e2e-scope: affected=$1 — $2"
+            exit 0
+          }
+          base=$(git merge-base HEAD origin/main 2>/dev/null) || decide true "Could not find the merge base with \`main\`, so the e2e shards run."
+          # `--no-renames`: a renamed file is listed as its old path deleted and
+          # its new path added, so both paths are judged, as on a PR.
+          if ! listing=$(git diff --name-only --no-renames "$base" HEAD); then
+            decide true "Could not list the branch's changed files, so the e2e shards run."
+          fi
+          files=$(printf '%s\n' "$listing" | awk 'NF' | wc -l)
+          [ "$files" -gt 0 ] || decide true "The branch changes nothing against \`main\`, so the e2e shards run."
+          affecting=$(printf '%s\n' "$listing" | awk 'NF && ($0 !~ ENVIRON["INERT"] || $0 ~ ENVIRON["ALWAYS"])')
+          if [ -n "$affecting" ]; then
+            n=$(printf '%s\n' "$affecting" | wc -l)
+            decide true "$n of $files changed file(s) can change what the e2e shards test, so they run. First: \`$(printf '%s\n' "$affecting" | head -1)\`."
+          fi
+          decide false "All $files changed file(s) against \`main\` are outside what the e2e shards read (\`INERT\` in this job), so the shards are skipped on this dispatch."
+      - name: Decide from the PR's changed files
+        id: scope
+        # Never fails the verdict-reuse job: no answer leaves `affected` empty, so the shards run.
+        continue-on-error: true
+        if: ${{ github.event_name == 'pull_request' && github.event.action != 'ready_for_review' && github.event.pull_request.draft != true }}
+        env:
+          INERT: '^(\.github/workflows/[^/]+\.ya?ml|\.github/(scripts|actions|pages-jekyll)/.+|\.github/dependabot\.yml|\.github/lake-packages\.json|test/workflows/[^/]+|\.mcp\.json)$'
+          ALWAYS: '^\.github/workflows/code-quality-gates\.yml$'
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          CHANGED: ${{ github.event.pull_request.changed_files }}
+        run: |
+          decide() {
+            echo "affected=$1" >> "$GITHUB_OUTPUT"
+            printf '### End-to-end scope: affected=%s\n\n%s\n' "$1" "$2" >> "$GITHUB_STEP_SUMMARY"
+            echo "e2e-scope: affected=$1 — $2"
+            exit 0
+          }
+          # Empty only off a pull_request payload, which the `if:` above already rules out.
+          if [ -z "$PR" ] || [ -z "$CHANGED" ]; then
+            decide true "No pull_request number or changed-file count in this event, so the e2e shards run."
+          fi
+          # F<TAB>path for each changed file, P<TAB>path for a renamed file's old path.
+          if ! listing=$(gh api --paginate "repos/$REPO/pulls/$PR/files?per_page=100" \
+              --jq '.[] | "F\t" + .filename, (.previous_filename // empty | "P\t" + .)'); then
+            decide true "Could not list the PR's changed files, so the e2e shards run."
+          fi
+          files=$(printf '%s\n' "$listing" | awk -F'\t' 'NF == 2 && $1 == "F"' | wc -l)
+          if [ "$files" -eq 0 ] || [ "$files" -ne "${CHANGED:-0}" ]; then
+            decide true "Listed $files changed file(s) where the PR reports ${CHANGED:-none}, so the list may be partial and the e2e shards run."
+          fi
+          affecting=$(printf '%s\n' "$listing" | awk -F'\t' -v inert="$INERT" -v always="$ALWAYS" \
+            'NF == 2 && ($2 !~ inert || $2 ~ always) { print $2 }')
+          if [ -n "$affecting" ]; then
+            n=$(printf '%s\n' "$affecting" | wc -l)
+            decide true "$n of $files changed file(s) can change what the e2e shards test, so they run. First: \`$(printf '%s\n' "$affecting" | head -1)\`."
+          fi
+          decide false "All $files changed file(s) are outside what the e2e shards read (\`INERT\` in this job), so the shards are skipped on this push. Marking the PR ready, and every push to \`main\`, still runs them."
 
   qa-working-copy:
     # bpmn-node: Task_QaWorkingCopy
@@ -906,13 +1043,22 @@ jobs:
       # pages are built over it. A PR run's pages name its merge ref (measured
       # 2026-11-05, `test/results/witnesses/**`), so `bundle-cache.sh` reuses
       # them only on the same commit: a re-run, a dispatch, Feature Staging.
+      #
+      # The digest also adds the `gh-pages` tip. The published-site viewer
+      # (`gen-site-viz.ts`, built at publish `because: state`) prints that
+      # branch's tip and route counts, so pages reused across a gh-pages move
+      # would show a stale site (determinism audit run 42190970994: the only
+      # page differing between two builds of one tree). No tip read, no digest:
+      # the pages are built.
       - name: Digest of what the publish-time pages are built from (bundle cache)
         id: pages-digest
         env:
           QA_MANIFEST: ${{ steps.cache.outputs.manifest || steps.pack.outputs.manifest }}
         run: |
           [ -n "$QA_MANIFEST" ] || { echo "no QA working copy manifest: no digest, so the pages are built"; exit 0; }
-          echo "digest=$(bash .github/scripts/bundle-cache.sh digest publish-pages "qa-working-copy $QA_MANIFEST")" >> "$GITHUB_OUTPUT"
+          site=$(git ls-remote origin refs/heads/gh-pages | cut -f1)
+          [ -n "$site" ] || { echo "could not read the gh-pages tip: no digest, so the pages are built"; exit 0; }
+          echo "digest=$(bash .github/scripts/bundle-cache.sh digest publish-pages "qa-working-copy $QA_MANIFEST" "gh-pages $site")" >> "$GITHUB_OUTPUT"
 
       - name: Reuse publish-time pages already built from this digest (bundle cache)
         id: pages-cache
@@ -4269,6 +4415,13 @@ jobs:
           # `--check` says in its own output which of the two it ran.
           # MOVED to who-iris's own CI (owner, 2026-10-11 ~06:55Z, relayed by session_01JkK6uP3iU2etyMbrw7v3cu: "who-iris CI"; bean kpci). who-iris 7eda8c3 moved this script into its own `scripts`, run from its root, so `bun run cat` here no longer resolves it: `iris:covers:check`.
           bun run cat translation:block-qa:check
+          # The catalogues' translation QA (cat-harness-tools#1598, #1630): the
+          # same judge with `--catalogues`, against the catalogue baseline
+          # main's qa:working-copy stores (`translation:page-qa` is its writer).
+          # Wired in a second step (owner, 2026-11-07, "A. Two steps"), once
+          # main had stored that baseline; until then index.config.json
+          # declared it `pending-baseline`.
+          bun run cat translation:page-qa:check
           # The translation STATUS page and its projection, bean `lnur`.
           # Stale-checked rather than merely generated, for the reason every
           # other generated artefact here is: a page carrying numbers nobody
@@ -4497,143 +4650,6 @@ jobs:
   # `docs-site` and `feature-staging` already make to render BPMN, so this
   # introduces no new capability requirement.
 
-  e2e-scope:
-    # bpmn-node: Task_E2E
-    # (Whether the e2e shards run on this push; part of that task, as they are.)
-    name: End-to-end scope — can this PR change what the e2e shards test? (not a gate)
-    #
-    # Owner, 2026-10-23: cut CI time. The three e2e shards are the largest
-    # cost in this workflow (about 42 runner-minutes a run), and a PR that
-    # changes only another workflow, a workflow test or the Lean cache action
-    # cannot change anything they exercise. So on a `pull_request` push this
-    # job lists the PR's changed files and answers `affected=false` ONLY when EVERY
-    # one of them (and every renamed file's old path) is in `INERT` below and
-    # none is in `ALWAYS`. Every other answer, and every failure to answer, is
-    # `affected=true`.
-    #
-    # ## How `INERT` was decided — what the shards read
-    #
-    # The shards serve the whole checkout (`test/test-server.mjs`) and build
-    # what they serve from it: `derive:publish` and every declared
-    # `builtAtPublish` writer, `kg-export`, `kg-viewer` and the specs
-    # themselves. The import closure of those (about 300 modules, 2026-10-23)
-    # reads ONE file under `.github/workflows/` — this one
-    # (`lib/gates-workflow.ts`, for the QA working copy) — and nothing under
-    # `test/workflows/`, `.github/scripts/`, `.github/actions/`,
-    # `.github/pages-jekyll/`, `dependabot.yml`, `lake-packages.json` or
-    # `.mcp.json`. Those are `INERT`. The other workflows render the real site
-    # (`docs-site`, `feature-staging`, `publish`), but the shards never run
-    # them, so a change there is tested by those workflows' own runs, not here.
-    #
-    # Deliberately NOT inert, because something the shards run reads them:
-    # the pins (`index.lock.json`, `index.config.json`), `package.json`,
-    # `bun.lock`, `bunfig.toml`, `.github/mount-from-lock.sh`, `uploads/`
-    # (the library pages), `.claude/` (the skills `kg-export` reads), root
-    # `*.md` files, `.gitignore`, `.gitattributes`, and any path not listed —
-    # a new kind of file runs the shards until somebody shows it cannot matter.
-    #
-    # ## What always runs everything
-    #
-    # This job runs only on a non-draft `pull_request` push that is not
-    # `ready_for_review`, and on a `workflow_dispatch` of a branch other than
-    # `main`. A `ready_for_review` run, a push to `main`, a dispatch on `main`
-    # and a `merge_group` skip this job, its output is empty, and the shards
-    # run (`!= 'false'` in their `if:`), so marking a PR ready always runs the
-    # full tier once.
-    #
-    # A dispatch on a branch is merge-main's (and repin-train's) way to judge a
-    # commit it pushed with a token that starts no `pull_request` run. It used
-    # to run all three shards whatever the branch changed (measured
-    # 2026-11-05: every dispatch run ran them). Now its changed files are the
-    # branch's diff against `main`'s merge base, read from git, and judged by
-    # the same `INERT` / `ALWAYS` rule. A PR run that skipped the shards
-    # never lets `main` reuse its verdict: `verdict-reuse.sh` requires all three
-    # shards to have concluded `success`, so the merge's push to `main` runs
-    # them.
-    #
-    # The changed files are the PR's whole diff against its base, not the last
-    # push's, so a later push that touches only `INERT` files still runs the
-    # shards when an earlier commit of the PR changed a pin.
-    if: ${{ (github.event_name == 'pull_request' && github.event.action != 'ready_for_review' && github.event.pull_request.draft != true) || (github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main') }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    permissions:
-      contents: read
-      pull-requests: read
-    outputs:
-      affected: ${{ steps.dispatch-scope.outputs.affected || steps.scope.outputs.affected }}
-    # One rule for both steps below.
-    env:
-      INERT: '^(\.github/workflows/[^/]+\.ya?ml|\.github/(scripts|actions|pages-jekyll)/.+|\.github/dependabot\.yml|\.github/lake-packages\.json|test/workflows/[^/]+|\.mcp\.json)$'
-      ALWAYS: '^\.github/workflows/code-quality-gates\.yml$'
-    steps:
-      # A dispatch: the history without file contents (a tree diff needs no
-      # blobs), so the merge base with `main` can be found.
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
-        if: github.event_name == 'workflow_dispatch'
-        with:
-          fetch-depth: 0
-          filter: blob:none
-      - name: Decide from the dispatched branch's diff against main
-        id: dispatch-scope
-        if: github.event_name == 'workflow_dispatch'
-        run: |
-          decide() {
-            echo "affected=$1" >> "$GITHUB_OUTPUT"
-            printf '### End-to-end scope: affected=%s\n\n%s\n' "$1" "$2" >> "$GITHUB_STEP_SUMMARY"
-            echo "e2e-scope: affected=$1 — $2"
-            exit 0
-          }
-          base=$(git merge-base origin/main HEAD 2>/dev/null) || decide true "Could not find the merge base with \`main\`, so the e2e shards run."
-          # `--no-renames`: a renamed file is listed as its old path deleted and
-          # its new path added, so both paths are judged, as on a PR.
-          if ! listing=$(git diff --name-only --no-renames "$base" HEAD); then
-            decide true "Could not list the branch's changed files, so the e2e shards run."
-          fi
-          files=$(printf '%s\n' "$listing" | awk 'NF' | wc -l)
-          [ "$files" -gt 0 ] || decide true "The branch changes nothing against \`main\`, so the e2e shards run."
-          affecting=$(printf '%s\n' "$listing" | awk 'NF && ($0 !~ ENVIRON["INERT"] || $0 ~ ENVIRON["ALWAYS"])')
-          if [ -n "$affecting" ]; then
-            n=$(printf '%s\n' "$affecting" | wc -l)
-            decide true "$n of $files changed file(s) can change what the e2e shards test, so they run. First: \`$(printf '%s\n' "$affecting" | head -1)\`."
-          fi
-          decide false "All $files changed file(s) against \`main\` are outside what the e2e shards read (\`INERT\` in this job), so the shards are skipped on this dispatch."
-      - name: Decide from the PR's changed files
-        id: scope
-        if: github.event_name == 'pull_request'
-        env:
-          GH_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
-          PR: ${{ github.event.pull_request.number }}
-          CHANGED: ${{ github.event.pull_request.changed_files }}
-        run: |
-          decide() {
-            echo "affected=$1" >> "$GITHUB_OUTPUT"
-            printf '### End-to-end scope: affected=%s\n\n%s\n' "$1" "$2" >> "$GITHUB_STEP_SUMMARY"
-            echo "e2e-scope: affected=$1 — $2"
-            exit 0
-          }
-          # Empty only off a pull_request payload, which the `if:` above already rules out.
-          if [ -z "$PR" ] || [ -z "$CHANGED" ]; then
-            decide true "No pull_request number or changed-file count in this event, so the e2e shards run."
-          fi
-          # F<TAB>path for each changed file, P<TAB>path for a renamed file's old path.
-          if ! listing=$(gh api --paginate "repos/$REPO/pulls/$PR/files?per_page=100" \
-              --jq '.[] | "F\t" + .filename, (.previous_filename // empty | "P\t" + .)'); then
-            decide true "Could not list the PR's changed files, so the e2e shards run."
-          fi
-          files=$(printf '%s\n' "$listing" | awk -F'\t' 'NF == 2 && $1 == "F"' | wc -l)
-          if [ "$files" -eq 0 ] || [ "$files" -ne "${CHANGED:-0}" ]; then
-            decide true "Listed $files changed file(s) where the PR reports ${CHANGED:-none}, so the list may be partial and the e2e shards run."
-          fi
-          affecting=$(printf '%s\n' "$listing" | awk -F'\t' -v inert="$INERT" -v always="$ALWAYS" \
-            'NF == 2 && ($2 !~ inert || $2 ~ always) { print $2 }')
-          if [ -n "$affecting" ]; then
-            n=$(printf '%s\n' "$affecting" | wc -l)
-            decide true "$n of $files changed file(s) can change what the e2e shards test, so they run. First: \`$(printf '%s\n' "$affecting" | head -1)\`."
-          fi
-          decide false "All $files changed file(s) are outside what the e2e shards read (\`INERT\` in this job), so the shards are skipped on this push. Marking the PR ready, and every push to \`main\`, still runs them."
-
   e2e-shard:
     # bpmn-node: Task_E2E
     name: End-to-end + accessibility, shard ${{ matrix.shard }}/3
@@ -4668,9 +4684,9 @@ jobs:
     # green (`verdict-reuse`, bean `qbco`); on every other event, and whenever
     # the reuse could not be determined, it runs.
     #
-    # Skipped too on a PR push whose every changed file `e2e-scope` showed the
+    # Skipped too on a PR push whose every changed file the e2e scope (in `verdict-reuse`) showed the
     # shards do not read (owner, 2026-10-23). Only the exact answer `false`
-    # skips: a skipped, failed or cancelled `e2e-scope` leaves the output
+    # skips: a skipped, failed or cancelled scope step leaves the output
     # empty and the shards run.
     #
     # Reads the QA working copy and the publish-time pages that
@@ -4683,8 +4699,8 @@ jobs:
     # the publish-time pages (owner card Q3), and this job checks both
     # manifests (`manifest`, `pages_manifest`) and downloads its `ig-indexes`
     # before it restores either bundle.
-    needs: [verdict-reuse, e2e-scope, qa-working-copy]
-    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true && needs.e2e-scope.outputs.affected != 'false' }}
+    needs: [verdict-reuse, qa-working-copy]
+    if: ${{ !cancelled() && needs.verdict-reuse.outputs.reuse != 'true' && github.event.pull_request.draft != true && needs.verdict-reuse.outputs.affected != 'false' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
