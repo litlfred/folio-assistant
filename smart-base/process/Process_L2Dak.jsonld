@@ -17,8 +17,8 @@
       "startNode": [
         "http://smart.who.int/base/process/Process_L2Dak/node/StartEvent_Guideline"
       ],
-      "nodeCount": 24,
-      "flowCount": 29,
+      "nodeCount": 25,
+      "flowCount": 30,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -38,10 +38,18 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
-      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22",
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22a",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_L1Library",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_PublishStatements",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_PublishStatements",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },

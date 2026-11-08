@@ -57,7 +57,7 @@
     "addReason": {
       "type": "boolean",
       "default": false,
-      "description": "True only when the health worker tapped \"add a reason\" while reviewing; Gateway_AddReason reads it. False, the default, skips record-decision-rationale."
+      "description": "True only when the health worker tapped \"add a reason\" while reviewing, which is Event_AddReason, the non-interrupting boundary event on the review. False, the default, skips record-decision-rationale."
     }
   },
   "additionalProperties": false,

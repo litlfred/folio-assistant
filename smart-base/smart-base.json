@@ -363,23 +363,23 @@
     "registry",
     "packages"
   ],
-  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/c00df6bfa29626e089cb4d4ae29d671bae1b6bec",
-  "sourceCommitSha": "c00df6bfa29626e089cb4d4ae29d671bae1b6bec",
-  "sourceTree": "2dff9db927e55aea58f9057905b1506633f5f591",
-  "sourceCommitAt": "2026-11-08T14:25:47+01:00",
+  "sourceCommit": "https://github.com/litlfred/folio-assistant/commit/975bbe594a8246f34e8f7b01b01cdb11bee51ce1",
+  "sourceCommitSha": "975bbe594a8246f34e8f7b01b01cdb11bee51ce1",
+  "sourceTree": "8515b2cf3a678ffab43a222a3d099887cf9c3c1a",
+  "sourceCommitAt": "2026-11-08T14:29:02+01:00",
   "sourceTreeDirty": true,
   "dependsOnUnavailable": "2 dependency edge(s), none expressible as a record — see gaps",
   "counts": {
     "Skill": 35,
     "Process": 10,
-    "SequenceFlow": 192,
+    "SequenceFlow": 191,
     "Lane": 30,
     "ProcessNode": 179,
     "GraphTypology": 24,
     "Role": 3,
     "Subgraph": 29,
     "Asset": 3,
-    "Tool": 14
+    "Tool": 15
   },
   "@graph": [
     {
@@ -535,7 +535,7 @@
       "title": "Record a decision rationale (optional)",
       "description": "OPTIONAL and never blocking: a health worker who chooses to may note why they accepted or declined decision-support guidance, in one tap plus an optional coded or free-text reason. Input is the decision; output is one FHIR Provenance (or nothing, when skipped, which is the default). The care plan is updated whether or not this is ever done.",
       "instructionsPath": "skills/content/authoring-who-smart-guidelines/record-decision-rationale.md",
-      "instructionLines": 70,
+      "instructionLines": 71,
       "inputSchema": "http://smart.who.int/base/schema/skills/record-decision-rationale/input.schema.json",
       "outputSchema": "http://smart.who.int/base/schema/skills/record-decision-rationale/output.schema.json",
       "hasInstructions": true,
@@ -1445,8 +1445,8 @@
       "startNode": [
         "http://smart.who.int/base/process/Process_DthAuthoring/node/Start_Requested"
       ],
-      "nodeCount": 44,
-      "flowCount": 52,
+      "nodeCount": 45,
+      "flowCount": 53,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -1518,6 +1518,14 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Coverage",
+      "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_PublishStatements",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09b",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_PublishStatements",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/M1",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
@@ -2135,6 +2143,28 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_PublishStatements",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Publish extracted statements",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/skill/publish-extracted-statements"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09b"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/M1",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
       "name": "Record milestone M1 · Library frozen",
@@ -2150,7 +2180,7 @@
       "workPlanOp": "note",
       "relaxable": true,
       "incoming": [
-        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09"
+        "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09b"
       ],
       "outgoing": [
         "http://smart.who.int/base/process/Process_DthAuthoring#flow/F10"
@@ -2942,8 +2972,8 @@
       "startNode": [
         "http://smart.who.int/base/process/Process_L2Dak/node/StartEvent_Guideline"
       ],
-      "nodeCount": 24,
-      "flowCount": 29,
+      "nodeCount": 25,
+      "flowCount": 30,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -2963,10 +2993,18 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
-      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22",
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22a",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_L1Library",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_PublishStatements",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_PublishStatements",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
@@ -3278,6 +3316,28 @@
       "relaxable": true,
       "incoming": [
         "http://smart.who.int/base/process/Process_L2Dak#flow/B02"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B22a"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Call_PublishStatements",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Publish extracted statements",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
+      "requires": [
+        "http://smart.who.int/base/skill/publish-extracted-statements"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_L2Dak#flow/B22a"
       ],
       "outgoing": [
         "http://smart.who.int/base/process/Process_L2Dak#flow/B22"
@@ -6310,7 +6370,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/Process",
       "name": "Act on decision-support guidance",
       "summary": "The point-of-care system applies one of the DAK's decision tables, published as a CPG-on-FHIR PlanDefinition, to one client ($apply) and shows the health worker what it proposes (a RequestGroup, or CDS Hooks cards).",
-      "description": "The point-of-care system applies one of the DAK's decision tables, published as a CPG-on-FHIR PlanDefinition, to one client ($apply) and shows the health worker what it proposes (a RequestGroup, or CDS Hooks cards). The health worker accepts or declines each action, one tap each, and the system makes the accepted requests active in the client's CarePlan; a declined action is never written. Recording why is OPTIONAL and never blocks: after the review a parallel split (Gateway_Fork) sends the main path on to the care plan and, separately, to Gateway_AddReason, which reads whether the health worker tapped \"add a reason\" while reviewing (false unless they did, so skipping is the default) and only then reaches the rationale task. The two paths end at their own end events and are never joined, so the care plan never waits for documentation. That is the simplest correct construct the harness executes: a non-interrupting boundary event on the review says the same thing, but the harness's interpreter does not run boundary events; an inclusive gateway would need a join the main path waits at; and a rationale task on the main path would make every run pass through it. The record, when made, is one FHIR Provenance. Skills: apply-decision-support, review-decision-support-guidance, record-decision-rationale, activate-accepted-guidance (package authoring-who-smart-guidelines).",
+      "description": "The point-of-care system applies one of the DAK's decision tables, published as a CPG-on-FHIR PlanDefinition, to one client ($apply) and shows the health worker what it proposes (a RequestGroup, or CDS Hooks cards). The health worker accepts or declines each action, one tap each, and the system makes the accepted requests active in the client's CarePlan; a declined action is never written. Recording why is OPTIONAL and never blocks: Event_AddReason is a non-interrupting boundary event on the review. It happens only when the health worker taps \"add a reason\" while reviewing, starts the rationale task beside the review, and takes nothing away from it: the review completes and the care plan is updated whether or not a reason is ever recorded. Skipping is the default, because the event is absent unless chosen. The record, when made, is one FHIR Provenance. Skills: apply-decision-support, review-decision-support-guidance, record-decision-rationale, activate-accepted-guidance (package authoring-who-smart-guidelines).",
       "enforcement": "advisory",
       "sourcePath": "processes/content/act-on-decision-support.bpmn",
       "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/act-on-decision-support.bpmn",
@@ -6318,8 +6378,8 @@
       "startNode": [
         "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Start_GuidanceDue"
       ],
-      "nodeCount": 14,
-      "flowCount": 13,
+      "nodeCount": 12,
+      "flowCount": 10,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -6361,23 +6421,7 @@
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
       "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
       "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Review",
-      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
       "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
-      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -6401,19 +6445,9 @@
     {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "yes",
       "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Event_AddReason",
       "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Rationale",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/SequenceFlow",
-      "name": "no",
-      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
-      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoReason",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -6550,63 +6584,21 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Event_AddReason",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Gateway_Fork",
-      "nodeKind": "parallel",
-      "bpmnType": "bpmn:ParallelGateway",
+      "name": "Taps \"add a reason\"",
+      "nodeKind": "boundary",
+      "bpmnType": "bpmn:BoundaryEvent",
       "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
       "performedBy": "http://smart.who.int/base/role/health-worker",
       "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D05"
-      ],
+      "incoming": [],
       "outgoing": [
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11",
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12"
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08"
       ],
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Tapped \"add a reason\"?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "performedBy": "http://smart.who.int/base/role/health-worker",
-      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12"
-      ],
-      "outgoing": [
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08",
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13"
-      ],
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoReason",
-      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "No reason noted",
-      "nodeKind": "end",
-      "bpmnType": "bpmn:EndEvent",
-      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "performedBy": "http://smart.who.int/base/role/health-worker",
-      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
-      "requires": [],
-      "touchesWorkPlan": false,
-      "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13"
-      ],
-      "outgoing": [],
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     },
     {
@@ -6622,7 +6614,7 @@
       "touchesWorkPlan": false,
       "relaxable": true,
       "incoming": [
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11"
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D05"
       ],
       "outgoing": [
         "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D06",
@@ -8001,6 +7993,69 @@
       },
       "satisfies": [
         "http://smart.who.int/base/skill/recommendation-scenarios"
+      ]
+    },
+    {
+      "@id": "http://smart.who.int/base/tools/l1-statement-lists.jsonld",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Tool",
+      "name": "l1-statement-lists",
+      "title": "L1 extraction → statement lists",
+      "description": "The smart-base collector for core's `publish-extracted-statements` step: an `l1-extraction` directory's authored L1 sources (`recommendations:` rows) and scenario-candidate graphs (`user-scenario` nodes whose `evidence.location` names a row), written as `folio-extracted-statements/v1` lists, each statement with the library entry its L1 source names and the page it was read from. Core's `statements:pages` then renders them with links to the entry and section.",
+      "install": {
+        "none": true
+      },
+      "invoke": {
+        "shell": "bun run smart-base/scripts/l1-statement-lists.ts"
+      },
+      "io": {
+        "inputs": [
+          {
+            "name": "dir",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "An `l1-extraction` directory.",
+            "required": true,
+            "arg": {
+              "flag": "--dir"
+            }
+          },
+          {
+            "name": "out",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "Where the lists go.",
+            "required": true,
+            "arg": {
+              "flag": "--out"
+            }
+          },
+          {
+            "name": "instance-root",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "The instance the evidence locations are relative to; the working directory when absent.",
+            "required": false,
+            "arg": {
+              "flag": "--instance-root"
+            }
+          },
+          {
+            "name": "check",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag",
+            "description": "Compare instead of writing: exit 1 when a list is stale.",
+            "required": false,
+            "arg": {
+              "flag": "--check"
+            }
+          }
+        ],
+        "outputs": [
+          {
+            "name": "lists",
+            "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath",
+            "description": "`<stem>.recommendations.json` per L1 source and `<stem>.scenarios.json` per scenario graph."
+          }
+        ]
+      },
+      "satisfies": [
+        "https://litlfred.github.io/folio-assistant/cat-harness/skill/publish-extracted-statements"
       ]
     },
     {

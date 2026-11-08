@@ -90,6 +90,63 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.businessprocessblock.objectives",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BusinessProcessBlock.objectives"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`objectives`: what the workflow is for."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#BusinessProcessBlock.objectives",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.businessprocessblock.scenarios",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BusinessProcessBlock.scenarios"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`scenario`: labels of the user-scenario blocks this workflow serves."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#BusinessProcessBlock.scenarios",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.businessprocessblock.tasks",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "BusinessProcessBlock.tasks"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`task`: the workflow's tasks, each with an identifier, name and description."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#BusinessProcessBlock.tasks",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.dakblockbase.layer",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -128,6 +185,44 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.dataelementblock.canonical",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DataElementBlock.canonical"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`CoreDataElement.canonical`: the canonical IRI of that artefact."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#DataElementBlock.canonical",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.dataelementblock.cdetype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "DataElementBlock.cdeType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`CoreDataElement.type`, from `CoreDataElementTypeVS`."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#DataElementBlock.cdeType",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.dublincoreref.source",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -147,6 +242,120 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.functionalrequirementblock.activity",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FunctionalRequirementBlock.activity"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`activity`: the activity being performed."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.activity",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.functionalrequirementblock.actors",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FunctionalRequirementBlock.actors"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`actor`: labels of the persona blocks that fulfil it."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.actors",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.functionalrequirementblock.benefit",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FunctionalRequirementBlock.benefit"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`benefit`: \"so that\"."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.benefit",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.functionalrequirementblock.capability",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FunctionalRequirementBlock.capability"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`capability`: \"I want\"."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.capability",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.functionalrequirementblock.classification",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FunctionalRequirementBlock.classification"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`classification`: codes classifying the requirement."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.classification",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.functionalrequirementblock.requirementid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "FunctionalRequirementBlock.requirementId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`FunctionalRequirement.id`, the requirement's own code (e.g. FR-LC-01)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#FunctionalRequirementBlock.requirementId",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.healthinterventionblock.references",
       "@type": "skos:Concept",
       "skos:inScheme": {
@@ -163,6 +372,177 @@
         }
       ],
       "dcterms:source": "smart-base/schemas/dak-blocks.ts#HealthInterventionBlock.references",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.indicatorblock.indicatorid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndicatorBlock.indicatorId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`ProgramIndicator.id`."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#IndicatorBlock.indicatorId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.indicatorblock.references",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "IndicatorBlock.references"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`references`: labels of the health-intervention blocks giving context."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#IndicatorBlock.references",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.nonfunctionalrequirementblock.category",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NonFunctionalRequirementBlock.category"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`category`: its category (availability, security, …)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#NonFunctionalRequirementBlock.category",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.nonfunctionalrequirementblock.classification",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NonFunctionalRequirementBlock.classification"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`classification`: codes classifying the requirement."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#NonFunctionalRequirementBlock.classification",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.nonfunctionalrequirementblock.requirement",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NonFunctionalRequirementBlock.requirement"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`requirement`: the requirement itself."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#NonFunctionalRequirementBlock.requirement",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.nonfunctionalrequirementblock.requirementid",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "NonFunctionalRequirementBlock.requirementId"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`NonFunctionalRequirement.id`."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#NonFunctionalRequirementBlock.requirementId",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.personablock.iscocodes",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PersonaBlock.iscoCodes"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`GenericPersona.iscoCode`: ISCO-08 occupation codes (one to four digits)."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#PersonaBlock.iscoCodes",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.personablock.othernames",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PersonaBlock.otherNames"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`GenericPersona.otherNames`: other names or examples."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#PersonaBlock.otherNames",
+      "skos:note": "candidate"
+    },
+    {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields/dak-blocks.personablock.personatype",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-schema-fields"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "PersonaBlock.personaType"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "`Persona.type`, from `SGPersonaTypesVS`: key, related, system or hardware."
+        }
+      ],
+      "dcterms:source": "smart-base/schemas/dak-blocks.ts#PersonaBlock.personaType",
       "skos:note": "candidate"
     },
     {

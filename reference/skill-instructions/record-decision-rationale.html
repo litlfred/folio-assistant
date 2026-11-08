@@ -111,10 +111,11 @@
 <code class="language-plaintext highlighter-rouge">Task_Rationale</code> of
 <a href="../../en/cat-harness/processes/act-on-decision-support.html"><code class="language-plaintext highlighter-rouge">act-on-decision-support.bpmn</code></a>
 (<code class="language-plaintext highlighter-rouge">Process_ActOnDecisionSupport</code>), lane <code class="language-plaintext highlighter-rouge">health-worker</code>, reached only
-when <code class="language-plaintext highlighter-rouge">Gateway_AddReason</code> reads that the health worker tapped “add a reason”.</p></blockquote><p><strong>Opt-in, skippable, and skipped by default.</strong> It is never required to
-finish the review, the visit or the process: the diagram puts it on a branch
-of a parallel split that is never joined, so the care plan is updated
-without waiting for it. A DAK must not make it
+through <code class="language-plaintext highlighter-rouge">Event_AddReason</code>, a non-interrupting boundary event on the review
+that happens when the health worker taps “add a reason”.</p></blockquote><p><strong>Opt-in, skippable, and skipped by default.</strong> It is never required to
+finish the review, the visit or the process: the diagram starts it from a
+non-interrupting boundary event on the review, which takes nothing from the
+review, so the care plan is updated without waiting for it. A DAK must not make it
 mandatory; a programme that needs a reason recorded every time is asking
 for a different, blocking step, and should draw one.</p><p><strong>Performed by a person</strong>: the health worker who made the decision.</p><h2 id="input-and-output"><a href="#input-and-output" class="anchor-heading" aria-labelledby="input-and-output"><svg viewBox="0 0 16 16" aria-hidden="true"><use xlink:href="#svg-link"></use></svg></a> Input and output
   

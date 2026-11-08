@@ -3306,6 +3306,21 @@
           "cites": "who-dpi-h-reference-architecture-draft-v1#sec-front-matter",
           "pages": "9",
           "quote": "Bespoke capability of connecting one application component to another [Under review]"
+        },
+        {
+          "id": "refer-by-number-and-title-not-by-id",
+          "title": "Point the reader to another part by its number or title, never by its machine id",
+          "description": "The published handbooks send the reader to another part of the text by section number and, where it helps, its title: 'see section 3.2.1', 'see Table 4'. They never show the identifier a file or model gives that part. In a computable DTH every block, persona, process step and decision rule has such an id (a label like pers:health-worker or freq:FR-ID-01, a BPMN or DMN id like Task_4_1_SelectSoftwareAndVendor or Rule_DT02_01, a role code, a repository path). In reader text, write the title and link it to the part; leave the id in the link target and in the model files. Ids are fine where the reader needs them as data: a requirement code in a catalogue table, or a coded value a system stores. The same applies to tool notes such as hit policies or file names, which belong in the model, not the prose.",
+          "category": "structure",
+          "severity": "major",
+          "patterns": 0,
+          "terminology": 0,
+          "judgementOnly": false,
+          "citation": "library",
+          "cites": "9789240093362-eng#sec-013-32-get-to-know-the-users",
+          "citesInstance": "litlfred/who-iris",
+          "pages": "33-35",
+          "quote": "Each user persona (generated previously – see section 3.2.1) should have a series of user stories"
         }
       ]
     },
@@ -4151,8 +4166,8 @@
   ],
   "totals": {
     "voices": 48,
-    "rules": 179,
-    "citingLibrary": 138,
+    "rules": 180,
+    "citingLibrary": 139,
     "citingKgNode": 41,
     "mechanical": 35
   }

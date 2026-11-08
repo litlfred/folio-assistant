@@ -647,6 +647,78 @@
       "path": "tools/l1-recommendation-scenarios/"
     },
     {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-statement-lists/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "http://smart.who.int/base/tools/l1-statement-lists.jsonld",
+          "@type": "cat-harness:Tool",
+          "description": "The smart-base collector for core's `publish-extracted-statements` step: an `l1-extraction` directory's authored L1 sources (`recommendations:` rows) and scenario-candidate graphs (`user-scenario` nodes whose `evidence.location` names a row), written as `folio-extracted-statements/v1` lists, each statement with the library entry its L1 source names and the page it was read from. Core's `statements:pages` then renders them with links to the entry and section.",
+          "install": {
+            "none": true
+          },
+          "invoke": {
+            "shell": "bun run smart-base/scripts/l1-statement-lists.ts"
+          },
+          "io": {
+            "inputs": [
+              {
+                "arg": {
+                  "flag": "--dir"
+                },
+                "description": "An `l1-extraction` directory.",
+                "name": "dir",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--out"
+                },
+                "description": "Where the lists go.",
+                "name": "out",
+                "required": true,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--instance-root"
+                },
+                "description": "The instance the evidence locations are relative to; the working directory when absent.",
+                "name": "instance-root",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              },
+              {
+                "arg": {
+                  "flag": "--check"
+                },
+                "description": "Compare instead of writing: exit 1 when a list is stale.",
+                "name": "check",
+                "required": false,
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/Flag"
+              }
+            ],
+            "outputs": [
+              {
+                "description": "`<stem>.recommendations.json` per L1 source and `<stem>.scenarios.json` per scenario graph.",
+                "name": "lists",
+                "schema": "https://litlfred.github.io/folio-assistant/cat-harness/tool-types.schema.json#/$defs/RepoPath"
+              }
+            ]
+          },
+          "name": "l1-statement-lists",
+          "satisfies": "https://litlfred.github.io/folio-assistant/cat-harness/skill/publish-extracted-statements",
+          "title": "L1 extraction → statement lists"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/tools"
+      ],
+      "name": "tools/l1-statement-lists",
+      "path": "tools/l1-statement-lists/"
+    },
+    {
       "@id": "https://litlfred.github.io/folio-assistant/subgraph/smart-base/tools/l1-transcription-verbatim/",
       "@type": "bootstrap:Subgraph",
       "hasMember": [

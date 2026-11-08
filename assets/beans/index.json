@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 27,
+      "count": 25,
       "unit": "open beans"
     }
   },
@@ -97,14 +97,14 @@
     {
       "id": "folio-assistant-4j43",
       "title": "Harness drain 2026-11-02: cat-harness, cat-harness-tools, fhir-harness",
-      "status": "in-progress",
+      "status": "completed",
       "type": "epic",
       "priority": "high",
       "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T06:50:00Z",
-      "updatedAt": "2026-11-08T08:47:00Z",
+      "updatedAt": "2026-11-08T13:45:00Z",
       "preview": "Drain of the open issues, PRs and beans in the three harness repos, plan A (owner card Q-HDR-1 A, 2026-11-02 06:44Z). Analysis and plan: https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr\n\nCounted 06:45Z: 15 issues, 13 PRs, 20 open beans; 35 in scope after leaving out paused and committee/DTH items (cat-harness#686; beans amom, oz9e, 17iw, 9hxd, fvec, r29x, nvhg, dthl, cysv, ls3t, max2, llxa).\n\nRul",
       "file": "beans/defs/folio-assistant-4j43--harness-drain-2026-11-02-cat-harness-tools-fhir-harness.md"
     },
@@ -520,11 +520,11 @@
       "status": "in-progress",
       "type": "task",
       "priority": "high",
-      "parent": "folio-assistant-4j43",
+      "parent": "folio-assistant-rwmf",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T18:20:00Z",
-      "updatedAt": "2026-11-08T07:18:30Z",
+      "updatedAt": "2026-11-08T13:45:00Z",
       "preview": "## How to resume (read this first)\n\nThis bean is the drain's durable memory. Complete it when the window closes and every item below is merged, handed off or carded.\n\n1. Read this whole bean, newest comment last. The last comment is the current state.\n2. Re-check each PR live on GitHub (checks, mergeable) before acting; this bean may be minutes old.\n3. Work the list. Take over any item whose owner",
       "file": "beans/defs/folio-assistant-drnh--merge-window-drain-handover-2026-11-02.md"
     },
@@ -587,15 +587,15 @@
     {
       "id": "folio-assistant-f1nc",
       "title": "Library chain: library/ becomes a named sub-graph (tools#1479, cat-harness#1032, core#639)",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "high",
       "parent": "folio-assistant-4j43",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T12:59:09Z",
-      "updatedAt": "2026-11-08T11:55:10Z",
-      "preview": "Land in order: litlfred/cat-harness-tools#1479, then litlfred/cat-harness#1032 (re-pin tools, ready, green), then litlfred/folio-assistant-core#639 (re-pin both, merge). Picked up from a session stalled on weekly limit; handover from drnh.\n\n## Done when\n- [x] tools#1479 merged\n- [x] tools#1631, tools#1695, who-iris#195 merged\n- [ ] cat-harness#1032 (`7bbf2d6`) + tools#1709 (`210993b` — green) merg",
+      "updatedAt": "2026-11-08T13:45:00Z",
+      "preview": "Land in order: litlfred/cat-harness-tools#1479, then litlfred/cat-harness#1032 (re-pin tools, ready, green), then litlfred/folio-assistant-core#639 (re-pin both, merge). Picked up from a session stalled on weekly limit; handover from drnh.\n\n## Done when\n- [x] tools#1479 merged (`2cee88d749bf9de22717158da00ec02e42922a2f`, `2026-11-05T14:39Z`)\n- [x] tools#1631 (`c0374a8`), tools#1695 (`8473fac`), wh",
       "file": "beans/defs/folio-assistant-f1nc--library-chain-library-becomes-a-named-sub-graph-to.md"
     },
     {
@@ -1463,18 +1463,18 @@
         "status": "in-progress",
         "epics": 3,
         "total": 63,
-        "closed": 45,
-        "open": 18,
-        "inProgress": 10,
+        "closed": 47,
+        "open": 16,
+        "inProgress": 8,
         "todo": 8,
         "draft": 0,
         "unclassified": 0,
-        "share": 0.7142857142857143
+        "share": 0.746031746031746
       }
     ],
     "orphanOpen": 8,
-    "openTotal": 27,
-    "coveredOpen": 18,
+    "openTotal": 25,
+    "coveredOpen": 16,
     "duplicateIds": 0
   }
 }

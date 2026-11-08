@@ -43,8 +43,7 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "yes"
+      "@type": "bootstrap:SequenceFlow"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D09",
@@ -53,19 +52,6 @@
     {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D10",
       "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12",
-      "@type": "bootstrap:SequenceFlow"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13",
-      "@type": "bootstrap:SequenceFlow",
-      "name": "no"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
@@ -93,29 +79,19 @@
       "name": "Nothing to act on"
     },
     {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoReason",
-      "@type": "bootstrap:ProcessNode",
-      "name": "No reason noted"
-    },
-    {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_Noted",
       "@type": "bootstrap:ProcessNode",
       "name": "Reason recorded"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Event_AddReason",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Taps \"add a reason\""
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
       "@type": "bootstrap:ProcessNode",
       "name": "Any action accepted?"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Tapped \"add a reason\"?"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
-      "@type": "bootstrap:ProcessNode",
-      "name": "Gateway_Fork"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_HasGuidance",
@@ -361,6 +337,10 @@
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09b",
       "@type": "bootstrap:SequenceFlow"
     },
     {
@@ -611,6 +591,11 @@
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Personas",
       "@type": "bootstrap:ProcessNode",
       "name": "Personas and roles"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_PublishStatements",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish extracted statements"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Scenarios",
@@ -1033,6 +1018,10 @@
       "@type": "bootstrap:SequenceFlow"
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22a",
+      "@type": "bootstrap:SequenceFlow"
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B23",
       "@type": "bootstrap:SequenceFlow"
     },
@@ -1101,6 +1090,11 @@
       "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen",
       "@type": "bootstrap:ProcessNode",
       "name": "Open the bean"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Call_PublishStatements",
+      "@type": "bootstrap:ProcessNode",
+      "name": "Publish extracted statements"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak/node/EndEvent_L2Ready",

@@ -1,27 +1,24 @@
 {
   "@context": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.context.jsonld",
-  "@id": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_ActOnDecisionSupport/node/Event_AddReason.jsonld",
   "partOf": "https://litlfred.github.io/folio-assistant/smart-base/smart-base.jsonld",
-  "sameAs": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Event_AddReason.jsonld",
   "@graph": [
     {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Event_AddReason",
       "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
-      "name": "Tapped \"add a reason\"?",
-      "nodeKind": "exclusive",
-      "bpmnType": "bpmn:ExclusiveGateway",
+      "name": "Taps \"add a reason\"",
+      "nodeKind": "boundary",
+      "bpmnType": "bpmn:BoundaryEvent",
       "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
       "performedBy": "http://smart.who.int/base/role/health-worker",
       "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
       "requires": [],
       "touchesWorkPlan": false,
       "relaxable": true,
-      "incoming": [
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12"
-      ],
+      "incoming": [],
       "outgoing": [
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08",
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13"
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08"
       ],
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
     }

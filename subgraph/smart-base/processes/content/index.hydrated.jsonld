@@ -8,12 +8,12 @@
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
       "@type": "bootstrap:Process",
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/act-on-decision-support.svg",
-      "description": "The point-of-care system applies one of the DAK's decision tables, published as a CPG-on-FHIR PlanDefinition, to one client ($apply) and shows the health worker what it proposes (a RequestGroup, or CDS Hooks cards). The health worker accepts or declines each action, one tap each, and the system makes the accepted requests active in the client's CarePlan; a declined action is never written. Recording why is OPTIONAL and never blocks: after the review a parallel split (Gateway_Fork) sends the main path on to the care plan and, separately, to Gateway_AddReason, which reads whether the health worker tapped \"add a reason\" while reviewing (false unless they did, so skipping is the default) and only then reaches the rationale task. The two paths end at their own end events and are never joined, so the care plan never waits for documentation. That is the simplest correct construct the harness executes: a non-interrupting boundary event on the review says the same thing, but the harness's interpreter does not run boundary events; an inclusive gateway would need a join the main path waits at; and a rationale task on the main path would make every run pass through it. The record, when made, is one FHIR Provenance. Skills: apply-decision-support, review-decision-support-guidance, record-decision-rationale, activate-accepted-guidance (package authoring-who-smart-guidelines).",
+      "description": "The point-of-care system applies one of the DAK's decision tables, published as a CPG-on-FHIR PlanDefinition, to one client ($apply) and shows the health worker what it proposes (a RequestGroup, or CDS Hooks cards). The health worker accepts or declines each action, one tap each, and the system makes the accepted requests active in the client's CarePlan; a declined action is never written. Recording why is OPTIONAL and never blocks: Event_AddReason is a non-interrupting boundary event on the review. It happens only when the health worker taps \"add a reason\" while reviewing, starts the rationale task beside the review, and takes nothing away from it: the review completes and the care plan is updated whether or not a reason is ever recorded. Skipping is the default, because the event is absent unless chosen. The record, when made, is one FHIR Provenance. Skills: apply-decision-support, review-decision-support-guidance, record-decision-rationale, activate-accepted-guidance (package authoring-who-smart-guidelines).",
       "enforcement": "advisory",
-      "flowCount": 13,
+      "flowCount": 10,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "Act on decision-support guidance",
-      "nodeCount": 14,
+      "nodeCount": 12,
       "sourcePath": "processes/content/act-on-decision-support.bpmn",
       "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/act-on-decision-support.bpmn",
       "startNode": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Start_GuidanceDue",
@@ -59,7 +59,7 @@
       "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Review",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork"
+      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D06",
@@ -82,9 +82,8 @@
     {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08",
       "@type": "bootstrap:SequenceFlow",
-      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
+      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Event_AddReason",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
-      "name": "yes",
       "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
       "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Task_Rationale"
     },
@@ -103,31 +102,6 @@
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
       "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_Noted"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11",
-      "@type": "bootstrap:SequenceFlow",
-      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
-      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12",
-      "@type": "bootstrap:SequenceFlow",
-      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
-      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason"
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13",
-      "@type": "bootstrap:SequenceFlow",
-      "from": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
-      "name": "no",
-      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "to": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoReason"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
@@ -188,20 +162,6 @@
       "touchesWorkPlan": false
     },
     {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_NoReason",
-      "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:EndEvent",
-      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
-      "incoming": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13",
-      "name": "No reason noted",
-      "nodeKind": "end",
-      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "performedBy": "http://smart.who.int/base/role/health-worker",
-      "relaxable": true,
-      "touchesWorkPlan": false
-    },
-    {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/End_Noted",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:EndEvent",
@@ -216,53 +176,31 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Event_AddReason",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:BoundaryEvent",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
+      "name": "Taps \"add a reason\"",
+      "nodeKind": "boundary",
+      "outgoing": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "relaxable": true,
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:ExclusiveGateway",
       "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
-      "incoming": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11",
+      "incoming": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D05",
       "name": "Any action accepted?",
       "nodeKind": "exclusive",
       "outgoing": [
         "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D06",
         "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D07"
-      ],
-      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "performedBy": "http://smart.who.int/base/role/health-worker",
-      "relaxable": true,
-      "touchesWorkPlan": false
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_AddReason",
-      "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:ExclusiveGateway",
-      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
-      "incoming": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12",
-      "name": "Tapped \"add a reason\"?",
-      "nodeKind": "exclusive",
-      "outgoing": [
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D08",
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D13"
-      ],
-      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
-      "performedBy": "http://smart.who.int/base/role/health-worker",
-      "relaxable": true,
-      "touchesWorkPlan": false
-    },
-    {
-      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Fork",
-      "@type": "bootstrap:ProcessNode",
-      "bpmnType": "bpmn:ParallelGateway",
-      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
-      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
-      "incoming": "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D05",
-      "name": "Gateway_Fork",
-      "nodeKind": "parallel",
-      "outgoing": [
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D11",
-        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D12"
       ],
       "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
       "performedBy": "http://smart.who.int/base/role/health-worker",
@@ -834,10 +772,10 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/dth-authoring.svg",
       "description": "Produces a WHO Digital Transformation Handbook (DTH) from its sources to publication, in seven stages that each end in a recorded milestone: initiate (M0 charter), ingest sources into the library (M1 library frozen), outline and scope (M2 outline agreed), structured drafting (M3 zero draft), working-group feedback (M4), public comment (M5 released, M6 dispositioned), and finalise and publish (M7).\nMilestones are recorded checkpoints, not gates: each is written as a note on the handbook's epic bean (which milestone, when, evidence), so the site can show stage and progress. Review runs beside drafting as QA, as in smart-guideline-end-to-end.bpmn.\nStructured drafting uses the smart-base DAK block kinds for personas, scenarios, processes, decisions, data elements, indicators and requirements, and each track calls Process_L2ComponentEditReview, as l2-dak-authoring.bpmn does. Contributor feedback from the contributor log sheet and from GitHub pc: comments lands in one review store.\nHandbooks ingested from a published WHO PDF (PHC, SC, PC, SFP) enter at stage 1 with their library built and their outline given by the publication; dth-hrh, authored natively, is the pilot. Steps with no platform subprocess are marked as placeholders in their documentation.\nEmpirical content (figures, statistics, country examples) stays as cited narrative blocks and never enters formal content.",
       "enforcement": "advisory",
-      "flowCount": 52,
+      "flowCount": 53,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "DTH authoring",
-      "nodeCount": 44,
+      "nodeCount": 45,
       "sourcePath": "processes/content/dth-authoring.bpmn",
       "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/dth-authoring.bpmn",
       "startNode": "http://smart.who.int/base/process/Process_DthAuthoring/node/Start_Requested",
@@ -911,6 +849,14 @@
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09",
       "@type": "bootstrap:SequenceFlow",
       "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Task_Coverage",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_PublishStatements"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09b",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_PublishStatements",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
       "to": "http://smart.who.int/base/process/Process_DthAuthoring/node/M1"
@@ -1455,6 +1401,22 @@
       "touchesWorkPlan": false
     },
     {
+      "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_PublishStatements",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09",
+      "name": "Publish extracted statements",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09b",
+      "partOf": "http://smart.who.int/base/process/Process_DthAuthoring",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/publish-extracted-statements",
+      "touchesWorkPlan": false
+    },
+    {
       "@id": "http://smart.who.int/base/process/Process_DthAuthoring/node/Call_Scenarios",
       "@type": "bootstrap:ProcessNode",
       "bpmnType": "bpmn:CallActivity",
@@ -1651,7 +1613,7 @@
       "bpmnType": "bpmn:Task",
       "inLane": "http://smart.who.int/base/process/Process_DthAuthoring/lane/Lane_Librarian",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
-      "incoming": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09",
+      "incoming": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F09b",
       "name": "Record milestone M1 · Library frozen",
       "nodeKind": "activity",
       "outgoing": "http://smart.who.int/base/process/Process_DthAuthoring#flow/F10",
@@ -2465,10 +2427,10 @@
       "depiction": "https://litlfred.github.io/folio-assistant/assets/img/workflows/l2-dak-authoring.svg",
       "description": "How a WHO SMART Guidelines L2 Digital Adaptation Kit is authored by a business analyst, a terminologist and a clinical SME under a programme manager. Each of the six authoring tracks calls l2-component-edit-review.bpmn (Process_L2ComponentEditReview): the agent edits, checks, renders and stages the component and hands it on, while a person in the component's reviewing role reviews it alongside, never as a gate. Each track's renderer, checker and reviewer are tabled in the skill l2-component-edit-review.",
       "enforcement": "advisory",
-      "flowCount": 29,
+      "flowCount": 30,
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "name": "L2 DAK authoring",
-      "nodeCount": 24,
+      "nodeCount": 25,
       "sourcePath": "processes/content/l2-dak-authoring.bpmn",
       "sourceUrl": "https://github.com/litlfred/smart-base/blob/main/smart-base/processes/content/l2-dak-authoring.bpmn",
       "startNode": "http://smart.who.int/base/process/Process_L2Dak/node/StartEvent_Guideline",
@@ -2647,10 +2609,18 @@
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22",
       "@type": "bootstrap:SequenceFlow",
-      "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_L1Library",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/Call_PublishStatements",
       "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_BeanOpen"
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B22a",
+      "@type": "bootstrap:SequenceFlow",
+      "from": "http://smart.who.int/base/process/Process_L2Dak/node/Task_L1Library",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "to": "http://smart.who.int/base/process/Process_L2Dak/node/Call_PublishStatements"
     },
     {
       "@id": "http://smart.who.int/base/process/Process_L2Dak#flow/B23",
@@ -2796,6 +2766,22 @@
       "performedBy": "http://smart.who.int/base/role/work-plan",
       "relaxable": true,
       "requires": "http://smart.who.int/base/skill/bean-coordination",
+      "touchesWorkPlan": false
+    },
+    {
+      "@id": "http://smart.who.int/base/process/Process_L2Dak/node/Call_PublishStatements",
+      "@type": "bootstrap:ProcessNode",
+      "bpmnType": "bpmn:CallActivity",
+      "inLane": "http://smart.who.int/base/process/Process_L2Dak/lane/Lane_Analyst",
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes",
+      "incoming": "http://smart.who.int/base/process/Process_L2Dak#flow/B22a",
+      "name": "Publish extracted statements",
+      "nodeKind": "activity",
+      "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B22",
+      "partOf": "http://smart.who.int/base/process/Process_L2Dak",
+      "performedBy": "http://smart.who.int/base/role/business-analyst",
+      "relaxable": true,
+      "requires": "http://smart.who.int/base/skill/publish-extracted-statements",
       "touchesWorkPlan": false
     },
     {
@@ -3076,7 +3062,7 @@
       "incoming": "http://smart.who.int/base/process/Process_L2Dak#flow/B02",
       "name": "Build the L1 library from Component 1",
       "nodeKind": "activity",
-      "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B22",
+      "outgoing": "http://smart.who.int/base/process/Process_L2Dak#flow/B22a",
       "partOf": "http://smart.who.int/base/process/Process_L2Dak",
       "performedBy": "http://smart.who.int/base/role/business-analyst",
       "relaxable": true,

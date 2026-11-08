@@ -214,6 +214,26 @@
       "skos:note": "candidate"
     },
     {
+      "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/l1-statement-lists",
+      "@type": "skos:Concept",
+      "skos:inScheme": {
+        "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools"
+      },
+      "skos:prefLabel": [
+        {
+          "@value": "L1 extraction → statement lists"
+        }
+      ],
+      "skos:definition": [
+        {
+          "@value": "The smart-base collector for core's `publish-extracted-statements` step: an `l1-extraction` directory's authored L1 sources (`recommendations:` rows) and scenario-candidate graphs (`user-scenario` nodes whose `evidence.location` names a row), written as `folio-extracted-statements/v1` lists, each statement with the library entry its L1 source names and the page it was read from. Core's `statements:pages` then renders them with links to the entry and section."
+        }
+      ],
+      "skos:notation": "l1-statement-lists",
+      "dcterms:source": "smart-base/tools/l1-statement-lists/l1-statement-lists.ts#l1-statement-lists",
+      "skos:note": "candidate"
+    },
+    {
       "@id": "https://litlfred.github.io/smart-base/v0/ns/glossary/kg-tools/l1-transcription-verbatim",
       "@type": "skos:Concept",
       "skos:inScheme": {

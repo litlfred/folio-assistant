@@ -3842,6 +3842,14 @@
       "isTest": false
     },
     {
+      "module": "smart-base/schemas/dak-block-fields.test.ts",
+      "instance": "smart-base",
+      "name": "dak-block-fields.test",
+      "graphNode": "undeclared",
+      "summary": "The DAK kinds carry the fields of WHO's own DAK logical models",
+      "isTest": true
+    },
+    {
       "module": "smart-base/schemas/dak-blocks.test.ts",
       "instance": "smart-base",
       "name": "dak-blocks.test",
@@ -89655,6 +89663,27 @@
           "type": "\"business-process\"",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "objectives",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`objectives`: what the workflow is for."
+        },
+        {
+          "name": "scenarios",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "`scenario`: labels of the user-scenario blocks this workflow serves."
+        },
+        {
+          "name": "tasks",
+          "type": "BusinessProcessTask[]",
+          "optional": true,
+          "array": true,
+          "doc": "`task`: the workflow's tasks, each with an identifier, name and description."
         }
       ],
       "extendsNames": [
@@ -89662,8 +89691,42 @@
       ],
       "values": [],
       "refs": [
+        "smart-base/schemas/dak-blocks.ts#BusinessProcessTask",
         "smart-base/schemas/dak-blocks.ts#DakBlockBase"
       ],
+      "unresolved": [],
+      "external": [],
+      "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#BusinessProcessTask",
+      "name": "BusinessProcessTask",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "interface",
+      "doc": "One task of a business process, as `BusinessProcessWorkflow.task` declares it.",
+      "fields": [
+        {
+          "name": "identifier",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "optional": false,
+          "array": false
+        },
+        {
+          "name": "description",
+          "type": "string",
+          "optional": false,
+          "array": false
+        }
+      ],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
       "unresolved": [],
       "external": [],
       "exported": true
@@ -89698,8 +89761,7 @@
       "name": "DAK_SCHEMA_EXTENSIONS",
       "module": "smart-base/schemas/dak-blocks.ts",
       "kind": "undetermined",
-      "note": "{ \"health-intervention\": { references: z.array(DublinCoreRefSchema).min(1, { message: \"A health intervention needs at least one reference (WHO models it 1..*)\"…",
-      "doc": "Per-kind additions to the shared shape.",
+      "note": "{ /* * The fields below are WHO's own DAK logical models (`input/fsh/models/`), * smart-base#245. Optional, so blocks written before them still build, and * de…",
       "fields": [],
       "extendsNames": [],
       "values": [],
@@ -89780,6 +89842,20 @@
           "type": "\"data-element\"",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "cdeType",
+          "type": "\"valueset\" | \"codesystem\" | \"conceptmap\" | \"logicalmodel\"",
+          "optional": true,
+          "array": false,
+          "doc": "`CoreDataElement.type`, from `CoreDataElementTypeVS`."
+        },
+        {
+          "name": "canonical",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`CoreDataElement.canonical`: the canonical IRI of that artefact."
         }
       ],
       "extendsNames": [
@@ -89935,6 +90011,48 @@
           "type": "\"functional-requirement\"",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "requirementId",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`FunctionalRequirement.id`, the requirement's own code (e.g. FR-LC-01)."
+        },
+        {
+          "name": "activity",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`activity`: the activity being performed."
+        },
+        {
+          "name": "actors",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "`actor`: labels of the persona blocks that fulfil it."
+        },
+        {
+          "name": "capability",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`capability`: \"I want\"."
+        },
+        {
+          "name": "benefit",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`benefit`: \"so that\"."
+        },
+        {
+          "name": "classification",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "`classification`: codes classifying the requirement."
         }
       ],
       "extendsNames": [
@@ -89993,6 +90111,44 @@
           "type": "\"indicator\"",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "indicatorId",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`ProgramIndicator.id`."
+        },
+        {
+          "name": "definition",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "numerator",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "denominator",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "disaggregation",
+          "type": "string",
+          "optional": true,
+          "array": false
+        },
+        {
+          "name": "references",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "`references`: labels of the health-intervention blocks giving context."
         }
       ],
       "extendsNames": [
@@ -90005,6 +90161,19 @@
       "unresolved": [],
       "external": [],
       "exported": true
+    },
+    {
+      "id": "smart-base/schemas/dak-blocks.ts#labels",
+      "name": "labels",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "zod-array",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
     },
     {
       "id": "smart-base/schemas/dak-blocks.ts#LogicalModelBlock",
@@ -90057,6 +90226,20 @@
       "exported": true
     },
     {
+      "id": "smart-base/schemas/dak-blocks.ts#nonEmpty",
+      "name": "nonEmpty",
+      "module": "smart-base/schemas/dak-blocks.ts",
+      "kind": "zod-scalar",
+      "doc": "Per-kind additions to the shared shape.",
+      "fields": [],
+      "extendsNames": [],
+      "values": [],
+      "refs": [],
+      "unresolved": [],
+      "external": [],
+      "exported": false
+    },
+    {
       "id": "smart-base/schemas/dak-blocks.ts#NonFunctionalRequirementBlock",
       "name": "NonFunctionalRequirementBlock",
       "module": "smart-base/schemas/dak-blocks.ts",
@@ -90068,6 +90251,34 @@
           "type": "\"non-functional-requirement\"",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "requirementId",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`NonFunctionalRequirement.id`."
+        },
+        {
+          "name": "requirement",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`requirement`: the requirement itself."
+        },
+        {
+          "name": "category",
+          "type": "string",
+          "optional": true,
+          "array": false,
+          "doc": "`category`: its category (availability, security, …)."
+        },
+        {
+          "name": "classification",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "`classification`: codes classifying the requirement."
         }
       ],
       "extendsNames": [
@@ -90093,6 +90304,27 @@
           "type": "\"persona\"",
           "optional": false,
           "array": false
+        },
+        {
+          "name": "personaType",
+          "type": "\"key\" | \"related\" | \"system\" | \"hardware\"",
+          "optional": true,
+          "array": false,
+          "doc": "`Persona.type`, from `SGPersonaTypesVS`: key, related, system or hardware."
+        },
+        {
+          "name": "otherNames",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "`GenericPersona.otherNames`: other names or examples."
+        },
+        {
+          "name": "iscoCodes",
+          "type": "string[]",
+          "optional": true,
+          "array": true,
+          "doc": "`GenericPersona.iscoCode`: ISCO-08 occupation codes (one to four digits)."
         }
       ],
       "extendsNames": [
@@ -105607,6 +105839,14 @@
       "kind": "extends",
       "optional": false,
       "array": false
+    },
+    {
+      "from": "smart-base/schemas/dak-blocks.ts#BusinessProcessBlock",
+      "to": "smart-base/schemas/dak-blocks.ts#BusinessProcessTask",
+      "via": "tasks",
+      "kind": "field",
+      "optional": true,
+      "array": true
     },
     {
       "from": "smart-base/schemas/dak-blocks.ts#BusinessProcessBlock",

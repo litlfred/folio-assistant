@@ -27,6 +27,18 @@
    }
   },
   {
+   "id": "Call_PublishStatements",
+   "name": "Publish extracted statements",
+   "left": 15.42,
+   "top": 38.11,
+   "box": {
+    "left": 12,
+    "top": 45.9,
+    "width": 1.06,
+    "height": 1.97
+   }
+  },
+  {
    "id": "Task_SeedBeans",
    "name": "Seed the work plan",
    "left": 34.8,
@@ -241,6 +253,93 @@
      "href": "../../../reference/skill-instructions/dak-l1-library.html"
     }
    ],
+   "role": {
+    "name": "business-analyst",
+    "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
+    "title": "Business analyst",
+    "skills": [
+     {
+      "name": "bpmn-authoring",
+      "href": "../../../reference/skill-instructions/bpmn-authoring.html"
+     },
+     {
+      "name": "content-validate",
+      "href": "../../../reference/skill-instructions/content-validate.html"
+     },
+     {
+      "name": "crdm-impact-analysis",
+      "href": "../../../reference/skill-instructions/crdm-impact-analysis.html"
+     },
+     {
+      "name": "crdm-needs-assessment",
+      "href": "../../../reference/skill-instructions/crdm-needs-assessment.html"
+     },
+     {
+      "name": "crdm-recorded-walkthrough",
+      "href": "../../../reference/skill-instructions/crdm-recorded-walkthrough.html"
+     },
+     {
+      "name": "crdm-requirements-template",
+      "href": "../../../reference/skill-instructions/crdm-requirements-template.html"
+     },
+     {
+      "name": "crdm-requirements-workflow",
+      "href": "../../../reference/skill-instructions/crdm-requirements-workflow.html"
+     },
+     {
+      "name": "data-modelling",
+      "href": "../../../reference/skill-instructions/data-modelling.html"
+     },
+     {
+      "name": "decision-audit",
+      "href": "../../../reference/skill-instructions/decision-audit.html"
+     },
+     {
+      "name": "decision-methodology-selector",
+      "href": "../../../reference/skill-instructions/decision-methodology-selector.html"
+     },
+     {
+      "name": "dmn-authoring",
+      "href": "../../../reference/skill-instructions/dmn-authoring.html"
+     },
+     {
+      "name": "methodology-adoption",
+      "href": "../../../reference/skill-instructions/methodology-adoption.html"
+     },
+     {
+      "name": "opening-brief",
+      "href": "../../../reference/skill-instructions/opening-brief.html"
+     },
+     {
+      "name": "staging-review",
+      "href": "../../../reference/skill-instructions/staging-review.html"
+     },
+     {
+      "name": "wireframe-design-review",
+      "href": "../../../reference/skill-instructions/wireframe-design-review.html"
+     }
+    ]
+   }
+  },
+  "Call_PublishStatements": {
+   "id": "Call_PublishStatements",
+   "name": "Publish extracted statements",
+   "type": "bpmn:CallActivity",
+   "href": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/node/Call_PublishStatements",
+   "stepHref": "l2-dak-authoring.html#step-Call_PublishStatements",
+   "lane": "Business analyst",
+   "laneHref": "https://litlfred.github.io/folio-assistant/smart-base/process/Process_L2Dak/lane/Lane_Analyst",
+   "skills": [
+    {
+     "name": "publish-extracted-statements",
+     "href": "../../../reference/skill-instructions/publish-extracted-statements.html"
+    }
+   ],
+   "calls": {
+    "name": "Publish extracted statements with source links",
+    "href": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements",
+    "diagram": "publish-extracted-statements.html"
+   },
    "role": {
     "name": "business-analyst",
     "href": "https://litlfred.github.io/folio-assistant/cat-harness/role/business-analyst",
