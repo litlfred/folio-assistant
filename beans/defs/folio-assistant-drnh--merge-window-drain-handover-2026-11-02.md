@@ -319,5 +319,7 @@ _2026-11-08T16:10:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a3
   14. `litlfred/fhir-harness#315` (`fix(site): skip the IG fragment step when the top layer is not an IG`, closing `cat-harness-tools#1719` site-scope chain): `ready: a8c82d305d38df92beb740c6117969049ce21fb7` (`#issuecomment-6724555436`).
   15. `litlfred/cat-harness-tools#1727` (`perf(kg-validate): memoize per-instance validators and directory maps`, fixing `smart-base#331` & `folio-assistant#3043` shard 2/4 `kg-validate-nested-instances.test.ts` 120s timeout: `198.2s -> 1.97s` ~100x speedup): `ready: 1f93380f6fc3f6f2b0836fe7ffbcfae507cdc814` (`#issuecomment-6724778152`).
 
+_2026-11-08T16:20:00Z_ — R6-Lane-1 (`folio-assistant-y4pw` Item 6): `litlfred/dth-sc#25` (`89e82c74d6b345114c31d742cbf270f61c5b3ccb`, branch `chore/y4pw-repin-smart-ra`) re-pins `dpi-h-ra` (`litlfred/smart-ra`) to `c14618fdb9b83a9f62fc06988aec039cc293525b` (keeping `["glossary", "archimate", "references"]`) and `cat-harness-tools` to `961b4d939d7d69874f44162d12407bd3f1d96c6b` with published layers cache ref `refs/cat/layers/402965e77a5ba5f3c431c6f3992f0110a8280e46ea614cbbef5af040f3ec0a73`. All 7 CI checks green (`gh pr checks 25 -R litlfred/dth-sc`), ready for review, labeled `ready-to-merge`, and commented `ready: 89e82c74d6b345114c31d742cbf270f61c5b3ccb` (`#issuecomment-6723927095`).
+
 
 
