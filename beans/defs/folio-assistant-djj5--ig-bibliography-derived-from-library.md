@@ -2,11 +2,11 @@
 # folio-assistant-djj5
 $schema: bean/1.0.0
 title: 'IG bibliographies derived from library/, not a hand-kept references/ directory'
-status: in-progress
+status: completed
 type: epic
 priority: normal
 created_at: 2026-11-03T05:32:31Z
-updated_at: 2026-11-08T07:03:00Z
+updated_at: 2026-11-08T07:07:01Z
 tags:
     - references
     - library
@@ -29,7 +29,7 @@ An ingested source already lives under `library/<group>/<slug>/`, with its struc
 
 - [x] A short proposal, put to the owner as a card before any code: derive each IG's bibliography (and `check:ig-citations`' entry set) from the `library/` entries it cites, keeping `references/` only for works that are not ingested, if at all. Say what CSL fields (volume, issue, pages) a library entry lacks and where they would come from.
 - [x] Once approved: the derivation, `check:ig-citations` reading it, and the three IG declarations changed to match. smart-trust-phw and smart-immunizations then no longer declare a directory they do not have.
-- [ ] The next re-pin train takes both IGs at their mains again.
+- [x] The next re-pin train takes both IGs at their mains again.
 
 _2026-11-03T05:32:31Z_ — Filed by the drain session https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5 on the owner's card (option 3); a sibling session picks it up.
 
@@ -110,3 +110,5 @@ _2026-11-04T23:38Z_ — folio-assistant#2941 MERGED (9537d71), green on all 35 c
 _2026-11-05T00:28Z_ — who-iris#179 MERGED (1e5c01c): the temporary index-ref is gone, who-iris PRs are judged against folio-assistant main again. The who-iris uploads/ chain is complete: cat-harness-tools #1453, #1468, #1473; who-iris #176, #179; folio-assistant #2941.
 
 _2026-11-08T07:03:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: inactive > 3h, completing verification/close-out in Round 4 drain.
+
+_2026-11-08T07:07:01Z_ — Completed on `origin/main` evidence: all PRs (`folio-assistant-core#628` @ `ccb5997`, `#630` @ `91dcc59`, `smart-base#298` @ `c2922bb`, `#300` @ `67f4edc`, `smart-trust-phw#30` @ `5bec992`, `#31` @ `d0d0394`, `smart-trust#139` @ `388fcf3`, `#140` @ `a094f18`, `smart-immunizations#111` @ `9675397`, `who-iris#176` @ `35f23d3`, `#179` @ `1e5c01c`, `cat-harness-tools#1453` @ `42af00b`, `#1468` @ `4dea8fc`, `#1473` @ `7225be8`, `folio-assistant#2941` @ `9537d71`) are merged, and re-pin trains (`folio-assistant#2946`, `#2985` @ `da3ca528562a`) take `smart-trust`, `smart-trust-phw`, and `smart-immunizations` without `references/` or `uploads/` KG directory errors.

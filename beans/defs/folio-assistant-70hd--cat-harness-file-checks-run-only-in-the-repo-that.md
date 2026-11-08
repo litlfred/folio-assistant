@@ -2,13 +2,13 @@
 # folio-assistant-70hd
 $schema: bean/1.0.0
 title: cat-harness-file checks run only in the repo that commits the files (owner ruling 2026-11-05)
-status: in-progress
+status: completed
 type: task
 priority: high
 tags:
     - stalled-pickup-2026-11-05
 created_at: 2026-11-05T13:02:05Z
-updated_at: 2026-11-08T07:03:00Z
+updated_at: 2026-11-08T07:07:01Z
 parent: folio-assistant-4j43
 ---
 
@@ -26,7 +26,7 @@ parent: folio-assistant-4j43
 
 ## Done when
 - [x] PR in litlfred/cat-harness-tools merged (green, or only main's own reds) — #1508, a094099
-- [ ] a downstream root lists `check:schema-nodes` as skipped `other-layer`
+- [x] a downstream root lists `check:schema-nodes` as skipped `other-layer`
 
 Parent: 4j43. Related: tsh9 (two-phase move rule), k3vv (CI speed II).
 
@@ -157,3 +157,5 @@ _2026-11-07T08:00:00Z_ — Coordinator (session_01VQDpPfGantMCt7AV4LCCK2, took o
 - 2026-11-07 17:33Z: smart-base#323 was merged by the merge manager (17:30Z). smart-base's L1 scripts now mint cat-harness/v0/ns/ from the declaration, and kg keeps a literal with a drift test. Downstream IGs pick this up when they re-pin smart-base.
 
 _2026-11-08T07:03:00Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: inactive > 3h, completing verification/close-out in Round 4 drain.
+
+_2026-11-08T07:07:01Z_ — Completed on `origin/main` evidence: all code and re-pin PRs (`cat-harness-tools#1508` @ `a094099`, `#1521` @ `6f373ef`, `#1529` @ `fc768f6`, `#1533` @ `711e078`, `#1534` @ `ee88ead`, `#1575` @ `306a4d6`, `folio-assistant-core#651` @ `d9e0836`, `#657` @ `344abb2`, `#659` @ `ecccd22`, `bootstrap-tools#80` @ `1dc08c9`, `who-iris#185` @ `9929b1f`, `#190`, `smart-immunizations#115` @ `26558d2`, `#116`, `#117`, `smart-base#323` @ `ad261e2`, `folio-assistant-core#675` @ `35c942502a16`) are merged, and downstream full-tier compare jobs (`smart-immunizations#116`, `#117`, `folio-assistant-core` `main` run `42416915216`) show `0` cross-layer NEW failures from the scoped gates.

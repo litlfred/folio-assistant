@@ -2,13 +2,13 @@
 # folio-assistant-uldr
 $schema: bean/1.0.0
 title: Replace the hand-listed state:visualizer (53) and glossary:page (36) builtAtPublish entries with rules (plan, awaiting owner approval)
-status: in-progress
+status: completed
 type: task
 priority: normal
 tags:
     - ci-speed-ii
 created_at: 2026-11-06T04:51:38Z
-updated_at: 2026-11-06T05:25:02Z
+updated_at: 2026-11-08T07:07:01Z
 parent: folio-assistant-k3vv
 ---
 
@@ -27,15 +27,15 @@ Both have akiq's defect: a lower layer naming files of the layers above it. A ne
 3. **Keep the lists but generate them**: no hand edits, but a lower layer still names higher layers' files. Not recommended.
 
 ## Done when
-- No `builtAtPublish` line in cat-harness names another layer's file or a locale-specific copy of one.
-- Adding a layer, a state graph, a glossary scheme or a locale needs no edit in cat-harness, and every check stays green.
+- [x] No `builtAtPublish` line in cat-harness names another layer's file or a locale-specific copy of one.
+- [x] Adding a layer, a state graph, a glossary scheme or a locale needs no edit in cat-harness, and every check stays green.
 
 ## Owner ruling (2026-11-06, card "Built lists")
 Option 1: one built-at-publish folder entry per writer.
 
 ## Progress
 - [x] cat-harness#1091: state:visualizer's beans/, qa/, health/, attestations/ and code/ become one folder entry each (33 lines → 5). docs/assets/glossary/ becomes one folder entry (30 → 1); its 8 committed files leave git, including smart-trust--gdhcn, a higher layer's file.
-- [ ] The 6 per-locale docs/<locale>/folio-assistant-core/ entries: core's glossary visualiser routes on the host site. A folder entry cannot remove the name. Awaiting an owner decision.
+- [x] The 6 per-locale docs/<locale>/folio-assistant-core/ entries: core's glossary visualiser routes on the host site. A folder entry cannot remove the name. Awaiting an owner decision.
 - Owner, 2026-11-06 (card "Locales"): derive the per-locale host routes from core's declared viewer, so the publish checks treat every declared viewer route on the host as built at publish and cat-harness lists none. Medium cat-harness-tools change, separate PR. The owner also approved merging #1091 once green.
 
 ## Design: per-locale viewer routes derived from declarations (owner chose "design first", 2026-11-06; NO CODE until approved)
@@ -74,3 +74,4 @@ Drop the 6 lines and their .gitignore lines. publish:check glossary:page stays a
   - folio-assistant-core#654 (41d9da9): the glossary and bibliography routes ignore themselves; both viewers declare `builtOnHostSite`; core re-pinned to the platform mains.
   - cat-harness#1100 (6dd3746): the last 7 hand-listed entries naming core's routes, and their `.gitignore` lines, are gone.
   - Together with #1091, cat-harness no longer hand-lists any higher layer's viewer route. Left for the index: folio-assistant must re-pin cat-harness, core and cat-harness-tools together (cat-harness alone would drop the bibliography writer from the plan).
+- _2026-11-08T07:07:01Z_ — Completed on `origin/main` evidence: `litlfred/cat-harness#1091`, `litlfred/cat-harness-tools#1564` (`7b5c9852c66b`), `litlfred/folio-assistant-core#654` (`41d9da905c38`), and `litlfred/cat-harness#1100` (`6dd374670329`) are all merged, and `litlfred/folio-assistant#2985` (`da3ca528562a`, `2026-11-08T06:42:36Z`) + `#3029` (`46a8ffbce4b9`) re-pinned the index past them with all checks green.
