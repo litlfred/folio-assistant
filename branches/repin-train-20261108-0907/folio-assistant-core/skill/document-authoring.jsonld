@@ -1,0 +1,28 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/folio-assistant-core/skill/document-authoring.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-0907",
+    "sha": "6cbbe5a2b43d894e84bf6fd066ba2c602f667b75",
+    "pr": "repin-train/20261108-0907",
+    "run": "42465890548"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/folio-assistant-core/skill/document-authoring",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "document-authoring",
+      "title": "document-authoring",
+      "instructionsPath": "skills/content/folio-document-adapter/document-authoring.md",
+      "instructionLines": 92,
+      "inputSchema": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/folio-assistant-core/schema/skills/document-authoring/input.schema.json",
+      "outputSchema": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/folio-assistant-core/schema/skills/document-authoring/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-authoring"
+    }
+  ]
+}

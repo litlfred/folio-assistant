@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/schema/deployment-description.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-0907",
+    "sha": "6cbbe5a2b43d894e84bf6fd066ba2c602f667b75",
+    "pr": "repin-train/20261108-0907",
+    "run": "42465890548"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/schema/deployment-description",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "deployment-description",
+      "title": "deployment-description",
+      "summary": "**Deployment descriptions**: which declared actors run where, in one",
+      "module": "schemas/process/deployment-description.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/deployment-description"
+    }
+  ]
+}

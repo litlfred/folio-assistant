@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/bootstrap/process/Process_CompleteInitialization/node/A_PerformStep.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/bootstrap/process/Process_CompleteInitialization/node/A_PerformStep",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Do it, then check again",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/bootstrap/process/Process_CompleteInitialization",
+      "requires": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/bootstrap/skill/initialization-steps"
+    }
+  ]
+}

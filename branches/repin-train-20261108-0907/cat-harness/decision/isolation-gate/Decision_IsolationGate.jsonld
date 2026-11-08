@@ -1,0 +1,25 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/decision/isolation-gate/Decision_IsolationGate.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-0907",
+    "sha": "6cbbe5a2b43d894e84bf6fd066ba2c602f667b75",
+    "pr": "repin-train/20261108-0907",
+    "run": "42465890548"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/decision/isolation-gate/Decision_IsolationGate",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Decision",
+      "name": "Stands alone?",
+      "hitPolicy": "FIRST",
+      "sourcePath": "processes/kg/decisions/isolation-gate.dmn",
+      "conformsTo": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/externalSchema/omg-dmn-1.3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/decision/isolation-gate/Decision_IsolationGate"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-0907",
+    "sha": "6cbbe5a2b43d894e84bf6fd066ba2c602f667b75",
+    "pr": "repin-train/20261108-0907",
+    "run": "42465890548"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Edited where it lives — no copy needed",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/process/Process_CopyOutMaterialized",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/role/user",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/process/Process_CopyOutMaterialized/lane/Lane_Reader",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/process/Process_CopyOutMaterialized#flow/Flow_NotFrozen"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0907/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CopyOutMaterialized/node/EndEvent_NotFrozen"
+    }
+  ]
+}

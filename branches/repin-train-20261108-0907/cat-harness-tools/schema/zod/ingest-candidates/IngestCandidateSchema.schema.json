@@ -1,0 +1,83 @@
+{
+  "$ref": "#/definitions/IngestCandidate",
+  "definitions": {
+    "IngestCandidate": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "statement": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "number": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "source_kind": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "aspect": {
+          "type": "string"
+        },
+        "section_file": {
+          "type": "string",
+          "pattern": "^sections\\/.+\\.md$"
+        },
+        "section_title": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pages": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "strength": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "formalization_candidate": {
+          "type": "boolean"
+        },
+        "route_to": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "section_file"
+      ],
+      "additionalProperties": {}
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/ingest-candidates/IngestCandidateSchema.schema.json",
+  "title": "IngestCandidateSchema",
+  "description": "Generated from `IngestCandidateSchema` in schemas/library/ingest-candidates.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261108-0907",
+    "sha": "6cbbe5a2b43d894e84bf6fd066ba2c602f667b75",
+    "pr": "repin-train/20261108-0907",
+    "run": "42465890548"
+  }
+}
