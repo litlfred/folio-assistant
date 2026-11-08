@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0044/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0044/cat-harness/skill/work-plan-store-git-branch.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0044/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261108-0044",
+    "sha": "f9ee0621f98e1874dd63768a76b3afa9650020dd",
+    "pr": "repin-train/20261108-0044",
+    "run": "42431204560"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0044/cat-harness/skill/work-plan-store-git-branch",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "work-plan-store-git-branch",
+      "title": "The work plan on a git state branch",
+      "description": "How the git state branch Tool performs the work-plan store's operations: the branch per graph, the mount at beans/, which command does get, list, create, update, note, history and positions, and how it keeps the race guarantee by fetching, rebuilding on the tip and pushing, never forcing. Read this only when the deployment's work-plan Tool is the git branch.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0044/cat-harness/package/work-plan"
+      ],
+      "instructionsPath": "work-plan/skills/work-plan/work-plan-store-git-branch.md",
+      "instructionLines": 72,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261108-0044/cat-harness/directory/work-plan",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/work-plan-store-git-branch"
+    }
+  ]
+}

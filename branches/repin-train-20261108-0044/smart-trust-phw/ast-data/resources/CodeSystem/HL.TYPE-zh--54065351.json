@@ -1,0 +1,48 @@
+{
+  "resourceType" : "CodeSystem",
+  "id" : "HL.TYPE-zh",
+  "language" : "zh",
+  "text" : {
+    "status" : "generated",
+    "div" : "<div xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"zh\" lang=\"zh\"><p class=\"res-header-id\"><b>Generated Narrative: CodeSystem HL.TYPE-zh</b></p><a name=\"HL.TYPE-zh\"> </a><a name=\"hcHL.TYPE-zh\"> </a><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Language: zh</p></div><p>This code system supplement <code>http://smart.who.int/trust-phw/CodeSystem/HL.TYPE-zh</code> defines displays on the following codes:</p><table class=\"codes\"><tr><td style=\"white-space:nowrap\"><b>Code</b></td></tr><tr><td><a style=\"white-space:nowrap\" href=\"CodeSystem-HL.TYPE.html#HL.TYPE-vhl\">vhl</a><a name=\"HL.TYPE-zh-vhl\"> </a></td></tr><tr><td><a style=\"white-space:nowrap\" href=\"CodeSystem-HL.TYPE.html#HL.TYPE-shl\">shl</a><a name=\"HL.TYPE-zh-shl\"> </a></td></tr></table></div>"
+  },
+  "url" : "http://smart.who.int/trust-phw/CodeSystem/HL.TYPE-zh",
+  "version" : "0.2.0-litlfred",
+  "name" : "HLTYPEZh",
+  "title" : "HL.TYPE — Chinese (zh) supplement",
+  "status" : "draft",
+  "experimental" : true,
+  "date" : "2026-11-07T21:42:10+00:00",
+  "publisher" : "WHO",
+  "contact" : [{
+    "name" : "WHO",
+    "telecom" : [{
+      "system" : "url",
+      "value" : "http://who.int"
+    }]
+  }],
+  "description" : "Unofficial Simplified Chinese (zh) display designations for the HL.TYPE code system, drafted by an agent and not signed off by a human.",
+  "jurisdiction" : [{
+    "coding" : [{
+      "system" : "http://unstats.un.org/unsd/methods/m49/m49.htm",
+      "code" : "001",
+      "display" : "World"
+    }]
+  }],
+  "content" : "supplement",
+  "supplements" : "http://smart.who.int/trust-phw/CodeSystem/HL.TYPE",
+  "concept" : [{
+    "code" : "vhl",
+    "designation" : [{
+      "language" : "zh",
+      "value" : "可验证健康链接"
+    }]
+  },
+  {
+    "code" : "shl",
+    "designation" : [{
+      "language" : "zh",
+      "value" : "智能健康链接"
+    }]
+  }]
+}
