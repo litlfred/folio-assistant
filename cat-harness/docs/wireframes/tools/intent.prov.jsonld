@@ -1,0 +1,43 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of intent.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/tools/intent.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/tools/intent.md#provenance-1"
+        },
+        {
+          "@id": "docs/wireframes/tools/intent.md#provenance-2"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/tools/intent.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Who it is for, and what they need to do",
+      "prov:value": "keep **tools and skills separate** (owner, 2026-09-21), and render `satisfies` from the tool side.",
+      "cat-harness:refs": [
+        "2026-09-21"
+      ],
+      "dcterms:date": [
+        "2026-09-21"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/tools/intent.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Observed on main (re-checked against main 0bcf94bd)",
+      "prov:value": "Re-checked against the page as regenerated in this checkout. The template, the chrome and the tag colours are unchanged. Only the counts moved: one new Tool, `context-prefixes` (JSON-LD prefix check, satisfies `kg-export`), and `kg-graph-export` now satisfies three skills (`bootstrap-graph-emission`, `bootstrap-graph-publication`, `kg-export`). The drawing is updated to match: invocation shell 53, installation `none` 66, and the verdict \"all 52 skills named across 71 tools resolve\"."
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.E.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.E.Collaboration">
+    <bpmn:participant id="PHW.E.Participant" name="E. Server-to-Server Access under a Data Sharing Agreement (DSA P5)" processRef="PHW.E" />
+  </bpmn:collaboration>
+  <bpmn:process id="PHW.E" name="E. Server-to-Server Access under a Data Sharing Agreement (DSA P5)" isExecutable="false">
+    <bpmn:documentation>A registered client asks the provider's authorization server for a token. The request names the agreement's fixed-version URL in RFC 9396 `authorization_details.identifier` (§2.2), and the client proves possession of its key with DPoP (RFC 9449) or mutual TLS (RFC 8705). The server decides under the agreement (process F) and issues a short-lived, key-bound token. The resource server checks the token on every call and records audit and provenance (process G). For a document-only agreement, the scopes the administrator set replace RAR details, and `identifier` can still carry the agreement URL for audit. Trust-anchor neutral: WHO GDHCN is one accepted anchor among others (a national X.509 PKI, the party's own did:web, or a local list); UDAP, as profiled by HL7 SSRAA (Security for Scalable Registration, Authentication, and Authorization IG), is approved for X.509 certificate-based registration and authentication (owner, 2026-10-30 20:28Z), and OpenID Federation is out of scope. Source: the data sharing agreement (DSA) process analysis for litlfred/folio-assistant#2702, §2 and §4.</bpmn:documentation>
+    <bpmn:laneSet id="PHW.E.LaneSet">
+      <bpmn:lane id="PHW.Lane.DataRecipient" name="Data Recipient System (OAuth client)">
+        <bpmn:documentation>The data recipient's server: the ODRL `assignee` of the agreement (ODRL 2.2 §2.1.3) and the OAuth client (RFC 6749 §1.1 (section from standing knowledge, unverified)).</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.E.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.E.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.E.6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.E.10</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.E.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.AuthorizationServer" name="Provider Authorization Server (administrator + decision point)">
+        <bpmn:documentation>The provider's OAuth authorization server (RFC 6749 §1.1 (section from standing knowledge, unverified)). In NIST SP 800-207 terms it is the policy administrator. It is grouped with the policy decision point that runs process F.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.E.2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.E.3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.E.Gateway1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.E.4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.E.5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.E.EndRefused</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.ResourceServer" name="Data Provider Resource Server (enforcement point)">
+        <bpmn:documentation>The provider's API: the OAuth resource server, and the policy enforcement point in NIST SP 800-207 terms.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.E.7</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.E.8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.E.9</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.E.Start" name="Recipient needs data covered by the agreement">
+      <bpmn:documentation>Trigger: the recipient's system needs data covered by a data sharing agreement (DSA P5). It already holds a `client_id` from process D.</bpmn:documentation>
+      <bpmn:outgoing>PHW.E.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="PHW.E.1" name="E1. Request token with authorization_details naming the agreement, plus DPoP proof or mTLS">
+      <bpmn:documentation>Token request with `authorization_details` (RFC 9396 §2). The `type` value is defined by the provider's API (§2). The common fields are `actions`, `locations`, `datatypes` and `identifier` (§2.2), and `identifier` carries the agreement's fixed-version URL (= the ODRL `uid`). That URL fixes the version, and the SHA-256 published with it (DCAT `spdx:checksum`) fixes the bytes. RFC 9396 has no field for the hash, and none is invented. Proof of possession: a DPoP proof JWT with `jti`, `htm`, `htu` and `iat` (RFC 9449 §4.2), or mutual TLS (RFC 8705 (section from standing knowledge, unverified)). Across domains, the client first exchanges its home-domain token (RFC 8693 §2.1: `subject_token`, `actor_token`, `audience`, `resource`). The grant is a W3C VC 2.0 credential issued to the recipient under the agreement. OPEN POINT: no checked standard parameter carries that credential in a server-to-server token request. Without one, the registration recorded in D6 is the grant.</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.E.Flow2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.E.2" name="E2. Authenticate client (private_key_jwt or mTLS) and check DPoP proof">
+      <bpmn:documentation>The server authenticates the client registered in process D: a JWT client assertion (RFC 7523 §2.2 (section from standing knowledge, unverified)) or mutual TLS (RFC 8705 §2 (section from standing knowledge, unverified)). It then checks the DPoP proof (RFC 9449 §4.3 (section from standing knowledge, unverified)).</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.E.Flow3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:callActivity id="PHW.E.3" name="E3. Decide access under the agreement (process F)" calledElement="PHW.F">
+      <bpmn:documentation>Calls process F with the verified client, the agreement URL from `identifier`, the grant and the requested details.</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow3</bpmn:incoming>
+      <bpmn:outgoing>PHW.E.Flow4</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="PHW.E.Gateway1" name="Decision = permit?">
+      <bpmn:documentation>`permit` issues a token. `deny` or `unknown` refuses it: unknown is never permit.</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow4</bpmn:incoming>
+      <bpmn:outgoing>PHW.E.Flow5</bpmn:outgoing>
+      <bpmn:outgoing>PHW.E.Flow6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="PHW.E.4" name="E4. Issue short-lived key-bound token with granted details">
+      <bpmn:documentation>Access token bound to the client's key: `cnf` with `jkt` (RFC 9449 §6.1), or a certificate-bound token (RFC 8705 (section from standing knowledge, unverified)). The token response carries the granted `authorization_details` (RFC 9396 §7). The server may grant less than was asked (§7.1).</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow5</bpmn:incoming>
+      <bpmn:outgoing>PHW.E.Flow8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.E.5" name="E5. Refuse token request (deny or unknown)">
+      <bpmn:documentation>OAuth error response (RFC 6749 §5.2 (section from standing knowledge, unverified)). RFC 9396 defines the error `invalid_authorization_details` (§5 (section from standing knowledge, unverified)).</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow6</bpmn:incoming>
+      <bpmn:outgoing>PHW.E.Flow7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="PHW.E.EndRefused" name="Access refused">
+      <bpmn:documentation>No token issued. The refusal is still recorded (process G), because process F hands every decision to audit.</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow7</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="PHW.E.6" name="E6. Call the API with token and DPoP proof">
+      <bpmn:documentation>Each API call carries the access token and a fresh DPoP proof that includes the token hash `ath` (RFC 9449 §4.2), or it runs over the same mutual TLS connection.</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow8</bpmn:incoming>
+      <bpmn:outgoing>PHW.E.Flow9</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.E.7" name="E7. Validate token, key binding and granted details on every call">
+      <bpmn:documentation>The resource server validates the token locally or by introspection (RFC 7662 §2 (section from standing knowledge, unverified)). Introspection returns `authorization_details` (RFC 9396 §9.2) and the key binding `cnf` (RFC 9449 §6.2). The request must lie inside the granted `actions`, `locations` and `datatypes`.</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow9</bpmn:incoming>
+      <bpmn:outgoing>PHW.E.Flow10</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:callActivity id="PHW.E.8" name="E8. Record audit and provenance (process G)" calledElement="PHW.G">
+      <bpmn:documentation>Calls process G: a PROV-O record citing the agreement and the token id, plus an ATNA audit event where the server is grouped with ATNA.</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow10</bpmn:incoming>
+      <bpmn:outgoing>PHW.E.Flow11</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:serviceTask id="PHW.E.9" name="E9. Return data or refusal">
+      <bpmn:documentation>Returns the data on a valid call. Otherwise it returns an error (for example HTTP 401 or 403).</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow11</bpmn:incoming>
+      <bpmn:outgoing>PHW.E.Flow12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.E.10" name="E10. Process response">
+      <bpmn:documentation>The recipient processes the data under the agreement's duties (process G records their fulfilment).</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow12</bpmn:incoming>
+      <bpmn:outgoing>PHW.E.Flow13</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="PHW.E.End" name="Exchange complete">
+      <bpmn:documentation>Server-to-server exchange under the agreement is complete.</bpmn:documentation>
+      <bpmn:incoming>PHW.E.Flow13</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="PHW.E.Flow1" sourceRef="PHW.E.Start" targetRef="PHW.E.1" />
+    <bpmn:sequenceFlow id="PHW.E.Flow2" name="token request" sourceRef="PHW.E.1" targetRef="PHW.E.2" />
+    <bpmn:sequenceFlow id="PHW.E.Flow3" sourceRef="PHW.E.2" targetRef="PHW.E.3" />
+    <bpmn:sequenceFlow id="PHW.E.Flow4" sourceRef="PHW.E.3" targetRef="PHW.E.Gateway1" />
+    <bpmn:sequenceFlow id="PHW.E.Flow5" name="permit" sourceRef="PHW.E.Gateway1" targetRef="PHW.E.4" />
+    <bpmn:sequenceFlow id="PHW.E.Flow6" name="deny / unknown" sourceRef="PHW.E.Gateway1" targetRef="PHW.E.5" />
+    <bpmn:sequenceFlow id="PHW.E.Flow7" sourceRef="PHW.E.5" targetRef="PHW.E.EndRefused" />
+    <bpmn:sequenceFlow id="PHW.E.Flow8" name="access token" sourceRef="PHW.E.4" targetRef="PHW.E.6" />
+    <bpmn:sequenceFlow id="PHW.E.Flow9" name="API call" sourceRef="PHW.E.6" targetRef="PHW.E.7" />
+    <bpmn:sequenceFlow id="PHW.E.Flow10" sourceRef="PHW.E.7" targetRef="PHW.E.8" />
+    <bpmn:sequenceFlow id="PHW.E.Flow11" sourceRef="PHW.E.8" targetRef="PHW.E.9" />
+    <bpmn:sequenceFlow id="PHW.E.Flow12" sourceRef="PHW.E.9" targetRef="PHW.E.10" />
+    <bpmn:sequenceFlow id="PHW.E.Flow13" sourceRef="PHW.E.10" targetRef="PHW.E.End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.E.Diagram">
+    <bpmndi:BPMNPlane id="PHW.E.Plane" bpmnElement="PHW.E.Collaboration">
+      <bpmndi:BPMNShape id="PHW.E.Participant_di" bpmnElement="PHW.E.Participant" isHorizontal="true"><dc:Bounds x="120" y="60" width="2580" height="530" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.DataRecipient_di" bpmnElement="PHW.Lane.DataRecipient" isHorizontal="true"><dc:Bounds x="150" y="60" width="2550" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.AuthorizationServer_di" bpmnElement="PHW.Lane.AuthorizationServer" isHorizontal="true"><dc:Bounds x="150" y="210" width="2550" height="230" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.ResourceServer_di" bpmnElement="PHW.Lane.ResourceServer" isHorizontal="true"><dc:Bounds x="150" y="440" width="2550" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.Start_di" bpmnElement="PHW.E.Start"><dc:Bounds x="267" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.1_di" bpmnElement="PHW.E.1"><dc:Bounds x="405" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.2_di" bpmnElement="PHW.E.2"><dc:Bounds x="610" y="285" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.3_di" bpmnElement="PHW.E.3"><dc:Bounds x="815" y="285" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.Gateway1_di" bpmnElement="PHW.E.Gateway1" isMarkerVisible="true"><dc:Bounds x="1080" y="300" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.4_di" bpmnElement="PHW.E.4"><dc:Bounds x="1225" y="225" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.5_di" bpmnElement="PHW.E.5"><dc:Bounds x="1225" y="345" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.EndRefused_di" bpmnElement="PHW.E.EndRefused"><dc:Bounds x="1497" y="367" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.6_di" bpmnElement="PHW.E.6"><dc:Bounds x="1430" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.7_di" bpmnElement="PHW.E.7"><dc:Bounds x="1635" y="475" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.8_di" bpmnElement="PHW.E.8"><dc:Bounds x="1840" y="475" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.9_di" bpmnElement="PHW.E.9"><dc:Bounds x="2045" y="475" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.10_di" bpmnElement="PHW.E.10"><dc:Bounds x="2250" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.E.End_di" bpmnElement="PHW.E.End"><dc:Bounds x="2522" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.E.Flow1_di" bpmnElement="PHW.E.Flow1">
+        <di:waypoint x="303" y="135" />
+        <di:waypoint x="405" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow2_di" bpmnElement="PHW.E.Flow2">
+        <di:waypoint x="575" y="135" />
+        <di:waypoint x="595" y="135" />
+        <di:waypoint x="595" y="325" />
+        <di:waypoint x="610" y="325" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow3_di" bpmnElement="PHW.E.Flow3">
+        <di:waypoint x="780" y="325" />
+        <di:waypoint x="815" y="325" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow4_di" bpmnElement="PHW.E.Flow4">
+        <di:waypoint x="985" y="325" />
+        <di:waypoint x="1080" y="325" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow5_di" bpmnElement="PHW.E.Flow5">
+        <di:waypoint x="1130" y="325" />
+        <di:waypoint x="1210" y="325" />
+        <di:waypoint x="1210" y="265" />
+        <di:waypoint x="1225" y="265" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow6_di" bpmnElement="PHW.E.Flow6">
+        <di:waypoint x="1130" y="325" />
+        <di:waypoint x="1210" y="325" />
+        <di:waypoint x="1210" y="385" />
+        <di:waypoint x="1225" y="385" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow7_di" bpmnElement="PHW.E.Flow7">
+        <di:waypoint x="1395" y="385" />
+        <di:waypoint x="1497" y="385" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow8_di" bpmnElement="PHW.E.Flow8">
+        <di:waypoint x="1395" y="265" />
+        <di:waypoint x="1415" y="265" />
+        <di:waypoint x="1415" y="135" />
+        <di:waypoint x="1430" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow9_di" bpmnElement="PHW.E.Flow9">
+        <di:waypoint x="1600" y="135" />
+        <di:waypoint x="1620" y="135" />
+        <di:waypoint x="1620" y="515" />
+        <di:waypoint x="1635" y="515" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow10_di" bpmnElement="PHW.E.Flow10">
+        <di:waypoint x="1805" y="515" />
+        <di:waypoint x="1840" y="515" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow11_di" bpmnElement="PHW.E.Flow11">
+        <di:waypoint x="2010" y="515" />
+        <di:waypoint x="2045" y="515" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow12_di" bpmnElement="PHW.E.Flow12">
+        <di:waypoint x="2215" y="515" />
+        <di:waypoint x="2235" y="515" />
+        <di:waypoint x="2235" y="135" />
+        <di:waypoint x="2250" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.E.Flow13_di" bpmnElement="PHW.E.Flow13">
+        <di:waypoint x="2420" y="135" />
+        <di:waypoint x="2522" y="135" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
