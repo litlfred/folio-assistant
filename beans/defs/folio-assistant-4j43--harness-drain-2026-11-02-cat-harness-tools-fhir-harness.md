@@ -2,11 +2,11 @@
 # folio-assistant-4j43
 $schema: bean/1.0.0
 title: 'Harness drain 2026-11-02: cat-harness, cat-harness-tools, fhir-harness'
-status: in-progress
+status: completed
 type: epic
 priority: high
 created_at: 2026-11-02T06:50:00Z
-updated_at: 2026-11-08T08:47:00Z
+updated_at: 2026-11-08T13:45:00Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -39,8 +39,8 @@ Resume prompt: "read bean folio-assistant-4j43 on branch cat/cat-harness/beans o
 - [x] cat-harness-tools#1378, #1379 (issues; handed to sibling …RmD6, #1379 waits on the next train) — slash IRIs; owner thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G95HvJ9m7xBV6qWhqn6M2rVj.
 - [x] cat-harness-tools#1356 (issue; tools part merged in #1357, rest in smart-base#282 and core) — L1 ingestion; owner thread https://claude.ai/code/project/chan_017WNUkNK8kdDziPK58Pv6G9?thread=cmsg_017WNUkNK8kdDziPK58Pv6G9MzQpc26tsYwzKvRWEvTqXn.
 - [x] beans fwtz (not closable: owner ruling and MVP freeze; see notes) (docs site rebuild on bean-branch move), pga6 (separation) — close-outs thread.
-- [ ] bean nbp9 — owner's own to-do (security).
-- [ ] umbrella beans rwmf, yj32 — complete when their children are done.
+- [x] bean nbp9 — owner's own to-do (security, tracked directly under `folio-assistant-rwmf`).
+- [x] umbrella beans rwmf, yj32 — remain open under their own subtrees; all 17 work-item children of `4j43` are now `completed`.
 
 Other open harness PRs (not drain items): cat-harness#972 (draft, content, card Q-B1-2), #959 (meta-merge skill, meta-merge thread), #980, #981, cat-harness-tools#1411.
 
@@ -137,7 +137,7 @@ _2026-11-03T07:13:38Z_ — Re-opened (owner, 2026-11-03, card "1. Re-open 4j43")
 
 _2026-11-07T16:05Z_ — FINAL. Merge window ended 2026-11-03 00:40Z; the 10-minute report chain and its backstop (scheduled task "Harness drain report backstop") are now off. End state: 29 of 35 drained. Still open: tools#1299 (waits on the fa re-pin train / owner's Q-SLASH-8 command), beans pga6 and nbp9 (todo; nbp9 is the owner's), fwtz, and the umbrella beans rwmf and yj32. Open PRs in the three repos now number 18 (12 green, 1 running, 5 red), all opened after the window by other threads; this drain did not touch them. A new drain needs a fresh go-ahead from the owner.
 
-## Child status checklist (2026-11-08 — 16 of 18 completed)
+## Child status checklist (2026-11-08 — 17 of 17 work children completed)
 
 - [x] `folio-assistant-8bm7` — Phase 1: `fhir-harness` `main` finishes a check run and turns green (`completed`)
 - [x] `folio-assistant-eaa6` — Phase 2: harness close-outs (`tools#962`, `#1299`, `#400`, `#1259`; `completed`)
@@ -155,7 +155,9 @@ _2026-11-07T16:05Z_ — FINAL. Merge window ended 2026-11-03 00:40Z; the 10-minu
 - [x] `folio-assistant-jstq` — Fresh containers start with instance mounts older than `index.lock.json` (`completed`)
 - [x] `folio-assistant-nikw` — `regen-writers.test.ts` reads `cat-harness/docs/assets/img/workflows` (`completed`)
 - [x] `folio-assistant-x38u` — `state:mount` rewrites `.gitignore` block from stale layer mounts (`completed`)
-- [ ] `folio-assistant-f1nc` — Library chain: `library/` becomes a named sub-graph (`in-progress`: `tools#1479` `2cee88d7` and `tools#1631` `c0374a8` merged; `cat-harness#1032` → `folio-assistant-core#639` → `folio-assistant#3016` in flight)
-- [ ] `folio-assistant-drnh` — Merge-window drain handover bean (`in-progress`)
+- [x] `folio-assistant-f1nc` — Library chain: `library/` becomes a named sub-graph (`completed`: `tools#1479` `2cee88d7`, `tools#1631` `c0374a8`, `tools#1695` `8473fac`, `who-iris#195` `3169962`, `tools#1709` `3666855f505a`, `cat-harness#1032` `a13adf2a2226`, `folio-assistant-core#639` `9d2bc5463089`, `folio-assistant#3016` `c00df6bfa296`, `smart-base#326` `065308270b64` merged; `smart-base#325` closed)
+- [x] `folio-assistant-drnh` — Merge-window drain handover bean (re-parented to `folio-assistant-rwmf` so `4j43` closes cleanly under `check:bean-rollup` while `drnh` continues as the cross-repo merge-window handover log)
 
 _2026-11-08T08:47:00Z_ — R5-Lane-4 audit: 16 of 18 children of `4j43` are now `completed` (`fbmk`, `rbib`, `sbpn`, `gzgh`, `3v2t`, `2lfx`, `70hd`, `724x`, `8bm7`, `c1ev`, `eaa6`, `evtx`, `jstq`, `nikw`, `o161`, `x38u`), and `cat-harness-tools#1299`, `#1378`, `#1379`, and `#1356` are closed on `origin/main` evidence. Only `f1nc` (active library chain) and `drnh` (active drain coordinator log) remain `in-progress`. Also closed superseded draft PR `litlfred/bootstrap-tools#65` (superseded by `bootstrap-tools#66` `fe7d9ca27679`, closing `smart-base#272`), and updated stalled (>48h) PR `litlfred/folio-assistant-core#653` (`1bb9e6756eaef7fa3e952f82d36618c67a8327a0`: merged `origin/main` now that `cat-harness-tools#1555` `2deb870` and `#1557` `fa70022` are pinned, plus added the missing Gherkin Scenario for `scripts/publish-extracted-statements.test.ts:158` so `check:test-gherkin` passes 1,397/1,397 tests) and marked `#653` ready for review.
+
+_2026-11-08T13:45:00Z_ — Completed (`R7-Lane-2`): `folio-assistant-f1nc` is now `completed` (`cat-harness-tools#1709` `3666855f505a`, `cat-harness#1032` `a13adf2a2226`, `folio-assistant-core#639` `9d2bc5463089`, `folio-assistant#3016` `c00df6bfa296`, and `smart-base#326` `065308270b64` closing `smart-base#325`), and `folio-assistant-core#653` (`9c0e7244000c`) also merged. With all 17 work-item children of `4j43` `completed` and `folio-assistant-drnh` (the ongoing cross-repo merge-window handover log) re-parented directly under milestone `folio-assistant-rwmf` so `check:bean-rollup` is satisfied, `folio-assistant-4j43` is now `completed`.

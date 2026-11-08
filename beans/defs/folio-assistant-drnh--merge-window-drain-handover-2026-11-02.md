@@ -6,8 +6,8 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-08T07:18:30Z
-parent: folio-assistant-4j43
+updated_at: 2026-11-08T13:45:00Z
+parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
     - merge-window
@@ -258,4 +258,21 @@ _2026-11-08T09:29:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a3
 _2026-11-08T12:26:30Z_ — R6 Lane 2 (`litlfred/cat-harness#1140` closing `cat-harness#1139`): marked `litlfred/cat-harness#1140` (`369a1806d31a7622c3e89a7f2ef9389316406311`) ready for review (`isDraft: false`), verified full `Harness PR checks` run `42477690359` + CodeQL `42460824551` all green (`MERGEABLE` / `CLEAN`), confirmed `ready-to-merge` label, and posted fresh `"ready: 369a1806d31a7622c3e89a7f2ef9389316406311"` comment (`#issuecomment-6721453422`) for Merge Manager.
 
 _2026-11-08T13:15:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a380-8dd5bf5cc0f3`, Round 6 update): (1) greened, marked ready for review, labeled `ready-to-merge`, and posted signed `"ready: <sha>"` comments on 4 more PRs for Merge Manager: `litlfred/cat-harness-tools#1693` (`ready: 254f37f5ddc9934ca91850bc4d2a69f5c8a0123a`), `litlfred/cat-harness#1145` (`ready: ccfd263a966ad17c7de7dd24fb4d9dd55d768c8e`), `litlfred/folio-assistant-core#679` (`ready: 7c35fc3a1205fbb060bf2cc9d09cf635aa1e7ced`), and `litlfred/cat-harness#1136` (`ready: 65a6723b9873f8c9554a6cbc83ee4b0ddc8b8af9`, with `folio-assistant-core#676` `fe859f8bc733687f6c9d886fc3d2834d7a1ee370` ready to re-run once `#1136` lands); (2) evicted 36.79 GiB of superseded `cat-mount-v1-*` / duplicate `codeql` caches across `folio-assistant` (`98.3% -> 1.48%`), `cat-harness` (`99.9% -> 1.18%`), `cat-harness-tools` (`99.6% -> 6.11%`), and `folio-assistant-core` (`88.6% -> 9.71%`), checking off `Done when #3` (`< 80%` of 10 GiB) in `folio-assistant-9ml4` (`e8d13911a0da`); (3) updated `folio-assistant-f1nc` (`ba9077fd59f1`). R6-Lane-1 finishing `litlfred/dth-sc#25` (`y4pw` Item 6).
+
+_2026-11-08T13:45:00Z_ — R7-Lane-2 merge & completion update:
+- **Library sub-graph chain (`folio-assistant-f1nc`) and parent epic (`folio-assistant-4j43`) completed:**
+  - `litlfred/cat-harness-tools#1709` (`external-schemas: read the declared workflow graph for BPMN terms`) — merged at `3666855f505ac7da8534a0e1b1945bd2ce203bbd` (`2026-11-08T12:48:25Z`).
+  - `litlfred/cat-harness#1032` (`library/ becomes a named sub-graph; its corpus is opt-in`) — merged at `a13adf2a222699935a7465de33f0cafb257a2bb1` (`2026-11-08T12:48:28Z`).
+  - `litlfred/folio-assistant-core#639` (`Core passes library/ down, and declares the library topic and process group`) — merged at `9d2bc54630897ee7a5791d6c9e7c6c86b4edfd8c` (`2026-11-08T12:48:32Z`).
+  - `litlfred/folio-assistant#3016` (`Re-pin cat-harness and folio-assistant-core for the library sub-graph (stacked)`) — merged at `c00df6bfa29626e089cb4d4ae29d671bae1b6bec` (`2026-11-08T13:25:47Z`).
+  - `litlfred/smart-base#326` (`Respell the code-lists skill link after cat-harness#1032`) — merged at `065308270b64d8cbb5bee19031e38567960097bb` (`2026-11-08T13:25:50Z`), closing `litlfred/smart-base#325` (`2026-11-08T13:25:52Z`).
+  - With `f1nc` `completed`, all 17 work-item children of `folio-assistant-4j43` are `completed`; re-parented `drnh` directly under milestone `folio-assistant-rwmf` so `folio-assistant-4j43` closes cleanly (`status: completed`, `check:bean-rollup` green).
+- **7 additional PRs merged (`13:25Z–13:34Z`):**
+  - `litlfred/folio-assistant-core#676` (`Content split step 1: content-plan, -author, -publish, -retire move up from cat-harness`) — merged at `7b7784659c35f15471d7480c8f8d054a77eeda3f` (`2026-11-08T13:25:31Z`).
+  - `litlfred/cat-harness#1136` (`Content split step 1: content-plan, -author, -publish, -retire move up to folio-assistant-core`) — merged at `767defc2be816134ca50845273e59aff151f0939` (`2026-11-08T13:25:35Z`).
+  - `litlfred/cat-harness-tools#1693` (`LSI page becomes Indexing evidence; index health moves to the repo health report`) — merged at `bc9365121b269f5bb547a4c01310c5c58202d371` (`2026-11-08T13:33:59Z`).
+  - `litlfred/cat-harness#1145` (`Indexing evidence: retitle the LSI page and point index health at the repo health report`) — merged at `49d57386b1d5b3062bdec0edf2a7f57a63668aa5` (`2026-11-08T13:34:03Z`).
+  - `litlfred/folio-assistant-core#679` (`l1-document-ingestion applies lsi (its keywords come from the LSI weights)`) — merged at `10ebb330143689b57dc8d02effcbd6660fdaae31` (`2026-11-08T13:34:07Z`).
+  - `litlfred/cat-harness#1140` (`Light/dark bulb on rail pages swaps the theme sheet too`) — merged at `edca4e4f8d6cafc5e90ca4fe9297e4277523c507` (`2026-11-08T13:34:10Z`), closing `litlfred/cat-harness#1139` (`2026-11-08T13:34:12Z`).
+  - `litlfred/folio-assistant-core#653` (`folio-site-blocks: order and date a block's QA entries by the reviewed tree`) — merged at `9c0e7244000c141108f4a2875d3792675e9e5137` (`2026-11-08T13:34:14Z`).
 
