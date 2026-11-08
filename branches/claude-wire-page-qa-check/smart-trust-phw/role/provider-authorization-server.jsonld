@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/smart-trust-phw/smart-trust-phw.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/smart-trust-phw/role/provider-authorization-server.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/smart-trust-phw/smart-trust-phw.jsonld",
+  "staging": {
+    "branch": "claude/wire-page-qa-check",
+    "sha": "cb05b73206002588b4b64fba9854e0ec8a28299c",
+    "pr": "3018/merge",
+    "run": "42467919995"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/smart-trust-phw/role/provider-authorization-server",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Provider Authorization Server",
+      "title": "Provider Authorization Server",
+      "notation": "provider-authorization-server",
+      "description": "Registers clients and decides access under a data sharing agreement (policy decision and enforcement).",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "system"
+      ],
+      "hasSkill": [],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/smart-trust-phw/role/provider-authorization-server"
+    }
+  ]
+}

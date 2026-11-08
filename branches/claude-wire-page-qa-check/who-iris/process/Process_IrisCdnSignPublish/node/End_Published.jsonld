@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/who-iris/who-iris.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/who-iris/process/Process_IrisCdnSignPublish/node/End_Published.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/who-iris/who-iris.jsonld",
+  "staging": {
+    "branch": "claude/wire-page-qa-check",
+    "sha": "cb05b73206002588b4b64fba9854e0ec8a28299c",
+    "pr": "3018/merge",
+    "run": "42467919995"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/who-iris/process/Process_IrisCdnSignPublish/node/End_Published",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Release published and verified",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/who-iris/process/Process_IrisCdnSignPublish",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/who-iris/role/verifier",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/who-iris/process/Process_IrisCdnSignPublish/lane/Lane_Verifier",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/who-iris/process/Process_IrisCdnSignPublish#flow/P10"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/who-iris/directory/who-iris-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/who-iris/process/Process_IrisCdnSignPublish/node/End_Published"
+    }
+  ]
+}

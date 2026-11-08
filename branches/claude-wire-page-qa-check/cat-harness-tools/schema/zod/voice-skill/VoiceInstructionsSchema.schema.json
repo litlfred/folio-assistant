@@ -1,0 +1,32 @@
+{
+  "$ref": "#/definitions/VoiceInstructions",
+  "definitions": {
+    "VoiceInstructions": {
+      "type": "object",
+      "properties": {
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "file",
+        "summary"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/voice-skill/VoiceInstructionsSchema.schema.json",
+  "title": "VoiceInstructionsSchema",
+  "description": "Generated from `VoiceInstructionsSchema` in schemas/content/voice-skill.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/wire-page-qa-check",
+    "sha": "cb05b73206002588b4b64fba9854e0ec8a28299c",
+    "pr": "3018/merge",
+    "run": "42467919995"
+  }
+}

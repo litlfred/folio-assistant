@@ -1,0 +1,83 @@
+{
+  "$ref": "#/definitions/CacheInventoryEntry",
+  "definitions": {
+    "CacheInventoryEntry": {
+      "type": "object",
+      "properties": {
+        "repo": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "actions-cache",
+            "artifact-reuse",
+            "ghcr-image",
+            "git-ref",
+            "branch-store",
+            "on-disk",
+            "setup-action-cache"
+          ]
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "restoreKeys": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "holds": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        },
+        "consumers": {
+          "type": "string"
+        },
+        "savePolicy": {
+          "type": "string"
+        },
+        "keyDerivation": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "repo",
+        "id",
+        "kind",
+        "locations"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheInventoryEntrySchema.schema.json",
+  "title": "CacheInventoryEntrySchema",
+  "description": "Generated from `CacheInventoryEntrySchema` in schemas/sdlc/cache.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/wire-page-qa-check",
+    "sha": "cb05b73206002588b4b64fba9854e0ec8a28299c",
+    "pr": "3018/merge",
+    "run": "42467919995"
+  }
+}

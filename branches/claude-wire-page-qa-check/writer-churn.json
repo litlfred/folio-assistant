@@ -1,0 +1,479 @@
+{
+  "against": "9dd53013f5e22cc54cab4e59e5c958978fa0d2be",
+  "skipped": 0,
+  "ran": 38,
+  "reused": 0,
+  "groups": [
+    {
+      "cause": ".",
+      "writtenBy": "the commit",
+      "reran": [
+        "uml:overview"
+      ],
+      "seconds": 242.032550546
+    },
+    {
+      "cause": "its script, imports or tools",
+      "writtenBy": "the commit",
+      "reran": [
+        "smart-base:document-kinds",
+        "subgraph:jsonld",
+        "library:viz",
+        "voices:viz",
+        "uploads:viz",
+        "document-kinds:viz",
+        "skills:docs",
+        "auto:docs",
+        "schema:viz",
+        "folio:viz",
+        "processes:viz"
+      ],
+      "seconds": 65.45857373699995
+    },
+    {
+      "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "writtenBy": "-",
+      "reran": [
+        "ig-index:build"
+      ],
+      "seconds": 35.816930217999996
+    },
+    {
+      "cause": "bootstrap-tools/schemas",
+      "writtenBy": "the commit",
+      "reran": [
+        "theme:viz",
+        "bibliography:page",
+        "smart-base:l1-extraction:pages",
+        "openapi:viz",
+        "methodologies:viz",
+        "subscriptions:viz",
+        "navbar:include",
+        "kind:table",
+        "avatars:css",
+        "themes:css",
+        "kg:viewer",
+        "render:bpmn",
+        "kind:json-schemas"
+      ],
+      "seconds": 14.807636839999935
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (state-visualizer: today)",
+      "writtenBy": "-",
+      "reran": [
+        "state:visualizer"
+      ],
+      "seconds": 13.917665979000041
+    },
+    {
+      "cause": ".github/workflows/code-quality-gates.yml",
+      "writtenBy": "the commit",
+      "reran": [
+        "external-schemas:viz",
+        "docs:harness"
+      ],
+      "seconds": 10.749086012999992
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
+      "writtenBy": "-",
+      "reran": [
+        "tools:viz",
+        "docs:pages"
+      ],
+      "seconds": 5.299857182999956
+    },
+    {
+      "cause": "bootstrap",
+      "writtenBy": "the commit",
+      "reran": [
+        "jsonld:contexts"
+      ],
+      "seconds": 1.9219774540000363
+    },
+    {
+      "cause": "bootstrap-tools/README.md",
+      "writtenBy": "the commit",
+      "reran": [
+        "node-kinds"
+      ],
+      "seconds": 1.447047038000077
+    },
+    {
+      "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "writtenBy": "-",
+      "reran": [
+        "site:viz"
+      ],
+      "seconds": 1.4085640369999455
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust:pages"
+      ],
+      "seconds": 0.9868406830000458
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-base:pages"
+      ],
+      "seconds": 0.9158417589999736
+    },
+    {
+      "cause": "not recorded: the writer reads smart-base/docs/assets and then rewrites it",
+      "writtenBy": "-",
+      "reran": [
+        "smart:pages"
+      ],
+      "seconds": 0.7404024399999762
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-trust-phw:pages"
+      ],
+      "seconds": 0.7257851179999998
+    }
+  ],
+  "writers": [
+    {
+      "writer": "auto:docs",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 9.335844284999999
+    },
+    {
+      "writer": "avatars:css",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+5 more: bootstrap-tools/schemas/graph.ts, cat-harness-tools/package.json, cat-harness-tools/scripts, smart-trust-phw, smart-trust-phw/smart-trust-phw.json)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 0.12789739599998576
+    },
+    {
+      "writer": "bibliography:page",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+11 more: bootstrap-tools/schemas/graph.ts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, index.lock.json, smart-trust-phw, smart-trust-phw/library/README.md, and 4 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 0.5726980109999422
+    },
+    {
+      "writer": "docs:harness",
+      "did": "ran",
+      "why": ".github/workflows/code-quality-gates.yml changed (+75 more: .github/workflows/repin-train.yml, README.md, bootstrap-tools/schemas, bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, and 68 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github/workflows/code-quality-gates.yml"
+      },
+      "seconds": 4.005470311000012
+    },
+    {
+      "writer": "docs:pages",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
+      "seconds": 2.0425157879999607
+    },
+    {
+      "writer": "document-kinds:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.78912081699993
+    },
+    {
+      "writer": "external-schemas:viz",
+      "did": "ran",
+      "why": ".github/workflows/code-quality-gates.yml changed (+861 more: .github/workflows/repin-train.yml, README.md, beans/defs/archive/folio-assistant-q7ey--uploads-retention-nothing-removes-an-ingested-uplo.md, beans/defs/folio-assistant-3v2t--cross-layer-derived-files-are-built-at-publish-no.md, beans/defs/folio-assistant-4j43--harness-drain-2026-11-02-cat-harness-tools-fhir-harness.md, beans/defs/folio-assistant-69lr--ci-speed-ii-c3-publish-time-qa-witnesses-stamp-the.md, beans/defs/folio-assistant-6h4p--ci-speed-ii-a-merge-main-restarts-full-ci-on-every.md, and 854 others)",
+      "cause": {
+        "kind": "path",
+        "path": ".github/workflows/code-quality-gates.yml"
+      },
+      "seconds": 6.743615701999981
+    },
+    {
+      "writer": "folio:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.656263442000025
+    },
+    {
+      "writer": "ig-index:build",
+      "did": "ran",
+      "why": "not recorded: git ls-remote is not a read-only command the cone replays",
+      "seconds": 35.816930217999996
+    },
+    {
+      "writer": "jsonld:contexts",
+      "did": "ran",
+      "why": "bootstrap changed (+77 more: bootstrap-tools/schemas, bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/process/features, cat-harness-tools/scripts, and 70 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap"
+      },
+      "seconds": 1.9219774540000363
+    },
+    {
+      "writer": "kg:viewer",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+8 more: bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/pipeline/pot-extract.ts, cat-harness-tools/scripts, smart-trust-phw, and 1 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 0.4707361459999811
+    },
+    {
+      "writer": "kind:json-schemas",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+10 more: bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, cat-harness/schemas, index.config.json, and 3 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 1.1981797340000049
+    },
+    {
+      "writer": "kind:table",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+5 more: bootstrap-tools/schemas/graph.ts, cat-harness-tools/package.json, cat-harness-tools/scripts, smart-trust-phw, smart-trust-phw/smart-trust-phw.json)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 0.11836213899997529
+    },
+    {
+      "writer": "library:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 4.708629507999984
+    },
+    {
+      "writer": "methodologies:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+22 more: bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, cat-harness/docs/assets/library/index.json, cat-harness/skills/library/library-core/translation-manager.md, and 15 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 2.025631957000005
+    },
+    {
+      "writer": "navbar:include",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+6 more: bootstrap-tools/schemas/graph.ts, cat-harness-tools/package.json, cat-harness-tools/scripts, cat-harness/docs/_data/harness.json, smart-trust-phw, smart-trust-phw/smart-trust-phw.json)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 0.13843206499994268
+    },
+    {
+      "writer": "node-kinds",
+      "did": "ran",
+      "why": "bootstrap-tools/README.md changed (+12 more: bootstrap-tools/schemas, bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, index.config.json, and 5 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/README.md"
+      },
+      "seconds": 1.447047038000077
+    },
+    {
+      "writer": "openapi:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+6 more: bootstrap-tools/schemas/graph.ts, cat-harness-tools/package.json, cat-harness-tools/scripts, index.lock.json, smart-trust-phw, smart-trust-phw/smart-trust-phw.json)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 0.18885641300003045
+    },
+    {
+      "writer": "processes:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 8.614444803000078
+    },
+    {
+      "writer": "render:bpmn",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+15 more: bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, fhir-harness/processes/content/l3-fhir-pipeline.bpmn, fhir-harness/processes/content/l3-fhir-pipeline.svg, and 8 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 7.950687428000034
+    },
+    {
+      "writer": "schema:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 2.9917942640000255
+    },
+    {
+      "writer": "site:viz",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
+      "seconds": 1.4085640369999455
+    },
+    {
+      "writer": "skills:docs",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 6.613617070999928
+    },
+    {
+      "writer": "smart-base:document-kinds",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 1.1467204709999497
+    },
+    {
+      "writer": "smart-base:l1-extraction:pages",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+11 more: bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, index.config.json, index.lock.json, and 4 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 0.7594689419999486
+    },
+    {
+      "writer": "smart-base:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "seconds": 0.9158417589999736
+    },
+    {
+      "writer": "smart-trust-phw:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
+      "seconds": 0.7257851179999998
+    },
+    {
+      "writer": "smart-trust:pages",
+      "did": "ran",
+      "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
+      "seconds": 0.9868406830000458
+    },
+    {
+      "writer": "smart:pages",
+      "did": "ran",
+      "why": "not recorded: the writer reads smart-base/docs/assets and then rewrites it",
+      "seconds": 0.7404024399999762
+    },
+    {
+      "writer": "state:visualizer",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (state-visualizer: today)",
+      "seconds": 13.917665979000041
+    },
+    {
+      "writer": "subgraph:jsonld",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 27.382466087000036
+    },
+    {
+      "writer": "subscriptions:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+6 more: bootstrap-tools/schemas/graph.ts, cat-harness-tools/package.json, cat-harness-tools/scripts, index.config.json, smart-trust-phw, smart-trust-phw/smart-trust-phw.json)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 0.2075909420000389
+    },
+    {
+      "writer": "theme:viz",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+11 more: bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/pipeline/pot-extract.ts, cat-harness-tools/scripts, index.lock.json, and 4 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 0.5507469900000141
+    },
+    {
+      "writer": "themes:css",
+      "did": "ran",
+      "why": "bootstrap-tools/schemas changed (+10 more: bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/pipeline/pot-extract.ts, cat-harness-tools/scripts, smart-trust-phw, and 3 others)",
+      "cause": {
+        "kind": "path",
+        "path": "bootstrap-tools/schemas"
+      },
+      "seconds": 0.4983486770000309
+    },
+    {
+      "writer": "tools:viz",
+      "did": "ran",
+      "why": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
+      "seconds": 3.2573413949999956
+    },
+    {
+      "writer": "uml:overview",
+      "did": "ran",
+      "why": ". changed (+3208 more: bootstrap-tools/schemas, bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, bootstrap/schemas/graph.schema.json, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/process/features, and 3201 others)",
+      "cause": {
+        "kind": "path",
+        "path": ""
+      },
+      "seconds": 242.032550546
+    },
+    {
+      "writer": "uploads:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 2.4128501379999796
+    },
+    {
+      "writer": "voices:viz",
+      "did": "ran",
+      "why": "its script, imports, audited environment or tools changed",
+      "cause": {
+        "kind": "script"
+      },
+      "seconds": 0.8068228510000044
+    }
+  ]
+}

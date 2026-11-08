@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/wire-page-qa-check",
+    "sha": "cb05b73206002588b4b64fba9854e0ec8a28299c",
+    "pr": "3018/merge",
+    "run": "42467919995"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Adjudicator",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/cat-harness/process/Process_CriterionAdjudication",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/cat-harness/role/adjudicator",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CriterionAdjudication/lane/Lane_CriterionAdjudicator"
+    }
+  ]
+}

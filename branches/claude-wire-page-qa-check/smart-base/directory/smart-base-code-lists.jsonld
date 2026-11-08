@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/smart-base/directory/smart-base-code-lists.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-wire-page-qa-check/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-code-lists.jsonld",
+  "staging": {
+    "branch": "claude/wire-page-qa-check",
+    "sha": "cb05b73206002588b4b64fba9854e0ec8a28299c",
+    "pr": "3018/merge",
+    "run": "42467919995"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-code-lists",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-code-lists",
+      "path": "code-lists/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code-list"
+      ],
+      "description": "The GRADE code lists (certainty of evidence, reasons to rate certainty down and up, the Evidence-to-Decision criteria, and recommendation direction and strength), one `\"$schema\": \"folio-code-list/v1\"` file per list, read with the `grade` skill; and the SMART Guidelines KG class lists `sgkg-l1-classes.json` and `sgkg-l2-classes.json`, the class ids document kinds name in `modelledBy` (read by `smart-base/scripts/kg-classes.ts`). Only this layer's own lists; the harness's generic lists reach it through the dependency overlay.",
+      "readmePath": "code-lists/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-code-lists"
+    }
+  ]
+}
