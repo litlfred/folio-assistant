@@ -16,9 +16,10 @@ import { parse } from "yaml";
 
 const WORKFLOW = resolve(import.meta.dir, "..", "..", ".github", "workflows", "code-quality-gates.yml");
 const wf = parse(readFileSync(WORKFLOW, "utf8")) as {
-  jobs: Record<string, { if?: string; needs?: string | string[]; env?: Record<string, string>; steps: Array<{ id?: string; run?: string; env?: Record<string, string> }> }>;
+  jobs: Record<string, { if?: string; needs?: string | string[]; env?: Record<string, string>; outputs?: Record<string, string>; steps: Array<{ id?: string; if?: string; run?: string; env?: Record<string, string> }> }>;
 };
-const scopeJob = wf.jobs["e2e-scope"]!;
+// The scope steps live in the verdict-reuse job (once their own job, `e2e-scope`; Q-CIB-1).
+const scopeJob = wf.jobs["verdict-reuse"]!;
 const step = scopeJob.steps.find((s) => s.id === "scope")!;
 const dispatchStep = scopeJob.steps.find((s) => s.id === "dispatch-scope")!;
 
@@ -42,8 +43,8 @@ function scope(listing: string[] | null, changed?: number): { affected: string; 
       REPO: "o/r",
       PR: "1",
       CHANGED: String(changed ?? files),
-      INERT: scopeJob.env!.INERT!,
-      ALWAYS: scopeJob.env!.ALWAYS!,
+      INERT: step.env!.INERT!,
+      ALWAYS: step.env!.ALWAYS!,
     },
     encoding: "utf8",
   });
@@ -114,7 +115,7 @@ function dispatchScope(paths: string[]): string {
   writeFileSync(out, "");
   const r = spawnSync("bash", ["-e", "-c", dispatchStep.run!], {
     cwd: dir,
-    env: { PATH: process.env.PATH, GITHUB_OUTPUT: out, GITHUB_STEP_SUMMARY: join(dir, "summary"), ...scopeJob.env },
+    env: { PATH: process.env.PATH, GITHUB_OUTPUT: out, GITHUB_STEP_SUMMARY: join(dir, "summary"), INERT: dispatchStep.env!.INERT!, ALWAYS: dispatchStep.env!.ALWAYS! },
     encoding: "utf8",
   });
   expect(r.status).toBe(0);
@@ -132,8 +133,8 @@ describe("a dispatch on a branch is scoped by its diff against main", () => {
   test("no change against main: run", () => {
     expect(dispatchScope([])).toBe("true");
   });
-  test("the job runs on a dispatch of a branch, never of main", () => {
-    expect(scopeJob.if).toContain("github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'");
+  test("the step runs on a dispatch of a branch, never of main", () => {
+    expect(dispatchStep.if).toContain("github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'");
   });
 });
 
@@ -141,14 +142,20 @@ describe("the shards honour it, and everything else still runs them", () => {
   const shard = wf.jobs["e2e-shard"]!;
 
   test("only the exact answer `false` skips a shard, so a missing answer runs it", () => {
-    expect(shard.needs).toContain("e2e-scope");
-    expect(shard.if).toContain("needs.e2e-scope.outputs.affected != 'false'");
+    expect(shard.needs).toContain("verdict-reuse");
+    expect(shard.if).toContain("needs.verdict-reuse.outputs.affected != 'false'");
     expect(shard.if).toContain("!cancelled()");
   });
 
-  test("the scope job runs on PR pushes only, never on ready_for_review or a draft", () => {
-    expect(scopeJob.if).toContain("github.event_name == 'pull_request'");
-    expect(scopeJob.if).toContain("github.event.action != 'ready_for_review'");
-    expect(scopeJob.if).toContain("github.event.pull_request.draft != true");
+  test("the scope step runs on PR pushes only, never on ready_for_review or a draft", () => {
+    expect(step.if).toContain("github.event_name == 'pull_request'");
+    expect(step.if).toContain("github.event.action != 'ready_for_review'");
+    expect(step.if).toContain("github.event.pull_request.draft != true");
+  });
+
+  test("the scope steps never fail the verdict-reuse job: no answer runs the shards", () => {
+    expect((step as { 'continue-on-error'?: boolean })['continue-on-error']).toBe(true);
+    expect((dispatchStep as { 'continue-on-error'?: boolean })['continue-on-error']).toBe(true);
+    expect(scopeJob.outputs?.affected ?? "").toContain("steps.scope.outputs.affected");
   });
 });
