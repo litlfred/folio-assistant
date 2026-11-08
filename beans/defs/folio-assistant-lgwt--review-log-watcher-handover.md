@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-02T20:02:26Z
+updated_at: 2026-11-08T06:55:00Z
 parent: folio-assistant-dthl
 tags:
     - review-log-watch
@@ -72,3 +72,5 @@ _2026-11-02T19:56:44Z_ — The owner reconnected Google Drive. From the coordina
 _2026-11-02T19:58:01Z_ — Google Drive connector now connected in https://claude.ai/code/session_01EucfRmAyZLEuxMG8wkPi5r: the logs are READABLE (DTH-HRH Contributor Feedback read via CSV export; Watch!G1 hash z5fwp9, checked 2026-11-02 19:55Z). But the Drive connector cannot WRITE cells, so the Agent step, new issue rows and hiding closed rows (skill review-log-watch steps 3–5) cannot be done. Owner chose (card, 2026-11-02T19:58:01Z): stop until a Google Sheets connector with cell-write access is connected and a new session is started. No polls armed.
 
 _2026-11-02T20:02:26Z_ — Read-only snapshot of all five logs (the owner shared the links; nothing written). Pending work no agent has taken up: DTH-HRH CS-022 (new row, needs a proposal; committee content), CS-007 (owner feedback "Need plan of changes to make / Dont know where link is. agent stalled"). DTH-PHC CS-006 (owner feedback "they need to be linked so no content drift. not sure of options"); CS-001 and CS-002 are Ready for agent = Yes with the agent's Decision needed unanswered. DTH-PC CS-001 new owner question "why so many changes in review?" (answer: #7 is stacked on scaffold PR dth-pc#1, so the review page shows the scaffold until #1 merges). DTH-SC: CS-002 and CS-004 await the owner's letter; nothing new. RA: Ready for agent = Yes on CS-004/052/060/097/194/254/283; CS-052 and CS-254 have Ready = Yes but no committee answer to the agent's question; RA Watch tab hash last written 2026-10-31 08:10Z (script not refreshing). Owner asked the agent to pick up CS-006 and CS-007; add_repo for litlfred/dth-hrh was refused by the session's permission classifier, and the sheets still cannot be written (the Drive connector has no cell write; Code.gs fetches nothing from GitHub).
+
+_2026-11-08T06:55:00Z_ — Watcher still stopped (since 2026-11-02T19:58Z, waiting on a Sheets connector with cell write). This session now lists Google Sheets tools (get_values, update_values, append_values), so the blocker may be gone; no poll was armed here. The merge master pass of 2026-11-08 asked the owner whether to restart the watch. Session https://claude.ai/code/session_01Qmmkt6te9q7bF3KBT2Qq11

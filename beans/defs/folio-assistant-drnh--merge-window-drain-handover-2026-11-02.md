@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-05T12:56:00Z
+updated_at: 2026-11-08T06:55:00Z
 parent: folio-assistant-4j43
 tags:
     - harness-drain-2026-11-02
@@ -232,3 +232,5 @@ _2026-11-05T14:07:00Z_ — Pickup C: cat-harness-tools#1486 merged (13366a5) on 
 _2026-11-05T14:39Z_ — tools#1479 merged (library chain, bean f1nc); cat-harness#1032 ready.
 
 _2026-11-05T16:36:00Z_ — Pickup C complete: cat-harness#1037 (merged earlier), tools#1486, cat-harness#1051, tools#1510 all merged; bean 2lfx completed; audit-coverage needed no change (CI already regenerates it). Session https://claude.ai/code/session_01VQDpPfwYbADcuuX2ZBXvqn
+
+_2026-11-08T06:55:00Z_ — Merge master pass (owner 06:30Z: "take on merge master role, review all open PRs, stalled agents"). No merge window is open; the last one this bean records closed 2026-11-05 10:27Z, and the PR bodies cite a later owner window ("repin + merge open 12 hrs", 2026-11-07 ~05:25Z) that has also lapsed. Live state: 105 open PRs in the harness, DTH and smart-* repos (22 ready, 83 draft); fa main green (82 pass). Green ready non-content: fa#2985, fa#3031, cat-harness#1131, smart-trust-phw#51, smart-trust-demo#61 (142 behind main), smart-base#320. Green ready, needs a content call: dth-phc#33, smart-ra#234, smart-ips-pilgrimage#48 (dth-sc#24 CI running). Red ready: train fa#3033 (KG gates, e2e shard 1, bun shard 2), cat-harness#1032 (graph:check-tools, publish:derive:publish new), dth-hrh#105 (check:bibliography new), fhir-harness#300 (kg-qa-report.ts not found), smart-immunizations#118 + smart-trust-phw#47 (conflicts; translation-qa new). No project thread is working; every PR last moved before 2026-11-07 22:20Z, so all chains count as stalled. Owner asked on a card whether to open a window for merges, rebases and take-overs. Report: https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr. Session https://claude.ai/code/session_01Qmmkt6te9q7bF3KBT2Qq11
