@@ -1,0 +1,110 @@
+Feature: resolving a reference into an instance's library
+
+  @test:schemas/library-ref.test.ts::instance_discovery::findsInstancesByDeclaredName
+  Scenario: finds instances by their DECLARED name, not by their published stub
+    When the instance roots of the checkout are found
+    Then cat-harness is the platform directory and folio-assistant is not
+    And folio-assistant-core is found at its own directory
+
+  @test:schemas/library-ref.test.ts::instance_discovery::findsPlatformInstance
+  Scenario: finds the platform instance, whose directory is `cat-harness`
+    When the instance roots are found
+    Then cat-harness resolves to the platform directory
+
+  @test:schemas/library-ref.test.ts::instance_discovery::indexRootIsNoInstance
+  Scenario: the index ROOT is no instance, and the harness layer keeps its own name
+    When the instance roots are found
+    Then folio-assistant is not an instance and the index root is not among the roots
+    And cat-harness keeps its own name
+
+  @test:schemas/library-ref.test.ts::library_location_is_read_from_the_declaration::resolvesDeclaredLibrary
+  Scenario: resolves a content instance's declared library graph
+    When the library directory of who-iris is read
+    Then it is who-iris/library
+
+  @test:schemas/library-ref.test.ts::library_location_is_read_from_the_declaration::platformLibraryOnlyCitedSources
+  Scenario: the PLATFORM's library holds ONLY sources its methodologies cite
+    When the platform's library entries are compared with the sources its methodologies cite
+    Then every entry is cited, held or awaiting citation by its declaration
+
+  @test:schemas/library-ref.test.ts::library_location_is_read_from_the_declaration::noLibraryGraphUndefined
+  Scenario: returns undefined for an instance that declares no library graph
+    When the library directory of an instance that declares none is read
+    Then it is undefined
+
+  @test:schemas/library-ref.test.ts::resolution_keeps_four_failures_apart::resolvesBareAgainstCitingInstance
+  Scenario: resolves a bare reference against the citing instance
+    When a bare reference is resolved from who-iris
+    Then it resolves
+
+  @test:schemas/library-ref.test.ts::resolution_keeps_four_failures_apart::namedInstanceSameAsBare
+  Scenario: resolves the SAME reference when the instance is named explicitly
+    When the same reference is resolved bare and with instance who-iris named
+    Then the named one resolves to the same path
+
+  @test:schemas/library-ref.test.ts::resolution_keeps_four_failures_apart::platformMustNameWhoIris
+  Scenario: the platform citing a WHO document must NAME who-iris — and does resolve
+    When the platform resolves the reference naming who-iris
+    Then it resolves to who-iris/library/wpr-rdo-2020-003-eng
+
+  @test:schemas/library-ref.test.ts::resolution_keeps_four_failures_apart::unknownInstanceNotLocal
+  Scenario: an unknown instance is never silently treated as local
+    When a reference naming "no-such-instance" is resolved
+    Then it fails as unknown-instance
+    And the explanation mentions the DECLARED NAME
+
+  @test:schemas/library-ref.test.ts::resolution_keeps_four_failures_apart::noLibraryGraphFinding
+  Scenario: a known instance with no library graph is its own finding
+    When a reference naming bootstrap is resolved
+    Then it fails as no-library-graph
+
+  @test:schemas/library-ref.test.ts::resolution_keeps_four_failures_apart::bareFromPlatformNotIngested
+  Scenario: a BARE reference from the platform now says `not-ingested`, and that is WORSE
+    When the bare reference is resolved from the platform
+    Then it fails as not-ingested
+
+  @test:schemas/library-ref.test.ts::resolution_keeps_four_failures_apart::neverIngestedDistinct
+  Scenario: a document that was never ingested is distinct from a missing section
+    When a reference to "never-ingested" is resolved from who-iris
+    Then it fails as not-ingested
+
+  @test:schemas/library-ref.test.ts::resolution_keeps_four_failures_apart::missingSectionFourthCase
+  Scenario: a missing section in an ingested document is the fourth case
+    When section page-999 of an ingested document is resolved
+    Then it fails as no-such-section
+
+  @test:schemas/library-ref.test.ts::resolution_keeps_four_failures_apart::everyFailureExplainsItself
+  Scenario: every failure explains itself in one actionable line
+    When each of the four failing references is resolved
+    Then each fails with an explanation longer than 40 characters
+
+  @test:schemas/library-ref.test.ts::an_instance's_library_is_ITS_OWN,_not_the_first_one_declared::ignoresRepositoryScopedFirst
+  Scenario: ignores a repository-scoped entry even when it is declared FIRST
+    Given an instance declaring a repository-scoped library first and its own second
+    When its library directory is read
+    Then it is its own library/
+
+  @test:schemas/library-ref.test.ts::an_instance's_library_is_ITS_OWN,_not_the_first_one_declared::orderDoesNotMatter
+  Scenario: and the answer does not change when the order does
+    Given an instance declaring its own library first and a repository-scoped one second
+    When its library directory is read
+    Then it is its own library/
+
+  @test:schemas/library-ref.test.ts::an_instance's_library_is_ITS_OWN,_not_the_first_one_declared::refusesTwoOwnLibraries
+  Scenario: REFUSES when an instance declares two of its own, rather than picking
+    Given an instance declaring two libraries of its own
+    When its library directory is read
+    Then it throws "no single answer"
+
+  @test:schemas/library-ref.test.ts::an_instance's_library_is_ITS_OWN,_not_the_first_one_declared::realInstancesResolveOwn
+  Scenario: every real instance here resolves its own library, or declares none
+    When the library directories of the real instances are read
+    Then cat-harness, who-iris and folio-assistant-sci each resolve to their own library
+    And smart-l1 has none
+
+  @test:schemas/library-ref.test.ts::an_entry_filed_in_a_concern_group_resolves_(bean_6fez)::groupedEntryResolves
+  Scenario: finds `library/<group>/<id>/` when the library declares the group, and only then
+    Given a library declaring concern group "kg" with entry doc, and an entry in an undeclared group
+    When the entries are resolved
+    Then doc resolves to library/kg/doc/structure.json, and its section sec-001 resolves
+    And the entry in the undeclared group is not-ingested

@@ -1,0 +1,116 @@
+{
+  "$schema": "folio-index-config/v1",
+  "instances": [
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "17e2ef2a0f169cb33a65d96d85b15aa82182d3a4",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-07",
+              "ref": "17e2ef2a0f169cb33a65d96d85b15aa82182d3a4",
+              "evidence": "owner litlfred, 2026-11-07, card 'Stack pins' option 1 in session_01VQDpPg681u1Pt3MCpbmx8J: record consent on the stacked pins; cat-harness#1032 head 17e2ef2 (contains cat-harness main, which folio-assistant#2985 pins); merge manager merges in the owner's order"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "fa5fb43f973a89581ca3f32145cd11c9137baa26",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-07",
+              "ref": "fa5fb43f973a89581ca3f32145cd11c9137baa26",
+              "evidence": "litlfred, 2026-11-07, via the merge manager (session_01VQDpPffYARDQ8juksAZScf): card 'Pin target' 'A. Never move back'; 'repin as needed'; window extended to 05:27Z. Follow-up: cat-harness past the journey-maps.md markup fix (6eed239), cat-harness-tools and bootstrap-tools at the newest commit any lock pins."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+              "evidence": "this session's user (litlfred), 2026-11-06 ~08:40Z: \"repin as needed. merge when green and ready for all your PRs within 6hr window\" — re-pin to mains for folio-assistant-core#654, which needs cat-harness-tools#1564 (https://claude.ai/code/session_01VQDpPfJKxVERPVKKWBTY8z)"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "1dc08c906f3a9377534b753fed493b811e040ad7",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-07",
+              "ref": "1dc08c906f3a9377534b753fed493b811e040ad7",
+              "evidence": "litlfred, 2026-11-07, via the merge manager (session_01VQDpPffYARDQ8juksAZScf): card 'Pin target' 'A. Never move back'; 'repin as needed'; window extended to 05:27Z. Follow-up: cat-harness past the journey-maps.md markup fix (6eed239), cat-harness-tools and bootstrap-tools at the newest commit any lock pins."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "site": {
+    "landing": "folio-assistant-core"
+  }
+}
