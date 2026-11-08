@@ -8,7 +8,7 @@ priority: high
 tags:
     - harness-drain-2026-11-02
 created_at: 2026-11-05T12:59:09Z
-updated_at: 2026-11-05T12:59:09Z
+updated_at: 2026-11-08T11:55:10Z
 parent: folio-assistant-4j43
 ---
 
@@ -16,8 +16,11 @@ Land in order: litlfred/cat-harness-tools#1479, then litlfred/cat-harness#1032 (
 
 ## Done when
 - [x] tools#1479 merged
-- [ ] cat-harness#1032 re-pinned, ready, merged
-- [ ] core#639 re-pinned, merged
+- [x] tools#1631, tools#1695, who-iris#195 merged
+- [ ] cat-harness#1032 (`7bbf2d6`) + tools#1709 (`210993b` — green) merged after combined proof fa#3016 (`7701dce`) finishes
+- [ ] core#639 (`5626a39`, draft) re-pinned to #1032 merge commit, marked ready, green, merged
+- [ ] smart-base#326 (`730428e`, closes #325) CI re-run after #1032 merge, green, merged
+- [ ] fa#3016 re-pinned to final merge commits, green, merged
 - [ ] then: agent-memory link fix as a pair (tools 5b9510a + cat-harness regen), one red merge allowed by owner
 
 
@@ -64,3 +67,12 @@ _2026-11-07T08:45Z_ — Owner (card in merge manager session ~08:43Z) "A. Allow 
 _2026-11-07T09:06Z_ — fa#3016 red (.jsonld siblings, 5611 stale) was a tools bug; draft tools#1631 (fd26d26) fixes libraryInstanceOf for library/corpus/. core#639 → dbad175 (3 manifests regenerated). ch#1032 → 1bbce61 (main merged, contains ea548f0). fa#3016 → 9dbcabf (on #2985 4dad168). Local gates pass at those pins. All draft; waiting on #2985.
 
 _2026-11-07T09:54Z_ — tools#1631 merged as c0374a8 (owner card in MM session). fa#3016 .jsonld green after core#639 fb9e15e (2 site nodes). ch#1032 marked ready at 1bbce61 (fast tier green, cat-harness queue 3); full tier judging. Sent "ready:" for #1631 earlier.
+
+_2026-11-08T11:55Z_ — Status sweep (active driver: `session_01Qmmkt91AsckNGwLQ2VNo2y`):
+- **Prerequisites merged:** `cat-harness-tools#1695` (`8473fac`) and `who-iris#195` (`3169962`) merged; bean `q7ey` dangling link fixed on beans branch (`0441335`).
+- **`cat-harness-tools#1709`** (`210993bf357d6f469c099ba5b9419d3b37e1d83a`, `isDraft: false`): **GREEN** on all checks (`Tests (no new failures)` + CodeQL). Paired with `cat-harness#1032` (`7bbf2d6`); PR body notes: *"do not land this before cat-harness#1032. Alone, cat-harness's record would show 2 new terms. fa#3016 is the combined proof."*
+- **`cat-harness#1032`** (`7bbf2d6382da861268a9b2506009ca343f6503a9`, `isDraft: false`): pushed at `11:22Z` (adds `bpmn:parallelGateway` and `bpmn:sourceRef` to `omg-bpmn-2.0` external-schema record); CodeQL + `Prepare PR/main` + `base — tests and gates` green, `head — tests and gates` in progress. Alone on layer CI it still expects the known cross-repo loop reds (`graph:check-tools` and `publish:derive:publish` until `core#639` lands), with `fa#3016` serving as the combined proof.
+- **`folio-assistant-core#639`** (`5626a39ef9a2a03b9c38b1068edf700ae8f246c2`, `isDraft: true`): intentionally kept in draft (fast tier green) until `cat-harness#1032` merges, because its `index.lock.json` is stacked on an unmerged `#1032` commit (`1bbce61`) and must be re-pinned to `#1032`'s merge commit before running full checks and merging. Do not mark ready prematurely.
+- **`smart-base#326`** (`730428e1c584b389eced480a5cfc2fd68b3db786`, `isDraft: false`, closes `#325`): respells `methodologies/terminology-coding.md` link to `../../cat-harness/library/skills/library-core/code-lists.md`. Currently red on `check:subgraphs` (`dangling category`) only because layer CI mounts `cat-harness` `main` prior to `#1032`. Wait for `cat-harness#1032` to merge, then re-run CI to turn green and mark `ready-to-merge` + `"ready: 730428e1c584b389eced480a5cfc2fd68b3db786"`.
+- **`folio-assistant#3016`** (`7701dce5a311a250a43202c7d726296c2aa484f4`, `isDraft: false`): combined proof pinning `cat-harness#1032` (`7bbf2d6`), `cat-harness-tools#1709` (`210993b`), `folio-assistant-core#639` (`5626a39`), and `smart-base#326` (`730428e`). Pushed at `11:24Z`; currently running and green so far on `lint and types`, `.jsonld siblings`, `cat-harness standalone ratchet`, `workflows, skills, knowledge graph`, `instances, docs, translations`, `bun test` shards 1/4 & 4/4, and all 3 E2E shards (remaining in progress: `bun test` shards 2/4 & 3/4, `registered, never run elsewhere`, `Skill-registration chain`, `stage`).
+- **Exact merge/dependency order:** (1) `fa#3016` (`7701dce`) finishes combined proof green → (2) merge `cat-harness#1032` (`7bbf2d6`) + `cat-harness-tools#1709` (`210993b`) → (3) in parallel: re-pin `folio-assistant-core#639` to `#1032` merge commit + mark ready + merge on green, and re-run `smart-base#326` (`730428e`) CI + merge on green → (4) re-pin `folio-assistant#3016` to the layer merge commits + merge on green.
