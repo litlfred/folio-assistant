@@ -276,3 +276,25 @@ _2026-11-08T13:45:00Z_ — R7-Lane-2 merge & completion update:
   - `litlfred/cat-harness#1140` (`Light/dark bulb on rail pages swaps the theme sheet too`) — merged at `edca4e4f8d6cafc5e90ca4fe9297e4277523c507` (`2026-11-08T13:34:10Z`), closing `litlfred/cat-harness#1139` (`2026-11-08T13:34:12Z`).
   - `litlfred/folio-assistant-core#653` (`folio-site-blocks: order and date a block's QA entries by the reviewed tree`) — merged at `9c0e7244000c141108f4a2875d3792675e9e5137` (`2026-11-08T13:34:14Z`).
 
+_2026-11-08T15:30:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a380-8dd5bf5cc0f3`, Round 7 update):
+- **2 more PRs merged by Merge Manager (`14:30Z–15:02Z`):**
+  - `litlfred/cat-harness-tools#1698` (`serve-local: point at the pages below a folder with no index.html`) — greened at `0e59ebb886a9b5ab11d5192a8e9b6159bd460e55` and merged at `6ca3aae5b42f07b6ce3f240d8d239a9a08880037` (`2026-11-08T14:30:57Z`).
+  - `litlfred/who-iris#197` (`IRIS-style search page with dynamic facets`, closing `who-iris#196`) — greened at `e11c5e3d23a94b32c26eb7df2ec8bbb20563d662` and merged at `eae6e712e0d41ec702e635f2c278eb546722b7d5` (`2026-11-08T15:02:57Z`).
+- **11 more PRs greened, marked ready for review, labeled `ready-to-merge`, and commented `"ready: <sha>"` for Merge Manager:**
+  1. `litlfred/bootstrap#47` (`P3: call a repository a layer, not an instance (prose only)`): `ready: 08cb7544718e6578d7a945bef05ce83759375fad` (`#issuecomment-6722724059`).
+  2. `litlfred/bootstrap-tools#84` (`docs: "layer" where "instance" means a repository (P3, prose only)`): `ready: 2983c3a2f00f4cb0972a57a41890fc0b87b25a42` (`#issuecomment-6722674858`).
+  3. `litlfred/cat-harness#1143` (`docs(harness): instance means a node-kind instance; repositories are layers (P1 of #1138)`): `ready: d3223513993563471afdeb47debc2cefc31b5544` (`#issuecomment-6723342034`).
+  4. `litlfred/cat-harness#1148` (`docs: "layer" where "instance" meant a repository (P3 of #1138)`): `ready: 5706a9e47e5185e2446014bb5d8742b72c63e848` (`#issuecomment-6723342436`).
+  5. `litlfred/cat-harness-tools#1706` (`docs: "layer" where "instance" meant a repository, comments only (P3 of cat-harness#1138)`): `ready: 9ecde5c4646a1b4e3fd8f017e7ff719e78083876` (`#issuecomment-6723347471`).
+  6. `litlfred/fhir-harness#312` (`Prose: call a repository in the stack a layer, not an instance (P3)`): `ready: c7509aa9490398aaa4c2acf60e733655a773c7bc` (`#issuecomment-6723341189`).
+  7. `litlfred/folio-assistant-core#684` (`P3: say "layer" where prose meant a repository by "instance"`): `ready: 4652101b7471a8600177b7af3914978e8dbb4f2a` (`#issuecomment-6722372302`).
+  8. `litlfred/smart-base#327` (`P3: say "layer" where "instance" meant a repository (prose only)`): `ready: 17fa8f4311096bfbab0fe932418e56f4ed53abe4` (`#issuecomment-6722655462`).
+  9. `litlfred/smart-trust-phw#53` (`Wording: "layer" for a repository in the stack (P3, prose only)`): `ready: f96593df38de3c479bb6f66ff4c42925459cce13` (`#issuecomment-6722735089`).
+  10. `litlfred/cat-harness-tools#1700` (`feat(index-config): harnesses instantiated vs layers mounted (P2a of cat-harness#1138)`): `ready: 2a28bab565f9cb385d1844a04bb2a6bd5d852294` (`#issuecomment-6723368206`).
+  11. `litlfred/cat-harness-tools#1725` (`chore(beans): complete cat-tools-5fmc and cat-tools-pp9g; update cat-tools-sm8r`): `ready: 44680aed777a975540b453d70c9f72e78d7b6a12`.
+- **2 paired PRs opened and labeled `ready-to-merge` for `folio-core-knsj` (`Content split step 3: move diff skill and /diff command to core`):**
+  - `litlfred/folio-assistant-core#687` (`e21728721f5125f788088fa5a26f12bbc21d65c1`, adds `diff.md` + `/diff` to core and marks `folio-core-knsj` `status: completed`).
+  - `litlfred/cat-harness#1162` (`f94e32b72f68cff60435bdba3f0c3d8c58681166`, removes `diff.md` + `/diff` from `cat-harness`).
+  - Note for Merge Manager: back-to-back atomic pair (identical to `#676` + `#1136`); `core#687` and `cat-harness#1162` each pass 100% of tests and typechecks, with only the cross-layer `diff` uniqueness (`skill:commands:check`) vs `folio-changeset -> diff` (`graph:check-tools`) check waiting on the other half to land.
+
+
