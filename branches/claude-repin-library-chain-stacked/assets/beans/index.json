@@ -2,7 +2,7 @@
   "$schema": "folio-bean-index/v1",
   "tile": {
     "beans": {
-      "count": 28,
+      "count": 27,
       "unit": "open beans"
     }
   },
@@ -300,7 +300,7 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T13:19:32Z",
-      "updatedAt": "2026-11-08T08:38:00Z",
+      "updatedAt": "2026-11-08T12:04:00Z",
       "preview": "Every CI step is a pure function of its inputs. The primitive is `.github/actions/cached-step` (litlfred/folio-assistant#2972).\n\n- **Trust classes:**\n  - (a) entries that can be verified exactly: committers may publish them with `cache:publish`, and CI only verifies them;\n  - (b) verdicts, which go through #2957 and #2958;\n  - (c) main-only entries.\n- **Daily report:** the hit-rate and budget repo",
       "file": "beans/defs/folio-assistant-9ml4--cache-first-ci-one-cached-step-primitive-derived-k.md"
     },
@@ -594,8 +594,8 @@
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-05T12:59:09Z",
-      "updatedAt": "2026-11-05T12:59:09Z",
-      "preview": "Land in order: litlfred/cat-harness-tools#1479, then litlfred/cat-harness#1032 (re-pin tools, ready, green), then litlfred/folio-assistant-core#639 (re-pin both, merge). Picked up from a session stalled on weekly limit; handover from drnh.\n\n## Done when\n- [x] tools#1479 merged\n- [ ] cat-harness#1032 re-pinned, ready, merged\n- [ ] core#639 re-pinned, merged\n- [ ] then: agent-memory link fix as a pa",
+      "updatedAt": "2026-11-08T11:55:10Z",
+      "preview": "Land in order: litlfred/cat-harness-tools#1479, then litlfred/cat-harness#1032 (re-pin tools, ready, green), then litlfred/folio-assistant-core#639 (re-pin both, merge). Picked up from a session stalled on weekly limit; handover from drnh.\n\n## Done when\n- [x] tools#1479 merged\n- [x] tools#1631, tools#1695, who-iris#195 merged\n- [ ] cat-harness#1032 (`7bbf2d6`) + tools#1709 (`210993b` — green) merg",
       "file": "beans/defs/folio-assistant-f1nc--library-chain-library-becomes-a-named-sub-graph-to.md"
     },
     {
@@ -629,14 +629,14 @@
     {
       "id": "folio-assistant-ftpc",
       "title": "dth-pc: drop flattened step/risks table text from prose pages",
-      "status": "in-progress",
+      "status": "completed",
       "type": "task",
       "priority": "normal",
       "parent": "folio-assistant-dthl",
       "blocking": [],
       "blockedBy": [],
       "createdAt": "2026-11-02T19:30:00Z",
-      "updatedAt": "2026-11-08T07:00:00Z",
+      "updatedAt": "2026-11-08T11:50:00Z",
       "preview": "## Goal\n\nOwner saw \"POTENTIAL RISKS MITIGATION MITIGATION ...\" run-on text under the real risks table on the dth-pc staging site (Chapter 4). The seeder copied PDF table text into prose pages next to the structured t-chNN-step-N table blocks.\n\nSame owner message also asked: more padding between content and the \"grill\" (side decoration), and no right-side grill. That is site chrome (cat-harness), n",
       "file": "beans/defs/folio-assistant-ftpc--dth-pc-flattened-table-prose-cleanup.md"
     },
@@ -1472,8 +1472,8 @@
         "share": 0.7142857142857143
       }
     ],
-    "orphanOpen": 9,
-    "openTotal": 28,
+    "orphanOpen": 8,
+    "openTotal": 27,
     "coveredOpen": 18,
     "duplicateIds": 0
   }

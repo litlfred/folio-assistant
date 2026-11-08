@@ -10,7 +10,7 @@
       "reran": [
         "uml:overview"
       ],
-      "seconds": 535.83719941
+      "seconds": 489.40618857400005
     },
     {
       "cause": "its script, imports or tools",
@@ -30,7 +30,7 @@
         "folio:viz",
         "processes:viz"
       ],
-      "seconds": 88.68903545399994
+      "seconds": 82.76873113799998
     },
     {
       "cause": "not recorded: the run reached a traced input site (state-visualizer: today)",
@@ -38,7 +38,7 @@
       "reran": [
         "state:visualizer"
       ],
-      "seconds": 16.734425384999952
+      "seconds": 16.51711369999999
     },
     {
       "cause": "bootstrap-tools/schemas",
@@ -57,7 +57,7 @@
         "render:bpmn",
         "kind:json-schemas"
       ],
-      "seconds": 15.950577103000018
+      "seconds": 15.804493402999825
     },
     {
       "cause": "not recorded: git ls-remote is not a read-only command the cone replays",
@@ -65,7 +65,7 @@
       "reran": [
         "ig-index:build"
       ],
-      "seconds": 14.852471033999988
+      "seconds": 15.645490372999978
     },
     {
       "cause": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
@@ -74,7 +74,7 @@
         "tools:viz",
         "docs:pages"
       ],
-      "seconds": 6.406450421000016
+      "seconds": 5.841791609999957
     },
     {
       "cause": ".github/workflows/code-quality-gates.yml",
@@ -82,15 +82,7 @@
       "reran": [
         "docs:harness"
       ],
-      "seconds": 5.011724806999904
-    },
-    {
-      "cause": "bootstrap",
-      "writtenBy": "the commit",
-      "reran": [
-        "jsonld:contexts"
-      ],
-      "seconds": 2.2518359649999766
+      "seconds": 5.104272892999928
     },
     {
       "cause": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
@@ -98,7 +90,15 @@
       "reran": [
         "site:viz"
       ],
-      "seconds": 2.012861661000061
+      "seconds": 2.103660696999985
+    },
+    {
+      "cause": "bootstrap",
+      "writtenBy": "the commit",
+      "reran": [
+        "jsonld:contexts"
+      ],
+      "seconds": 2.053148935999954
     },
     {
       "cause": "bootstrap-tools/README.md",
@@ -106,15 +106,7 @@
       "reran": [
         "node-kinds"
       ],
-      "seconds": 1.611679868999985
-    },
-    {
-      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "writtenBy": "-",
-      "reran": [
-        "smart-base:pages"
-      ],
-      "seconds": 1.231031398000079
+      "seconds": 1.6055672039999627
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
@@ -122,7 +114,15 @@
       "reran": [
         "smart-trust:pages"
       ],
-      "seconds": 1.2085374549999832
+      "seconds": 1.1123711200000252
+    },
+    {
+      "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
+      "writtenBy": "-",
+      "reran": [
+        "smart-base:pages"
+      ],
+      "seconds": 1.064784084999934
     },
     {
       "cause": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
@@ -130,7 +130,7 @@
       "reran": [
         "smart-trust-phw:pages"
       ],
-      "seconds": 0.9242322810000041
+      "seconds": 0.8147565529999556
     },
     {
       "cause": "not recorded: the writer reads smart-base/docs/assets and then rewrites it",
@@ -138,7 +138,7 @@
       "reran": [
         "smart:pages"
       ],
-      "seconds": 0.802229762999923
+      "seconds": 0.7217070329999551
     }
   ],
   "writers": [
@@ -149,7 +149,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 10.975766302999924
+      "seconds": 10.169253710999968
     },
     {
       "writer": "avatars:css",
@@ -159,7 +159,7 @@
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 0.16129043100005946
+      "seconds": 0.14071151399996598
     },
     {
       "writer": "bibliography:page",
@@ -169,23 +169,23 @@
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 0.7295873850000789
+      "seconds": 0.6734060879999306
     },
     {
       "writer": "docs:harness",
       "did": "ran",
-      "why": ".github/workflows/code-quality-gates.yml changed (+758 more: .github/workflows/feature-staging.yml, .github/workflows/repin-train.yml, README.md, bootstrap-tools/schemas, bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, and 751 others)",
+      "why": ".github/workflows/code-quality-gates.yml changed (+757 more: .github/workflows/feature-staging.yml, .github/workflows/repin-train.yml, README.md, bootstrap-tools/schemas, bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, and 750 others)",
       "cause": {
         "kind": "path",
         "path": ".github/workflows/code-quality-gates.yml"
       },
-      "seconds": 5.011724806999904
+      "seconds": 5.104272892999928
     },
     {
       "writer": "docs:pages",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
-      "seconds": 2.6088699219999834
+      "seconds": 2.30799591399997
     },
     {
       "writer": "document-kinds:viz",
@@ -194,7 +194,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.9729491610000841
+      "seconds": 0.960442381999921
     },
     {
       "writer": "external-schemas:viz",
@@ -203,7 +203,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 6.664569557999959
+      "seconds": 6.3620999799999405
     },
     {
       "writer": "folio:viz",
@@ -212,13 +212,13 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 0.797624599999981
+      "seconds": 0.7471073000000324
     },
     {
       "writer": "ig-index:build",
       "did": "ran",
       "why": "not recorded: git ls-remote is not a read-only command the cone replays",
-      "seconds": 14.852471033999988
+      "seconds": 15.645490372999978
     },
     {
       "writer": "jsonld:contexts",
@@ -228,7 +228,7 @@
         "kind": "path",
         "path": "bootstrap"
       },
-      "seconds": 2.2518359649999766
+      "seconds": 2.053148935999954
     },
     {
       "writer": "kg:viewer",
@@ -238,17 +238,17 @@
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 0.5738602189999074
+      "seconds": 0.548851090000011
     },
     {
       "writer": "kind:json-schemas",
       "did": "ran",
-      "why": "bootstrap-tools/schemas changed (+28 more: bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, cat-harness-tools/scripts/external-schemas.ts, cat-harness-tools/scripts/lib, and 21 others)",
+      "why": "bootstrap-tools/schemas changed (+27 more: bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/scripts, cat-harness-tools/scripts/external-schemas.ts, cat-harness-tools/scripts/lib, and 20 others)",
       "cause": {
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 1.4202304259999656
+      "seconds": 1.4151032639999175
     },
     {
       "writer": "kind:table",
@@ -258,7 +258,7 @@
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 0.14968309599999338
+      "seconds": 0.13160364200000185
     },
     {
       "writer": "library:viz",
@@ -267,7 +267,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 5.637461958999978
+      "seconds": 5.474179187000031
     },
     {
       "writer": "methodologies:viz",
@@ -276,7 +276,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 2.3790977659999624
+      "seconds": 2.1924366399999706
     },
     {
       "writer": "navbar:include",
@@ -286,7 +286,7 @@
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 0.17860552500002086
+      "seconds": 0.16097707799996716
     },
     {
       "writer": "node-kinds",
@@ -296,7 +296,7 @@
         "kind": "path",
         "path": "bootstrap-tools/README.md"
       },
-      "seconds": 1.611679868999985
+      "seconds": 1.6055672039999627
     },
     {
       "writer": "openapi:viz",
@@ -306,7 +306,7 @@
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 0.24987806399993132
+      "seconds": 0.2243500960000092
     },
     {
       "writer": "processes:viz",
@@ -315,7 +315,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 11.036372429999988
+      "seconds": 10.04169415200001
     },
     {
       "writer": "render:bpmn",
@@ -325,7 +325,7 @@
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 9.971955243000062
+      "seconds": 10.128135330000077
     },
     {
       "writer": "schema:viz",
@@ -334,13 +334,13 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 3.6780649690000575
+      "seconds": 3.5727871570000427
     },
     {
       "writer": "site:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (branch-store /home/runner/work/folio-assistant/folio-assistant/.git/branch-store.git)",
-      "seconds": 2.012861661000061
+      "seconds": 2.103660696999985
     },
     {
       "writer": "skills:docs",
@@ -349,7 +349,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 8.18057832500001
+      "seconds": 7.714875873000012
     },
     {
       "writer": "smart-base:document-kinds",
@@ -358,7 +358,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 1.4053583079999663
+      "seconds": 1.3642629389999783
     },
     {
       "writer": "smart-base:l1-extraction:pages",
@@ -368,37 +368,37 @@
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 0.9466663569998928
+      "seconds": 0.8926782459999667
     },
     {
       "writer": "smart-base:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/index.html, which another writer declares as its output",
-      "seconds": 1.231031398000079
+      "seconds": 1.064784084999934
     },
     {
       "writer": "smart-trust-phw:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust-phw, which another writer declares as its output",
-      "seconds": 0.9242322810000041
+      "seconds": 0.8147565529999556
     },
     {
       "writer": "smart-trust:pages",
       "did": "ran",
       "why": "not recorded: the writer wrote cat-harness/docs/smart-base/artifact-index/smart-trust, which another writer declares as its output",
-      "seconds": 1.2085374549999832
+      "seconds": 1.1123711200000252
     },
     {
       "writer": "smart:pages",
       "did": "ran",
       "why": "not recorded: the writer reads smart-base/docs/assets and then rewrites it",
-      "seconds": 0.802229762999923
+      "seconds": 0.7217070329999551
     },
     {
       "writer": "state:visualizer",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (state-visualizer: today)",
-      "seconds": 16.734425384999952
+      "seconds": 16.51711369999999
     },
     {
       "writer": "subgraph:jsonld",
@@ -407,7 +407,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 33.11827628900006
+      "seconds": 30.56616179100005
     },
     {
       "writer": "subscriptions:viz",
@@ -417,7 +417,7 @@
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 0.2621013900000835
+      "seconds": 0.2367591989999637
     },
     {
       "writer": "theme:viz",
@@ -427,7 +427,7 @@
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 0.6869539050000021
+      "seconds": 0.6547610779999522
     },
     {
       "writer": "themes:css",
@@ -437,23 +437,23 @@
         "kind": "path",
         "path": "bootstrap-tools/schemas"
       },
-      "seconds": 0.6197650620000205
+      "seconds": 0.5971567780000623
     },
     {
       "writer": "tools:viz",
       "did": "ran",
       "why": "not recorded: the run reached a traced input site (qa-result-link: the site build's fetch state)",
-      "seconds": 3.7975804990000324
+      "seconds": 3.5337956959999866
     },
     {
       "writer": "uml:overview",
       "did": "ran",
-      "why": ". changed (+3872 more: bootstrap-tools/schemas, bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, bootstrap/schemas/graph.schema.json, cat-harness-tools/libraries/yaml.library.json, cat-harness-tools/package.json, cat-harness-tools/pipeline, and 3865 others)",
+      "why": ". changed (+3870 more: bootstrap-tools/schemas, bootstrap-tools/schemas/graph.ts, bootstrap-tools/scripts, bootstrap/schemas/graph.schema.json, cat-harness-tools/package.json, cat-harness-tools/pipeline, cat-harness-tools/schemas/process/features, and 3863 others)",
       "cause": {
         "kind": "path",
         "path": ""
       },
-      "seconds": 535.83719941
+      "seconds": 489.40618857400005
     },
     {
       "writer": "uploads:viz",
@@ -462,7 +462,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 2.827035189999966
+      "seconds": 2.674779273999971
     },
     {
       "writer": "voices:viz",
@@ -471,7 +471,7 @@
       "cause": {
         "kind": "script"
       },
-      "seconds": 1.0158805960000028
+      "seconds": 0.928650752000045
     }
   ]
 }

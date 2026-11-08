@@ -106,7 +106,6 @@
    "name": "Author FSH profiles",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_AuthorFsh",
-   "stepHref": "l3-fhir-pipeline.html#step-Task_AuthorFsh",
    "lane": "FHIR modeller",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Modeller",
    "skills": [
@@ -140,7 +139,6 @@
    "name": "Compile FSH to FHIR JSON",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_Sushi",
-   "stepHref": "l3-fhir-pipeline.html#step-Task_Sushi",
    "lane": "Build pipeline — SUSHI · validator · IG Publisher",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
    "skills": [
@@ -238,7 +236,6 @@
    "name": "Validate against profiles",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_Validate",
-   "stepHref": "l3-fhir-pipeline.html#step-Task_Validate",
    "lane": "Build pipeline — SUSHI · validator · IG Publisher",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
    "skills": [
@@ -336,7 +333,6 @@
    "name": "QC gates",
    "type": "bpmn:UserTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_QcGates",
-   "stepHref": "l3-fhir-pipeline.html#step-Task_QcGates",
    "lane": "QC reviewer",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Qc",
    "skills": [
@@ -420,7 +416,6 @@
    "name": "File QC findings as beans",
    "type": "bpmn:Task",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_QcBeans",
-   "stepHref": "l3-fhir-pipeline.html#step-Task_QcBeans",
    "lane": "FHIR modeller",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Modeller",
    "skills": [
@@ -454,7 +449,6 @@
    "name": "Publish extracted statements",
    "type": "bpmn:CallActivity",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Call_PublishStatements",
-   "stepHref": "l3-fhir-pipeline.html#step-Call_PublishStatements",
    "lane": "Build pipeline — SUSHI · validator · IG Publisher",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
    "skills": [
@@ -557,7 +551,6 @@
    "name": "IG Publisher build",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_IgPublisher",
-   "stepHref": "l3-fhir-pipeline.html#step-Task_IgPublisher",
    "lane": "Build pipeline — SUSHI · validator · IG Publisher",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_Build",
    "skills": [
@@ -655,7 +648,6 @@
    "name": "Publish the IG site",
    "type": "bpmn:ServiceTask",
    "href": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/node/Task_PublishIg",
-   "stepHref": "l3-fhir-pipeline.html#step-Task_PublishIg",
    "lane": "Publication manager",
    "laneHref": "https://litlfred.github.io/folio-assistant/fhir-harness/process/Process_L3Fhir/lane/Lane_PubMgr",
    "skills": [
