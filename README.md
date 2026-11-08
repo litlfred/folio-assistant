@@ -84,7 +84,8 @@ The table is generated from the declarations themselves; it is not a list anybod
 ## How this checkout is put together
 
 - [`index.config.json`](index.config.json) names every instance and where it comes from. [`index.lock.json`](index.lock.json) records the commit each remote mount resolved to, with a digest of its tree.
-- `bash .github/mount-from-lock.sh --root .` lays every mount down on a fresh clone, and reports one already on disk as current.
+- On a fresh clone the first `bun run cat <script>` mounts every layer the lock pins and runs `bun install` once (`.github/cat.ts`), then runs the script.
+- `bash .github/mount-from-lock.sh --root .` refreshes the mounts after a re-pin, and reports one already on disk as current.
 - `bun install` installs every instance's dependencies at once; `bun run cat <script>` finds a script in the instance that declares it (`checkoutScripts`).
 - `bun run cat index:render` writes this README, `AGENTS.md`, `CLAUDE.md` and `GEMINI.md`; nothing else at the root says what the instances are.
 

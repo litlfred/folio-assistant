@@ -1101,7 +1101,8 @@ jobs:
             CHROME_ARGS=()
             [ "$CHROME" != "-" ] && CHROME_ARGS=(--chrome-owner "$CHROME")
             bash fhir-harness/scripts/ig-ast-site.sh --ig-root "$SRC" --instance "$INSTANCE" \
-              --out "$OUT" --label "$LABEL" "${CHROME_ARGS[@]}" || { echo "AST pipeline failed: $INSTANCE"; continue; }
+              --out "$OUT" --label "$LABEL" "${CHROME_ARGS[@]}" \
+              -- --site-prefix "/${INSTANCE}/ast" || { echo "AST pipeline failed: $INSTANCE"; continue; }
             mkdir -p "./_docs/${INSTANCE}/ast"
             cp -R "$OUT/docs/." "./_docs/${INSTANCE}/ast/"
             # The resources the pages load in the browser, beside the pages.

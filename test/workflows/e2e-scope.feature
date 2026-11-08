@@ -68,21 +68,26 @@ Feature: The e2e shards run on a PR push unless every changed file is one they c
     When the dispatch-scope step runs on a branch with no commit beyond origin/main
     Then affected is "true"
 
-  @test:test/workflows/e2e-scope.test.ts::a_dispatch_on_a_branch_is_scoped_by_its_diff_against_main::the_job_runs_on_a_dispatch_of_a_branch,_never_of_main
-  Scenario: The job runs on a dispatch of a branch, never of main
-    Given the e2e-scope job's if
+  @test:test/workflows/e2e-scope.test.ts::a_dispatch_on_a_branch_is_scoped_by_its_diff_against_main::the_step_runs_on_a_dispatch_of_a_branch,_never_of_main
+  Scenario: The dispatch-scope step runs on a dispatch of a branch, never of main
+    Given the dispatch-scope step's if in the verdict-reuse job
     Then it contains "github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main'"
 
   @test:test/workflows/e2e-scope.test.ts::the_shards_honour_it,_and_everything_else_still_runs_them::only_the_exact_answer_`false`_skips_a_shard,_so_a_missing_answer_runs_it
   Scenario: Only the exact answer false skips a shard, so a missing answer runs it
     Given the e2e-shard job
-    Then it needs e2e-scope
-    And its if contains "needs.e2e-scope.outputs.affected != 'false'"
+    Then it needs verdict-reuse
+    And its if contains "needs.verdict-reuse.outputs.affected != 'false'"
     And its if contains "!cancelled()"
 
-  @test:test/workflows/e2e-scope.test.ts::the_shards_honour_it,_and_everything_else_still_runs_them::the_scope_job_runs_on_PR_pushes_only,_never_on_ready_for_review_or_a_draft
-  Scenario: The scope job runs on PR pushes only, never on ready_for_review or a draft
-    Given the e2e-scope job's if
+  @test:test/workflows/e2e-scope.test.ts::the_shards_honour_it,_and_everything_else_still_runs_them::the_scope_step_runs_on_PR_pushes_only,_never_on_ready_for_review_or_a_draft
+  Scenario: The scope step runs on PR pushes only, never on ready_for_review or a draft
+    Given the scope step's if in the verdict-reuse job
     Then it contains "github.event_name == 'pull_request'"
     And it contains "github.event.action != 'ready_for_review'"
-    And it contains "github.event.pull_request.draft != true"
+    And it contains "contains(github.event.pull_request.labels.*.name, 'release')"
+
+  @test:test/workflows/e2e-scope.test.ts::the_shards_honour_it,_and_everything_else_still_runs_them::the_scope_steps_never_fail_the_verdict-reuse_job:_no_answer_runs_the_shards
+  Scenario: The scope steps never fail the verdict-reuse job, and no answer runs the shards
+    Given the scope and dispatch-scope steps in the verdict-reuse job
+    Then each has continue-on-error true
