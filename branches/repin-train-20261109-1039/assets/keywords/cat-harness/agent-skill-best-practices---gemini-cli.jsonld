@@ -1,0 +1,1042 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "agent-skill-best-practices---gemini-cli",
+  "instance": "cat-harness",
+  "about": "library/agent-skill-best-practices---gemini-cli",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "agent skill",
+        "score": 3.4854,
+        "evidence": []
+      },
+      {
+        "term": "gemini cli",
+        "score": 3.0898,
+        "evidence": []
+      },
+      {
+        "term": "practices gemini",
+        "score": 2.4291,
+        "evidence": []
+      },
+      {
+        "term": "analyze traffic",
+        "score": 2.1314,
+        "evidence": []
+      },
+      {
+        "term": "scripts",
+        "score": 1.5823,
+        "evidence": []
+      },
+      {
+        "term": "website",
+        "score": 1.2776,
+        "evidence": []
+      },
+      {
+        "term": "google",
+        "score": 1.2548,
+        "evidence": []
+      },
+      {
+        "term": "loaded",
+        "score": 1.115,
+        "evidence": []
+      },
+      {
+        "term": "cookies",
+        "score": 1.1145,
+        "evidence": []
+      },
+      {
+        "term": "enhance",
+        "score": 1.1057,
+        "evidence": []
+      },
+      {
+        "term": "freedom",
+        "score": 1.0748,
+        "evidence": []
+      },
+      {
+        "term": "deliver",
+        "score": 1.0452,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "agent skill",
+        "score": 63.5234,
+        "evidence": []
+      },
+      {
+        "term": "gemini cli",
+        "score": 42.8999,
+        "evidence": []
+      },
+      {
+        "term": "scripts",
+        "score": 33.05,
+        "evidence": []
+      },
+      {
+        "term": "practices gemini",
+        "score": 30.1033,
+        "evidence": []
+      },
+      {
+        "term": "analyze traffic",
+        "score": 22.1794,
+        "evidence": []
+      },
+      {
+        "term": "freedom",
+        "score": 19.9581,
+        "evidence": []
+      },
+      {
+        "term": "google",
+        "score": 14.9853,
+        "evidence": []
+      },
+      {
+        "term": "website",
+        "score": 13.9592,
+        "evidence": []
+      },
+      {
+        "term": "loaded",
+        "score": 13.8196,
+        "evidence": []
+      },
+      {
+        "term": "resources",
+        "score": 12.3591,
+        "evidence": []
+      },
+      {
+        "term": "cookies",
+        "score": 12.26,
+        "evidence": []
+      },
+      {
+        "term": "enhance",
+        "score": 11.952,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "agent skill",
+        "score": 1.8707,
+        "evidence": []
+      },
+      {
+        "term": "claude",
+        "score": 0.919,
+        "evidence": []
+      },
+      {
+        "term": "docs",
+        "score": 0.5262,
+        "evidence": []
+      },
+      {
+        "term": "practices gemini",
+        "score": 0.5119,
+        "evidence": []
+      },
+      {
+        "term": "cookie",
+        "score": 0.4945,
+        "evidence": []
+      },
+      {
+        "term": "file",
+        "score": 0.4798,
+        "evidence": []
+      },
+      {
+        "term": "platform",
+        "score": 0.4745,
+        "evidence": []
+      },
+      {
+        "term": "services",
+        "score": 0.4336,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 0.4311,
+        "evidence": []
+      },
+      {
+        "term": "read",
+        "score": 0.4216,
+        "evidence": []
+      },
+      {
+        "term": "scripts",
+        "score": 0.4178,
+        "evidence": []
+      },
+      {
+        "term": "authoring",
+        "score": 0.4112,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "agent skill",
+        "score": 39.3612,
+        "evidence": []
+      },
+      {
+        "term": "claude",
+        "score": 14.2187,
+        "evidence": []
+      },
+      {
+        "term": "task",
+        "score": 6.8935,
+        "evidence": []
+      },
+      {
+        "term": "files",
+        "score": 5.3802,
+        "evidence": []
+      },
+      {
+        "term": "reference",
+        "score": 4.7751,
+        "evidence": []
+      },
+      {
+        "term": "instructions",
+        "score": 4.3168,
+        "evidence": []
+      },
+      {
+        "term": "scripts",
+        "score": 4.1303,
+        "evidence": []
+      },
+      {
+        "term": "body",
+        "score": 4.1187,
+        "evidence": []
+      },
+      {
+        "term": "practices gemini",
+        "score": 4.0517,
+        "evidence": []
+      },
+      {
+        "term": "docs",
+        "score": 3.9848,
+        "evidence": []
+      },
+      {
+        "term": "context",
+        "score": 3.9247,
+        "evidence": []
+      },
+      {
+        "term": "gemini cli",
+        "score": 3.8296,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "agent skill",
+        "score": 1.8707,
+        "evidence": []
+      },
+      {
+        "term": "practices gemini",
+        "score": 0.5119,
+        "evidence": []
+      },
+      {
+        "term": "analyze traffic",
+        "score": 0.4365,
+        "evidence": []
+      },
+      {
+        "term": "services",
+        "score": 0.4336,
+        "evidence": []
+      },
+      {
+        "term": "scripts",
+        "score": 0.4178,
+        "evidence": []
+      },
+      {
+        "term": "instructions",
+        "score": 0.4072,
+        "evidence": []
+      },
+      {
+        "term": "reference",
+        "score": 0.3791,
+        "evidence": []
+      },
+      {
+        "term": "context",
+        "score": 0.3418,
+        "evidence": []
+      },
+      {
+        "term": "task",
+        "score": 0.3388,
+        "evidence": []
+      },
+      {
+        "term": "gemini cli",
+        "score": 0.3378,
+        "evidence": []
+      },
+      {
+        "term": "cookies",
+        "score": 0.3349,
+        "evidence": []
+      },
+      {
+        "term": "deliver",
+        "score": 0.2967,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "form-filling",
+        "score": 98.6266,
+        "evidence": []
+      },
+      {
+        "term": "bigquery-skill",
+        "score": 92.1668,
+        "evidence": []
+      },
+      {
+        "term": "upload",
+        "score": 90.4087,
+        "evidence": []
+      },
+      {
+        "term": "pre-loaded",
+        "score": 86.8102,
+        "evidence": []
+      },
+      {
+        "term": "personalize",
+        "score": 85.1294,
+        "evidence": []
+      },
+      {
+        "term": "filesystem-based",
+        "score": 82.4828,
+        "evidence": []
+      },
+      {
+        "term": "pdf-processing",
+        "score": 81.3126,
+        "evidence": []
+      },
+      {
+        "term": "plugins",
+        "score": 81.0049,
+        "evidence": []
+      },
+      {
+        "term": "customize",
+        "score": 80.6905,
+        "evidence": []
+      },
+      {
+        "term": "cookie",
+        "score": 79.9161,
+        "evidence": []
+      },
+      {
+        "term": "pdfplumber",
+        "score": 79.406,
+        "evidence": []
+      },
+      {
+        "term": "voodoo",
+        "score": 78.9084,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gemini cli",
+          "score": 1.608,
+          "evidence": []
+        },
+        {
+          "term": "agent skill",
+          "score": 1.3513,
+          "evidence": []
+        },
+        {
+          "term": "loaded",
+          "score": 0.6837,
+          "evidence": []
+        },
+        {
+          "term": "google",
+          "score": 0.5547,
+          "evidence": []
+        },
+        {
+          "term": "words",
+          "score": 0.4579,
+          "evidence": []
+        },
+        {
+          "term": "practices",
+          "score": 0.4568,
+          "evidence": []
+        },
+        {
+          "term": "design",
+          "score": 0.3977,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "agent skill",
+          "score": 28.0179,
+          "evidence": []
+        },
+        {
+          "term": "gemini cli",
+          "score": 27.4203,
+          "evidence": []
+        },
+        {
+          "term": "loaded",
+          "score": 9.2131,
+          "evidence": []
+        },
+        {
+          "term": "google",
+          "score": 7.4927,
+          "evidence": []
+        },
+        {
+          "term": "practices",
+          "score": 6.2049,
+          "evidence": []
+        },
+        {
+          "term": "words",
+          "score": 5.7385,
+          "evidence": []
+        },
+        {
+          "term": "resources",
+          "score": 4.9437,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agent skill",
+          "score": 0.6302,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.3425,
+          "evidence": []
+        },
+        {
+          "term": "docs",
+          "score": 0.182,
+          "evidence": []
+        },
+        {
+          "term": "gemini cli",
+          "score": 0.1775,
+          "evidence": []
+        },
+        {
+          "term": "cookie",
+          "score": 0.1737,
+          "evidence": []
+        },
+        {
+          "term": "platform",
+          "score": 0.1726,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.156,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent skill",
+          "score": 15.0001,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 5.733,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 2.3773,
+          "evidence": []
+        },
+        {
+          "term": "gemini cli",
+          "score": 2.2159,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 2.1412,
+          "evidence": []
+        },
+        {
+          "term": "openhands",
+          "score": 1.982,
+          "evidence": []
+        },
+        {
+          "term": "context",
+          "score": 1.8157,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent skill",
+          "score": 0.6302,
+          "evidence": []
+        },
+        {
+          "term": "gemini cli",
+          "score": 0.1775,
+          "evidence": []
+        },
+        {
+          "term": "context",
+          "score": 0.1277,
+          "evidence": []
+        },
+        {
+          "term": "practices",
+          "score": 0.1274,
+          "evidence": []
+        },
+        {
+          "term": "resources",
+          "score": 0.0948,
+          "evidence": []
+        },
+        {
+          "term": "description",
+          "score": 0.0884,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 0.0866,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "form-filling",
+          "score": 29.5607,
+          "evidence": []
+        },
+        {
+          "term": "bigquery-skill",
+          "score": 27.7513,
+          "evidence": []
+        },
+        {
+          "term": "plugins",
+          "score": 27.028,
+          "evidence": []
+        },
+        {
+          "term": "pre-loaded",
+          "score": 26.1684,
+          "evidence": []
+        },
+        {
+          "term": "personalize",
+          "score": 25.6644,
+          "evidence": []
+        },
+        {
+          "term": "pdf-processing",
+          "score": 24.6692,
+          "evidence": []
+        },
+        {
+          "term": "filesystem-based",
+          "score": 24.6128,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "freedom",
+          "score": 1.0748,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 1.0353,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.8031,
+          "evidence": []
+        },
+        {
+          "term": "folder",
+          "score": 0.7644,
+          "evidence": []
+        },
+        {
+          "term": "assets",
+          "score": 0.7373,
+          "evidence": []
+        },
+        {
+          "term": "bundle",
+          "score": 0.6939,
+          "evidence": []
+        },
+        {
+          "term": "directory",
+          "score": 0.5796,
+          "evidence": []
+        },
+        {
+          "term": "templates",
+          "score": 0.5709,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "scripts",
+          "score": 25.7056,
+          "evidence": []
+        },
+        {
+          "term": "freedom",
+          "score": 19.9581,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 16.6656,
+          "evidence": []
+        },
+        {
+          "term": "assets",
+          "score": 11.3567,
+          "evidence": []
+        },
+        {
+          "term": "folder",
+          "score": 10.5994,
+          "evidence": []
+        },
+        {
+          "term": "optional",
+          "score": 8.8579,
+          "evidence": []
+        },
+        {
+          "term": "bundle",
+          "score": 8.8035,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 8.4901,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.5881,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.3431,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2447,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.2184,
+          "evidence": []
+        },
+        {
+          "term": "docs",
+          "score": 0.2168,
+          "evidence": []
+        },
+        {
+          "term": "cookie",
+          "score": 0.2066,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 0.1959,
+          "evidence": []
+        },
+        {
+          "term": "platform",
+          "score": 0.1917,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 12.5916,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 5.2917,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 3.078,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 3.0008,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 2.2064,
+          "evidence": []
+        },
+        {
+          "term": "instruction",
+          "score": 2.1022,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 2.0752,
+          "evidence": []
+        },
+        {
+          "term": "enterprise",
+          "score": 1.809,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.5881,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2447,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 0.1959,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 0.1904,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.1782,
+          "evidence": []
+        },
+        {
+          "term": "resources",
+          "score": 0.1347,
+          "evidence": []
+        },
+        {
+          "term": "output",
+          "score": 0.1099,
+          "evidence": []
+        },
+        {
+          "term": "assets",
+          "score": 0.0906,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 40.1154,
+          "evidence": []
+        },
+        {
+          "term": "form-filling",
+          "score": 36.7529,
+          "evidence": []
+        },
+        {
+          "term": "bigquery-skill",
+          "score": 33.7914,
+          "evidence": []
+        },
+        {
+          "term": "pre-loaded",
+          "score": 31.7106,
+          "evidence": []
+        },
+        {
+          "term": "personalize",
+          "score": 31.2818,
+          "evidence": []
+        },
+        {
+          "term": "filesystem-based",
+          "score": 30.2765,
+          "evidence": []
+        },
+        {
+          "term": "pdf-processing",
+          "score": 29.7908,
+          "evidence": []
+        },
+        {
+          "term": "customize",
+          "score": 29.5696,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "privacy",
+          "score": 0.6775,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.6642,
+          "evidence": []
+        },
+        {
+          "term": "installing",
+          "score": 0.5982,
+          "evidence": []
+        },
+        {
+          "term": "passwords",
+          "score": 0.5526,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skill",
+          "score": 11.1104,
+          "evidence": []
+        },
+        {
+          "term": "privacy",
+          "score": 8.8035,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 7.3444,
+          "evidence": []
+        },
+        {
+          "term": "installing",
+          "score": 6.599,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.3042,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.2334,
+          "evidence": []
+        },
+        {
+          "term": "docs",
+          "score": 0.1274,
+          "evidence": []
+        },
+        {
+          "term": "cookie",
+          "score": 0.1142,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 7.4636,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 3.1939,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 1.4381,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 1.405,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.3042,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1035,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.0988,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 0.0894,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "form-filling",
+          "score": 32.313,
+          "evidence": []
+        },
+        {
+          "term": "bigquery-skill",
+          "score": 30.624,
+          "evidence": []
+        },
+        {
+          "term": "pre-loaded",
+          "score": 28.9312,
+          "evidence": []
+        },
+        {
+          "term": "upload",
+          "score": 28.2274,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

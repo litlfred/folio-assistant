@@ -1,0 +1,27 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/folio-assistant-core/skill/diff.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1039",
+    "sha": "382320dc738877f46955b5d8b573a8a0727c7f5a",
+    "pr": "repin-train/20261109-1039",
+    "run": "42602559545"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/folio-assistant-core/skill/diff",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "diff",
+      "title": "Diff — Content Block Change Report",
+      "description": "Show per-block content changes with viewer links, changelog, and undo impact analysis",
+      "instructionsPath": "skills/content/content-lifecycle-ext/diff.md",
+      "instructionLines": 164,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/folio-assistant-core/directory/core-skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/diff"
+    }
+  ]
+}

@@ -1,0 +1,1900 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "kg-folio-asst-2026-09-30",
+  "instance": "cat-harness",
+  "about": "library/kg-folio-asst-2026-09-30",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "images alt",
+        "score": 8.6886,
+        "evidence": []
+      },
+      {
+        "term": "test repos",
+        "score": 5.0939,
+        "evidence": []
+      },
+      {
+        "term": "content repos",
+        "score": 4.8103,
+        "evidence": []
+      },
+      {
+        "term": "missing",
+        "score": 4.4613,
+        "evidence": []
+      },
+      {
+        "term": "tool repos",
+        "score": 4.3919,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 3.9599,
+        "evidence": []
+      },
+      {
+        "term": "ohs app",
+        "score": 3.919,
+        "evidence": []
+      },
+      {
+        "term": "none",
+        "score": 3.9105,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 3.6049,
+        "evidence": []
+      },
+      {
+        "term": "bpmn execution",
+        "score": 3.4694,
+        "evidence": []
+      },
+      {
+        "term": "test data",
+        "score": 3.2974,
+        "evidence": []
+      },
+      {
+        "term": "knowledge assets",
+        "score": 3.2609,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "images alt",
+        "score": 212.5558,
+        "evidence": []
+      },
+      {
+        "term": "missing",
+        "score": 107.3675,
+        "evidence": []
+      },
+      {
+        "term": "none",
+        "score": 102.782,
+        "evidence": []
+      },
+      {
+        "term": "test repos",
+        "score": 100.7545,
+        "evidence": []
+      },
+      {
+        "term": "content repos",
+        "score": 92.307,
+        "evidence": []
+      },
+      {
+        "term": "tool repos",
+        "score": 82.304,
+        "evidence": []
+      },
+      {
+        "term": "ohs app",
+        "score": 63.541,
+        "evidence": []
+      },
+      {
+        "term": "public health",
+        "score": 54.7661,
+        "evidence": []
+      },
+      {
+        "term": "test data",
+        "score": 52.4227,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 51.1473,
+        "evidence": []
+      },
+      {
+        "term": "bpmn execution",
+        "score": 50.8331,
+        "evidence": []
+      },
+      {
+        "term": "contain test",
+        "score": 42.9556,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "public health",
+        "score": 1.0365,
+        "evidence": []
+      },
+      {
+        "term": "skill",
+        "score": 0.9264,
+        "evidence": []
+      },
+      {
+        "term": "execution tool",
+        "score": 0.9024,
+        "evidence": []
+      },
+      {
+        "term": "test data",
+        "score": 0.8689,
+        "evidence": []
+      },
+      {
+        "term": "agentic workflows",
+        "score": 0.7828,
+        "evidence": []
+      },
+      {
+        "term": "bpmn execution",
+        "score": 0.7375,
+        "evidence": []
+      },
+      {
+        "term": "process",
+        "score": 0.718,
+        "evidence": []
+      },
+      {
+        "term": "author review",
+        "score": 0.6852,
+        "evidence": []
+      },
+      {
+        "term": "agent",
+        "score": 0.6798,
+        "evidence": []
+      },
+      {
+        "term": "task",
+        "score": 0.6656,
+        "evidence": []
+      },
+      {
+        "term": "knowledge graph",
+        "score": 0.6632,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 0.6599,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "public health",
+        "score": 23.1639,
+        "evidence": []
+      },
+      {
+        "term": "skill",
+        "score": 19.8186,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 16.3908,
+        "evidence": []
+      },
+      {
+        "term": "process",
+        "score": 10.6805,
+        "evidence": []
+      },
+      {
+        "term": "execution tool",
+        "score": 10.6112,
+        "evidence": []
+      },
+      {
+        "term": "agentic workflows",
+        "score": 10.1588,
+        "evidence": []
+      },
+      {
+        "term": "task",
+        "score": 9.4024,
+        "evidence": []
+      },
+      {
+        "term": "knowledge graph",
+        "score": 9.0212,
+        "evidence": []
+      },
+      {
+        "term": "defects",
+        "score": 8.1928,
+        "evidence": []
+      },
+      {
+        "term": "test data",
+        "score": 8.1325,
+        "evidence": []
+      },
+      {
+        "term": "tool repos",
+        "score": 8.1195,
+        "evidence": []
+      },
+      {
+        "term": "reasoning",
+        "score": 7.9516,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "public health",
+        "score": 1.0365,
+        "evidence": []
+      },
+      {
+        "term": "skill",
+        "score": 0.9264,
+        "evidence": []
+      },
+      {
+        "term": "execution tool",
+        "score": 0.9024,
+        "evidence": []
+      },
+      {
+        "term": "test data",
+        "score": 0.8689,
+        "evidence": []
+      },
+      {
+        "term": "agentic workflows",
+        "score": 0.7828,
+        "evidence": []
+      },
+      {
+        "term": "bpmn execution",
+        "score": 0.7375,
+        "evidence": []
+      },
+      {
+        "term": "process",
+        "score": 0.718,
+        "evidence": []
+      },
+      {
+        "term": "author review",
+        "score": 0.6852,
+        "evidence": []
+      },
+      {
+        "term": "agent",
+        "score": 0.6798,
+        "evidence": []
+      },
+      {
+        "term": "task",
+        "score": 0.6656,
+        "evidence": []
+      },
+      {
+        "term": "knowledge graph",
+        "score": 0.6632,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 0.6599,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "images alt",
+        "score": 3075.9455,
+        "evidence": []
+      },
+      {
+        "term": "adjudicate",
+        "score": 2378.6628,
+        "evidence": []
+      },
+      {
+        "term": "ohs app",
+        "score": 1896.1022,
+        "evidence": []
+      },
+      {
+        "term": "anthropic-mcp app",
+        "score": 1698.001,
+        "evidence": []
+      },
+      {
+        "term": "customizable",
+        "score": 1651.0122,
+        "evidence": []
+      },
+      {
+        "term": "endorse",
+        "score": 1506.0757,
+        "evidence": []
+      },
+      {
+        "term": "mitigated",
+        "score": 1504.4171,
+        "evidence": []
+      },
+      {
+        "term": "envisions",
+        "score": 1484.2531,
+        "evidence": []
+      },
+      {
+        "term": "smart-imz-test",
+        "score": 1401.8008,
+        "evidence": []
+      },
+      {
+        "term": "smart-kg-tools",
+        "score": 1401.8008,
+        "evidence": []
+      },
+      {
+        "term": "clock",
+        "score": 1041.6088,
+        "evidence": []
+      },
+      {
+        "term": "computable",
+        "score": 1025.9901,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "slide-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "alt",
+          "score": 2.1689,
+          "evidence": []
+        },
+        {
+          "term": "smart guidelines",
+          "score": 1.6691,
+          "evidence": []
+        },
+        {
+          "term": "media post",
+          "score": 1.382,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 1.31,
+          "evidence": []
+        },
+        {
+          "term": "none",
+          "score": 1.1483,
+          "evidence": []
+        },
+        {
+          "term": "social media",
+          "score": 1.1082,
+          "evidence": []
+        },
+        {
+          "term": "screenshot",
+          "score": 0.829,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.794,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "alt",
+          "score": 77.0049,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 34.6347,
+          "evidence": []
+        },
+        {
+          "term": "none",
+          "score": 33.1555,
+          "evidence": []
+        },
+        {
+          "term": "smart guidelines",
+          "score": 27.785,
+          "evidence": []
+        },
+        {
+          "term": "media post",
+          "score": 16.6762,
+          "evidence": []
+        },
+        {
+          "term": "social media",
+          "score": 14.3361,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 12.7908,
+          "evidence": []
+        },
+        {
+          "term": "screenshot",
+          "score": 11.5033,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "health",
+          "score": 0.1664,
+          "evidence": []
+        },
+        {
+          "term": "media post",
+          "score": 0.1601,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1347,
+          "evidence": []
+        },
+        {
+          "term": "social media",
+          "score": 0.1138,
+          "evidence": []
+        },
+        {
+          "term": "smart guidelines",
+          "score": 0.0949,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 0.0881,
+          "evidence": []
+        },
+        {
+          "term": "text",
+          "score": 0.0868,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 0.0862,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 4.2159,
+          "evidence": []
+        },
+        {
+          "term": "media post",
+          "score": 3.8756,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 2.154,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 2.0514,
+          "evidence": []
+        },
+        {
+          "term": "dmn",
+          "score": 1.9813,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 1.9754,
+          "evidence": []
+        },
+        {
+          "term": "rules",
+          "score": 1.9741,
+          "evidence": []
+        },
+        {
+          "term": "text",
+          "score": 1.9253,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "health",
+          "score": 0.1664,
+          "evidence": []
+        },
+        {
+          "term": "media post",
+          "score": 0.1601,
+          "evidence": []
+        },
+        {
+          "term": "social media",
+          "score": 0.1138,
+          "evidence": []
+        },
+        {
+          "term": "smart guidelines",
+          "score": 0.0949,
+          "evidence": []
+        },
+        {
+          "term": "none",
+          "score": 0.0732,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.0726,
+          "evidence": []
+        },
+        {
+          "term": "content",
+          "score": 0.0553,
+          "evidence": []
+        },
+        {
+          "term": "generated",
+          "score": 0.0529,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alt",
+          "score": 786.0063,
+          "evidence": []
+        },
+        {
+          "term": "adjudicate",
+          "score": 525.8144,
+          "evidence": []
+        },
+        {
+          "term": "customizable",
+          "score": 445.7895,
+          "evidence": []
+        },
+        {
+          "term": "envisions",
+          "score": 407.3951,
+          "evidence": []
+        },
+        {
+          "term": "endorse",
+          "score": 404.3385,
+          "evidence": []
+        },
+        {
+          "term": "mitigated",
+          "score": 401.0318,
+          "evidence": []
+        },
+        {
+          "term": "clock",
+          "score": 302.4204,
+          "evidence": []
+        },
+        {
+          "term": "computable",
+          "score": 279.0075,
+          "evidence": []
+        }
+      ]
+    },
+    "slide-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "world health",
+          "score": 1.2713,
+          "evidence": []
+        },
+        {
+          "term": "data hub",
+          "score": 1.2123,
+          "evidence": []
+        },
+        {
+          "term": "fees",
+          "score": 1.0078,
+          "evidence": []
+        },
+        {
+          "term": "cryptographic",
+          "score": 0.9502,
+          "evidence": []
+        },
+        {
+          "term": "knowledge graph",
+          "score": 0.8792,
+          "evidence": []
+        },
+        {
+          "term": "cloud",
+          "score": 0.7506,
+          "evidence": []
+        },
+        {
+          "term": "signed",
+          "score": 0.7278,
+          "evidence": []
+        },
+        {
+          "term": "origin",
+          "score": 0.7238,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "world health",
+          "score": 19.1232,
+          "evidence": []
+        },
+        {
+          "term": "data hub",
+          "score": 17.1461,
+          "evidence": []
+        },
+        {
+          "term": "fees",
+          "score": 14.0089,
+          "evidence": []
+        },
+        {
+          "term": "cryptographic",
+          "score": 13.1979,
+          "evidence": []
+        },
+        {
+          "term": "cloud",
+          "score": 11.5423,
+          "evidence": []
+        },
+        {
+          "term": "knowledge graph",
+          "score": 10.6555,
+          "evidence": []
+        },
+        {
+          "term": "origin",
+          "score": 9.9791,
+          "evidence": []
+        },
+        {
+          "term": "signed",
+          "score": 9.6144,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world health",
+          "score": 0.2012,
+          "evidence": []
+        },
+        {
+          "term": "enterprise",
+          "score": 0.1935,
+          "evidence": []
+        },
+        {
+          "term": "knowledge graph",
+          "score": 0.1833,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.1631,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1592,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1501,
+          "evidence": []
+        },
+        {
+          "term": "data hub",
+          "score": 0.1501,
+          "evidence": []
+        },
+        {
+          "term": "trust",
+          "score": 0.1378,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world health",
+          "score": 5.0006,
+          "evidence": []
+        },
+        {
+          "term": "knowledge graph",
+          "score": 3.3068,
+          "evidence": []
+        },
+        {
+          "term": "enterprise",
+          "score": 2.836,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 2.6056,
+          "evidence": []
+        },
+        {
+          "term": "node",
+          "score": 2.4363,
+          "evidence": []
+        },
+        {
+          "term": "json-ld",
+          "score": 2.2995,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 1.9612,
+          "evidence": []
+        },
+        {
+          "term": "spdx",
+          "score": 1.9548,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world health",
+          "score": 0.2012,
+          "evidence": []
+        },
+        {
+          "term": "knowledge graph",
+          "score": 0.1833,
+          "evidence": []
+        },
+        {
+          "term": "data hub",
+          "score": 0.1605,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1592,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1135,
+          "evidence": []
+        },
+        {
+          "term": "assets",
+          "score": 0.1026,
+          "evidence": []
+        },
+        {
+          "term": "architecture",
+          "score": 0.0979,
+          "evidence": []
+        },
+        {
+          "term": "cloud",
+          "score": 0.0764,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alt",
+          "score": 66.6291,
+          "evidence": []
+        },
+        {
+          "term": "adjudicate",
+          "score": 47.267,
+          "evidence": []
+        },
+        {
+          "term": "customizable",
+          "score": 38.3406,
+          "evidence": []
+        },
+        {
+          "term": "mitigated",
+          "score": 36.133,
+          "evidence": []
+        },
+        {
+          "term": "envisions",
+          "score": 35.5904,
+          "evidence": []
+        },
+        {
+          "term": "endorse",
+          "score": 34.4631,
+          "evidence": []
+        },
+        {
+          "term": "clock",
+          "score": 24.6847,
+          "evidence": []
+        },
+        {
+          "term": "computable",
+          "score": 23.784,
+          "evidence": []
+        }
+      ]
+    },
+    "slide-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adaptation kit",
+          "score": 1.7248,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 1.6608,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.6754,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital adaptation",
+          "score": 25.9687,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kit",
+          "score": 22.9267,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 9.6268,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital adaptation",
+          "score": 0.0778,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0776,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.0575,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 2.4982,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 1.3586,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 1.3501,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital adaptation",
+          "score": 0.0778,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0776,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kit",
+          "score": 0.0491,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alt",
+          "score": 160.0224,
+          "evidence": []
+        },
+        {
+          "term": "adjudicate",
+          "score": 108.7326,
+          "evidence": []
+        },
+        {
+          "term": "customizable",
+          "score": 91.4829,
+          "evidence": []
+        }
+      ]
+    },
+    "slide-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "alt",
+          "score": 1.289,
+          "evidence": []
+        },
+        {
+          "term": "state management",
+          "score": 1.0521,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 0.8792,
+          "evidence": []
+        },
+        {
+          "term": "none",
+          "score": 0.7707,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.7073,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 0.7069,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "alt",
+          "score": 22.0014,
+          "evidence": []
+        },
+        {
+          "term": "state management",
+          "score": 14.7459,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 13.8539,
+          "evidence": []
+        },
+        {
+          "term": "none",
+          "score": 13.2622,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 9.9523,
+          "evidence": []
+        },
+        {
+          "term": "bpmn",
+          "score": 9.3061,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.2173,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.2062,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1901,
+          "evidence": []
+        },
+        {
+          "term": "state management",
+          "score": 0.1254,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.1219,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1218,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 5.5723,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 5.0451,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 2.142,
+          "evidence": []
+        },
+        {
+          "term": "business",
+          "score": 2.0871,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 1.8062,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 1.7453,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process",
+          "score": 0.2173,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.2062,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1901,
+          "evidence": []
+        },
+        {
+          "term": "state management",
+          "score": 0.1254,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.1219,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1218,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alt",
+          "score": 306.3949,
+          "evidence": []
+        },
+        {
+          "term": "adjudicate",
+          "score": 212.2047,
+          "evidence": []
+        },
+        {
+          "term": "customizable",
+          "score": 172.1696,
+          "evidence": []
+        },
+        {
+          "term": "mitigated",
+          "score": 156.3786,
+          "evidence": []
+        },
+        {
+          "term": "endorse",
+          "score": 154.9905,
+          "evidence": []
+        },
+        {
+          "term": "envisions",
+          "score": 154.5955,
+          "evidence": []
+        }
+      ]
+    },
+    "slide-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "alt",
+          "score": 2.2206,
+          "evidence": []
+        },
+        {
+          "term": "bpmn execution",
+          "score": 1.7238,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 1.5147,
+          "evidence": []
+        },
+        {
+          "term": "none",
+          "score": 1.3277,
+          "evidence": []
+        },
+        {
+          "term": "agentic",
+          "score": 1.1358,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "alt",
+          "score": 82.5053,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 51.952,
+          "evidence": []
+        },
+        {
+          "term": "none",
+          "score": 49.7332,
+          "evidence": []
+        },
+        {
+          "term": "bpmn execution",
+          "score": 30.7867,
+          "evidence": []
+        },
+        {
+          "term": "execution tool",
+          "score": 16.9334,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "execution tool",
+          "score": 0.1954,
+          "evidence": []
+        },
+        {
+          "term": "bpmn execution",
+          "score": 0.1869,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1584,
+          "evidence": []
+        },
+        {
+          "term": "agentic",
+          "score": 0.1554,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "skills",
+          "score": 0.1409,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agentic",
+          "score": 3.5802,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dmn",
+          "score": 3.2392,
+          "evidence": []
+        },
+        {
+          "term": "asr",
+          "score": 2.9217,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 2.8825,
+          "evidence": []
+        },
+        {
+          "term": "rules",
+          "score": 2.8463,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "execution tool",
+          "score": 0.1954,
+          "evidence": []
+        },
+        {
+          "term": "bpmn execution",
+          "score": 0.1869,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1584,
+          "evidence": []
+        },
+        {
+          "term": "agentic",
+          "score": 0.1554,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "skills",
+          "score": 0.1409,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alt",
+          "score": 1142.4199,
+          "evidence": []
+        },
+        {
+          "term": "adjudicate",
+          "score": 758.5838,
+          "evidence": []
+        },
+        {
+          "term": "customizable",
+          "score": 643.653,
+          "evidence": []
+        },
+        {
+          "term": "envisions",
+          "score": 585.854,
+          "evidence": []
+        },
+        {
+          "term": "mitigated",
+          "score": 585.7203,
+          "evidence": []
+        }
+      ]
+    },
+    "slide-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ohs",
+          "score": 1.5048,
+          "evidence": []
+        },
+        {
+          "term": "agentic workflows",
+          "score": 1.3377,
+          "evidence": []
+        },
+        {
+          "term": "repos",
+          "score": 1.2698,
+          "evidence": []
+        },
+        {
+          "term": "kenya",
+          "score": 0.9085,
+          "evidence": []
+        },
+        {
+          "term": "app",
+          "score": 0.883,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ohs",
+          "score": 28.0177,
+          "evidence": []
+        },
+        {
+          "term": "repos",
+          "score": 23.0067,
+          "evidence": []
+        },
+        {
+          "term": "agentic workflows",
+          "score": 20.7423,
+          "evidence": []
+        },
+        {
+          "term": "app",
+          "score": 14.2594,
+          "evidence": []
+        },
+        {
+          "term": "kenya",
+          "score": 12.6226,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agentic workflows",
+          "score": 0.1522,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.131,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1151,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1139,
+          "evidence": []
+        },
+        {
+          "term": "llm",
+          "score": 0.0969,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 3.1992,
+          "evidence": []
+        },
+        {
+          "term": "agentic workflows",
+          "score": 2.0448,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 2.0125,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 1.8404,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 1.5105,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agentic workflows",
+          "score": 0.1522,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.131,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1151,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 0.079,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 0.0623,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ohs",
+          "score": 513.5259,
+          "evidence": []
+        },
+        {
+          "term": "anthropic-mcp",
+          "score": 446.042,
+          "evidence": []
+        },
+        {
+          "term": "smart-imz-test",
+          "score": 446.042,
+          "evidence": []
+        },
+        {
+          "term": "smart-kg-tools",
+          "score": 446.042,
+          "evidence": []
+        },
+        {
+          "term": "adjudicate",
+          "score": 399.322,
+          "evidence": []
+        }
+      ]
+    },
+    "slide-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "test repos",
+          "score": 2.4162,
+          "evidence": []
+        },
+        {
+          "term": "content repos",
+          "score": 2.2762,
+          "evidence": []
+        },
+        {
+          "term": "contain test",
+          "score": 1.1849,
+          "evidence": []
+        },
+        {
+          "term": "test data",
+          "score": 1.1676,
+          "evidence": []
+        },
+        {
+          "term": "utilizes",
+          "score": 1.1612,
+          "evidence": []
+        },
+        {
+          "term": "content types",
+          "score": 1.0525,
+          "evidence": []
+        },
+        {
+          "term": "itb",
+          "score": 1.0078,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "test repos",
+          "score": 60.2543,
+          "evidence": []
+        },
+        {
+          "term": "content repos",
+          "score": 53.6641,
+          "evidence": []
+        },
+        {
+          "term": "test data",
+          "score": 26.394,
+          "evidence": []
+        },
+        {
+          "term": "contain test",
+          "score": 25.4621,
+          "evidence": []
+        },
+        {
+          "term": "utilizes",
+          "score": 21.58,
+          "evidence": []
+        },
+        {
+          "term": "content types",
+          "score": 18.8304,
+          "evidence": []
+        },
+        {
+          "term": "app",
+          "score": 14.2594,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.2573,
+          "evidence": []
+        },
+        {
+          "term": "test data",
+          "score": 0.1869,
+          "evidence": []
+        },
+        {
+          "term": "tool",
+          "score": 0.1367,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1346,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.1249,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1232,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.107,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 5.9027,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 2.3067,
+          "evidence": []
+        },
+        {
+          "term": "test data",
+          "score": 2.1773,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 2.1358,
+          "evidence": []
+        },
+        {
+          "term": "tool",
+          "score": 2.0423,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 1.9667,
+          "evidence": []
+        },
+        {
+          "term": "camel",
+          "score": 1.4413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.235,
+          "evidence": []
+        },
+        {
+          "term": "test data",
+          "score": 0.1869,
+          "evidence": []
+        },
+        {
+          "term": "tool",
+          "score": 0.1367,
+          "evidence": []
+        },
+        {
+          "term": "contain test",
+          "score": 0.1029,
+          "evidence": []
+        },
+        {
+          "term": "content types",
+          "score": 0.0991,
+          "evidence": []
+        },
+        {
+          "term": "test repos",
+          "score": 0.0899,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.0578,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ohs",
+          "score": 309.0452,
+          "evidence": []
+        },
+        {
+          "term": "anthropic-mcp",
+          "score": 272.2597,
+          "evidence": []
+        },
+        {
+          "term": "smart-imz-test",
+          "score": 272.2597,
+          "evidence": []
+        },
+        {
+          "term": "smart-kg-tools",
+          "score": 272.2597,
+          "evidence": []
+        },
+        {
+          "term": "adjudicate",
+          "score": 241.8855,
+          "evidence": []
+        },
+        {
+          "term": "self-documenting",
+          "score": 181.0762,
+          "evidence": []
+        },
+        {
+          "term": "content repos",
+          "score": 173.4271,
+          "evidence": []
+        }
+      ]
+    },
+    "slide-013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "actor",
+          "score": 1.0157,
+          "evidence": []
+        },
+        {
+          "term": "diagram",
+          "score": 0.7478,
+          "evidence": []
+        },
+        {
+          "term": "dmn",
+          "score": 0.6839,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "actor",
+          "score": 16.5011,
+          "evidence": []
+        },
+        {
+          "term": "diagram",
+          "score": 10.4253,
+          "evidence": []
+        },
+        {
+          "term": "role",
+          "score": 8.3992,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.1585,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1175,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.0885,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 3.6778,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 1.9948,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 1.2959,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.1585,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1175,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.0885,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alt",
+          "score": 99.8576,
+          "evidence": []
+        },
+        {
+          "term": "adjudicate",
+          "score": 84.8528,
+          "evidence": []
+        },
+        {
+          "term": "ohs",
+          "score": 63.5635,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

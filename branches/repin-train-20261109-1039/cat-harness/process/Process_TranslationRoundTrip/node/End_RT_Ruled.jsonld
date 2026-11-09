@@ -1,0 +1,32 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/cat-harness/process/Process_TranslationRoundTrip/node/End_RT_Ruled.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1039",
+    "sha": "382320dc738877f46955b5d8b573a8a0727c7f5a",
+    "pr": "repin-train/20261109-1039",
+    "run": "42602559545"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/cat-harness/process/Process_TranslationRoundTrip/node/End_RT_Ruled",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Verdicts recorded",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/cat-harness/process/Process_TranslationRoundTrip",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/cat-harness/role/round-trip-adjudicator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/cat-harness/process/Process_TranslationRoundTrip/lane/Lane_RT_Adjudicator",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/cat-harness/process/Process_TranslationRoundTrip#flow/Flow_RT_6"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1039/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRoundTrip/node/End_RT_Ruled"
+    }
+  ]
+}

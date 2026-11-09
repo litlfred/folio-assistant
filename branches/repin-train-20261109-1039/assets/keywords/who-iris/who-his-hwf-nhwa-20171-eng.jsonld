@@ -1,0 +1,2186 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "who-his-hwf-nhwa-20171-eng",
+  "instance": "who-iris",
+  "about": "library/who-his-hwf-nhwa-20171-eng",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 1478,
+    "terms": 11089
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "workforce policies",
+        "score": 5.6793,
+        "evidence": []
+      },
+      {
+        "term": "workforce accounts",
+        "score": 4.9241,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 4.8783,
+        "evidence": []
+      },
+      {
+        "term": "nhwa handbook",
+        "score": 4.4801,
+        "evidence": []
+      },
+      {
+        "term": "int hrh",
+        "score": 3.944,
+        "evidence": []
+      },
+      {
+        "term": "labour market",
+        "score": 3.5131,
+        "evidence": []
+      },
+      {
+        "term": "increasing productivity",
+        "score": 3.0158,
+        "evidence": []
+      },
+      {
+        "term": "towards uhc",
+        "score": 2.9214,
+        "evidence": []
+      },
+      {
+        "term": "sector employment",
+        "score": 2.9023,
+        "evidence": []
+      },
+      {
+        "term": "market framework",
+        "score": 2.6624,
+        "evidence": []
+      },
+      {
+        "term": "worker distribution",
+        "score": 2.5887,
+        "evidence": []
+      },
+      {
+        "term": "retention policies",
+        "score": 2.5814,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "workforce policies",
+        "score": 62.4839,
+        "evidence": []
+      },
+      {
+        "term": "workforce accounts",
+        "score": 51.9195,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 51.0288,
+        "evidence": []
+      },
+      {
+        "term": "nhwa handbook",
+        "score": 50.8216,
+        "evidence": []
+      },
+      {
+        "term": "labour market",
+        "score": 42.4163,
+        "evidence": []
+      },
+      {
+        "term": "int hrh",
+        "score": 40.533,
+        "evidence": []
+      },
+      {
+        "term": "module",
+        "score": 37.9313,
+        "evidence": []
+      },
+      {
+        "term": "increasing productivity",
+        "score": 36.8718,
+        "evidence": []
+      },
+      {
+        "term": "worker distribution",
+        "score": 34.1561,
+        "evidence": []
+      },
+      {
+        "term": "towards uhc",
+        "score": 33.9075,
+        "evidence": []
+      },
+      {
+        "term": "sector employment",
+        "score": 33.8609,
+        "evidence": []
+      },
+      {
+        "term": "retention policies",
+        "score": 31.4259,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "workforce accounts",
+        "score": 3.3384,
+        "evidence": []
+      },
+      {
+        "term": "workforce policies",
+        "score": 3.0539,
+        "evidence": []
+      },
+      {
+        "term": "nhwa handbook",
+        "score": 2.8672,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 2.849,
+        "evidence": []
+      },
+      {
+        "term": "labour market",
+        "score": 2.708,
+        "evidence": []
+      },
+      {
+        "term": "hwf",
+        "score": 2.1026,
+        "evidence": []
+      },
+      {
+        "term": "market framework",
+        "score": 1.8812,
+        "evidence": []
+      },
+      {
+        "term": "labour force",
+        "score": 1.8476,
+        "evidence": []
+      },
+      {
+        "term": "towards uhc",
+        "score": 1.8197,
+        "evidence": []
+      },
+      {
+        "term": "market dynamics",
+        "score": 1.7652,
+        "evidence": []
+      },
+      {
+        "term": "market analysis",
+        "score": 1.6687,
+        "evidence": []
+      },
+      {
+        "term": "worker distribution",
+        "score": 1.5408,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "workforce policies",
+        "score": 40.6753,
+        "evidence": []
+      },
+      {
+        "term": "nhwa handbook",
+        "score": 39.7298,
+        "evidence": []
+      },
+      {
+        "term": "workforce accounts",
+        "score": 39.0124,
+        "evidence": []
+      },
+      {
+        "term": "module",
+        "score": 37.6109,
+        "evidence": []
+      },
+      {
+        "term": "labour market",
+        "score": 35.7687,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 33.7118,
+        "evidence": []
+      },
+      {
+        "term": "hwf",
+        "score": 27.8953,
+        "evidence": []
+      },
+      {
+        "term": "education",
+        "score": 22.33,
+        "evidence": []
+      },
+      {
+        "term": "labour force",
+        "score": 22.234,
+        "evidence": []
+      },
+      {
+        "term": "indicators",
+        "score": 21.6912,
+        "evidence": []
+      },
+      {
+        "term": "market framework",
+        "score": 21.6358,
+        "evidence": []
+      },
+      {
+        "term": "market analysis",
+        "score": 20.5538,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "workforce accounts",
+        "score": 3.3384,
+        "evidence": []
+      },
+      {
+        "term": "workforce policies",
+        "score": 3.0539,
+        "evidence": []
+      },
+      {
+        "term": "nhwa handbook",
+        "score": 2.8672,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 2.849,
+        "evidence": []
+      },
+      {
+        "term": "labour market",
+        "score": 2.708,
+        "evidence": []
+      },
+      {
+        "term": "hwf",
+        "score": 2.1026,
+        "evidence": []
+      },
+      {
+        "term": "market framework",
+        "score": 1.8812,
+        "evidence": []
+      },
+      {
+        "term": "labour force",
+        "score": 1.8476,
+        "evidence": []
+      },
+      {
+        "term": "towards uhc",
+        "score": 1.8197,
+        "evidence": []
+      },
+      {
+        "term": "market dynamics",
+        "score": 1.7652,
+        "evidence": []
+      },
+      {
+        "term": "market analysis",
+        "score": 1.6687,
+        "evidence": []
+      },
+      {
+        "term": "worker distribution",
+        "score": 1.5408,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "societal",
+        "score": 675.2077,
+        "evidence": []
+      },
+      {
+        "term": "tackle",
+        "score": 670.2457,
+        "evidence": []
+      },
+      {
+        "term": "mncah",
+        "score": 572.403,
+        "evidence": []
+      },
+      {
+        "term": "attaining",
+        "score": 552.0322,
+        "evidence": []
+      },
+      {
+        "term": "maldistribution",
+        "score": 529.2824,
+        "evidence": []
+      },
+      {
+        "term": "regulate",
+        "score": 517.9003,
+        "evidence": []
+      },
+      {
+        "term": "market dynamics",
+        "score": 449.5785,
+        "evidence": []
+      },
+      {
+        "term": "commis",
+        "score": 448.3379,
+        "evidence": []
+      },
+      {
+        "term": "work-life",
+        "score": 416.7591,
+        "evidence": []
+      },
+      {
+        "term": "decomposing",
+        "score": 411.6474,
+        "evidence": []
+      },
+      {
+        "term": "fax",
+        "score": 402.3272,
+        "evidence": []
+      },
+      {
+        "term": "coun",
+        "score": 400.9323,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa",
+          "score": 0.6115,
+          "evidence": []
+        },
+        {
+          "term": "uhc",
+          "score": 0.5661,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.5635,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 0.5625,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "workforce",
+          "score": 8.4632,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 8.11,
+          "evidence": []
+        },
+        {
+          "term": "uhc",
+          "score": 7.2698,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 6.8132,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 0.2858,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.2061,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1973,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.1633,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 5.7291,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 2.6097,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 2.6041,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 1.8083,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa",
+          "score": 0.2858,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1973,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.1633,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 0.1355,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "tackle",
+          "score": 26.2761,
+          "evidence": []
+        },
+        {
+          "term": "societal",
+          "score": 25.514,
+          "evidence": []
+        },
+        {
+          "term": "attaining",
+          "score": 23.4716,
+          "evidence": []
+        },
+        {
+          "term": "commis",
+          "score": 20.6513,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cross-country",
+          "score": 0.5888,
+          "evidence": []
+        },
+        {
+          "term": "inform",
+          "score": 0.5836,
+          "evidence": []
+        },
+        {
+          "term": "comprehensiveness",
+          "score": 0.5666,
+          "evidence": []
+        },
+        {
+          "term": "uhc",
+          "score": 0.5661,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.5403,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "inform",
+          "score": 9.8487,
+          "evidence": []
+        },
+        {
+          "term": "uhc",
+          "score": 7.2698,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 6.7706,
+          "evidence": []
+        },
+        {
+          "term": "strengthen",
+          "score": 6.476,
+          "evidence": []
+        },
+        {
+          "term": "cross-country",
+          "score": 6.1998,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 0.3285,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.3122,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.2651,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.2445,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1837,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 5.7014,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 5.0347,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 3.754,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 3.1743,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 1.8933,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa",
+          "score": 0.3285,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.3122,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.2651,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.2445,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1837,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "plianbangchang",
+          "score": 21.486,
+          "evidence": []
+        },
+        {
+          "term": "inaugural",
+          "score": 21.2436,
+          "evidence": []
+        },
+        {
+          "term": "samlee",
+          "score": 20.5782,
+          "evidence": []
+        },
+        {
+          "term": "tackle",
+          "score": 20.1596,
+          "evidence": []
+        },
+        {
+          "term": "cross-country",
+          "score": 19.4754,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "island",
+          "score": 0.5449,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.4846,
+          "evidence": []
+        },
+        {
+          "term": "recommends",
+          "score": 0.4631,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "island",
+          "score": 5.689,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 5.4067,
+          "evidence": []
+        },
+        {
+          "term": "mandate",
+          "score": 4.6594,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 0.1636,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.1502,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1236,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 3.2925,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 1.9408,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 1.3124,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa",
+          "score": 0.1636,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1236,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.1179,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "compass",
+          "score": 90.6987,
+          "evidence": []
+        },
+        {
+          "term": "california",
+          "score": 69.48,
+          "evidence": []
+        },
+        {
+          "term": "illinois",
+          "score": 64.9225,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gshrh",
+          "score": 0.7525,
+          "evidence": []
+        },
+        {
+          "term": "wha",
+          "score": 0.6892,
+          "evidence": []
+        },
+        {
+          "term": "resolution",
+          "score": 0.6369,
+          "evidence": []
+        },
+        {
+          "term": "sixty-ninth",
+          "score": 0.4957,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gshrh",
+          "score": 11.4981,
+          "evidence": []
+        },
+        {
+          "term": "wha",
+          "score": 8.9305,
+          "evidence": []
+        },
+        {
+          "term": "resolution",
+          "score": 8.2408,
+          "evidence": []
+        },
+        {
+          "term": "sixty-ninth",
+          "score": 5.219,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 0.1893,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.182,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.1819,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1375,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 1.6667,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 1.6494,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 1.4405,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 1.0423,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workforce",
+          "score": 0.182,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1375,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.1207,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1204,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ise",
+          "score": 74.7121,
+          "evidence": []
+        },
+        {
+          "term": "ize",
+          "score": 72.4612,
+          "evidence": []
+        },
+        {
+          "term": "suffix",
+          "score": 70.4306,
+          "evidence": []
+        },
+        {
+          "term": "yse",
+          "score": 68.7098,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "productivity",
+          "score": 0.7593,
+          "evidence": []
+        },
+        {
+          "term": "policy questions",
+          "score": 0.6592,
+          "evidence": []
+        },
+        {
+          "term": "production",
+          "score": 0.5635,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "productivity",
+          "score": 9.9917,
+          "evidence": []
+        },
+        {
+          "term": "current",
+          "score": 8.3778,
+          "evidence": []
+        },
+        {
+          "term": "deployment",
+          "score": 8.11,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 0.17,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1661,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.1589,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 3.4045,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 1.8288,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 1.7022,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa",
+          "score": 0.17,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1661,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.1589,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "societal",
+          "score": 39.4388,
+          "evidence": []
+        },
+        {
+          "term": "tackle",
+          "score": 38.8969,
+          "evidence": []
+        },
+        {
+          "term": "attaining",
+          "score": 31.4494,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "increasing productivity",
+          "score": 1.2982,
+          "evidence": []
+        },
+        {
+          "term": "effective retention",
+          "score": 1.2502,
+          "evidence": []
+        },
+        {
+          "term": "retention policies",
+          "score": 1.0868,
+          "evidence": []
+        },
+        {
+          "term": "improving performance",
+          "score": 0.932,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "effective retention",
+          "score": 17.9685,
+          "evidence": []
+        },
+        {
+          "term": "increasing productivity",
+          "score": 16.8883,
+          "evidence": []
+        },
+        {
+          "term": "retention policies",
+          "score": 14.712,
+          "evidence": []
+        },
+        {
+          "term": "through effective",
+          "score": 14.4827,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "retention policies",
+          "score": 0.1593,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.1543,
+          "evidence": []
+        },
+        {
+          "term": "effective retention",
+          "score": 0.1494,
+          "evidence": []
+        },
+        {
+          "term": "through effective",
+          "score": 0.1302,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "module",
+          "score": 1.5562,
+          "evidence": []
+        },
+        {
+          "term": "retention policies",
+          "score": 1.4975,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 1.4246,
+          "evidence": []
+        },
+        {
+          "term": "nfxnreq",
+          "score": 1.3344,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "retention policies",
+          "score": 0.1593,
+          "evidence": []
+        },
+        {
+          "term": "effective retention",
+          "score": 0.1494,
+          "evidence": []
+        },
+        {
+          "term": "through effective",
+          "score": 0.1302,
+          "evidence": []
+        },
+        {
+          "term": "workers",
+          "score": 0.1259,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "societal",
+          "score": 58.8475,
+          "evidence": []
+        },
+        {
+          "term": "tackle",
+          "score": 57.0845,
+          "evidence": []
+        },
+        {
+          "term": "maldistribution",
+          "score": 45.3828,
+          "evidence": []
+        },
+        {
+          "term": "attaining",
+          "score": 45.2189,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "labour market",
+          "score": 1.1595,
+          "evidence": []
+        },
+        {
+          "term": "market analysis",
+          "score": 0.9489,
+          "evidence": []
+        },
+        {
+          "term": "interplay",
+          "score": 0.6273,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "labour market",
+          "score": 16.0748,
+          "evidence": []
+        },
+        {
+          "term": "market analysis",
+          "score": 12.6825,
+          "evidence": []
+        },
+        {
+          "term": "interplay",
+          "score": 6.6053,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "labour market",
+          "score": 0.2574,
+          "evidence": []
+        },
+        {
+          "term": "market analysis",
+          "score": 0.148,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 0.1288,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "labour market",
+          "score": 3.8293,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 3.0216,
+          "evidence": []
+        },
+        {
+          "term": "market analysis",
+          "score": 2.0182,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "labour market",
+          "score": 0.2574,
+          "evidence": []
+        },
+        {
+          "term": "market analysis",
+          "score": 0.148,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.122,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "societal",
+          "score": 121.4087,
+          "evidence": []
+        },
+        {
+          "term": "tackle",
+          "score": 118.1996,
+          "evidence": []
+        },
+        {
+          "term": "regulate",
+          "score": 93.1189,
+          "evidence": []
+        }
+      ]
+    },
+    "page-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "labour market",
+          "score": 1.0331,
+          "evidence": []
+        },
+        {
+          "term": "care sector",
+          "score": 0.9213,
+          "evidence": []
+        },
+        {
+          "term": "unemployed",
+          "score": 0.837,
+          "evidence": []
+        },
+        {
+          "term": "migration",
+          "score": 0.6475,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.5648,
+          "evidence": []
+        },
+        {
+          "term": "policies",
+          "score": 0.4877,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "labour market",
+          "score": 13.1708,
+          "evidence": []
+        },
+        {
+          "term": "care sector",
+          "score": 12.2273,
+          "evidence": []
+        },
+        {
+          "term": "unemployed",
+          "score": 11.0134,
+          "evidence": []
+        },
+        {
+          "term": "migration",
+          "score": 8.4148,
+          "evidence": []
+        },
+        {
+          "term": "policies",
+          "score": 7.4589,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 6.7076,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "labour market",
+          "score": 0.4876,
+          "evidence": []
+        },
+        {
+          "term": "care sector",
+          "score": 0.3541,
+          "evidence": []
+        },
+        {
+          "term": "workers",
+          "score": 0.2693,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.2388,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.2325,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 0.2215,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "labour market",
+          "score": 6.3152,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 5.3031,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 3.5081,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 3.4342,
+          "evidence": []
+        },
+        {
+          "term": "care sector",
+          "score": 2.6684,
+          "evidence": []
+        },
+        {
+          "term": "workers",
+          "score": 2.4952,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "labour market",
+          "score": 0.4876,
+          "evidence": []
+        },
+        {
+          "term": "care sector",
+          "score": 0.3541,
+          "evidence": []
+        },
+        {
+          "term": "workers",
+          "score": 0.2693,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.2388,
+          "evidence": []
+        },
+        {
+          "term": "policies",
+          "score": 0.1498,
+          "evidence": []
+        },
+        {
+          "term": "service",
+          "score": 0.1418,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "societal",
+          "score": 149.3809,
+          "evidence": []
+        },
+        {
+          "term": "tackle",
+          "score": 143.5963,
+          "evidence": []
+        },
+        {
+          "term": "regulate",
+          "score": 114.2101,
+          "evidence": []
+        },
+        {
+          "term": "maldistribution",
+          "score": 112.9561,
+          "evidence": []
+        },
+        {
+          "term": "attaining",
+          "score": 110.3403,
+          "evidence": []
+        },
+        {
+          "term": "emigration",
+          "score": 87.5129,
+          "evidence": []
+        }
+      ]
+    },
+    "page-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa",
+          "score": 0.7099,
+          "evidence": []
+        },
+        {
+          "term": "experts",
+          "score": 0.5906,
+          "evidence": []
+        },
+        {
+          "term": "deans",
+          "score": 0.5888,
+          "evidence": []
+        },
+        {
+          "term": "instructors",
+          "score": 0.5615,
+          "evidence": []
+        },
+        {
+          "term": "faculty",
+          "score": 0.5582,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa",
+          "score": 10.8133,
+          "evidence": []
+        },
+        {
+          "term": "experts",
+          "score": 8.4976,
+          "evidence": []
+        },
+        {
+          "term": "consultation",
+          "score": 7.0745,
+          "evidence": []
+        },
+        {
+          "term": "deans",
+          "score": 6.1998,
+          "evidence": []
+        },
+        {
+          "term": "instructors",
+          "score": 5.9122,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 0.333,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.2597,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.1717,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 0.1611,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.1332,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 7.9692,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 3.7613,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 2.5526,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 1.9378,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 1.7468,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa",
+          "score": 0.333,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.2597,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 0.1611,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.121,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1144,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "uhf",
+          "score": 38.5389,
+          "evidence": []
+        },
+        {
+          "term": "lauer",
+          "score": 25.9478,
+          "evidence": []
+        },
+        {
+          "term": "casey",
+          "score": 20.781,
+          "evidence": []
+        },
+        {
+          "term": "christian",
+          "score": 20.781,
+          "evidence": []
+        },
+        {
+          "term": "garcía",
+          "score": 20.3204,
+          "evidence": []
+        }
+      ]
+    },
+    "page-011": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "declared",
+          "score": 0.5521,
+          "evidence": []
+        },
+        {
+          "term": "numeric",
+          "score": 0.4966,
+          "evidence": []
+        },
+        {
+          "term": "modules",
+          "score": 0.4138,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "numeric",
+          "score": 5.1012,
+          "evidence": []
+        },
+        {
+          "term": "declared",
+          "score": 4.9959,
+          "evidence": []
+        },
+        {
+          "term": "capability",
+          "score": 4.0026,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 0.1525,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.1242,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.086,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 2.2923,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 1.5474,
+          "evidence": []
+        },
+        {
+          "term": "module",
+          "score": 1.491,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa",
+          "score": 0.1525,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.1242,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.086,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "uhf",
+          "score": 30.1971,
+          "evidence": []
+        },
+        {
+          "term": "tackle",
+          "score": 26.4471,
+          "evidence": []
+        },
+        {
+          "term": "societal",
+          "score": 25.476,
+          "evidence": []
+        }
+      ]
+    },
+    "page-012": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "module",
+          "score": 1.3138,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.6557,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.5062,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "module",
+          "score": 34.483,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 8.9434,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 6.7706,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "module",
+          "score": 0.3079,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.289,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.2376,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "module",
+          "score": 16.3966,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 7.8786,
+          "evidence": []
+        },
+        {
+          "term": "labour",
+          "score": 6.1286,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "module",
+          "score": 0.3079,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 0.289,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.2376,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "societal",
+          "score": 119.7717,
+          "evidence": []
+        },
+        {
+          "term": "tackle",
+          "score": 118.7493,
+          "evidence": []
+        },
+        {
+          "term": "maldistribution",
+          "score": 96.7806,
+          "evidence": []
+        }
+      ]
+    },
+    "page-013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "worker density",
+          "score": 1.6653,
+          "evidence": []
+        },
+        {
+          "term": "worker distribution",
+          "score": 1.4987,
+          "evidence": []
+        },
+        {
+          "term": "sector employment",
+          "score": 0.9743,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "worker density",
+          "score": 25.0849,
+          "evidence": []
+        },
+        {
+          "term": "worker distribution",
+          "score": 24.7462,
+          "evidence": []
+        },
+        {
+          "term": "sector employment",
+          "score": 11.5872,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "worker density",
+          "score": 0.4269,
+          "evidence": []
+        },
+        {
+          "term": "worker distribution",
+          "score": 0.4046,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.2182,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "worker density",
+          "score": 6.1261,
+          "evidence": []
+        },
+        {
+          "term": "worker distribution",
+          "score": 3.8029,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 2.5682,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "worker density",
+          "score": 0.4269,
+          "evidence": []
+        },
+        {
+          "term": "worker distribution",
+          "score": 0.4046,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 0.2182,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "hormone",
+          "score": 52.6373,
+          "evidence": []
+        },
+        {
+          "term": "ribonucleic",
+          "score": 48.1874,
+          "evidence": []
+        },
+        {
+          "term": "annum",
+          "score": 46.0999,
+          "evidence": []
+        }
+      ]
+    },
+    "page-014": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hrhstatistics",
+          "score": 0.5666,
+          "evidence": []
+        },
+        {
+          "term": "maputo",
+          "score": 0.5615,
+          "evidence": []
+        },
+        {
+          "term": "int",
+          "score": 0.5501,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "int",
+          "score": 6.5822,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 6.3332,
+          "evidence": []
+        },
+        {
+          "term": "hrhstatistics",
+          "score": 5.9122,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workforce",
+          "score": 0.1233,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1024,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.0862,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "workforce",
+          "score": 1.4655,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 1.131,
+          "evidence": []
+        },
+        {
+          "term": "online",
+          "score": 1.0811,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workforce",
+          "score": 0.1233,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 0.0797,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.0742,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "monaco",
+          "score": 101.6091,
+          "evidence": []
+        },
+        {
+          "term": "zealand",
+          "score": 100.634,
+          "evidence": []
+        },
+        {
+          "term": "nicaragua",
+          "score": 90.5694,
+          "evidence": []
+        }
+      ]
+    },
+    "page-016": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "appia",
+          "score": 0.4609,
+          "evidence": []
+        },
+        {
+          "term": "avenue",
+          "score": 0.4534,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 0.4398,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "appia",
+          "score": 4.7335,
+          "evidence": []
+        },
+        {
+          "term": "avenue",
+          "score": 4.6594,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 4.0796,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world",
+          "score": 0.1999,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1804,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.1668,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "igo",
+          "score": 3.0249,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 2.8537,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 2.8411,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world",
+          "score": 0.1999,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1804,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.1668,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "mncah",
+          "score": 460.8149,
+          "evidence": []
+        },
+        {
+          "term": "fax",
+          "score": 332.7069,
+          "evidence": []
+        },
+        {
+          "term": "appia",
+          "score": 283.1857,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

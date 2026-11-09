@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/fhir-harness/skills/fhir-client/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/fhir-client-operations",
+      "@type": "bootstrap:Skill",
+      "name": "fhir-client-operations",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/53caab7f6056148402fd3d9eaf6136d6658d9c7ffcd2620b6a46f30cdb953063",
+        "bytes": 7419,
+        "sha256": "53caab7f6056148402fd3d9eaf6136d6658d9c7ffcd2620b6a46f30cdb953063"
+      },
+      "title": "fhir-client-operations"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/fhir-harness/skill/smart-launch",
+      "@type": "bootstrap:Skill",
+      "name": "smart-launch",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/07bdd3b1f51319b31be99afd1b5180f52f1b5b507ac0e47f0e65eca334421d1f",
+        "bytes": 8866,
+        "sha256": "07bdd3b1f51319b31be99afd1b5180f52f1b5b507ac0e47f0e65eca334421d1f"
+      },
+      "title": "smart-launch"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/fhir-client",
+  "path": "skills/fhir-client/"
+}

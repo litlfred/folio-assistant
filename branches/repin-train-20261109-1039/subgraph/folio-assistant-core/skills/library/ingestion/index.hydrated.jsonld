@@ -1,0 +1,139 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/ingestion/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/audio-transcription",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Turn recorded speech (a meeting recording, a video with audio, an interview) into a transcript the library can cite, and choose WHICH open-source recogniser to run for the job: whisper.cpp by default, faster-whisper, WhisperX with pyannote, Vosk, NVIDIA Parakeet/Canary, or Distil-Whisper. Covers audio extraction, why two exports of one recogniser are one opinion, how to compare transcripts (WER, CER, DER), translation, and what blocks a run. Use when an upload contains audio or video, when someone asks which transcription tool to use, or before declaring a new transcription Tool.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+      "instructionLines": 145,
+      "instructionsPath": "skills/library/ingestion/audio-transcription.md",
+      "name": "audio-transcription",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cafc699e08d4b54a1e81cb78cbb4983f9c8b3a0bd56602fbbd127877c5d7ff1e",
+        "bytes": 8211,
+        "sha256": "cafc699e08d4b54a1e81cb78cbb4983f9c8b3a0bd56602fbbd127877c5d7ff1e"
+      },
+      "title": "Audio transcription: which recogniser, when, and how to check it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Process uploaded documents (PDFs, scans, LaTeX, structured/normative guidelines, etc.) from uploads/ into structured content objects. Handles OCR extraction, environment detection, structural analysis, and content-object generation. Supports multi-stage pipelines: raw upload → extracted text → structured blocks → .ts/.md content objects.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+      "instructionLines": 482,
+      "instructionsPath": "skills/library/ingestion/document-intake.md",
+      "name": "document-intake",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8234c454d829e58fe1e9d2b02807e9bc898d08bc49248529094766fc391eaa99",
+        "bytes": 22721,
+        "sha256": "8234c454d829e58fe1e9d2b02807e9bc898d08bc49248529094766fc391eaa99"
+      },
+      "title": "Document Intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Turn a source publication's figures into computable diagrams when a folio is built from its L1 entry. Every declared figure gets a block, and each one is rebuilt in the form its type calls for: an ArchiMate view, BPMN, DMN, a FHIR logical model, or an SVG generated from data, always from one schema-backed source. The PDF crop stays beside the rebuild as the cited source. The figure-coverage check counts what is missing and what is still only a picture.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+      "instructionLines": 263,
+      "instructionsPath": "skills/library/ingestion/figure-rebuild.md",
+      "name": "figure-rebuild",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/57003f31b8a0cb9917fb06cc1110fcf9197dee37bbb06a653e4483e15a29acc1",
+        "bytes": 15142,
+        "sha256": "57003f31b8a0cb9917fb06cc1110fcf9197dee37bbb06a653e4483e15a29acc1"
+      },
+      "title": "Figure rebuild: a figure is data, not a picture"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-coverage",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Check that an L1 extraction accounted for every normative sentence in its source publication — captured as a node, or excluded for a fixed-list reason a person signed off. Per-page counts, captured %, accounted-for %, and a non-zero exit below 100 % accounted-for. Generic: three input files, nothing folio-specific. Implements smart-kg's docs/COVERAGE.md contract.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+      "instructionLines": 92,
+      "instructionsPath": "skills/library/ingestion/l1-coverage.md",
+      "name": "l1-coverage",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/50591d200ba091877838e0ccdfbf3930b419ca92012e2b20e4ffaf6f0f69c1c9",
+        "bytes": 4691,
+        "sha256": "50591d200ba091877838e0ccdfbf3930b419ca92012e2b20e4ffaf6f0f69c1c9"
+      },
+      "title": "L1 coverage — nothing normative goes missing silently"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The detailed method for turning a DOCUMENT in `uploads/` into a complete L1 entry in `library/<bib-slug>/` — which rung reads it and why, what a complete L1 entry holds, why an inferred structure is refused rather than guessed, and the archive, dataset, narrative, image and vector-label arms. Refines the harness's basic `library-ingestion` flow; one entry point: `bun run cat ingest`.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+      "instructionLines": 894,
+      "instructionsPath": "skills/library/ingestion/l1-document-ingestion.md",
+      "name": "l1-document-ingestion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/197bdcd3c99bf1ce79c67c2a2027e08e8f103dbc2b6afbb6fbd7dfc9d3954141",
+        "bytes": 49933,
+        "sha256": "197bdcd3c99bf1ce79c67c2a2027e08e8f103dbc2b6afbb6fbd7dfc9d3954141"
+      },
+      "title": "L1 document ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "The standard step of adding source documents to a folio's working artifact: every statement extracted from a library source is published readably in the artifact's own pages AND in the shared extraction viewer, each with a link to its library entry and to the section it came from, and CI fails when the generated pages are stale. Generic across content types; each type's adapter says only how its pages look. Executable form: `processes/library/publish-extracted-statements.bpmn`.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+      "instructionLines": 135,
+      "instructionsPath": "skills/library/ingestion/publish-extracted-statements.md",
+      "name": "publish-extracted-statements",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb4988690cc1284ef4bbf9d799ccd410dcfc8b547dcbd22a40b3af864b2eb1f0",
+        "bytes": 6813,
+        "sha256": "fb4988690cc1284ef4bbf9d799ccd410dcfc8b547dcbd22a40b3af864b2eb1f0"
+      },
+      "title": "Publish extracted statements with source links"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/tabular-metadata",
+      "@type": "bootstrap:Skill",
+      "ambiguous": false,
+      "description": "Extract tabular metadata from a CSV or spreadsheet as CSVW — tables, rows, headers, columns, datatypes and location on sheet — recording every field as determined or explicitly undetermined. Read before touching a tabular ingest arm, adding a format, or deciding what a sheet is in the graph.",
+      "hasIOContract": false,
+      "hasInstructions": true,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-skills",
+      "instructionLines": 175,
+      "instructionsPath": "skills/library/ingestion/tabular-metadata.md",
+      "name": "tabular-metadata",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/14f960dcc246b11ef675fdb764415982740549d0c07238666792121677b8063a",
+        "bytes": 8761,
+        "sha256": "14f960dcc246b11ef675fdb764415982740549d0c07238666792121677b8063a"
+      },
+      "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/library/ingestion",
+  "path": "skills/library/ingestion/"
+}

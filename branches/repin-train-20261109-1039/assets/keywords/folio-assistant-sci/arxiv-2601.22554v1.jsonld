@@ -1,0 +1,3546 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2601.22554v1",
+  "instance": "folio-assistant-sci",
+  "about": "library/arxiv-2601.22554v1",
+  "corpus": {
+    "library": "folio-assistant-sci/library",
+    "sections": 116,
+    "terms": 2735
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "blueprint nodes",
+        "score": 19.7202,
+        "evidence": []
+      },
+      {
+        "term": "latex blueprint",
+        "score": 19.6452,
+        "evidence": []
+      },
+      {
+        "term": "blueprint metadata",
+        "score": 16.9056,
+        "evidence": []
+      },
+      {
+        "term": "build blueprint",
+        "score": 16.7472,
+        "evidence": []
+      },
+      {
+        "term": "existing blueprint",
+        "score": 16.4368,
+        "evidence": []
+      },
+      {
+        "term": "blueprint information",
+        "score": 16.3628,
+        "evidence": []
+      },
+      {
+        "term": "blueprint workflows",
+        "score": 16.3595,
+        "evidence": []
+      },
+      {
+        "term": "blueprint structure",
+        "score": 15.9546,
+        "evidence": []
+      },
+      {
+        "term": "blueprint content",
+        "score": 15.2158,
+        "evidence": []
+      },
+      {
+        "term": "blueprint comment",
+        "score": 14.9464,
+        "evidence": []
+      },
+      {
+        "term": "blueprint data",
+        "score": 14.9008,
+        "evidence": []
+      },
+      {
+        "term": "web blueprint",
+        "score": 14.8733,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "blueprint node",
+        "score": 355.0541,
+        "evidence": []
+      },
+      {
+        "term": "latex blueprint",
+        "score": 296.4683,
+        "evidence": []
+      },
+      {
+        "term": "build blueprint",
+        "score": 265.4514,
+        "evidence": []
+      },
+      {
+        "term": "blueprint metadata",
+        "score": 253.8779,
+        "evidence": []
+      },
+      {
+        "term": "existing blueprint",
+        "score": 250.487,
+        "evidence": []
+      },
+      {
+        "term": "blueprint structure",
+        "score": 247.9349,
+        "evidence": []
+      },
+      {
+        "term": "blueprint workflows",
+        "score": 246.8767,
+        "evidence": []
+      },
+      {
+        "term": "blueprint information",
+        "score": 241.2289,
+        "evidence": []
+      },
+      {
+        "term": "initial blueprint",
+        "score": 239.5146,
+        "evidence": []
+      },
+      {
+        "term": "refined blueprint",
+        "score": 237.1088,
+        "evidence": []
+      },
+      {
+        "term": "web blueprint",
+        "score": 237.1088,
+        "evidence": []
+      },
+      {
+        "term": "blueprint content",
+        "score": 236.8869,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "blueprint nodes",
+        "score": 19.6636,
+        "evidence": []
+      },
+      {
+        "term": "latex blueprint",
+        "score": 19.4087,
+        "evidence": []
+      },
+      {
+        "term": "blueprint metadata",
+        "score": 16.7513,
+        "evidence": []
+      },
+      {
+        "term": "build blueprint",
+        "score": 16.7187,
+        "evidence": []
+      },
+      {
+        "term": "blueprint workflows",
+        "score": 16.4269,
+        "evidence": []
+      },
+      {
+        "term": "existing blueprint",
+        "score": 16.3769,
+        "evidence": []
+      },
+      {
+        "term": "blueprint information",
+        "score": 16.1474,
+        "evidence": []
+      },
+      {
+        "term": "blueprint structure",
+        "score": 15.9634,
+        "evidence": []
+      },
+      {
+        "term": "blueprint content",
+        "score": 15.1826,
+        "evidence": []
+      },
+      {
+        "term": "blueprint comment",
+        "score": 14.8982,
+        "evidence": []
+      },
+      {
+        "term": "web blueprint",
+        "score": 14.8924,
+        "evidence": []
+      },
+      {
+        "term": "blueprint data",
+        "score": 14.8765,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "blueprint node",
+        "score": 354.6376,
+        "evidence": []
+      },
+      {
+        "term": "latex blueprint",
+        "score": 295.7443,
+        "evidence": []
+      },
+      {
+        "term": "build blueprint",
+        "score": 265.7748,
+        "evidence": []
+      },
+      {
+        "term": "blueprint metadata",
+        "score": 252.5814,
+        "evidence": []
+      },
+      {
+        "term": "existing blueprint",
+        "score": 250.7458,
+        "evidence": []
+      },
+      {
+        "term": "blueprint structure",
+        "score": 248.7132,
+        "evidence": []
+      },
+      {
+        "term": "blueprint workflows",
+        "score": 247.8776,
+        "evidence": []
+      },
+      {
+        "term": "blueprint information",
+        "score": 240.1055,
+        "evidence": []
+      },
+      {
+        "term": "initial blueprint",
+        "score": 239.9048,
+        "evidence": []
+      },
+      {
+        "term": "web blueprint",
+        "score": 237.7188,
+        "evidence": []
+      },
+      {
+        "term": "blueprint content",
+        "score": 237.344,
+        "evidence": []
+      },
+      {
+        "term": "refined blueprint",
+        "score": 237.2519,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "blueprint nodes",
+        "score": 19.6636,
+        "evidence": []
+      },
+      {
+        "term": "latex blueprint",
+        "score": 19.4087,
+        "evidence": []
+      },
+      {
+        "term": "blueprint metadata",
+        "score": 16.7513,
+        "evidence": []
+      },
+      {
+        "term": "build blueprint",
+        "score": 16.7187,
+        "evidence": []
+      },
+      {
+        "term": "blueprint workflows",
+        "score": 16.4269,
+        "evidence": []
+      },
+      {
+        "term": "existing blueprint",
+        "score": 16.3769,
+        "evidence": []
+      },
+      {
+        "term": "blueprint information",
+        "score": 16.1474,
+        "evidence": []
+      },
+      {
+        "term": "blueprint structure",
+        "score": 15.9634,
+        "evidence": []
+      },
+      {
+        "term": "blueprint content",
+        "score": 15.1826,
+        "evidence": []
+      },
+      {
+        "term": "blueprint comment",
+        "score": 14.8982,
+        "evidence": []
+      },
+      {
+        "term": "web blueprint",
+        "score": 14.8924,
+        "evidence": []
+      },
+      {
+        "term": "blueprint data",
+        "score": 14.8765,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "proofs evolve",
+        "score": 600.89,
+        "evidence": []
+      },
+      {
+        "term": "latex fragments",
+        "score": 418.3374,
+        "evidence": []
+      },
+      {
+        "term": "informal exposition",
+        "score": 412.6406,
+        "evidence": []
+      },
+      {
+        "term": "mathematical exposition",
+        "score": 345.6525,
+        "evidence": []
+      },
+      {
+        "term": "inputleannode thm",
+        "score": 345.5288,
+        "evidence": []
+      },
+      {
+        "term": "cref lem",
+        "score": 338.0856,
+        "evidence": []
+      },
+      {
+        "term": "integrate",
+        "score": 337.6818,
+        "evidence": []
+      },
+      {
+        "term": "brownian motion",
+        "score": 306.3763,
+        "evidence": []
+      },
+      {
+        "term": "infinity cosmos",
+        "score": 306.3763,
+        "evidence": []
+      },
+      {
+        "term": "cref mynat",
+        "score": 304.4794,
+        "evidence": []
+      },
+      {
+        "term": "duplication",
+        "score": 293.3959,
+        "evidence": []
+      },
+      {
+        "term": "maintenance overhead",
+        "score": 293.1406,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "blueprint workflows",
+          "score": 1.7285,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 1.5718,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 0.986,
+          "evidence": []
+        },
+        {
+          "term": "managing",
+          "score": 0.9515,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 0.8795,
+          "evidence": []
+        },
+        {
+          "term": "lean code",
+          "score": 0.8666,
+          "evidence": []
+        },
+        {
+          "term": "duplication",
+          "score": 0.7379,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 0.7319,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "blueprint workflows",
+          "score": 20.3969,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 18.5304,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 11.2307,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 10.9432,
+          "evidence": []
+        },
+        {
+          "term": "lean code",
+          "score": 9.8102,
+          "evidence": []
+        },
+        {
+          "term": "managing",
+          "score": 8.1209,
+          "evidence": []
+        },
+        {
+          "term": "formalization",
+          "score": 6.9315,
+          "evidence": []
+        },
+        {
+          "term": "duplication",
+          "score": 6.2883,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "blueprint workflows",
+          "score": 1.7317,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 1.5952,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 0.9775,
+          "evidence": []
+        },
+        {
+          "term": "managing",
+          "score": 0.9456,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 0.8864,
+          "evidence": []
+        },
+        {
+          "term": "lean code",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "duplication",
+          "score": 0.7655,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 0.7289,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "blueprint workflows",
+          "score": 20.386,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 18.593,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 11.188,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 10.9477,
+          "evidence": []
+        },
+        {
+          "term": "lean code",
+          "score": 9.8682,
+          "evidence": []
+        },
+        {
+          "term": "managing",
+          "score": 8.0964,
+          "evidence": []
+        },
+        {
+          "term": "formalization",
+          "score": 6.9414,
+          "evidence": []
+        },
+        {
+          "term": "duplication",
+          "score": 6.4259,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "blueprint workflows",
+          "score": 1.7317,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 1.5952,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 0.9775,
+          "evidence": []
+        },
+        {
+          "term": "managing",
+          "score": 0.9456,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 0.8864,
+          "evidence": []
+        },
+        {
+          "term": "lean code",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "duplication",
+          "score": 0.7655,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 0.7289,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "managing",
+          "score": 64.6067,
+          "evidence": []
+        },
+        {
+          "term": "integrating",
+          "score": 56.3822,
+          "evidence": []
+        },
+        {
+          "term": "blueprints",
+          "score": 50.4478,
+          "evidence": []
+        },
+        {
+          "term": "evolve",
+          "score": 44.6887,
+          "evidence": []
+        },
+        {
+          "term": "ai-assisted",
+          "score": 43.8177,
+          "evidence": []
+        },
+        {
+          "term": "developments",
+          "score": 43.8177,
+          "evidence": []
+        },
+        {
+          "term": "lean-native",
+          "score": 43.8177,
+          "evidence": []
+        },
+        {
+          "term": "undergraduate",
+          "score": 43.8177,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-related-work": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "blueprint structure",
+          "score": 1.8609,
+          "evidence": []
+        },
+        {
+          "term": "leanblueprint",
+          "score": 0.9937,
+          "evidence": []
+        },
+        {
+          "term": "lean code",
+          "score": 0.9592,
+          "evidence": []
+        },
+        {
+          "term": "leanblueprint-extract",
+          "score": 0.9515,
+          "evidence": []
+        },
+        {
+          "term": "problems",
+          "score": 0.8857,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 0.8795,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 0.8493,
+          "evidence": []
+        },
+        {
+          "term": "doc-gen",
+          "score": 0.7907,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "blueprint structure",
+          "score": 24.3782,
+          "evidence": []
+        },
+        {
+          "term": "leanblueprint",
+          "score": 11.2307,
+          "evidence": []
+        },
+        {
+          "term": "lean code",
+          "score": 11.1626,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 10.9432,
+          "evidence": []
+        },
+        {
+          "term": "problems",
+          "score": 9.4228,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 8.423,
+          "evidence": []
+        },
+        {
+          "term": "leanblueprint-extract",
+          "score": 8.1209,
+          "evidence": []
+        },
+        {
+          "term": "doc-gen",
+          "score": 6.7346,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "blueprint structure",
+          "score": 1.8596,
+          "evidence": []
+        },
+        {
+          "term": "leanblueprint",
+          "score": 1.0023,
+          "evidence": []
+        },
+        {
+          "term": "lean code",
+          "score": 0.9551,
+          "evidence": []
+        },
+        {
+          "term": "leanblueprint-extract",
+          "score": 0.9496,
+          "evidence": []
+        },
+        {
+          "term": "problems",
+          "score": 0.8841,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 0.8786,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 0.8453,
+          "evidence": []
+        },
+        {
+          "term": "doc-gen",
+          "score": 0.7897,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "blueprint structure",
+          "score": 24.3563,
+          "evidence": []
+        },
+        {
+          "term": "leanblueprint",
+          "score": 11.2745,
+          "evidence": []
+        },
+        {
+          "term": "lean code",
+          "score": 11.141,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 10.9276,
+          "evidence": []
+        },
+        {
+          "term": "problems",
+          "score": 9.4088,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 8.3981,
+          "evidence": []
+        },
+        {
+          "term": "leanblueprint-extract",
+          "score": 8.1107,
+          "evidence": []
+        },
+        {
+          "term": "doc-gen",
+          "score": 6.7317,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "blueprint structure",
+          "score": 1.8596,
+          "evidence": []
+        },
+        {
+          "term": "leanblueprint",
+          "score": 1.0023,
+          "evidence": []
+        },
+        {
+          "term": "lean code",
+          "score": 0.9551,
+          "evidence": []
+        },
+        {
+          "term": "leanblueprint-extract",
+          "score": 0.9496,
+          "evidence": []
+        },
+        {
+          "term": "problems",
+          "score": 0.8841,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 0.8786,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 0.8453,
+          "evidence": []
+        },
+        {
+          "term": "doc-gen",
+          "score": 0.7897,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "leanblueprint-extract",
+          "score": 86.3254,
+          "evidence": []
+        },
+        {
+          "term": "ai-assisted",
+          "score": 68.0781,
+          "evidence": []
+        },
+        {
+          "term": "developments",
+          "score": 68.0781,
+          "evidence": []
+        },
+        {
+          "term": "lean-native",
+          "score": 68.0781,
+          "evidence": []
+        },
+        {
+          "term": "undergraduate",
+          "score": 68.0781,
+          "evidence": []
+        },
+        {
+          "term": "comments",
+          "score": 64.6999,
+          "evidence": []
+        },
+        {
+          "term": "synchronization",
+          "score": 64.6999,
+          "evidence": []
+        },
+        {
+          "term": "ecosystem",
+          "score": 64.5512,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-overview": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "attribute",
+          "score": 0.879,
+          "evidence": []
+        },
+        {
+          "term": "blueprint",
+          "score": 0.6523,
+          "evidence": []
+        },
+        {
+          "term": "node",
+          "score": 0.6041,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "attribute",
+          "score": 7.31,
+          "evidence": []
+        },
+        {
+          "term": "blueprint",
+          "score": 5.4275,
+          "evidence": []
+        },
+        {
+          "term": "theorems",
+          "score": 4.4865,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "blueprint",
+          "score": 0.3973,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 0.3789,
+          "evidence": []
+        },
+        {
+          "term": "latex",
+          "score": 0.2992,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "blueprint",
+          "score": 4.533,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 4.3482,
+          "evidence": []
+        },
+        {
+          "term": "node",
+          "score": 2.2982,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "blueprint",
+          "score": 0.3973,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 0.3789,
+          "evidence": []
+        },
+        {
+          "term": "latex",
+          "score": 0.2992,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "treating",
+          "score": 103.9979,
+          "evidence": []
+        },
+        {
+          "term": "attached",
+          "score": 95.208,
+          "evidence": []
+        },
+        {
+          "term": "infers",
+          "score": 73.5286,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-environment-extension": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "evolve",
+          "score": 0.5921,
+          "evidence": []
+        },
+        {
+          "term": "macros",
+          "score": 0.5415,
+          "evidence": []
+        },
+        {
+          "term": "fragments",
+          "score": 0.533,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "evolve",
+          "score": 4.0604,
+          "evidence": []
+        },
+        {
+          "term": "fragments",
+          "score": 3.655,
+          "evidence": []
+        },
+        {
+          "term": "integrate",
+          "score": 3.655,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "blueprint",
+          "score": 0.1459,
+          "evidence": []
+        },
+        {
+          "term": "latex",
+          "score": 0.137,
+          "evidence": []
+        },
+        {
+          "term": "existing",
+          "score": 0.1159,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "blueprint",
+          "score": 1.1316,
+          "evidence": []
+        },
+        {
+          "term": "inputleannode",
+          "score": 0.8156,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 0.6896,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "latex",
+          "score": 0.137,
+          "evidence": []
+        },
+        {
+          "term": "existing",
+          "score": 0.1159,
+          "evidence": []
+        },
+        {
+          "term": "inputleannode",
+          "score": 0.1097,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "evolve",
+          "score": 489.5017,
+          "evidence": []
+        },
+        {
+          "term": "integrate",
+          "score": 330.5479,
+          "evidence": []
+        },
+        {
+          "term": "fragments",
+          "score": 329.3019,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-blueprint-attribute": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cref lem",
+          "score": 2.5353,
+          "evidence": []
+        },
+        {
+          "term": "blueprint",
+          "score": 2.4137,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "web blueprint",
+          "score": 2.0652,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 1.962,
+          "evidence": []
+        },
+        {
+          "term": "add comm",
+          "score": 1.8732,
+          "evidence": []
+        },
+        {
+          "term": "blueprint generation",
+          "score": 1.8587,
+          "evidence": []
+        },
+        {
+          "term": "formalization status",
+          "score": 1.7964,
+          "evidence": []
+        },
+        {
+          "term": "proof status",
+          "score": 1.7847,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "blueprint",
+          "score": 43.4196,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cref lem",
+          "score": 31.6726,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 29.8242,
+          "evidence": []
+        },
+        {
+          "term": "web blueprint",
+          "score": 29.0198,
+          "evidence": []
+        },
+        {
+          "term": "blueprint generation",
+          "score": 27.4709,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 24.075,
+          "evidence": []
+        },
+        {
+          "term": "formalization status",
+          "score": 21.9299,
+          "evidence": []
+        },
+        {
+          "term": "proof status",
+          "score": 21.2181,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cref lem",
+          "score": 2.5113,
+          "evidence": []
+        },
+        {
+          "term": "blueprint",
+          "score": 2.4827,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "web blueprint",
+          "score": 2.088,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 2.0126,
+          "evidence": []
+        },
+        {
+          "term": "attribute",
+          "score": 1.9391,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "blueprint generation",
+          "score": 1.8811,
+          "evidence": []
+        },
+        {
+          "term": "add comm",
+          "score": 1.8596,
+          "evidence": []
+        },
+        {
+          "term": "formalization status",
+          "score": 1.8403,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "blueprint",
+          "score": 43.6345,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cref lem",
+          "score": 31.5805,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 29.9741,
+          "evidence": []
+        },
+        {
+          "term": "web blueprint",
+          "score": 29.0873,
+          "evidence": []
+        },
+        {
+          "term": "blueprint generation",
+          "score": 27.5645,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 24.0873,
+          "evidence": []
+        },
+        {
+          "term": "formalization status",
+          "score": 22.1085,
+          "evidence": []
+        },
+        {
+          "term": "proof status",
+          "score": 21.3537,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cref lem",
+          "score": 2.5113,
+          "evidence": []
+        },
+        {
+          "term": "blueprint",
+          "score": 2.4827,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "web blueprint",
+          "score": 2.088,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 2.0126,
+          "evidence": []
+        },
+        {
+          "term": "attribute",
+          "score": 1.9391,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "blueprint generation",
+          "score": 1.8811,
+          "evidence": []
+        },
+        {
+          "term": "add comm",
+          "score": 1.8596,
+          "evidence": []
+        },
+        {
+          "term": "formalization status",
+          "score": 1.8403,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "cref lem",
+          "score": 103.2747,
+          "evidence": []
+        },
+        {
+          "term": "succ-add",
+          "score": 65.6267,
+          "evidence": []
+        },
+        {
+          "term": "zero-add",
+          "score": 65.6267,
+          "evidence": []
+        },
+        {
+          "term": "attribute",
+          "score": 62.2215,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "web blueprint",
+          "score": 61.5654,
+          "evidence": []
+        },
+        {
+          "term": "formalization status",
+          "score": 59.2138,
+          "evidence": []
+        },
+        {
+          "term": "none",
+          "score": 57.222,
+          "evidence": []
+        },
+        {
+          "term": "proof status",
+          "score": 56.2821,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-latex-export": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "latex blueprint",
+          "score": 1.4536,
+          "evidence": []
+        },
+        {
+          "term": "lem",
+          "score": 1.3816,
+          "evidence": []
+        },
+        {
+          "term": "succ-add",
+          "score": 0.9431,
+          "evidence": []
+        },
+        {
+          "term": "zero-add",
+          "score": 0.9431,
+          "evidence": []
+        },
+        {
+          "term": "begin",
+          "score": 0.8548,
+          "evidence": []
+        },
+        {
+          "term": "add-comm",
+          "score": 0.8492,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lem",
+          "score": 16.2418,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 14.9121,
+          "evidence": []
+        },
+        {
+          "term": "succ-add",
+          "score": 8.1209,
+          "evidence": []
+        },
+        {
+          "term": "zero-add",
+          "score": 8.1209,
+          "evidence": []
+        },
+        {
+          "term": "add-comm",
+          "score": 7.31,
+          "evidence": []
+        },
+        {
+          "term": "begin",
+          "score": 7.31,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "latex blueprint",
+          "score": 1.4388,
+          "evidence": []
+        },
+        {
+          "term": "lem",
+          "score": 1.3825,
+          "evidence": []
+        },
+        {
+          "term": "succ-add",
+          "score": 0.944,
+          "evidence": []
+        },
+        {
+          "term": "zero-add",
+          "score": 0.944,
+          "evidence": []
+        },
+        {
+          "term": "begin",
+          "score": 0.8498,
+          "evidence": []
+        },
+        {
+          "term": "add-comm",
+          "score": 0.8496,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lem",
+          "score": 16.3057,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 14.7598,
+          "evidence": []
+        },
+        {
+          "term": "succ-add",
+          "score": 8.1528,
+          "evidence": []
+        },
+        {
+          "term": "zero-add",
+          "score": 8.1528,
+          "evidence": []
+        },
+        {
+          "term": "add-comm",
+          "score": 7.3188,
+          "evidence": []
+        },
+        {
+          "term": "begin",
+          "score": 7.2282,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "latex blueprint",
+          "score": 1.4388,
+          "evidence": []
+        },
+        {
+          "term": "lem",
+          "score": 1.3825,
+          "evidence": []
+        },
+        {
+          "term": "succ-add",
+          "score": 0.944,
+          "evidence": []
+        },
+        {
+          "term": "zero-add",
+          "score": 0.944,
+          "evidence": []
+        },
+        {
+          "term": "begin",
+          "score": 0.8498,
+          "evidence": []
+        },
+        {
+          "term": "add-comm",
+          "score": 0.8496,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "writes",
+          "score": 107.6087,
+          "evidence": []
+        },
+        {
+          "term": "succ-add",
+          "score": 106.2672,
+          "evidence": []
+        },
+        {
+          "term": "zero-add",
+          "score": 106.2672,
+          "evidence": []
+        },
+        {
+          "term": "lem",
+          "score": 106.2672,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 105.6758,
+          "evidence": []
+        },
+        {
+          "term": "identifiers",
+          "score": 83.8118,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-project-management-using-leanarchitect": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "latex blueprint",
+          "score": 1.4536,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.361,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "project",
+          "score": 1.1989,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lean experts",
+          "score": 1.014,
+          "evidence": []
+        },
+        {
+          "term": "script",
+          "score": 0.8649,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "latex blueprint",
+          "score": 14.9121,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 13.1318,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "project",
+          "score": 9.4228,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lean experts",
+          "score": 8.901,
+          "evidence": []
+        },
+        {
+          "term": "script",
+          "score": 7.31,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "latex blueprint",
+          "score": 1.5171,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.3882,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "project",
+          "score": 1.2522,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lean experts",
+          "score": 1.0275,
+          "evidence": []
+        },
+        {
+          "term": "script",
+          "score": 0.831,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "latex blueprint",
+          "score": 15.0849,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 13.0203,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "project",
+          "score": 9.6433,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lean experts",
+          "score": 8.911,
+          "evidence": []
+        },
+        {
+          "term": "script",
+          "score": 7.1666,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "latex blueprint",
+          "score": 1.5171,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.3882,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "project",
+          "score": 1.2522,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lean experts",
+          "score": 1.0275,
+          "evidence": []
+        },
+        {
+          "term": "script",
+          "score": 0.831,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "automate",
+          "score": 151.1392,
+          "evidence": []
+        },
+        {
+          "term": "leave",
+          "score": 150.7758,
+          "evidence": []
+        },
+        {
+          "term": "mathematicians",
+          "score": 150.0357,
+          "evidence": []
+        },
+        {
+          "term": "tag",
+          "score": 149.2009,
+          "evidence": []
+        },
+        {
+          "term": "envision",
+          "score": 148.418,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-primenumbertheoremand": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "leanok tags",
+          "score": 1.9095,
+          "evidence": []
+        },
+        {
+          "term": "primenumbertheoremand",
+          "score": 1.903,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "blueprint metadata",
+          "score": 1.6887,
+          "evidence": []
+        },
+        {
+          "term": "project",
+          "score": 1.0618,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.0207,
+          "evidence": []
+        },
+        {
+          "term": "custom",
+          "score": 0.8583,
+          "evidence": []
+        },
+        {
+          "term": "maintenance",
+          "score": 0.8583,
+          "evidence": []
+        },
+        {
+          "term": "tao",
+          "score": 0.8548,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "blueprint metadata",
+          "score": 22.2254,
+          "evidence": []
+        },
+        {
+          "term": "leanok tags",
+          "score": 19.1573,
+          "evidence": []
+        },
+        {
+          "term": "primenumbertheoremand",
+          "score": 16.2418,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leanarchitect",
+          "score": 15.3205,
+          "evidence": []
+        },
+        {
+          "term": "project",
+          "score": 14.1342,
+          "evidence": []
+        },
+        {
+          "term": "custom",
+          "score": 7.31,
+          "evidence": []
+        },
+        {
+          "term": "maintenance",
+          "score": 7.31,
+          "evidence": []
+        },
+        {
+          "term": "tao",
+          "score": 7.31,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "leanok tags",
+          "score": 1.9038,
+          "evidence": []
+        },
+        {
+          "term": "primenumbertheoremand",
+          "score": 1.8999,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "blueprint metadata",
+          "score": 1.7046,
+          "evidence": []
+        },
+        {
+          "term": "project",
+          "score": 1.0674,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.0253,
+          "evidence": []
+        },
+        {
+          "term": "custom",
+          "score": 0.8569,
+          "evidence": []
+        },
+        {
+          "term": "maintenance",
+          "score": 0.8552,
+          "evidence": []
+        },
+        {
+          "term": "tao",
+          "score": 0.8532,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "blueprint metadata",
+          "score": 22.3628,
+          "evidence": []
+        },
+        {
+          "term": "leanok tags",
+          "score": 19.1027,
+          "evidence": []
+        },
+        {
+          "term": "primenumbertheoremand",
+          "score": 16.211,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leanarchitect",
+          "score": 15.3286,
+          "evidence": []
+        },
+        {
+          "term": "project",
+          "score": 14.1683,
+          "evidence": []
+        },
+        {
+          "term": "tao",
+          "score": 7.2955,
+          "evidence": []
+        },
+        {
+          "term": "maintenance",
+          "score": 7.2907,
+          "evidence": []
+        },
+        {
+          "term": "custom",
+          "score": 7.2895,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "leanok tags",
+          "score": 1.9038,
+          "evidence": []
+        },
+        {
+          "term": "primenumbertheoremand",
+          "score": 1.8999,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "blueprint metadata",
+          "score": 1.7046,
+          "evidence": []
+        },
+        {
+          "term": "project",
+          "score": 1.0674,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.0253,
+          "evidence": []
+        },
+        {
+          "term": "custom",
+          "score": 0.8569,
+          "evidence": []
+        },
+        {
+          "term": "maintenance",
+          "score": 0.8552,
+          "evidence": []
+        },
+        {
+          "term": "tao",
+          "score": 0.8532,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "primenumbertheoremand",
+          "score": 194.0228,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "leanok tags",
+          "score": 113.4929,
+          "evidence": []
+        },
+        {
+          "term": "maintainability",
+          "score": 73.9427,
+          "evidence": []
+        },
+        {
+          "term": "replacing",
+          "score": 73.2443,
+          "evidence": []
+        },
+        {
+          "term": "pull",
+          "score": 72.9962,
+          "evidence": []
+        },
+        {
+          "term": "zulip",
+          "score": 72.9962,
+          "evidence": []
+        },
+        {
+          "term": "comments",
+          "score": 72.9464,
+          "evidence": []
+        },
+        {
+          "term": "synchronization",
+          "score": 72.9464,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-converting-existing-projects-to-leanarchitect-fo": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "conversion script",
+          "score": 2.1137,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.9104,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "brownian motion",
+          "score": 1.903,
+          "evidence": []
+        },
+        {
+          "term": "infinity cosmos",
+          "score": 1.903,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 1.3461,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "carleson",
+          "score": 0.9515,
+          "evidence": []
+        },
+        {
+          "term": "distribution",
+          "score": 0.8777,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "leanarchitect",
+          "score": 26.2637,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "conversion script",
+          "score": 24.0427,
+          "evidence": []
+        },
+        {
+          "term": "brownian motion",
+          "score": 16.2418,
+          "evidence": []
+        },
+        {
+          "term": "infinity cosmos",
+          "score": 16.2418,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 11.2307,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "blueprint",
+          "score": 9.0458,
+          "evidence": []
+        },
+        {
+          "term": "carleson",
+          "score": 8.1209,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "conversion script",
+          "score": 2.114,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.9167,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "brownian motion",
+          "score": 1.8984,
+          "evidence": []
+        },
+        {
+          "term": "infinity cosmos",
+          "score": 1.8984,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 1.3529,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "carleson",
+          "score": 0.9492,
+          "evidence": []
+        },
+        {
+          "term": "distribution",
+          "score": 0.8761,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "leanarchitect",
+          "score": 26.3146,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "conversion script",
+          "score": 24.0604,
+          "evidence": []
+        },
+        {
+          "term": "brownian motion",
+          "score": 16.2011,
+          "evidence": []
+        },
+        {
+          "term": "infinity cosmos",
+          "score": 16.2011,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 11.3186,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "blueprint",
+          "score": 9.0561,
+          "evidence": []
+        },
+        {
+          "term": "carleson",
+          "score": 8.1006,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "conversion script",
+          "score": 2.114,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.9167,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "brownian motion",
+          "score": 1.8984,
+          "evidence": []
+        },
+        {
+          "term": "infinity cosmos",
+          "score": 1.8984,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 1.3529,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "carleson",
+          "score": 0.9492,
+          "evidence": []
+        },
+        {
+          "term": "distribution",
+          "score": 0.8761,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "brownian motion",
+          "score": 319.128,
+          "evidence": []
+        },
+        {
+          "term": "infinity cosmos",
+          "score": 319.128,
+          "evidence": []
+        },
+        {
+          "term": "carleson",
+          "score": 159.564,
+          "evidence": []
+        },
+        {
+          "term": "conversion script",
+          "score": 139.4425,
+          "evidence": []
+        },
+        {
+          "term": "sync",
+          "score": 121.4638,
+          "evidence": []
+        },
+        {
+          "term": "pull",
+          "score": 119.8554,
+          "evidence": []
+        },
+        {
+          "term": "zulip",
+          "score": 119.8554,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-blueprint-based-autoformalization": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "remaining failures",
+          "score": 2.4563,
+          "evidence": []
+        },
+        {
+          "term": "multivariate taylor",
+          "score": 2.4411,
+          "evidence": []
+        },
+        {
+          "term": "gpt pro",
+          "score": 2.4294,
+          "evidence": []
+        },
+        {
+          "term": "refined blueprint",
+          "score": 2.3509,
+          "evidence": []
+        },
+        {
+          "term": "initial blueprint",
+          "score": 2.213,
+          "evidence": []
+        },
+        {
+          "term": "intermediate lemmas",
+          "score": 1.8489,
+          "evidence": []
+        },
+        {
+          "term": "taylor theorem",
+          "score": 1.7824,
+          "evidence": []
+        },
+        {
+          "term": "aristotle",
+          "score": 1.778,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "refined blueprint",
+          "score": 34.4839,
+          "evidence": []
+        },
+        {
+          "term": "initial blueprint",
+          "score": 34.2156,
+          "evidence": []
+        },
+        {
+          "term": "gpt pro",
+          "score": 31.9968,
+          "evidence": []
+        },
+        {
+          "term": "remaining failures",
+          "score": 29.6362,
+          "evidence": []
+        },
+        {
+          "term": "multivariate taylor",
+          "score": 25.6505,
+          "evidence": []
+        },
+        {
+          "term": "aristotle",
+          "score": 24.3627,
+          "evidence": []
+        },
+        {
+          "term": "intermediate lemmas",
+          "score": 21.5727,
+          "evidence": []
+        },
+        {
+          "term": "taylor theorem",
+          "score": 19.6459,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "remaining failures",
+          "score": 2.4557,
+          "evidence": []
+        },
+        {
+          "term": "multivariate taylor",
+          "score": 2.4408,
+          "evidence": []
+        },
+        {
+          "term": "gpt pro",
+          "score": 2.43,
+          "evidence": []
+        },
+        {
+          "term": "refined blueprint",
+          "score": 2.3523,
+          "evidence": []
+        },
+        {
+          "term": "initial blueprint",
+          "score": 2.2152,
+          "evidence": []
+        },
+        {
+          "term": "intermediate lemmas",
+          "score": 1.8489,
+          "evidence": []
+        },
+        {
+          "term": "taylor theorem",
+          "score": 1.7819,
+          "evidence": []
+        },
+        {
+          "term": "aristotle",
+          "score": 1.7776,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "refined blueprint",
+          "score": 34.4838,
+          "evidence": []
+        },
+        {
+          "term": "initial blueprint",
+          "score": 34.2218,
+          "evidence": []
+        },
+        {
+          "term": "gpt pro",
+          "score": 32.0237,
+          "evidence": []
+        },
+        {
+          "term": "remaining failures",
+          "score": 29.6313,
+          "evidence": []
+        },
+        {
+          "term": "multivariate taylor",
+          "score": 25.6434,
+          "evidence": []
+        },
+        {
+          "term": "aristotle",
+          "score": 24.3563,
+          "evidence": []
+        },
+        {
+          "term": "intermediate lemmas",
+          "score": 21.5766,
+          "evidence": []
+        },
+        {
+          "term": "taylor theorem",
+          "score": 19.6403,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "remaining failures",
+          "score": 2.4557,
+          "evidence": []
+        },
+        {
+          "term": "multivariate taylor",
+          "score": 2.4408,
+          "evidence": []
+        },
+        {
+          "term": "gpt pro",
+          "score": 2.43,
+          "evidence": []
+        },
+        {
+          "term": "refined blueprint",
+          "score": 2.3523,
+          "evidence": []
+        },
+        {
+          "term": "initial blueprint",
+          "score": 2.2152,
+          "evidence": []
+        },
+        {
+          "term": "intermediate lemmas",
+          "score": 1.8489,
+          "evidence": []
+        },
+        {
+          "term": "taylor theorem",
+          "score": 1.7819,
+          "evidence": []
+        },
+        {
+          "term": "aristotle",
+          "score": 1.7776,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "multivariate taylor",
+          "score": 114.8962,
+          "evidence": []
+        },
+        {
+          "term": "remaining failures",
+          "score": 88.457,
+          "evidence": []
+        },
+        {
+          "term": "blueprint-based",
+          "score": 86.2303,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aristotle",
+          "score": 74.3657,
+          "evidence": []
+        },
+        {
+          "term": "refined blueprint",
+          "score": 60.5489,
+          "evidence": []
+        },
+        {
+          "term": "integral form",
+          "score": 57.834,
+          "evidence": []
+        },
+        {
+          "term": "taylor theorem",
+          "score": 52.1158,
+          "evidence": []
+        },
+        {
+          "term": "gpt pro",
+          "score": 48.8415,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-limitations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "arxiv preprint",
+          "score": 4.0059,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 3.392,
+          "evidence": []
+        },
+        {
+          "term": "floris van",
+          "score": 2.6005,
+          "evidence": []
+        },
+        {
+          "term": "van doorn",
+          "score": 2.6005,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 2.4231,
+          "evidence": []
+        },
+        {
+          "term": "reinforcement learning",
+          "score": 2.1982,
+          "evidence": []
+        },
+        {
+          "term": "huajian xin",
+          "score": 2.1254,
+          "evidence": []
+        },
+        {
+          "term": "thomas zhu",
+          "score": 2.0941,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "arxiv preprint",
+          "score": 114.0635,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 85.3384,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 67.3459,
+          "evidence": []
+        },
+        {
+          "term": "theorem proving",
+          "score": 32.7716,
+          "evidence": []
+        },
+        {
+          "term": "floris van",
+          "score": 28.4231,
+          "evidence": []
+        },
+        {
+          "term": "van doorn",
+          "score": 28.4231,
+          "evidence": []
+        },
+        {
+          "term": "reinforcement learning",
+          "score": 24.8498,
+          "evidence": []
+        },
+        {
+          "term": "thomas zhu",
+          "score": 23.4726,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 4.006,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 3.3918,
+          "evidence": []
+        },
+        {
+          "term": "floris van",
+          "score": 2.6003,
+          "evidence": []
+        },
+        {
+          "term": "van doorn",
+          "score": 2.6003,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 2.423,
+          "evidence": []
+        },
+        {
+          "term": "reinforcement learning",
+          "score": 2.198,
+          "evidence": []
+        },
+        {
+          "term": "huajian xin",
+          "score": 2.1253,
+          "evidence": []
+        },
+        {
+          "term": "thomas zhu",
+          "score": 2.0939,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 114.0636,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 85.3383,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 67.3456,
+          "evidence": []
+        },
+        {
+          "term": "theorem proving",
+          "score": 32.7736,
+          "evidence": []
+        },
+        {
+          "term": "floris van",
+          "score": 28.4224,
+          "evidence": []
+        },
+        {
+          "term": "van doorn",
+          "score": 28.4224,
+          "evidence": []
+        },
+        {
+          "term": "reinforcement learning",
+          "score": 24.8512,
+          "evidence": []
+        },
+        {
+          "term": "thomas zhu",
+          "score": 23.4725,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "arxiv preprint",
+          "score": 4.006,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 3.3918,
+          "evidence": []
+        },
+        {
+          "term": "floris van",
+          "score": 2.6003,
+          "evidence": []
+        },
+        {
+          "term": "van doorn",
+          "score": 2.6003,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 2.423,
+          "evidence": []
+        },
+        {
+          "term": "reinforcement learning",
+          "score": 2.198,
+          "evidence": []
+        },
+        {
+          "term": "huajian xin",
+          "score": 2.1253,
+          "evidence": []
+        },
+        {
+          "term": "thomas zhu",
+          "score": 2.0939,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "pietro monticone",
+          "score": 56.1259,
+          "evidence": []
+        },
+        {
+          "term": "floris van",
+          "score": 54.2324,
+          "evidence": []
+        },
+        {
+          "term": "van doorn",
+          "score": 54.2324,
+          "evidence": []
+        },
+        {
+          "term": "bohan lyu",
+          "score": 43.4475,
+          "evidence": []
+        },
+        {
+          "term": "junxiao song",
+          "score": 36.2154,
+          "evidence": []
+        },
+        {
+          "term": "shange tang",
+          "score": 33.4874,
+          "evidence": []
+        },
+        {
+          "term": "jeremy avigad",
+          "score": 32.8977,
+          "evidence": []
+        },
+        {
+          "term": "yong lin",
+          "score": 32.0903,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-example": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "succ add",
+          "score": 3.8546,
+          "evidence": []
+        },
+        {
+          "term": "cref mynat",
+          "score": 3.1143,
+          "evidence": []
+        },
+        {
+          "term": "zero add",
+          "score": 2.9218,
+          "evidence": []
+        },
+        {
+          "term": "simp",
+          "score": 1.2223,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 1.2116,
+          "evidence": []
+        },
+        {
+          "term": "blueprint",
+          "score": 1.0834,
+          "evidence": []
+        },
+        {
+          "term": "natural numbers",
+          "score": 1.0705,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "succ add",
+          "score": 75.01,
+          "evidence": []
+        },
+        {
+          "term": "zero add",
+          "score": 55.7273,
+          "evidence": []
+        },
+        {
+          "term": "cref mynat",
+          "score": 54.7398,
+          "evidence": []
+        },
+        {
+          "term": "blueprint",
+          "score": 16.2824,
+          "evidence": []
+        },
+        {
+          "term": "simp",
+          "score": 12.1813,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 11.1033,
+          "evidence": []
+        },
+        {
+          "term": "induction",
+          "score": 9.804,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "succ add",
+          "score": 3.8492,
+          "evidence": []
+        },
+        {
+          "term": "cref mynat",
+          "score": 3.1134,
+          "evidence": []
+        },
+        {
+          "term": "zero add",
+          "score": 2.9175,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 1.2176,
+          "evidence": []
+        },
+        {
+          "term": "simp",
+          "score": 1.2162,
+          "evidence": []
+        },
+        {
+          "term": "natural numbers",
+          "score": 1.0688,
+          "evidence": []
+        },
+        {
+          "term": "blueprint",
+          "score": 1.0685,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "succ add",
+          "score": 75.0071,
+          "evidence": []
+        },
+        {
+          "term": "zero add",
+          "score": 55.7305,
+          "evidence": []
+        },
+        {
+          "term": "cref mynat",
+          "score": 54.7413,
+          "evidence": []
+        },
+        {
+          "term": "blueprint",
+          "score": 16.2579,
+          "evidence": []
+        },
+        {
+          "term": "simp",
+          "score": 12.1698,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 11.1285,
+          "evidence": []
+        },
+        {
+          "term": "induction",
+          "score": 9.813,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "succ add",
+          "score": 3.8492,
+          "evidence": []
+        },
+        {
+          "term": "cref mynat",
+          "score": 3.1134,
+          "evidence": []
+        },
+        {
+          "term": "zero add",
+          "score": 2.9175,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 1.2176,
+          "evidence": []
+        },
+        {
+          "term": "simp",
+          "score": 1.2162,
+          "evidence": []
+        },
+        {
+          "term": "natural numbers",
+          "score": 1.0688,
+          "evidence": []
+        },
+        {
+          "term": "blueprint",
+          "score": 1.0685,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "succ add",
+          "score": 244.1444,
+          "evidence": []
+        },
+        {
+          "term": "cref mynat",
+          "score": 210.9776,
+          "evidence": []
+        },
+        {
+          "term": "simp",
+          "score": 151.2092,
+          "evidence": []
+        },
+        {
+          "term": "zero add",
+          "score": 144.3426,
+          "evidence": []
+        },
+        {
+          "term": "inserted",
+          "score": 107.4363,
+          "evidence": []
+        },
+        {
+          "term": "import",
+          "score": 66.7009,
+          "evidence": []
+        },
+        {
+          "term": "omitted",
+          "score": 66.6555,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-implementation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "node depends",
+          "score": 4.901,
+          "evidence": []
+        },
+        {
+          "term": "lake script",
+          "score": 3.677,
+          "evidence": []
+        },
+        {
+          "term": "lake build",
+          "score": 3.6115,
+          "evidence": []
+        },
+        {
+          "term": "build blueprint",
+          "score": 3.1392,
+          "evidence": []
+        },
+        {
+          "term": "array name",
+          "score": 3.1081,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 2.9221,
+          "evidence": []
+        },
+        {
+          "term": "add comm",
+          "score": 2.7618,
+          "evidence": []
+        },
+        {
+          "term": "latex label",
+          "score": 2.6588,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "node depends",
+          "score": 134.408,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 93.9686,
+          "evidence": []
+        },
+        {
+          "term": "build blueprint",
+          "score": 83.9726,
+          "evidence": []
+        },
+        {
+          "term": "blueprint content",
+          "score": 67.65,
+          "evidence": []
+        },
+        {
+          "term": "lake build",
+          "score": 59.0054,
+          "evidence": []
+        },
+        {
+          "term": "lake script",
+          "score": 58.4739,
+          "evidence": []
+        },
+        {
+          "term": "latex label",
+          "score": 53.8506,
+          "evidence": []
+        },
+        {
+          "term": "latex environment",
+          "score": 51.1765,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "node depends",
+          "score": 4.9047,
+          "evidence": []
+        },
+        {
+          "term": "lake script",
+          "score": 3.6753,
+          "evidence": []
+        },
+        {
+          "term": "lake build",
+          "score": 3.6112,
+          "evidence": []
+        },
+        {
+          "term": "build blueprint",
+          "score": 3.1423,
+          "evidence": []
+        },
+        {
+          "term": "array name",
+          "score": 3.1062,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 2.9267,
+          "evidence": []
+        },
+        {
+          "term": "add comm",
+          "score": 2.7612,
+          "evidence": []
+        },
+        {
+          "term": "latex label",
+          "score": 2.6657,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "node depends",
+          "score": 134.4129,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 93.9923,
+          "evidence": []
+        },
+        {
+          "term": "build blueprint",
+          "score": 83.9905,
+          "evidence": []
+        },
+        {
+          "term": "blueprint content",
+          "score": 67.6626,
+          "evidence": []
+        },
+        {
+          "term": "lake build",
+          "score": 59.0037,
+          "evidence": []
+        },
+        {
+          "term": "lake script",
+          "score": 58.4533,
+          "evidence": []
+        },
+        {
+          "term": "latex label",
+          "score": 53.8977,
+          "evidence": []
+        },
+        {
+          "term": "latex environment",
+          "score": 51.1663,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "node depends",
+          "score": 4.9047,
+          "evidence": []
+        },
+        {
+          "term": "lake script",
+          "score": 3.6753,
+          "evidence": []
+        },
+        {
+          "term": "lake build",
+          "score": 3.6112,
+          "evidence": []
+        },
+        {
+          "term": "build blueprint",
+          "score": 3.1423,
+          "evidence": []
+        },
+        {
+          "term": "array name",
+          "score": 3.1062,
+          "evidence": []
+        },
+        {
+          "term": "latex blueprint",
+          "score": 2.9267,
+          "evidence": []
+        },
+        {
+          "term": "add comm",
+          "score": 2.7612,
+          "evidence": []
+        },
+        {
+          "term": "latex label",
+          "score": 2.6657,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "node depends",
+          "score": 63.9258,
+          "evidence": []
+        },
+        {
+          "term": "array name",
+          "score": 55.7063,
+          "evidence": []
+        },
+        {
+          "term": "lake script",
+          "score": 52.1544,
+          "evidence": []
+        },
+        {
+          "term": "lake build",
+          "score": 49.9971,
+          "evidence": []
+        },
+        {
+          "term": "tagged constant",
+          "score": 41.2669,
+          "evidence": []
+        },
+        {
+          "term": "environment extension",
+          "score": 32.75,
+          "evidence": []
+        },
+        {
+          "term": "lean constants",
+          "score": 31.7039,
+          "evidence": []
+        },
+        {
+          "term": "options",
+          "score": 27.8827,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "formal declarations",
+          "score": 1.1437,
+          "evidence": []
+        },
+        {
+          "term": "blueprints",
+          "score": 1.0456,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.0207,
+          "evidence": []
+        },
+        {
+          "term": "collaboration",
+          "score": 0.8583,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.7347,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 0.673,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 0.654,
+          "evidence": []
+        },
+        {
+          "term": "informal",
+          "score": 0.5897,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "leanarchitect",
+          "score": 15.3205,
+          "evidence": []
+        },
+        {
+          "term": "formal declarations",
+          "score": 10.2566,
+          "evidence": []
+        },
+        {
+          "term": "blueprints",
+          "score": 10.1019,
+          "evidence": []
+        },
+        {
+          "term": "collaboration",
+          "score": 7.31,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 5.9237,
+          "evidence": []
+        },
+        {
+          "term": "informal",
+          "score": 5.7611,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 5.6154,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 4.7266,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "formal declarations",
+          "score": 1.1461,
+          "evidence": []
+        },
+        {
+          "term": "blueprints",
+          "score": 1.0358,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.0197,
+          "evidence": []
+        },
+        {
+          "term": "collaboration",
+          "score": 0.8522,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.7537,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 0.6629,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 0.65,
+          "evidence": []
+        },
+        {
+          "term": "jan",
+          "score": 0.6168,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "leanarchitect",
+          "score": 15.2624,
+          "evidence": []
+        },
+        {
+          "term": "formal declarations",
+          "score": 10.2557,
+          "evidence": []
+        },
+        {
+          "term": "blueprints",
+          "score": 10.0437,
+          "evidence": []
+        },
+        {
+          "term": "collaboration",
+          "score": 7.2646,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 6.0523,
+          "evidence": []
+        },
+        {
+          "term": "informal",
+          "score": 5.8564,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 5.5682,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 4.7457,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "formal declarations",
+          "score": 1.1461,
+          "evidence": []
+        },
+        {
+          "term": "blueprints",
+          "score": 1.0358,
+          "evidence": []
+        },
+        {
+          "term": "leanarchitect",
+          "score": 1.0197,
+          "evidence": []
+        },
+        {
+          "term": "collaboration",
+          "score": 0.8522,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.7537,
+          "evidence": []
+        },
+        {
+          "term": "projects",
+          "score": 0.6629,
+          "evidence": []
+        },
+        {
+          "term": "human",
+          "score": 0.65,
+          "evidence": []
+        },
+        {
+          "term": "informal",
+          "score": 0.6002,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "integrating",
+          "score": 94.8855,
+          "evidence": []
+        },
+        {
+          "term": "collaboration",
+          "score": 87.1425,
+          "evidence": []
+        },
+        {
+          "term": "tracking",
+          "score": 82.8911,
+          "evidence": []
+        },
+        {
+          "term": "maintainability",
+          "score": 79.9391,
+          "evidence": []
+        },
+        {
+          "term": "automating",
+          "score": 78.4521,
+          "evidence": []
+        },
+        {
+          "term": "package",
+          "score": 78.4328,
+          "evidence": []
+        },
+        {
+          "term": "blueprint-driven",
+          "score": 74.6998,
+          "evidence": []
+        },
+        {
+          "term": "managing",
+          "score": 73.8266,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

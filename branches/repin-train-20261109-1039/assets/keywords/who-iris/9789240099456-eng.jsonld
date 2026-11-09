@@ -1,0 +1,2562 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "9789240099456-eng",
+  "instance": "who-iris",
+  "about": "library/9789240099456-eng",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 1478,
+    "terms": 11089
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "adaptation kit",
+        "score": 14.169,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "decision-support logic",
+        "score": 12.8789,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "routine immunizations",
+        "score": 12.7896,
+        "evidence": []
+      },
+      {
+        "term": "immunization record",
+        "score": 11.9794,
+        "evidence": []
+      },
+      {
+        "term": "logic personas",
+        "score": 11.8879,
+        "evidence": []
+      },
+      {
+        "term": "immunization schedule",
+        "score": 11.8518,
+        "evidence": []
+      },
+      {
+        "term": "workflows personas",
+        "score": 11.7948,
+        "evidence": []
+      },
+      {
+        "term": "elements personas",
+        "score": 11.7111,
+        "evidence": []
+      },
+      {
+        "term": "process immz",
+        "score": 11.5908,
+        "evidence": []
+      },
+      {
+        "term": "digital adaptation",
+        "score": 11.378,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization doses",
+        "score": 11.2157,
+        "evidence": []
+      },
+      {
+        "term": "paper immunization",
+        "score": 11.0732,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "process immz",
+        "score": 2792.8166,
+        "evidence": []
+      },
+      {
+        "term": "vaccination schedule",
+        "score": 1495.9257,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine schedule",
+        "score": 1403.6456,
+        "evidence": []
+      },
+      {
+        "term": "vaccines client",
+        "score": 1357.035,
+        "evidence": []
+      },
+      {
+        "term": "client record",
+        "score": 1337.9906,
+        "evidence": []
+      },
+      {
+        "term": "dose vaccination",
+        "score": 1328.2767,
+        "evidence": []
+      },
+      {
+        "term": "measles vaccination",
+        "score": 1248.7747,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "recommended vaccination",
+        "score": 1230.2074,
+        "evidence": []
+      },
+      {
+        "term": "vaccination location",
+        "score": 1172.4334,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital vaccination",
+        "score": 1139.5104,
+        "evidence": []
+      },
+      {
+        "term": "duplicate client",
+        "score": 1112.1512,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization schedule",
+        "score": 1091.5808,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "adaptation kit",
+        "score": 13.552,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "decision-support logic",
+        "score": 12.8769,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "logic personas",
+        "score": 11.7569,
+        "evidence": []
+      },
+      {
+        "term": "workflows personas",
+        "score": 11.2278,
+        "evidence": []
+      },
+      {
+        "term": "digital adaptation",
+        "score": 11.1742,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization schedule",
+        "score": 11.1193,
+        "evidence": []
+      },
+      {
+        "term": "elements personas",
+        "score": 11.0063,
+        "evidence": []
+      },
+      {
+        "term": "requirements personas",
+        "score": 10.9132,
+        "evidence": []
+      },
+      {
+        "term": "immunization record",
+        "score": 10.8097,
+        "evidence": []
+      },
+      {
+        "term": "recommendations personas",
+        "score": 10.7912,
+        "evidence": []
+      },
+      {
+        "term": "process immz",
+        "score": 10.7295,
+        "evidence": []
+      },
+      {
+        "term": "vaccine schedule",
+        "score": 10.7123,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "process immz",
+        "score": 2786.9967,
+        "evidence": []
+      },
+      {
+        "term": "vaccination schedule",
+        "score": 1511.0287,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine schedule",
+        "score": 1426.7219,
+        "evidence": []
+      },
+      {
+        "term": "vaccines client",
+        "score": 1355.8011,
+        "evidence": []
+      },
+      {
+        "term": "client record",
+        "score": 1347.7172,
+        "evidence": []
+      },
+      {
+        "term": "dose vaccination",
+        "score": 1329.9857,
+        "evidence": []
+      },
+      {
+        "term": "measles vaccination",
+        "score": 1251.6478,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "recommended vaccination",
+        "score": 1235.0329,
+        "evidence": []
+      },
+      {
+        "term": "vaccination location",
+        "score": 1179.657,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital vaccination",
+        "score": 1146.3733,
+        "evidence": []
+      },
+      {
+        "term": "duplicate client",
+        "score": 1114.6878,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization schedule",
+        "score": 1093.8516,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "adaptation kit",
+        "score": 13.552,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "decision-support logic",
+        "score": 12.8769,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "logic personas",
+        "score": 11.7569,
+        "evidence": []
+      },
+      {
+        "term": "workflows personas",
+        "score": 11.2278,
+        "evidence": []
+      },
+      {
+        "term": "digital adaptation",
+        "score": 11.1742,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization schedule",
+        "score": 11.1193,
+        "evidence": []
+      },
+      {
+        "term": "elements personas",
+        "score": 11.0063,
+        "evidence": []
+      },
+      {
+        "term": "requirements personas",
+        "score": 10.9132,
+        "evidence": []
+      },
+      {
+        "term": "immunization record",
+        "score": 10.8097,
+        "evidence": []
+      },
+      {
+        "term": "recommendations personas",
+        "score": 10.7912,
+        "evidence": []
+      },
+      {
+        "term": "process immz",
+        "score": 10.7295,
+        "evidence": []
+      },
+      {
+        "term": "vaccine schedule",
+        "score": 10.7123,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "prioritise",
+        "score": 188.3369,
+        "evidence": []
+      },
+      {
+        "term": "requirments",
+        "score": 176.8205,
+        "evidence": []
+      },
+      {
+        "term": "optimised",
+        "score": 175.144,
+        "evidence": []
+      },
+      {
+        "term": "localised",
+        "score": 166.3487,
+        "evidence": []
+      },
+      {
+        "term": "prioritised",
+        "score": 166.3487,
+        "evidence": []
+      },
+      {
+        "term": "localisation",
+        "score": 165.5821,
+        "evidence": []
+      },
+      {
+        "term": "quantity subtype",
+        "score": 162.8776,
+        "evidence": []
+      },
+      {
+        "term": "updatable",
+        "score": 154.0856,
+        "evidence": []
+      },
+      {
+        "term": "element label",
+        "score": 149.5579,
+        "evidence": []
+      },
+      {
+        "term": "machine readable",
+        "score": 149.092,
+        "evidence": []
+      },
+      {
+        "term": "boolean",
+        "score": 123.7774,
+        "evidence": []
+      },
+      {
+        "term": "datetime",
+        "score": 123.7774,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-digital-health-interventions-incorporated-into-t": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "digital adaptation",
+          "score": 1.9286,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "smart guidelines",
+          "score": 1.316,
+          "evidence": []
+        },
+        {
+          "term": "manage person-centred",
+          "score": 1.1512,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 1.0638,
+          "evidence": []
+        },
+        {
+          "term": "daks",
+          "score": 0.997,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 0.9759,
+          "evidence": []
+        },
+        {
+          "term": "kit",
+          "score": 0.9591,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision support",
+          "score": 0.7376,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital adaptation",
+          "score": 25.6553,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "smart guidelines",
+          "score": 21.5776,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 17.6795,
+          "evidence": []
+        },
+        {
+          "term": "daks",
+          "score": 17.416,
+          "evidence": []
+        },
+        {
+          "term": "manage person-centred",
+          "score": 15.2559,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 11.3598,
+          "evidence": []
+        },
+        {
+          "term": "vision",
+          "score": 9.3722,
+          "evidence": []
+        },
+        {
+          "term": "status",
+          "score": 8.8434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital adaptation",
+          "score": 1.4171,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "smart guidelines",
+          "score": 0.6149,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 0.5601,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 0.5097,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.5019,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision support",
+          "score": 0.4151,
+          "evidence": []
+        },
+        {
+          "term": "manage person-centred",
+          "score": 0.3677,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.3446,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital adaptation",
+          "score": 26.101,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital tracking",
+          "score": 10.227,
+          "evidence": []
+        },
+        {
+          "term": "smart guidelines",
+          "score": 7.2781,
+          "evidence": []
+        },
+        {
+          "term": "kit",
+          "score": 6.292,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pcposs",
+          "score": 6.1191,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 4.9887,
+          "evidence": []
+        },
+        {
+          "term": "decision support",
+          "score": 4.5477,
+          "evidence": []
+        },
+        {
+          "term": "manage person-centred",
+          "score": 4.476,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital adaptation",
+          "score": 1.4171,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "smart guidelines",
+          "score": 0.6149,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 0.5601,
+          "evidence": []
+        },
+        {
+          "term": "digital tracking",
+          "score": 0.5097,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.5019,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision support",
+          "score": 0.4151,
+          "evidence": []
+        },
+        {
+          "term": "manage person-centred",
+          "score": 0.3677,
+          "evidence": []
+        },
+        {
+          "term": "kit",
+          "score": 0.3322,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "prioritise",
+          "score": 42.2911,
+          "evidence": []
+        },
+        {
+          "term": "requirments",
+          "score": 39.7837,
+          "evidence": []
+        },
+        {
+          "term": "optimised",
+          "score": 38.7989,
+          "evidence": []
+        },
+        {
+          "term": "localisation",
+          "score": 36.5579,
+          "evidence": []
+        },
+        {
+          "term": "localised",
+          "score": 36.4708,
+          "evidence": []
+        },
+        {
+          "term": "prioritised",
+          "score": 36.4708,
+          "evidence": []
+        },
+        {
+          "term": "updatable",
+          "score": 34.5019,
+          "evidence": []
+        },
+        {
+          "term": "executable",
+          "score": 24.9866,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-objectives": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adaptation kits",
+          "score": 1.6598,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 1.5785,
+          "evidence": []
+        },
+        {
+          "term": "machine readable",
+          "score": 1.345,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 1.2899,
+          "evidence": []
+        },
+        {
+          "term": "localised",
+          "score": 1.1776,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 1.1392,
+          "evidence": []
+        },
+        {
+          "term": "dak",
+          "score": 1.0316,
+          "evidence": []
+        },
+        {
+          "term": "daks",
+          "score": 0.8588,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "digital adaptation",
+          "score": 33.9719,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kits",
+          "score": 30.4817,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 18.9806,
+          "evidence": []
+        },
+        {
+          "term": "localised",
+          "score": 18.5995,
+          "evidence": []
+        },
+        {
+          "term": "machine readable",
+          "score": 17.4665,
+          "evidence": []
+        },
+        {
+          "term": "software developers",
+          "score": 16.855,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 14.747,
+          "evidence": []
+        },
+        {
+          "term": "algorithms",
+          "score": 14.3395,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "digital adaptation",
+          "score": 1.4077,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kits",
+          "score": 1.3176,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 0.9859,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 0.8126,
+          "evidence": []
+        },
+        {
+          "term": "machine readable",
+          "score": 0.678,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.6603,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 0.61,
+          "evidence": []
+        },
+        {
+          "term": "smart",
+          "score": 0.5924,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital adaptation",
+          "score": 24.3112,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 16.7332,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kits",
+          "score": 15.1493,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 9.6926,
+          "evidence": []
+        },
+        {
+          "term": "smart",
+          "score": 7.5659,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 7.1953,
+          "evidence": []
+        },
+        {
+          "term": "decision-support",
+          "score": 6.4186,
+          "evidence": []
+        },
+        {
+          "term": "kit",
+          "score": 6.1755,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "digital adaptation",
+          "score": 1.4077,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kits",
+          "score": 1.3176,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 0.9859,
+          "evidence": []
+        },
+        {
+          "term": "digital systems",
+          "score": 0.8126,
+          "evidence": []
+        },
+        {
+          "term": "machine readable",
+          "score": 0.678,
+          "evidence": []
+        },
+        {
+          "term": "recommendations",
+          "score": 0.6603,
+          "evidence": []
+        },
+        {
+          "term": "guidelines",
+          "score": 0.61,
+          "evidence": []
+        },
+        {
+          "term": "smart",
+          "score": 0.5924,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "prioritise",
+          "score": 91.2188,
+          "evidence": []
+        },
+        {
+          "term": "requirments",
+          "score": 85.9289,
+          "evidence": []
+        },
+        {
+          "term": "optimised",
+          "score": 83.8004,
+          "evidence": []
+        },
+        {
+          "term": "localisation",
+          "score": 79.049,
+          "evidence": []
+        },
+        {
+          "term": "prioritised",
+          "score": 78.8547,
+          "evidence": []
+        },
+        {
+          "term": "localised",
+          "score": 78.8547,
+          "evidence": []
+        },
+        {
+          "term": "updatable",
+          "score": 74.1595,
+          "evidence": []
+        },
+        {
+          "term": "machine readable",
+          "score": 69.484,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-components-of-a-digital-adaptation-kit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adaptation kit",
+          "score": 3.6452,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immz",
+          "score": 2.8704,
+          "evidence": []
+        },
+        {
+          "term": "decision-support logic",
+          "score": 2.8443,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 2.5967,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "non-functional requirement",
+          "score": 2.5356,
+          "evidence": []
+        },
+        {
+          "term": "generic personas",
+          "score": 2.4909,
+          "evidence": []
+        },
+        {
+          "term": "functional requirement",
+          "score": 2.2831,
+          "evidence": []
+        },
+        {
+          "term": "generic business",
+          "score": 2.1593,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "immz",
+          "score": 118.8954,
+          "evidence": []
+        },
+        {
+          "term": "decision-support logic",
+          "score": 67.0672,
+          "evidence": []
+        },
+        {
+          "term": "functional requirement",
+          "score": 52.917,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kit",
+          "score": 52.4566,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "non-functional requirement",
+          "score": 51.0471,
+          "evidence": []
+        },
+        {
+          "term": "generic personas",
+          "score": 43.174,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 42.7199,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dak represents",
+          "score": 40.1019,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "adaptation kit",
+          "score": 3.7581,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital adaptation",
+          "score": 3.3695,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision-support logic",
+          "score": 2.5496,
+          "evidence": []
+        },
+        {
+          "term": "generic personas",
+          "score": 2.0041,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirements",
+          "score": 1.7913,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 1.7811,
+          "evidence": []
+        },
+        {
+          "term": "generic business",
+          "score": 1.6467,
+          "evidence": []
+        },
+        {
+          "term": "user scenarios",
+          "score": 1.5035,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "immz",
+          "score": 106.1544,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kit",
+          "score": 57.2265,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision-support logic",
+          "score": 57.0095,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 53.1538,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "functional requirement",
+          "score": 42.248,
+          "evidence": []
+        },
+        {
+          "term": "generic personas",
+          "score": 41.5887,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirement",
+          "score": 39.2959,
+          "evidence": []
+        },
+        {
+          "term": "generic business",
+          "score": 30.3699,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "adaptation kit",
+          "score": 3.7581,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital adaptation",
+          "score": 3.3695,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision-support logic",
+          "score": 2.5496,
+          "evidence": []
+        },
+        {
+          "term": "generic personas",
+          "score": 2.0041,
+          "evidence": []
+        },
+        {
+          "term": "non-functional requirements",
+          "score": 1.7913,
+          "evidence": []
+        },
+        {
+          "term": "functional requirements",
+          "score": 1.7811,
+          "evidence": []
+        },
+        {
+          "term": "generic business",
+          "score": 1.6467,
+          "evidence": []
+        },
+        {
+          "term": "user scenarios",
+          "score": 1.5035,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "adaptation kit",
+          "score": 25.6051,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "decision-support logic",
+          "score": 15.2495,
+          "evidence": []
+        },
+        {
+          "term": "prioritise",
+          "score": 14.4647,
+          "evidence": []
+        },
+        {
+          "term": "optimised",
+          "score": 13.9475,
+          "evidence": []
+        },
+        {
+          "term": "localised",
+          "score": 13.6026,
+          "evidence": []
+        },
+        {
+          "term": "prioritised",
+          "score": 13.6026,
+          "evidence": []
+        },
+        {
+          "term": "boolean",
+          "score": 13.5841,
+          "evidence": []
+        },
+        {
+          "term": "datetime",
+          "score": 13.5841,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-how-this-digital-adaptation-kit-was-developed": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dak",
+          "score": 1.635,
+          "evidence": []
+        },
+        {
+          "term": "immunizations",
+          "score": 1.3331,
+          "evidence": []
+        },
+        {
+          "term": "guidance documents",
+          "score": 1.2944,
+          "evidence": []
+        },
+        {
+          "term": "clinical guidelines",
+          "score": 1.1844,
+          "evidence": []
+        },
+        {
+          "term": "daks",
+          "score": 0.6806,
+          "evidence": []
+        },
+        {
+          "term": "contributors",
+          "score": 0.6547,
+          "evidence": []
+        },
+        {
+          "term": "logic",
+          "score": 0.6082,
+          "evidence": []
+        },
+        {
+          "term": "algorithms",
+          "score": 0.5671,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dak",
+          "score": 37.2751,
+          "evidence": []
+        },
+        {
+          "term": "guidance documents",
+          "score": 23.7044,
+          "evidence": []
+        },
+        {
+          "term": "clinical guidelines",
+          "score": 22.0894,
+          "evidence": []
+        },
+        {
+          "term": "immunizations",
+          "score": 20.3978,
+          "evidence": []
+        },
+        {
+          "term": "daks",
+          "score": 8.708,
+          "evidence": []
+        },
+        {
+          "term": "contributors",
+          "score": 8.5078,
+          "evidence": []
+        },
+        {
+          "term": "relevant",
+          "score": 8.1601,
+          "evidence": []
+        },
+        {
+          "term": "teams",
+          "score": 8.05,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "adaptation",
+          "score": 0.6524,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical guidelines",
+          "score": 0.4156,
+          "evidence": []
+        },
+        {
+          "term": "kit",
+          "score": 0.3578,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 0.3276,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital systems",
+          "score": 0.3041,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2916,
+          "evidence": []
+        },
+        {
+          "term": "guidance documents",
+          "score": 0.2789,
+          "evidence": []
+        },
+        {
+          "term": "decision-support",
+          "score": 0.2745,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "adaptation",
+          "score": 11.5334,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "kit",
+          "score": 8.705,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization",
+          "score": 6.054,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 6.0515,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical guidelines",
+          "score": 5.7675,
+          "evidence": []
+        },
+        {
+          "term": "decision-support",
+          "score": 5.1246,
+          "evidence": []
+        },
+        {
+          "term": "dak",
+          "score": 4.7335,
+          "evidence": []
+        },
+        {
+          "term": "canada",
+          "score": 4.7294,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "adaptation",
+          "score": 0.6524,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "clinical guidelines",
+          "score": 0.4156,
+          "evidence": []
+        },
+        {
+          "term": "kit",
+          "score": 0.3578,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 0.3276,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital systems",
+          "score": 0.3041,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2916,
+          "evidence": []
+        },
+        {
+          "term": "guidance documents",
+          "score": 0.2789,
+          "evidence": []
+        },
+        {
+          "term": "dak",
+          "score": 0.2691,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "prioritise",
+          "score": 21.4566,
+          "evidence": []
+        },
+        {
+          "term": "requirments",
+          "score": 20.0617,
+          "evidence": []
+        },
+        {
+          "term": "optimised",
+          "score": 19.9506,
+          "evidence": []
+        },
+        {
+          "term": "prioritised",
+          "score": 18.9466,
+          "evidence": []
+        },
+        {
+          "term": "localised",
+          "score": 18.9466,
+          "evidence": []
+        },
+        {
+          "term": "localisation",
+          "score": 18.8158,
+          "evidence": []
+        },
+        {
+          "term": "updatable",
+          "score": 17.2472,
+          "evidence": []
+        },
+        {
+          "term": "executable",
+          "score": 12.7892,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-how-to-use-this-digital-adaptation-kit": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adaptation kit",
+          "score": 8.8153,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "measles contraindications",
+          "score": 7.6001,
+          "evidence": []
+        },
+        {
+          "term": "measles schedule",
+          "score": 7.3668,
+          "evidence": []
+        },
+        {
+          "term": "vaccine schedule",
+          "score": 7.1967,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis contraindications",
+          "score": 7.1631,
+          "evidence": []
+        },
+        {
+          "term": "process immz",
+          "score": 6.9992,
+          "evidence": []
+        },
+        {
+          "term": "vaccines client",
+          "score": 6.9654,
+          "evidence": []
+        },
+        {
+          "term": "dose schedule",
+          "score": 6.8612,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process immz",
+          "score": 2651.3167,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 1439.6308,
+          "evidence": []
+        },
+        {
+          "term": "vaccine schedule",
+          "score": 1357.2112,
+          "evidence": []
+        },
+        {
+          "term": "vaccines client",
+          "score": 1336.6153,
+          "evidence": []
+        },
+        {
+          "term": "client record",
+          "score": 1281.0704,
+          "evidence": []
+        },
+        {
+          "term": "dose vaccination",
+          "score": 1274.7292,
+          "evidence": []
+        },
+        {
+          "term": "measles vaccination",
+          "score": 1190.18,
+          "evidence": []
+        },
+        {
+          "term": "recommended vaccination",
+          "score": 1166.1799,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "adaptation kit",
+          "score": 8.8413,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "measles contraindications",
+          "score": 7.6269,
+          "evidence": []
+        },
+        {
+          "term": "measles schedule",
+          "score": 7.4152,
+          "evidence": []
+        },
+        {
+          "term": "vaccine schedule",
+          "score": 7.2293,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis contraindications",
+          "score": 7.1861,
+          "evidence": []
+        },
+        {
+          "term": "process immz",
+          "score": 7.0546,
+          "evidence": []
+        },
+        {
+          "term": "vaccines client",
+          "score": 7.0066,
+          "evidence": []
+        },
+        {
+          "term": "dose schedule",
+          "score": 6.8963,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process immz",
+          "score": 2651.4722,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 1439.2912,
+          "evidence": []
+        },
+        {
+          "term": "vaccine schedule",
+          "score": 1356.7226,
+          "evidence": []
+        },
+        {
+          "term": "vaccines client",
+          "score": 1336.6116,
+          "evidence": []
+        },
+        {
+          "term": "client record",
+          "score": 1281.2037,
+          "evidence": []
+        },
+        {
+          "term": "dose vaccination",
+          "score": 1274.6787,
+          "evidence": []
+        },
+        {
+          "term": "measles vaccination",
+          "score": 1190.0579,
+          "evidence": []
+        },
+        {
+          "term": "recommended vaccination",
+          "score": 1166.075,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "adaptation kit",
+          "score": 8.8413,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "measles contraindications",
+          "score": 7.6269,
+          "evidence": []
+        },
+        {
+          "term": "measles schedule",
+          "score": 7.4152,
+          "evidence": []
+        },
+        {
+          "term": "vaccine schedule",
+          "score": 7.2293,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis contraindications",
+          "score": 7.1861,
+          "evidence": []
+        },
+        {
+          "term": "process immz",
+          "score": 7.0546,
+          "evidence": []
+        },
+        {
+          "term": "vaccines client",
+          "score": 7.0066,
+          "evidence": []
+        },
+        {
+          "term": "dose schedule",
+          "score": 6.8963,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "attenuated hav",
+          "score": 34.0164,
+          "evidence": []
+        },
+        {
+          "term": "cholera meningococcal",
+          "score": 33.861,
+          "evidence": []
+        },
+        {
+          "term": "tbe typhoid",
+          "score": 33.7664,
+          "evidence": []
+        },
+        {
+          "term": "rabies dengue",
+          "score": 33.4748,
+          "evidence": []
+        },
+        {
+          "term": "mena conjugate",
+          "score": 32.8427,
+          "evidence": []
+        },
+        {
+          "term": "meningococcal hepatitis",
+          "score": 32.7392,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis contraindications",
+          "score": 32.3356,
+          "evidence": []
+        },
+        {
+          "term": "inactivated hav",
+          "score": 31.6869,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "world bank",
+          "score": 1.7134,
+          "evidence": []
+        },
+        {
+          "term": "sci pract",
+          "score": 1.6578,
+          "evidence": []
+        },
+        {
+          "term": "computer-based decision",
+          "score": 1.6557,
+          "evidence": []
+        },
+        {
+          "term": "immunization registry",
+          "score": 1.5764,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 1.4062,
+          "evidence": []
+        },
+        {
+          "term": "global fund",
+          "score": 1.3649,
+          "evidence": []
+        },
+        {
+          "term": "clinical decision",
+          "score": 1.3082,
+          "evidence": []
+        },
+        {
+          "term": "digital square",
+          "score": 1.2747,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "world bank",
+          "score": 50.0291,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 46.279,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 36.1724,
+          "evidence": []
+        },
+        {
+          "term": "digital strategy",
+          "score": 28.8617,
+          "evidence": []
+        },
+        {
+          "term": "digital square",
+          "score": 28.7244,
+          "evidence": []
+        },
+        {
+          "term": "immunization registry",
+          "score": 26.2939,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 26.0867,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 25.8739,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world bank",
+          "score": 1.4769,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 1.2148,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 1.0937,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 1.0884,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 1.028,
+          "evidence": []
+        },
+        {
+          "term": "digital strategy",
+          "score": 1.0222,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 0.9834,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 0.9792,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world bank",
+          "score": 33.796,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 31.2857,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 26.0842,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 25.1845,
+          "evidence": []
+        },
+        {
+          "term": "digital strategy",
+          "score": 24.7744,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 22.9574,
+          "evidence": []
+        },
+        {
+          "term": "digital age",
+          "score": 21.8665,
+          "evidence": []
+        },
+        {
+          "term": "digital square",
+          "score": 20.9065,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world bank",
+          "score": 1.4769,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 1.2148,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 1.0937,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 1.0884,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 1.028,
+          "evidence": []
+        },
+        {
+          "term": "digital strategy",
+          "score": 1.0222,
+          "evidence": []
+        },
+        {
+          "term": "digital interventions",
+          "score": 0.9834,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 0.9792,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "electric",
+          "score": 61.7967,
+          "evidence": []
+        },
+        {
+          "term": "nih",
+          "score": 56.7863,
+          "evidence": []
+        },
+        {
+          "term": "yokogawa",
+          "score": 56.2168,
+          "evidence": []
+        },
+        {
+          "term": "unido",
+          "score": 51.0489,
+          "evidence": []
+        },
+        {
+          "term": "smart-guidelines",
+          "score": 47.4,
+          "evidence": []
+        },
+        {
+          "term": "digital-transformation",
+          "score": 43.5841,
+          "evidence": []
+        },
+        {
+          "term": "itu-t",
+          "score": 43.5841,
+          "evidence": []
+        },
+        {
+          "term": "corporation",
+          "score": 41.706,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-annex-guidance-for-adding-data-elements-to-or-am": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "element label",
+          "score": 3.5188,
+          "evidence": []
+        },
+        {
+          "term": "element contributes",
+          "score": 2.8824,
+          "evidence": []
+        },
+        {
+          "term": "quantity subtype",
+          "score": 2.74,
+          "evidence": []
+        },
+        {
+          "term": "column blank",
+          "score": 2.6043,
+          "evidence": []
+        },
+        {
+          "term": "input options",
+          "score": 2.1478,
+          "evidence": []
+        },
+        {
+          "term": "multiple-choice question",
+          "score": 2.136,
+          "evidence": []
+        },
+        {
+          "term": "paper forms",
+          "score": 2.0037,
+          "evidence": []
+        },
+        {
+          "term": "past pregnancies",
+          "score": 1.8048,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "element label",
+          "score": 124.4821,
+          "evidence": []
+        },
+        {
+          "term": "element contributes",
+          "score": 104.945,
+          "evidence": []
+        },
+        {
+          "term": "column blank",
+          "score": 56.7397,
+          "evidence": []
+        },
+        {
+          "term": "quantity subtype",
+          "score": 56.5391,
+          "evidence": []
+        },
+        {
+          "term": "input options",
+          "score": 43.8298,
+          "evidence": []
+        },
+        {
+          "term": "paper forms",
+          "score": 43.044,
+          "evidence": []
+        },
+        {
+          "term": "multiple-choice question",
+          "score": 38.6238,
+          "evidence": []
+        },
+        {
+          "term": "target concept",
+          "score": 36.9539,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "element label",
+          "score": 3.6303,
+          "evidence": []
+        },
+        {
+          "term": "element contributes",
+          "score": 2.9962,
+          "evidence": []
+        },
+        {
+          "term": "column blank",
+          "score": 2.2853,
+          "evidence": []
+        },
+        {
+          "term": "quantity subtype",
+          "score": 2.2272,
+          "evidence": []
+        },
+        {
+          "term": "paper forms",
+          "score": 1.9239,
+          "evidence": []
+        },
+        {
+          "term": "terminology code",
+          "score": 1.6922,
+          "evidence": []
+        },
+        {
+          "term": "target concept",
+          "score": 1.6244,
+          "evidence": []
+        },
+        {
+          "term": "past pregnancies",
+          "score": 1.5864,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "element label",
+          "score": 134.3643,
+          "evidence": []
+        },
+        {
+          "term": "element contributes",
+          "score": 113.5166,
+          "evidence": []
+        },
+        {
+          "term": "column blank",
+          "score": 42.5177,
+          "evidence": []
+        },
+        {
+          "term": "quantity subtype",
+          "score": 40.5541,
+          "evidence": []
+        },
+        {
+          "term": "paper forms",
+          "score": 38.0889,
+          "evidence": []
+        },
+        {
+          "term": "terminology code",
+          "score": 31.6243,
+          "evidence": []
+        },
+        {
+          "term": "field",
+          "score": 31.5781,
+          "evidence": []
+        },
+        {
+          "term": "here",
+          "score": 29.4164,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "element label",
+          "score": 3.6303,
+          "evidence": []
+        },
+        {
+          "term": "element contributes",
+          "score": 2.9962,
+          "evidence": []
+        },
+        {
+          "term": "column blank",
+          "score": 2.2853,
+          "evidence": []
+        },
+        {
+          "term": "quantity subtype",
+          "score": 2.2272,
+          "evidence": []
+        },
+        {
+          "term": "paper forms",
+          "score": 1.9239,
+          "evidence": []
+        },
+        {
+          "term": "terminology code",
+          "score": 1.6922,
+          "evidence": []
+        },
+        {
+          "term": "target concept",
+          "score": 1.6244,
+          "evidence": []
+        },
+        {
+          "term": "past pregnancies",
+          "score": 1.5864,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "quantity subtype",
+          "score": 139.9319,
+          "evidence": []
+        },
+        {
+          "term": "element label",
+          "score": 116.1075,
+          "evidence": []
+        },
+        {
+          "term": "column blank",
+          "score": 108.2675,
+          "evidence": []
+        },
+        {
+          "term": "boolean",
+          "score": 99.1322,
+          "evidence": []
+        },
+        {
+          "term": "datetime",
+          "score": 99.1322,
+          "evidence": []
+        },
+        {
+          "term": "integer",
+          "score": 99.1322,
+          "evidence": []
+        },
+        {
+          "term": "pill",
+          "score": 99.1322,
+          "evidence": []
+        },
+        {
+          "term": "requesting",
+          "score": 99.1322,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adaptation kit",
+          "score": 3.5687,
+          "evidence": []
+        },
+        {
+          "term": "record immunization",
+          "score": 3.3901,
+          "evidence": []
+        },
+        {
+          "term": "immunization doses",
+          "score": 3.212,
+          "evidence": []
+        },
+        {
+          "term": "vaccination record",
+          "score": 3.0391,
+          "evidence": []
+        },
+        {
+          "term": "supplementary immunization",
+          "score": 3.0015,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 2.8979,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 2.8778,
+          "evidence": []
+        },
+        {
+          "term": "individual immunization",
+          "score": 2.8248,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "record immunization",
+          "score": 141.1594,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 138.8488,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kit",
+          "score": 137.4612,
+          "evidence": []
+        },
+        {
+          "term": "immunization doses",
+          "score": 128.597,
+          "evidence": []
+        },
+        {
+          "term": "individuals immunization",
+          "score": 125.4324,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 121.953,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 120.4184,
+          "evidence": []
+        },
+        {
+          "term": "electronic immunization",
+          "score": 119.6717,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "adaptation kit",
+          "score": 3.6365,
+          "evidence": []
+        },
+        {
+          "term": "record immunization",
+          "score": 3.506,
+          "evidence": []
+        },
+        {
+          "term": "immunization doses",
+          "score": 3.2363,
+          "evidence": []
+        },
+        {
+          "term": "vaccination record",
+          "score": 3.1979,
+          "evidence": []
+        },
+        {
+          "term": "supplementary immunization",
+          "score": 2.964,
+          "evidence": []
+        },
+        {
+          "term": "individual immunization",
+          "score": 2.9167,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 2.9029,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 2.8502,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "record immunization",
+          "score": 143.224,
+          "evidence": []
+        },
+        {
+          "term": "digital adaptation",
+          "score": 141.4952,
+          "evidence": []
+        },
+        {
+          "term": "adaptation kit",
+          "score": 138.4056,
+          "evidence": []
+        },
+        {
+          "term": "immunization doses",
+          "score": 129.3548,
+          "evidence": []
+        },
+        {
+          "term": "individuals immunization",
+          "score": 126.1677,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 122.2949,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 121.4973,
+          "evidence": []
+        },
+        {
+          "term": "electronic immunization",
+          "score": 120.7213,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "adaptation kit",
+          "score": 3.6365,
+          "evidence": []
+        },
+        {
+          "term": "record immunization",
+          "score": 3.506,
+          "evidence": []
+        },
+        {
+          "term": "immunization doses",
+          "score": 3.2363,
+          "evidence": []
+        },
+        {
+          "term": "vaccination record",
+          "score": 3.1979,
+          "evidence": []
+        },
+        {
+          "term": "supplementary immunization",
+          "score": 2.964,
+          "evidence": []
+        },
+        {
+          "term": "individual immunization",
+          "score": 2.9167,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 2.9029,
+          "evidence": []
+        },
+        {
+          "term": "polio vaccine",
+          "score": 2.8502,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "creative commons",
+          "score": 18.3563,
+          "evidence": []
+        },
+        {
+          "term": "prioritise",
+          "score": 15.5729,
+          "evidence": []
+        },
+        {
+          "term": "requirments",
+          "score": 14.6045,
+          "evidence": []
+        },
+        {
+          "term": "optimised",
+          "score": 14.4783,
+          "evidence": []
+        },
+        {
+          "term": "wong",
+          "score": 13.9745,
+          "evidence": []
+        },
+        {
+          "term": "prioritised",
+          "score": 13.7485,
+          "evidence": []
+        },
+        {
+          "term": "localised",
+          "score": 13.7485,
+          "evidence": []
+        },
+        {
+          "term": "localisation",
+          "score": 13.6555,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

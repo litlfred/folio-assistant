@@ -1,0 +1,4050 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2608.08453v1",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2608.08453v1",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "routing defects",
+        "score": 19.5764,
+        "evidence": []
+      },
+      {
+        "term": "agent skills",
+        "score": 18.9633,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "safety defects",
+        "score": 17.1907,
+        "evidence": []
+      },
+      {
+        "term": "public skills",
+        "score": 16.9558,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "skills paths",
+        "score": 16.8938,
+        "evidence": []
+      },
+      {
+        "term": "spec-aware skills",
+        "score": 16.7043,
+        "evidence": []
+      },
+      {
+        "term": "detected defects",
+        "score": 16.1794,
+        "evidence": []
+      },
+      {
+        "term": "skills specification",
+        "score": 16.0293,
+        "evidence": []
+      },
+      {
+        "term": "ai-marked skills",
+        "score": 15.5124,
+        "evidence": []
+      },
+      {
+        "term": "r1-clean skills",
+        "score": 15.4442,
+        "evidence": []
+      },
+      {
+        "term": "skills work",
+        "score": 15.392,
+        "evidence": []
+      },
+      {
+        "term": "unmarked skills",
+        "score": 15.3534,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "agent skills",
+        "score": 506.5789,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "spec-aware skills",
+        "score": 468.6936,
+        "evidence": []
+      },
+      {
+        "term": "skills paths",
+        "score": 465.1726,
+        "evidence": []
+      },
+      {
+        "term": "public skills",
+        "score": 464.0916,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ai-marked skills",
+        "score": 460.9231,
+        "evidence": []
+      },
+      {
+        "term": "unmarked skills",
+        "score": 453.9186,
+        "evidence": []
+      },
+      {
+        "term": "skills specification",
+        "score": 446.649,
+        "evidence": []
+      },
+      {
+        "term": "r1-clean skills",
+        "score": 444.8869,
+        "evidence": []
+      },
+      {
+        "term": "generic skills",
+        "score": 440.1302,
+        "evidence": []
+      },
+      {
+        "term": "r1-defective skills",
+        "score": 439.9098,
+        "evidence": []
+      },
+      {
+        "term": "skills work",
+        "score": 439.4367,
+        "evidence": []
+      },
+      {
+        "term": "skills average",
+        "score": 435.3072,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "agent skills",
+        "score": 17.95,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "routing defects",
+        "score": 17.1579,
+        "evidence": []
+      },
+      {
+        "term": "skills paths",
+        "score": 15.8775,
+        "evidence": []
+      },
+      {
+        "term": "safety defects",
+        "score": 15.8555,
+        "evidence": []
+      },
+      {
+        "term": "spec-aware skills",
+        "score": 15.823,
+        "evidence": []
+      },
+      {
+        "term": "skills specification",
+        "score": 15.0113,
+        "evidence": []
+      },
+      {
+        "term": "public skills",
+        "score": 14.6292,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "r1-clean skills",
+        "score": 14.4258,
+        "evidence": []
+      },
+      {
+        "term": "skills work",
+        "score": 14.3812,
+        "evidence": []
+      },
+      {
+        "term": "detected defects",
+        "score": 14.3521,
+        "evidence": []
+      },
+      {
+        "term": "ai-marked skills",
+        "score": 14.2423,
+        "evidence": []
+      },
+      {
+        "term": "defective skills",
+        "score": 14.1024,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "agent skills",
+        "score": 501.2698,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "spec-aware skills",
+        "score": 462.9433,
+        "evidence": []
+      },
+      {
+        "term": "ai-marked skills",
+        "score": 453.0209,
+        "evidence": []
+      },
+      {
+        "term": "skills paths",
+        "score": 442.9594,
+        "evidence": []
+      },
+      {
+        "term": "unmarked skills",
+        "score": 442.8833,
+        "evidence": []
+      },
+      {
+        "term": "skills average",
+        "score": 433.2515,
+        "evidence": []
+      },
+      {
+        "term": "skills specification",
+        "score": 430.0369,
+        "evidence": []
+      },
+      {
+        "term": "public skills",
+        "score": 429.2123,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "curated skills",
+        "score": 428.0002,
+        "evidence": []
+      },
+      {
+        "term": "defective skills",
+        "score": 427.5211,
+        "evidence": []
+      },
+      {
+        "term": "exemplary skills",
+        "score": 424.4546,
+        "evidence": []
+      },
+      {
+        "term": "r1-clean skills",
+        "score": 422.975,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "agent skills",
+        "score": 17.95,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "routing defects",
+        "score": 17.1579,
+        "evidence": []
+      },
+      {
+        "term": "skills paths",
+        "score": 15.8775,
+        "evidence": []
+      },
+      {
+        "term": "safety defects",
+        "score": 15.8555,
+        "evidence": []
+      },
+      {
+        "term": "spec-aware skills",
+        "score": 15.823,
+        "evidence": []
+      },
+      {
+        "term": "skills specification",
+        "score": 15.0113,
+        "evidence": []
+      },
+      {
+        "term": "public skills",
+        "score": 14.6292,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "r1-clean skills",
+        "score": 14.4258,
+        "evidence": []
+      },
+      {
+        "term": "skills work",
+        "score": 14.3812,
+        "evidence": []
+      },
+      {
+        "term": "detected defects",
+        "score": 14.3521,
+        "evidence": []
+      },
+      {
+        "term": "ai-marked skills",
+        "score": 14.2423,
+        "evidence": []
+      },
+      {
+        "term": "defective skills",
+        "score": 14.1024,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "github-issue corroboration",
+        "score": 1762.3827,
+        "evidence": []
+      },
+      {
+        "term": "pat terns",
+        "score": 1591.2859,
+        "evidence": []
+      },
+      {
+        "term": "name-as-heading duplication",
+        "score": 1510.1694,
+        "evidence": []
+      },
+      {
+        "term": "unguarded destructive",
+        "score": 1466.8154,
+        "evidence": []
+      },
+      {
+        "term": "two-tier defect",
+        "score": 1455.1796,
+        "evidence": []
+      },
+      {
+        "term": "persona redefinition",
+        "score": 1332.6311,
+        "evidence": []
+      },
+      {
+        "term": "discovery-stage reuse",
+        "score": 1310.3559,
+        "evidence": []
+      },
+      {
+        "term": "detected defect",
+        "score": 1298.1027,
+        "evidence": []
+      },
+      {
+        "term": "portability defects",
+        "score": 1262.1668,
+        "evidence": []
+      },
+      {
+        "term": "r1-defective skills",
+        "score": 1214.1675,
+        "evidence": []
+      },
+      {
+        "term": "r1-clean skills",
+        "score": 1188.1347,
+        "evidence": []
+      },
+      {
+        "term": "reusability defects",
+        "score": 1183.4864,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-abstract": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "quality-assured generation",
+          "score": 1.369,
+          "evidence": []
+        },
+        {
+          "term": "skills contain",
+          "score": 1.3395,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 1.2824,
+          "evidence": []
+        },
+        {
+          "term": "routing metadata",
+          "score": 1.2545,
+          "evidence": []
+        },
+        {
+          "term": "defect",
+          "score": 0.9987,
+          "evidence": []
+        },
+        {
+          "term": "repair",
+          "score": 0.6736,
+          "evidence": []
+        },
+        {
+          "term": "lightweight",
+          "score": 0.6198,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.6013,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skills contain",
+          "score": 30.0193,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 28.4146,
+          "evidence": []
+        },
+        {
+          "term": "routing metadata",
+          "score": 22.7828,
+          "evidence": []
+        },
+        {
+          "term": "quality-assured generation",
+          "score": 17.9568,
+          "evidence": []
+        },
+        {
+          "term": "defect",
+          "score": 15.899,
+          "evidence": []
+        },
+        {
+          "term": "repair",
+          "score": 9.039,
+          "evidence": []
+        },
+        {
+          "term": "lightweight",
+          "score": 8.5272,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 7.8728,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agent skills",
+          "score": 0.9543,
+          "evidence": []
+        },
+        {
+          "term": "skills contain",
+          "score": 0.5987,
+          "evidence": []
+        },
+        {
+          "term": "routing metadata",
+          "score": 0.4945,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.4638,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.304,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 0.2544,
+          "evidence": []
+        },
+        {
+          "term": "detected",
+          "score": 0.2317,
+          "evidence": []
+        },
+        {
+          "term": "checks",
+          "score": 0.2294,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent skills",
+          "score": 26.5805,
+          "evidence": []
+        },
+        {
+          "term": "skills contain",
+          "score": 20.7837,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 13.3635,
+          "evidence": []
+        },
+        {
+          "term": "routing metadata",
+          "score": 8.7216,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 5.5687,
+          "evidence": []
+        },
+        {
+          "term": "detected",
+          "score": 4.0071,
+          "evidence": []
+        },
+        {
+          "term": "repair",
+          "score": 3.3827,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 3.2653,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent skills",
+          "score": 0.9543,
+          "evidence": []
+        },
+        {
+          "term": "skills contain",
+          "score": 0.6412,
+          "evidence": []
+        },
+        {
+          "term": "routing metadata",
+          "score": 0.4945,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.4638,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.304,
+          "evidence": []
+        },
+        {
+          "term": "repair",
+          "score": 0.2081,
+          "evidence": []
+        },
+        {
+          "term": "quality-assured generation",
+          "score": 0.1996,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1663,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "os-specific",
+          "score": 90.6175,
+          "evidence": []
+        },
+        {
+          "term": "porta",
+          "score": 90.6175,
+          "evidence": []
+        },
+        {
+          "term": "unfinished",
+          "score": 90.6175,
+          "evidence": []
+        },
+        {
+          "term": "peer-reviewed",
+          "score": 89.7528,
+          "evidence": []
+        },
+        {
+          "term": "non-functional",
+          "score": 84.0587,
+          "evidence": []
+        },
+        {
+          "term": "r1-defective",
+          "score": 82.067,
+          "evidence": []
+        },
+        {
+          "term": "unguarded",
+          "score": 81.5895,
+          "evidence": []
+        },
+        {
+          "term": "ai-marked",
+          "score": 81.1588,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "public skills",
+          "score": 1.8678,
+          "evidence": []
+        },
+        {
+          "term": "skill quality",
+          "score": 1.7228,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 1.6684,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 1.0989,
+          "evidence": []
+        },
+        {
+          "term": "require ments",
+          "score": 1.0832,
+          "evidence": []
+        },
+        {
+          "term": "reusable",
+          "score": 1.048,
+          "evidence": []
+        },
+        {
+          "term": "diagnosis",
+          "score": 0.7934,
+          "evidence": []
+        },
+        {
+          "term": "platform",
+          "score": 0.7379,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "public skills",
+          "score": 53.8485,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 47.8506,
+          "evidence": []
+        },
+        {
+          "term": "skill quality",
+          "score": 40.8258,
+          "evidence": []
+        },
+        {
+          "term": "reusable",
+          "score": 21.6514,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 18.6122,
+          "evidence": []
+        },
+        {
+          "term": "require ments",
+          "score": 14.9883,
+          "evidence": []
+        },
+        {
+          "term": "platform",
+          "score": 13.7963,
+          "evidence": []
+        },
+        {
+          "term": "official",
+          "score": 11.8797,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agent skills",
+          "score": 1.5866,
+          "evidence": []
+        },
+        {
+          "term": "public skills",
+          "score": 1.3471,
+          "evidence": []
+        },
+        {
+          "term": "skill quality",
+          "score": 1.2455,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.7059,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.5612,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.4429,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 0.4271,
+          "evidence": []
+        },
+        {
+          "term": "checks",
+          "score": 0.3687,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent skills",
+          "score": 42.3471,
+          "evidence": []
+        },
+        {
+          "term": "public skills",
+          "score": 37.4697,
+          "evidence": []
+        },
+        {
+          "term": "skill quality",
+          "score": 30.3544,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 17.0142,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 7.4821,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 6.9395,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 6.2862,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 5.7433,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent skills",
+          "score": 1.5866,
+          "evidence": []
+        },
+        {
+          "term": "public skills",
+          "score": 1.3471,
+          "evidence": []
+        },
+        {
+          "term": "skill quality",
+          "score": 1.2455,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.7059,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.5612,
+          "evidence": []
+        },
+        {
+          "term": "reuse",
+          "score": 0.3286,
+          "evidence": []
+        },
+        {
+          "term": "reusable",
+          "score": 0.328,
+          "evidence": []
+        },
+        {
+          "term": "official",
+          "score": 0.2999,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "os-specific",
+          "score": 56.9014,
+          "evidence": []
+        },
+        {
+          "term": "porta",
+          "score": 56.9014,
+          "evidence": []
+        },
+        {
+          "term": "unfinished",
+          "score": 56.9014,
+          "evidence": []
+        },
+        {
+          "term": "peer-reviewed",
+          "score": 56.5012,
+          "evidence": []
+        },
+        {
+          "term": "non-functional",
+          "score": 52.2433,
+          "evidence": []
+        },
+        {
+          "term": "r1-defective",
+          "score": 52.0607,
+          "evidence": []
+        },
+        {
+          "term": "unguarded",
+          "score": 51.2489,
+          "evidence": []
+        },
+        {
+          "term": "ai-marked",
+          "score": 51.0631,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-21-agent-skills-and-the-skillmd-format": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "agent skills",
+          "score": 3.9286,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public skills",
+          "score": 1.8076,
+          "evidence": []
+        },
+        {
+          "term": "malicious skills",
+          "score": 1.7652,
+          "evidence": []
+        },
+        {
+          "term": "skill quality",
+          "score": 1.6647,
+          "evidence": []
+        },
+        {
+          "term": "safety concerns",
+          "score": 1.4973,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 1.0222,
+          "evidence": []
+        },
+        {
+          "term": "disclosure",
+          "score": 0.89,
+          "evidence": []
+        },
+        {
+          "term": "upstream",
+          "score": 0.8813,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "agent skills",
+          "score": 135.2564,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public skills",
+          "score": 56.8119,
+          "evidence": []
+        },
+        {
+          "term": "skill quality",
+          "score": 55.2167,
+          "evidence": []
+        },
+        {
+          "term": "malicious skills",
+          "score": 54.2918,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 23.3861,
+          "evidence": []
+        },
+        {
+          "term": "safety concerns",
+          "score": 22.0744,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 15.3055,
+          "evidence": []
+        },
+        {
+          "term": "disclosure",
+          "score": 14.5931,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agent skills",
+          "score": 4.1852,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public skills",
+          "score": 1.6468,
+          "evidence": []
+        },
+        {
+          "term": "skill quality",
+          "score": 1.5701,
+          "evidence": []
+        },
+        {
+          "term": "malicious skills",
+          "score": 1.4386,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.6861,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.611,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 0.5535,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.4655,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent skills",
+          "score": 114.0605,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "skill quality",
+          "score": 46.297,
+          "evidence": []
+        },
+        {
+          "term": "public skills",
+          "score": 46.2399,
+          "evidence": []
+        },
+        {
+          "term": "malicious skills",
+          "score": 43.9356,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 15.8788,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 12.992,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 9.2371,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 9.0425,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent skills",
+          "score": 4.1852,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public skills",
+          "score": 1.6468,
+          "evidence": []
+        },
+        {
+          "term": "skill quality",
+          "score": 1.5701,
+          "evidence": []
+        },
+        {
+          "term": "malicious skills",
+          "score": 1.4386,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.611,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 0.5535,
+          "evidence": []
+        },
+        {
+          "term": "safety concerns",
+          "score": 0.5369,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 0.4486,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "os-specific",
+          "score": 33.4302,
+          "evidence": []
+        },
+        {
+          "term": "porta",
+          "score": 33.4302,
+          "evidence": []
+        },
+        {
+          "term": "unfinished",
+          "score": 33.4302,
+          "evidence": []
+        },
+        {
+          "term": "peer-reviewed",
+          "score": 33.293,
+          "evidence": []
+        },
+        {
+          "term": "r1-defective",
+          "score": 30.9591,
+          "evidence": []
+        },
+        {
+          "term": "non-functional",
+          "score": 30.7614,
+          "evidence": []
+        },
+        {
+          "term": "unguarded",
+          "score": 30.7522,
+          "evidence": []
+        },
+        {
+          "term": "ai-marked",
+          "score": 30.7217,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-31-data-collection": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "repository cloning",
+          "score": 1.8285,
+          "evidence": []
+        },
+        {
+          "term": "ecosystem-wide",
+          "score": 1.0078,
+          "evidence": []
+        },
+        {
+          "term": "case-insensitive",
+          "score": 0.9088,
+          "evidence": []
+        },
+        {
+          "term": "repositories",
+          "score": 0.8899,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.7395,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 0.7102,
+          "evidence": []
+        },
+        {
+          "term": "registry",
+          "score": 0.61,
+          "evidence": []
+        },
+        {
+          "term": "collection",
+          "score": 0.6082,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "repository cloning",
+          "score": 28.6978,
+          "evidence": []
+        },
+        {
+          "term": "repositories",
+          "score": 16.4562,
+          "evidence": []
+        },
+        {
+          "term": "ecosystem-wide",
+          "score": 14.0089,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 13.888,
+          "evidence": []
+        },
+        {
+          "term": "case-insensitive",
+          "score": 12.6226,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 10.7601,
+          "evidence": []
+        },
+        {
+          "term": "registry",
+          "score": 8.4637,
+          "evidence": []
+        },
+        {
+          "term": "search",
+          "score": 6.3516,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.3933,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.2045,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.2024,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 0.149,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.1464,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1434,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 0.1379,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.1327,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 10.0343,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 3.3876,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 2.9587,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 2.4551,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 2.4521,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 2.0624,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 1.8375,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 1.8151,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.3933,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 0.1799,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 0.149,
+          "evidence": []
+        },
+        {
+          "term": "repository cloning",
+          "score": 0.1434,
+          "evidence": []
+        },
+        {
+          "term": "content",
+          "score": 0.129,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.1168,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "repositories",
+          "score": 0.0948,
+          "evidence": []
+        },
+        {
+          "term": "search",
+          "score": 0.0703,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "digest",
+          "score": 79.5194,
+          "evidence": []
+        },
+        {
+          "term": "blake",
+          "score": 62.3924,
+          "evidence": []
+        },
+        {
+          "term": "falcon",
+          "score": 59.1593,
+          "evidence": []
+        },
+        {
+          "term": "hashing",
+          "score": 53.2537,
+          "evidence": []
+        },
+        {
+          "term": "fips",
+          "score": 50.3333,
+          "evidence": []
+        },
+        {
+          "term": "message-digest",
+          "score": 48.6327,
+          "evidence": []
+        },
+        {
+          "term": "zlib",
+          "score": 48.6327,
+          "evidence": []
+        },
+        {
+          "term": "und",
+          "score": 45.6611,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-34-routing-stress-test": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tier categories",
+          "score": 2.3073,
+          "evidence": []
+        },
+        {
+          "term": "spec clause",
+          "score": 2.275,
+          "evidence": []
+        },
+        {
+          "term": "pat terns",
+          "score": 2.0155,
+          "evidence": []
+        },
+        {
+          "term": "persona redefinition",
+          "score": 1.9897,
+          "evidence": []
+        },
+        {
+          "term": "platform-specific paths",
+          "score": 1.8488,
+          "evidence": []
+        },
+        {
+          "term": "hardcoded credentials",
+          "score": 1.8013,
+          "evidence": []
+        },
+        {
+          "term": "oversized bodies",
+          "score": 1.7847,
+          "evidence": []
+        },
+        {
+          "term": "skills specification",
+          "score": 1.5196,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tier categories",
+          "score": 48.1443,
+          "evidence": []
+        },
+        {
+          "term": "spec clause",
+          "score": 39.5281,
+          "evidence": []
+        },
+        {
+          "term": "checks",
+          "score": 39.1339,
+          "evidence": []
+        },
+        {
+          "term": "skills specification",
+          "score": 31.7527,
+          "evidence": []
+        },
+        {
+          "term": "persona redefinition",
+          "score": 30.34,
+          "evidence": []
+        },
+        {
+          "term": "hardcoded credentials",
+          "score": 30.1747,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 29.5516,
+          "evidence": []
+        },
+        {
+          "term": "github issues",
+          "score": 29.0218,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "routing",
+          "score": 1.7269,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "agent skills",
+          "score": 1.6623,
+          "evidence": []
+        },
+        {
+          "term": "skills specification",
+          "score": 1.5556,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 1.087,
+          "evidence": []
+        },
+        {
+          "term": "official agent",
+          "score": 1.0377,
+          "evidence": []
+        },
+        {
+          "term": "tier categories",
+          "score": 0.9283,
+          "evidence": []
+        },
+        {
+          "term": "hardcoded credentials",
+          "score": 0.8693,
+          "evidence": []
+        },
+        {
+          "term": "stress",
+          "score": 0.7338,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent skills",
+          "score": 36.753,
+          "evidence": []
+        },
+        {
+          "term": "skills specification",
+          "score": 32.7621,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 20.5915,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defects",
+          "score": 20.5578,
+          "evidence": []
+        },
+        {
+          "term": "official agent",
+          "score": 10.9777,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 8.6972,
+          "evidence": []
+        },
+        {
+          "term": "github issues",
+          "score": 6.9534,
+          "evidence": []
+        },
+        {
+          "term": "hardcoded credentials",
+          "score": 6.8017,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "routing",
+          "score": 1.7269,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "agent skills",
+          "score": 1.6623,
+          "evidence": []
+        },
+        {
+          "term": "skills specification",
+          "score": 1.5556,
+          "evidence": []
+        },
+        {
+          "term": "official agent",
+          "score": 1.0377,
+          "evidence": []
+        },
+        {
+          "term": "defect",
+          "score": 1.019,
+          "evidence": []
+        },
+        {
+          "term": "tier categories",
+          "score": 0.9283,
+          "evidence": []
+        },
+        {
+          "term": "hardcoded credentials",
+          "score": 0.8693,
+          "evidence": []
+        },
+        {
+          "term": "stress",
+          "score": 0.7338,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "pat terns",
+          "score": 186.554,
+          "evidence": []
+        },
+        {
+          "term": "persona redefinition",
+          "score": 151.6267,
+          "evidence": []
+        },
+        {
+          "term": "stress",
+          "score": 142.096,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "os-specific",
+          "score": 125.4287,
+          "evidence": []
+        },
+        {
+          "term": "porta",
+          "score": 125.4287,
+          "evidence": []
+        },
+        {
+          "term": "unfinished",
+          "score": 125.4287,
+          "evidence": []
+        },
+        {
+          "term": "peer-reviewed",
+          "score": 125.0174,
+          "evidence": []
+        },
+        {
+          "term": "oversized bodies",
+          "score": 120.6978,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-33-detector-validation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "stress test",
+          "score": 1.1716,
+          "evidence": []
+        },
+        {
+          "term": "detectors",
+          "score": 0.9542,
+          "evidence": []
+        },
+        {
+          "term": "fixture",
+          "score": 0.9502,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.8698,
+          "evidence": []
+        },
+        {
+          "term": "defect",
+          "score": 0.7914,
+          "evidence": []
+        },
+        {
+          "term": "length",
+          "score": 0.7382,
+          "evidence": []
+        },
+        {
+          "term": "lexical",
+          "score": 0.6618,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 0.6002,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "stress test",
+          "score": 15.7881,
+          "evidence": []
+        },
+        {
+          "term": "detectors",
+          "score": 15.638,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 15.3055,
+          "evidence": []
+        },
+        {
+          "term": "fixture",
+          "score": 13.1979,
+          "evidence": []
+        },
+        {
+          "term": "length",
+          "score": 11.6727,
+          "evidence": []
+        },
+        {
+          "term": "defect",
+          "score": 10.5994,
+          "evidence": []
+        },
+        {
+          "term": "lexical",
+          "score": 9.1242,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 8.3328,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skills",
+          "score": 0.4479,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.3171,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.3168,
+          "evidence": []
+        },
+        {
+          "term": "stress test",
+          "score": 0.2389,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2248,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 0.2157,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.199,
+          "evidence": []
+        },
+        {
+          "term": "checks",
+          "score": 0.1646,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 9.4374,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 5.9607,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 4.7674,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 2.9823,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 2.4961,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 1.8337,
+          "evidence": []
+        },
+        {
+          "term": "detected",
+          "score": 1.809,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 1.6604,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.4479,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.3171,
+          "evidence": []
+        },
+        {
+          "term": "defect",
+          "score": 0.29,
+          "evidence": []
+        },
+        {
+          "term": "stress test",
+          "score": 0.2389,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 0.2157,
+          "evidence": []
+        },
+        {
+          "term": "descriptions",
+          "score": 0.1614,
+          "evidence": []
+        },
+        {
+          "term": "detector",
+          "score": 0.0817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "missing",
+          "score": 0.0719,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "os-specific",
+          "score": 82.6108,
+          "evidence": []
+        },
+        {
+          "term": "porta",
+          "score": 82.6108,
+          "evidence": []
+        },
+        {
+          "term": "unfinished",
+          "score": 82.6108,
+          "evidence": []
+        },
+        {
+          "term": "peer-reviewed",
+          "score": 81.5714,
+          "evidence": []
+        },
+        {
+          "term": "non-functional",
+          "score": 77.7596,
+          "evidence": []
+        },
+        {
+          "term": "delib",
+          "score": 75.87,
+          "evidence": []
+        },
+        {
+          "term": "r1-defective",
+          "score": 73.9103,
+          "evidence": []
+        },
+        {
+          "term": "discovery-stage",
+          "score": 72.7812,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-41-ecosystem-overview": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ecosystem",
+          "score": 0.8802,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "unmarked",
+          "score": 0.6526,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 0.6501,
+          "evidence": []
+        },
+        {
+          "term": "contributor",
+          "score": 0.6476,
+          "evidence": []
+        },
+        {
+          "term": "ai-generation",
+          "score": 0.6358,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skills",
+          "score": 10.911,
+          "evidence": []
+        },
+        {
+          "term": "ecosystem",
+          "score": 9.4037,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "largest",
+          "score": 7.5711,
+          "evidence": []
+        },
+        {
+          "term": "ai-generation",
+          "score": 7.0044,
+          "evidence": []
+        },
+        {
+          "term": "unmarked",
+          "score": 7.0044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.3314,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.2319,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1902,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 0.1291,
+          "evidence": []
+        },
+        {
+          "term": "platform",
+          "score": 0.1126,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 6.9996,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 3.1708,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 2.6071,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 2.4892,
+          "evidence": []
+        },
+        {
+          "term": "contributor",
+          "score": 1.8797,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.3314,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.2319,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1902,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 0.1291,
+          "evidence": []
+        },
+        {
+          "term": "platform",
+          "score": 0.1126,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ai-marked",
+          "score": 30.2135,
+          "evidence": []
+        },
+        {
+          "term": "defect-free",
+          "score": 29.154,
+          "evidence": []
+        },
+        {
+          "term": "unmarked",
+          "score": 28.6851,
+          "evidence": []
+        },
+        {
+          "term": "spec-unaware",
+          "score": 27.4524,
+          "evidence": []
+        },
+        {
+          "term": "platform-level",
+          "score": 27.0497,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-42-rq1-what-reusability-defects-are-prevalent-in": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "defects",
+          "score": 2.1978,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "detected defects",
+          "score": 2.0909,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 1.4475,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prevalent",
+          "score": 1.0358,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prevalence",
+          "score": 0.9542,
+          "evidence": []
+        },
+        {
+          "term": "tier",
+          "score": 0.8277,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "defects",
+          "score": 37.2244,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "detected defects",
+          "score": 36.527,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 27.2776,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prevalence",
+          "score": 15.638,
+          "evidence": []
+        },
+        {
+          "term": "prevalent",
+          "score": 11.5033,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routing",
+          "score": 11.4791,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skills",
+          "score": 0.8559,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defects",
+          "score": 0.7928,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "detected defects",
+          "score": 0.5924,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.3499,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.2568,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2354,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 29.0452,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defects",
+          "score": 22.2417,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "detected defects",
+          "score": 14.4488,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 6.0499,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 4.6076,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 3.6865,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.8559,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defects",
+          "score": 0.7928,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "detected defects",
+          "score": 0.5924,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.3499,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2354,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.2291,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "defects",
+          "score": 131.5491,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "detected defects",
+          "score": 111.9477,
+          "evidence": []
+        },
+        {
+          "term": "os-specific",
+          "score": 109.2604,
+          "evidence": []
+        },
+        {
+          "term": "porta",
+          "score": 109.2604,
+          "evidence": []
+        },
+        {
+          "term": "unfinished",
+          "score": 109.2604,
+          "evidence": []
+        },
+        {
+          "term": "peer-reviewed",
+          "score": 108.2629,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-43-rq2-how-do-these-defects-limit-skill-reuse": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "spec conformance",
+          "score": 2.0231,
+          "evidence": []
+        },
+        {
+          "term": "tier",
+          "score": 1.6555,
+          "evidence": []
+        },
+        {
+          "term": "reuse",
+          "score": 1.6305,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "stress test",
+          "score": 1.5571,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 1.5115,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 1.5003,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "r1-defective",
+          "score": 1.285,
+          "evidence": []
+        },
+        {
+          "term": "reduce discovery",
+          "score": 1.2727,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tier",
+          "score": 44.0028,
+          "evidence": []
+        },
+        {
+          "term": "spec conformance",
+          "score": 38.0834,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 33.4164,
+          "evidence": []
+        },
+        {
+          "term": "checks",
+          "score": 31.3071,
+          "evidence": []
+        },
+        {
+          "term": "reuse",
+          "score": 26.6369,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "stress test",
+          "score": 26.1813,
+          "evidence": []
+        },
+        {
+          "term": "defect",
+          "score": 21.1987,
+          "evidence": []
+        },
+        {
+          "term": "r1-defective",
+          "score": 21.0133,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "defects",
+          "score": 1.9198,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "agent skills",
+          "score": 1.5379,
+          "evidence": []
+        },
+        {
+          "term": "reuse",
+          "score": 0.8812,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routing",
+          "score": 0.8337,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.625,
+          "evidence": []
+        },
+        {
+          "term": "stress test",
+          "score": 0.6053,
+          "evidence": []
+        },
+        {
+          "term": "spec conformance",
+          "score": 0.5729,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 0.5151,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "defects",
+          "score": 41.5822,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "agent skills",
+          "score": 36.4761,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 12.0819,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 8.8824,
+          "evidence": []
+        },
+        {
+          "term": "reuse",
+          "score": 6.2772,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "detected",
+          "score": 6.2229,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 5.2267,
+          "evidence": []
+        },
+        {
+          "term": "repair",
+          "score": 5.1867,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "defects",
+          "score": 1.9198,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "agent skills",
+          "score": 1.5379,
+          "evidence": []
+        },
+        {
+          "term": "reuse",
+          "score": 0.8812,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routing",
+          "score": 0.8337,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.625,
+          "evidence": []
+        },
+        {
+          "term": "stress test",
+          "score": 0.6053,
+          "evidence": []
+        },
+        {
+          "term": "spec conformance",
+          "score": 0.5729,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 0.5151,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "defects",
+          "score": 141.084,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "os-specific",
+          "score": 130.7192,
+          "evidence": []
+        },
+        {
+          "term": "porta",
+          "score": 130.7192,
+          "evidence": []
+        },
+        {
+          "term": "unfinished",
+          "score": 130.7192,
+          "evidence": []
+        },
+        {
+          "term": "peer-reviewed",
+          "score": 129.3671,
+          "evidence": []
+        },
+        {
+          "term": "non-functional",
+          "score": 117.2166,
+          "evidence": []
+        },
+        {
+          "term": "r1-defective",
+          "score": 115.6071,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 112.7721,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-44-rq3-which-platform-and-provenance-signals-are": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ai-marked skills",
+          "score": 3.2546,
+          "evidence": []
+        },
+        {
+          "term": "unmarked skills",
+          "score": 3.0992,
+          "evidence": []
+        },
+        {
+          "term": "avg defects",
+          "score": 3.0884,
+          "evidence": []
+        },
+        {
+          "term": "detected defects",
+          "score": 3.0389,
+          "evidence": []
+        },
+        {
+          "term": "portability defects",
+          "score": 2.9429,
+          "evidence": []
+        },
+        {
+          "term": "safety defects",
+          "score": 2.8154,
+          "evidence": []
+        },
+        {
+          "term": "exemplary skills",
+          "score": 2.6275,
+          "evidence": []
+        },
+        {
+          "term": "defect rates",
+          "score": 2.1108,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ai-marked skills",
+          "score": 129.315,
+          "evidence": []
+        },
+        {
+          "term": "unmarked skills",
+          "score": 122.3105,
+          "evidence": []
+        },
+        {
+          "term": "exemplary skills",
+          "score": 107.0853,
+          "evidence": []
+        },
+        {
+          "term": "detected defects",
+          "score": 96.8423,
+          "evidence": []
+        },
+        {
+          "term": "skills encode",
+          "score": 96.2458,
+          "evidence": []
+        },
+        {
+          "term": "avg defects",
+          "score": 95.2995,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 95.0179,
+          "evidence": []
+        },
+        {
+          "term": "portability defects",
+          "score": 90.9499,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "safety defects",
+          "score": 2.1271,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 2.0302,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "agent skills",
+          "score": 2.0142,
+          "evidence": []
+        },
+        {
+          "term": "detected defects",
+          "score": 2.0061,
+          "evidence": []
+        },
+        {
+          "term": "ai-marked skills",
+          "score": 1.776,
+          "evidence": []
+        },
+        {
+          "term": "unmarked skills",
+          "score": 1.7212,
+          "evidence": []
+        },
+        {
+          "term": "portability defects",
+          "score": 1.7185,
+          "evidence": []
+        },
+        {
+          "term": "exemplary skills",
+          "score": 1.6277,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent skills",
+          "score": 87.3183,
+          "evidence": []
+        },
+        {
+          "term": "ai-marked skills",
+          "score": 84.2909,
+          "evidence": []
+        },
+        {
+          "term": "unmarked skills",
+          "score": 82.2621,
+          "evidence": []
+        },
+        {
+          "term": "exemplary skills",
+          "score": 78.5514,
+          "evidence": []
+        },
+        {
+          "term": "skills encode",
+          "score": 76.3551,
+          "evidence": []
+        },
+        {
+          "term": "safety defects",
+          "score": 72.6728,
+          "evidence": []
+        },
+        {
+          "term": "detected defects",
+          "score": 67.2835,
+          "evidence": []
+        },
+        {
+          "term": "portability defects",
+          "score": 58.9223,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "safety defects",
+          "score": 2.1271,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 2.0302,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "agent skills",
+          "score": 2.0142,
+          "evidence": []
+        },
+        {
+          "term": "detected defects",
+          "score": 2.0061,
+          "evidence": []
+        },
+        {
+          "term": "ai-marked skills",
+          "score": 1.776,
+          "evidence": []
+        },
+        {
+          "term": "unmarked skills",
+          "score": 1.7212,
+          "evidence": []
+        },
+        {
+          "term": "portability defects",
+          "score": 1.7185,
+          "evidence": []
+        },
+        {
+          "term": "exemplary skills",
+          "score": 1.6277,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "portability defects",
+          "score": 122.4431,
+          "evidence": []
+        },
+        {
+          "term": "ai-marked skills",
+          "score": 120.2768,
+          "evidence": []
+        },
+        {
+          "term": "unmarked skills",
+          "score": 111.4263,
+          "evidence": []
+        },
+        {
+          "term": "detected defects",
+          "score": 108.196,
+          "evidence": []
+        },
+        {
+          "term": "defect-free",
+          "score": 93.1975,
+          "evidence": []
+        },
+        {
+          "term": "safety defects",
+          "score": 92.6158,
+          "evidence": []
+        },
+        {
+          "term": "san jose",
+          "score": 90.5507,
+          "evidence": []
+        },
+        {
+          "term": "os-specific",
+          "score": 88.4807,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-5-discussion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "detected defects",
+          "score": 3.2782,
+          "evidence": []
+        },
+        {
+          "term": "defects eliminated",
+          "score": 3.1994,
+          "evidence": []
+        },
+        {
+          "term": "structural defects",
+          "score": 2.634,
+          "evidence": []
+        },
+        {
+          "term": "critical defects",
+          "score": 2.5765,
+          "evidence": []
+        },
+        {
+          "term": "safety bypasses",
+          "score": 2.4807,
+          "evidence": []
+        },
+        {
+          "term": "marginal defect",
+          "score": 2.4646,
+          "evidence": []
+        },
+        {
+          "term": "observed defect",
+          "score": 2.4437,
+          "evidence": []
+        },
+        {
+          "term": "defect instances",
+          "score": 2.4129,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "detected defects",
+          "score": 119.9333,
+          "evidence": []
+        },
+        {
+          "term": "defects eliminated",
+          "score": 111.3255,
+          "evidence": []
+        },
+        {
+          "term": "structural defects",
+          "score": 100.5156,
+          "evidence": []
+        },
+        {
+          "term": "critical defects",
+          "score": 99.8481,
+          "evidence": []
+        },
+        {
+          "term": "defective skills",
+          "score": 67.7532,
+          "evidence": []
+        },
+        {
+          "term": "skills blocked",
+          "score": 66.7315,
+          "evidence": []
+        },
+        {
+          "term": "observed defect",
+          "score": 66.259,
+          "evidence": []
+        },
+        {
+          "term": "defect instances",
+          "score": 63.344,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "detected defects",
+          "score": 2.8824,
+          "evidence": []
+        },
+        {
+          "term": "structural defects",
+          "score": 2.3299,
+          "evidence": []
+        },
+        {
+          "term": "defects eliminated",
+          "score": 2.3015,
+          "evidence": []
+        },
+        {
+          "term": "defective skills",
+          "score": 2.1878,
+          "evidence": []
+        },
+        {
+          "term": "observed defect",
+          "score": 2.1533,
+          "evidence": []
+        },
+        {
+          "term": "skills blocked",
+          "score": 2.0585,
+          "evidence": []
+        },
+        {
+          "term": "defect instances",
+          "score": 1.9816,
+          "evidence": []
+        },
+        {
+          "term": "marginal defect",
+          "score": 1.9527,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "detected defects",
+          "score": 83.7988,
+          "evidence": []
+        },
+        {
+          "term": "defective skills",
+          "score": 83.0519,
+          "evidence": []
+        },
+        {
+          "term": "skills blocked",
+          "score": 80.8426,
+          "evidence": []
+        },
+        {
+          "term": "defects eliminated",
+          "score": 71.2605,
+          "evidence": []
+        },
+        {
+          "term": "structural defects",
+          "score": 69.9346,
+          "evidence": []
+        },
+        {
+          "term": "critical defects",
+          "score": 64.5849,
+          "evidence": []
+        },
+        {
+          "term": "observed defect",
+          "score": 43.6072,
+          "evidence": []
+        },
+        {
+          "term": "defect instances",
+          "score": 42.6288,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "detected defects",
+          "score": 2.8824,
+          "evidence": []
+        },
+        {
+          "term": "structural defects",
+          "score": 2.3299,
+          "evidence": []
+        },
+        {
+          "term": "defects eliminated",
+          "score": 2.3015,
+          "evidence": []
+        },
+        {
+          "term": "defective skills",
+          "score": 2.1878,
+          "evidence": []
+        },
+        {
+          "term": "observed defect",
+          "score": 2.1533,
+          "evidence": []
+        },
+        {
+          "term": "critical defects",
+          "score": 2.0801,
+          "evidence": []
+        },
+        {
+          "term": "skills blocked",
+          "score": 2.0585,
+          "evidence": []
+        },
+        {
+          "term": "defect instances",
+          "score": 1.9816,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "unguarded destructive",
+          "score": 125.3459,
+          "evidence": []
+        },
+        {
+          "term": "detected defect",
+          "score": 111.0405,
+          "evidence": []
+        },
+        {
+          "term": "os-specific",
+          "score": 88.0454,
+          "evidence": []
+        },
+        {
+          "term": "porta",
+          "score": 88.0454,
+          "evidence": []
+        },
+        {
+          "term": "unfinished",
+          "score": 88.0454,
+          "evidence": []
+        },
+        {
+          "term": "peer-reviewed",
+          "score": 87.4556,
+          "evidence": []
+        },
+        {
+          "term": "defects eliminated",
+          "score": 87.1332,
+          "evidence": []
+        },
+        {
+          "term": "non-functional",
+          "score": 80.7345,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-6-threats-to-validity": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "skills paths",
+          "score": 1.9459,
+          "evidence": []
+        },
+        {
+          "term": "persona redefinition",
+          "score": 1.7654,
+          "evidence": []
+        },
+        {
+          "term": "plat form",
+          "score": 1.7265,
+          "evidence": []
+        },
+        {
+          "term": "generic skills",
+          "score": 1.7047,
+          "evidence": []
+        },
+        {
+          "term": "validity",
+          "score": 1.6806,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "agent skills",
+          "score": 1.5644,
+          "evidence": []
+        },
+        {
+          "term": "follow-up work",
+          "score": 1.4878,
+          "evidence": []
+        },
+        {
+          "term": "file paths",
+          "score": 1.3769,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skills paths",
+          "score": 56.1395,
+          "evidence": []
+        },
+        {
+          "term": "generic skills",
+          "score": 48.9845,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 46.7136,
+          "evidence": []
+        },
+        {
+          "term": "validity",
+          "score": 27.6392,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "plat form",
+          "score": 27.5297,
+          "evidence": []
+        },
+        {
+          "term": "persona redefinition",
+          "score": 24.4342,
+          "evidence": []
+        },
+        {
+          "term": "file paths",
+          "score": 22.8559,
+          "evidence": []
+        },
+        {
+          "term": "follow-up work",
+          "score": 20.0462,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agent skills",
+          "score": 1.371,
+          "evidence": []
+        },
+        {
+          "term": "skills paths",
+          "score": 1.2789,
+          "evidence": []
+        },
+        {
+          "term": "generic skills",
+          "score": 1.123,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.8061,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.6476,
+          "evidence": []
+        },
+        {
+          "term": "stress test",
+          "score": 0.551,
+          "evidence": []
+        },
+        {
+          "term": "repair experiment",
+          "score": 0.5378,
+          "evidence": []
+        },
+        {
+          "term": "file paths",
+          "score": 0.5115,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent skills",
+          "score": 37.0286,
+          "evidence": []
+        },
+        {
+          "term": "skills paths",
+          "score": 32.9524,
+          "evidence": []
+        },
+        {
+          "term": "generic skills",
+          "score": 31.3675,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 19.0788,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 8.6302,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 8.0104,
+          "evidence": []
+        },
+        {
+          "term": "repair experiment",
+          "score": 6.7083,
+          "evidence": []
+        },
+        {
+          "term": "detected",
+          "score": 5.6572,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent skills",
+          "score": 1.371,
+          "evidence": []
+        },
+        {
+          "term": "skills paths",
+          "score": 1.2789,
+          "evidence": []
+        },
+        {
+          "term": "generic skills",
+          "score": 1.123,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.8061,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.6476,
+          "evidence": []
+        },
+        {
+          "term": "stress test",
+          "score": 0.551,
+          "evidence": []
+        },
+        {
+          "term": "repair experiment",
+          "score": 0.5378,
+          "evidence": []
+        },
+        {
+          "term": "file paths",
+          "score": 0.5115,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "persona redefinition",
+          "score": 97.363,
+          "evidence": []
+        },
+        {
+          "term": "os-specific",
+          "score": 77.4575,
+          "evidence": []
+        },
+        {
+          "term": "porta",
+          "score": 77.4575,
+          "evidence": []
+        },
+        {
+          "term": "unfinished",
+          "score": 77.4575,
+          "evidence": []
+        },
+        {
+          "term": "peer-reviewed",
+          "score": 76.7399,
+          "evidence": []
+        },
+        {
+          "term": "non-functional",
+          "score": 70.9006,
+          "evidence": []
+        },
+        {
+          "term": "r1-defective",
+          "score": 69.2703,
+          "evidence": []
+        },
+        {
+          "term": "unguarded",
+          "score": 67.797,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-7-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "routing",
+          "score": 0.9683,
+          "evidence": []
+        },
+        {
+          "term": "repair",
+          "score": 0.6736,
+          "evidence": []
+        },
+        {
+          "term": "lexical",
+          "score": 0.6618,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 0.6501,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.6013,
+          "evidence": []
+        },
+        {
+          "term": "baseline",
+          "score": 0.5534,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.508,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "routing",
+          "score": 19.1319,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 10.911,
+          "evidence": []
+        },
+        {
+          "term": "lexical",
+          "score": 9.1242,
+          "evidence": []
+        },
+        {
+          "term": "repair",
+          "score": 9.039,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 7.8728,
+          "evidence": []
+        },
+        {
+          "term": "baseline",
+          "score": 6.9269,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 6.4633,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skills",
+          "score": 0.4156,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.3317,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.3104,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2365,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.2217,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 0.183,
+          "evidence": []
+        },
+        {
+          "term": "detected",
+          "score": 0.1679,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 10.6089,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 7.5532,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 5.8478,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 4.1081,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 3.1918,
+          "evidence": []
+        },
+        {
+          "term": "detected",
+          "score": 2.2719,
+          "evidence": []
+        },
+        {
+          "term": "repair",
+          "score": 1.9632,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.4156,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.3104,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2365,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 0.2217,
+          "evidence": []
+        },
+        {
+          "term": "repair",
+          "score": 0.1536,
+          "evidence": []
+        },
+        {
+          "term": "public",
+          "score": 0.1259,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.1129,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "os-specific",
+          "score": 82.4934,
+          "evidence": []
+        },
+        {
+          "term": "porta",
+          "score": 82.4934,
+          "evidence": []
+        },
+        {
+          "term": "unfinished",
+          "score": 82.4934,
+          "evidence": []
+        },
+        {
+          "term": "peer-reviewed",
+          "score": 81.7268,
+          "evidence": []
+        },
+        {
+          "term": "non-functional",
+          "score": 76.4145,
+          "evidence": []
+        },
+        {
+          "term": "discovery-stage",
+          "score": 74.5109,
+          "evidence": []
+        },
+        {
+          "term": "r1-defective",
+          "score": 74.0642,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "yimin liu",
+          "score": 2.2081,
+          "evidence": []
+        },
+        {
+          "term": "xiaokun chen",
+          "score": 1.993,
+          "evidence": []
+        },
+        {
+          "term": "wenbo chen",
+          "score": 1.8937,
+          "evidence": []
+        },
+        {
+          "term": "sahar abdelnabi",
+          "score": 1.7573,
+          "evidence": []
+        },
+        {
+          "term": "han chung",
+          "score": 1.7396,
+          "evidence": []
+        },
+        {
+          "term": "jiankai sun",
+          "score": 1.6987,
+          "evidence": []
+        },
+        {
+          "term": "alex beutel",
+          "score": 1.6355,
+          "evidence": []
+        },
+        {
+          "term": "kai xiao",
+          "score": 1.6111,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "wang",
+          "score": 44.5031,
+          "evidence": []
+        },
+        {
+          "term": "yimin liu",
+          "score": 40.7353,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 33.4164,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 32.6676,
+          "evidence": []
+        },
+        {
+          "term": "xiaokun chen",
+          "score": 31.3992,
+          "evidence": []
+        },
+        {
+          "term": "wenbo chen",
+          "score": 30.0129,
+          "evidence": []
+        },
+        {
+          "term": "han chung",
+          "score": 25.9249,
+          "evidence": []
+        },
+        {
+          "term": "skills work",
+          "score": 25.757,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agent skills",
+          "score": 1.1346,
+          "evidence": []
+        },
+        {
+          "term": "yimin liu",
+          "score": 0.964,
+          "evidence": []
+        },
+        {
+          "term": "skills work",
+          "score": 0.8904,
+          "evidence": []
+        },
+        {
+          "term": "wang",
+          "score": 0.846,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 0.8213,
+          "evidence": []
+        },
+        {
+          "term": "wenbo chen",
+          "score": 0.7842,
+          "evidence": []
+        },
+        {
+          "term": "xiaokun chen",
+          "score": 0.7696,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 0.7214,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "arxiv",
+          "score": 27.8596,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 20.054,
+          "evidence": []
+        },
+        {
+          "term": "wang",
+          "score": 19.9398,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 17.6749,
+          "evidence": []
+        },
+        {
+          "term": "preprint",
+          "score": 14.053,
+          "evidence": []
+        },
+        {
+          "term": "skills work",
+          "score": 13.7644,
+          "evidence": []
+        },
+        {
+          "term": "liu",
+          "score": 12.8386,
+          "evidence": []
+        },
+        {
+          "term": "yimin liu",
+          "score": 12.8386,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent skills",
+          "score": 1.1346,
+          "evidence": []
+        },
+        {
+          "term": "yimin liu",
+          "score": 0.964,
+          "evidence": []
+        },
+        {
+          "term": "skills work",
+          "score": 0.8904,
+          "evidence": []
+        },
+        {
+          "term": "wang",
+          "score": 0.846,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 0.8213,
+          "evidence": []
+        },
+        {
+          "term": "wenbo chen",
+          "score": 0.7842,
+          "evidence": []
+        },
+        {
+          "term": "xiaokun chen",
+          "score": 0.7696,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 0.7214,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "jiankai sun",
+          "score": 520.0902,
+          "evidence": []
+        },
+        {
+          "term": "bingran",
+          "score": 477.845,
+          "evidence": []
+        },
+        {
+          "term": "shenghan",
+          "score": 477.845,
+          "evidence": []
+        },
+        {
+          "term": "xiaokun",
+          "score": 477.845,
+          "evidence": []
+        },
+        {
+          "term": "xiaokun chen",
+          "score": 477.845,
+          "evidence": []
+        },
+        {
+          "term": "yuanli",
+          "score": 477.845,
+          "evidence": []
+        },
+        {
+          "term": "zonglin",
+          "score": 477.845,
+          "evidence": []
+        },
+        {
+          "term": "binxu",
+          "score": 449.367,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "city university",
+          "score": 1.7934,
+          "evidence": []
+        },
+        {
+          "term": "graduate center",
+          "score": 1.6304,
+          "evidence": []
+        },
+        {
+          "term": "york",
+          "score": 1.274,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.9689,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "city university",
+          "score": 29.0003,
+          "evidence": []
+        },
+        {
+          "term": "york",
+          "score": 27.9183,
+          "evidence": []
+        },
+        {
+          "term": "graduate center",
+          "score": 21.6825,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 16.0348,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skills",
+          "score": 0.1764,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.1134,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 0.1126,
+          "evidence": []
+        },
+        {
+          "term": "liu",
+          "score": 0.0944,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "doi",
+          "score": 3.9036,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 2.884,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 2.4759,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 1.8578,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.1764,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.1134,
+          "evidence": []
+        },
+        {
+          "term": "liu",
+          "score": 0.0944,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 0.0917,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "berkeley",
+          "score": 361.6276,
+          "evidence": []
+        },
+        {
+          "term": "neville",
+          "score": 327.9211,
+          "evidence": []
+        },
+        {
+          "term": "deepmind",
+          "score": 278.1197,
+          "evidence": []
+        },
+        {
+          "term": "shanghai",
+          "score": 247.3222,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

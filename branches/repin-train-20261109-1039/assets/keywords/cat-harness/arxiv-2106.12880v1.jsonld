@@ -1,0 +1,4208 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2106.12880v1",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2106.12880v1",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "quality process",
+        "score": 30.8265,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "modeling process",
+        "score": 30.1258,
+        "evidence": []
+      },
+      {
+        "term": "process modelers",
+        "score": 29.7907,
+        "evidence": []
+      },
+      {
+        "term": "process readers",
+        "score": 28.6018,
+        "evidence": []
+      },
+      {
+        "term": "process model",
+        "score": 27.131,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "model comprehension",
+        "score": 26.1194,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "process knowledge",
+        "score": 25.1601,
+        "evidence": []
+      },
+      {
+        "term": "process information",
+        "score": 24.3515,
+        "evidence": []
+      },
+      {
+        "term": "comprehension framework",
+        "score": 24.1212,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "regarding process",
+        "score": 23.9672,
+        "evidence": []
+      },
+      {
+        "term": "comprehensible process",
+        "score": 23.2235,
+        "evidence": []
+      },
+      {
+        "term": "proper process",
+        "score": 22.484,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "quality process",
+        "score": 1330.1531,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "modeling process",
+        "score": 1280.9298,
+        "evidence": []
+      },
+      {
+        "term": "process model",
+        "score": 1242.7137,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "process modeler",
+        "score": 1203.4668,
+        "evidence": []
+      },
+      {
+        "term": "process readers",
+        "score": 1164.8162,
+        "evidence": []
+      },
+      {
+        "term": "process knowledge",
+        "score": 1102.2873,
+        "evidence": []
+      },
+      {
+        "term": "process information",
+        "score": 1088.0922,
+        "evidence": []
+      },
+      {
+        "term": "regarding process",
+        "score": 1057.2725,
+        "evidence": []
+      },
+      {
+        "term": "business process",
+        "score": 1048.0432,
+        "evidence": []
+      },
+      {
+        "term": "speciﬁc process",
+        "score": 1024.8827,
+        "evidence": []
+      },
+      {
+        "term": "comprehensible process",
+        "score": 1022.3695,
+        "evidence": []
+      },
+      {
+        "term": "proper process",
+        "score": 1016.6317,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "modeling process",
+        "score": 29.1234,
+        "evidence": []
+      },
+      {
+        "term": "quality process",
+        "score": 28.888,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "process modelers",
+        "score": 28.7364,
+        "evidence": []
+      },
+      {
+        "term": "process readers",
+        "score": 27.8167,
+        "evidence": []
+      },
+      {
+        "term": "process model",
+        "score": 26.1079,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "model comprehension",
+        "score": 24.573,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "process information",
+        "score": 23.4094,
+        "evidence": []
+      },
+      {
+        "term": "regarding process",
+        "score": 23.3605,
+        "evidence": []
+      },
+      {
+        "term": "process knowledge",
+        "score": 23.3229,
+        "evidence": []
+      },
+      {
+        "term": "comprehension framework",
+        "score": 22.3829,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "business process",
+        "score": 21.8042,
+        "evidence": []
+      },
+      {
+        "term": "speciﬁc process",
+        "score": 21.7711,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "quality process",
+        "score": 1303.0856,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "modeling process",
+        "score": 1290.065,
+        "evidence": []
+      },
+      {
+        "term": "process model",
+        "score": 1250.9906,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "process modeler",
+        "score": 1225.3191,
+        "evidence": []
+      },
+      {
+        "term": "process readers",
+        "score": 1172.8951,
+        "evidence": []
+      },
+      {
+        "term": "process information",
+        "score": 1073.9026,
+        "evidence": []
+      },
+      {
+        "term": "process knowledge",
+        "score": 1059.7369,
+        "evidence": []
+      },
+      {
+        "term": "regarding process",
+        "score": 1059.5391,
+        "evidence": []
+      },
+      {
+        "term": "business process",
+        "score": 1056.8004,
+        "evidence": []
+      },
+      {
+        "term": "speciﬁc process",
+        "score": 1049.5635,
+        "evidence": []
+      },
+      {
+        "term": "corresponding process",
+        "score": 1012.1776,
+        "evidence": []
+      },
+      {
+        "term": "calculated process",
+        "score": 1012.0219,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "modeling process",
+        "score": 29.1234,
+        "evidence": []
+      },
+      {
+        "term": "quality process",
+        "score": 28.888,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "process modelers",
+        "score": 28.7364,
+        "evidence": []
+      },
+      {
+        "term": "process readers",
+        "score": 27.8167,
+        "evidence": []
+      },
+      {
+        "term": "process model",
+        "score": 26.1079,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "model comprehension",
+        "score": 24.573,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "process information",
+        "score": 23.4094,
+        "evidence": []
+      },
+      {
+        "term": "regarding process",
+        "score": 23.3605,
+        "evidence": []
+      },
+      {
+        "term": "process knowledge",
+        "score": 23.3229,
+        "evidence": []
+      },
+      {
+        "term": "comprehension framework",
+        "score": 22.3829,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "business process",
+        "score": 21.8042,
+        "evidence": []
+      },
+      {
+        "term": "speciﬁc process",
+        "score": 21.7711,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "pmcf worksheet",
+        "score": 1790.1471,
+        "evidence": []
+      },
+      {
+        "term": "workbook sheets",
+        "score": 1732.5583,
+        "evidence": []
+      },
+      {
+        "term": "rüdiger pryss",
+        "score": 1558.1654,
+        "evidence": []
+      },
+      {
+        "term": "speciﬁc questionnaire",
+        "score": 1326.3831,
+        "evidence": []
+      },
+      {
+        "term": "event-driven process",
+        "score": 1238.4029,
+        "evidence": []
+      },
+      {
+        "term": "manfred reichert",
+        "score": 1215.2626,
+        "evidence": []
+      },
+      {
+        "term": "process modeler",
+        "score": 1193.7722,
+        "evidence": []
+      },
+      {
+        "term": "cmqf deﬁnes",
+        "score": 1178.6704,
+        "evidence": []
+      },
+      {
+        "term": "comprehensible process",
+        "score": 1132.533,
+        "evidence": []
+      },
+      {
+        "term": "comprehended process",
+        "score": 1120.1352,
+        "evidence": []
+      },
+      {
+        "term": "ﬁnal comprehension",
+        "score": 1071.1815,
+        "evidence": []
+      },
+      {
+        "term": "true-or-false",
+        "score": 1022.095,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "process modelers",
+          "score": 3.1004,
+          "evidence": []
+        },
+        {
+          "term": "process readers",
+          "score": 2.8813,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 2.6994,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 2.592,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 2.5206,
+          "evidence": []
+        },
+        {
+          "term": "created process",
+          "score": 2.2153,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 2.21,
+          "evidence": []
+        },
+        {
+          "term": "conceptual models",
+          "score": 1.9913,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process modelers",
+          "score": 145.4109,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 143.8931,
+          "evidence": []
+        },
+        {
+          "term": "process readers",
+          "score": 139.1032,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 126.6338,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 122.1465,
+          "evidence": []
+        },
+        {
+          "term": "created process",
+          "score": 115.7574,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 105.755,
+          "evidence": []
+        },
+        {
+          "term": "model quality",
+          "score": 78.6234,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process modeling",
+          "score": 3.0766,
+          "evidence": []
+        },
+        {
+          "term": "process modelers",
+          "score": 3.0442,
+          "evidence": []
+        },
+        {
+          "term": "process readers",
+          "score": 2.9545,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 2.7795,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 2.5924,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 2.5197,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 2.4287,
+          "evidence": []
+        },
+        {
+          "term": "created process",
+          "score": 2.1625,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process modeling",
+          "score": 137.8976,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 136.3653,
+          "evidence": []
+        },
+        {
+          "term": "process modeler",
+          "score": 129.4168,
+          "evidence": []
+        },
+        {
+          "term": "process readers",
+          "score": 124.7875,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 115.9379,
+          "evidence": []
+        },
+        {
+          "term": "created process",
+          "score": 106.1513,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 88.7319,
+          "evidence": []
+        },
+        {
+          "term": "model quality",
+          "score": 70.5671,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process modeling",
+          "score": 3.0766,
+          "evidence": []
+        },
+        {
+          "term": "process modelers",
+          "score": 3.0442,
+          "evidence": []
+        },
+        {
+          "term": "process readers",
+          "score": 2.9545,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 2.7795,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 2.5924,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 2.5197,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 2.4287,
+          "evidence": []
+        },
+        {
+          "term": "created process",
+          "score": 2.1625,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "process modeler",
+          "score": 76.214,
+          "evidence": []
+        },
+        {
+          "term": "true-or-false",
+          "score": 65.0076,
+          "evidence": []
+        },
+        {
+          "term": "process readers",
+          "score": 62.4501,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 59.5974,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 59.0781,
+          "evidence": []
+        },
+        {
+          "term": "worksheet",
+          "score": 58.8735,
+          "evidence": []
+        },
+        {
+          "term": "unravel",
+          "score": 58.2791,
+          "evidence": []
+        },
+        {
+          "term": "workﬂow",
+          "score": 57.1364,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-2-theoretical-fundamentals": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pmcf",
+          "score": 1.0849,
+          "evidence": []
+        },
+        {
+          "term": "fundamentals",
+          "score": 1.043,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "case study",
+          "score": 0.7356,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pmcf",
+          "score": 20.5305,
+          "evidence": []
+        },
+        {
+          "term": "fundamentals",
+          "score": 11.5033,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "section",
+          "score": 9.9297,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process",
+          "score": 0.2413,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 0.2062,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.1558,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process",
+          "score": 5.3999,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 3.0996,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 2.1171,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process",
+          "score": 0.2413,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 0.2062,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.1558,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fundamentals",
+          "score": 62.3072,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "true-or-false",
+          "score": 60.4621,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 55.212,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-21-communication-theory": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "communication theory",
+          "score": 3.2567,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 2.639,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 2.5531,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 2.2077,
+          "evidence": []
+        },
+        {
+          "term": "process reader",
+          "score": 2.1711,
+          "evidence": []
+        },
+        {
+          "term": "conceptual modeling",
+          "score": 1.9517,
+          "evidence": []
+        },
+        {
+          "term": "modeling quality",
+          "score": 1.8834,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.7696,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process model",
+          "score": 107.2851,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 104.2809,
+          "evidence": []
+        },
+        {
+          "term": "process modeler",
+          "score": 100.1491,
+          "evidence": []
+        },
+        {
+          "term": "process reader",
+          "score": 88.576,
+          "evidence": []
+        },
+        {
+          "term": "communication theory",
+          "score": 66.4348,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 47.0112,
+          "evidence": []
+        },
+        {
+          "term": "modeling quality",
+          "score": 40.3222,
+          "evidence": []
+        },
+        {
+          "term": "conceptual modeling",
+          "score": 39.8045,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process modeling",
+          "score": 1.8982,
+          "evidence": []
+        },
+        {
+          "term": "process modelers",
+          "score": 1.8614,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.738,
+          "evidence": []
+        },
+        {
+          "term": "process reader",
+          "score": 1.6202,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.5962,
+          "evidence": []
+        },
+        {
+          "term": "modeling quality",
+          "score": 1.397,
+          "evidence": []
+        },
+        {
+          "term": "communication theory",
+          "score": 1.3863,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modeling language",
+          "score": 1.0565,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process modeling",
+          "score": 82.3604,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 81.1817,
+          "evidence": []
+        },
+        {
+          "term": "process modeler",
+          "score": 78.5559,
+          "evidence": []
+        },
+        {
+          "term": "process reader",
+          "score": 70.7057,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 50.4124,
+          "evidence": []
+        },
+        {
+          "term": "modeling quality",
+          "score": 40.0403,
+          "evidence": []
+        },
+        {
+          "term": "modeling language",
+          "score": 26.0373,
+          "evidence": []
+        },
+        {
+          "term": "conceptual modeling",
+          "score": 24.4555,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process modeling",
+          "score": 1.8982,
+          "evidence": []
+        },
+        {
+          "term": "process modelers",
+          "score": 1.8614,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.738,
+          "evidence": []
+        },
+        {
+          "term": "process reader",
+          "score": 1.6202,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.5962,
+          "evidence": []
+        },
+        {
+          "term": "modeling quality",
+          "score": 1.397,
+          "evidence": []
+        },
+        {
+          "term": "communication theory",
+          "score": 1.3863,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modeling language",
+          "score": 1.0565,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "process modeler",
+          "score": 74.9954,
+          "evidence": []
+        },
+        {
+          "term": "true-or-false",
+          "score": 63.5269,
+          "evidence": []
+        },
+        {
+          "term": "process reader",
+          "score": 62.5354,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 57.9433,
+          "evidence": []
+        },
+        {
+          "term": "worksheet",
+          "score": 57.6492,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 57.6324,
+          "evidence": []
+        },
+        {
+          "term": "unravel",
+          "score": 56.744,
+          "evidence": []
+        },
+        {
+          "term": "workﬂow",
+          "score": 55.9852,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-22-conceptual-modeling-quality-framework": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "conceptual modeling",
+          "score": 5.0095,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modeling quality",
+          "score": 4.4929,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality framework",
+          "score": 3.1383,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cmqf deﬁnes",
+          "score": 2.3352,
+          "evidence": []
+        },
+        {
+          "term": "vertical clusters",
+          "score": 2.1706,
+          "evidence": []
+        },
+        {
+          "term": "quality dimensions",
+          "score": 2.0961,
+          "evidence": []
+        },
+        {
+          "term": "conceptual model",
+          "score": 1.9449,
+          "evidence": []
+        },
+        {
+          "term": "cognitive reality",
+          "score": 1.8792,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "conceptual modeling",
+          "score": 147.749,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modeling quality",
+          "score": 132.844,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality framework",
+          "score": 93.8377,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality dimensions",
+          "score": 60.1208,
+          "evidence": []
+        },
+        {
+          "term": "conceptual model",
+          "score": 59.7518,
+          "evidence": []
+        },
+        {
+          "term": "quality types",
+          "score": 55.3295,
+          "evidence": []
+        },
+        {
+          "term": "cmqf deﬁnes",
+          "score": 42.2523,
+          "evidence": []
+        },
+        {
+          "term": "physical",
+          "score": 41.7121,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "modeling quality",
+          "score": 2.0009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality framework",
+          "score": 1.5532,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "conceptual modeling",
+          "score": 1.4808,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modeling process",
+          "score": 1.2059,
+          "evidence": []
+        },
+        {
+          "term": "conceptual model",
+          "score": 0.6946,
+          "evidence": []
+        },
+        {
+          "term": "quality dimensions",
+          "score": 0.654,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 0.6442,
+          "evidence": []
+        },
+        {
+          "term": "quality types",
+          "score": 0.6175,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "modeling quality",
+          "score": 38.0371,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modeling process",
+          "score": 30.1349,
+          "evidence": []
+        },
+        {
+          "term": "quality framework",
+          "score": 27.6668,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "conceptual modeling",
+          "score": 22.2508,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "conceptual model",
+          "score": 13.9773,
+          "evidence": []
+        },
+        {
+          "term": "quality dimensions",
+          "score": 12.4348,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 12.4297,
+          "evidence": []
+        },
+        {
+          "term": "quality types",
+          "score": 11.8631,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "modeling quality",
+          "score": 2.0009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality framework",
+          "score": 1.5532,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "conceptual modeling",
+          "score": 1.4808,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modeling process",
+          "score": 1.2059,
+          "evidence": []
+        },
+        {
+          "term": "conceptual model",
+          "score": 0.6946,
+          "evidence": []
+        },
+        {
+          "term": "quality dimensions",
+          "score": 0.654,
+          "evidence": []
+        },
+        {
+          "term": "quality types",
+          "score": 0.6175,
+          "evidence": []
+        },
+        {
+          "term": "communication theory",
+          "score": 0.4951,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "conceptual modeling",
+          "score": 78.1897,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modeling quality",
+          "score": 76.7849,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cmqf deﬁnes",
+          "score": 66.7706,
+          "evidence": []
+        },
+        {
+          "term": "true-or-false",
+          "score": 51.8468,
+          "evidence": []
+        },
+        {
+          "term": "vertical clusters",
+          "score": 47.5734,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 47.3975,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 47.0921,
+          "evidence": []
+        },
+        {
+          "term": "adaption",
+          "score": 46.9399,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-3-process-model-comprehension-framework": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "process model",
+          "score": 3.6346,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 3.6168,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 3.4202,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 1.9647,
+          "evidence": []
+        },
+        {
+          "term": "vertical clusters",
+          "score": 1.8866,
+          "evidence": []
+        },
+        {
+          "term": "quality types",
+          "score": 1.4684,
+          "evidence": []
+        },
+        {
+          "term": "model knowledge",
+          "score": 1.4078,
+          "evidence": []
+        },
+        {
+          "term": "cmqf",
+          "score": 1.3141,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process model",
+          "score": 111.2375,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 85.7839,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 69.6426,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 49.7884,
+          "evidence": []
+        },
+        {
+          "term": "model knowledge",
+          "score": 37.4932,
+          "evidence": []
+        },
+        {
+          "term": "quality types",
+          "score": 31.6317,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 30.7958,
+          "evidence": []
+        },
+        {
+          "term": "vertical clusters",
+          "score": 28.5074,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process model",
+          "score": 2.5302,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 2.3832,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 2.1091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 1.3225,
+          "evidence": []
+        },
+        {
+          "term": "model knowledge",
+          "score": 0.7305,
+          "evidence": []
+        },
+        {
+          "term": "quality types",
+          "score": 0.657,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.5377,
+          "evidence": []
+        },
+        {
+          "term": "modeling",
+          "score": 0.5168,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process model",
+          "score": 98.3359,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 64.8623,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 48.7001,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 45.6921,
+          "evidence": []
+        },
+        {
+          "term": "model knowledge",
+          "score": 16.3523,
+          "evidence": []
+        },
+        {
+          "term": "quality types",
+          "score": 15.6467,
+          "evidence": []
+        },
+        {
+          "term": "modeling",
+          "score": 12.4805,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 8.816,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process model",
+          "score": 2.5302,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 2.3832,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 2.1091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 1.3225,
+          "evidence": []
+        },
+        {
+          "term": "model knowledge",
+          "score": 0.7305,
+          "evidence": []
+        },
+        {
+          "term": "quality types",
+          "score": 0.657,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.5377,
+          "evidence": []
+        },
+        {
+          "term": "modeling",
+          "score": 0.5168,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "comprehension",
+          "score": 92.6032,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 92.6032,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 92.6032,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 81.6048,
+          "evidence": []
+        },
+        {
+          "term": "true-or-false",
+          "score": 74.13,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 67.3421,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 67.2512,
+          "evidence": []
+        },
+        {
+          "term": "adaption",
+          "score": 66.2989,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-31-evaluation-theory-tree-ett": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ett",
+          "score": 3.6756,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeling",
+          "score": 3.0636,
+          "evidence": []
+        },
+        {
+          "term": "process modelers",
+          "score": 2.999,
+          "evidence": []
+        },
+        {
+          "term": "quality criterion",
+          "score": 2.9886,
+          "evidence": []
+        },
+        {
+          "term": "quality metrics",
+          "score": 2.6923,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 2.6425,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 2.5491,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 2.2896,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process modeling",
+          "score": 176.7144,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 173.5006,
+          "evidence": []
+        },
+        {
+          "term": "process modelers",
+          "score": 157.3269,
+          "evidence": []
+        },
+        {
+          "term": "quality criterion",
+          "score": 148.5571,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 135.7157,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 127.274,
+          "evidence": []
+        },
+        {
+          "term": "quality metrics",
+          "score": 126.3745,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 115.7517,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process modelers",
+          "score": 3.4332,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 3.3544,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 3.044,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 2.8058,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 2.7238,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 2.5448,
+          "evidence": []
+        },
+        {
+          "term": "quality metrics",
+          "score": 2.4104,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 2.3502,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process modeling",
+          "score": 174.4522,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 171.8396,
+          "evidence": []
+        },
+        {
+          "term": "process modeler",
+          "score": 164.3807,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 142.1766,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 112.5809,
+          "evidence": []
+        },
+        {
+          "term": "model quality",
+          "score": 95.0472,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 85.5662,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 82.9707,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process modelers",
+          "score": 3.4332,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 3.3544,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 3.044,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 2.8058,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 2.7238,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 2.5448,
+          "evidence": []
+        },
+        {
+          "term": "quality metrics",
+          "score": 2.4104,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 2.3502,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ett",
+          "score": 104.8607,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 72.545,
+          "evidence": []
+        },
+        {
+          "term": "true-or-false",
+          "score": 62.8356,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 56.6785,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 56.6081,
+          "evidence": []
+        },
+        {
+          "term": "unravel",
+          "score": 55.7507,
+          "evidence": []
+        },
+        {
+          "term": "worksheet",
+          "score": 55.1463,
+          "evidence": []
+        },
+        {
+          "term": "workﬂow",
+          "score": 54.4859,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-4-implementation-of-the-process-model-comprehens": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "process model",
+          "score": 5.2932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 5.2528,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 4.5809,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 3.7673,
+          "evidence": []
+        },
+        {
+          "term": "speciﬁc questionnaire",
+          "score": 3.5621,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 3.455,
+          "evidence": []
+        },
+        {
+          "term": "process readers",
+          "score": 3.3188,
+          "evidence": []
+        },
+        {
+          "term": "comprehension score",
+          "score": 3.1524,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process model",
+          "score": 459.8133,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeling",
+          "score": 266.1466,
+          "evidence": []
+        },
+        {
+          "term": "process modeler",
+          "score": 256.97,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 252.082,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process readers",
+          "score": 235.5261,
+          "evidence": []
+        },
+        {
+          "term": "speciﬁc process",
+          "score": 225.3749,
+          "evidence": []
+        },
+        {
+          "term": "regarding process",
+          "score": 209.6332,
+          "evidence": []
+        },
+        {
+          "term": "evaluated process",
+          "score": 194.4818,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process model",
+          "score": 6.9605,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 6.7837,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 6.1217,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 4.1677,
+          "evidence": []
+        },
+        {
+          "term": "process readers",
+          "score": 3.9713,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 3.9661,
+          "evidence": []
+        },
+        {
+          "term": "comprehension score",
+          "score": 3.368,
+          "evidence": []
+        },
+        {
+          "term": "regarding process",
+          "score": 3.2878,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process model",
+          "score": 482.6593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 309.6577,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 257.2019,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 256.1081,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 242.3876,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process readers",
+          "score": 238.5258,
+          "evidence": []
+        },
+        {
+          "term": "regarding process",
+          "score": 214.24,
+          "evidence": []
+        },
+        {
+          "term": "speciﬁc process",
+          "score": 213.693,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process model",
+          "score": 6.9605,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 6.7837,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 6.1217,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 4.1677,
+          "evidence": []
+        },
+        {
+          "term": "process readers",
+          "score": 3.9713,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 3.9661,
+          "evidence": []
+        },
+        {
+          "term": "comprehension score",
+          "score": 3.368,
+          "evidence": []
+        },
+        {
+          "term": "regarding process",
+          "score": 3.2878,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "speciﬁc questionnaire",
+          "score": 108.3544,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 100.4642,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 100.4642,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 100.4642,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 94.408,
+          "evidence": []
+        },
+        {
+          "term": "true-or-false",
+          "score": 82.385,
+          "evidence": []
+        },
+        {
+          "term": "process reader",
+          "score": 78.2614,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 73.7208,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-5-case-study-and-application-of-the-process-mode": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "model comprehension",
+          "score": 5.1102,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process model",
+          "score": 4.5863,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 4.3662,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 3.4349,
+          "evidence": []
+        },
+        {
+          "term": "comprehension scores",
+          "score": 2.7553,
+          "evidence": []
+        },
+        {
+          "term": "comprehension questions",
+          "score": 2.7048,
+          "evidence": []
+        },
+        {
+          "term": "pmcf worksheet",
+          "score": 2.4095,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 2.3528,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process model",
+          "score": 245.0145,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 228.3679,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 172.8136,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 156.2951,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 103.6637,
+          "evidence": []
+        },
+        {
+          "term": "comprehension scores",
+          "score": 103.1077,
+          "evidence": []
+        },
+        {
+          "term": "comprehension questions",
+          "score": 101.4487,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 92.3462,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process model",
+          "score": 4.2977,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 4.2655,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 3.7681,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 2.4548,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 2.3469,
+          "evidence": []
+        },
+        {
+          "term": "comprehension score",
+          "score": 1.9854,
+          "evidence": []
+        },
+        {
+          "term": "comprehension questions",
+          "score": 1.8304,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 1.8233,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process model",
+          "score": 239.2101,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 156.7826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeling",
+          "score": 124.0395,
+          "evidence": []
+        },
+        {
+          "term": "process modeler",
+          "score": 122.97,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 120.056,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process information",
+          "score": 100.3988,
+          "evidence": []
+        },
+        {
+          "term": "comprehension score",
+          "score": 70.5746,
+          "evidence": []
+        },
+        {
+          "term": "comprehension questions",
+          "score": 59.7862,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process model",
+          "score": 4.2977,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 4.2655,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 3.7681,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 2.4548,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 2.3469,
+          "evidence": []
+        },
+        {
+          "term": "comprehension score",
+          "score": 1.9854,
+          "evidence": []
+        },
+        {
+          "term": "comprehension questions",
+          "score": 1.8304,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 1.8233,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "pmcf worksheet",
+          "score": 144.606,
+          "evidence": []
+        },
+        {
+          "term": "comprehension",
+          "score": 103.8436,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 103.8436,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 103.8436,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 97.0919,
+          "evidence": []
+        },
+        {
+          "term": "true-or-false",
+          "score": 85.0332,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 76.6047,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 76.5801,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-51-application-of-the-process-model-comprehensio": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "model comprehension",
+          "score": 4.3737,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process model",
+          "score": 4.2811,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 4.0009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 3.1458,
+          "evidence": []
+        },
+        {
+          "term": "ﬁnal comprehension",
+          "score": 2.8674,
+          "evidence": []
+        },
+        {
+          "term": "comprehension score",
+          "score": 2.8267,
+          "evidence": []
+        },
+        {
+          "term": "process reader",
+          "score": 2.7933,
+          "evidence": []
+        },
+        {
+          "term": "score regarding",
+          "score": 2.3212,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process model",
+          "score": 224.0495,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 145.052,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 138.5938,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 126.3863,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process reader",
+          "score": 124.405,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 118.3476,
+          "evidence": []
+        },
+        {
+          "term": "textual process",
+          "score": 106.657,
+          "evidence": []
+        },
+        {
+          "term": "comprehension score",
+          "score": 98.3659,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process model",
+          "score": 3.8839,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 3.7247,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 3.4063,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 2.2335,
+          "evidence": []
+        },
+        {
+          "term": "process readers",
+          "score": 2.1536,
+          "evidence": []
+        },
+        {
+          "term": "comprehension score",
+          "score": 1.8031,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 1.7473,
+          "evidence": []
+        },
+        {
+          "term": "ﬁnal comprehension",
+          "score": 1.5001,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process model",
+          "score": 217.6242,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 138.6959,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 112.5348,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 108.6587,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process readers",
+          "score": 105.802,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 94.4704,
+          "evidence": []
+        },
+        {
+          "term": "textual process",
+          "score": 86.2326,
+          "evidence": []
+        },
+        {
+          "term": "comprehension score",
+          "score": 68.1632,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process model",
+          "score": 3.8839,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 3.7247,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 3.4063,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modelers",
+          "score": 2.2335,
+          "evidence": []
+        },
+        {
+          "term": "process readers",
+          "score": 2.1536,
+          "evidence": []
+        },
+        {
+          "term": "comprehension score",
+          "score": 1.8031,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 1.7473,
+          "evidence": []
+        },
+        {
+          "term": "ﬁnal comprehension",
+          "score": 1.5001,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "comprehension",
+          "score": 91.091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "comprehension framework",
+          "score": 91.091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model comprehension",
+          "score": 91.091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "process modeler",
+          "score": 85.1322,
+          "evidence": []
+        },
+        {
+          "term": "ﬁnal comprehension",
+          "score": 76.0377,
+          "evidence": []
+        },
+        {
+          "term": "true-or-false",
+          "score": 73.8684,
+          "evidence": []
+        },
+        {
+          "term": "process reader",
+          "score": 70.7581,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 66.477,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-52-limitations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "quality aspects",
+          "score": 1.5231,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.4141,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 1.3773,
+          "evidence": []
+        },
+        {
+          "term": "cognitive aspects",
+          "score": 1.3746,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 1.3633,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 1.3118,
+          "evidence": []
+        },
+        {
+          "term": "workbook",
+          "score": 1.3018,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 0.9945,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pmcf",
+          "score": 30.7958,
+          "evidence": []
+        },
+        {
+          "term": "quality aspects",
+          "score": 27.2677,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 25.6644,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 24.6145,
+          "evidence": []
+        },
+        {
+          "term": "workbook",
+          "score": 23.6233,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 22.5448,
+          "evidence": []
+        },
+        {
+          "term": "cognitive aspects",
+          "score": 21.8293,
+          "evidence": []
+        },
+        {
+          "term": "further evaluated",
+          "score": 13.8192,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process model",
+          "score": 1.0717,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.022,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 0.7933,
+          "evidence": []
+        },
+        {
+          "term": "quality aspects",
+          "score": 0.7048,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.4983,
+          "evidence": []
+        },
+        {
+          "term": "modelers",
+          "score": 0.4664,
+          "evidence": []
+        },
+        {
+          "term": "modeling",
+          "score": 0.4405,
+          "evidence": []
+        },
+        {
+          "term": "readers",
+          "score": 0.4304,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process model",
+          "score": 33.0282,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 21.9081,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 13.6737,
+          "evidence": []
+        },
+        {
+          "term": "quality aspects",
+          "score": 11.669,
+          "evidence": []
+        },
+        {
+          "term": "modeling",
+          "score": 8.7508,
+          "evidence": []
+        },
+        {
+          "term": "modeler",
+          "score": 7.3209,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 6.0075,
+          "evidence": []
+        },
+        {
+          "term": "readers",
+          "score": 5.8431,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process model",
+          "score": 1.0717,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.022,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 0.7933,
+          "evidence": []
+        },
+        {
+          "term": "quality aspects",
+          "score": 0.7048,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.4983,
+          "evidence": []
+        },
+        {
+          "term": "metrics",
+          "score": 0.3685,
+          "evidence": []
+        },
+        {
+          "term": "cognitive aspects",
+          "score": 0.3189,
+          "evidence": []
+        },
+        {
+          "term": "workbook",
+          "score": 0.2951,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "true-or-false",
+          "score": 67.0286,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 60.61,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 60.4349,
+          "evidence": []
+        },
+        {
+          "term": "unravel",
+          "score": 59.3595,
+          "evidence": []
+        },
+        {
+          "term": "worksheet",
+          "score": 58.8821,
+          "evidence": []
+        },
+        {
+          "term": "workﬂow",
+          "score": 57.9434,
+          "evidence": []
+        },
+        {
+          "term": "workbook",
+          "score": 57.8982,
+          "evidence": []
+        },
+        {
+          "term": "adaption",
+          "score": 57.5912,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-53-implications": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "process modeling",
+          "score": 2.1745,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 1.9532,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 1.7198,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.4579,
+          "evidence": []
+        },
+        {
+          "term": "modeling language",
+          "score": 1.4318,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 1.3118,
+          "evidence": []
+        },
+        {
+          "term": "implications",
+          "score": 1.16,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "information systems",
+          "score": 0.878,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process modeling",
+          "score": 61.4062,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 61.0695,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 52.1162,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 30.7958,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 25.9319,
+          "evidence": []
+        },
+        {
+          "term": "modeling language",
+          "score": 24.0151,
+          "evidence": []
+        },
+        {
+          "term": "implications",
+          "score": 15.6535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "noise",
+          "score": 14.9091,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process modeling",
+          "score": 1.3686,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.2444,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 1.1272,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.1201,
+          "evidence": []
+        },
+        {
+          "term": "modeling language",
+          "score": 0.7281,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.5337,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 0.5078,
+          "evidence": []
+        },
+        {
+          "term": "modelers",
+          "score": 0.4957,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process modeling",
+          "score": 47.5763,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 46.2452,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 40.6237,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 29.1693,
+          "evidence": []
+        },
+        {
+          "term": "modeling language",
+          "score": 15.8022,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 12.0809,
+          "evidence": []
+        },
+        {
+          "term": "modeler",
+          "score": 8.9019,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 8.1153,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process modeling",
+          "score": 1.3686,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.2444,
+          "evidence": []
+        },
+        {
+          "term": "process information",
+          "score": 1.1272,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.1201,
+          "evidence": []
+        },
+        {
+          "term": "modeling language",
+          "score": 0.7281,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.5337,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 0.5078,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.3947,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "true-or-false",
+          "score": 60.6968,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 55.4261,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 55.1839,
+          "evidence": []
+        },
+        {
+          "term": "worksheet",
+          "score": 54.8509,
+          "evidence": []
+        },
+        {
+          "term": "unravel",
+          "score": 54.2456,
+          "evidence": []
+        },
+        {
+          "term": "workﬂow",
+          "score": 53.3281,
+          "evidence": []
+        },
+        {
+          "term": "workbook",
+          "score": 52.9333,
+          "evidence": []
+        },
+        {
+          "term": "adaption",
+          "score": 52.2398,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-54-future-work": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "process modeling",
+          "score": 1.9104,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 1.6257,
+          "evidence": []
+        },
+        {
+          "term": "future work",
+          "score": 1.5545,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "quality criteria",
+          "score": 1.4647,
+          "evidence": []
+        },
+        {
+          "term": "process knowledge",
+          "score": 1.4471,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 1.3118,
+          "evidence": []
+        },
+        {
+          "term": "weighting factor",
+          "score": 1.1397,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.0589,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process modeling",
+          "score": 41.9593,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 37.4661,
+          "evidence": []
+        },
+        {
+          "term": "process knowledge",
+          "score": 32.6851,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 30.7958,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 25.7098,
+          "evidence": []
+        },
+        {
+          "term": "future work",
+          "score": 19.0988,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighting factor",
+          "score": 14.9883,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 14.2417,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process modeling",
+          "score": 1.3766,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.2242,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.164,
+          "evidence": []
+        },
+        {
+          "term": "process knowledge",
+          "score": 1.1008,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 0.7943,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.5683,
+          "evidence": []
+        },
+        {
+          "term": "modelers",
+          "score": 0.5263,
+          "evidence": []
+        },
+        {
+          "term": "readers",
+          "score": 0.4794,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process modeling",
+          "score": 38.2641,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 37.1438,
+          "evidence": []
+        },
+        {
+          "term": "process knowledge",
+          "score": 31.5005,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 24.1397,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 14.804,
+          "evidence": []
+        },
+        {
+          "term": "modeler",
+          "score": 7.4244,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 6.7695,
+          "evidence": []
+        },
+        {
+          "term": "readers",
+          "score": 6.1434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process modeling",
+          "score": 1.3766,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.2242,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.164,
+          "evidence": []
+        },
+        {
+          "term": "process knowledge",
+          "score": 1.1008,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 0.7943,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.5683,
+          "evidence": []
+        },
+        {
+          "term": "metrics",
+          "score": 0.3944,
+          "evidence": []
+        },
+        {
+          "term": "noise",
+          "score": 0.3072,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "true-or-false",
+          "score": 65.2923,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 59.2955,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 59.1027,
+          "evidence": []
+        },
+        {
+          "term": "worksheet",
+          "score": 58.2337,
+          "evidence": []
+        },
+        {
+          "term": "unravel",
+          "score": 58.0199,
+          "evidence": []
+        },
+        {
+          "term": "workﬂow",
+          "score": 57.0314,
+          "evidence": []
+        },
+        {
+          "term": "workbook",
+          "score": 56.7184,
+          "evidence": []
+        },
+        {
+          "term": "adaption",
+          "score": 56.1161,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-6-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "model comprehension",
+          "score": 1.1279,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.1008,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 1.0666,
+          "evidence": []
+        },
+        {
+          "term": "conclusion",
+          "score": 0.8383,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process model",
+          "score": 15.8951,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 15.5592,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 14.1599,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 10.2653,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process model",
+          "score": 0.7856,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 0.723,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 0.5487,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.3551,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process model",
+          "score": 18.4359,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 11.7888,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 7.9202,
+          "evidence": []
+        },
+        {
+          "term": "modeling",
+          "score": 4.725,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process model",
+          "score": 0.7856,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 0.723,
+          "evidence": []
+        },
+        {
+          "term": "quality criteria",
+          "score": 0.5487,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.3551,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "true-or-false",
+          "score": 79.5508,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 71.9875,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 71.9315,
+          "evidence": []
+        },
+        {
+          "term": "unravel",
+          "score": 70.7735,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-b": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rüdiger pryss",
+          "score": 3.3394,
+          "evidence": []
+        },
+        {
+          "term": "manfred reichert",
+          "score": 3.0425,
+          "evidence": []
+        },
+        {
+          "term": "jan mendling",
+          "score": 3.0127,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 2.9433,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 2.8949,
+          "evidence": []
+        },
+        {
+          "term": "jan claes",
+          "score": 2.8904,
+          "evidence": []
+        },
+        {
+          "term": "systems modeling",
+          "score": 2.5293,
+          "evidence": []
+        },
+        {
+          "term": "conceptual modeling",
+          "score": 2.4948,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "business process",
+          "score": 148.3389,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 138.4378,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 120.1486,
+          "evidence": []
+        },
+        {
+          "term": "process management",
+          "score": 103.2539,
+          "evidence": []
+        },
+        {
+          "term": "systems modeling",
+          "score": 95.4507,
+          "evidence": []
+        },
+        {
+          "term": "modeling quality",
+          "score": 81.5576,
+          "evidence": []
+        },
+        {
+          "term": "conceptual modeling",
+          "score": 75.5611,
+          "evidence": []
+        },
+        {
+          "term": "jan mendling",
+          "score": 73.6173,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process modeling",
+          "score": 3.1464,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 3.0693,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 2.9454,
+          "evidence": []
+        },
+        {
+          "term": "process management",
+          "score": 2.6525,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 2.3123,
+          "evidence": []
+        },
+        {
+          "term": "systems modeling",
+          "score": 2.2281,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 2.2261,
+          "evidence": []
+        },
+        {
+          "term": "modeling quality",
+          "score": 2.1773,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "business process",
+          "score": 136.5922,
+          "evidence": []
+        },
+        {
+          "term": "process modeling",
+          "score": 125.3464,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 123.616,
+          "evidence": []
+        },
+        {
+          "term": "process management",
+          "score": 111.5159,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 68.8905,
+          "evidence": []
+        },
+        {
+          "term": "modeling quality",
+          "score": 59.8814,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 57.7296,
+          "evidence": []
+        },
+        {
+          "term": "systems modeling",
+          "score": 57.3193,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process modeling",
+          "score": 3.1464,
+          "evidence": []
+        },
+        {
+          "term": "business process",
+          "score": 3.0693,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 2.9454,
+          "evidence": []
+        },
+        {
+          "term": "process management",
+          "score": 2.6525,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 2.3123,
+          "evidence": []
+        },
+        {
+          "term": "systems modeling",
+          "score": 2.2281,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 2.2261,
+          "evidence": []
+        },
+        {
+          "term": "modeling quality",
+          "score": 2.1773,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "rüdiger pryss",
+          "score": 158.1046,
+          "evidence": []
+        },
+        {
+          "term": "manfred reichert",
+          "score": 134.3358,
+          "evidence": []
+        },
+        {
+          "term": "jörg becker",
+          "score": 99.3636,
+          "evidence": []
+        },
+        {
+          "term": "wil van",
+          "score": 92.3663,
+          "evidence": []
+        },
+        {
+          "term": "jan mendling",
+          "score": 88.0226,
+          "evidence": []
+        },
+        {
+          "term": "jan claes",
+          "score": 85.8197,
+          "evidence": []
+        },
+        {
+          "term": "sindre",
+          "score": 74.3501,
+          "evidence": []
+        },
+        {
+          "term": "confed",
+          "score": 70.0536,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "proper comprehension",
+          "score": 2.2301,
+          "evidence": []
+        },
+        {
+          "term": "process modelers",
+          "score": 2.1452,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 1.976,
+          "evidence": []
+        },
+        {
+          "term": "process models",
+          "score": 1.898,
+          "evidence": []
+        },
+        {
+          "term": "both perspectives",
+          "score": 1.2202,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 1.0849,
+          "evidence": []
+        },
+        {
+          "term": "pryss",
+          "score": 1.0132,
+          "evidence": []
+        },
+        {
+          "term": "ulm",
+          "score": 1.0078,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "process models",
+          "score": 55.0981,
+          "evidence": []
+        },
+        {
+          "term": "process modelers",
+          "score": 52.7874,
+          "evidence": []
+        },
+        {
+          "term": "proper comprehension",
+          "score": 52.1254,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 49.0077,
+          "evidence": []
+        },
+        {
+          "term": "both perspectives",
+          "score": 21.2522,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 20.5305,
+          "evidence": []
+        },
+        {
+          "term": "pryss",
+          "score": 14.0089,
+          "evidence": []
+        },
+        {
+          "term": "ulm",
+          "score": 14.0089,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "process modelers",
+          "score": 1.3899,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.2972,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.2314,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 1.151,
+          "evidence": []
+        },
+        {
+          "term": "proper comprehension",
+          "score": 0.9798,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.5846,
+          "evidence": []
+        },
+        {
+          "term": "modeling",
+          "score": 0.5632,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 0.5417,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "process model",
+          "score": 48.4026,
+          "evidence": []
+        },
+        {
+          "term": "process modelers",
+          "score": 46.245,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 31.3755,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 24.9752,
+          "evidence": []
+        },
+        {
+          "term": "proper comprehension",
+          "score": 21.9952,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 13.1614,
+          "evidence": []
+        },
+        {
+          "term": "modeling",
+          "score": 12.5843,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 8.9787,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "process modelers",
+          "score": 1.3899,
+          "evidence": []
+        },
+        {
+          "term": "process model",
+          "score": 1.2972,
+          "evidence": []
+        },
+        {
+          "term": "model comprehension",
+          "score": 1.2314,
+          "evidence": []
+        },
+        {
+          "term": "comprehension framework",
+          "score": 1.151,
+          "evidence": []
+        },
+        {
+          "term": "proper comprehension",
+          "score": 0.9798,
+          "evidence": []
+        },
+        {
+          "term": "pmcf",
+          "score": 0.5846,
+          "evidence": []
+        },
+        {
+          "term": "modeling",
+          "score": 0.5632,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 0.5417,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "process modelers",
+          "score": 91.762,
+          "evidence": []
+        },
+        {
+          "term": "true-or-false",
+          "score": 80.1768,
+          "evidence": []
+        },
+        {
+          "term": "worksheet",
+          "score": 76.3447,
+          "evidence": []
+        },
+        {
+          "term": "deﬁcits",
+          "score": 73.4925,
+          "evidence": []
+        },
+        {
+          "term": "workﬂow",
+          "score": 73.206,
+          "evidence": []
+        },
+        {
+          "term": "ﬁne-grained",
+          "score": 72.8591,
+          "evidence": []
+        },
+        {
+          "term": "event-driven",
+          "score": 72.2245,
+          "evidence": []
+        },
+        {
+          "term": "unravel",
+          "score": 72.0231,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}
