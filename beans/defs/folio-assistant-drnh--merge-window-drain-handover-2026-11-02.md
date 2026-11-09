@@ -363,6 +363,16 @@ _2026-11-09T14:20:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a3
   10. `litlfred/fhir-harness#320` (`IG releases: a tag builds a draft release with packages and ast-data.zip`, closing `#319`): `ready: d1da9422cb30b9a0d0a85925e431dfea3d972f0a`.
 - **Bean rollup & audit updates:** completed `folio-assistant-tv20` (`folio-assistant#2953` merged at `bef2b0b1a6dafbd5ed558777f1d968b2019ad849` at `2026-11-08T18:29:09Z`), updated `folio-assistant-k3vv` (13/14 tracked children completed, Done-when Box 1 checked off, release-gated CI `#1158` Phases 1–4 recorded), `folio-assistant-9ml4` (`cat-harness-tools#1707` `839ee5d7`, `cat-harness-tools#1703` `dd0c48ba`, `folio-assistant#3038` `cc989094` merged), `folio-assistant-fwtz` (`folio-assistant#2875` `db9acd89`, `folio-assistant#2904` `97d2e407`, `cat-harness-tools#1707` `839ee5d7` merged), and `folio-assistant-k6dz` (`cat-harness#972` `d3d7a4da` merged closing `#971`; 79 `cat-harness` + 31 `folio-assistant-core` BPMN recount).
 
+_2026-11-09T15:14:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a380-8dd5bf5cc0f3`, Round 8 Lanes 1–5 completion update):
+- **6 more PRs greened, marked ready for review, labeled `ready-to-merge`, and commented `"ready: <sha>"` for Merge Manager:**
+  1. `litlfred/bootstrap-tools#84` (`docs: "layer" where "instance" means a repository (P3, prose only)` — re-triggered `CodeQL` after Nov 8 runner initialization glitch; all checks `CLEAN`): `ready: 0a910d86d156081cfa4570a3ad66c6be2c5a04f2` (`#issuecomment-6742287347`).
+  2. `litlfred/cat-harness-tools#1744` (`fix(test): sync standalone-checkout fixture copies after P3 prose sweep`, fixing `schemas/standalone-fixture.test.ts` for `folio-assistant-core#695` & `fhir-harness#318`): `ready: 97ef69c58dab0bc5ff615ac3fce30cd6c8308f3d` (`#issuecomment-6742288354`).
+  3. `litlfred/folio-assistant-core#696` (`fix(glossary): refresh glossary .pot and .po after P3 prose sweep`, closing `folio-assistant-core#695`): `ready: d15be26931c77233ba564edc7ca727cee3233740` (`#issuecomment-6743278551`).
+  4. `litlfred/cat-harness#1173` (`fix(processes): regenerate merge-to-main.checklist.md`, closing `cat-harness#1169`): `ready: 6f144f826879f766c867f2c09914d2493d16956e`.
+  5. `litlfred/who-iris#204` (`fix(iris-pages): resolve LIBRARY_LISTING_ROUTE when library is a sub-graph`, closing `who-iris#203`): `ready: ae83ab8c0517282e0087cfce5d686a4d3af6601b` (`#issuecomment-6743517904`).
+  6. `litlfred/smart-base#334` (`chore: re-pin cat-harness-tools to 21e99640 for kg-validate memoization`, closing `smart-base#331`, with published layers cache ref `refs/cat/layers/892dd166330c7fe3c22152bc80edd3db00562bb7358b5bc572b7659bce222b12`): `ready: fb00db479b22b5a4f62be73b2961c2d3d7063818`.
+
+
 
 
 
