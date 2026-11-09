@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_MergeRefusal/node/Task_Comment.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1354",
+    "sha": "36948f2c31cdb272274a5eb056442b14cb8e264a",
+    "pr": "repin-train/20261109-1354",
+    "run": "42629704316"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_MergeRefusal/node/Task_Comment",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Comment on the PR once, linking the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_MergeRefusal/lane/Lane_Steward",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/skill/merge-conflict-patterns"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_MergeRefusal#flow/r2"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_MergeRefusal#flow/r3"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal/node/Task_Comment"
+    }
+  ]
+}

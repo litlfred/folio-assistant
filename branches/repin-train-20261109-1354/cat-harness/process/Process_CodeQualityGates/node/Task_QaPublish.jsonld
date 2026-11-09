@@ -1,0 +1,37 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_CodeQualityGates/node/Task_QaPublish.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1354",
+    "sha": "36948f2c31cdb272274a5eb056442b14cb8e264a",
+    "pr": "repin-train/20261109-1354",
+    "run": "42629704316"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_CodeQualityGates/node/Task_QaPublish",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Publish QA results (not a gate)",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_CodeQualityGates",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/role/build-pipeline",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_CodeQualityGates/lane/Lane_Ci",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/skill/qa-reports"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_QaPublish",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_CodeQualityGates#flow/Flow_22"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/process/Process_CodeQualityGates#flow/Flow_23"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_CodeQualityGates/node/Task_QaPublish"
+    }
+  ]
+}

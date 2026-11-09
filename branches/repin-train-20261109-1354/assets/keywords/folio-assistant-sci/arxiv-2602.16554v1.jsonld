@@ -1,0 +1,3440 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2602.16554v1",
+  "instance": "folio-assistant-sci",
+  "about": "library/arxiv-2602.16554v1",
+  "corpus": {
+    "library": "folio-assistant-sci/library",
+    "sections": 116,
+    "terms": 2735
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "fault-tolerant quantum",
+        "score": 10.3569,
+        "evidence": []
+      },
+      {
+        "term": "quantum physics",
+        "score": 10.0083,
+        "evidence": []
+      },
+      {
+        "term": "quantum codes",
+        "score": 9.6608,
+        "evidence": []
+      },
+      {
+        "term": "theoretical quantum",
+        "score": 9.1019,
+        "evidence": []
+      },
+      {
+        "term": "quantum computation",
+        "score": 8.9736,
+        "evidence": []
+      },
+      {
+        "term": "quantum topology",
+        "score": 8.6962,
+        "evidence": []
+      },
+      {
+        "term": "axiom cycle",
+        "score": 8.2602,
+        "evidence": []
+      },
+      {
+        "term": "axiom kunnethmap",
+        "score": 8.2235,
+        "evidence": []
+      },
+      {
+        "term": "quantum computing",
+        "score": 8.1353,
+        "evidence": []
+      },
+      {
+        "term": "merlean handles",
+        "score": 7.9237,
+        "evidence": []
+      },
+      {
+        "term": "axiom declarations",
+        "score": 7.9231,
+        "evidence": []
+      },
+      {
+        "term": "evaluate merlean",
+        "score": 7.8134,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "url arxiv",
+        "score": 110.5254,
+        "evidence": []
+      },
+      {
+        "term": "fault-tolerant quantum",
+        "score": 107.7277,
+        "evidence": []
+      },
+      {
+        "term": "axiom cycle",
+        "score": 102.9794,
+        "evidence": []
+      },
+      {
+        "term": "quantum codes",
+        "score": 102.3957,
+        "evidence": []
+      },
+      {
+        "term": "cycle tensor",
+        "score": 98.8428,
+        "evidence": []
+      },
+      {
+        "term": "quantum physics",
+        "score": 98.7168,
+        "evidence": []
+      },
+      {
+        "term": "tensor product",
+        "score": 95.7355,
+        "evidence": []
+      },
+      {
+        "term": "axiom kunnethmap",
+        "score": 91.4448,
+        "evidence": []
+      },
+      {
+        "term": "theoretical quantum",
+        "score": 90.4248,
+        "evidence": []
+      },
+      {
+        "term": "url org",
+        "score": 89.8214,
+        "evidence": []
+      },
+      {
+        "term": "quantum topology",
+        "score": 88.7836,
+        "evidence": []
+      },
+      {
+        "term": "quantum computation",
+        "score": 87.3046,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "fault-tolerant quantum",
+        "score": 10.0237,
+        "evidence": []
+      },
+      {
+        "term": "quantum physics",
+        "score": 9.6808,
+        "evidence": []
+      },
+      {
+        "term": "quantum codes",
+        "score": 9.3244,
+        "evidence": []
+      },
+      {
+        "term": "theoretical quantum",
+        "score": 8.8009,
+        "evidence": []
+      },
+      {
+        "term": "quantum topology",
+        "score": 8.3658,
+        "evidence": []
+      },
+      {
+        "term": "quantum computation",
+        "score": 8.3056,
+        "evidence": []
+      },
+      {
+        "term": "axiom cycle",
+        "score": 8.2624,
+        "evidence": []
+      },
+      {
+        "term": "axiom kunnethmap",
+        "score": 8.222,
+        "evidence": []
+      },
+      {
+        "term": "merlean handles",
+        "score": 7.9544,
+        "evidence": []
+      },
+      {
+        "term": "axiom declarations",
+        "score": 7.9332,
+        "evidence": []
+      },
+      {
+        "term": "evaluate merlean",
+        "score": 7.8721,
+        "evidence": []
+      },
+      {
+        "term": "quantum computing",
+        "score": 7.8036,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "url arxiv",
+        "score": 110.5516,
+        "evidence": []
+      },
+      {
+        "term": "fault-tolerant quantum",
+        "score": 105.8901,
+        "evidence": []
+      },
+      {
+        "term": "axiom cycle",
+        "score": 102.9306,
+        "evidence": []
+      },
+      {
+        "term": "quantum codes",
+        "score": 100.5053,
+        "evidence": []
+      },
+      {
+        "term": "cycle tensor",
+        "score": 98.9442,
+        "evidence": []
+      },
+      {
+        "term": "quantum physics",
+        "score": 96.831,
+        "evidence": []
+      },
+      {
+        "term": "tensor product",
+        "score": 95.9398,
+        "evidence": []
+      },
+      {
+        "term": "axiom kunnethmap",
+        "score": 91.3479,
+        "evidence": []
+      },
+      {
+        "term": "url org",
+        "score": 89.8642,
+        "evidence": []
+      },
+      {
+        "term": "theoretical quantum",
+        "score": 88.7677,
+        "evidence": []
+      },
+      {
+        "term": "quantum topology",
+        "score": 86.9483,
+        "evidence": []
+      },
+      {
+        "term": "quantum computation",
+        "score": 83.1173,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "fault-tolerant quantum",
+        "score": 10.0237,
+        "evidence": []
+      },
+      {
+        "term": "quantum physics",
+        "score": 9.6808,
+        "evidence": []
+      },
+      {
+        "term": "quantum codes",
+        "score": 9.3244,
+        "evidence": []
+      },
+      {
+        "term": "theoretical quantum",
+        "score": 8.8009,
+        "evidence": []
+      },
+      {
+        "term": "quantum topology",
+        "score": 8.3658,
+        "evidence": []
+      },
+      {
+        "term": "quantum computation",
+        "score": 8.3056,
+        "evidence": []
+      },
+      {
+        "term": "axiom cycle",
+        "score": 8.2624,
+        "evidence": []
+      },
+      {
+        "term": "axiom kunnethmap",
+        "score": 8.222,
+        "evidence": []
+      },
+      {
+        "term": "merlean handles",
+        "score": 7.9544,
+        "evidence": []
+      },
+      {
+        "term": "axiom declarations",
+        "score": 7.9332,
+        "evidence": []
+      },
+      {
+        "term": "evaluate merlean",
+        "score": 7.8721,
+        "evidence": []
+      },
+      {
+        "term": "quantum computing",
+        "score": 7.8036,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "edu",
+        "score": 1525.7203,
+        "evidence": []
+      },
+      {
+        "term": "cambridge",
+        "score": 1013.2677,
+        "evidence": []
+      },
+      {
+        "term": "mit",
+        "score": 670.9551,
+        "evidence": []
+      },
+      {
+        "term": "quantum computation",
+        "score": 434.5553,
+        "evidence": []
+      },
+      {
+        "term": "cheeger constant",
+        "score": 400.0735,
+        "evidence": []
+      },
+      {
+        "term": "merlean handles",
+        "score": 375.6424,
+        "evidence": []
+      },
+      {
+        "term": "peer review",
+        "score": 336.6334,
+        "evidence": []
+      },
+      {
+        "term": "theoretical quantum",
+        "score": 333.4866,
+        "evidence": []
+      },
+      {
+        "term": "unverified assumptions",
+        "score": 296.7424,
+        "evidence": []
+      },
+      {
+        "term": "ren",
+        "score": 286.0872,
+        "evidence": []
+      },
+      {
+        "term": "quantum physics",
+        "score": 281.5494,
+        "evidence": []
+      },
+      {
+        "term": "abstract",
+        "score": 280.103,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-framework": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "edu",
+          "score": 1.2223,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.7347,
+          "evidence": []
+        },
+        {
+          "term": "cambridge",
+          "score": 0.5921,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "edu",
+          "score": 12.1813,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 5.9237,
+          "evidence": []
+        },
+        {
+          "term": "cambridge",
+          "score": 4.0604,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "university",
+          "score": 0.2343,
+          "evidence": []
+        },
+        {
+          "term": "germany",
+          "score": 0.1257,
+          "evidence": []
+        },
+        {
+          "term": "institute",
+          "score": 0.113,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "university",
+          "score": 2.588,
+          "evidence": []
+        },
+        {
+          "term": "hong",
+          "score": 1.401,
+          "evidence": []
+        },
+        {
+          "term": "kong",
+          "score": 1.0822,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "university",
+          "score": 0.2343,
+          "evidence": []
+        },
+        {
+          "term": "institute",
+          "score": 0.113,
+          "evidence": []
+        },
+        {
+          "term": "technology",
+          "score": 0.0768,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "edu",
+          "score": 1537.3025,
+          "evidence": []
+        },
+        {
+          "term": "cambridge",
+          "score": 1024.9198,
+          "evidence": []
+        },
+        {
+          "term": "mit",
+          "score": 682.7022,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-autoformalization": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "theoretical",
+          "score": 0.7862,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 0.735,
+          "evidence": []
+        },
+        {
+          "term": "quantum",
+          "score": 0.6905,
+          "evidence": []
+        },
+        {
+          "term": "trans",
+          "score": 0.6202,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "merlean",
+          "score": 7.353,
+          "evidence": []
+        },
+        {
+          "term": "theoretical",
+          "score": 6.7346,
+          "evidence": []
+        },
+        {
+          "term": "quantum",
+          "score": 5.3483,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 4.902,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "theoretical",
+          "score": 0.7709,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 0.731,
+          "evidence": []
+        },
+        {
+          "term": "quantum",
+          "score": 0.6985,
+          "evidence": []
+        },
+        {
+          "term": "trans",
+          "score": 0.6082,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "merlean",
+          "score": 7.2618,
+          "evidence": []
+        },
+        {
+          "term": "theoretical",
+          "score": 6.4966,
+          "evidence": []
+        },
+        {
+          "term": "quantum",
+          "score": 5.3591,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 4.7709,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "theoretical",
+          "score": 0.7709,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 0.731,
+          "evidence": []
+        },
+        {
+          "term": "quantum",
+          "score": 0.6985,
+          "evidence": []
+        },
+        {
+          "term": "trans",
+          "score": 0.6082,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "producing",
+          "score": 173.871,
+          "evidence": []
+        },
+        {
+          "term": "formalizes",
+          "score": 172.8806,
+          "evidence": []
+        },
+        {
+          "term": "offering",
+          "score": 172.3573,
+          "evidence": []
+        },
+        {
+          "term": "human-readable",
+          "score": 116.4392,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "theoretical quantum",
+          "score": 1.6575,
+          "evidence": []
+        },
+        {
+          "term": "quantum computation",
+          "score": 1.474,
+          "evidence": []
+        },
+        {
+          "term": "mathematical statements",
+          "score": 1.0477,
+          "evidence": []
+        },
+        {
+          "term": "accelerate",
+          "score": 0.9515,
+          "evidence": []
+        },
+        {
+          "term": "formal code",
+          "score": 0.9492,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 0.8628,
+          "evidence": []
+        },
+        {
+          "term": "natural language",
+          "score": 0.7892,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 0.735,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "theoretical quantum",
+          "score": 14.757,
+          "evidence": []
+        },
+        {
+          "term": "quantum computation",
+          "score": 13.1352,
+          "evidence": []
+        },
+        {
+          "term": "formal code",
+          "score": 8.2161,
+          "evidence": []
+        },
+        {
+          "term": "mathematical statements",
+          "score": 8.1794,
+          "evidence": []
+        },
+        {
+          "term": "accelerate",
+          "score": 8.1209,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 7.353,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 6.8061,
+          "evidence": []
+        },
+        {
+          "term": "verification",
+          "score": 6.5659,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "theoretical quantum",
+          "score": 1.6597,
+          "evidence": []
+        },
+        {
+          "term": "quantum computation",
+          "score": 1.4813,
+          "evidence": []
+        },
+        {
+          "term": "mathematical statements",
+          "score": 1.0502,
+          "evidence": []
+        },
+        {
+          "term": "formal code",
+          "score": 0.949,
+          "evidence": []
+        },
+        {
+          "term": "accelerate",
+          "score": 0.9481,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 0.8599,
+          "evidence": []
+        },
+        {
+          "term": "natural language",
+          "score": 0.804,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 0.7336,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "theoretical quantum",
+          "score": 14.7814,
+          "evidence": []
+        },
+        {
+          "term": "quantum computation",
+          "score": 13.1874,
+          "evidence": []
+        },
+        {
+          "term": "mathematical statements",
+          "score": 8.2052,
+          "evidence": []
+        },
+        {
+          "term": "formal code",
+          "score": 8.1922,
+          "evidence": []
+        },
+        {
+          "term": "accelerate",
+          "score": 8.0851,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 7.3468,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 6.7849,
+          "evidence": []
+        },
+        {
+          "term": "verification",
+          "score": 6.5812,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "theoretical quantum",
+          "score": 1.6597,
+          "evidence": []
+        },
+        {
+          "term": "quantum computation",
+          "score": 1.4813,
+          "evidence": []
+        },
+        {
+          "term": "mathematical statements",
+          "score": 1.0502,
+          "evidence": []
+        },
+        {
+          "term": "formal code",
+          "score": 0.949,
+          "evidence": []
+        },
+        {
+          "term": "accelerate",
+          "score": 0.9481,
+          "evidence": []
+        },
+        {
+          "term": "arxiv",
+          "score": 0.8599,
+          "evidence": []
+        },
+        {
+          "term": "natural language",
+          "score": 0.804,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 0.7336,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "accelerate",
+          "score": 87.7607,
+          "evidence": []
+        },
+        {
+          "term": "relies",
+          "score": 66.0939,
+          "evidence": []
+        },
+        {
+          "term": "physlean",
+          "score": 65.8904,
+          "evidence": []
+        },
+        {
+          "term": "submissions",
+          "score": 65.7064,
+          "evidence": []
+        },
+        {
+          "term": "reached",
+          "score": 65.4264,
+          "evidence": []
+        },
+        {
+          "term": "contamination",
+          "score": 65.3424,
+          "evidence": []
+        },
+        {
+          "term": "operating",
+          "score": 65.3306,
+          "evidence": []
+        },
+        {
+          "term": "run",
+          "score": 65.2956,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-related-works": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "human guidance",
+          "score": 1.4567,
+          "evidence": []
+        },
+        {
+          "term": "frontier llms",
+          "score": 1.0424,
+          "evidence": []
+        },
+        {
+          "term": "agentic",
+          "score": 0.8618,
+          "evidence": []
+        },
+        {
+          "term": "demonstrated",
+          "score": 0.8523,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.8262,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.7913,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 0.735,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 0.7001,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "human guidance",
+          "score": 11.272,
+          "evidence": []
+        },
+        {
+          "term": "agentic",
+          "score": 8.423,
+          "evidence": []
+        },
+        {
+          "term": "demonstrated",
+          "score": 8.423,
+          "evidence": []
+        },
+        {
+          "term": "frontier llms",
+          "score": 8.2546,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 7.353,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 6.7346,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 6.2883,
+          "evidence": []
+        },
+        {
+          "term": "provers",
+          "score": 5.1127,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "human guidance",
+          "score": 1.4596,
+          "evidence": []
+        },
+        {
+          "term": "frontier llms",
+          "score": 1.0455,
+          "evidence": []
+        },
+        {
+          "term": "agentic",
+          "score": 0.8612,
+          "evidence": []
+        },
+        {
+          "term": "demonstrated",
+          "score": 0.8605,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.8251,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.7897,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 0.7341,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 0.6988,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "human guidance",
+          "score": 11.296,
+          "evidence": []
+        },
+        {
+          "term": "demonstrated",
+          "score": 8.4717,
+          "evidence": []
+        },
+        {
+          "term": "agentic",
+          "score": 8.4121,
+          "evidence": []
+        },
+        {
+          "term": "frontier llms",
+          "score": 8.2659,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 7.353,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 6.7164,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 6.2734,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 5.0999,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "human guidance",
+          "score": 1.4596,
+          "evidence": []
+        },
+        {
+          "term": "frontier llms",
+          "score": 1.0455,
+          "evidence": []
+        },
+        {
+          "term": "agentic",
+          "score": 0.8612,
+          "evidence": []
+        },
+        {
+          "term": "demonstrated",
+          "score": 0.8605,
+          "evidence": []
+        },
+        {
+          "term": "lines",
+          "score": 0.8251,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.7897,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 0.7341,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 0.6988,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "human guidance",
+          "score": 88.0378,
+          "evidence": []
+        },
+        {
+          "term": "ax-prover",
+          "score": 84.9133,
+          "evidence": []
+        },
+        {
+          "term": "breen",
+          "score": 84.9133,
+          "evidence": []
+        },
+        {
+          "term": "murphy",
+          "score": 84.9133,
+          "evidence": []
+        },
+        {
+          "term": "numina-lean-agent",
+          "score": 84.9133,
+          "evidence": []
+        },
+        {
+          "term": "odersky",
+          "score": 84.9133,
+          "evidence": []
+        },
+        {
+          "term": "lean-lsp-mcp",
+          "score": 84.8905,
+          "evidence": []
+        },
+        {
+          "term": "biomedical",
+          "score": 84.8612,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-autoinformalization": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "latex paper",
+          "score": 1.5299,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 1.5266,
+          "evidence": []
+        },
+        {
+          "term": "continues",
+          "score": 1.2223,
+          "evidence": []
+        },
+        {
+          "term": "faithfulness",
+          "score": 1.0913,
+          "evidence": []
+        },
+        {
+          "term": "autoinformalization",
+          "score": 1.0831,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "compiles",
+          "score": 0.9431,
+          "evidence": []
+        },
+        {
+          "term": "architecture",
+          "score": 0.9398,
+          "evidence": []
+        },
+        {
+          "term": "lemmas",
+          "score": 0.8763,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "agent",
+          "score": 22.4614,
+          "evidence": []
+        },
+        {
+          "term": "latex paper",
+          "score": 15.2201,
+          "evidence": []
+        },
+        {
+          "term": "continues",
+          "score": 12.1813,
+          "evidence": []
+        },
+        {
+          "term": "faithfulness",
+          "score": 10.9649,
+          "evidence": []
+        },
+        {
+          "term": "lemmas",
+          "score": 10.5727,
+          "evidence": []
+        },
+        {
+          "term": "statement",
+          "score": 8.7465,
+          "evidence": []
+        },
+        {
+          "term": "compiles",
+          "score": 8.1209,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 8.1144,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "latex paper",
+          "score": 1.5315,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 1.5247,
+          "evidence": []
+        },
+        {
+          "term": "continues",
+          "score": 1.2206,
+          "evidence": []
+        },
+        {
+          "term": "faithfulness",
+          "score": 1.0894,
+          "evidence": []
+        },
+        {
+          "term": "autoinformalization",
+          "score": 1.0826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "compiles",
+          "score": 0.9415,
+          "evidence": []
+        },
+        {
+          "term": "architecture",
+          "score": 0.9388,
+          "evidence": []
+        },
+        {
+          "term": "lemmas",
+          "score": 0.8748,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent",
+          "score": 22.4366,
+          "evidence": []
+        },
+        {
+          "term": "latex paper",
+          "score": 15.2064,
+          "evidence": []
+        },
+        {
+          "term": "continues",
+          "score": 12.1651,
+          "evidence": []
+        },
+        {
+          "term": "faithfulness",
+          "score": 10.9551,
+          "evidence": []
+        },
+        {
+          "term": "lemmas",
+          "score": 10.5593,
+          "evidence": []
+        },
+        {
+          "term": "statement",
+          "score": 8.8495,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 8.1159,
+          "evidence": []
+        },
+        {
+          "term": "compiles",
+          "score": 8.1072,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "latex paper",
+          "score": 1.5315,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 1.5247,
+          "evidence": []
+        },
+        {
+          "term": "continues",
+          "score": 1.2206,
+          "evidence": []
+        },
+        {
+          "term": "faithfulness",
+          "score": 1.0894,
+          "evidence": []
+        },
+        {
+          "term": "autoinformalization",
+          "score": 1.0826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "compiles",
+          "score": 0.9415,
+          "evidence": []
+        },
+        {
+          "term": "architecture",
+          "score": 0.9388,
+          "evidence": []
+        },
+        {
+          "term": "lemmas",
+          "score": 0.8748,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "continues",
+          "score": 72.7858,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 55.2336,
+          "evidence": []
+        },
+        {
+          "term": "writes",
+          "score": 50.632,
+          "evidence": []
+        },
+        {
+          "term": "formalizes",
+          "score": 49.4815,
+          "evidence": []
+        },
+        {
+          "term": "protocol",
+          "score": 49.1378,
+          "evidence": []
+        },
+        {
+          "term": "sketches",
+          "score": 48.5639,
+          "evidence": []
+        },
+        {
+          "term": "compile-fix",
+          "score": 48.4375,
+          "evidence": []
+        },
+        {
+          "term": "helper",
+          "score": 48.4375,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "axiom declarations",
+          "score": 1.5156,
+          "evidence": []
+        },
+        {
+          "term": "assumptions",
+          "score": 1.1092,
+          "evidence": []
+        },
+        {
+          "term": "formal methods",
+          "score": 0.8784,
+          "evidence": []
+        },
+        {
+          "term": "readers",
+          "score": 0.8583,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 0.5824,
+          "evidence": []
+        },
+        {
+          "term": "informalization",
+          "score": 0.5454,
+          "evidence": []
+        },
+        {
+          "term": "dependency",
+          "score": 0.5337,
+          "evidence": []
+        },
+        {
+          "term": "formalization",
+          "score": 0.5267,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "axiom declarations",
+          "score": 13.1344,
+          "evidence": []
+        },
+        {
+          "term": "assumptions",
+          "score": 10.9649,
+          "evidence": []
+        },
+        {
+          "term": "readers",
+          "score": 7.31,
+          "evidence": []
+        },
+        {
+          "term": "formal methods",
+          "score": 6.0088,
+          "evidence": []
+        },
+        {
+          "term": "formalization",
+          "score": 5.5452,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 4.902,
+          "evidence": []
+        },
+        {
+          "term": "dependency",
+          "score": 4.3773,
+          "evidence": []
+        },
+        {
+          "term": "informalization",
+          "score": 3.8408,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "axiom declarations",
+          "score": 1.5127,
+          "evidence": []
+        },
+        {
+          "term": "assumptions",
+          "score": 1.1055,
+          "evidence": []
+        },
+        {
+          "term": "readers",
+          "score": 0.8787,
+          "evidence": []
+        },
+        {
+          "term": "formal methods",
+          "score": 0.8756,
+          "evidence": []
+        },
+        {
+          "term": "expands",
+          "score": 0.5987,
+          "evidence": []
+        },
+        {
+          "term": "producing",
+          "score": 0.5926,
+          "evidence": []
+        },
+        {
+          "term": "unverified",
+          "score": 0.5901,
+          "evidence": []
+        },
+        {
+          "term": "subgoals",
+          "score": 0.5898,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "axiom declarations",
+          "score": 13.1037,
+          "evidence": []
+        },
+        {
+          "term": "assumptions",
+          "score": 10.9251,
+          "evidence": []
+        },
+        {
+          "term": "readers",
+          "score": 7.405,
+          "evidence": []
+        },
+        {
+          "term": "formal methods",
+          "score": 6.074,
+          "evidence": []
+        },
+        {
+          "term": "formalization",
+          "score": 5.5292,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 4.9138,
+          "evidence": []
+        },
+        {
+          "term": "dependency",
+          "score": 4.3956,
+          "evidence": []
+        },
+        {
+          "term": "producing",
+          "score": 4.0588,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "axiom declarations",
+          "score": 1.5127,
+          "evidence": []
+        },
+        {
+          "term": "assumptions",
+          "score": 1.1055,
+          "evidence": []
+        },
+        {
+          "term": "readers",
+          "score": 0.8787,
+          "evidence": []
+        },
+        {
+          "term": "formal methods",
+          "score": 0.8756,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 0.5837,
+          "evidence": []
+        },
+        {
+          "term": "informalization",
+          "score": 0.5523,
+          "evidence": []
+        },
+        {
+          "term": "dependency",
+          "score": 0.5344,
+          "evidence": []
+        },
+        {
+          "term": "formalization",
+          "score": 0.522,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "assumptions",
+          "score": 125.7938,
+          "evidence": []
+        },
+        {
+          "term": "readers",
+          "score": 113.0216,
+          "evidence": []
+        },
+        {
+          "term": "producing",
+          "score": 106.7779,
+          "evidence": []
+        },
+        {
+          "term": "unverified",
+          "score": 104.7971,
+          "evidence": []
+        },
+        {
+          "term": "handles",
+          "score": 104.6272,
+          "evidence": []
+        },
+        {
+          "term": "accessible",
+          "score": 104.5131,
+          "evidence": []
+        },
+        {
+          "term": "subgoals",
+          "score": 104.5051,
+          "evidence": []
+        },
+        {
+          "term": "transparent",
+          "score": 104.5051,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-experiments": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "compile attempts",
+          "score": 3.2952,
+          "evidence": []
+        },
+        {
+          "term": "quantum topology",
+          "score": 2.6967,
+          "evidence": []
+        },
+        {
+          "term": "balanced product",
+          "score": 2.2947,
+          "evidence": []
+        },
+        {
+          "term": "product codes",
+          "score": 2.2594,
+          "evidence": []
+        },
+        {
+          "term": "unpublished manuscript",
+          "score": 1.8788,
+          "evidence": []
+        },
+        {
+          "term": "spectral sequences",
+          "score": 1.8451,
+          "evidence": []
+        },
+        {
+          "term": "fault-tolerant",
+          "score": 1.5091,
+          "evidence": []
+        },
+        {
+          "term": "statement type",
+          "score": 1.3942,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "compile attempts",
+          "score": 50.3511,
+          "evidence": []
+        },
+        {
+          "term": "quantum topology",
+          "score": 36.0131,
+          "evidence": []
+        },
+        {
+          "term": "product codes",
+          "score": 30.0442,
+          "evidence": []
+        },
+        {
+          "term": "balanced product",
+          "score": 29.1097,
+          "evidence": []
+        },
+        {
+          "term": "fault-tolerant",
+          "score": 22.0091,
+          "evidence": []
+        },
+        {
+          "term": "paper",
+          "score": 21.1453,
+          "evidence": []
+        },
+        {
+          "term": "spectral sequences",
+          "score": 17.7967,
+          "evidence": []
+        },
+        {
+          "term": "unpublished manuscript",
+          "score": 17.4118,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "compile attempts",
+          "score": 3.2947,
+          "evidence": []
+        },
+        {
+          "term": "quantum topology",
+          "score": 2.6993,
+          "evidence": []
+        },
+        {
+          "term": "balanced product",
+          "score": 2.2945,
+          "evidence": []
+        },
+        {
+          "term": "product codes",
+          "score": 2.2592,
+          "evidence": []
+        },
+        {
+          "term": "unpublished manuscript",
+          "score": 1.878,
+          "evidence": []
+        },
+        {
+          "term": "spectral sequences",
+          "score": 1.8447,
+          "evidence": []
+        },
+        {
+          "term": "fault-tolerant",
+          "score": 1.5087,
+          "evidence": []
+        },
+        {
+          "term": "statement type",
+          "score": 1.3996,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "compile attempts",
+          "score": 50.3437,
+          "evidence": []
+        },
+        {
+          "term": "quantum topology",
+          "score": 36.0261,
+          "evidence": []
+        },
+        {
+          "term": "product codes",
+          "score": 30.0411,
+          "evidence": []
+        },
+        {
+          "term": "balanced product",
+          "score": 29.1067,
+          "evidence": []
+        },
+        {
+          "term": "fault-tolerant",
+          "score": 22.0061,
+          "evidence": []
+        },
+        {
+          "term": "paper",
+          "score": 21.142,
+          "evidence": []
+        },
+        {
+          "term": "spectral sequences",
+          "score": 17.796,
+          "evidence": []
+        },
+        {
+          "term": "unpublished manuscript",
+          "score": 17.4037,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "compile attempts",
+          "score": 3.2947,
+          "evidence": []
+        },
+        {
+          "term": "quantum topology",
+          "score": 2.6993,
+          "evidence": []
+        },
+        {
+          "term": "balanced product",
+          "score": 2.2945,
+          "evidence": []
+        },
+        {
+          "term": "product codes",
+          "score": 2.2592,
+          "evidence": []
+        },
+        {
+          "term": "unpublished manuscript",
+          "score": 1.878,
+          "evidence": []
+        },
+        {
+          "term": "spectral sequences",
+          "score": 1.8447,
+          "evidence": []
+        },
+        {
+          "term": "fault-tolerant",
+          "score": 1.5087,
+          "evidence": []
+        },
+        {
+          "term": "statement type",
+          "score": 1.3996,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "compile attempts",
+          "score": 103.3998,
+          "evidence": []
+        },
+        {
+          "term": "quantum topology",
+          "score": 81.2129,
+          "evidence": []
+        },
+        {
+          "term": "unpublished manuscript",
+          "score": 73.8841,
+          "evidence": []
+        },
+        {
+          "term": "avg",
+          "score": 62.2152,
+          "evidence": []
+        },
+        {
+          "term": "spectral sequences",
+          "score": 55.6557,
+          "evidence": []
+        },
+        {
+          "term": "stabilizer",
+          "score": 55.1892,
+          "evidence": []
+        },
+        {
+          "term": "iterations",
+          "score": 55.1527,
+          "evidence": []
+        },
+        {
+          "term": "balanced product",
+          "score": 52.2492,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-qualitative-observations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "spectral sequences",
+          "score": 1.8451,
+          "evidence": []
+        },
+        {
+          "term": "unneth formula",
+          "score": 1.8207,
+          "evidence": []
+        },
+        {
+          "term": "balanced product",
+          "score": 1.3602,
+          "evidence": []
+        },
+        {
+          "term": "product codes",
+          "score": 1.2756,
+          "evidence": []
+        },
+        {
+          "term": "homology",
+          "score": 1.0671,
+          "evidence": []
+        },
+        {
+          "term": "original paper",
+          "score": 1.0362,
+          "evidence": []
+        },
+        {
+          "term": "kunnethmap",
+          "score": 0.9686,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.9603,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "spectral sequences",
+          "score": 17.7967,
+          "evidence": []
+        },
+        {
+          "term": "unneth formula",
+          "score": 15.2146,
+          "evidence": []
+        },
+        {
+          "term": "balanced product",
+          "score": 10.8257,
+          "evidence": []
+        },
+        {
+          "term": "product codes",
+          "score": 10.0147,
+          "evidence": []
+        },
+        {
+          "term": "homology",
+          "score": 9.4325,
+          "evidence": []
+        },
+        {
+          "term": "lemmas",
+          "score": 8.4581,
+          "evidence": []
+        },
+        {
+          "term": "axiom",
+          "score": 8.423,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 8.1209,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "spectral sequences",
+          "score": 1.8432,
+          "evidence": []
+        },
+        {
+          "term": "unneth formula",
+          "score": 1.8213,
+          "evidence": []
+        },
+        {
+          "term": "balanced product",
+          "score": 1.36,
+          "evidence": []
+        },
+        {
+          "term": "product codes",
+          "score": 1.2754,
+          "evidence": []
+        },
+        {
+          "term": "homology",
+          "score": 1.0673,
+          "evidence": []
+        },
+        {
+          "term": "original paper",
+          "score": 1.0342,
+          "evidence": []
+        },
+        {
+          "term": "kunnethmap",
+          "score": 0.9685,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.9601,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "spectral sequences",
+          "score": 17.785,
+          "evidence": []
+        },
+        {
+          "term": "unneth formula",
+          "score": 15.2119,
+          "evidence": []
+        },
+        {
+          "term": "balanced product",
+          "score": 10.8242,
+          "evidence": []
+        },
+        {
+          "term": "product codes",
+          "score": 10.0136,
+          "evidence": []
+        },
+        {
+          "term": "homology",
+          "score": 9.4303,
+          "evidence": []
+        },
+        {
+          "term": "lemmas",
+          "score": 8.4564,
+          "evidence": []
+        },
+        {
+          "term": "axiom",
+          "score": 8.4244,
+          "evidence": []
+        },
+        {
+          "term": "spacetime",
+          "score": 8.1217,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "spectral sequences",
+          "score": 1.8432,
+          "evidence": []
+        },
+        {
+          "term": "unneth formula",
+          "score": 1.8213,
+          "evidence": []
+        },
+        {
+          "term": "balanced product",
+          "score": 1.36,
+          "evidence": []
+        },
+        {
+          "term": "product codes",
+          "score": 1.2754,
+          "evidence": []
+        },
+        {
+          "term": "homology",
+          "score": 1.0673,
+          "evidence": []
+        },
+        {
+          "term": "original paper",
+          "score": 1.0342,
+          "evidence": []
+        },
+        {
+          "term": "kunnethmap",
+          "score": 0.9685,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.9601,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "spectral sequences",
+          "score": 81.9683,
+          "evidence": []
+        },
+        {
+          "term": "fiber",
+          "score": 81.1468,
+          "evidence": []
+        },
+        {
+          "term": "leave",
+          "score": 62.4728,
+          "evidence": []
+        },
+        {
+          "term": "reveal",
+          "score": 60.891,
+          "evidence": []
+        },
+        {
+          "term": "unverified",
+          "score": 60.8488,
+          "evidence": []
+        },
+        {
+          "term": "stated",
+          "score": 60.8171,
+          "evidence": []
+        },
+        {
+          "term": "concrete",
+          "score": 60.8062,
+          "evidence": []
+        },
+        {
+          "term": "compile-fix",
+          "score": 60.7952,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-challenges-in-merlean": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "faithfulness checking",
+          "score": 1.5549,
+          "evidence": []
+        },
+        {
+          "term": "physics concepts",
+          "score": 1.3127,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 1.1649,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "too",
+          "score": 0.7913,
+          "evidence": []
+        },
+        {
+          "term": "gaps",
+          "score": 0.6981,
+          "evidence": []
+        },
+        {
+          "term": "axioms",
+          "score": 0.6723,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "faithfulness checking",
+          "score": 12.9253,
+          "evidence": []
+        },
+        {
+          "term": "physics concepts",
+          "score": 10.8257,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 9.804,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "too",
+          "score": 6.7346,
+          "evidence": []
+        },
+        {
+          "term": "gaps",
+          "score": 5.9237,
+          "evidence": []
+        },
+        {
+          "term": "axioms",
+          "score": 5.6154,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "faithfulness checking",
+          "score": 1.5503,
+          "evidence": []
+        },
+        {
+          "term": "physics concepts",
+          "score": 1.3108,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 1.1651,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "too",
+          "score": 0.7893,
+          "evidence": []
+        },
+        {
+          "term": "gaps",
+          "score": 0.6962,
+          "evidence": []
+        },
+        {
+          "term": "axioms",
+          "score": 0.672,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "faithfulness checking",
+          "score": 12.9364,
+          "evidence": []
+        },
+        {
+          "term": "physics concepts",
+          "score": 10.8281,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 9.8266,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "too",
+          "score": 6.7187,
+          "evidence": []
+        },
+        {
+          "term": "gaps",
+          "score": 5.9153,
+          "evidence": []
+        },
+        {
+          "term": "axioms",
+          "score": 5.6109,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "faithfulness checking",
+          "score": 1.5503,
+          "evidence": []
+        },
+        {
+          "term": "physics concepts",
+          "score": 1.3108,
+          "evidence": []
+        },
+        {
+          "term": "merlean",
+          "score": 1.1651,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "too",
+          "score": 0.7893,
+          "evidence": []
+        },
+        {
+          "term": "gaps",
+          "score": 0.6962,
+          "evidence": []
+        },
+        {
+          "term": "axioms",
+          "score": 0.672,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "faithfulness checking",
+          "score": 131.4079,
+          "evidence": []
+        },
+        {
+          "term": "explained",
+          "score": 129.5718,
+          "evidence": []
+        },
+        {
+          "term": "autoinformalized",
+          "score": 127.8921,
+          "evidence": []
+        },
+        {
+          "term": "handles",
+          "score": 127.7319,
+          "evidence": []
+        },
+        {
+          "term": "variation",
+          "score": 127.6178,
+          "evidence": []
+        },
+        {
+          "term": "satisfy",
+          "score": 127.615,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-future-applications-of-merlean": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "merlean",
+          "score": 1.8998,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "peer review",
+          "score": 1.5292,
+          "evidence": []
+        },
+        {
+          "term": "synthetic data",
+          "score": 1.1173,
+          "evidence": []
+        },
+        {
+          "term": "scientific",
+          "score": 0.8583,
+          "evidence": []
+        },
+        {
+          "term": "unpublished",
+          "score": 0.8548,
+          "evidence": []
+        },
+        {
+          "term": "physics",
+          "score": 0.7593,
+          "evidence": []
+        },
+        {
+          "term": "researchers",
+          "score": 0.6947,
+          "evidence": []
+        },
+        {
+          "term": "quantum",
+          "score": 0.6905,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "merlean",
+          "score": 24.5101,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "peer review",
+          "score": 13.0229,
+          "evidence": []
+        },
+        {
+          "term": "synthetic data",
+          "score": 8.0531,
+          "evidence": []
+        },
+        {
+          "term": "physics",
+          "score": 7.353,
+          "evidence": []
+        },
+        {
+          "term": "scientific",
+          "score": 7.31,
+          "evidence": []
+        },
+        {
+          "term": "unpublished",
+          "score": 7.31,
+          "evidence": []
+        },
+        {
+          "term": "formal",
+          "score": 6.9315,
+          "evidence": []
+        },
+        {
+          "term": "libraries",
+          "score": 6.5659,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "merlean",
+          "score": 1.8966,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "peer review",
+          "score": 1.5288,
+          "evidence": []
+        },
+        {
+          "term": "synthetic data",
+          "score": 1.1102,
+          "evidence": []
+        },
+        {
+          "term": "scientific",
+          "score": 0.8563,
+          "evidence": []
+        },
+        {
+          "term": "unpublished",
+          "score": 0.8527,
+          "evidence": []
+        },
+        {
+          "term": "physics",
+          "score": 0.7586,
+          "evidence": []
+        },
+        {
+          "term": "researchers",
+          "score": 0.6925,
+          "evidence": []
+        },
+        {
+          "term": "quantum",
+          "score": 0.6897,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "merlean",
+          "score": 24.5294,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "peer review",
+          "score": 13.0463,
+          "evidence": []
+        },
+        {
+          "term": "synthetic data",
+          "score": 8.035,
+          "evidence": []
+        },
+        {
+          "term": "physics",
+          "score": 7.3547,
+          "evidence": []
+        },
+        {
+          "term": "scientific",
+          "score": 7.2859,
+          "evidence": []
+        },
+        {
+          "term": "unpublished",
+          "score": 7.2847,
+          "evidence": []
+        },
+        {
+          "term": "formal",
+          "score": 6.9179,
+          "evidence": []
+        },
+        {
+          "term": "libraries",
+          "score": 6.5847,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "merlean",
+          "score": 1.8966,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "peer review",
+          "score": 1.5288,
+          "evidence": []
+        },
+        {
+          "term": "synthetic data",
+          "score": 1.1102,
+          "evidence": []
+        },
+        {
+          "term": "scientific",
+          "score": 0.8563,
+          "evidence": []
+        },
+        {
+          "term": "unpublished",
+          "score": 0.8527,
+          "evidence": []
+        },
+        {
+          "term": "physics",
+          "score": 0.7586,
+          "evidence": []
+        },
+        {
+          "term": "researchers",
+          "score": 0.6925,
+          "evidence": []
+        },
+        {
+          "term": "quantum",
+          "score": 0.6897,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "peer review",
+          "score": 127.9202,
+          "evidence": []
+        },
+        {
+          "term": "physlean",
+          "score": 76.854,
+          "evidence": []
+        },
+        {
+          "term": "autoinformalized",
+          "score": 76.5019,
+          "evidence": []
+        },
+        {
+          "term": "ecosystem",
+          "score": 76.4773,
+          "evidence": []
+        },
+        {
+          "term": "caused",
+          "score": 76.3557,
+          "evidence": []
+        },
+        {
+          "term": "reusable",
+          "score": 76.3135,
+          "evidence": []
+        },
+        {
+          "term": "pre-training",
+          "score": 76.3049,
+          "evidence": []
+        },
+        {
+          "term": "scientific",
+          "score": 76.252,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "url arxiv",
+          "score": 4.2344,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 4.1122,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 3.5379,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 3.4386,
+          "evidence": []
+        },
+        {
+          "term": "mateja jamnik",
+          "score": 2.3742,
+          "evidence": []
+        },
+        {
+          "term": "quantum physics",
+          "score": 2.1885,
+          "evidence": []
+        },
+        {
+          "term": "theoretical quantum",
+          "score": 2.0932,
+          "evidence": []
+        },
+        {
+          "term": "quantum computation",
+          "score": 1.9097,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "url arxiv",
+          "score": 103.7193,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 89.8214,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 72.9849,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 52.5232,
+          "evidence": []
+        },
+        {
+          "term": "quantum physics",
+          "score": 28.5231,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 25.5637,
+          "evidence": []
+        },
+        {
+          "term": "theoretical quantum",
+          "score": 25.4536,
+          "evidence": []
+        },
+        {
+          "term": "mateja jamnik",
+          "score": 24.3627,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "url arxiv",
+          "score": 4.2344,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 4.1123,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 3.5377,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 3.4385,
+          "evidence": []
+        },
+        {
+          "term": "mateja jamnik",
+          "score": 2.3737,
+          "evidence": []
+        },
+        {
+          "term": "quantum physics",
+          "score": 2.1907,
+          "evidence": []
+        },
+        {
+          "term": "theoretical quantum",
+          "score": 2.0958,
+          "evidence": []
+        },
+        {
+          "term": "quantum computation",
+          "score": 1.9143,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "url arxiv",
+          "score": 103.7183,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 89.8206,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 72.985,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 52.5223,
+          "evidence": []
+        },
+        {
+          "term": "quantum physics",
+          "score": 28.5296,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 25.5621,
+          "evidence": []
+        },
+        {
+          "term": "theoretical quantum",
+          "score": 25.4603,
+          "evidence": []
+        },
+        {
+          "term": "mateja jamnik",
+          "score": 24.3615,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "url arxiv",
+          "score": 4.2344,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 4.1123,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 3.5377,
+          "evidence": []
+        },
+        {
+          "term": "url https",
+          "score": 3.4385,
+          "evidence": []
+        },
+        {
+          "term": "mateja jamnik",
+          "score": 2.3737,
+          "evidence": []
+        },
+        {
+          "term": "quantum physics",
+          "score": 2.1907,
+          "evidence": []
+        },
+        {
+          "term": "theoretical quantum",
+          "score": 2.0958,
+          "evidence": []
+        },
+        {
+          "term": "quantum computation",
+          "score": 1.9143,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "mateja jamnik",
+          "score": 43.7949,
+          "evidence": []
+        },
+        {
+          "term": "yifan",
+          "score": 30.222,
+          "evidence": []
+        },
+        {
+          "term": "submission",
+          "score": 26.7923,
+          "evidence": []
+        },
+        {
+          "term": "june",
+          "score": 26.7535,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 24.8826,
+          "evidence": []
+        },
+        {
+          "term": "url org",
+          "score": 24.5013,
+          "evidence": []
+        },
+        {
+          "term": "christian szegedy",
+          "score": 23.9071,
+          "evidence": []
+        },
+        {
+          "term": "theoretical quantum",
+          "score": 21.6521,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-theorem-fault-tolerance-of-gauging-measurement": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "min log",
+          "score": 2.7991,
+          "evidence": []
+        },
+        {
+          "term": "measurement",
+          "score": 1.903,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cheeger constant",
+          "score": 1.8768,
+          "evidence": []
+        },
+        {
+          "term": "spacetime",
+          "score": 1.3939,
+          "evidence": []
+        },
+        {
+          "term": "exists",
+          "score": 1.2223,
+          "evidence": []
+        },
+        {
+          "term": "weight",
+          "score": 1.1761,
+          "evidence": []
+        },
+        {
+          "term": "decompose",
+          "score": 0.9515,
+          "evidence": []
+        },
+        {
+          "term": "least",
+          "score": 0.8583,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "min log",
+          "score": 39.5624,
+          "evidence": []
+        },
+        {
+          "term": "cheeger constant",
+          "score": 16.2418,
+          "evidence": []
+        },
+        {
+          "term": "measurement",
+          "score": 16.2418,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spacetime",
+          "score": 16.2418,
+          "evidence": []
+        },
+        {
+          "term": "weight",
+          "score": 13.4692,
+          "evidence": []
+        },
+        {
+          "term": "exists",
+          "score": 12.1813,
+          "evidence": []
+        },
+        {
+          "term": "decompose",
+          "score": 8.1209,
+          "evidence": []
+        },
+        {
+          "term": "get",
+          "score": 7.31,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "min log",
+          "score": 2.8007,
+          "evidence": []
+        },
+        {
+          "term": "measurement",
+          "score": 1.9013,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cheeger constant",
+          "score": 1.8755,
+          "evidence": []
+        },
+        {
+          "term": "spacetime",
+          "score": 1.3929,
+          "evidence": []
+        },
+        {
+          "term": "exists",
+          "score": 1.2212,
+          "evidence": []
+        },
+        {
+          "term": "weight",
+          "score": 1.1745,
+          "evidence": []
+        },
+        {
+          "term": "decompose",
+          "score": 0.9505,
+          "evidence": []
+        },
+        {
+          "term": "least",
+          "score": 0.8593,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "min log",
+          "score": 39.5908,
+          "evidence": []
+        },
+        {
+          "term": "cheeger constant",
+          "score": 16.2266,
+          "evidence": []
+        },
+        {
+          "term": "spacetime",
+          "score": 16.2252,
+          "evidence": []
+        },
+        {
+          "term": "measurement",
+          "score": 16.2222,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weight",
+          "score": 13.4505,
+          "evidence": []
+        },
+        {
+          "term": "exists",
+          "score": 12.1667,
+          "evidence": []
+        },
+        {
+          "term": "decompose",
+          "score": 8.1093,
+          "evidence": []
+        },
+        {
+          "term": "get",
+          "score": 7.3033,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "min log",
+          "score": 2.8007,
+          "evidence": []
+        },
+        {
+          "term": "measurement",
+          "score": 1.9013,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cheeger constant",
+          "score": 1.8755,
+          "evidence": []
+        },
+        {
+          "term": "spacetime",
+          "score": 1.3929,
+          "evidence": []
+        },
+        {
+          "term": "exists",
+          "score": 1.2212,
+          "evidence": []
+        },
+        {
+          "term": "weight",
+          "score": 1.1745,
+          "evidence": []
+        },
+        {
+          "term": "decompose",
+          "score": 0.9505,
+          "evidence": []
+        },
+        {
+          "term": "least",
+          "score": 0.8593,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "measurement",
+          "score": 484.4872,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cheeger constant",
+          "score": 362.839,
+          "evidence": []
+        },
+        {
+          "term": "exists",
+          "score": 272.639,
+          "evidence": []
+        },
+        {
+          "term": "decompose",
+          "score": 242.288,
+          "evidence": []
+        },
+        {
+          "term": "spacetime",
+          "score": 242.2124,
+          "evidence": []
+        },
+        {
+          "term": "min log",
+          "score": 221.3562,
+          "evidence": []
+        },
+        {
+          "term": "existence",
+          "score": 182.2917,
+          "evidence": []
+        },
+        {
+          "term": "least",
+          "score": 181.924,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-agent-discovered-helper-lemma": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cycle tensor",
+          "score": 4.3813,
+          "evidence": []
+        },
+        {
+          "term": "axiom cycle",
+          "score": 3.8691,
+          "evidence": []
+        },
+        {
+          "term": "axiom kunnethmap",
+          "score": 3.4298,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 3.413,
+          "evidence": []
+        },
+        {
+          "term": "boundary aux",
+          "score": 3.3352,
+          "evidence": []
+        },
+        {
+          "term": "unneth map",
+          "score": 2.8535,
+          "evidence": []
+        },
+        {
+          "term": "unneth formula",
+          "score": 2.6227,
+          "evidence": []
+        },
+        {
+          "term": "cross product",
+          "score": 2.2959,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cycle tensor",
+          "score": 84.7337,
+          "evidence": []
+        },
+        {
+          "term": "axiom cycle",
+          "score": 71.7585,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 64.3151,
+          "evidence": []
+        },
+        {
+          "term": "axiom kunnethmap",
+          "score": 55.2471,
+          "evidence": []
+        },
+        {
+          "term": "boundary aux",
+          "score": 49.9205,
+          "evidence": []
+        },
+        {
+          "term": "unneth map",
+          "score": 45.1048,
+          "evidence": []
+        },
+        {
+          "term": "homology",
+          "score": 40.874,
+          "evidence": []
+        },
+        {
+          "term": "cross product",
+          "score": 31.4203,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "cycle tensor",
+          "score": 4.3802,
+          "evidence": []
+        },
+        {
+          "term": "axiom cycle",
+          "score": 3.8694,
+          "evidence": []
+        },
+        {
+          "term": "axiom kunnethmap",
+          "score": 3.4296,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 3.4117,
+          "evidence": []
+        },
+        {
+          "term": "boundary aux",
+          "score": 3.3337,
+          "evidence": []
+        },
+        {
+          "term": "unneth map",
+          "score": 2.8529,
+          "evidence": []
+        },
+        {
+          "term": "unneth formula",
+          "score": 2.6221,
+          "evidence": []
+        },
+        {
+          "term": "cross product",
+          "score": 2.2949,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "cycle tensor",
+          "score": 84.7331,
+          "evidence": []
+        },
+        {
+          "term": "axiom cycle",
+          "score": 71.7599,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 64.3129,
+          "evidence": []
+        },
+        {
+          "term": "axiom kunnethmap",
+          "score": 55.2465,
+          "evidence": []
+        },
+        {
+          "term": "boundary aux",
+          "score": 49.9186,
+          "evidence": []
+        },
+        {
+          "term": "unneth map",
+          "score": 45.1048,
+          "evidence": []
+        },
+        {
+          "term": "homology",
+          "score": 40.8728,
+          "evidence": []
+        },
+        {
+          "term": "cross product",
+          "score": 31.4196,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "cycle tensor",
+          "score": 4.3802,
+          "evidence": []
+        },
+        {
+          "term": "axiom cycle",
+          "score": 3.8694,
+          "evidence": []
+        },
+        {
+          "term": "axiom kunnethmap",
+          "score": 3.4296,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 3.4117,
+          "evidence": []
+        },
+        {
+          "term": "boundary aux",
+          "score": 3.3337,
+          "evidence": []
+        },
+        {
+          "term": "unneth map",
+          "score": 2.8529,
+          "evidence": []
+        },
+        {
+          "term": "unneth formula",
+          "score": 2.6221,
+          "evidence": []
+        },
+        {
+          "term": "cross product",
+          "score": 2.2949,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "cycle tensor",
+          "score": 131.2631,
+          "evidence": []
+        },
+        {
+          "term": "boundary aux",
+          "score": 112.1184,
+          "evidence": []
+        },
+        {
+          "term": "tensor products",
+          "score": 108.7727,
+          "evidence": []
+        },
+        {
+          "term": "axiom cycle",
+          "score": 107.7552,
+          "evidence": []
+        },
+        {
+          "term": "axiom kunnethmap",
+          "score": 106.5564,
+          "evidence": []
+        },
+        {
+          "term": "flat",
+          "score": 72.0247,
+          "evidence": []
+        },
+        {
+          "term": "unneth map",
+          "score": 70.8417,
+          "evidence": []
+        },
+        {
+          "term": "cross product",
+          "score": 69.3817,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

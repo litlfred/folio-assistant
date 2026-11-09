@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/skill/translation-refresh.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1354",
+    "sha": "36948f2c31cdb272274a5eb056442b14cb8e264a",
+    "pr": "repin-train/20261109-1354",
+    "run": "42629704316"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/skill/translation-refresh",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "translation-refresh",
+      "title": "Translation refresh — the watcher",
+      "description": "The translation watcher: a scheduled fresh session that keeps every locale of every layer current after the source moves. Cold start, then, per layer, detect, refresh the templates, merge them into each locale, translate only the new and fuzzy strings with the fixed terms, run the gates, round-trip the changed strings, write the QA report, open one PR to main, merge it only where the layer declares merge-when-green, and report source mistakes as one issue. Use for \"refresh the translations\", \"a template check failed\", and when scheduling or running the watcher.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/package/library-core"
+      ],
+      "instructionsPath": "library/skills/library-core/translation-refresh.md",
+      "instructionLines": 212,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/translation-refresh"
+    }
+  ]
+}

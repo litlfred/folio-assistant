@@ -1,0 +1,504 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "skills-in-openai-api",
+  "instance": "cat-harness",
+  "about": "library/skills-in-openai-api",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "local shell",
+        "score": 2.0544,
+        "evidence": []
+      },
+      {
+        "term": "shell call",
+        "score": 2.0516,
+        "evidence": []
+      },
+      {
+        "term": "skill path",
+        "score": 1.5954,
+        "evidence": []
+      },
+      {
+        "term": "csv insights",
+        "score": 1.5916,
+        "evidence": []
+      },
+      {
+        "term": "import",
+        "score": 0.8164,
+        "evidence": []
+      },
+      {
+        "term": "openai",
+        "score": 0.7986,
+        "evidence": []
+      },
+      {
+        "term": "snippet",
+        "score": 0.6619,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "local shell",
+        "score": 43.1422,
+        "evidence": []
+      },
+      {
+        "term": "shell call",
+        "score": 42.7609,
+        "evidence": []
+      },
+      {
+        "term": "skill path",
+        "score": 31.2053,
+        "evidence": []
+      },
+      {
+        "term": "csv insights",
+        "score": 24.4209,
+        "evidence": []
+      },
+      {
+        "term": "openai",
+        "score": 14.2178,
+        "evidence": []
+      },
+      {
+        "term": "import",
+        "score": 13.2052,
+        "evidence": []
+      },
+      {
+        "term": "api",
+        "score": 9.1308,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "skill path",
+        "score": 0.3806,
+        "evidence": []
+      },
+      {
+        "term": "insights skill",
+        "score": 0.3218,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 0.1695,
+        "evidence": []
+      },
+      {
+        "term": "claude",
+        "score": 0.1596,
+        "evidence": []
+      },
+      {
+        "term": "file",
+        "score": 0.1486,
+        "evidence": []
+      },
+      {
+        "term": "agent",
+        "score": 0.1342,
+        "evidence": []
+      },
+      {
+        "term": "body",
+        "score": 0.1203,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "skill path",
+        "score": 10.5573,
+        "evidence": []
+      },
+      {
+        "term": "insights skill",
+        "score": 10.0016,
+        "evidence": []
+      },
+      {
+        "term": "claude",
+        "score": 4.0594,
+        "evidence": []
+      },
+      {
+        "term": "task",
+        "score": 1.8672,
+        "evidence": []
+      },
+      {
+        "term": "files",
+        "score": 1.741,
+        "evidence": []
+      },
+      {
+        "term": "body",
+        "score": 1.6049,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 1.5226,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "skill path",
+        "score": 0.3806,
+        "evidence": []
+      },
+      {
+        "term": "insights skill",
+        "score": 0.3301,
+        "evidence": []
+      },
+      {
+        "term": "output",
+        "score": 0.1104,
+        "evidence": []
+      },
+      {
+        "term": "shell call",
+        "score": 0.0941,
+        "evidence": []
+      },
+      {
+        "term": "execution",
+        "score": 0.0931,
+        "evidence": []
+      },
+      {
+        "term": "local shell",
+        "score": 0.0884,
+        "evidence": []
+      },
+      {
+        "term": "environment",
+        "score": 0.0803,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "upload",
+        "score": 98.8364,
+        "evidence": []
+      },
+      {
+        "term": "multipart",
+        "score": 75.6199,
+        "evidence": []
+      },
+      {
+        "term": "assemble",
+        "score": 71.8479,
+        "evidence": []
+      },
+      {
+        "term": "neville",
+        "score": 70.7874,
+        "evidence": []
+      },
+      {
+        "term": "pointers",
+        "score": 56.1501,
+        "evidence": []
+      },
+      {
+        "term": "uploading",
+        "score": 55.699,
+        "evidence": []
+      },
+      {
+        "term": "god",
+        "score": 55.6518,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "local shell",
+          "score": 2.0544,
+          "evidence": []
+        },
+        {
+          "term": "shell call",
+          "score": 2.0516,
+          "evidence": []
+        },
+        {
+          "term": "skill path",
+          "score": 1.5954,
+          "evidence": []
+        },
+        {
+          "term": "csv insights",
+          "score": 1.5916,
+          "evidence": []
+        },
+        {
+          "term": "import",
+          "score": 0.8164,
+          "evidence": []
+        },
+        {
+          "term": "openai",
+          "score": 0.7986,
+          "evidence": []
+        },
+        {
+          "term": "snippet",
+          "score": 0.6619,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "local shell",
+          "score": 43.1422,
+          "evidence": []
+        },
+        {
+          "term": "shell call",
+          "score": 42.7609,
+          "evidence": []
+        },
+        {
+          "term": "skill path",
+          "score": 31.2053,
+          "evidence": []
+        },
+        {
+          "term": "csv insights",
+          "score": 24.4209,
+          "evidence": []
+        },
+        {
+          "term": "openai",
+          "score": 14.2178,
+          "evidence": []
+        },
+        {
+          "term": "import",
+          "score": 13.2052,
+          "evidence": []
+        },
+        {
+          "term": "api",
+          "score": 9.1308,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill path",
+          "score": 0.3806,
+          "evidence": []
+        },
+        {
+          "term": "insights skill",
+          "score": 0.3218,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1695,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.1596,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.1486,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1342,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 0.1203,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill path",
+          "score": 10.5573,
+          "evidence": []
+        },
+        {
+          "term": "insights skill",
+          "score": 10.0016,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 4.0594,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 1.8672,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 1.741,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 1.6049,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 1.5226,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill path",
+          "score": 0.3806,
+          "evidence": []
+        },
+        {
+          "term": "insights skill",
+          "score": 0.3301,
+          "evidence": []
+        },
+        {
+          "term": "output",
+          "score": 0.1104,
+          "evidence": []
+        },
+        {
+          "term": "shell call",
+          "score": 0.0941,
+          "evidence": []
+        },
+        {
+          "term": "execution",
+          "score": 0.0931,
+          "evidence": []
+        },
+        {
+          "term": "local shell",
+          "score": 0.0884,
+          "evidence": []
+        },
+        {
+          "term": "environment",
+          "score": 0.0803,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 98.8364,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 75.6199,
+          "evidence": []
+        },
+        {
+          "term": "assemble",
+          "score": 71.8479,
+          "evidence": []
+        },
+        {
+          "term": "neville",
+          "score": 70.7874,
+          "evidence": []
+        },
+        {
+          "term": "pointers",
+          "score": 56.1501,
+          "evidence": []
+        },
+        {
+          "term": "uploading",
+          "score": 55.699,
+          "evidence": []
+        },
+        {
+          "term": "god",
+          "score": 55.6518,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,973 @@
+{
+  "$ref": "#/definitions/DthStepTable",
+  "definitions": {
+    "DthStepTable": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "dth-step-table/1.0.0"
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "handbookId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "processId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "object",
+          "properties": {
+            "libraryId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sectionId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "locator": {
+              "type": "string",
+              "minLength": 1
+            },
+            "tableNumber": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "libraryId"
+          ],
+          "additionalProperties": false
+        },
+        "declaredRoles": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+          }
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "roleIds": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                }
+              },
+              "sourceRef": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "roleIds"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "number": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  {
+                    "type": "integer",
+                    "exclusiveMinimum": 0,
+                    "maximum": 9007199254740991
+                  }
+                ]
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "roleIds": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                }
+              },
+              "produces": {
+                "type": "string",
+                "enum": [
+                  "actor-definition",
+                  "business-process",
+                  "cql-library",
+                  "data-element",
+                  "decision-table",
+                  "functional-requirement",
+                  "health-intervention",
+                  "indicator",
+                  "logical-model",
+                  "measure",
+                  "non-functional-requirement",
+                  "persona",
+                  "plan-definition",
+                  "profile",
+                  "questionnaire",
+                  "scheduling-logic",
+                  "structure-map",
+                  "test-case",
+                  "test-scenario",
+                  "user-scenario",
+                  "value-set"
+                ]
+              },
+              "inputs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "roleIds": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                      }
+                    },
+                    "sourceRef": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label",
+                    "roleIds"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "resources": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "template",
+                        "tool",
+                        "standard",
+                        "guideline",
+                        "system",
+                        "reference"
+                      ]
+                    },
+                    "ref": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "outputs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "roleIds": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                      }
+                    },
+                    "produces": {
+                      "type": "string",
+                      "enum": [
+                        "actor-definition",
+                        "business-process",
+                        "cql-library",
+                        "data-element",
+                        "decision-table",
+                        "functional-requirement",
+                        "health-intervention",
+                        "indicator",
+                        "logical-model",
+                        "measure",
+                        "non-functional-requirement",
+                        "persona",
+                        "plan-definition",
+                        "profile",
+                        "questionnaire",
+                        "scheduling-logic",
+                        "structure-map",
+                        "test-case",
+                        "test-scenario",
+                        "user-scenario",
+                        "value-set"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label",
+                    "roleIds"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "risks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "risk": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "mitigation": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "ownerRoleId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                    },
+                    "stepIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "risk",
+                    "mitigation",
+                    "ownerRoleId"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "roleIds"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "phase": {
+                "type": "string",
+                "minLength": 1
+              },
+              "chapter": {
+                "type": "string",
+                "minLength": 1
+              },
+              "inputs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "roleIds": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                      }
+                    },
+                    "sourceRef": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label",
+                    "roleIds"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "steps": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "number": {
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        {
+                          "type": "integer",
+                          "exclusiveMinimum": 0,
+                          "maximum": 9007199254740991
+                        }
+                      ]
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "roleIds": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                      }
+                    },
+                    "produces": {
+                      "type": "string",
+                      "enum": [
+                        "actor-definition",
+                        "business-process",
+                        "cql-library",
+                        "data-element",
+                        "decision-table",
+                        "functional-requirement",
+                        "health-intervention",
+                        "indicator",
+                        "logical-model",
+                        "measure",
+                        "non-functional-requirement",
+                        "persona",
+                        "plan-definition",
+                        "profile",
+                        "questionnaire",
+                        "scheduling-logic",
+                        "structure-map",
+                        "test-case",
+                        "test-scenario",
+                        "user-scenario",
+                        "value-set"
+                      ]
+                    },
+                    "inputs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "label": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "description": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "roleIds": {
+                            "minItems": 1,
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                            }
+                          },
+                          "sourceRef": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "label",
+                          "roleIds"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "resources": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "label": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "kind": {
+                            "type": "string",
+                            "enum": [
+                              "template",
+                              "tool",
+                              "standard",
+                              "guideline",
+                              "system",
+                              "reference"
+                            ]
+                          },
+                          "ref": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "description": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "label"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "outputs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "label": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "description": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "roleIds": {
+                            "minItems": 1,
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1,
+                              "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                            }
+                          },
+                          "produces": {
+                            "type": "string",
+                            "enum": [
+                              "actor-definition",
+                              "business-process",
+                              "cql-library",
+                              "data-element",
+                              "decision-table",
+                              "functional-requirement",
+                              "health-intervention",
+                              "indicator",
+                              "logical-model",
+                              "measure",
+                              "non-functional-requirement",
+                              "persona",
+                              "plan-definition",
+                              "profile",
+                              "questionnaire",
+                              "scheduling-logic",
+                              "structure-map",
+                              "test-case",
+                              "test-scenario",
+                              "user-scenario",
+                              "value-set"
+                            ]
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "label",
+                          "roleIds"
+                        ],
+                        "additionalProperties": false
+                      }
+                    },
+                    "risks": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "risk": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "mitigation": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "ownerRoleId": {
+                            "type": "string",
+                            "minLength": 1,
+                            "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                          },
+                          "stepIds": {
+                            "type": "array",
+                            "items": {
+                              "type": "string",
+                              "minLength": 1
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "risk",
+                          "mitigation",
+                          "ownerRoleId"
+                        ],
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "title",
+                    "roleIds"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "resources": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "kind": {
+                      "type": "string",
+                      "enum": [
+                        "template",
+                        "tool",
+                        "standard",
+                        "guideline",
+                        "system",
+                        "reference"
+                      ]
+                    },
+                    "ref": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "outputs": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "label": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "roleIds": {
+                      "minItems": 1,
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1,
+                        "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                      }
+                    },
+                    "produces": {
+                      "type": "string",
+                      "enum": [
+                        "actor-definition",
+                        "business-process",
+                        "cql-library",
+                        "data-element",
+                        "decision-table",
+                        "functional-requirement",
+                        "health-intervention",
+                        "indicator",
+                        "logical-model",
+                        "measure",
+                        "non-functional-requirement",
+                        "persona",
+                        "plan-definition",
+                        "profile",
+                        "questionnaire",
+                        "scheduling-logic",
+                        "structure-map",
+                        "test-case",
+                        "test-scenario",
+                        "user-scenario",
+                        "value-set"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "label",
+                    "roleIds"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "risks": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "risk": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "mitigation": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "ownerRoleId": {
+                      "type": "string",
+                      "minLength": 1,
+                      "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                    },
+                    "stepIds": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "minLength": 1
+                      }
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "risk",
+                    "mitigation",
+                    "ownerRoleId"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": [
+              "id",
+              "title",
+              "steps"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "template",
+                  "tool",
+                  "standard",
+                  "guideline",
+                  "system",
+                  "reference"
+                ]
+              },
+              "ref": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "label"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "roleIds": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1,
+                  "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+                }
+              },
+              "produces": {
+                "type": "string",
+                "enum": [
+                  "actor-definition",
+                  "business-process",
+                  "cql-library",
+                  "data-element",
+                  "decision-table",
+                  "functional-requirement",
+                  "health-intervention",
+                  "indicator",
+                  "logical-model",
+                  "measure",
+                  "non-functional-requirement",
+                  "persona",
+                  "plan-definition",
+                  "profile",
+                  "questionnaire",
+                  "scheduling-logic",
+                  "structure-map",
+                  "test-case",
+                  "test-scenario",
+                  "user-scenario",
+                  "value-set"
+                ]
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "roleIds"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "risks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "risk": {
+                "type": "string",
+                "minLength": 1
+              },
+              "mitigation": {
+                "type": "string",
+                "minLength": 1
+              },
+              "ownerRoleId": {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?:pers:[a-z0-9][a-z0-9-]*|actor:[a-z0-9][a-z0-9-]*|[A-Z]{2,6}-R-[0-9]{2,3}|DAK\\.Persona\\.[A-Za-z0-9_.]+|[a-z0-9][a-z0-9-]*)$"
+              },
+              "stepIds": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "id",
+              "risk",
+              "mitigation",
+              "ownerRoleId"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "title"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepTableSchema.schema.json",
+  "title": "DthStepTableSchema",
+  "description": "Generated from `DthStepTableSchema` in schemas/dth-step-table.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261109-1354",
+    "sha": "36948f2c31cdb272274a5eb056442b14cb8e264a",
+    "pr": "repin-train/20261109-1354",
+    "run": "42629704316"
+  }
+}

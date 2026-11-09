@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/smart-base/skill/apply-decision-support.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1354/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/skill/apply-decision-support.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1354",
+    "sha": "36948f2c31cdb272274a5eb056442b14cb8e264a",
+    "pr": "repin-train/20261109-1354",
+    "run": "42629704316"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/skill/apply-decision-support",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "apply-decision-support",
+      "title": "Apply decision support",
+      "description": "The point-of-care system applies a DAK decision table's PlanDefinition to one client ($apply) and gets the proposed actions back as a RequestGroup (R4; RequestOrchestration in R5), or as CDS Hooks cards when the guidance comes from a CDS service. Input is the PlanDefinition and the client; output is the proposal, every request in it still a proposal.",
+      "instructionsPath": "skills/content/authoring-who-smart-guidelines/apply-decision-support.md",
+      "instructionLines": 54,
+      "inputSchema": "http://smart.who.int/base/schema/skills/apply-decision-support/input.schema.json",
+      "outputSchema": "http://smart.who.int/base/schema/skills/apply-decision-support/output.schema.json",
+      "hasInstructions": true,
+      "hasIOContract": true,
+      "ambiguous": false,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-skills"
+    }
+  ]
+}

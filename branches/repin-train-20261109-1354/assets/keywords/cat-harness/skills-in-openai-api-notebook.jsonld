@@ -1,0 +1,2272 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "skills-in-openai-api-notebook",
+  "instance": "cat-harness",
+  "about": "library/skills-in-openai-api-notebook",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "upload zip",
+        "score": 8.7563,
+        "evidence": []
+      },
+      {
+        "term": "hosted shell",
+        "score": 7.6526,
+        "evidence": []
+      },
+      {
+        "term": "local shell",
+        "score": 6.5542,
+        "evidence": []
+      },
+      {
+        "term": "uploaded skill",
+        "score": 6.4299,
+        "evidence": []
+      },
+      {
+        "term": "shell tool",
+        "score": 6.4095,
+        "evidence": []
+      },
+      {
+        "term": "skill version",
+        "score": 6.2178,
+        "evidence": []
+      },
+      {
+        "term": "upload multiple",
+        "score": 6.2163,
+        "evidence": []
+      },
+      {
+        "term": "zip bundle",
+        "score": 5.7775,
+        "evidence": []
+      },
+      {
+        "term": "live api",
+        "score": 4.7637,
+        "evidence": []
+      },
+      {
+        "term": "api call",
+        "score": 4.1831,
+        "evidence": []
+      },
+      {
+        "term": "system prompts",
+        "score": 3.5766,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "api request",
+        "score": 3.3923,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "upload zip",
+        "score": 147.3129,
+        "evidence": []
+      },
+      {
+        "term": "hosted shell",
+        "score": 125.9501,
+        "evidence": []
+      },
+      {
+        "term": "skill version",
+        "score": 123.0029,
+        "evidence": []
+      },
+      {
+        "term": "uploaded skill",
+        "score": 117.7108,
+        "evidence": []
+      },
+      {
+        "term": "local shell",
+        "score": 111.5769,
+        "evidence": []
+      },
+      {
+        "term": "upload multiple",
+        "score": 109.3338,
+        "evidence": []
+      },
+      {
+        "term": "shell tool",
+        "score": 105.0304,
+        "evidence": []
+      },
+      {
+        "term": "zip bundle",
+        "score": 73.3244,
+        "evidence": []
+      },
+      {
+        "term": "live api",
+        "score": 69.5041,
+        "evidence": []
+      },
+      {
+        "term": "api call",
+        "score": 55.0793,
+        "evidence": []
+      },
+      {
+        "term": "api request",
+        "score": 50.4676,
+        "evidence": []
+      },
+      {
+        "term": "responses api",
+        "score": 46.1487,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "skill",
+        "score": 3.2089,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "skill version",
+        "score": 3.2089,
+        "evidence": []
+      },
+      {
+        "term": "uploaded skill",
+        "score": 3.2089,
+        "evidence": []
+      },
+      {
+        "term": "instructions scripts",
+        "score": 2.0048,
+        "evidence": []
+      },
+      {
+        "term": "claude",
+        "score": 1.6224,
+        "evidence": []
+      },
+      {
+        "term": "scripts assets",
+        "score": 1.3666,
+        "evidence": []
+      },
+      {
+        "term": "execution environment",
+        "score": 1.3342,
+        "evidence": []
+      },
+      {
+        "term": "agent",
+        "score": 1.2855,
+        "evidence": []
+      },
+      {
+        "term": "shell tool",
+        "score": 1.2606,
+        "evidence": []
+      },
+      {
+        "term": "file",
+        "score": 1.2284,
+        "evidence": []
+      },
+      {
+        "term": "system prompt",
+        "score": 1.1999,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 1.1515,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "skill version",
+        "score": 90.052,
+        "evidence": []
+      },
+      {
+        "term": "uploaded skill",
+        "score": 86.6302,
+        "evidence": []
+      },
+      {
+        "term": "claude",
+        "score": 32.8251,
+        "evidence": []
+      },
+      {
+        "term": "instructions scripts",
+        "score": 23.2794,
+        "evidence": []
+      },
+      {
+        "term": "task",
+        "score": 18.8764,
+        "evidence": []
+      },
+      {
+        "term": "defects",
+        "score": 18.2392,
+        "evidence": []
+      },
+      {
+        "term": "agent",
+        "score": 15.7016,
+        "evidence": []
+      },
+      {
+        "term": "scripts assets",
+        "score": 14.9998,
+        "evidence": []
+      },
+      {
+        "term": "shell tool",
+        "score": 14.5549,
+        "evidence": []
+      },
+      {
+        "term": "files",
+        "score": 14.3744,
+        "evidence": []
+      },
+      {
+        "term": "execution environment",
+        "score": 13.6334,
+        "evidence": []
+      },
+      {
+        "term": "reference",
+        "score": 13.4975,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "skill version",
+        "score": 3.4294,
+        "evidence": []
+      },
+      {
+        "term": "uploaded skill",
+        "score": 3.3094,
+        "evidence": []
+      },
+      {
+        "term": "instructions scripts",
+        "score": 2.0048,
+        "evidence": []
+      },
+      {
+        "term": "scripts assets",
+        "score": 1.3666,
+        "evidence": []
+      },
+      {
+        "term": "execution environment",
+        "score": 1.3342,
+        "evidence": []
+      },
+      {
+        "term": "shell tool",
+        "score": 1.2606,
+        "evidence": []
+      },
+      {
+        "term": "file",
+        "score": 1.2284,
+        "evidence": []
+      },
+      {
+        "term": "system prompt",
+        "score": 1.1999,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 1.1515,
+        "evidence": []
+      },
+      {
+        "term": "tool schemas",
+        "score": 1.1289,
+        "evidence": []
+      },
+      {
+        "term": "api call",
+        "score": 0.9311,
+        "evidence": []
+      },
+      {
+        "term": "workflow",
+        "score": 0.9268,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "upload zip",
+        "score": 2021.3082,
+        "evidence": []
+      },
+      {
+        "term": "upload multiple",
+        "score": 1336.3223,
+        "evidence": []
+      },
+      {
+        "term": "multipart",
+        "score": 1027.7064,
+        "evidence": []
+      },
+      {
+        "term": "assemble",
+        "score": 974.0804,
+        "evidence": []
+      },
+      {
+        "term": "hosted shell",
+        "score": 856.2813,
+        "evidence": []
+      },
+      {
+        "term": "uploaded skill",
+        "score": 785.0107,
+        "evidence": []
+      },
+      {
+        "term": "pointers",
+        "score": 760.8143,
+        "evidence": []
+      },
+      {
+        "term": "version pointers",
+        "score": 760.8143,
+        "evidence": []
+      },
+      {
+        "term": "zip bundle",
+        "score": 684.9859,
+        "evidence": []
+      },
+      {
+        "term": "uploading",
+        "score": 661.7953,
+        "evidence": []
+      },
+      {
+        "term": "local shell",
+        "score": 600.5996,
+        "evidence": []
+      },
+      {
+        "term": "shell tool",
+        "score": 600.5996,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "s001-skills-in-openai-api": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "skills",
+          "score": 0.8875,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shell",
+          "score": 0.7612,
+          "evidence": []
+        },
+        {
+          "term": "openai",
+          "score": 0.6879,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skills",
+          "score": 10.911,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shell",
+          "score": 10.117,
+          "evidence": []
+        },
+        {
+          "term": "openai",
+          "score": 7.1089,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skills",
+          "score": 0.2902,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 0.1015,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 0.062,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 5.8289,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reference",
+          "score": 1.3731,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 1.2063,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.2902,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "files",
+          "score": 0.062,
+          "evidence": []
+        },
+        {
+          "term": "api",
+          "score": 0.0599,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 188.1855,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 145.2819,
+          "evidence": []
+        },
+        {
+          "term": "assemble",
+          "score": 136.4931,
+          "evidence": []
+        }
+      ]
+    },
+    "s002-what-is-a-skill": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "skill",
+          "score": 1.6062,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shell tool",
+          "score": 1.358,
+          "evidence": []
+        },
+        {
+          "term": "bundle",
+          "score": 0.6939,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 0.6902,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 0.644,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skill",
+          "score": 33.3311,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shell tool",
+          "score": 19.9345,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 11.3202,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 11.0167,
+          "evidence": []
+        },
+        {
+          "term": "bundle",
+          "score": 8.8035,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.9418,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 0.2323,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1835,
+          "evidence": []
+        },
+        {
+          "term": "shell tool",
+          "score": 0.1747,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.1707,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 25.401,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 4.8047,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 2.3837,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 2.0624,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 2.0313,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.9418,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shell tool",
+          "score": 0.1747,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 0.163,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1519,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 0.1479,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 88.9959,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 66.1473,
+          "evidence": []
+        },
+        {
+          "term": "assemble",
+          "score": 60.9411,
+          "evidence": []
+        },
+        {
+          "term": "pointers",
+          "score": 49.253,
+          "evidence": []
+        },
+        {
+          "term": "uploading",
+          "score": 46.7514,
+          "evidence": []
+        }
+      ]
+    },
+    "s003-when-to-use-skills": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "skills",
+          "score": 1.7751,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "keep system",
+          "score": 0.8606,
+          "evidence": []
+        },
+        {
+          "term": "system prompts",
+          "score": 0.7739,
+          "evidence": []
+        },
+        {
+          "term": "live",
+          "score": 0.7243,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.641,
+          "evidence": []
+        },
+        {
+          "term": "procedure",
+          "score": 0.5097,
+          "evidence": []
+        },
+        {
+          "term": "standard",
+          "score": 0.3674,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skills",
+          "score": 43.6442,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "keep system",
+          "score": 11.1967,
+          "evidence": []
+        },
+        {
+          "term": "live",
+          "score": 9.9791,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 9.695,
+          "evidence": []
+        },
+        {
+          "term": "system prompts",
+          "score": 9.5021,
+          "evidence": []
+        },
+        {
+          "term": "procedure",
+          "score": 6.9561,
+          "evidence": []
+        },
+        {
+          "term": "standard",
+          "score": 4.6914,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skills",
+          "score": 0.604,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "agent",
+          "score": 0.1534,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.1508,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1365,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.1262,
+          "evidence": []
+        },
+        {
+          "term": "system prompts",
+          "score": 0.1166,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 0.1146,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 19.4972,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defects",
+          "score": 4.0796,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 2.4075,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 2.2464,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 2.1927,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 1.7066,
+          "evidence": []
+        },
+        {
+          "term": "safety",
+          "score": 1.6376,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.604,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "system prompts",
+          "score": 0.1166,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.1137,
+          "evidence": []
+        },
+        {
+          "term": "keep system",
+          "score": 0.102,
+          "evidence": []
+        },
+        {
+          "term": "standard",
+          "score": 0.044,
+          "evidence": []
+        },
+        {
+          "term": "procedure",
+          "score": 0.0234,
+          "evidence": []
+        },
+        {
+          "term": "live",
+          "score": 0.0202,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 31.7735,
+          "evidence": []
+        },
+        {
+          "term": "urgency",
+          "score": 28.8128,
+          "evidence": []
+        },
+        {
+          "term": "tiers",
+          "score": 27.5321,
+          "evidence": []
+        },
+        {
+          "term": "neville",
+          "score": 23.5838,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 22.7359,
+          "evidence": []
+        },
+        {
+          "term": "eligibility",
+          "score": 22.3462,
+          "evidence": []
+        },
+        {
+          "term": "refund",
+          "score": 22.22,
+          "evidence": []
+        }
+      ]
+    },
+    "s004-skills-vs-tools-vs-system-prompts": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "system prompts",
+          "score": 1.699,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "side effects",
+          "score": 1.1712,
+          "evidence": []
+        },
+        {
+          "term": "tools",
+          "score": 1.1221,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "every turn",
+          "score": 0.9356,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 0.8875,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "procedures",
+          "score": 0.6453,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "system prompts",
+          "score": 22.2811,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tools",
+          "score": 19.2745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "side effects",
+          "score": 15.5255,
+          "evidence": []
+        },
+        {
+          "term": "every turn",
+          "score": 12.4714,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 10.911,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "procedures",
+          "score": 8.9574,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skills",
+          "score": 0.4272,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "system prompts",
+          "score": 0.205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tools",
+          "score": 0.1813,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 0.136,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1307,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1214,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 7.4755,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "system prompts",
+          "score": 1.7442,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 1.5496,
+          "evidence": []
+        },
+        {
+          "term": "tools",
+          "score": 1.5462,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code",
+          "score": 1.4994,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 1.3085,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.4272,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "system prompts",
+          "score": 0.205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tools",
+          "score": 0.1813,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code",
+          "score": 0.1214,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 0.1049,
+          "evidence": []
+        },
+        {
+          "term": "every turn",
+          "score": 0.0545,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 22.4357,
+          "evidence": []
+        },
+        {
+          "term": "upload",
+          "score": 20.0652,
+          "evidence": []
+        },
+        {
+          "term": "blogpost",
+          "score": 14.7546,
+          "evidence": []
+        },
+        {
+          "term": "wordcount",
+          "score": 14.7546,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 14.4875,
+          "evidence": []
+        },
+        {
+          "term": "assemble",
+          "score": 13.9995,
+          "evidence": []
+        }
+      ]
+    },
+    "s007-skill-md-frontmatter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "frontmatter",
+          "score": 1.5736,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "upload multiple",
+          "score": 1.4624,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.9068,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "frontmatter",
+          "score": 25.5815,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "upload multiple",
+          "score": 22.1849,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 11.1104,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.3737,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 0.0956,
+          "evidence": []
+        },
+        {
+          "term": "frontmatter",
+          "score": 0.0779,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 7.9018,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 1.4959,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 0.8107,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.3737,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "frontmatter",
+          "score": 0.0779,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routing",
+          "score": 0.0616,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 225.0285,
+          "evidence": []
+        },
+        {
+          "term": "upload multiple",
+          "score": 225.0285,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 172.889,
+          "evidence": []
+        }
+      ]
+    },
+    "s008-creating-skills-via-api": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "upload zip",
+          "score": 2.8828,
+          "evidence": []
+        },
+        {
+          "term": "api",
+          "score": 0.9854,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "skill",
+          "score": 0.8582,
+          "evidence": []
+        },
+        {
+          "term": "creating",
+          "score": 0.6622,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "upload zip",
+          "score": 68.0972,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 19.4432,
+          "evidence": []
+        },
+        {
+          "term": "api",
+          "score": 12.1745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "option",
+          "score": 7.7818,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skills",
+          "score": 0.4582,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 0.1626,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 0.1172,
+          "evidence": []
+        },
+        {
+          "term": "api",
+          "score": 0.1079,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 11.8267,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 4.1822,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 1.7763,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 1.7287,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.4582,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "files",
+          "score": 0.1172,
+          "evidence": []
+        },
+        {
+          "term": "api",
+          "score": 0.1079,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "instructions",
+          "score": 0.0848,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload zip",
+          "score": 585.5373,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 303.8496,
+          "evidence": []
+        },
+        {
+          "term": "assemble",
+          "score": 294.8786,
+          "evidence": []
+        },
+        {
+          "term": "pointers",
+          "score": 225.3817,
+          "evidence": []
+        }
+      ]
+    },
+    "s009-mounting-skills-into-execution": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "local shell",
+          "score": 1.5971,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 1.1199,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hosted",
+          "score": 0.6642,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "local shell",
+          "score": 26.6296,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 16.3666,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hosted",
+          "score": 8.879,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skills",
+          "score": 0.2692,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "execution",
+          "score": 0.0746,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 0.0686,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 6.8992,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "defects",
+          "score": 1.3449,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 1.0848,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.2692,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "execution",
+          "score": 0.0746,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "files",
+          "score": 0.0592,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 161.1459,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 124.8477,
+          "evidence": []
+        },
+        {
+          "term": "assemble",
+          "score": 117.223,
+          "evidence": []
+        }
+      ]
+    },
+    "s010-runnable-example-csv-insights-skill-skill": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hosted shell",
+          "score": 2.4139,
+          "evidence": []
+        },
+        {
+          "term": "local shell",
+          "score": 2.1469,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 2.1171,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "live api",
+          "score": 1.8464,
+          "evidence": []
+        },
+        {
+          "term": "api request",
+          "score": 1.4384,
+          "evidence": []
+        },
+        {
+          "term": "runnable",
+          "score": 1.2615,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "directory containing",
+          "score": 1.2143,
+          "evidence": []
+        },
+        {
+          "term": "save",
+          "score": 1.1565,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skill",
+          "score": 66.6623,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hosted shell",
+          "score": 53.1675,
+          "evidence": []
+        },
+        {
+          "term": "local shell",
+          "score": 48.2007,
+          "evidence": []
+        },
+        {
+          "term": "live api",
+          "score": 36.2739,
+          "evidence": []
+        },
+        {
+          "term": "api request",
+          "score": 30.0258,
+          "evidence": []
+        },
+        {
+          "term": "save",
+          "score": 21.58,
+          "evidence": []
+        },
+        {
+          "term": "run",
+          "score": 19.4432,
+          "evidence": []
+        },
+        {
+          "term": "directory containing",
+          "score": 18.3662,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.9051,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "file",
+          "score": 0.2385,
+          "evidence": []
+        },
+        {
+          "term": "api request",
+          "score": 0.232,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.2303,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.2279,
+          "evidence": []
+        },
+        {
+          "term": "input",
+          "score": 0.2219,
+          "evidence": []
+        },
+        {
+          "term": "network access",
+          "score": 0.1988,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.1904,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 38.9453,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 8.1412,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 3.3662,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 3.3563,
+          "evidence": []
+        },
+        {
+          "term": "network access",
+          "score": 3.319,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 3.1682,
+          "evidence": []
+        },
+        {
+          "term": "api request",
+          "score": 3.1151,
+          "evidence": []
+        },
+        {
+          "term": "tool",
+          "score": 2.5507,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.9051,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "api request",
+          "score": 0.232,
+          "evidence": []
+        },
+        {
+          "term": "input",
+          "score": 0.2219,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 0.2199,
+          "evidence": []
+        },
+        {
+          "term": "network access",
+          "score": 0.1988,
+          "evidence": []
+        },
+        {
+          "term": "output",
+          "score": 0.1808,
+          "evidence": []
+        },
+        {
+          "term": "run",
+          "score": 0.1581,
+          "evidence": []
+        },
+        {
+          "term": "execution",
+          "score": 0.1438,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 138.5246,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 106.9936,
+          "evidence": []
+        },
+        {
+          "term": "runnable",
+          "score": 106.7981,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "assemble",
+          "score": 99.7619,
+          "evidence": []
+        },
+        {
+          "term": "hosted shell",
+          "score": 93.9098,
+          "evidence": []
+        },
+        {
+          "term": "pointers",
+          "score": 77.677,
+          "evidence": []
+        },
+        {
+          "term": "uploading",
+          "score": 73.0116,
+          "evidence": []
+        },
+        {
+          "term": "zip",
+          "score": 71.9815,
+          "evidence": []
+        }
+      ]
+    },
+    "s011-operational-best-practices": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "skill version",
+          "score": 1.4333,
+          "evidence": []
+        },
+        {
+          "term": "network access",
+          "score": 1.2988,
+          "evidence": []
+        },
+        {
+          "term": "add explicit",
+          "score": 1.2384,
+          "evidence": []
+        },
+        {
+          "term": "expected outputs",
+          "score": 1.0581,
+          "evidence": []
+        },
+        {
+          "term": "uploads",
+          "score": 0.9481,
+          "evidence": []
+        },
+        {
+          "term": "pin",
+          "score": 0.851,
+          "evidence": []
+        },
+        {
+          "term": "operational",
+          "score": 0.8052,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multi-step",
+          "score": 0.7924,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skill version",
+          "score": 31.308,
+          "evidence": []
+        },
+        {
+          "term": "network access",
+          "score": 21.3986,
+          "evidence": []
+        },
+        {
+          "term": "add explicit",
+          "score": 19.3967,
+          "evidence": []
+        },
+        {
+          "term": "expected outputs",
+          "score": 15.8262,
+          "evidence": []
+        },
+        {
+          "term": "uploads",
+          "score": 13.1979,
+          "evidence": []
+        },
+        {
+          "term": "frontmatter",
+          "score": 12.7908,
+          "evidence": []
+        },
+        {
+          "term": "pin",
+          "score": 11.8116,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 11.4791,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.6808,
+          "evidence": []
+        },
+        {
+          "term": "skill version",
+          "score": 0.6808,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.3557,
+          "evidence": []
+        },
+        {
+          "term": "system prompt",
+          "score": 0.317,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2765,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.2734,
+          "evidence": []
+        },
+        {
+          "term": "practices",
+          "score": 0.2617,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tool",
+          "score": 0.2386,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill version",
+          "score": 18.4087,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 6.5205,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 5.4975,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 4.4682,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 4.2157,
+          "evidence": []
+        },
+        {
+          "term": "routing",
+          "score": 4.1828,
+          "evidence": []
+        },
+        {
+          "term": "network access",
+          "score": 3.3173,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 3.1793,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill version",
+          "score": 0.7253,
+          "evidence": []
+        },
+        {
+          "term": "system prompt",
+          "score": 0.317,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.2734,
+          "evidence": []
+        },
+        {
+          "term": "practices",
+          "score": 0.2617,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tool",
+          "score": 0.2386,
+          "evidence": []
+        },
+        {
+          "term": "output",
+          "score": 0.2161,
+          "evidence": []
+        },
+        {
+          "term": "name",
+          "score": 0.2119,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 0.2023,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 58.1978,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 43.9847,
+          "evidence": []
+        },
+        {
+          "term": "assemble",
+          "score": 42.2748,
+          "evidence": []
+        },
+        {
+          "term": "pointers",
+          "score": 34.0133,
+          "evidence": []
+        },
+        {
+          "term": "zip",
+          "score": 29.9956,
+          "evidence": []
+        },
+        {
+          "term": "uploading",
+          "score": 29.131,
+          "evidence": []
+        },
+        {
+          "term": "shell",
+          "score": 27.2162,
+          "evidence": []
+        },
+        {
+          "term": "uploaded",
+          "score": 25.8514,
+          "evidence": []
+        }
+      ]
+    },
+    "s012-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "conclusion",
+          "score": 0.8383,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "skills",
+          "score": 0.786,
+          "evidence": []
+        },
+        {
+          "term": "spaghetti",
+          "score": 0.6526,
+          "evidence": []
+        },
+        {
+          "term": "durable",
+          "score": 0.6307,
+          "evidence": []
+        },
+        {
+          "term": "runnable",
+          "score": 0.6307,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skills",
+          "score": 16.3666,
+          "evidence": []
+        },
+        {
+          "term": "prompts",
+          "score": 9.3378,
+          "evidence": []
+        },
+        {
+          "term": "conclusion",
+          "score": 8.9574,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "library",
+          "score": 7.0158,
+          "evidence": []
+        },
+        {
+          "term": "durable",
+          "score": 7.0044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skills",
+          "score": 0.24,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1439,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.0961,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.0958,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.0915,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 6.9458,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 2.7713,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 2.0514,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 1.5481,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 1.4324,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.24,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.1007,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.0958,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 0.0861,
+          "evidence": []
+        },
+        {
+          "term": "tools",
+          "score": 0.0712,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 36.7668,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 26.489,
+          "evidence": []
+        },
+        {
+          "term": "assemble",
+          "score": 23.5191,
+          "evidence": []
+        },
+        {
+          "term": "runnable",
+          "score": 21.005,
+          "evidence": []
+        },
+        {
+          "term": "pointers",
+          "score": 20.2374,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

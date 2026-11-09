@@ -1,0 +1,90 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/folio-assistant-core/skills/library/ingestion/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/audio-transcription",
+      "@type": "bootstrap:Skill",
+      "name": "audio-transcription",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/cafc699e08d4b54a1e81cb78cbb4983f9c8b3a0bd56602fbbd127877c5d7ff1e",
+        "bytes": 8211,
+        "sha256": "cafc699e08d4b54a1e81cb78cbb4983f9c8b3a0bd56602fbbd127877c5d7ff1e"
+      },
+      "title": "Audio transcription: which recogniser, when, and how to check it"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/document-intake",
+      "@type": "bootstrap:Skill",
+      "name": "document-intake",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/8234c454d829e58fe1e9d2b02807e9bc898d08bc49248529094766fc391eaa99",
+        "bytes": 22721,
+        "sha256": "8234c454d829e58fe1e9d2b02807e9bc898d08bc49248529094766fc391eaa99"
+      },
+      "title": "Document Intake"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/figure-rebuild",
+      "@type": "bootstrap:Skill",
+      "name": "figure-rebuild",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/57003f31b8a0cb9917fb06cc1110fcf9197dee37bbb06a653e4483e15a29acc1",
+        "bytes": 15142,
+        "sha256": "57003f31b8a0cb9917fb06cc1110fcf9197dee37bbb06a653e4483e15a29acc1"
+      },
+      "title": "Figure rebuild: a figure is data, not a picture"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-coverage",
+      "@type": "bootstrap:Skill",
+      "name": "l1-coverage",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/50591d200ba091877838e0ccdfbf3930b419ca92012e2b20e4ffaf6f0f69c1c9",
+        "bytes": 4691,
+        "sha256": "50591d200ba091877838e0ccdfbf3930b419ca92012e2b20e4ffaf6f0f69c1c9"
+      },
+      "title": "L1 coverage — nothing normative goes missing silently"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/l1-document-ingestion",
+      "@type": "bootstrap:Skill",
+      "name": "l1-document-ingestion",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/197bdcd3c99bf1ce79c67c2a2027e08e8f103dbc2b6afbb6fbd7dfc9d3954141",
+        "bytes": 49933,
+        "sha256": "197bdcd3c99bf1ce79c67c2a2027e08e8f103dbc2b6afbb6fbd7dfc9d3954141"
+      },
+      "title": "L1 document ingestion"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/publish-extracted-statements",
+      "@type": "bootstrap:Skill",
+      "name": "publish-extracted-statements",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/fb4988690cc1284ef4bbf9d799ccd410dcfc8b547dcbd22a40b3af864b2eb1f0",
+        "bytes": 6813,
+        "sha256": "fb4988690cc1284ef4bbf9d799ccd410dcfc8b547dcbd22a40b3af864b2eb1f0"
+      },
+      "title": "Publish extracted statements with source links"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/folio-assistant-core/skill/tabular-metadata",
+      "@type": "bootstrap:Skill",
+      "name": "tabular-metadata",
+      "payload": {
+        "@id": "https://litlfred.github.io/folio-assistant/payload/sha256/14f960dcc246b11ef675fdb764415982740549d0c07238666792121677b8063a",
+        "bytes": 8761,
+        "sha256": "14f960dcc246b11ef675fdb764415982740549d0c07238666792121677b8063a"
+      },
+      "title": "Tabular metadata — CSVW, annotated, and honest about what it could not read"
+    }
+  ],
+  "holdsGraph": [
+    "bootstrap:graphTypology/skills"
+  ],
+  "name": "skills/library/ingestion",
+  "path": "skills/library/ingestion/"
+}

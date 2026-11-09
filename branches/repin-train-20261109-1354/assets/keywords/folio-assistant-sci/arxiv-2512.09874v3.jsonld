@@ -1,0 +1,726 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2512.09874v3",
+  "instance": "folio-assistant-sci",
+  "about": "library/arxiv-2512.09874v3",
+  "corpus": {
+    "library": "folio-assistant-sci/library",
+    "sections": 116,
+    "terms": 2735
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "parsed formulas",
+        "score": 5.9177,
+        "evidence": []
+      },
+      {
+        "term": "formula matching",
+        "score": 5.9103,
+        "evidence": []
+      },
+      {
+        "term": "formula parsing",
+        "score": 5.7771,
+        "evidence": []
+      },
+      {
+        "term": "truth formulas",
+        "score": 5.6739,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pdf parsing",
+        "score": 5.5009,
+        "evidence": []
+      },
+      {
+        "term": "formula extraction",
+        "score": 4.9771,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ground truth",
+        "score": 4.956,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "character-level matching",
+        "score": 4.8387,
+        "evidence": []
+      },
+      {
+        "term": "display formulas",
+        "score": 4.7841,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "parsing evaluation",
+        "score": 4.7732,
+        "evidence": []
+      },
+      {
+        "term": "semantic formula",
+        "score": 4.6835,
+        "evidence": []
+      },
+      {
+        "term": "benchmark pdf",
+        "score": 4.6589,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "formula matching",
+        "score": 253.692,
+        "evidence": []
+      },
+      {
+        "term": "truth formulas",
+        "score": 221.5388,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "parsed formulas",
+        "score": 215.7927,
+        "evidence": []
+      },
+      {
+        "term": "formula parsing",
+        "score": 215.368,
+        "evidence": []
+      },
+      {
+        "term": "formula extraction",
+        "score": 189.1397,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "formula evaluation",
+        "score": 187.638,
+        "evidence": []
+      },
+      {
+        "term": "mathematical formulas",
+        "score": 177.2243,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "semantic formula",
+        "score": 173.192,
+        "evidence": []
+      },
+      {
+        "term": "pdf parsing",
+        "score": 171.7801,
+        "evidence": []
+      },
+      {
+        "term": "display formulas",
+        "score": 171.1278,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "exclude formulas",
+        "score": 167.0673,
+        "evidence": []
+      },
+      {
+        "term": "equivalent formulas",
+        "score": 161.051,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "parsed formulas",
+        "score": 5.917,
+        "evidence": []
+      },
+      {
+        "term": "formula matching",
+        "score": 5.9095,
+        "evidence": []
+      },
+      {
+        "term": "formula parsing",
+        "score": 5.7763,
+        "evidence": []
+      },
+      {
+        "term": "truth formulas",
+        "score": 5.6735,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pdf parsing",
+        "score": 5.5005,
+        "evidence": []
+      },
+      {
+        "term": "formula extraction",
+        "score": 4.9771,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ground truth",
+        "score": 4.9562,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "character-level matching",
+        "score": 4.838,
+        "evidence": []
+      },
+      {
+        "term": "display formulas",
+        "score": 4.7837,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "parsing evaluation",
+        "score": 4.7743,
+        "evidence": []
+      },
+      {
+        "term": "semantic formula",
+        "score": 4.6833,
+        "evidence": []
+      },
+      {
+        "term": "benchmark pdf",
+        "score": 4.6603,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "formula matching",
+        "score": 253.688,
+        "evidence": []
+      },
+      {
+        "term": "truth formulas",
+        "score": 221.5357,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "parsed formulas",
+        "score": 215.7894,
+        "evidence": []
+      },
+      {
+        "term": "formula parsing",
+        "score": 215.3646,
+        "evidence": []
+      },
+      {
+        "term": "formula extraction",
+        "score": 189.1375,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "formula evaluation",
+        "score": 187.6388,
+        "evidence": []
+      },
+      {
+        "term": "mathematical formulas",
+        "score": 177.222,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "semantic formula",
+        "score": 173.1895,
+        "evidence": []
+      },
+      {
+        "term": "pdf parsing",
+        "score": 171.7774,
+        "evidence": []
+      },
+      {
+        "term": "display formulas",
+        "score": 171.1255,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "exclude formulas",
+        "score": 167.065,
+        "evidence": []
+      },
+      {
+        "term": "equivalent formulas",
+        "score": 161.0499,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "parsed formulas",
+        "score": 5.917,
+        "evidence": []
+      },
+      {
+        "term": "formula matching",
+        "score": 5.9095,
+        "evidence": []
+      },
+      {
+        "term": "formula parsing",
+        "score": 5.7763,
+        "evidence": []
+      },
+      {
+        "term": "truth formulas",
+        "score": 5.6735,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pdf parsing",
+        "score": 5.5005,
+        "evidence": []
+      },
+      {
+        "term": "formula extraction",
+        "score": 4.9771,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ground truth",
+        "score": 4.9562,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "character-level matching",
+        "score": 4.838,
+        "evidence": []
+      },
+      {
+        "term": "display formulas",
+        "score": 4.7837,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "parsing evaluation",
+        "score": 4.7743,
+        "evidence": []
+      },
+      {
+        "term": "semantic formula",
+        "score": 4.6833,
+        "evidence": []
+      },
+      {
+        "term": "benchmark pdf",
+        "score": 4.6603,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "gpu api",
+        "score": 14.2032,
+        "evidence": []
+      },
+      {
+        "term": "gpu gemini",
+        "score": 13.7559,
+        "evidence": []
+      },
+      {
+        "term": "character-level matching",
+        "score": 13.7495,
+        "evidence": []
+      },
+      {
+        "term": "image-based character-level",
+        "score": 13.69,
+        "evidence": []
+      },
+      {
+        "term": "aligns parsed",
+        "score": 13.6736,
+        "evidence": []
+      },
+      {
+        "term": "evaluating parsed",
+        "score": 12.7036,
+        "evidence": []
+      },
+      {
+        "term": "perfect agreement",
+        "score": 12.4346,
+        "evidence": []
+      },
+      {
+        "term": "synthetic pdfs",
+        "score": 12.3717,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "against ground",
+        "score": 12.1081,
+        "evidence": []
+      },
+      {
+        "term": "parsed formulas",
+        "score": 11.9868,
+        "evidence": []
+      },
+      {
+        "term": "deterministic fuzzy",
+        "score": 11.8967,
+        "evidence": []
+      },
+      {
+        "term": "similarity metrics",
+        "score": 11.8945,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-document": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "parsed formulas",
+          "score": 5.9177,
+          "evidence": []
+        },
+        {
+          "term": "formula matching",
+          "score": 5.9103,
+          "evidence": []
+        },
+        {
+          "term": "formula parsing",
+          "score": 5.7771,
+          "evidence": []
+        },
+        {
+          "term": "truth formulas",
+          "score": 5.6739,
+          "evidence": []
+        },
+        {
+          "term": "pdf parsing",
+          "score": 5.5009,
+          "evidence": []
+        },
+        {
+          "term": "formula extraction",
+          "score": 4.9771,
+          "evidence": []
+        },
+        {
+          "term": "ground truth",
+          "score": 4.956,
+          "evidence": []
+        },
+        {
+          "term": "character-level matching",
+          "score": 4.8387,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "formula matching",
+          "score": 253.692,
+          "evidence": []
+        },
+        {
+          "term": "truth formulas",
+          "score": 221.5388,
+          "evidence": []
+        },
+        {
+          "term": "parsed formulas",
+          "score": 215.7927,
+          "evidence": []
+        },
+        {
+          "term": "formula parsing",
+          "score": 215.368,
+          "evidence": []
+        },
+        {
+          "term": "formula extraction",
+          "score": 189.1397,
+          "evidence": []
+        },
+        {
+          "term": "formula evaluation",
+          "score": 187.638,
+          "evidence": []
+        },
+        {
+          "term": "mathematical formulas",
+          "score": 177.2243,
+          "evidence": []
+        },
+        {
+          "term": "semantic formula",
+          "score": 173.192,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "parsed formulas",
+          "score": 5.917,
+          "evidence": []
+        },
+        {
+          "term": "formula matching",
+          "score": 5.9095,
+          "evidence": []
+        },
+        {
+          "term": "formula parsing",
+          "score": 5.7763,
+          "evidence": []
+        },
+        {
+          "term": "truth formulas",
+          "score": 5.6735,
+          "evidence": []
+        },
+        {
+          "term": "pdf parsing",
+          "score": 5.5005,
+          "evidence": []
+        },
+        {
+          "term": "formula extraction",
+          "score": 4.9771,
+          "evidence": []
+        },
+        {
+          "term": "ground truth",
+          "score": 4.9562,
+          "evidence": []
+        },
+        {
+          "term": "character-level matching",
+          "score": 4.838,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "formula matching",
+          "score": 253.688,
+          "evidence": []
+        },
+        {
+          "term": "truth formulas",
+          "score": 221.5357,
+          "evidence": []
+        },
+        {
+          "term": "parsed formulas",
+          "score": 215.7894,
+          "evidence": []
+        },
+        {
+          "term": "formula parsing",
+          "score": 215.3646,
+          "evidence": []
+        },
+        {
+          "term": "formula extraction",
+          "score": 189.1375,
+          "evidence": []
+        },
+        {
+          "term": "formula evaluation",
+          "score": 187.6388,
+          "evidence": []
+        },
+        {
+          "term": "mathematical formulas",
+          "score": 177.222,
+          "evidence": []
+        },
+        {
+          "term": "semantic formula",
+          "score": 173.1895,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "parsed formulas",
+          "score": 5.917,
+          "evidence": []
+        },
+        {
+          "term": "formula matching",
+          "score": 5.9095,
+          "evidence": []
+        },
+        {
+          "term": "formula parsing",
+          "score": 5.7763,
+          "evidence": []
+        },
+        {
+          "term": "truth formulas",
+          "score": 5.6735,
+          "evidence": []
+        },
+        {
+          "term": "pdf parsing",
+          "score": 5.5005,
+          "evidence": []
+        },
+        {
+          "term": "formula extraction",
+          "score": 4.9771,
+          "evidence": []
+        },
+        {
+          "term": "ground truth",
+          "score": 4.9562,
+          "evidence": []
+        },
+        {
+          "term": "character-level matching",
+          "score": 4.838,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "gpu api",
+          "score": 14.2032,
+          "evidence": []
+        },
+        {
+          "term": "gpu gemini",
+          "score": 13.7559,
+          "evidence": []
+        },
+        {
+          "term": "character-level matching",
+          "score": 13.7495,
+          "evidence": []
+        },
+        {
+          "term": "image-based character-level",
+          "score": 13.69,
+          "evidence": []
+        },
+        {
+          "term": "aligns parsed",
+          "score": 13.6736,
+          "evidence": []
+        },
+        {
+          "term": "evaluating parsed",
+          "score": 12.7036,
+          "evidence": []
+        },
+        {
+          "term": "perfect agreement",
+          "score": 12.4346,
+          "evidence": []
+        },
+        {
+          "term": "synthetic pdfs",
+          "score": 12.3717,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}
