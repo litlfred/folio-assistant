@@ -1,0 +1,29 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/role/evidence-agent.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/role/evidence-agent",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Role",
+      "prefLabel": "Evidence agent",
+      "title": "Evidence agent",
+      "notation": "evidence-agent",
+      "description": "Retrieves and appraises external evidence for a guideline claim.",
+      "sourceKind": "role-registry",
+      "actorKinds": [
+        "agent"
+      ],
+      "hasSkill": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/skill/document-intake"
+      ],
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/role/evidence-agent"
+    }
+  ]
+}

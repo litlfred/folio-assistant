@@ -1,0 +1,25 @@
+{
+  "$ref": "#/definitions/RedFlagGateState",
+  "definitions": {
+    "RedFlagGateState": {
+      "type": "string",
+      "enum": [
+        "open",
+        "resolved",
+        "overridden",
+        "would-have-blocked",
+        "unknown",
+        "stale"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/red-flag/RedFlagGateStateSchema.schema.json",
+  "title": "RedFlagGateStateSchema",
+  "description": "Generated from `RedFlagGateStateSchema` in schemas/sdlc/red-flag.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  }
+}

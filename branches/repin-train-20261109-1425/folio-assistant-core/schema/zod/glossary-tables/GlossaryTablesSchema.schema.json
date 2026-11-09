@@ -1,0 +1,58 @@
+{
+  "$ref": "#/definitions/GlossaryTables",
+  "definitions": {
+    "GlossaryTables": {
+      "type": "object",
+      "properties": {
+        "$schema": {
+          "type": "string",
+          "const": "folio-glossary-tables/v1"
+        },
+        "tables": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "glossary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "block": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "type": "string",
+                "enum": [
+                  "terms",
+                  "acronyms"
+                ]
+              }
+            },
+            "required": [
+              "glossary",
+              "block",
+              "kind"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "$schema",
+        "tables"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/schema/zod/glossary-tables/GlossaryTablesSchema.schema.json",
+  "title": "GlossaryTablesSchema",
+  "description": "Generated from `GlossaryTablesSchema` in schemas/glossary-tables.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  }
+}

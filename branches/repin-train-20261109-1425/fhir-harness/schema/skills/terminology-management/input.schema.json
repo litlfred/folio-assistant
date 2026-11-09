@@ -1,0 +1,45 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Terminology Management Input",
+  "description": "Input schema for terminology management — CodeSystems, ValueSets, ConceptMaps.",
+  "type": "object",
+  "required": [
+    "operation"
+  ],
+  "properties": {
+    "operation": {
+      "type": "string",
+      "enum": [
+        "create-codesystem",
+        "create-valueset",
+        "create-conceptmap",
+        "validate-bindings",
+        "map-to-standard"
+      ],
+      "description": "Terminology operation to perform."
+    },
+    "targetStandard": {
+      "type": "string",
+      "enum": [
+        "ICD-11",
+        "SNOMED-CT",
+        "LOINC",
+        "IPS",
+        "WHO-FIC",
+        "WHO-ATC"
+      ],
+      "description": "Target standard terminology for mapping."
+    },
+    "inputFile": {
+      "type": "string",
+      "description": "Path to input terminology resource (FSH, JSON, CSV)."
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/fhir-harness/schema/skills/terminology-management/input.schema.json",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  }
+}

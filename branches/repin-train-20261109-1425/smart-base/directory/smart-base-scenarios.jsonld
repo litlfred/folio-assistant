@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/smart-base/directory/smart-base-scenarios.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-scenarios.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-scenarios",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-scenarios",
+      "path": "scenarios/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/bootstrap/v0/ns/graphTypology/scenarios"
+      ],
+      "description": "`scenarios/roles.json`: the roles this layer's processes bind. Declared so a remote mount brings it.",
+      "readmePath": "scenarios/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-scenarios"
+    }
+  ]
+}

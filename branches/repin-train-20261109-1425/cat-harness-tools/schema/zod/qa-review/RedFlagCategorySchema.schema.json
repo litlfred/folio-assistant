@@ -1,0 +1,27 @@
+{
+  "$ref": "#/definitions/RedFlagCategory",
+  "definitions": {
+    "RedFlagCategory": {
+      "type": "string",
+      "enum": [
+        "security",
+        "data-loss",
+        "correctness",
+        "false-green",
+        "provenance",
+        "scope-breach",
+        "irreversible-action",
+        "licence"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/qa-review/RedFlagCategorySchema.schema.json",
+  "title": "RedFlagCategorySchema",
+  "description": "Generated from `RedFlagCategorySchema` in schemas/sdlc/qa-review.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-sci/folio-assistant-sci.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Lean.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-sci/folio-assistant-sci.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Lean",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Lean toolchain (lean-mcp)",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-sci/process/Process_PaperAuthoring",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-sci/role/lean-toolchain",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-sci/directory/sci-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-sci/process/Process_PaperAuthoring/lane/Lane_Lean"
+    }
+  ]
+}

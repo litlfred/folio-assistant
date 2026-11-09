@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_SmeTestDataReview/node/Task_SmeJudge.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_SmeTestDataReview/node/Task_SmeJudge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Judge whether the case or cohort is right",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:UserTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_SmeTestDataReview",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/role/clinical-sme",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_SmeTestDataReview/lane/Lane_SME",
+      "requires": [],
+      "touchesWorkPlan": true,
+      "workPlanOp": "note",
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_SmeTestDataReview#flow/Flow_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_SmeTestDataReview#flow/Flow_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SmeTestDataReview/node/Task_SmeJudge"
+    }
+  ]
+}

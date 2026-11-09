@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_SubKgLifecycle/lane/Lane_Pipeline.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_SubKgLifecycle/lane/Lane_Pipeline",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "Build pipeline",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_SubKgLifecycle",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/role/build-pipeline",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_SubKgLifecycle/lane/Lane_Pipeline"
+    }
+  ]
+}

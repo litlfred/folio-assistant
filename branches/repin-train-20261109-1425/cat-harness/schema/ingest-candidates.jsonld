@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/schema/ingest-candidates.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/schema/ingest-candidates",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "ingest-candidates",
+      "title": "ingest-candidates",
+      "summary": "`library/<slug>/candidates.json` — Stage B's proposals for an entry,",
+      "module": "schemas/library/ingest-candidates.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/directory/schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/schema/ingest-candidates"
+    }
+  ]
+}

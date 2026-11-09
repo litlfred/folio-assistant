@@ -1,0 +1,34 @@
+{
+  "$ref": "#/definitions/ReviewLogColumn",
+  "definitions": {
+    "ReviewLogColumn": {
+      "type": "object",
+      "properties": {
+        "header": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "human",
+            "editor",
+            "agent",
+            "script"
+          ]
+        }
+      },
+      "required": [
+        "header"
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/schema/zod/public-comment/ReviewLogColumnSchema.schema.json",
+  "title": "ReviewLogColumnSchema",
+  "description": "Generated from `ReviewLogColumnSchema` in schemas/public-comment.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  }
+}

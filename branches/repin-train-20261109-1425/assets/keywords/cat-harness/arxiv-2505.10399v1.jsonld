@@ -1,0 +1,3686 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2505.10399v1",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2505.10399v1",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "ground-truth explanations",
+        "score": 21.5323,
+        "evidence": []
+      },
+      {
+        "term": "explanation evaluation",
+        "score": 21.4729,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "model explanations",
+        "score": 21.2342,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "explanation quality",
+        "score": 19.9129,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "importance explanations",
+        "score": 19.8439,
+        "evidence": []
+      },
+      {
+        "term": "local explanations",
+        "score": 18.7672,
+        "evidence": []
+      },
+      {
+        "term": "evaluating explanation",
+        "score": 18.7243,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "truth explanations",
+        "score": 18.276,
+        "evidence": []
+      },
+      {
+        "term": "compare axe",
+        "score": 18.0124,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "axe satisfies",
+        "score": 17.965,
+        "evidence": []
+      },
+      {
+        "term": "feature-importance explanations",
+        "score": 17.9335,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "competing explanations",
+        "score": 17.4012,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "compare axe",
+        "score": 663.439,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "axe satisfies",
+        "score": 660.9307,
+        "evidence": []
+      },
+      {
+        "term": "axe score",
+        "score": 649.0187,
+        "evidence": []
+      },
+      {
+        "term": "model explanations",
+        "score": 630.4664,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "explanation evaluation",
+        "score": 593.4782,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ground-truth explanations",
+        "score": 592.2582,
+        "evidence": []
+      },
+      {
+        "term": "importance explanations",
+        "score": 550.6603,
+        "evidence": []
+      },
+      {
+        "term": "local explanations",
+        "score": 532.9378,
+        "evidence": []
+      },
+      {
+        "term": "truth explanations",
+        "score": 511.4538,
+        "evidence": []
+      },
+      {
+        "term": "feature-importance explanations",
+        "score": 503.6524,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "different explanations",
+        "score": 502.635,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "competing explanations",
+        "score": 499.4352,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "ground-truth explanations",
+        "score": 21.1821,
+        "evidence": []
+      },
+      {
+        "term": "model explanations",
+        "score": 20.7264,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "explanation evaluation",
+        "score": 20.6025,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "importance explanations",
+        "score": 19.4929,
+        "evidence": []
+      },
+      {
+        "term": "explanation quality",
+        "score": 19.0661,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "local explanations",
+        "score": 18.3855,
+        "evidence": []
+      },
+      {
+        "term": "truth explanations",
+        "score": 18.1153,
+        "evidence": []
+      },
+      {
+        "term": "evaluating explanation",
+        "score": 17.8309,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "different explanations",
+        "score": 17.3243,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "feature-importance explanations",
+        "score": 17.2056,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "compare axe",
+        "score": 17.1181,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "competing explanations",
+        "score": 17.0462,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "compare axe",
+        "score": 660.9761,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "axe satisfies",
+        "score": 646.1745,
+        "evidence": []
+      },
+      {
+        "term": "axe score",
+        "score": 630.3262,
+        "evidence": []
+      },
+      {
+        "term": "model explanations",
+        "score": 619.5277,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "explanation evaluation",
+        "score": 613.9074,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ground-truth explanations",
+        "score": 568.9502,
+        "evidence": []
+      },
+      {
+        "term": "importance explanations",
+        "score": 532.6105,
+        "evidence": []
+      },
+      {
+        "term": "local explanations",
+        "score": 511.3648,
+        "evidence": []
+      },
+      {
+        "term": "explanation quality",
+        "score": 509.902,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "truth explanations",
+        "score": 498.3947,
+        "evidence": []
+      },
+      {
+        "term": "different explanations",
+        "score": 489.5876,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "competing explanations",
+        "score": 486.0312,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "ground-truth explanations",
+        "score": 21.1821,
+        "evidence": []
+      },
+      {
+        "term": "model explanations",
+        "score": 20.7264,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "explanation evaluation",
+        "score": 20.6025,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "importance explanations",
+        "score": 19.4929,
+        "evidence": []
+      },
+      {
+        "term": "explanation quality",
+        "score": 19.0661,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "local explanations",
+        "score": 18.3855,
+        "evidence": []
+      },
+      {
+        "term": "truth explanations",
+        "score": 18.1153,
+        "evidence": []
+      },
+      {
+        "term": "evaluating explanation",
+        "score": 17.8309,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "different explanations",
+        "score": 17.3243,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "feature-importance explanations",
+        "score": 17.2056,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "compare axe",
+        "score": 17.1181,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "competing explanations",
+        "score": 17.0462,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "eoin delaney",
+        "score": 5474.3448,
+        "evidence": []
+      },
+      {
+        "term": "kaivalya rawal",
+        "score": 4044.6575,
+        "evidence": []
+      },
+      {
+        "term": "oxford internet",
+        "score": 3388.0258,
+        "evidence": []
+      },
+      {
+        "term": "chris russell",
+        "score": 3072.6838,
+        "evidence": []
+      },
+      {
+        "term": "trinity",
+        "score": 2913.0184,
+        "evidence": []
+      },
+      {
+        "term": "criminal justice",
+        "score": 2638.0175,
+        "evidence": []
+      },
+      {
+        "term": "fool lime",
+        "score": 2050.9556,
+        "evidence": []
+      },
+      {
+        "term": "datapoint x𝑖",
+        "score": 1965.1153,
+        "evidence": []
+      },
+      {
+        "term": "contradictory explanations",
+        "score": 1912.3795,
+        "evidence": []
+      },
+      {
+        "term": "pgu inverted",
+        "score": 1883.4376,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ireland",
+        "score": 1783.5685,
+        "evidence": []
+      },
+      {
+        "term": "expla nations",
+        "score": 1783.2983,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-2-evaluating-model-explanations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "oxford internet",
+          "score": 2.2904,
+          "evidence": []
+        },
+        {
+          "term": "internet institute",
+          "score": 1.6376,
+          "evidence": []
+        },
+        {
+          "term": "delaney",
+          "score": 0.807,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "oxford internet",
+          "score": 45.4661,
+          "evidence": []
+        },
+        {
+          "term": "internet institute",
+          "score": 24.9052,
+          "evidence": []
+        },
+        {
+          "term": "delaney",
+          "score": 11.2363,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "explanations",
+          "score": 0.177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "axe",
+          "score": 0.0885,
+          "evidence": []
+        },
+        {
+          "term": "w3c",
+          "score": 0.0692,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "explanations",
+          "score": 1.5613,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "zta",
+          "score": 1.1348,
+          "evidence": []
+        },
+        {
+          "term": "rfc",
+          "score": 0.9798,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "explanations",
+          "score": 0.177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "internet institute",
+          "score": 0.0559,
+          "evidence": []
+        },
+        {
+          "term": "evaluating",
+          "score": 0.0469,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "oxford internet",
+          "score": 2549.7241,
+          "evidence": []
+        },
+        {
+          "term": "trinity",
+          "score": 2191.1032,
+          "evidence": []
+        },
+        {
+          "term": "delaney",
+          "score": 1528.594,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-abstract": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "model explanations",
+          "score": 1.6946,
+          "evidence": []
+        },
+        {
+          "term": "explanation evaluation",
+          "score": 1.5443,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 1.0607,
+          "evidence": []
+        },
+        {
+          "term": "model sensitivity",
+          "score": 1.0545,
+          "evidence": []
+        },
+        {
+          "term": "ground-truth",
+          "score": 0.9279,
+          "evidence": []
+        },
+        {
+          "term": "ideal",
+          "score": 0.7243,
+          "evidence": []
+        },
+        {
+          "term": "comparing",
+          "score": 0.7137,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "model explanations",
+          "score": 33.4595,
+          "evidence": []
+        },
+        {
+          "term": "explanation evaluation",
+          "score": 24.9867,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 16.185,
+          "evidence": []
+        },
+        {
+          "term": "model sensitivity",
+          "score": 15.0509,
+          "evidence": []
+        },
+        {
+          "term": "ground-truth",
+          "score": 14.5931,
+          "evidence": []
+        },
+        {
+          "term": "comparing",
+          "score": 11.4173,
+          "evidence": []
+        },
+        {
+          "term": "acm",
+          "score": 10.6161,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "explanation evaluation",
+          "score": 0.9009,
+          "evidence": []
+        },
+        {
+          "term": "model explanations",
+          "score": 0.8827,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 0.6374,
+          "evidence": []
+        },
+        {
+          "term": "model sensitivity",
+          "score": 0.4809,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 0.39,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 0.3654,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 0.3304,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "explanation evaluation",
+          "score": 22.2635,
+          "evidence": []
+        },
+        {
+          "term": "model explanations",
+          "score": 21.6406,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 12.1004,
+          "evidence": []
+        },
+        {
+          "term": "model sensitivity",
+          "score": 8.9634,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 6.9482,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 5.5457,
+          "evidence": []
+        },
+        {
+          "term": "ground-truth",
+          "score": 4.7154,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "explanation evaluation",
+          "score": 0.9009,
+          "evidence": []
+        },
+        {
+          "term": "model explanations",
+          "score": 0.8827,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 0.6374,
+          "evidence": []
+        },
+        {
+          "term": "model sensitivity",
+          "score": 0.4809,
+          "evidence": []
+        },
+        {
+          "term": "ground-truth",
+          "score": 0.2873,
+          "evidence": []
+        },
+        {
+          "term": "evaluating",
+          "score": 0.2305,
+          "evidence": []
+        },
+        {
+          "term": "ground",
+          "score": 0.1723,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "delaney",
+          "score": 157.2974,
+          "evidence": []
+        },
+        {
+          "term": "eoin",
+          "score": 157.2974,
+          "evidence": []
+        },
+        {
+          "term": "trinity",
+          "score": 149.8942,
+          "evidence": []
+        },
+        {
+          "term": "oxford",
+          "score": 147.9425,
+          "evidence": []
+        },
+        {
+          "term": "kaivalya",
+          "score": 121.8105,
+          "evidence": []
+        },
+        {
+          "term": "rawal",
+          "score": 121.8105,
+          "evidence": []
+        },
+        {
+          "term": "russell",
+          "score": 117.2849,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "feature-importance explanations",
+          "score": 3.1094,
+          "evidence": []
+        },
+        {
+          "term": "competing explanation",
+          "score": 2.9735,
+          "evidence": []
+        },
+        {
+          "term": "explanation evaluation",
+          "score": 2.9005,
+          "evidence": []
+        },
+        {
+          "term": "explanation vector",
+          "score": 2.7888,
+          "evidence": []
+        },
+        {
+          "term": "explanation disagreement",
+          "score": 2.6829,
+          "evidence": []
+        },
+        {
+          "term": "model explanations",
+          "score": 2.6774,
+          "evidence": []
+        },
+        {
+          "term": "signed feature",
+          "score": 2.6597,
+          "evidence": []
+        },
+        {
+          "term": "explanation generation",
+          "score": 2.5188,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "explanation evaluation",
+          "score": 127.376,
+          "evidence": []
+        },
+        {
+          "term": "model explanation",
+          "score": 122.5347,
+          "evidence": []
+        },
+        {
+          "term": "competing explanation",
+          "score": 115.4145,
+          "evidence": []
+        },
+        {
+          "term": "explanation vector",
+          "score": 113.576,
+          "evidence": []
+        },
+        {
+          "term": "explanation disagreement",
+          "score": 106.4509,
+          "evidence": []
+        },
+        {
+          "term": "explanation methods",
+          "score": 105.3116,
+          "evidence": []
+        },
+        {
+          "term": "explanation generation",
+          "score": 104.1871,
+          "evidence": []
+        },
+        {
+          "term": "feature-importance explanations",
+          "score": 104.0291,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "model explanations",
+          "score": 2.7153,
+          "evidence": []
+        },
+        {
+          "term": "explanation evaluation",
+          "score": 2.6587,
+          "evidence": []
+        },
+        {
+          "term": "feature-importance explanations",
+          "score": 2.2679,
+          "evidence": []
+        },
+        {
+          "term": "competing explanation",
+          "score": 2.075,
+          "evidence": []
+        },
+        {
+          "term": "explanation vector",
+          "score": 2.0148,
+          "evidence": []
+        },
+        {
+          "term": "explanation disagreement",
+          "score": 2.0131,
+          "evidence": []
+        },
+        {
+          "term": "explanation methods",
+          "score": 1.9982,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 1.982,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "model explanation",
+          "score": 125.3861,
+          "evidence": []
+        },
+        {
+          "term": "explanation evaluation",
+          "score": 117.2714,
+          "evidence": []
+        },
+        {
+          "term": "explanation vector",
+          "score": 101.6167,
+          "evidence": []
+        },
+        {
+          "term": "competing explanation",
+          "score": 98.401,
+          "evidence": []
+        },
+        {
+          "term": "explanation methods",
+          "score": 95.8642,
+          "evidence": []
+        },
+        {
+          "term": "explanation disagreement",
+          "score": 94.6082,
+          "evidence": []
+        },
+        {
+          "term": "explanation generation",
+          "score": 93.8382,
+          "evidence": []
+        },
+        {
+          "term": "feature-importance explanations",
+          "score": 82.204,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "model explanations",
+          "score": 2.7153,
+          "evidence": []
+        },
+        {
+          "term": "explanation evaluation",
+          "score": 2.6587,
+          "evidence": []
+        },
+        {
+          "term": "feature-importance explanations",
+          "score": 2.2679,
+          "evidence": []
+        },
+        {
+          "term": "competing explanation",
+          "score": 2.075,
+          "evidence": []
+        },
+        {
+          "term": "explanation vector",
+          "score": 2.0148,
+          "evidence": []
+        },
+        {
+          "term": "explanation disagreement",
+          "score": 2.0131,
+          "evidence": []
+        },
+        {
+          "term": "explanation methods",
+          "score": 1.9982,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 1.982,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "feature-importance explanations",
+          "score": 117.5181,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 91.8449,
+          "evidence": []
+        },
+        {
+          "term": "feature importances",
+          "score": 89.871,
+          "evidence": []
+        },
+        {
+          "term": "criminal",
+          "score": 87.7068,
+          "evidence": []
+        },
+        {
+          "term": "justice",
+          "score": 87.7068,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 84.8924,
+          "evidence": []
+        },
+        {
+          "term": "compas",
+          "score": 83.7403,
+          "evidence": []
+        },
+        {
+          "term": "𝑞should",
+          "score": 82.7023,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-21-our-notation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "explanation quality",
+          "score": 3.0195,
+          "evidence": []
+        },
+        {
+          "term": "explanation evaluation",
+          "score": 2.9906,
+          "evidence": []
+        },
+        {
+          "term": "explanation remain",
+          "score": 2.6992,
+          "evidence": []
+        },
+        {
+          "term": "local explanations",
+          "score": 2.5206,
+          "evidence": []
+        },
+        {
+          "term": "corresponding explanation",
+          "score": 2.466,
+          "evidence": []
+        },
+        {
+          "term": "metric 𝑞should",
+          "score": 2.4278,
+          "evidence": []
+        },
+        {
+          "term": "top-n features",
+          "score": 2.4102,
+          "evidence": []
+        },
+        {
+          "term": "on-manifold evaluation",
+          "score": 2.1988,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "explanation evaluation",
+          "score": 141.3176,
+          "evidence": []
+        },
+        {
+          "term": "explanation quality",
+          "score": 136.4377,
+          "evidence": []
+        },
+        {
+          "term": "explanation remain",
+          "score": 119.1452,
+          "evidence": []
+        },
+        {
+          "term": "corresponding explanation",
+          "score": 113.5988,
+          "evidence": []
+        },
+        {
+          "term": "local explanations",
+          "score": 72.931,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metric",
+          "score": 61.6505,
+          "evidence": []
+        },
+        {
+          "term": "top-n features",
+          "score": 58.9021,
+          "evidence": []
+        },
+        {
+          "term": "off-manifold model",
+          "score": 58.003,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "explanation evaluation",
+          "score": 2.7624,
+          "evidence": []
+        },
+        {
+          "term": "explanation quality",
+          "score": 2.5704,
+          "evidence": []
+        },
+        {
+          "term": "local explanations",
+          "score": 2.3504,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 2.1041,
+          "evidence": []
+        },
+        {
+          "term": "on-manifold evaluation",
+          "score": 1.919,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 1.9161,
+          "evidence": []
+        },
+        {
+          "term": "corresponding explanation",
+          "score": 1.9016,
+          "evidence": []
+        },
+        {
+          "term": "explanation remain",
+          "score": 1.8802,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "explanation evaluation",
+          "score": 114.3296,
+          "evidence": []
+        },
+        {
+          "term": "explanation quality",
+          "score": 113.7836,
+          "evidence": []
+        },
+        {
+          "term": "explanation remain",
+          "score": 92.8491,
+          "evidence": []
+        },
+        {
+          "term": "corresponding explanation",
+          "score": 91.7895,
+          "evidence": []
+        },
+        {
+          "term": "local explanations",
+          "score": 85.1895,
+          "evidence": []
+        },
+        {
+          "term": "model relativism",
+          "score": 54.7308,
+          "evidence": []
+        },
+        {
+          "term": "model output",
+          "score": 49.0036,
+          "evidence": []
+        },
+        {
+          "term": "off-manifold model",
+          "score": 48.1283,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "explanation evaluation",
+          "score": 2.7624,
+          "evidence": []
+        },
+        {
+          "term": "explanation quality",
+          "score": 2.5704,
+          "evidence": []
+        },
+        {
+          "term": "local explanations",
+          "score": 2.3504,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 2.1041,
+          "evidence": []
+        },
+        {
+          "term": "on-manifold evaluation",
+          "score": 1.919,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 1.9161,
+          "evidence": []
+        },
+        {
+          "term": "corresponding explanation",
+          "score": 1.9016,
+          "evidence": []
+        },
+        {
+          "term": "explanation remain",
+          "score": 1.8802,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "metric 𝑞should",
+          "score": 122.8602,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 103.4514,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 96.3895,
+          "evidence": []
+        },
+        {
+          "term": "criminal",
+          "score": 96.3576,
+          "evidence": []
+        },
+        {
+          "term": "justice",
+          "score": 96.3576,
+          "evidence": []
+        },
+        {
+          "term": "compas",
+          "score": 93.178,
+          "evidence": []
+        },
+        {
+          "term": "planations",
+          "score": 92.8692,
+          "evidence": []
+        },
+        {
+          "term": "𝑞is",
+          "score": 92.8692,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-23-prior-approaches": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "explanation quality",
+          "score": 2.4246,
+          "evidence": []
+        },
+        {
+          "term": "model relativism",
+          "score": 2.1791,
+          "evidence": []
+        },
+        {
+          "term": "rank agreement",
+          "score": 2.0442,
+          "evidence": []
+        },
+        {
+          "term": "feature importances",
+          "score": 1.9296,
+          "evidence": []
+        },
+        {
+          "term": "local contextualization",
+          "score": 1.9013,
+          "evidence": []
+        },
+        {
+          "term": "sign agreement",
+          "score": 1.8795,
+          "evidence": []
+        },
+        {
+          "term": "signed rank",
+          "score": 1.8528,
+          "evidence": []
+        },
+        {
+          "term": "feature perturbation",
+          "score": 1.7748,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "explanation quality",
+          "score": 67.049,
+          "evidence": []
+        },
+        {
+          "term": "model relativism",
+          "score": 55.4723,
+          "evidence": []
+        },
+        {
+          "term": "rank agreement",
+          "score": 48.9086,
+          "evidence": []
+        },
+        {
+          "term": "ground-truth",
+          "score": 48.6436,
+          "evidence": []
+        },
+        {
+          "term": "model changes",
+          "score": 41.7411,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 40.7355,
+          "evidence": []
+        },
+        {
+          "term": "sign agreement",
+          "score": 39.8356,
+          "evidence": []
+        },
+        {
+          "term": "based metrics",
+          "score": 37.2574,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "explanation quality",
+          "score": 2.011,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 1.5883,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 1.4888,
+          "evidence": []
+        },
+        {
+          "term": "feature perturbation",
+          "score": 1.3312,
+          "evidence": []
+        },
+        {
+          "term": "feature importances",
+          "score": 1.2422,
+          "evidence": []
+        },
+        {
+          "term": "model relativism",
+          "score": 1.2145,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 0.9901,
+          "evidence": []
+        },
+        {
+          "term": "local contextualization",
+          "score": 0.9086,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "explanation quality",
+          "score": 76.1704,
+          "evidence": []
+        },
+        {
+          "term": "model relativism",
+          "score": 36.8967,
+          "evidence": []
+        },
+        {
+          "term": "feature importances",
+          "score": 30.6078,
+          "evidence": []
+        },
+        {
+          "term": "model changes",
+          "score": 30.1397,
+          "evidence": []
+        },
+        {
+          "term": "feature perturbation",
+          "score": 28.5843,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 26.1426,
+          "evidence": []
+        },
+        {
+          "term": "signed rank",
+          "score": 25.0967,
+          "evidence": []
+        },
+        {
+          "term": "rank agreement",
+          "score": 22.0029,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "explanation quality",
+          "score": 2.011,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 1.4888,
+          "evidence": []
+        },
+        {
+          "term": "feature perturbation",
+          "score": 1.3312,
+          "evidence": []
+        },
+        {
+          "term": "feature importances",
+          "score": 1.2422,
+          "evidence": []
+        },
+        {
+          "term": "model relativism",
+          "score": 1.2145,
+          "evidence": []
+        },
+        {
+          "term": "local contextualization",
+          "score": 0.9086,
+          "evidence": []
+        },
+        {
+          "term": "model changes",
+          "score": 0.907,
+          "evidence": []
+        },
+        {
+          "term": "ground truth",
+          "score": 0.8662,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "pgu",
+          "score": 87.7181,
+          "evidence": []
+        },
+        {
+          "term": "feature importances",
+          "score": 84.5607,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 81.9417,
+          "evidence": []
+        },
+        {
+          "term": "criminal",
+          "score": 80.7612,
+          "evidence": []
+        },
+        {
+          "term": "justice",
+          "score": 80.7612,
+          "evidence": []
+        },
+        {
+          "term": "compas",
+          "score": 78.6479,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 77.7786,
+          "evidence": []
+        },
+        {
+          "term": "𝑞should",
+          "score": 77.6635,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-25-inherent-biases-in-sensitivity-metrics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gaussian tends",
+          "score": 1.6483,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity",
+          "score": 1.5763,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "datapoint",
+          "score": 1.3537,
+          "evidence": []
+        },
+        {
+          "term": "metrics",
+          "score": 1.3505,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sensitivity based",
+          "score": 1.1608,
+          "evidence": []
+        },
+        {
+          "term": "explainers",
+          "score": 1.0763,
+          "evidence": []
+        },
+        {
+          "term": "lime",
+          "score": 1.0395,
+          "evidence": []
+        },
+        {
+          "term": "neighborhood",
+          "score": 1.0263,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "datapoint",
+          "score": 28.0907,
+          "evidence": []
+        },
+        {
+          "term": "gaussian tends",
+          "score": 26.2237,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity",
+          "score": 25.391,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "metrics",
+          "score": 20.1226,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sensitivity based",
+          "score": 18.2751,
+          "evidence": []
+        },
+        {
+          "term": "explainers",
+          "score": 17.255,
+          "evidence": []
+        },
+        {
+          "term": "lime",
+          "score": 16.8544,
+          "evidence": []
+        },
+        {
+          "term": "neighborhood",
+          "score": 15.899,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "axe",
+          "score": 0.5896,
+          "evidence": []
+        },
+        {
+          "term": "explanations",
+          "score": 0.5008,
+          "evidence": []
+        },
+        {
+          "term": "metrics",
+          "score": 0.4527,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sensitivity",
+          "score": 0.4199,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pgi",
+          "score": 0.3719,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 0.339,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 0.3096,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.3038,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "explanation",
+          "score": 10.1342,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 8.8918,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 4.8073,
+          "evidence": []
+        },
+        {
+          "term": "metrics",
+          "score": 4.6492,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "model",
+          "score": 4.3471,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 4.3307,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 4.1481,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity",
+          "score": 3.3391,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "explanation",
+          "score": 0.4726,
+          "evidence": []
+        },
+        {
+          "term": "metrics",
+          "score": 0.4527,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sensitivity",
+          "score": 0.4199,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pgi",
+          "score": 0.3719,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 0.339,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.3038,
+          "evidence": []
+        },
+        {
+          "term": "datapoint",
+          "score": 0.2933,
+          "evidence": []
+        },
+        {
+          "term": "sensitivity based",
+          "score": 0.2773,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "pgu",
+          "score": 83.8037,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 78.4984,
+          "evidence": []
+        },
+        {
+          "term": "criminal",
+          "score": 75.7212,
+          "evidence": []
+        },
+        {
+          "term": "justice",
+          "score": 75.7212,
+          "evidence": []
+        },
+        {
+          "term": "compas",
+          "score": 74.6514,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 73.8185,
+          "evidence": []
+        },
+        {
+          "term": "pgi𝑛",
+          "score": 72.9351,
+          "evidence": []
+        },
+        {
+          "term": "𝑞should",
+          "score": 72.3724,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-3-methodology": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "top-n",
+          "score": 1.2607,
+          "evidence": []
+        },
+        {
+          "term": "k-nn",
+          "score": 1.1152,
+          "evidence": []
+        },
+        {
+          "term": "curacy",
+          "score": 1.0078,
+          "evidence": []
+        },
+        {
+          "term": "predictiveness",
+          "score": 0.9502,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 0.8406,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "top-n",
+          "score": 23.6233,
+          "evidence": []
+        },
+        {
+          "term": "k-nn",
+          "score": 17.255,
+          "evidence": []
+        },
+        {
+          "term": "curacy",
+          "score": 14.0089,
+          "evidence": []
+        },
+        {
+          "term": "predictiveness",
+          "score": 13.1979,
+          "evidence": []
+        },
+        {
+          "term": "features",
+          "score": 11.7076,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "axe",
+          "score": 0.4361,
+          "evidence": []
+        },
+        {
+          "term": "explanations",
+          "score": 0.3717,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 0.2678,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 0.2511,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 0.2239,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "explanation",
+          "score": 9.0029,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 7.6154,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 4.1375,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 4.0571,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 3.56,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "axe",
+          "score": 0.4361,
+          "evidence": []
+        },
+        {
+          "term": "explanation",
+          "score": 0.3532,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 0.2511,
+          "evidence": []
+        },
+        {
+          "term": "datapoint",
+          "score": 0.2172,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.2061,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "pgu",
+          "score": 113.9576,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 109.4489,
+          "evidence": []
+        },
+        {
+          "term": "pgi𝑛",
+          "score": 105.9326,
+          "evidence": []
+        },
+        {
+          "term": "criminal",
+          "score": 105.4617,
+          "evidence": []
+        },
+        {
+          "term": "justice",
+          "score": 105.4617,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-31-the-axe-framework": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "axe",
+          "score": 3.6693,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "datapoint x𝑖",
+          "score": 3.0062,
+          "evidence": []
+        },
+        {
+          "term": "axe satisfies",
+          "score": 2.7644,
+          "evidence": []
+        },
+        {
+          "term": "k-nn model",
+          "score": 2.5022,
+          "evidence": []
+        },
+        {
+          "term": "unique k-nn",
+          "score": 2.4535,
+          "evidence": []
+        },
+        {
+          "term": "explanation quality",
+          "score": 1.7988,
+          "evidence": []
+        },
+        {
+          "term": "contextualization principle",
+          "score": 1.7632,
+          "evidence": []
+        },
+        {
+          "term": "expla nations",
+          "score": 1.7049,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "axe",
+          "score": 107.8998,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "k-nn model",
+          "score": 70.2093,
+          "evidence": []
+        },
+        {
+          "term": "axe satisfies",
+          "score": 68.543,
+          "evidence": []
+        },
+        {
+          "term": "datapoint x𝑖",
+          "score": 63.1128,
+          "evidence": []
+        },
+        {
+          "term": "unique k-nn",
+          "score": 61.4947,
+          "evidence": []
+        },
+        {
+          "term": "explanation quality",
+          "score": 32.287,
+          "evidence": []
+        },
+        {
+          "term": "model relativism",
+          "score": 30.6206,
+          "evidence": []
+        },
+        {
+          "term": "contextualization principle",
+          "score": 28.5229,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "axe",
+          "score": 2.5258,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "explanation quality",
+          "score": 1.541,
+          "evidence": []
+        },
+        {
+          "term": "axe satisfies",
+          "score": 1.4199,
+          "evidence": []
+        },
+        {
+          "term": "on-manifold evaluation",
+          "score": 1.124,
+          "evidence": []
+        },
+        {
+          "term": "model relativism",
+          "score": 0.8923,
+          "evidence": []
+        },
+        {
+          "term": "k-nn model",
+          "score": 0.8904,
+          "evidence": []
+        },
+        {
+          "term": "datapoint x𝑖",
+          "score": 0.8494,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 0.7884,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "axe",
+          "score": 75.315,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "axe satisfies",
+          "score": 38.946,
+          "evidence": []
+        },
+        {
+          "term": "explanation quality",
+          "score": 32.5368,
+          "evidence": []
+        },
+        {
+          "term": "on-manifold evaluation",
+          "score": 18.551,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 18.384,
+          "evidence": []
+        },
+        {
+          "term": "k-nn model",
+          "score": 17.4329,
+          "evidence": []
+        },
+        {
+          "term": "model relativism",
+          "score": 16.4976,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 15.2878,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "axe",
+          "score": 2.5258,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "explanation quality",
+          "score": 1.541,
+          "evidence": []
+        },
+        {
+          "term": "axe satisfies",
+          "score": 1.4199,
+          "evidence": []
+        },
+        {
+          "term": "on-manifold evaluation",
+          "score": 1.124,
+          "evidence": []
+        },
+        {
+          "term": "model relativism",
+          "score": 0.8923,
+          "evidence": []
+        },
+        {
+          "term": "k-nn model",
+          "score": 0.8904,
+          "evidence": []
+        },
+        {
+          "term": "datapoint x𝑖",
+          "score": 0.8494,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 0.7058,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "axe",
+          "score": 195.4233,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "datapoint x𝑖",
+          "score": 157.4965,
+          "evidence": []
+        },
+        {
+          "term": "expla nations",
+          "score": 133.7786,
+          "evidence": []
+        },
+        {
+          "term": "axe satisfies",
+          "score": 110.8437,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 109.312,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 102.1491,
+          "evidence": []
+        },
+        {
+          "term": "criminal",
+          "score": 100.8332,
+          "evidence": []
+        },
+        {
+          "term": "justice",
+          "score": 100.8332,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-32-illustrative-example": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "k-nn neighborhood",
+          "score": 3.479,
+          "evidence": []
+        },
+        {
+          "term": "axe score",
+          "score": 2.7674,
+          "evidence": []
+        },
+        {
+          "term": "perturbation width",
+          "score": 2.6277,
+          "evidence": []
+        },
+        {
+          "term": "k-nn models",
+          "score": 2.457,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 2.2147,
+          "evidence": []
+        },
+        {
+          "term": "nearest neighbor",
+          "score": 2.0517,
+          "evidence": []
+        },
+        {
+          "term": "explanation quality",
+          "score": 1.9654,
+          "evidence": []
+        },
+        {
+          "term": "feature space",
+          "score": 1.8068,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "axe score",
+          "score": 103.3147,
+          "evidence": []
+        },
+        {
+          "term": "k-nn neighborhood",
+          "score": 94.1624,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 82.6814,
+          "evidence": []
+        },
+        {
+          "term": "k-nn model",
+          "score": 66.257,
+          "evidence": []
+        },
+        {
+          "term": "perturbation width",
+          "score": 55.393,
+          "evidence": []
+        },
+        {
+          "term": "model predictions",
+          "score": 43.2904,
+          "evidence": []
+        },
+        {
+          "term": "feature space",
+          "score": 41.3252,
+          "evidence": []
+        },
+        {
+          "term": "explanation quality",
+          "score": 41.2193,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "explanation quality",
+          "score": 1.7426,
+          "evidence": []
+        },
+        {
+          "term": "axe score",
+          "score": 1.7292,
+          "evidence": []
+        },
+        {
+          "term": "k-nn model",
+          "score": 1.0796,
+          "evidence": []
+        },
+        {
+          "term": "feature space",
+          "score": 1.0367,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 0.9821,
+          "evidence": []
+        },
+        {
+          "term": "model predictions",
+          "score": 0.9802,
+          "evidence": []
+        },
+        {
+          "term": "k-nn neighborhood",
+          "score": 0.8919,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 0.8097,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "axe",
+          "score": 86.5043,
+          "evidence": []
+        },
+        {
+          "term": "axe score",
+          "score": 86.5043,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 43.7141,
+          "evidence": []
+        },
+        {
+          "term": "explanation quality",
+          "score": 39.1018,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 37.7066,
+          "evidence": []
+        },
+        {
+          "term": "k-nn model",
+          "score": 24.0372,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 22.903,
+          "evidence": []
+        },
+        {
+          "term": "model predictions",
+          "score": 20.1243,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "explanation quality",
+          "score": 1.7426,
+          "evidence": []
+        },
+        {
+          "term": "axe score",
+          "score": 1.7292,
+          "evidence": []
+        },
+        {
+          "term": "k-nn model",
+          "score": 1.0796,
+          "evidence": []
+        },
+        {
+          "term": "feature space",
+          "score": 1.0367,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 0.9821,
+          "evidence": []
+        },
+        {
+          "term": "model predictions",
+          "score": 0.9802,
+          "evidence": []
+        },
+        {
+          "term": "k-nn neighborhood",
+          "score": 0.8919,
+          "evidence": []
+        },
+        {
+          "term": "neighbor model",
+          "score": 0.7437,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "k-nn neighborhood",
+          "score": 147.5917,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 124.6094,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 116.8185,
+          "evidence": []
+        },
+        {
+          "term": "criminal",
+          "score": 111.8202,
+          "evidence": []
+        },
+        {
+          "term": "justice",
+          "score": 111.8202,
+          "evidence": []
+        },
+        {
+          "term": "compas",
+          "score": 111.0672,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 109.3942,
+          "evidence": []
+        },
+        {
+          "term": "axe score",
+          "score": 109.3942,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-41-detecting-explanation-fairwashing": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "metrics pgi",
+          "score": 3.192,
+          "evidence": []
+        },
+        {
+          "term": "manipulated explanations",
+          "score": 2.9627,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 2.523,
+          "evidence": []
+        },
+        {
+          "term": "generating explanations",
+          "score": 2.4079,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 2.3294,
+          "evidence": []
+        },
+        {
+          "term": "metric 𝑞should",
+          "score": 2.039,
+          "evidence": []
+        },
+        {
+          "term": "criminal justice",
+          "score": 2.0155,
+          "evidence": []
+        },
+        {
+          "term": "adversarial attack",
+          "score": 1.9937,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "metrics pgi",
+          "score": 119.7198,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 109.5865,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 107.8998,
+          "evidence": []
+        },
+        {
+          "term": "manipulated explanations",
+          "score": 93.8553,
+          "evidence": []
+        },
+        {
+          "term": "generating explanations",
+          "score": 83.4469,
+          "evidence": []
+        },
+        {
+          "term": "adversarial attack",
+          "score": 40.062,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 34.7807,
+          "evidence": []
+        },
+        {
+          "term": "metric 𝑞should",
+          "score": 33.0394,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "explanation",
+          "score": 2.3538,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "metrics pgi",
+          "score": 1.6991,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 1.6025,
+          "evidence": []
+        },
+        {
+          "term": "manipulated explanations",
+          "score": 1.4999,
+          "evidence": []
+        },
+        {
+          "term": "generating explanations",
+          "score": 1.4732,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 1.4649,
+          "evidence": []
+        },
+        {
+          "term": "metric 𝑞should",
+          "score": 0.911,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 0.9009,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "axe",
+          "score": 131.5511,
+          "evidence": []
+        },
+        {
+          "term": "metrics pgi",
+          "score": 86.8699,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 60.5543,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 50.4286,
+          "evidence": []
+        },
+        {
+          "term": "manipulated explanations",
+          "score": 43.9575,
+          "evidence": []
+        },
+        {
+          "term": "generating explanations",
+          "score": 41.799,
+          "evidence": []
+        },
+        {
+          "term": "grad",
+          "score": 24.0593,
+          "evidence": []
+        },
+        {
+          "term": "metric 𝑞should",
+          "score": 23.1911,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "explanation",
+          "score": 2.3538,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "metrics pgi",
+          "score": 1.6991,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 1.6025,
+          "evidence": []
+        },
+        {
+          "term": "manipulated explanations",
+          "score": 1.4999,
+          "evidence": []
+        },
+        {
+          "term": "generating explanations",
+          "score": 1.4732,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 1.4649,
+          "evidence": []
+        },
+        {
+          "term": "metric 𝑞should",
+          "score": 0.911,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 0.9009,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "criminal justice",
+          "score": 367.4587,
+          "evidence": []
+        },
+        {
+          "term": "fairwashing",
+          "score": 247.2177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "metric 𝑞should",
+          "score": 222.9671,
+          "evidence": []
+        },
+        {
+          "term": "metrics pgi",
+          "score": 215.903,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 203.2251,
+          "evidence": []
+        },
+        {
+          "term": "compas",
+          "score": 183.2663,
+          "evidence": []
+        },
+        {
+          "term": "manipulated explanations",
+          "score": 172.3541,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 171.2607,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-42-comparing-axe-with-baselines": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "axe",
+          "score": 5.8916,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pgu inverted",
+          "score": 3.4793,
+          "evidence": []
+        },
+        {
+          "term": "integrated grad",
+          "score": 2.9178,
+          "evidence": []
+        },
+        {
+          "term": "smooth grad",
+          "score": 2.8775,
+          "evidence": []
+        },
+        {
+          "term": "random explainer",
+          "score": 2.6369,
+          "evidence": []
+        },
+        {
+          "term": "input grad",
+          "score": 2.6097,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metric",
+          "score": 2.5733,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 2.3171,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "axe",
+          "score": 496.3391,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pgu inverted",
+          "score": 117.5072,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 110.7782,
+          "evidence": []
+        },
+        {
+          "term": "evaluation scores",
+          "score": 95.285,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 94.4931,
+          "evidence": []
+        },
+        {
+          "term": "integrated grad",
+          "score": 78.5033,
+          "evidence": []
+        },
+        {
+          "term": "smooth grad",
+          "score": 76.1067,
+          "evidence": []
+        },
+        {
+          "term": "across evaluation",
+          "score": 73.111,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "axe",
+          "score": 4.4899,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 2.1025,
+          "evidence": []
+        },
+        {
+          "term": "explanations",
+          "score": 1.7888,
+          "evidence": []
+        },
+        {
+          "term": "evaluation scores",
+          "score": 1.667,
+          "evidence": []
+        },
+        {
+          "term": "pgu inverted",
+          "score": 1.5402,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 1.5004,
+          "evidence": []
+        },
+        {
+          "term": "across evaluation",
+          "score": 1.4697,
+          "evidence": []
+        },
+        {
+          "term": "top-n features",
+          "score": 1.4361,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "axe",
+          "score": 480.8465,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pgu inverted",
+          "score": 123.2518,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 122.8959,
+          "evidence": []
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 88.0349,
+          "evidence": []
+        },
+        {
+          "term": "evaluation scores",
+          "score": 75.0031,
+          "evidence": []
+        },
+        {
+          "term": "across evaluation",
+          "score": 57.4861,
+          "evidence": []
+        },
+        {
+          "term": "integrated grad",
+          "score": 56.1265,
+          "evidence": []
+        },
+        {
+          "term": "smooth grad",
+          "score": 54.353,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "axe",
+          "score": 4.4899,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "evaluation metrics",
+          "score": 2.1025,
+          "evidence": []
+        },
+        {
+          "term": "explanations",
+          "score": 1.7888,
+          "evidence": []
+        },
+        {
+          "term": "evaluation scores",
+          "score": 1.667,
+          "evidence": []
+        },
+        {
+          "term": "pgu inverted",
+          "score": 1.5402,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 1.5004,
+          "evidence": []
+        },
+        {
+          "term": "across evaluation",
+          "score": 1.4697,
+          "evidence": []
+        },
+        {
+          "term": "top-n features",
+          "score": 1.4361,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "axe",
+          "score": 326.2561,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pgu inverted",
+          "score": 281.0165,
+          "evidence": []
+        },
+        {
+          "term": "smooth grad",
+          "score": 189.6705,
+          "evidence": []
+        },
+        {
+          "term": "auc trick",
+          "score": 188.9503,
+          "evidence": []
+        },
+        {
+          "term": "integrated grad",
+          "score": 180.2011,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 175.396,
+          "evidence": []
+        },
+        {
+          "term": "compas",
+          "score": 173.857,
+          "evidence": []
+        },
+        {
+          "term": "compas dataset",
+          "score": 173.857,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-5-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "model explanations",
+          "score": 1.9883,
+          "evidence": []
+        },
+        {
+          "term": "explanation evaluation",
+          "score": 1.8242,
+          "evidence": []
+        },
+        {
+          "term": "existing xai",
+          "score": 1.5306,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 1.4888,
+          "evidence": []
+        },
+        {
+          "term": "evaluation frameworks",
+          "score": 1.3497,
+          "evidence": []
+        },
+        {
+          "term": "datapoints",
+          "score": 0.8353,
+          "evidence": []
+        },
+        {
+          "term": "principles",
+          "score": 0.7758,
+          "evidence": []
+        },
+        {
+          "term": "local",
+          "score": 0.7061,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "model explanations",
+          "score": 51.3743,
+          "evidence": []
+        },
+        {
+          "term": "explanation evaluation",
+          "score": 36.0319,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 32.3699,
+          "evidence": []
+        },
+        {
+          "term": "existing xai",
+          "score": 26.2191,
+          "evidence": []
+        },
+        {
+          "term": "evaluation frameworks",
+          "score": 24.7146,
+          "evidence": []
+        },
+        {
+          "term": "principles",
+          "score": 14.4129,
+          "evidence": []
+        },
+        {
+          "term": "local",
+          "score": 12.7911,
+          "evidence": []
+        },
+        {
+          "term": "datapoints",
+          "score": 11.5033,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "model explanations",
+          "score": 1.0537,
+          "evidence": []
+        },
+        {
+          "term": "explanation evaluation",
+          "score": 1.048,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 0.7695,
+          "evidence": []
+        },
+        {
+          "term": "evaluation framework",
+          "score": 0.559,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 0.4649,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 0.4392,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 0.3924,
+          "evidence": []
+        },
+        {
+          "term": "datapoint",
+          "score": 0.3762,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "explanation evaluation",
+          "score": 31.8406,
+          "evidence": []
+        },
+        {
+          "term": "model explanations",
+          "score": 30.7968,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 22.4161,
+          "evidence": []
+        },
+        {
+          "term": "evaluation framework",
+          "score": 11.6699,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 10.6331,
+          "evidence": []
+        },
+        {
+          "term": "feature",
+          "score": 9.9248,
+          "evidence": []
+        },
+        {
+          "term": "pgu",
+          "score": 8.59,
+          "evidence": []
+        },
+        {
+          "term": "ground-truth",
+          "score": 6.504,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "model explanations",
+          "score": 1.0537,
+          "evidence": []
+        },
+        {
+          "term": "explanation evaluation",
+          "score": 1.048,
+          "evidence": []
+        },
+        {
+          "term": "axe",
+          "score": 0.7695,
+          "evidence": []
+        },
+        {
+          "term": "evaluation framework",
+          "score": 0.559,
+          "evidence": []
+        },
+        {
+          "term": "existing xai",
+          "score": 0.2121,
+          "evidence": []
+        },
+        {
+          "term": "local",
+          "score": 0.211,
+          "evidence": []
+        },
+        {
+          "term": "behavior",
+          "score": 0.2101,
+          "evidence": []
+        },
+        {
+          "term": "datapoints",
+          "score": 0.2079,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "pgu",
+          "score": 90.5005,
+          "evidence": []
+        },
+        {
+          "term": "criminal",
+          "score": 84.5619,
+          "evidence": []
+        },
+        {
+          "term": "justice",
+          "score": 84.5619,
+          "evidence": []
+        },
+        {
+          "term": "pgi",
+          "score": 84.2778,
+          "evidence": []
+        },
+        {
+          "term": "compas",
+          "score": 82.1445,
+          "evidence": []
+        },
+        {
+          "term": "𝑞should",
+          "score": 80.6255,
+          "evidence": []
+        },
+        {
+          "term": "planations",
+          "score": 80.6255,
+          "evidence": []
+        },
+        {
+          "term": "𝑞is",
+          "score": 80.6255,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-acknowledgments": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "grant",
+          "score": 0.8226,
+          "evidence": []
+        },
+        {
+          "term": "oxford",
+          "score": 0.8047,
+          "evidence": []
+        },
+        {
+          "term": "donors",
+          "score": 0.6358,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "grant",
+          "score": 13.4361,
+          "evidence": []
+        },
+        {
+          "term": "oxford",
+          "score": 10.79,
+          "evidence": []
+        },
+        {
+          "term": "donors",
+          "score": 7.0044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "w3c",
+          "score": 0.0601,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.058,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.0495,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 1.0461,
+          "evidence": []
+        },
+        {
+          "term": "zta",
+          "score": 0.8641,
+          "evidence": []
+        },
+        {
+          "term": "trust",
+          "score": 0.7496,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "group",
+          "score": 0.058,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.0495,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0479,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "oxford",
+          "score": 362.2462,
+          "evidence": []
+        },
+        {
+          "term": "trinity",
+          "score": 348.4327,
+          "evidence": []
+        },
+        {
+          "term": "delaney",
+          "score": 239.0078,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "international conference",
+          "score": 3.5117,
+          "evidence": []
+        },
+        {
+          "term": "ieee international",
+          "score": 3.0303,
+          "evidence": []
+        },
+        {
+          "term": "curran associates",
+          "score": 2.9967,
+          "evidence": []
+        },
+        {
+          "term": "acm conference",
+          "score": 2.9394,
+          "evidence": []
+        },
+        {
+          "term": "computing machinery",
+          "score": 2.9384,
+          "evidence": []
+        },
+        {
+          "term": "machine learning",
+          "score": 2.834,
+          "evidence": []
+        },
+        {
+          "term": "neural networks",
+          "score": 2.7396,
+          "evidence": []
+        },
+        {
+          "term": "ieee cvf",
+          "score": 2.6535,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "international conference",
+          "score": 163.6458,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 150.7952,
+          "evidence": []
+        },
+        {
+          "term": "machine learning",
+          "score": 144.6052,
+          "evidence": []
+        },
+        {
+          "term": "acm conference",
+          "score": 117.9529,
+          "evidence": []
+        },
+        {
+          "term": "ieee international",
+          "score": 107.4903,
+          "evidence": []
+        },
+        {
+          "term": "proceedings",
+          "score": 104.2804,
+          "evidence": []
+        },
+        {
+          "term": "web conference",
+          "score": 99.6,
+          "evidence": []
+        },
+        {
+          "term": "computing machinery",
+          "score": 88.8045,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "international conference",
+          "score": 3.7442,
+          "evidence": []
+        },
+        {
+          "term": "acm conference",
+          "score": 3.1555,
+          "evidence": []
+        },
+        {
+          "term": "ieee international",
+          "score": 3.095,
+          "evidence": []
+        },
+        {
+          "term": "computing machinery",
+          "score": 2.9881,
+          "evidence": []
+        },
+        {
+          "term": "machine learning",
+          "score": 2.9682,
+          "evidence": []
+        },
+        {
+          "term": "curran associates",
+          "score": 2.9649,
+          "evidence": []
+        },
+        {
+          "term": "neural networks",
+          "score": 2.7458,
+          "evidence": []
+        },
+        {
+          "term": "evaluating explainable",
+          "score": 2.5883,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "international conference",
+          "score": 170.9306,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 154.1455,
+          "evidence": []
+        },
+        {
+          "term": "machine learning",
+          "score": 141.7796,
+          "evidence": []
+        },
+        {
+          "term": "acm conference",
+          "score": 123.5556,
+          "evidence": []
+        },
+        {
+          "term": "ieee international",
+          "score": 109.492,
+          "evidence": []
+        },
+        {
+          "term": "web conference",
+          "score": 104.6721,
+          "evidence": []
+        },
+        {
+          "term": "proceedings",
+          "score": 101.4856,
+          "evidence": []
+        },
+        {
+          "term": "learning research",
+          "score": 86.5153,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "international conference",
+          "score": 3.7442,
+          "evidence": []
+        },
+        {
+          "term": "acm conference",
+          "score": 3.1555,
+          "evidence": []
+        },
+        {
+          "term": "ieee international",
+          "score": 3.095,
+          "evidence": []
+        },
+        {
+          "term": "computing machinery",
+          "score": 2.9881,
+          "evidence": []
+        },
+        {
+          "term": "machine learning",
+          "score": 2.9682,
+          "evidence": []
+        },
+        {
+          "term": "curran associates",
+          "score": 2.9649,
+          "evidence": []
+        },
+        {
+          "term": "neural networks",
+          "score": 2.7458,
+          "evidence": []
+        },
+        {
+          "term": "evaluating explainable",
+          "score": 2.5883,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "devi parikh",
+          "score": 117.6835,
+          "evidence": []
+        },
+        {
+          "term": "sujay khandagale",
+          "score": 92.1954,
+          "evidence": []
+        },
+        {
+          "term": "berkeley",
+          "score": 83.2527,
+          "evidence": []
+        },
+        {
+          "term": "oxford",
+          "score": 81.2958,
+          "evidence": []
+        },
+        {
+          "term": "trinity",
+          "score": 78.6594,
+          "evidence": []
+        },
+        {
+          "term": "delaney",
+          "score": 75.6663,
+          "evidence": []
+        },
+        {
+          "term": "eoin",
+          "score": 75.6663,
+          "evidence": []
+        },
+        {
+          "term": "nian",
+          "score": 73.0512,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

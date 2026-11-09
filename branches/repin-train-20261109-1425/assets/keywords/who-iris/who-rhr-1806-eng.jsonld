@@ -1,0 +1,5332 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "who-rhr-1806-eng",
+  "instance": "who-iris",
+  "about": "library/who-rhr-1806-eng",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 1478,
+    "terms": 11089
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "manage client",
+        "score": 22.8472,
+        "evidence": []
+      },
+      {
+        "term": "client communication",
+        "score": 21.0543,
+        "evidence": []
+      },
+      {
+        "term": "track client",
+        "score": 20.431,
+        "evidence": []
+      },
+      {
+        "term": "client insurance",
+        "score": 18.4667,
+        "evidence": []
+      },
+      {
+        "term": "client medication",
+        "score": 18.1102,
+        "evidence": []
+      },
+      {
+        "term": "untargeted client",
+        "score": 18.0251,
+        "evidence": []
+      },
+      {
+        "term": "client unstructured",
+        "score": 17.7555,
+        "evidence": []
+      },
+      {
+        "term": "client identification",
+        "score": 17.7024,
+        "evidence": []
+      },
+      {
+        "term": "healthcare provider",
+        "score": 17.6949,
+        "evidence": []
+      },
+      {
+        "term": "client personal",
+        "score": 17.6111,
+        "evidence": []
+      },
+      {
+        "term": "targeted client",
+        "score": 17.4795,
+        "evidence": []
+      },
+      {
+        "term": "remote client",
+        "score": 17.3929,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "healthcare provider",
+        "score": 434.5631,
+        "evidence": []
+      },
+      {
+        "term": "manage client",
+        "score": 424.3425,
+        "evidence": []
+      },
+      {
+        "term": "client communication",
+        "score": 395.2711,
+        "evidence": []
+      },
+      {
+        "term": "track client",
+        "score": 378.9232,
+        "evidence": []
+      },
+      {
+        "term": "client insurance",
+        "score": 342.0781,
+        "evidence": []
+      },
+      {
+        "term": "untargeted client",
+        "score": 334.8063,
+        "evidence": []
+      },
+      {
+        "term": "client medication",
+        "score": 332.2783,
+        "evidence": []
+      },
+      {
+        "term": "targeted client",
+        "score": 322.2278,
+        "evidence": []
+      },
+      {
+        "term": "remote client",
+        "score": 322.2037,
+        "evidence": []
+      },
+      {
+        "term": "client unstructured",
+        "score": 318.2158,
+        "evidence": []
+      },
+      {
+        "term": "client identification",
+        "score": 316.9898,
+        "evidence": []
+      },
+      {
+        "term": "client personal",
+        "score": 314.702,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "manage client",
+        "score": 20.0901,
+        "evidence": []
+      },
+      {
+        "term": "healthcare provider",
+        "score": 19.4801,
+        "evidence": []
+      },
+      {
+        "term": "client communication",
+        "score": 18.8129,
+        "evidence": []
+      },
+      {
+        "term": "track client",
+        "score": 18.2237,
+        "evidence": []
+      },
+      {
+        "term": "client medication",
+        "score": 16.5878,
+        "evidence": []
+      },
+      {
+        "term": "client insurance",
+        "score": 16.5799,
+        "evidence": []
+      },
+      {
+        "term": "untargeted client",
+        "score": 16.1976,
+        "evidence": []
+      },
+      {
+        "term": "remote client",
+        "score": 16.0057,
+        "evidence": []
+      },
+      {
+        "term": "client personal",
+        "score": 15.9255,
+        "evidence": []
+      },
+      {
+        "term": "targeted client",
+        "score": 15.9249,
+        "evidence": []
+      },
+      {
+        "term": "client applications",
+        "score": 15.8062,
+        "evidence": []
+      },
+      {
+        "term": "client identification",
+        "score": 15.6171,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "healthcare provider",
+        "score": 482.1779,
+        "evidence": []
+      },
+      {
+        "term": "manage client",
+        "score": 403.0053,
+        "evidence": []
+      },
+      {
+        "term": "client communication",
+        "score": 378.7679,
+        "evidence": []
+      },
+      {
+        "term": "track client",
+        "score": 357.6307,
+        "evidence": []
+      },
+      {
+        "term": "client insurance",
+        "score": 325.087,
+        "evidence": []
+      },
+      {
+        "term": "untargeted client",
+        "score": 317.526,
+        "evidence": []
+      },
+      {
+        "term": "client medication",
+        "score": 316.5077,
+        "evidence": []
+      },
+      {
+        "term": "remote client",
+        "score": 312.469,
+        "evidence": []
+      },
+      {
+        "term": "targeted client",
+        "score": 309.5566,
+        "evidence": []
+      },
+      {
+        "term": "healthcare workers",
+        "score": 304.1078,
+        "evidence": []
+      },
+      {
+        "term": "client personal",
+        "score": 302.2622,
+        "evidence": []
+      },
+      {
+        "term": "client unstructured",
+        "score": 298.9933,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "manage client",
+        "score": 20.0901,
+        "evidence": []
+      },
+      {
+        "term": "healthcare provider",
+        "score": 19.4801,
+        "evidence": []
+      },
+      {
+        "term": "client communication",
+        "score": 18.8129,
+        "evidence": []
+      },
+      {
+        "term": "track client",
+        "score": 18.2237,
+        "evidence": []
+      },
+      {
+        "term": "client medication",
+        "score": 16.5878,
+        "evidence": []
+      },
+      {
+        "term": "client insurance",
+        "score": 16.5799,
+        "evidence": []
+      },
+      {
+        "term": "untargeted client",
+        "score": 16.1976,
+        "evidence": []
+      },
+      {
+        "term": "remote client",
+        "score": 16.0057,
+        "evidence": []
+      },
+      {
+        "term": "client personal",
+        "score": 15.9255,
+        "evidence": []
+      },
+      {
+        "term": "targeted client",
+        "score": 15.9249,
+        "evidence": []
+      },
+      {
+        "term": "client applications",
+        "score": 15.8062,
+        "evidence": []
+      },
+      {
+        "term": "client identification",
+        "score": 15.6171,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "transmit untargeted",
+        "score": 727.8204,
+        "evidence": []
+      },
+      {
+        "term": "transmit non-routine",
+        "score": 676.0458,
+        "evidence": []
+      },
+      {
+        "term": "transmit diagnostics",
+        "score": 643.1405,
+        "evidence": []
+      },
+      {
+        "term": "prescription orders",
+        "score": 596.798,
+        "evidence": []
+      },
+      {
+        "term": "parse unstructured",
+        "score": 559.2506,
+        "evidence": []
+      },
+      {
+        "term": "curate coded",
+        "score": 529.1745,
+        "evidence": []
+      },
+      {
+        "term": "healthcare provider",
+        "score": 491.9513,
+        "evidence": []
+      },
+      {
+        "term": "pocket payments",
+        "score": 481.7462,
+        "evidence": []
+      },
+      {
+        "term": "cate",
+        "score": 418.7568,
+        "evidence": []
+      },
+      {
+        "term": "certifi",
+        "score": 418.7568,
+        "evidence": []
+      },
+      {
+        "term": "notifi",
+        "score": 418.124,
+        "evidence": []
+      },
+      {
+        "term": "ects",
+        "score": 416.8584,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "manage client",
+          "score": 3.0961,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 2.8251,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 2.7592,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 2.5819,
+          "evidence": []
+        },
+        {
+          "term": "verify client",
+          "score": 2.5498,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 2.3224,
+          "evidence": []
+        },
+        {
+          "term": "transmit routine",
+          "score": 2.1837,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 1.9461,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 115.5141,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 98.5808,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 80.4558,
+          "evidence": []
+        },
+        {
+          "term": "verify client",
+          "score": 73.4212,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 73.0567,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 70.5643,
+          "evidence": []
+        },
+        {
+          "term": "transmit routine",
+          "score": 64.5181,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 42.9118,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "manage client",
+          "score": 3.3259,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 2.9317,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 2.7806,
+          "evidence": []
+        },
+        {
+          "term": "verify client",
+          "score": 2.6371,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 2.5498,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 2.3716,
+          "evidence": []
+        },
+        {
+          "term": "transmit routine",
+          "score": 2.2567,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 2.008,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 111.7525,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 99.3545,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 83.1216,
+          "evidence": []
+        },
+        {
+          "term": "verify client",
+          "score": 74.1013,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 69.8589,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 65.7045,
+          "evidence": []
+        },
+        {
+          "term": "transmit routine",
+          "score": 62.0541,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 42.1158,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "manage client",
+          "score": 3.3259,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 2.9317,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 2.7806,
+          "evidence": []
+        },
+        {
+          "term": "verify client",
+          "score": 2.6371,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 2.5498,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 2.3716,
+          "evidence": []
+        },
+        {
+          "term": "transmit routine",
+          "score": 2.2567,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 2.008,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "transmit untargeted",
+          "score": 71.1454,
+          "evidence": []
+        },
+        {
+          "term": "certifi",
+          "score": 46.4349,
+          "evidence": []
+        },
+        {
+          "term": "cate",
+          "score": 46.4349,
+          "evidence": []
+        },
+        {
+          "term": "notifi",
+          "score": 45.5833,
+          "evidence": []
+        },
+        {
+          "term": "ned",
+          "score": 45.2372,
+          "evidence": []
+        },
+        {
+          "term": "undefi",
+          "score": 45.2372,
+          "evidence": []
+        },
+        {
+          "term": "specifi",
+          "score": 45.2372,
+          "evidence": []
+        },
+        {
+          "term": "verifi",
+          "score": 45.2372,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "classification scheme",
+          "score": 1.215,
+          "evidence": []
+        },
+        {
+          "term": "service utilisation",
+          "score": 1.1402,
+          "evidence": []
+        },
+        {
+          "term": "system categories",
+          "score": 1.0168,
+          "evidence": []
+        },
+        {
+          "term": "system challenges",
+          "score": 0.8043,
+          "evidence": []
+        },
+        {
+          "term": "hsc",
+          "score": 0.7849,
+          "evidence": []
+        },
+        {
+          "term": "lmis",
+          "score": 0.6629,
+          "evidence": []
+        },
+        {
+          "term": "articulate",
+          "score": 0.6264,
+          "evidence": []
+        },
+        {
+          "term": "dhis",
+          "score": 0.6071,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "classification scheme",
+          "score": 17.4457,
+          "evidence": []
+        },
+        {
+          "term": "system categories",
+          "score": 15.2723,
+          "evidence": []
+        },
+        {
+          "term": "service utilisation",
+          "score": 13.99,
+          "evidence": []
+        },
+        {
+          "term": "system challenges",
+          "score": 11.9765,
+          "evidence": []
+        },
+        {
+          "term": "hsc",
+          "score": 10.2024,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 10.1992,
+          "evidence": []
+        },
+        {
+          "term": "lmis",
+          "score": 8.708,
+          "evidence": []
+        },
+        {
+          "term": "articulate",
+          "score": 8.0052,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "system challenges",
+          "score": 0.5516,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.504,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.431,
+          "evidence": []
+        },
+        {
+          "term": "system categories",
+          "score": 0.4291,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.395,
+          "evidence": []
+        },
+        {
+          "term": "classification scheme",
+          "score": 0.3464,
+          "evidence": []
+        },
+        {
+          "term": "applications",
+          "score": 0.2427,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.2424,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "digital",
+          "score": 10.0639,
+          "evidence": []
+        },
+        {
+          "term": "system challenges",
+          "score": 5.2472,
+          "evidence": []
+        },
+        {
+          "term": "intervention",
+          "score": 4.6745,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 4.2831,
+          "evidence": []
+        },
+        {
+          "term": "system categories",
+          "score": 3.3437,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 2.9531,
+          "evidence": []
+        },
+        {
+          "term": "enterprise",
+          "score": 2.6107,
+          "evidence": []
+        },
+        {
+          "term": "applications",
+          "score": 2.4488,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "system challenges",
+          "score": 0.5516,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.504,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.431,
+          "evidence": []
+        },
+        {
+          "term": "system categories",
+          "score": 0.4291,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.395,
+          "evidence": []
+        },
+        {
+          "term": "classification scheme",
+          "score": 0.3464,
+          "evidence": []
+        },
+        {
+          "term": "clients",
+          "score": 0.2311,
+          "evidence": []
+        },
+        {
+          "term": "support",
+          "score": 0.2051,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "whodrug",
+          "score": 15.3138,
+          "evidence": []
+        },
+        {
+          "term": "bowman",
+          "score": 13.9697,
+          "evidence": []
+        },
+        {
+          "term": "crafting-your-value-proposition",
+          "score": 13.9697,
+          "evidence": []
+        },
+        {
+          "term": "evalprogplan",
+          "score": 13.9697,
+          "evidence": []
+        },
+        {
+          "term": "mars-library",
+          "score": 13.9697,
+          "evidence": []
+        },
+        {
+          "term": "patton",
+          "score": 13.9697,
+          "evidence": []
+        },
+        {
+          "term": "plann",
+          "score": 13.9697,
+          "evidence": []
+        },
+        {
+          "term": "mars",
+          "score": 13.3275,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 1.252,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 0.9504,
+          "evidence": []
+        },
+        {
+          "term": "technical consultations",
+          "score": 0.9024,
+          "evidence": []
+        },
+        {
+          "term": "public feedback",
+          "score": 0.7948,
+          "evidence": []
+        },
+        {
+          "term": "dhi",
+          "score": 0.7708,
+          "evidence": []
+        },
+        {
+          "term": "commodities",
+          "score": 0.7246,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.684,
+          "evidence": []
+        },
+        {
+          "term": "evolve",
+          "score": 0.6701,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 15.8498,
+          "evidence": []
+        },
+        {
+          "term": "technical consultations",
+          "score": 11.6586,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 11.5062,
+          "evidence": []
+        },
+        {
+          "term": "commodities",
+          "score": 10.4094,
+          "evidence": []
+        },
+        {
+          "term": "public feedback",
+          "score": 10.1001,
+          "evidence": []
+        },
+        {
+          "term": "dhi",
+          "score": 9.8011,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 9.119,
+          "evidence": []
+        },
+        {
+          "term": "evolve",
+          "score": 8.8161,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 0.726,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.5952,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 0.4217,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.3851,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.3831,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.3521,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 0.3337,
+          "evidence": []
+        },
+        {
+          "term": "public feedback",
+          "score": 0.3063,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 14.6882,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 7.2309,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 6.5997,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 6.064,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 3.7203,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 3.7124,
+          "evidence": []
+        },
+        {
+          "term": "public feedback",
+          "score": 3.4203,
+          "evidence": []
+        },
+        {
+          "term": "manage",
+          "score": 3.1529,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "healthcare provider",
+          "score": 0.726,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.5952,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 0.4217,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.3851,
+          "evidence": []
+        },
+        {
+          "term": "interventions",
+          "score": 0.3831,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 0.3337,
+          "evidence": []
+        },
+        {
+          "term": "public feedback",
+          "score": 0.3063,
+          "evidence": []
+        },
+        {
+          "term": "alerts",
+          "score": 0.2849,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "cient",
+          "score": 19.0575,
+          "evidence": []
+        },
+        {
+          "term": "insuffi",
+          "score": 19.0575,
+          "evidence": []
+        },
+        {
+          "term": "benefi",
+          "score": 19.0575,
+          "evidence": []
+        },
+        {
+          "term": "ciary",
+          "score": 19.0575,
+          "evidence": []
+        },
+        {
+          "term": "ective",
+          "score": 19.0575,
+          "evidence": []
+        },
+        {
+          "term": "qualifi",
+          "score": 19.0575,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 18.7921,
+          "evidence": []
+        },
+        {
+          "term": "workﬂ",
+          "score": 18.3331,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "insufficient",
+          "score": 1.3592,
+          "evidence": []
+        },
+        {
+          "term": "lack",
+          "score": 1.0733,
+          "evidence": []
+        },
+        {
+          "term": "inadequate",
+          "score": 1.0149,
+          "evidence": []
+        },
+        {
+          "term": "poor",
+          "score": 0.7858,
+          "evidence": []
+        },
+        {
+          "term": "commodities",
+          "score": 0.7246,
+          "evidence": []
+        },
+        {
+          "term": "delayed",
+          "score": 0.6782,
+          "evidence": []
+        },
+        {
+          "term": "utilization",
+          "score": 0.5576,
+          "evidence": []
+        },
+        {
+          "term": "adherence",
+          "score": 0.4835,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "insufficient",
+          "score": 33.3036,
+          "evidence": []
+        },
+        {
+          "term": "lack",
+          "score": 25.8087,
+          "evidence": []
+        },
+        {
+          "term": "inadequate",
+          "score": 17.0157,
+          "evidence": []
+        },
+        {
+          "term": "poor",
+          "score": 13.0924,
+          "evidence": []
+        },
+        {
+          "term": "commodities",
+          "score": 10.4094,
+          "evidence": []
+        },
+        {
+          "term": "delayed",
+          "score": 8.4148,
+          "evidence": []
+        },
+        {
+          "term": "utilization",
+          "score": 6.9836,
+          "evidence": []
+        },
+        {
+          "term": "adherence",
+          "score": 6.2791,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lack",
+          "score": 0.5483,
+          "evidence": []
+        },
+        {
+          "term": "inadequate",
+          "score": 0.4441,
+          "evidence": []
+        },
+        {
+          "term": "cient",
+          "score": 0.3867,
+          "evidence": []
+        },
+        {
+          "term": "insuffi",
+          "score": 0.3867,
+          "evidence": []
+        },
+        {
+          "term": "poor",
+          "score": 0.3597,
+          "evidence": []
+        },
+        {
+          "term": "commodities",
+          "score": 0.2895,
+          "evidence": []
+        },
+        {
+          "term": "workers",
+          "score": 0.2854,
+          "evidence": []
+        },
+        {
+          "term": "cation",
+          "score": 0.2813,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lack",
+          "score": 7.0346,
+          "evidence": []
+        },
+        {
+          "term": "cient",
+          "score": 6.5989,
+          "evidence": []
+        },
+        {
+          "term": "insuffi",
+          "score": 6.5989,
+          "evidence": []
+        },
+        {
+          "term": "inadequate",
+          "score": 4.947,
+          "evidence": []
+        },
+        {
+          "term": "person",
+          "score": 4.2889,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 4.0901,
+          "evidence": []
+        },
+        {
+          "term": "cation",
+          "score": 4.0149,
+          "evidence": []
+        },
+        {
+          "term": "identifi",
+          "score": 3.0768,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lack",
+          "score": 0.5483,
+          "evidence": []
+        },
+        {
+          "term": "inadequate",
+          "score": 0.4441,
+          "evidence": []
+        },
+        {
+          "term": "poor",
+          "score": 0.3597,
+          "evidence": []
+        },
+        {
+          "term": "commodities",
+          "score": 0.2895,
+          "evidence": []
+        },
+        {
+          "term": "delayed",
+          "score": 0.2592,
+          "evidence": []
+        },
+        {
+          "term": "worker",
+          "score": 0.2536,
+          "evidence": []
+        },
+        {
+          "term": "insufficient",
+          "score": 0.25,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.2344,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "uhf",
+          "score": 111.7766,
+          "evidence": []
+        },
+        {
+          "term": "benefi",
+          "score": 67.5788,
+          "evidence": []
+        },
+        {
+          "term": "ciary",
+          "score": 67.5788,
+          "evidence": []
+        },
+        {
+          "term": "cient",
+          "score": 67.5788,
+          "evidence": []
+        },
+        {
+          "term": "ective",
+          "score": 67.5788,
+          "evidence": []
+        },
+        {
+          "term": "insuffi",
+          "score": 67.5788,
+          "evidence": []
+        },
+        {
+          "term": "qualifi",
+          "score": 67.5788,
+          "evidence": []
+        },
+        {
+          "term": "client-side",
+          "score": 64.0265,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "accessed march",
+          "score": 1.619,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 1.0565,
+          "evidence": []
+        },
+        {
+          "term": "standards organization",
+          "score": 0.9114,
+          "evidence": []
+        },
+        {
+          "term": "management information",
+          "score": 0.841,
+          "evidence": []
+        },
+        {
+          "term": "international standards",
+          "score": 0.7745,
+          "evidence": []
+        },
+        {
+          "term": "record",
+          "score": 0.7376,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.684,
+          "evidence": []
+        },
+        {
+          "term": "iso",
+          "score": 0.6583,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "information system",
+          "score": 27.2694,
+          "evidence": []
+        },
+        {
+          "term": "accessed march",
+          "score": 22.814,
+          "evidence": []
+        },
+        {
+          "term": "management information",
+          "score": 15.0735,
+          "evidence": []
+        },
+        {
+          "term": "standards organization",
+          "score": 10.4925,
+          "evidence": []
+        },
+        {
+          "term": "international standards",
+          "score": 8.8624,
+          "evidence": []
+        },
+        {
+          "term": "iso",
+          "score": 8.0807,
+          "evidence": []
+        },
+        {
+          "term": "record",
+          "score": 7.7667,
+          "evidence": []
+        },
+        {
+          "term": "ehealth",
+          "score": 5.7116,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "accessed march",
+          "score": 0.7846,
+          "evidence": []
+        },
+        {
+          "term": "standards organization",
+          "score": 0.5157,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 0.4329,
+          "evidence": []
+        },
+        {
+          "term": "international standards",
+          "score": 0.4035,
+          "evidence": []
+        },
+        {
+          "term": "management information",
+          "score": 0.4006,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.379,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.3763,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 0.3011,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "accessed march",
+          "score": 9.961,
+          "evidence": []
+        },
+        {
+          "term": "standards organization",
+          "score": 5.4647,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 5.1353,
+          "evidence": []
+        },
+        {
+          "term": "management information",
+          "score": 4.3683,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 3.9945,
+          "evidence": []
+        },
+        {
+          "term": "november",
+          "score": 3.9611,
+          "evidence": []
+        },
+        {
+          "term": "international standards",
+          "score": 3.9524,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 3.6434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "accessed march",
+          "score": 0.7846,
+          "evidence": []
+        },
+        {
+          "term": "standards organization",
+          "score": 0.5157,
+          "evidence": []
+        },
+        {
+          "term": "information system",
+          "score": 0.4329,
+          "evidence": []
+        },
+        {
+          "term": "international standards",
+          "score": 0.4035,
+          "evidence": []
+        },
+        {
+          "term": "management information",
+          "score": 0.4006,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.379,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.3763,
+          "evidence": []
+        },
+        {
+          "term": "page",
+          "score": 0.2453,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "boosts",
+          "score": 35.4555,
+          "evidence": []
+        },
+        {
+          "term": "hawkins",
+          "score": 35.4555,
+          "evidence": []
+        },
+        {
+          "term": "africa-teledermatology-project",
+          "score": 35.449,
+          "evidence": []
+        },
+        {
+          "term": "amarillo",
+          "score": 35.449,
+          "evidence": []
+        },
+        {
+          "term": "baja",
+          "score": 35.449,
+          "evidence": []
+        },
+        {
+          "term": "castillo-carandang",
+          "score": 35.449,
+          "evidence": []
+        },
+        {
+          "term": "gay",
+          "score": 35.449,
+          "evidence": []
+        },
+        {
+          "term": "healthmarketinnovations",
+          "score": 35.449,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "transmit untargeted",
+          "score": 2.2801,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 2.23,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 1.8597,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 1.168,
+          "evidence": []
+        },
+        {
+          "term": "undefined",
+          "score": 0.8142,
+          "evidence": []
+        },
+        {
+          "term": "manage",
+          "score": 0.5485,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "transmit untargeted",
+          "score": 47.7898,
+          "evidence": []
+        },
+        {
+          "term": "client communication",
+          "score": 45.3878,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 40.1728,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 15.3552,
+          "evidence": []
+        },
+        {
+          "term": "undefined",
+          "score": 10.7051,
+          "evidence": []
+        },
+        {
+          "term": "manage",
+          "score": 7.2697,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "client communication",
+          "score": 1.3938,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 0.9444,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 0.8967,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 0.6986,
+          "evidence": []
+        },
+        {
+          "term": "provider",
+          "score": 0.32,
+          "evidence": []
+        },
+        {
+          "term": "undefined",
+          "score": 0.2981,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "client communication",
+          "score": 33.523,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 22.0982,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 20.4359,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 10.9049,
+          "evidence": []
+        },
+        {
+          "term": "provider",
+          "score": 10.8736,
+          "evidence": []
+        },
+        {
+          "term": "healthcare",
+          "score": 8.9935,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "client communication",
+          "score": 1.3938,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 0.9444,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 0.8967,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 0.6986,
+          "evidence": []
+        },
+        {
+          "term": "undefined",
+          "score": 0.2981,
+          "evidence": []
+        },
+        {
+          "term": "manage",
+          "score": 0.2594,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "transmit untargeted",
+          "score": 108.1004,
+          "evidence": []
+        },
+        {
+          "term": "kibaale",
+          "score": 63.9187,
+          "evidence": []
+        },
+        {
+          "term": "bundibugyo",
+          "score": 63.9187,
+          "evidence": []
+        },
+        {
+          "term": "hoima",
+          "score": 63.9187,
+          "evidence": []
+        },
+        {
+          "term": "ibanda",
+          "score": 63.9187,
+          "evidence": []
+        },
+        {
+          "term": "kabarole",
+          "score": 63.9187,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 2.555,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 2.1297,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 1.2773,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 1.0979,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 1.0191,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic",
+          "score": 0.8052,
+          "evidence": []
+        },
+        {
+          "term": "prescription",
+          "score": 0.7544,
+          "evidence": []
+        },
+        {
+          "term": "medication",
+          "score": 0.6969,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 84.1734,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 35.4925,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 18.0478,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 17.4875,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 13.6954,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic",
+          "score": 13.5457,
+          "evidence": []
+        },
+        {
+          "term": "track",
+          "score": 10.2842,
+          "evidence": []
+        },
+        {
+          "term": "prescription",
+          "score": 9.8011,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "manage client",
+          "score": 1.6092,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.6051,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 0.8026,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.7888,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 0.735,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic",
+          "score": 0.5088,
+          "evidence": []
+        },
+        {
+          "term": "alerts",
+          "score": 0.4177,
+          "evidence": []
+        },
+        {
+          "term": "medication",
+          "score": 0.4072,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 59.603,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 37.1754,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 22.3076,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 19.1533,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 9.4692,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic",
+          "score": 8.8246,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 8.7057,
+          "evidence": []
+        },
+        {
+          "term": "alerts",
+          "score": 8.2907,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "manage client",
+          "score": 1.6092,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.6051,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 0.8026,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.7888,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 0.735,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic",
+          "score": 0.5088,
+          "evidence": []
+        },
+        {
+          "term": "alerts",
+          "score": 0.4177,
+          "evidence": []
+        },
+        {
+          "term": "medication",
+          "score": 0.4072,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 56.874,
+          "evidence": []
+        },
+        {
+          "term": "ects",
+          "score": 51.7385,
+          "evidence": []
+        },
+        {
+          "term": "nancing",
+          "score": 51.7385,
+          "evidence": []
+        },
+        {
+          "term": "notifi",
+          "score": 51.5059,
+          "evidence": []
+        },
+        {
+          "term": "certifi",
+          "score": 51.3896,
+          "evidence": []
+        },
+        {
+          "term": "cate",
+          "score": 51.3896,
+          "evidence": []
+        },
+        {
+          "term": "ned",
+          "score": 50.8482,
+          "evidence": []
+        },
+        {
+          "term": "undefi",
+          "score": 50.8482,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "death event",
+          "score": 1.631,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.6182,
+          "evidence": []
+        },
+        {
+          "term": "birth event",
+          "score": 1.5441,
+          "evidence": []
+        },
+        {
+          "term": "commodities",
+          "score": 0.9366,
+          "evidence": []
+        },
+        {
+          "term": "notify",
+          "score": 0.7907,
+          "evidence": []
+        },
+        {
+          "term": "register",
+          "score": 0.7718,
+          "evidence": []
+        },
+        {
+          "term": "manage",
+          "score": 0.7699,
+          "evidence": []
+        },
+        {
+          "term": "certify",
+          "score": 0.7679,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "death event",
+          "score": 28.4675,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 26.4164,
+          "evidence": []
+        },
+        {
+          "term": "birth event",
+          "score": 25.8463,
+          "evidence": []
+        },
+        {
+          "term": "commodities",
+          "score": 17.349,
+          "evidence": []
+        },
+        {
+          "term": "manage",
+          "score": 14.5395,
+          "evidence": []
+        },
+        {
+          "term": "register",
+          "score": 12.952,
+          "evidence": []
+        },
+        {
+          "term": "notify",
+          "score": 12.0078,
+          "evidence": []
+        },
+        {
+          "term": "certify",
+          "score": 10.2024,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 0.9722,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 0.8726,
+          "evidence": []
+        },
+        {
+          "term": "birth event",
+          "score": 0.8249,
+          "evidence": []
+        },
+        {
+          "term": "manage",
+          "score": 0.5049,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 0.4934,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.4917,
+          "evidence": []
+        },
+        {
+          "term": "registration",
+          "score": 0.4432,
+          "evidence": []
+        },
+        {
+          "term": "commodities",
+          "score": 0.3977,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 23.1999,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 16.8109,
+          "evidence": []
+        },
+        {
+          "term": "birth event",
+          "score": 14.7215,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 10.9183,
+          "evidence": []
+        },
+        {
+          "term": "manage",
+          "score": 10.2802,
+          "evidence": []
+        },
+        {
+          "term": "registration",
+          "score": 7.0651,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 6.825,
+          "evidence": []
+        },
+        {
+          "term": "commodities",
+          "score": 6.3793,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "healthcare provider",
+          "score": 0.9722,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 0.8726,
+          "evidence": []
+        },
+        {
+          "term": "birth event",
+          "score": 0.8249,
+          "evidence": []
+        },
+        {
+          "term": "manage",
+          "score": 0.5049,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.4917,
+          "evidence": []
+        },
+        {
+          "term": "registration",
+          "score": 0.4432,
+          "evidence": []
+        },
+        {
+          "term": "commodities",
+          "score": 0.3977,
+          "evidence": []
+        },
+        {
+          "term": "register",
+          "score": 0.3681,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "certifi",
+          "score": 65.8202,
+          "evidence": []
+        },
+        {
+          "term": "cate",
+          "score": 65.8202,
+          "evidence": []
+        },
+        {
+          "term": "notifi",
+          "score": 62.9308,
+          "evidence": []
+        },
+        {
+          "term": "nancial",
+          "score": 60.7093,
+          "evidence": []
+        },
+        {
+          "term": "ned",
+          "score": 59.484,
+          "evidence": []
+        },
+        {
+          "term": "undefi",
+          "score": 59.484,
+          "evidence": []
+        },
+        {
+          "term": "specifi",
+          "score": 59.484,
+          "evidence": []
+        },
+        {
+          "term": "verifi",
+          "score": 59.484,
+          "evidence": []
+        }
+      ]
+    },
+    "page-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "map location",
+          "score": 1.8821,
+          "evidence": []
+        },
+        {
+          "term": "de-duplicate",
+          "score": 0.4957,
+          "evidence": []
+        },
+        {
+          "term": "curate",
+          "score": 0.4845,
+          "evidence": []
+        },
+        {
+          "term": "parse",
+          "score": 0.4845,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "map location",
+          "score": 28.1139,
+          "evidence": []
+        },
+        {
+          "term": "de-duplicate",
+          "score": 5.219,
+          "evidence": []
+        },
+        {
+          "term": "curate",
+          "score": 5.1012,
+          "evidence": []
+        },
+        {
+          "term": "parse",
+          "score": 5.1012,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "map location",
+          "score": 0.5838,
+          "evidence": []
+        },
+        {
+          "term": "mapping",
+          "score": 0.213,
+          "evidence": []
+        },
+        {
+          "term": "healthcare",
+          "score": 0.1929,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.1725,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "map location",
+          "score": 5.1573,
+          "evidence": []
+        },
+        {
+          "term": "maps",
+          "score": 3.6125,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 2.7388,
+          "evidence": []
+        },
+        {
+          "term": "mapping",
+          "score": 2.6696,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "map location",
+          "score": 0.5838,
+          "evidence": []
+        },
+        {
+          "term": "mapping",
+          "score": 0.213,
+          "evidence": []
+        },
+        {
+          "term": "healthcare",
+          "score": 0.1929,
+          "evidence": []
+        },
+        {
+          "term": "collection",
+          "score": 0.1648,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "compass",
+          "score": 68.6938,
+          "evidence": []
+        },
+        {
+          "term": "dirty",
+          "score": 64.4957,
+          "evidence": []
+        },
+        {
+          "term": "geospatial",
+          "score": 59.2185,
+          "evidence": []
+        },
+        {
+          "term": "geo",
+          "score": 59.2094,
+          "evidence": []
+        }
+      ]
+    },
+    "page-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "client communication",
+          "score": 2.6022,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 2.2334,
+          "evidence": []
+        },
+        {
+          "term": "messaging campaign",
+          "score": 1.991,
+          "evidence": []
+        },
+        {
+          "term": "sms reminders",
+          "score": 1.9051,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 1.8177,
+          "evidence": []
+        },
+        {
+          "term": "event notification",
+          "score": 1.7431,
+          "evidence": []
+        },
+        {
+          "term": "mass messaging",
+          "score": 1.7106,
+          "evidence": []
+        },
+        {
+          "term": "undefined target",
+          "score": 1.6283,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "client communication",
+          "score": 62.5233,
+          "evidence": []
+        },
+        {
+          "term": "sms reminders",
+          "score": 42.9619,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 42.0623,
+          "evidence": []
+        },
+        {
+          "term": "messaging campaign",
+          "score": 36.0731,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 34.4686,
+          "evidence": []
+        },
+        {
+          "term": "peer group",
+          "score": 31.3205,
+          "evidence": []
+        },
+        {
+          "term": "mass messaging",
+          "score": 30.1372,
+          "evidence": []
+        },
+        {
+          "term": "event notification",
+          "score": 29.8781,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "client communication",
+          "score": 2.8925,
+          "evidence": []
+        },
+        {
+          "term": "sms reminders",
+          "score": 1.9577,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 1.9267,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 1.9079,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 1.5771,
+          "evidence": []
+        },
+        {
+          "term": "messaging campaign",
+          "score": 1.5367,
+          "evidence": []
+        },
+        {
+          "term": "mass messaging",
+          "score": 1.4835,
+          "evidence": []
+        },
+        {
+          "term": "event notification",
+          "score": 1.471,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "client communication",
+          "score": 49.0768,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 22.7658,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 21.9279,
+          "evidence": []
+        },
+        {
+          "term": "sms reminders",
+          "score": 19.273,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 16.7872,
+          "evidence": []
+        },
+        {
+          "term": "peer group",
+          "score": 15.4198,
+          "evidence": []
+        },
+        {
+          "term": "event notification",
+          "score": 14.4919,
+          "evidence": []
+        },
+        {
+          "term": "mass messaging",
+          "score": 13.3415,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "client communication",
+          "score": 2.8925,
+          "evidence": []
+        },
+        {
+          "term": "sms reminders",
+          "score": 1.9577,
+          "evidence": []
+        },
+        {
+          "term": "transmit untargeted",
+          "score": 1.9267,
+          "evidence": []
+        },
+        {
+          "term": "transmit targeted",
+          "score": 1.9079,
+          "evidence": []
+        },
+        {
+          "term": "event alerts",
+          "score": 1.5771,
+          "evidence": []
+        },
+        {
+          "term": "messaging campaign",
+          "score": 1.5367,
+          "evidence": []
+        },
+        {
+          "term": "mass messaging",
+          "score": 1.4835,
+          "evidence": []
+        },
+        {
+          "term": "event notification",
+          "score": 1.471,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "kibaale",
+          "score": 136.5262,
+          "evidence": []
+        },
+        {
+          "term": "bundibugyo",
+          "score": 136.5262,
+          "evidence": []
+        },
+        {
+          "term": "hoima",
+          "score": 136.5262,
+          "evidence": []
+        },
+        {
+          "term": "ibanda",
+          "score": 136.5262,
+          "evidence": []
+        },
+        {
+          "term": "kabarole",
+          "score": 136.5262,
+          "evidence": []
+        },
+        {
+          "term": "kiboga",
+          "score": 136.5262,
+          "evidence": []
+        },
+        {
+          "term": "kyankwanzi",
+          "score": 136.5262,
+          "evidence": []
+        },
+        {
+          "term": "kyegegwa",
+          "score": 136.5262,
+          "evidence": []
+        }
+      ]
+    },
+    "page-011": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "client personal",
+          "score": 2.525,
+          "evidence": []
+        },
+        {
+          "term": "cash transfers",
+          "score": 2.3478,
+          "evidence": []
+        },
+        {
+          "term": "conditional cash",
+          "score": 2.1302,
+          "evidence": []
+        },
+        {
+          "term": "weighing card",
+          "score": 1.7916,
+          "evidence": []
+        },
+        {
+          "term": "wearables",
+          "score": 1.1955,
+          "evidence": []
+        },
+        {
+          "term": "financial transactions",
+          "score": 1.1901,
+          "evidence": []
+        },
+        {
+          "term": "airtel",
+          "score": 1.0028,
+          "evidence": []
+        },
+        {
+          "term": "smartcard",
+          "score": 0.9943,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "client personal",
+          "score": 55.0983,
+          "evidence": []
+        },
+        {
+          "term": "cash transfers",
+          "score": 41.4994,
+          "evidence": []
+        },
+        {
+          "term": "conditional cash",
+          "score": 38.0413,
+          "evidence": []
+        },
+        {
+          "term": "weighing card",
+          "score": 24.4075,
+          "evidence": []
+        },
+        {
+          "term": "wearables",
+          "score": 18.5995,
+          "evidence": []
+        },
+        {
+          "term": "financial transactions",
+          "score": 17.6831,
+          "evidence": []
+        },
+        {
+          "term": "sms",
+          "score": 17.6504,
+          "evidence": []
+        },
+        {
+          "term": "payments",
+          "score": 16.8296,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "client personal",
+          "score": 2.5022,
+          "evidence": []
+        },
+        {
+          "term": "cash transfers",
+          "score": 0.9078,
+          "evidence": []
+        },
+        {
+          "term": "conditional cash",
+          "score": 0.8593,
+          "evidence": []
+        },
+        {
+          "term": "record",
+          "score": 0.722,
+          "evidence": []
+        },
+        {
+          "term": "mobile",
+          "score": 0.7183,
+          "evidence": []
+        },
+        {
+          "term": "financial transactions",
+          "score": 0.7163,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.6987,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.6919,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "client personal",
+          "score": 45.674,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 14.5818,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 9.8587,
+          "evidence": []
+        },
+        {
+          "term": "mobile",
+          "score": 9.0788,
+          "evidence": []
+        },
+        {
+          "term": "alerts",
+          "score": 7.9148,
+          "evidence": []
+        },
+        {
+          "term": "sms",
+          "score": 7.8418,
+          "evidence": []
+        },
+        {
+          "term": "record",
+          "score": 7.7742,
+          "evidence": []
+        },
+        {
+          "term": "digital",
+          "score": 7.5672,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "client personal",
+          "score": 2.5022,
+          "evidence": []
+        },
+        {
+          "term": "cash transfers",
+          "score": 0.9078,
+          "evidence": []
+        },
+        {
+          "term": "conditional cash",
+          "score": 0.8593,
+          "evidence": []
+        },
+        {
+          "term": "record",
+          "score": 0.722,
+          "evidence": []
+        },
+        {
+          "term": "mobile",
+          "score": 0.7183,
+          "evidence": []
+        },
+        {
+          "term": "financial transactions",
+          "score": 0.7163,
+          "evidence": []
+        },
+        {
+          "term": "transmit",
+          "score": 0.6987,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.6919,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "cash transfers",
+          "score": 86.2515,
+          "evidence": []
+        },
+        {
+          "term": "smartcard",
+          "score": 77.7943,
+          "evidence": []
+        },
+        {
+          "term": "voucher",
+          "score": 77.7943,
+          "evidence": []
+        },
+        {
+          "term": "bearer",
+          "score": 77.7943,
+          "evidence": []
+        },
+        {
+          "term": "franchise",
+          "score": 77.7943,
+          "evidence": []
+        },
+        {
+          "term": "mosquito",
+          "score": 77.7943,
+          "evidence": []
+        },
+        {
+          "term": "pre-paid",
+          "score": 77.7943,
+          "evidence": []
+        },
+        {
+          "term": "redemption",
+          "score": 77.7943,
+          "evidence": []
+        }
+      ]
+    },
+    "page-012": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "manage client",
+          "score": 2.2798,
+          "evidence": []
+        },
+        {
+          "term": "client registry",
+          "score": 2.2206,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 1.9402,
+          "evidence": []
+        },
+        {
+          "term": "register children",
+          "score": 1.8298,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 1.814,
+          "evidence": []
+        },
+        {
+          "term": "catholic relief",
+          "score": 1.7777,
+          "evidence": []
+        },
+        {
+          "term": "job aid",
+          "score": 1.7584,
+          "evidence": []
+        },
+        {
+          "term": "clinical algorithms",
+          "score": 1.7133,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "manage client",
+          "score": 43.2323,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 41.5382,
+          "evidence": []
+        },
+        {
+          "term": "client registry",
+          "score": 41.4728,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 40.9802,
+          "evidence": []
+        },
+        {
+          "term": "register children",
+          "score": 37.0042,
+          "evidence": []
+        },
+        {
+          "term": "clinical algorithms",
+          "score": 36.6349,
+          "evidence": []
+        },
+        {
+          "term": "job aid",
+          "score": 33.388,
+          "evidence": []
+        },
+        {
+          "term": "commcare mobile",
+          "score": 26.5884,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "clinical records",
+          "score": 1.9838,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 1.9813,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 1.816,
+          "evidence": []
+        },
+        {
+          "term": "client registry",
+          "score": 1.6887,
+          "evidence": []
+        },
+        {
+          "term": "clinical algorithms",
+          "score": 1.5426,
+          "evidence": []
+        },
+        {
+          "term": "service delivery",
+          "score": 1.1703,
+          "evidence": []
+        },
+        {
+          "term": "decision support",
+          "score": 1.1615,
+          "evidence": []
+        },
+        {
+          "term": "care plans",
+          "score": 1.1214,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "manage client",
+          "score": 30.2516,
+          "evidence": []
+        },
+        {
+          "term": "client registry",
+          "score": 29.7742,
+          "evidence": []
+        },
+        {
+          "term": "clinical records",
+          "score": 23.1438,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 21.7463,
+          "evidence": []
+        },
+        {
+          "term": "support service",
+          "score": 17.311,
+          "evidence": []
+        },
+        {
+          "term": "decision support",
+          "score": 16.7502,
+          "evidence": []
+        },
+        {
+          "term": "service delivery",
+          "score": 16.0576,
+          "evidence": []
+        },
+        {
+          "term": "clinical algorithms",
+          "score": 14.403,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "clinical records",
+          "score": 1.9838,
+          "evidence": []
+        },
+        {
+          "term": "medical record",
+          "score": 1.9813,
+          "evidence": []
+        },
+        {
+          "term": "manage client",
+          "score": 1.816,
+          "evidence": []
+        },
+        {
+          "term": "client registry",
+          "score": 1.6887,
+          "evidence": []
+        },
+        {
+          "term": "clinical algorithms",
+          "score": 1.5426,
+          "evidence": []
+        },
+        {
+          "term": "service delivery",
+          "score": 1.1703,
+          "evidence": []
+        },
+        {
+          "term": "decision support",
+          "score": 1.1615,
+          "evidence": []
+        },
+        {
+          "term": "care plans",
+          "score": 1.1214,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "biosignals",
+          "score": 22.3507,
+          "evidence": []
+        },
+        {
+          "term": "alarms",
+          "score": 22.3507,
+          "evidence": []
+        },
+        {
+          "term": "cameras",
+          "score": 22.3507,
+          "evidence": []
+        },
+        {
+          "term": "dermatologists",
+          "score": 22.3507,
+          "evidence": []
+        },
+        {
+          "term": "helpline",
+          "score": 22.3507,
+          "evidence": []
+        },
+        {
+          "term": "implanted",
+          "score": 22.3507,
+          "evidence": []
+        },
+        {
+          "term": "inter-provider",
+          "score": 22.3507,
+          "evidence": []
+        },
+        {
+          "term": "synchronous",
+          "score": 22.3507,
+          "evidence": []
+        }
+      ]
+    },
+    "page-013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 2.5157,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 1.8326,
+          "evidence": []
+        },
+        {
+          "term": "phone-based communication",
+          "score": 1.791,
+          "evidence": []
+        },
+        {
+          "term": "chat feature",
+          "score": 1.5337,
+          "evidence": []
+        },
+        {
+          "term": "text messaging",
+          "score": 1.4344,
+          "evidence": []
+        },
+        {
+          "term": "africa teledermatology",
+          "score": 1.4215,
+          "evidence": []
+        },
+        {
+          "term": "referral management",
+          "score": 1.4136,
+          "evidence": []
+        },
+        {
+          "term": "group chat",
+          "score": 1.4051,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 80.9933,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 43.819,
+          "evidence": []
+        },
+        {
+          "term": "phone-based communication",
+          "score": 43.6456,
+          "evidence": []
+        },
+        {
+          "term": "communication system",
+          "score": 37.9925,
+          "evidence": []
+        },
+        {
+          "term": "referral management",
+          "score": 27.2892,
+          "evidence": []
+        },
+        {
+          "term": "text messaging",
+          "score": 25.8638,
+          "evidence": []
+        },
+        {
+          "term": "performance feedback",
+          "score": 24.2929,
+          "evidence": []
+        },
+        {
+          "term": "telemedicine",
+          "score": 24.0156,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 3.1939,
+          "evidence": []
+        },
+        {
+          "term": "phone-based communication",
+          "score": 1.8873,
+          "evidence": []
+        },
+        {
+          "term": "communication system",
+          "score": 1.5747,
+          "evidence": []
+        },
+        {
+          "term": "text messaging",
+          "score": 1.5698,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 1.4987,
+          "evidence": []
+        },
+        {
+          "term": "mobile phone-based",
+          "score": 1.4296,
+          "evidence": []
+        },
+        {
+          "term": "social services",
+          "score": 1.4196,
+          "evidence": []
+        },
+        {
+          "term": "text message",
+          "score": 1.3531,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 84.2446,
+          "evidence": []
+        },
+        {
+          "term": "phone-based communication",
+          "score": 38.0071,
+          "evidence": []
+        },
+        {
+          "term": "communication system",
+          "score": 36.022,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 27.7709,
+          "evidence": []
+        },
+        {
+          "term": "text messaging",
+          "score": 25.2899,
+          "evidence": []
+        },
+        {
+          "term": "referral management",
+          "score": 23.1132,
+          "evidence": []
+        },
+        {
+          "term": "mobile phone-based",
+          "score": 21.7421,
+          "evidence": []
+        },
+        {
+          "term": "social services",
+          "score": 21.7095,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "healthcare provider",
+          "score": 3.1939,
+          "evidence": []
+        },
+        {
+          "term": "phone-based communication",
+          "score": 1.8873,
+          "evidence": []
+        },
+        {
+          "term": "communication system",
+          "score": 1.5747,
+          "evidence": []
+        },
+        {
+          "term": "text messaging",
+          "score": 1.5698,
+          "evidence": []
+        },
+        {
+          "term": "manage referrals",
+          "score": 1.4987,
+          "evidence": []
+        },
+        {
+          "term": "mobile phone-based",
+          "score": 1.4296,
+          "evidence": []
+        },
+        {
+          "term": "social services",
+          "score": 1.4196,
+          "evidence": []
+        },
+        {
+          "term": "text message",
+          "score": 1.3531,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "biosignals",
+          "score": 104.9553,
+          "evidence": []
+        },
+        {
+          "term": "alarms",
+          "score": 104.9553,
+          "evidence": []
+        },
+        {
+          "term": "cameras",
+          "score": 104.9553,
+          "evidence": []
+        },
+        {
+          "term": "dermatologists",
+          "score": 104.9553,
+          "evidence": []
+        },
+        {
+          "term": "helpline",
+          "score": 104.9553,
+          "evidence": []
+        },
+        {
+          "term": "implanted",
+          "score": 104.9553,
+          "evidence": []
+        },
+        {
+          "term": "inter-provider",
+          "score": 104.9553,
+          "evidence": []
+        },
+        {
+          "term": "synchronous",
+          "score": 104.9553,
+          "evidence": []
+        }
+      ]
+    },
+    "page-014": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prescription orders",
+          "score": 2.3331,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic orders",
+          "score": 2.2015,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 2.0883,
+          "evidence": []
+        },
+        {
+          "term": "adverse drug",
+          "score": 1.7253,
+          "evidence": []
+        },
+        {
+          "term": "drug reactions",
+          "score": 1.7069,
+          "evidence": []
+        },
+        {
+          "term": "blood donations",
+          "score": 1.6243,
+          "evidence": []
+        },
+        {
+          "term": "automated scheduling",
+          "score": 1.6236,
+          "evidence": []
+        },
+        {
+          "term": "educational videos",
+          "score": 1.5716,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "healthcare provider",
+          "score": 49.2937,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic orders",
+          "score": 47.1099,
+          "evidence": []
+        },
+        {
+          "term": "prescription orders",
+          "score": 46.3936,
+          "evidence": []
+        },
+        {
+          "term": "adverse drug",
+          "score": 30.2219,
+          "evidence": []
+        },
+        {
+          "term": "provider training",
+          "score": 29.4166,
+          "evidence": []
+        },
+        {
+          "term": "medication",
+          "score": 28.2824,
+          "evidence": []
+        },
+        {
+          "term": "drug reactions",
+          "score": 26.3001,
+          "evidence": []
+        },
+        {
+          "term": "automated scheduling",
+          "score": 26.1768,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 2.3526,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic orders",
+          "score": 2.0361,
+          "evidence": []
+        },
+        {
+          "term": "prescription orders",
+          "score": 2.0232,
+          "evidence": []
+        },
+        {
+          "term": "adverse drug",
+          "score": 1.6871,
+          "evidence": []
+        },
+        {
+          "term": "provider training",
+          "score": 1.6509,
+          "evidence": []
+        },
+        {
+          "term": "drug reactions",
+          "score": 1.5903,
+          "evidence": []
+        },
+        {
+          "term": "mobile phone",
+          "score": 1.3427,
+          "evidence": []
+        },
+        {
+          "term": "delivery app",
+          "score": 1.219,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 48.7316,
+          "evidence": []
+        },
+        {
+          "term": "provider training",
+          "score": 29.258,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic orders",
+          "score": 13.8518,
+          "evidence": []
+        },
+        {
+          "term": "medication",
+          "score": 13.5771,
+          "evidence": []
+        },
+        {
+          "term": "delivery app",
+          "score": 13.4192,
+          "evidence": []
+        },
+        {
+          "term": "client",
+          "score": 12.8212,
+          "evidence": []
+        },
+        {
+          "term": "adverse drug",
+          "score": 12.2091,
+          "evidence": []
+        },
+        {
+          "term": "mobile phone",
+          "score": 12.0995,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "healthcare provider",
+          "score": 2.3526,
+          "evidence": []
+        },
+        {
+          "term": "diagnostic orders",
+          "score": 2.0361,
+          "evidence": []
+        },
+        {
+          "term": "prescription orders",
+          "score": 2.0232,
+          "evidence": []
+        },
+        {
+          "term": "adverse drug",
+          "score": 1.6871,
+          "evidence": []
+        },
+        {
+          "term": "provider training",
+          "score": 1.6509,
+          "evidence": []
+        },
+        {
+          "term": "drug reactions",
+          "score": 1.5903,
+          "evidence": []
+        },
+        {
+          "term": "mobile phone",
+          "score": 1.3427,
+          "evidence": []
+        },
+        {
+          "term": "delivery app",
+          "score": 1.219,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "opens",
+          "score": 62.2963,
+          "evidence": []
+        },
+        {
+          "term": "attaches",
+          "score": 61.5645,
+          "evidence": []
+        },
+        {
+          "term": "prescription orders",
+          "score": 61.1427,
+          "evidence": []
+        },
+        {
+          "term": "anaesthetic",
+          "score": 60.7798,
+          "evidence": []
+        },
+        {
+          "term": "quiz",
+          "score": 55.709,
+          "evidence": []
+        },
+        {
+          "term": "refills",
+          "score": 55.709,
+          "evidence": []
+        },
+        {
+          "term": "server-based",
+          "score": 55.709,
+          "evidence": []
+        },
+        {
+          "term": "spurring",
+          "score": 55.709,
+          "evidence": []
+        }
+      ]
+    },
+    "page-015": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "commodities logistics",
+          "score": 2.1451,
+          "evidence": []
+        },
+        {
+          "term": "drug authenticity",
+          "score": 2.0373,
+          "evidence": []
+        },
+        {
+          "term": "logging thermometers",
+          "score": 1.9009,
+          "evidence": []
+        },
+        {
+          "term": "stock levels",
+          "score": 1.8811,
+          "evidence": []
+        },
+        {
+          "term": "registration certification",
+          "score": 1.7045,
+          "evidence": []
+        },
+        {
+          "term": "msos ebola",
+          "score": 1.6853,
+          "evidence": []
+        },
+        {
+          "term": "medical commodities",
+          "score": 1.6193,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.5993,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "commodities logistics",
+          "score": 52.157,
+          "evidence": []
+        },
+        {
+          "term": "stock levels",
+          "score": 46.3246,
+          "evidence": []
+        },
+        {
+          "term": "medical commodities",
+          "score": 38.6392,
+          "evidence": []
+        },
+        {
+          "term": "drug authenticity",
+          "score": 36.7198,
+          "evidence": []
+        },
+        {
+          "term": "logistics management",
+          "score": 29.4626,
+          "evidence": []
+        },
+        {
+          "term": "registration certification",
+          "score": 28.348,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 26.0574,
+          "evidence": []
+        },
+        {
+          "term": "logging thermometers",
+          "score": 25.0349,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "stock levels",
+          "score": 1.5628,
+          "evidence": []
+        },
+        {
+          "term": "healthcare providers",
+          "score": 1.5168,
+          "evidence": []
+        },
+        {
+          "term": "commodities logistics",
+          "score": 1.5102,
+          "evidence": []
+        },
+        {
+          "term": "medical commodities",
+          "score": 1.453,
+          "evidence": []
+        },
+        {
+          "term": "logistics management",
+          "score": 1.325,
+          "evidence": []
+        },
+        {
+          "term": "registration certification",
+          "score": 1.3062,
+          "evidence": []
+        },
+        {
+          "term": "drug authenticity",
+          "score": 1.2038,
+          "evidence": []
+        },
+        {
+          "term": "record training",
+          "score": 1.0765,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "healthcare provider",
+          "score": 26.4527,
+          "evidence": []
+        },
+        {
+          "term": "stock levels",
+          "score": 20.5322,
+          "evidence": []
+        },
+        {
+          "term": "medical commodities",
+          "score": 18.6845,
+          "evidence": []
+        },
+        {
+          "term": "logistics management",
+          "score": 18.5015,
+          "evidence": []
+        },
+        {
+          "term": "registration certification",
+          "score": 16.5236,
+          "evidence": []
+        },
+        {
+          "term": "drug authenticity",
+          "score": 14.646,
+          "evidence": []
+        },
+        {
+          "term": "record training",
+          "score": 12.7061,
+          "evidence": []
+        },
+        {
+          "term": "training through",
+          "score": 11.7252,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "stock levels",
+          "score": 1.5628,
+          "evidence": []
+        },
+        {
+          "term": "healthcare providers",
+          "score": 1.5168,
+          "evidence": []
+        },
+        {
+          "term": "commodities logistics",
+          "score": 1.5102,
+          "evidence": []
+        },
+        {
+          "term": "medical commodities",
+          "score": 1.453,
+          "evidence": []
+        },
+        {
+          "term": "logistics management",
+          "score": 1.325,
+          "evidence": []
+        },
+        {
+          "term": "registration certification",
+          "score": 1.3062,
+          "evidence": []
+        },
+        {
+          "term": "drug authenticity",
+          "score": 1.2038,
+          "evidence": []
+        },
+        {
+          "term": "record training",
+          "score": 1.0765,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "logging thermometers",
+          "score": 29.7346,
+          "evidence": []
+        },
+        {
+          "term": "activated",
+          "score": 28.1682,
+          "evidence": []
+        },
+        {
+          "term": "calculates",
+          "score": 25.6011,
+          "evidence": []
+        },
+        {
+          "term": "alarm",
+          "score": 24.8747,
+          "evidence": []
+        },
+        {
+          "term": "biosignals",
+          "score": 22.2857,
+          "evidence": []
+        },
+        {
+          "term": "cameras",
+          "score": 22.2857,
+          "evidence": []
+        },
+        {
+          "term": "dermatologists",
+          "score": 22.2857,
+          "evidence": []
+        },
+        {
+          "term": "helpline",
+          "score": 22.2857,
+          "evidence": []
+        }
+      ]
+    },
+    "page-016": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "birth registration",
+          "score": 2.3406,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 2.2878,
+          "evidence": []
+        },
+        {
+          "term": "notify death",
+          "score": 2.0509,
+          "evidence": []
+        },
+        {
+          "term": "event alert",
+          "score": 1.9655,
+          "evidence": []
+        },
+        {
+          "term": "death surveillance",
+          "score": 1.9117,
+          "evidence": []
+        },
+        {
+          "term": "civil registration",
+          "score": 1.8692,
+          "evidence": []
+        },
+        {
+          "term": "mobile birth",
+          "score": 1.8437,
+          "evidence": []
+        },
+        {
+          "term": "physical assets",
+          "score": 1.713,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "birth registration",
+          "score": 65.1974,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 61.0814,
+          "evidence": []
+        },
+        {
+          "term": "notify death",
+          "score": 49.7075,
+          "evidence": []
+        },
+        {
+          "term": "death surveillance",
+          "score": 47.4137,
+          "evidence": []
+        },
+        {
+          "term": "mobile birth",
+          "score": 47.0957,
+          "evidence": []
+        },
+        {
+          "term": "civil registration",
+          "score": 44.7751,
+          "evidence": []
+        },
+        {
+          "term": "registration initiative",
+          "score": 40.0234,
+          "evidence": []
+        },
+        {
+          "term": "event alert",
+          "score": 39.7,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "birth registration",
+          "score": 2.2465,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 1.9898,
+          "evidence": []
+        },
+        {
+          "term": "civil registration",
+          "score": 1.7879,
+          "evidence": []
+        },
+        {
+          "term": "notify death",
+          "score": 1.6994,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.6392,
+          "evidence": []
+        },
+        {
+          "term": "mobile birth",
+          "score": 1.634,
+          "evidence": []
+        },
+        {
+          "term": "death surveillance",
+          "score": 1.6101,
+          "evidence": []
+        },
+        {
+          "term": "registration initiative",
+          "score": 1.4136,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "death event",
+          "score": 48.7,
+          "evidence": []
+        },
+        {
+          "term": "birth registration",
+          "score": 47.5313,
+          "evidence": []
+        },
+        {
+          "term": "notify death",
+          "score": 37.2128,
+          "evidence": []
+        },
+        {
+          "term": "death surveillance",
+          "score": 36.2373,
+          "evidence": []
+        },
+        {
+          "term": "civil registration",
+          "score": 34.6997,
+          "evidence": []
+        },
+        {
+          "term": "mobile birth",
+          "score": 33.2687,
+          "evidence": []
+        },
+        {
+          "term": "event alert",
+          "score": 30.0231,
+          "evidence": []
+        },
+        {
+          "term": "registration initiative",
+          "score": 28.2311,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "birth registration",
+          "score": 2.2465,
+          "evidence": []
+        },
+        {
+          "term": "death event",
+          "score": 1.9898,
+          "evidence": []
+        },
+        {
+          "term": "civil registration",
+          "score": 1.7879,
+          "evidence": []
+        },
+        {
+          "term": "notify death",
+          "score": 1.6994,
+          "evidence": []
+        },
+        {
+          "term": "healthcare provider",
+          "score": 1.6392,
+          "evidence": []
+        },
+        {
+          "term": "mobile birth",
+          "score": 1.634,
+          "evidence": []
+        },
+        {
+          "term": "death surveillance",
+          "score": 1.6101,
+          "evidence": []
+        },
+        {
+          "term": "registration initiative",
+          "score": 1.4136,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "m-tiba",
+          "score": 32.3639,
+          "evidence": []
+        },
+        {
+          "term": "smartva",
+          "score": 32.3639,
+          "evidence": []
+        },
+        {
+          "term": "nhia",
+          "score": 30.2014,
+          "evidence": []
+        },
+        {
+          "term": "amplification",
+          "score": 27.9031,
+          "evidence": []
+        },
+        {
+          "term": "certifi",
+          "score": 27.8042,
+          "evidence": []
+        },
+        {
+          "term": "cate",
+          "score": 27.8042,
+          "evidence": []
+        },
+        {
+          "term": "notifi",
+          "score": 26.2998,
+          "evidence": []
+        },
+        {
+          "term": "performance-based",
+          "score": 26.2582,
+          "evidence": []
+        }
+      ]
+    },
+    "page-017": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "map location",
+          "score": 2.2948,
+          "evidence": []
+        },
+        {
+          "term": "gps mapping",
+          "score": 2.1516,
+          "evidence": []
+        },
+        {
+          "term": "visualization gps",
+          "score": 1.9439,
+          "evidence": []
+        },
+        {
+          "term": "geospatial visualization",
+          "score": 1.7925,
+          "evidence": []
+        },
+        {
+          "term": "displayed",
+          "score": 1.0861,
+          "evidence": []
+        },
+        {
+          "term": "odk",
+          "score": 1.0708,
+          "evidence": []
+        },
+        {
+          "term": "team leaders",
+          "score": 1.0506,
+          "evidence": []
+        },
+        {
+          "term": "spray",
+          "score": 0.9943,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gps mapping",
+          "score": 45.9636,
+          "evidence": []
+        },
+        {
+          "term": "map location",
+          "score": 43.7565,
+          "evidence": []
+        },
+        {
+          "term": "visualization gps",
+          "score": 32.4784,
+          "evidence": []
+        },
+        {
+          "term": "geospatial visualization",
+          "score": 25.6239,
+          "evidence": []
+        },
+        {
+          "term": "odk",
+          "score": 16.5201,
+          "evidence": []
+        },
+        {
+          "term": "displayed",
+          "score": 16.0576,
+          "evidence": []
+        },
+        {
+          "term": "collection",
+          "score": 14.9757,
+          "evidence": []
+        },
+        {
+          "term": "gis",
+          "score": 14.2005,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "map location",
+          "score": 2.0611,
+          "evidence": []
+        },
+        {
+          "term": "gps mapping",
+          "score": 1.4257,
+          "evidence": []
+        },
+        {
+          "term": "visualization gps",
+          "score": 1.0699,
+          "evidence": []
+        },
+        {
+          "term": "geospatial visualization",
+          "score": 0.9407,
+          "evidence": []
+        },
+        {
+          "term": "collection",
+          "score": 0.7578,
+          "evidence": []
+        },
+        {
+          "term": "automated",
+          "score": 0.6669,
+          "evidence": []
+        },
+        {
+          "term": "terminology",
+          "score": 0.6179,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.5859,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "map location",
+          "score": 18.2068,
+          "evidence": []
+        },
+        {
+          "term": "maps",
+          "score": 14.2992,
+          "evidence": []
+        },
+        {
+          "term": "gps mapping",
+          "score": 13.6374,
+          "evidence": []
+        },
+        {
+          "term": "terminology",
+          "score": 6.9738,
+          "evidence": []
+        },
+        {
+          "term": "validation",
+          "score": 6.1297,
+          "evidence": []
+        },
+        {
+          "term": "elements",
+          "score": 5.9294,
+          "evidence": []
+        },
+        {
+          "term": "target",
+          "score": 5.8085,
+          "evidence": []
+        },
+        {
+          "term": "classifications",
+          "score": 5.3981,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "map location",
+          "score": 2.0611,
+          "evidence": []
+        },
+        {
+          "term": "gps mapping",
+          "score": 1.4257,
+          "evidence": []
+        },
+        {
+          "term": "visualization gps",
+          "score": 1.0699,
+          "evidence": []
+        },
+        {
+          "term": "geospatial visualization",
+          "score": 0.9407,
+          "evidence": []
+        },
+        {
+          "term": "collection",
+          "score": 0.7578,
+          "evidence": []
+        },
+        {
+          "term": "automated",
+          "score": 0.6669,
+          "evidence": []
+        },
+        {
+          "term": "terminology",
+          "score": 0.6179,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.5859,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "geospatial visualization",
+          "score": 79.7231,
+          "evidence": []
+        },
+        {
+          "term": "subtitle",
+          "score": 68.8021,
+          "evidence": []
+        },
+        {
+          "term": "phosphorus",
+          "score": 59.8495,
+          "evidence": []
+        },
+        {
+          "term": "dirty",
+          "score": 59.1158,
+          "evidence": []
+        },
+        {
+          "term": "visualization gps",
+          "score": 51.7464,
+          "evidence": []
+        },
+        {
+          "term": "spray",
+          "score": 51.3814,
+          "evidence": []
+        },
+        {
+          "term": "indoor",
+          "score": 51.3814,
+          "evidence": []
+        },
+        {
+          "term": "residual",
+          "score": 51.3814,
+          "evidence": []
+        }
+      ]
+    },
+    "page-018": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "accessed november",
+          "score": 3.2436,
+          "evidence": []
+        },
+        {
+          "term": "waha international",
+          "score": 1.5518,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 1.4056,
+          "evidence": []
+        },
+        {
+          "term": "international telecommunication",
+          "score": 1.2735,
+          "evidence": []
+        },
+        {
+          "term": "jmir public",
+          "score": 1.1678,
+          "evidence": []
+        },
+        {
+          "term": "telecommunication union",
+          "score": 1.1506,
+          "evidence": []
+        },
+        {
+          "term": "national ehealth",
+          "score": 1.0422,
+          "evidence": []
+        },
+        {
+          "term": "medopad",
+          "score": 1.0028,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "accessed november",
+          "score": 114.2256,
+          "evidence": []
+        },
+        {
+          "term": "waha international",
+          "score": 24.0972,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 22.074,
+          "evidence": []
+        },
+        {
+          "term": "international telecommunication",
+          "score": 20.0674,
+          "evidence": []
+        },
+        {
+          "term": "national ehealth",
+          "score": 17.5425,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 15.4263,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 15.0399,
+          "evidence": []
+        },
+        {
+          "term": "openmrs",
+          "score": 14.9876,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "accessed november",
+          "score": 2.5273,
+          "evidence": []
+        },
+        {
+          "term": "baltimore",
+          "score": 1.0994,
+          "evidence": []
+        },
+        {
+          "term": "k4health",
+          "score": 1.0988,
+          "evidence": []
+        },
+        {
+          "term": "compendium",
+          "score": 1.0522,
+          "evidence": []
+        },
+        {
+          "term": "database",
+          "score": 0.9625,
+          "evidence": []
+        },
+        {
+          "term": "december",
+          "score": 0.9077,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.8726,
+          "evidence": []
+        },
+        {
+          "term": "handle",
+          "score": 0.8719,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "accessed november",
+          "score": 78.674,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 18.6107,
+          "evidence": []
+        },
+        {
+          "term": "cochrane",
+          "score": 14.0371,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 12.9521,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 12.1816,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 10.7658,
+          "evidence": []
+        },
+        {
+          "term": "pmid",
+          "score": 9.1875,
+          "evidence": []
+        },
+        {
+          "term": "collaboration",
+          "score": 8.0805,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "accessed november",
+          "score": 2.5273,
+          "evidence": []
+        },
+        {
+          "term": "database",
+          "score": 0.9625,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.8726,
+          "evidence": []
+        },
+        {
+          "term": "international telecommunication",
+          "score": 0.8583,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 0.7973,
+          "evidence": []
+        },
+        {
+          "term": "waha international",
+          "score": 0.7729,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.7606,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.7454,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "africa-teledermatology-project",
+          "score": 163.5392,
+          "evidence": []
+        },
+        {
+          "term": "amarillo",
+          "score": 163.5392,
+          "evidence": []
+        },
+        {
+          "term": "baja",
+          "score": 163.5392,
+          "evidence": []
+        },
+        {
+          "term": "castillo-carandang",
+          "score": 163.5392,
+          "evidence": []
+        },
+        {
+          "term": "gay",
+          "score": 163.5392,
+          "evidence": []
+        },
+        {
+          "term": "healthmarketinnovations",
+          "score": 163.5392,
+          "evidence": []
+        },
+        {
+          "term": "juban",
+          "score": 163.5392,
+          "evidence": []
+        },
+        {
+          "term": "leijdekkers",
+          "score": 163.5392,
+          "evidence": []
+        }
+      ]
+    },
+    "page-019": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "accessed november",
+          "score": 2.7205,
+          "evidence": []
+        },
+        {
+          "term": "concept lab",
+          "score": 1.2237,
+          "evidence": []
+        },
+        {
+          "term": "dar",
+          "score": 1.2058,
+          "evidence": []
+        },
+        {
+          "term": "salaam",
+          "score": 1.2058,
+          "evidence": []
+        },
+        {
+          "term": "open concept",
+          "score": 1.0178,
+          "evidence": []
+        },
+        {
+          "term": "nairobi",
+          "score": 0.916,
+          "evidence": []
+        },
+        {
+          "term": "kenya",
+          "score": 0.7234,
+          "evidence": []
+        },
+        {
+          "term": "html",
+          "score": 0.6998,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "accessed november",
+          "score": 69.3728,
+          "evidence": []
+        },
+        {
+          "term": "dar",
+          "score": 18.5995,
+          "evidence": []
+        },
+        {
+          "term": "salaam",
+          "score": 18.5995,
+          "evidence": []
+        },
+        {
+          "term": "concept lab",
+          "score": 15.6799,
+          "evidence": []
+        },
+        {
+          "term": "open concept",
+          "score": 12.5014,
+          "evidence": []
+        },
+        {
+          "term": "nairobi",
+          "score": 11.8243,
+          "evidence": []
+        },
+        {
+          "term": "kenya",
+          "score": 10.8287,
+          "evidence": []
+        },
+        {
+          "term": "html",
+          "score": 9.0517,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "accessed november",
+          "score": 1.3102,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.458,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 0.4186,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.3865,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.3833,
+          "evidence": []
+        },
+        {
+          "term": "pdf",
+          "score": 0.324,
+          "evidence": []
+        },
+        {
+          "term": "online",
+          "score": 0.3128,
+          "evidence": []
+        },
+        {
+          "term": "baltimore",
+          "score": 0.3041,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "accessed november",
+          "score": 43.8606,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 10.1268,
+          "evidence": []
+        },
+        {
+          "term": "cochrane",
+          "score": 7.7948,
+          "evidence": []
+        },
+        {
+          "term": "republic",
+          "score": 6.728,
+          "evidence": []
+        },
+        {
+          "term": "pmid",
+          "score": 5.9842,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 4.9048,
+          "evidence": []
+        },
+        {
+          "term": "collaboration",
+          "score": 4.8339,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 4.7073,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "accessed november",
+          "score": 1.3102,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.458,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 0.4186,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.3865,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.3833,
+          "evidence": []
+        },
+        {
+          "term": "online",
+          "score": 0.3128,
+          "evidence": []
+        },
+        {
+          "term": "registration",
+          "score": 0.2659,
+          "evidence": []
+        },
+        {
+          "term": "republic",
+          "score": 0.2349,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "dar",
+          "score": 110.7235,
+          "evidence": []
+        },
+        {
+          "term": "salaam",
+          "score": 110.7235,
+          "evidence": []
+        },
+        {
+          "term": "nairobi",
+          "score": 110.6247,
+          "evidence": []
+        },
+        {
+          "term": "bohren",
+          "score": 105.2906,
+          "evidence": []
+        },
+        {
+          "term": "fawole",
+          "score": 105.2906,
+          "evidence": []
+        },
+        {
+          "term": "moscovici",
+          "score": 105.2906,
+          "evidence": []
+        },
+        {
+          "term": "mugerwa",
+          "score": 105.2906,
+          "evidence": []
+        },
+        {
+          "term": "m-tiba",
+          "score": 103.2679,
+          "evidence": []
+        }
+      ]
+    },
+    "page-020": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tigest tamrat",
+          "score": 1.5874,
+          "evidence": []
+        },
+        {
+          "term": "garrett mehl",
+          "score": 1.395,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.9868,
+          "evidence": []
+        },
+        {
+          "term": "consultant",
+          "score": 0.972,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 0.9454,
+          "evidence": []
+        },
+        {
+          "term": "derek",
+          "score": 0.8653,
+          "evidence": []
+        },
+        {
+          "term": "michael",
+          "score": 0.8653,
+          "evidence": []
+        },
+        {
+          "term": "independent",
+          "score": 0.7733,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tigest tamrat",
+          "score": 20.8145,
+          "evidence": []
+        },
+        {
+          "term": "garrett mehl",
+          "score": 18.3705,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 17.5713,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 16.3183,
+          "evidence": []
+        },
+        {
+          "term": "consultant",
+          "score": 14.9876,
+          "evidence": []
+        },
+        {
+          "term": "independent",
+          "score": 11.7934,
+          "evidence": []
+        },
+        {
+          "term": "derek",
+          "score": 11.378,
+          "evidence": []
+        },
+        {
+          "term": "michael",
+          "score": 11.378,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tigest tamrat",
+          "score": 0.869,
+          "evidence": []
+        },
+        {
+          "term": "garrett mehl",
+          "score": 0.8118,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.7581,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.7289,
+          "evidence": []
+        },
+        {
+          "term": "steven",
+          "score": 0.5624,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.4979,
+          "evidence": []
+        },
+        {
+          "term": "merrick",
+          "score": 0.4932,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 0.4835,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "united",
+          "score": 8.8489,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 8.5833,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 8.1334,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 7.8767,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 7.6608,
+          "evidence": []
+        },
+        {
+          "term": "headquarters",
+          "score": 6.9568,
+          "evidence": []
+        },
+        {
+          "term": "office",
+          "score": 6.4953,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 6.0766,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tigest tamrat",
+          "score": 0.869,
+          "evidence": []
+        },
+        {
+          "term": "garrett mehl",
+          "score": 0.8118,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.7581,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.7289,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.4979,
+          "evidence": []
+        },
+        {
+          "term": "path",
+          "score": 0.4835,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.4764,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.4438,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alvin",
+          "score": 376.0758,
+          "evidence": []
+        },
+        {
+          "term": "chaitali",
+          "score": 364.4426,
+          "evidence": []
+        },
+        {
+          "term": "deborma",
+          "score": 341.1762,
+          "evidence": []
+        },
+        {
+          "term": "elaine",
+          "score": 341.1762,
+          "evidence": []
+        },
+        {
+          "term": "falzon",
+          "score": 341.1762,
+          "evidence": []
+        },
+        {
+          "term": "fogwill",
+          "score": 341.1762,
+          "evidence": []
+        },
+        {
+          "term": "hazim",
+          "score": 341.1762,
+          "evidence": []
+        },
+        {
+          "term": "joshi",
+          "score": 341.1762,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,4346 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2202.02427v1",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2202.02427v1",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "incremental streaming",
+        "score": 28.5827,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "streaming recommendation",
+        "score": 25.5191,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "streaming graph",
+        "score": 25.1246,
+        "evidence": []
+      },
+      {
+        "term": "lce performance",
+        "score": 22.4691,
+        "evidence": []
+      },
+      {
+        "term": "lce model",
+        "score": 22.2863,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "streaming setting",
+        "score": 21.006,
+        "evidence": []
+      },
+      {
+        "term": "lce layer",
+        "score": 20.5902,
+        "evidence": []
+      },
+      {
+        "term": "lce emb",
+        "score": 20.1504,
+        "evidence": []
+      },
+      {
+        "term": "streaming data",
+        "score": 19.758,
+        "evidence": []
+      },
+      {
+        "term": "method lce",
+        "score": 19.6816,
+        "evidence": []
+      },
+      {
+        "term": "lce variants",
+        "score": 18.83,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce refers",
+        "score": 18.4224,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "lce performance",
+        "score": 625.812,
+        "evidence": []
+      },
+      {
+        "term": "lce model",
+        "score": 597.9648,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "incremental streaming",
+        "score": 597.7317,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce layer",
+        "score": 555.0885,
+        "evidence": []
+      },
+      {
+        "term": "method lce",
+        "score": 548.09,
+        "evidence": []
+      },
+      {
+        "term": "streaming recommendation",
+        "score": 546.525,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce emb",
+        "score": 543.9086,
+        "evidence": []
+      },
+      {
+        "term": "lce variants",
+        "score": 521.8404,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce refers",
+        "score": 515.1235,
+        "evidence": []
+      },
+      {
+        "term": "lce achieves",
+        "score": 510.1889,
+        "evidence": []
+      },
+      {
+        "term": "streaming graph",
+        "score": 509.4938,
+        "evidence": []
+      },
+      {
+        "term": "month streaming",
+        "score": 435.2539,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "incremental streaming",
+        "score": 21.1979,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "streaming graph",
+        "score": 19.1142,
+        "evidence": []
+      },
+      {
+        "term": "lce performance",
+        "score": 19.0762,
+        "evidence": []
+      },
+      {
+        "term": "lce model",
+        "score": 18.9713,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "streaming recommendation",
+        "score": 18.8203,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce emb",
+        "score": 18.2036,
+        "evidence": []
+      },
+      {
+        "term": "lce layer",
+        "score": 18.0561,
+        "evidence": []
+      },
+      {
+        "term": "method lce",
+        "score": 16.6168,
+        "evidence": []
+      },
+      {
+        "term": "lce variants",
+        "score": 16.4457,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce refers",
+        "score": 15.5414,
+        "evidence": []
+      },
+      {
+        "term": "streaming setting",
+        "score": 15.5,
+        "evidence": []
+      },
+      {
+        "term": "streaming data",
+        "score": 15.4287,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "lce performance",
+        "score": 614.2599,
+        "evidence": []
+      },
+      {
+        "term": "lce model",
+        "score": 588.2529,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce emb",
+        "score": 544.6409,
+        "evidence": []
+      },
+      {
+        "term": "lce layer",
+        "score": 544.056,
+        "evidence": []
+      },
+      {
+        "term": "method lce",
+        "score": 535.278,
+        "evidence": []
+      },
+      {
+        "term": "incremental streaming",
+        "score": 521.7769,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce variants",
+        "score": 515.3782,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce refers",
+        "score": 505.0716,
+        "evidence": []
+      },
+      {
+        "term": "lce achieves",
+        "score": 500.6809,
+        "evidence": []
+      },
+      {
+        "term": "streaming recommendation",
+        "score": 454.8094,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "streaming graph",
+        "score": 429.6582,
+        "evidence": []
+      },
+      {
+        "term": "month streaming",
+        "score": 422.6375,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "incremental streaming",
+        "score": 21.1979,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "streaming graph",
+        "score": 19.1142,
+        "evidence": []
+      },
+      {
+        "term": "lce performance",
+        "score": 19.0762,
+        "evidence": []
+      },
+      {
+        "term": "lce model",
+        "score": 18.9713,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "streaming recommendation",
+        "score": 18.8203,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce emb",
+        "score": 18.2036,
+        "evidence": []
+      },
+      {
+        "term": "lce layer",
+        "score": 18.0561,
+        "evidence": []
+      },
+      {
+        "term": "method lce",
+        "score": 16.6168,
+        "evidence": []
+      },
+      {
+        "term": "lce variants",
+        "score": 16.4457,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce refers",
+        "score": 15.5414,
+        "evidence": []
+      },
+      {
+        "term": "streaming setting",
+        "score": 15.5,
+        "evidence": []
+      },
+      {
+        "term": "streaming data",
+        "score": 15.4287,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "neville",
+        "score": 9278.8434,
+        "evidence": []
+      },
+      {
+        "term": "tobias",
+        "score": 5531.1331,
+        "evidence": []
+      },
+      {
+        "term": "schnabel",
+        "score": 4960.6948,
+        "evidence": []
+      },
+      {
+        "term": "hang",
+        "score": 3487.7626,
+        "evidence": []
+      },
+      {
+        "term": "librarything month",
+        "score": 3315.9155,
+        "evidence": []
+      },
+      {
+        "term": "month streaming",
+        "score": 2982.5289,
+        "evidence": []
+      },
+      {
+        "term": "incremental streaming",
+        "score": 2906.1825,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce emb",
+        "score": 2583.9721,
+        "evidence": []
+      },
+      {
+        "term": "microsoft",
+        "score": 2324.4577,
+        "evidence": []
+      },
+      {
+        "term": "microsoft teams",
+        "score": 2324.4577,
+        "evidence": []
+      },
+      {
+        "term": "composi",
+        "score": 2022.5206,
+        "evidence": []
+      },
+      {
+        "term": "composi tional",
+        "score": 2022.5206,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-3-lightweight-compositional-embeddings": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "neville",
+          "score": 1.0078,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 0.9085,
+          "evidence": []
+        },
+        {
+          "term": "microsoft",
+          "score": 0.8889,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "microsoft",
+          "score": 14.5931,
+          "evidence": []
+        },
+        {
+          "term": "neville",
+          "score": 14.0089,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 12.6226,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lce",
+          "score": 0.0832,
+          "evidence": []
+        },
+        {
+          "term": "embeddings",
+          "score": 0.0727,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "streaming",
+          "score": 0.0716,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 1.6687,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 1.0414,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.9783,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "embeddings",
+          "score": 0.0727,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "streaming",
+          "score": 0.0716,
+          "evidence": []
+        },
+        {
+          "term": "compositional",
+          "score": 0.0681,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 8109.3763,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 4850.7075,
+          "evidence": []
+        },
+        {
+          "term": "schnabel",
+          "score": 3582.2345,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-abstract": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "static setting",
+          "score": 1.3518,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 1.1555,
+          "evidence": []
+        },
+        {
+          "term": "graph-based",
+          "score": 1.0965,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.9293,
+          "evidence": []
+        },
+        {
+          "term": "nodes",
+          "score": 0.9056,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.8481,
+          "evidence": []
+        },
+        {
+          "term": "compositional",
+          "score": 0.7569,
+          "evidence": []
+        },
+        {
+          "term": "stream",
+          "score": 0.569,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "static setting",
+          "score": 22.5483,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 20.8507,
+          "evidence": []
+        },
+        {
+          "term": "graph-based",
+          "score": 19.9581,
+          "evidence": []
+        },
+        {
+          "term": "nodes",
+          "score": 18.4512,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 14.9091,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 13.9592,
+          "evidence": []
+        },
+        {
+          "term": "compositional",
+          "score": 10.2653,
+          "evidence": []
+        },
+        {
+          "term": "stream",
+          "score": 7.5711,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lce",
+          "score": 0.5178,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.4489,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.3758,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.3691,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.3224,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.3188,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 0.316,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.2844,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 13.0839,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 8.0509,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 7.7355,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 6.2557,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 6.1214,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 4.7511,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 4.4547,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 4.3944,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lce",
+          "score": 0.5178,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.4489,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.3224,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.3188,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.2844,
+          "evidence": []
+        },
+        {
+          "term": "static setting",
+          "score": 0.272,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 0.2474,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 0.2323,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "skyline",
+          "score": 89.3104,
+          "evidence": []
+        },
+        {
+          "term": "bucket",
+          "score": 89.1,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 84.4605,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 81.4408,
+          "evidence": []
+        },
+        {
+          "term": "epinions",
+          "score": 79.0468,
+          "evidence": []
+        },
+        {
+          "term": "librarything",
+          "score": 78.0983,
+          "evidence": []
+        },
+        {
+          "term": "t-test",
+          "score": 76.0035,
+          "evidence": []
+        },
+        {
+          "term": "lce-item",
+          "score": 75.4243,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "incremental streaming",
+          "score": 2.6699,
+          "evidence": []
+        },
+        {
+          "term": "graph-based recommendation",
+          "score": 2.4215,
+          "evidence": []
+        },
+        {
+          "term": "incremental replay",
+          "score": 2.3461,
+          "evidence": []
+        },
+        {
+          "term": "lce performance",
+          "score": 2.2657,
+          "evidence": []
+        },
+        {
+          "term": "recommen dation",
+          "score": 2.129,
+          "evidence": []
+        },
+        {
+          "term": "utilize incremental",
+          "score": 2.0898,
+          "evidence": []
+        },
+        {
+          "term": "incremental updates",
+          "score": 2.0551,
+          "evidence": []
+        },
+        {
+          "term": "streaming setting",
+          "score": 1.9472,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "incremental streaming",
+          "score": 60.1175,
+          "evidence": []
+        },
+        {
+          "term": "lce performance",
+          "score": 58.5541,
+          "evidence": []
+        },
+        {
+          "term": "graph-based recommendation",
+          "score": 56.0281,
+          "evidence": []
+        },
+        {
+          "term": "incremental replay",
+          "score": 49.0285,
+          "evidence": []
+        },
+        {
+          "term": "utilize incremental",
+          "score": 45.3794,
+          "evidence": []
+        },
+        {
+          "term": "incremental updates",
+          "score": 44.5471,
+          "evidence": []
+        },
+        {
+          "term": "recommendation setting",
+          "score": 42.0938,
+          "evidence": []
+        },
+        {
+          "term": "incremental information",
+          "score": 41.0152,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "incremental streaming",
+          "score": 1.5934,
+          "evidence": []
+        },
+        {
+          "term": "lce performance",
+          "score": 1.5148,
+          "evidence": []
+        },
+        {
+          "term": "streaming setting",
+          "score": 1.2427,
+          "evidence": []
+        },
+        {
+          "term": "incremental updates",
+          "score": 1.0598,
+          "evidence": []
+        },
+        {
+          "term": "graph-based recommendation",
+          "score": 0.9278,
+          "evidence": []
+        },
+        {
+          "term": "utilize incremental",
+          "score": 0.9012,
+          "evidence": []
+        },
+        {
+          "term": "incremental information",
+          "score": 0.8805,
+          "evidence": []
+        },
+        {
+          "term": "incremental replay",
+          "score": 0.8281,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce performance",
+          "score": 40.8841,
+          "evidence": []
+        },
+        {
+          "term": "incremental streaming",
+          "score": 34.4151,
+          "evidence": []
+        },
+        {
+          "term": "streaming setting",
+          "score": 23.4186,
+          "evidence": []
+        },
+        {
+          "term": "incremental updates",
+          "score": 18.7217,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 18.4092,
+          "evidence": []
+        },
+        {
+          "term": "utilize incremental",
+          "score": 17.3456,
+          "evidence": []
+        },
+        {
+          "term": "incremental information",
+          "score": 17.1134,
+          "evidence": []
+        },
+        {
+          "term": "incremental replay",
+          "score": 15.0385,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "incremental streaming",
+          "score": 1.5934,
+          "evidence": []
+        },
+        {
+          "term": "lce performance",
+          "score": 1.5148,
+          "evidence": []
+        },
+        {
+          "term": "streaming setting",
+          "score": 1.2427,
+          "evidence": []
+        },
+        {
+          "term": "incremental updates",
+          "score": 1.0598,
+          "evidence": []
+        },
+        {
+          "term": "graph-based recommendation",
+          "score": 0.9278,
+          "evidence": []
+        },
+        {
+          "term": "utilize incremental",
+          "score": 0.9012,
+          "evidence": []
+        },
+        {
+          "term": "incremental information",
+          "score": 0.8805,
+          "evidence": []
+        },
+        {
+          "term": "incremental replay",
+          "score": 0.8281,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 130.3712,
+          "evidence": []
+        },
+        {
+          "term": "incremental streaming",
+          "score": 120.6354,
+          "evidence": []
+        },
+        {
+          "term": "schnabel",
+          "score": 100.3433,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 91.4507,
+          "evidence": []
+        },
+        {
+          "term": "bucket",
+          "score": 90.6607,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 86.2553,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 85.2105,
+          "evidence": []
+        },
+        {
+          "term": "hang",
+          "score": 84.5526,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-2-problem-formulation-and-notation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "𝐺𝑓𝑖𝑛𝑎𝑙",
+          "score": 1.2651,
+          "evidence": []
+        },
+        {
+          "term": "edges",
+          "score": 1.0208,
+          "evidence": []
+        },
+        {
+          "term": "nodes",
+          "score": 0.9835,
+          "evidence": []
+        },
+        {
+          "term": "𝐸𝑡𝐾and",
+          "score": 0.6307,
+          "evidence": []
+        },
+        {
+          "term": "assume",
+          "score": 0.5886,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nodes",
+          "score": 22.1415,
+          "evidence": []
+        },
+        {
+          "term": "𝐺𝑓𝑖𝑛𝑎𝑙",
+          "score": 21.0133,
+          "evidence": []
+        },
+        {
+          "term": "edges",
+          "score": 18.6122,
+          "evidence": []
+        },
+        {
+          "term": "assume",
+          "score": 9.3686,
+          "evidence": []
+        },
+        {
+          "term": "𝐸𝑡𝐾and",
+          "score": 7.0044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lce",
+          "score": 0.1941,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.1702,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.1412,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.1405,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.1375,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 3.2071,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 1.9646,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 1.926,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 1.9081,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 1.5162,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "streaming",
+          "score": 0.1702,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.1405,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.1375,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.1347,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 0.1203,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "skyline",
+          "score": 57.3066,
+          "evidence": []
+        },
+        {
+          "term": "bucket",
+          "score": 56.2934,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 54.2366,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 52.3991,
+          "evidence": []
+        },
+        {
+          "term": "epinions",
+          "score": 50.9094,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-32-offline-batch-training": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lightweight compositional",
+          "score": 1.3767,
+          "evidence": []
+        },
+        {
+          "term": "edges",
+          "score": 1.1364,
+          "evidence": []
+        },
+        {
+          "term": "prediction target",
+          "score": 1.0564,
+          "evidence": []
+        },
+        {
+          "term": "offline",
+          "score": 0.8756,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "graph",
+          "score": 0.8173,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 0.7887,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.7365,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "edges",
+          "score": 23.2653,
+          "evidence": []
+        },
+        {
+          "term": "lightweight compositional",
+          "score": 18.7924,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 14.5923,
+          "evidence": []
+        },
+        {
+          "term": "prediction target",
+          "score": 13.7955,
+          "evidence": []
+        },
+        {
+          "term": "nodes",
+          "score": 11.0707,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 10.4253,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 9.3061,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lce",
+          "score": 0.3627,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.3147,
+          "evidence": []
+        },
+        {
+          "term": "offline",
+          "score": 0.2975,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "graph",
+          "score": 0.2717,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.2648,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.2566,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 0.2368,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 7.7942,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 5.4739,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 4.7584,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 4.614,
+          "evidence": []
+        },
+        {
+          "term": "node",
+          "score": 4.0722,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 3.7131,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 3.6011,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lce",
+          "score": 0.3627,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.3147,
+          "evidence": []
+        },
+        {
+          "term": "offline",
+          "score": 0.2975,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "graph",
+          "score": 0.2717,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.2566,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 0.2368,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lightweight compositional",
+          "score": 0.223,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "bucket",
+          "score": 74.4751,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 73.5149,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 69.7195,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 66.4464,
+          "evidence": []
+        },
+        {
+          "term": "epinions",
+          "score": 65.1398,
+          "evidence": []
+        },
+        {
+          "term": "librarything",
+          "score": 64.4665,
+          "evidence": []
+        },
+        {
+          "term": "lce-item",
+          "score": 63.5355,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-31-lce-model": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lce model",
+          "score": 3.1708,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "compositional embeddings",
+          "score": 2.355,
+          "evidence": []
+        },
+        {
+          "term": "convolution layers",
+          "score": 2.3349,
+          "evidence": []
+        },
+        {
+          "term": "explicit embeddings",
+          "score": 1.9477,
+          "evidence": []
+        },
+        {
+          "term": "aggregation function",
+          "score": 1.8329,
+          "evidence": []
+        },
+        {
+          "term": "composition function",
+          "score": 1.5915,
+          "evidence": []
+        },
+        {
+          "term": "mean pooling",
+          "score": 1.5897,
+          "evidence": []
+        },
+        {
+          "term": "compose",
+          "score": 0.8293,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "compositional embeddings",
+          "score": 58.698,
+          "evidence": []
+        },
+        {
+          "term": "lce model",
+          "score": 54.8759,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "explicit embeddings",
+          "score": 52.0808,
+          "evidence": []
+        },
+        {
+          "term": "convolution layers",
+          "score": 40.9889,
+          "evidence": []
+        },
+        {
+          "term": "aggregation function",
+          "score": 37.0794,
+          "evidence": []
+        },
+        {
+          "term": "composition function",
+          "score": 30.7397,
+          "evidence": []
+        },
+        {
+          "term": "mean pooling",
+          "score": 24.3708,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 14.5923,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lce model",
+          "score": 1.8227,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "compositional embeddings",
+          "score": 0.6227,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.4858,
+          "evidence": []
+        },
+        {
+          "term": "explicit embeddings",
+          "score": 0.4668,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.4148,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.4052,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.3912,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.3772,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce model",
+          "score": 36.0222,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "graph",
+          "score": 8.7652,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 7.9947,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 7.9127,
+          "evidence": []
+        },
+        {
+          "term": "compositional embeddings",
+          "score": 6.9147,
+          "evidence": []
+        },
+        {
+          "term": "node",
+          "score": 6.3125,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 6.1875,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 5.9632,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lce model",
+          "score": 1.8227,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "compositional embeddings",
+          "score": 0.6227,
+          "evidence": []
+        },
+        {
+          "term": "explicit embeddings",
+          "score": 0.4668,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.4052,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.3772,
+          "evidence": []
+        },
+        {
+          "term": "composition function",
+          "score": 0.2982,
+          "evidence": []
+        },
+        {
+          "term": "convolution layers",
+          "score": 0.2738,
+          "evidence": []
+        },
+        {
+          "term": "node",
+          "score": 0.2599,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "lce",
+          "score": 106.7493,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lce model",
+          "score": 106.7493,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bucket",
+          "score": 75.4356,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 74.5273,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 70.9369,
+          "evidence": []
+        },
+        {
+          "term": "epinions",
+          "score": 66.5046,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 66.1649,
+          "evidence": []
+        },
+        {
+          "term": "librarything",
+          "score": 65.9644,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-42-data": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "z𝑇 𝑢z𝑤",
+          "score": 2.0155,
+          "evidence": []
+        },
+        {
+          "term": "edges",
+          "score": 1.2342,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.8877,
+          "evidence": []
+        },
+        {
+          "term": "z𝑈",
+          "score": 0.873,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.8028,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 0.7375,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.7365,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.7343,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "z𝑇 𝑢z𝑤",
+          "score": 28.0177,
+          "evidence": []
+        },
+        {
+          "term": "edges",
+          "score": 27.9183,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 17.5107,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 14.8509,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 13.9123,
+          "evidence": []
+        },
+        {
+          "term": "z𝑈",
+          "score": 12.1763,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 9.3061,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 9.2131,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lce",
+          "score": 0.416,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.3629,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.3287,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.3072,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.2896,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.2864,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.286,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 0.255,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 7.3287,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 5.7652,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 4.462,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 4.4099,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 4.3243,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "node",
+          "score": 4.0051,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 3.3773,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 3.1832,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "streaming",
+          "score": 0.3629,
+          "evidence": []
+        },
+        {
+          "term": "data",
+          "score": 0.3287,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "incremental",
+          "score": 0.2896,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.2864,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.286,
+          "evidence": []
+        },
+        {
+          "term": "embeddings",
+          "score": 0.2419,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 0.2285,
+          "evidence": []
+        },
+        {
+          "term": "training",
+          "score": 0.1714,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "bucket",
+          "score": 80.356,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 79.6474,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 75.6834,
+          "evidence": []
+        },
+        {
+          "term": "z𝑇 𝑢z𝑤",
+          "score": 72.3187,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 71.9983,
+          "evidence": []
+        },
+        {
+          "term": "epinions",
+          "score": 70.9746,
+          "evidence": []
+        },
+        {
+          "term": "librarything",
+          "score": 70.0593,
+          "evidence": []
+        },
+        {
+          "term": "lce-item",
+          "score": 68.9335,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-33-online-incremental-streaming-updates": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "z𝑈",
+          "score": 0.873,
+          "evidence": []
+        },
+        {
+          "term": "embeddings",
+          "score": 0.781,
+          "evidence": []
+        },
+        {
+          "term": "re-compute",
+          "score": 0.6307,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "z𝑈",
+          "score": 12.1763,
+          "evidence": []
+        },
+        {
+          "term": "embeddings",
+          "score": 11.8091,
+          "evidence": []
+        },
+        {
+          "term": "re-compute",
+          "score": 7.0044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "streaming",
+          "score": 0.2289,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "incremental",
+          "score": 0.1853,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lce",
+          "score": 0.1342,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "streaming",
+          "score": 2.2245,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lce",
+          "score": 1.9237,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 1.6925,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "streaming",
+          "score": 0.2289,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "incremental",
+          "score": 0.1853,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "embeddings",
+          "score": 0.0984,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "incremental",
+          "score": 123.5012,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "streaming",
+          "score": 118.7685,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bucket",
+          "score": 97.5262,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-43-baselines": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "sec",
+          "score": 0.9565,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 0.7887,
+          "evidence": []
+        },
+        {
+          "term": "fig",
+          "score": 0.6822,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "sec",
+          "score": 17.3211,
+          "evidence": []
+        },
+        {
+          "term": "fig",
+          "score": 10.6633,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 10.5329,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lce",
+          "score": 0.2389,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.2069,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.1761,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 6.1691,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 3.9155,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 3.5421,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lce",
+          "score": 0.2389,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.2069,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.17,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "skyline",
+          "score": 107.2507,
+          "evidence": []
+        },
+        {
+          "term": "bucket",
+          "score": 106.655,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 101.4206,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-41-replay-protocol": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "user-item graph",
+          "score": 2.8493,
+          "evidence": []
+        },
+        {
+          "term": "user-item interactions",
+          "score": 2.5374,
+          "evidence": []
+        },
+        {
+          "term": "yelp dataset",
+          "score": 2.2831,
+          "evidence": []
+        },
+        {
+          "term": "lce emb",
+          "score": 2.2734,
+          "evidence": []
+        },
+        {
+          "term": "lce layer",
+          "score": 2.2618,
+          "evidence": []
+        },
+        {
+          "term": "window months",
+          "score": 2.1712,
+          "evidence": []
+        },
+        {
+          "term": "user-user edges",
+          "score": 2.1609,
+          "evidence": []
+        },
+        {
+          "term": "cold-start items",
+          "score": 2.0884,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "user-item graph",
+          "score": 78.3511,
+          "evidence": []
+        },
+        {
+          "term": "user-item interactions",
+          "score": 66.2425,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 54.6802,
+          "evidence": []
+        },
+        {
+          "term": "yelp dataset",
+          "score": 54.3277,
+          "evidence": []
+        },
+        {
+          "term": "user item",
+          "score": 53.1441,
+          "evidence": []
+        },
+        {
+          "term": "cold-start items",
+          "score": 49.7621,
+          "evidence": []
+        },
+        {
+          "term": "offline data",
+          "score": 49.2994,
+          "evidence": []
+        },
+        {
+          "term": "window months",
+          "score": 47.4468,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lce emb",
+          "score": 2.4705,
+          "evidence": []
+        },
+        {
+          "term": "lce layer",
+          "score": 2.457,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 2.165,
+          "evidence": []
+        },
+        {
+          "term": "user-item graph",
+          "score": 1.833,
+          "evidence": []
+        },
+        {
+          "term": "cold-start items",
+          "score": 1.7881,
+          "evidence": []
+        },
+        {
+          "term": "yelp dataset",
+          "score": 1.4952,
+          "evidence": []
+        },
+        {
+          "term": "user item",
+          "score": 1.4273,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 1.3973,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce layer",
+          "score": 62.2003,
+          "evidence": []
+        },
+        {
+          "term": "lce emb",
+          "score": 62.1616,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 45.2316,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 32.6987,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 26.3459,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 26.2419,
+          "evidence": []
+        },
+        {
+          "term": "yelp dataset",
+          "score": 24.6402,
+          "evidence": []
+        },
+        {
+          "term": "cold-start items",
+          "score": 24.4231,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lce emb",
+          "score": 2.4705,
+          "evidence": []
+        },
+        {
+          "term": "lce layer",
+          "score": 2.457,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 2.165,
+          "evidence": []
+        },
+        {
+          "term": "user-item graph",
+          "score": 1.833,
+          "evidence": []
+        },
+        {
+          "term": "cold-start items",
+          "score": 1.7881,
+          "evidence": []
+        },
+        {
+          "term": "yelp dataset",
+          "score": 1.4952,
+          "evidence": []
+        },
+        {
+          "term": "user item",
+          "score": 1.4273,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 1.3973,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "lce emb",
+          "score": 161.679,
+          "evidence": []
+        },
+        {
+          "term": "bucket",
+          "score": 123.8627,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 123.5224,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 117.3996,
+          "evidence": []
+        },
+        {
+          "term": "lce layer",
+          "score": 114.5865,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 111.2654,
+          "evidence": []
+        },
+        {
+          "term": "epinions",
+          "score": 110.0344,
+          "evidence": []
+        },
+        {
+          "term": "librarything",
+          "score": 108.5479,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-44-comparison-with-baseline-methods": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "streaming performance",
+          "score": 2.9094,
+          "evidence": []
+        },
+        {
+          "term": "streaming recommendation",
+          "score": 2.7715,
+          "evidence": []
+        },
+        {
+          "term": "streaming window",
+          "score": 2.7171,
+          "evidence": []
+        },
+        {
+          "term": "method lce",
+          "score": 2.5634,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 2.5417,
+          "evidence": []
+        },
+        {
+          "term": "recall ndcg",
+          "score": 2.2881,
+          "evidence": []
+        },
+        {
+          "term": "incremental updates",
+          "score": 2.249,
+          "evidence": []
+        },
+        {
+          "term": "model retraining",
+          "score": 2.2397,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "streaming performance",
+          "score": 124.6599,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 104.7969,
+          "evidence": []
+        },
+        {
+          "term": "streaming recommendation",
+          "score": 104.2429,
+          "evidence": []
+        },
+        {
+          "term": "streaming window",
+          "score": 102.1852,
+          "evidence": []
+        },
+        {
+          "term": "method lce",
+          "score": 92.6003,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 56.1813,
+          "evidence": []
+        },
+        {
+          "term": "model retraining",
+          "score": 50.1217,
+          "evidence": []
+        },
+        {
+          "term": "skyline performance",
+          "score": 48.8538,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "streaming performance",
+          "score": 2.1967,
+          "evidence": []
+        },
+        {
+          "term": "streaming recommendation",
+          "score": 2.1372,
+          "evidence": []
+        },
+        {
+          "term": "method lce",
+          "score": 1.9532,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 1.768,
+          "evidence": []
+        },
+        {
+          "term": "incremental updates",
+          "score": 1.6417,
+          "evidence": []
+        },
+        {
+          "term": "streaming window",
+          "score": 1.6317,
+          "evidence": []
+        },
+        {
+          "term": "skyline performance",
+          "score": 1.5844,
+          "evidence": []
+        },
+        {
+          "term": "cold-start items",
+          "score": 1.4796,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "method lce",
+          "score": 84.7764,
+          "evidence": []
+        },
+        {
+          "term": "streaming performance",
+          "score": 74.7361,
+          "evidence": []
+        },
+        {
+          "term": "streaming recommendation",
+          "score": 67.7922,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 58.7948,
+          "evidence": []
+        },
+        {
+          "term": "skyline performance",
+          "score": 56.0634,
+          "evidence": []
+        },
+        {
+          "term": "streaming window",
+          "score": 53.9193,
+          "evidence": []
+        },
+        {
+          "term": "recall ndcg",
+          "score": 47.2149,
+          "evidence": []
+        },
+        {
+          "term": "incremental updates",
+          "score": 46.6781,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "streaming performance",
+          "score": 2.1967,
+          "evidence": []
+        },
+        {
+          "term": "streaming recommendation",
+          "score": 2.1372,
+          "evidence": []
+        },
+        {
+          "term": "method lce",
+          "score": 1.9532,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 1.768,
+          "evidence": []
+        },
+        {
+          "term": "incremental updates",
+          "score": 1.6417,
+          "evidence": []
+        },
+        {
+          "term": "streaming window",
+          "score": 1.6317,
+          "evidence": []
+        },
+        {
+          "term": "skyline performance",
+          "score": 1.5844,
+          "evidence": []
+        },
+        {
+          "term": "cold-start items",
+          "score": 1.4796,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "skyline performance",
+          "score": 191.1696,
+          "evidence": []
+        },
+        {
+          "term": "bucket",
+          "score": 178.579,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 167.7976,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 158.677,
+          "evidence": []
+        },
+        {
+          "term": "epinions",
+          "score": 156.4809,
+          "evidence": []
+        },
+        {
+          "term": "librarything",
+          "score": 154.604,
+          "evidence": []
+        },
+        {
+          "term": "t-test",
+          "score": 150.844,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 148.9185,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-45-comparison-with-lce-variants": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lce",
+          "score": 4.4383,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "librarything month",
+          "score": 3.9104,
+          "evidence": []
+        },
+        {
+          "term": "month streaming",
+          "score": 3.7808,
+          "evidence": []
+        },
+        {
+          "term": "lce emb",
+          "score": 3.0955,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 2.1719,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 2.0648,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 1.994,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 1.9369,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lce",
+          "score": 218.9321,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "month streaming",
+          "score": 123.4994,
+          "evidence": []
+        },
+        {
+          "term": "librarything month",
+          "score": 122.8038,
+          "evidence": []
+        },
+        {
+          "term": "lce emb",
+          "score": 121.6423,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 74.7716,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 66.9695,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 64.964,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 64.4915,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lce",
+          "score": 3.3072,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lce emb",
+          "score": 2.1976,
+          "evidence": []
+        },
+        {
+          "term": "month streaming",
+          "score": 1.8273,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 1.7622,
+          "evidence": []
+        },
+        {
+          "term": "recommendation performance",
+          "score": 1.5858,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 1.2358,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 1.1821,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 1.0546,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 198.3887,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lce emb",
+          "score": 110.3759,
+          "evidence": []
+        },
+        {
+          "term": "month streaming",
+          "score": 103.9456,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 74.0947,
+          "evidence": []
+        },
+        {
+          "term": "librarything month",
+          "score": 62.1629,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 55.7205,
+          "evidence": []
+        },
+        {
+          "term": "recommendation performance",
+          "score": 53.1971,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 52.1608,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lce",
+          "score": 3.3072,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lce emb",
+          "score": 2.1976,
+          "evidence": []
+        },
+        {
+          "term": "month streaming",
+          "score": 1.8273,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 1.7622,
+          "evidence": []
+        },
+        {
+          "term": "recommendation performance",
+          "score": 1.5858,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 1.2358,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 1.1821,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 1.0546,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "librarything month",
+          "score": 465.5287,
+          "evidence": []
+        },
+        {
+          "term": "month streaming",
+          "score": 390.0992,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 383.7694,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lce emb",
+          "score": 355.9333,
+          "evidence": []
+        },
+        {
+          "term": "bucket",
+          "score": 283.4894,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 276.5536,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 262.3315,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 248.6734,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-46-explicit-vs-implicit-embeddings": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "explicit embeddings",
+          "score": 4.0716,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "item embeddings",
+          "score": 2.3134,
+          "evidence": []
+        },
+        {
+          "term": "user embeddings",
+          "score": 1.9076,
+          "evidence": []
+        },
+        {
+          "term": "learn explicit",
+          "score": 1.5314,
+          "evidence": []
+        },
+        {
+          "term": "compositional function",
+          "score": 1.5295,
+          "evidence": []
+        },
+        {
+          "term": "node types",
+          "score": 1.3772,
+          "evidence": []
+        },
+        {
+          "term": "implicit",
+          "score": 1.3064,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lce-user",
+          "score": 1.2651,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "explicit embeddings",
+          "score": 110.0154,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "item embeddings",
+          "score": 59.6468,
+          "evidence": []
+        },
+        {
+          "term": "user embeddings",
+          "score": 51.4805,
+          "evidence": []
+        },
+        {
+          "term": "learn explicit",
+          "score": 30.1588,
+          "evidence": []
+        },
+        {
+          "term": "compositional function",
+          "score": 25.6307,
+          "evidence": []
+        },
+        {
+          "term": "node type",
+          "score": 25.4884,
+          "evidence": []
+        },
+        {
+          "term": "lce-user",
+          "score": 21.0133,
+          "evidence": []
+        },
+        {
+          "term": "implicit",
+          "score": 17.9148,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "explicit embeddings",
+          "score": 0.9167,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "item embeddings",
+          "score": 0.5987,
+          "evidence": []
+        },
+        {
+          "term": "user embeddings",
+          "score": 0.5617,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 0.5526,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.4794,
+          "evidence": []
+        },
+        {
+          "term": "compositional function",
+          "score": 0.4208,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.4002,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.3901,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 10.7578,
+          "evidence": []
+        },
+        {
+          "term": "embeddings",
+          "score": 9.4274,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "explicit embeddings",
+          "score": 9.4274,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "item embeddings",
+          "score": 7.3246,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 6.9548,
+          "evidence": []
+        },
+        {
+          "term": "user embeddings",
+          "score": 6.8535,
+          "evidence": []
+        },
+        {
+          "term": "node type",
+          "score": 6.6832,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 6.582,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "explicit embeddings",
+          "score": 0.9167,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "item embeddings",
+          "score": 0.5987,
+          "evidence": []
+        },
+        {
+          "term": "user embeddings",
+          "score": 0.5617,
+          "evidence": []
+        },
+        {
+          "term": "compositional function",
+          "score": 0.4208,
+          "evidence": []
+        },
+        {
+          "term": "node type",
+          "score": 0.3751,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 0.2793,
+          "evidence": []
+        },
+        {
+          "term": "datasets",
+          "score": 0.2507,
+          "evidence": []
+        },
+        {
+          "term": "implicit",
+          "score": 0.2431,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "bucket",
+          "score": 88.7488,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 86.6883,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 82.2838,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 77.4696,
+          "evidence": []
+        },
+        {
+          "term": "epinions",
+          "score": 76.9105,
+          "evidence": []
+        },
+        {
+          "term": "librarything",
+          "score": 76.3644,
+          "evidence": []
+        },
+        {
+          "term": "lce-item",
+          "score": 75.6792,
+          "evidence": []
+        },
+        {
+          "term": "t-test",
+          "score": 73.6903,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-47-evaluation-on-real-world-production-data": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "streaming data",
+          "score": 1.5254,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 1.2379,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 0.9953,
+          "evidence": []
+        },
+        {
+          "term": "offline",
+          "score": 0.8756,
+          "evidence": []
+        },
+        {
+          "term": "teams",
+          "score": 0.8609,
+          "evidence": []
+        },
+        {
+          "term": "weeks",
+          "score": 0.8492,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "streaming data",
+          "score": 27.5328,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 22.4725,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 15.638,
+          "evidence": []
+        },
+        {
+          "term": "offline",
+          "score": 13.6862,
+          "evidence": []
+        },
+        {
+          "term": "teams",
+          "score": 13.4361,
+          "evidence": []
+        },
+        {
+          "term": "weeks",
+          "score": 11.8116,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "streaming data",
+          "score": 0.4678,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 0.3855,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.289,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.2739,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 0.2448,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.2273,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 12.9395,
+          "evidence": []
+        },
+        {
+          "term": "streaming data",
+          "score": 10.214,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 7.5975,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 6.2778,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 6.2524,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 4.7366,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "streaming data",
+          "score": 0.4678,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 0.3855,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.289,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 0.2076,
+          "evidence": []
+        },
+        {
+          "term": "model",
+          "score": 0.1527,
+          "evidence": []
+        },
+        {
+          "term": "offline",
+          "score": 0.1527,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 135.4706,
+          "evidence": []
+        },
+        {
+          "term": "schnabel",
+          "score": 107.4717,
+          "evidence": []
+        },
+        {
+          "term": "bucket",
+          "score": 104.6707,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 104.2781,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 98.5715,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 96.144,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-53-cold-start-recommendation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "recommendation",
+          "score": 1.6962,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "user-item",
+          "score": 0.8462,
+          "evidence": []
+        },
+        {
+          "term": "graph-based",
+          "score": 0.7485,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.7365,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "recommendation",
+          "score": 29.8183,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "user-item",
+          "score": 11.0007,
+          "evidence": []
+        },
+        {
+          "term": "graph-based",
+          "score": 9.9791,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 9.5996,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "recommendation",
+          "score": 0.2882,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lce",
+          "score": 0.2267,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.1973,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.1658,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 4.9371,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 4.026,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "streaming",
+          "score": 3.0178,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 2.9613,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "recommendation",
+          "score": 0.2882,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "streaming",
+          "score": 0.1973,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.1648,
+          "evidence": []
+        },
+        {
+          "term": "cold-start",
+          "score": 0.1636,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "cold-start",
+          "score": 108.3394,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "skyline",
+          "score": 90.8353,
+          "evidence": []
+        },
+        {
+          "term": "bucket",
+          "score": 89.1348,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 85.8998,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-52-graph-based-recommendation-models": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cold-start problem",
+          "score": 2.0008,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 1.6962,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "compositional embedding",
+          "score": 1.53,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 1.1555,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.9706,
+          "evidence": []
+        },
+        {
+          "term": "graph-based",
+          "score": 0.9445,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.845,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.7365,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cold-start problem",
+          "score": 39.5598,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 29.8183,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "compositional embedding",
+          "score": 22.8905,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 20.8684,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 20.8507,
+          "evidence": []
+        },
+        {
+          "term": "users",
+          "score": 14.4678,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 11.2363,
+          "evidence": []
+        },
+        {
+          "term": "setting",
+          "score": 10.6685,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "recommendation",
+          "score": 0.6301,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lce",
+          "score": 0.5686,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.4899,
+          "evidence": []
+        },
+        {
+          "term": "compositional embedding",
+          "score": 0.456,
+          "evidence": []
+        },
+        {
+          "term": "graph-based",
+          "score": 0.4251,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.416,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.4042,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.3655,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 15.5605,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 10.4956,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "streaming",
+          "score": 9.5441,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 9.2231,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 7.4115,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 7.2536,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 5.7111,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 5.2538,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "recommendation",
+          "score": 0.6301,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lce",
+          "score": 0.5686,
+          "evidence": []
+        },
+        {
+          "term": "streaming",
+          "score": 0.4899,
+          "evidence": []
+        },
+        {
+          "term": "compositional embedding",
+          "score": 0.456,
+          "evidence": []
+        },
+        {
+          "term": "graph-based",
+          "score": 0.4251,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.416,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.3655,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.3482,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "bucket",
+          "score": 92.7564,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 92.7476,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 87.9599,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 83.8797,
+          "evidence": []
+        },
+        {
+          "term": "epinions",
+          "score": 82.4266,
+          "evidence": []
+        },
+        {
+          "term": "librarything",
+          "score": 81.4605,
+          "evidence": []
+        },
+        {
+          "term": "t-test",
+          "score": 79.4069,
+          "evidence": []
+        },
+        {
+          "term": "lce-item",
+          "score": 78.6772,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-6-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "streaming setting",
+          "score": 1.5464,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 1.2864,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.7305,
+          "evidence": []
+        },
+        {
+          "term": "baselines",
+          "score": 0.5468,
+          "evidence": []
+        },
+        {
+          "term": "real-world",
+          "score": 0.5086,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.5011,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lce",
+          "score": 26.0633,
+          "evidence": []
+        },
+        {
+          "term": "streaming setting",
+          "score": 24.6277,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 11.1819,
+          "evidence": []
+        },
+        {
+          "term": "baselines",
+          "score": 7.3444,
+          "evidence": []
+        },
+        {
+          "term": "real-world",
+          "score": 6.8142,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 5.8369,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "streaming setting",
+          "score": 0.5303,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 0.4421,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 0.3237,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 0.3159,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 0.2743,
+          "evidence": []
+        },
+        {
+          "term": "items",
+          "score": 0.2639,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lce",
+          "score": 12.8838,
+          "evidence": []
+        },
+        {
+          "term": "streaming setting",
+          "score": 9.5331,
+          "evidence": []
+        },
+        {
+          "term": "lightgcn",
+          "score": 7.5421,
+          "evidence": []
+        },
+        {
+          "term": "incremental",
+          "score": 6.2416,
+          "evidence": []
+        },
+        {
+          "term": "slim",
+          "score": 6.2092,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 4.6699,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "streaming setting",
+          "score": 0.5303,
+          "evidence": []
+        },
+        {
+          "term": "lce",
+          "score": 0.4421,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.2437,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.2392,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 0.2317,
+          "evidence": []
+        },
+        {
+          "term": "baselines",
+          "score": 0.15,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 348.1528,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 206.81,
+          "evidence": []
+        },
+        {
+          "term": "schnabel",
+          "score": 204.8741,
+          "evidence": []
+        },
+        {
+          "term": "hang",
+          "score": 152.7031,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 114.9234,
+          "evidence": []
+        },
+        {
+          "term": "bucket",
+          "score": 113.9569,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "sigir conference",
+          "score": 3.8374,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 3.6379,
+          "evidence": []
+        },
+        {
+          "term": "acm conference",
+          "score": 3.4562,
+          "evidence": []
+        },
+        {
+          "term": "lce emb",
+          "score": 3.2916,
+          "evidence": []
+        },
+        {
+          "term": "lce layer",
+          "score": 3.1898,
+          "evidence": []
+        },
+        {
+          "term": "incremental streaming",
+          "score": 3.1466,
+          "evidence": []
+        },
+        {
+          "term": "recommender systems",
+          "score": 3.1029,
+          "evidence": []
+        },
+        {
+          "term": "web conference",
+          "score": 3.0325,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "international conference",
+          "score": 185.8055,
+          "evidence": []
+        },
+        {
+          "term": "acm conference",
+          "score": 171.9763,
+          "evidence": []
+        },
+        {
+          "term": "sigir conference",
+          "score": 158.0112,
+          "evidence": []
+        },
+        {
+          "term": "web conference",
+          "score": 143.9079,
+          "evidence": []
+        },
+        {
+          "term": "lce layer",
+          "score": 122.6795,
+          "evidence": []
+        },
+        {
+          "term": "lce emb",
+          "score": 122.5178,
+          "evidence": []
+        },
+        {
+          "term": "lce achieves",
+          "score": 111.746,
+          "evidence": []
+        },
+        {
+          "term": "proceedings",
+          "score": 104.2804,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "incremental streaming",
+          "score": 4.2289,
+          "evidence": []
+        },
+        {
+          "term": "lce layer",
+          "score": 3.9039,
+          "evidence": []
+        },
+        {
+          "term": "lce emb",
+          "score": 3.8861,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 3.3036,
+          "evidence": []
+        },
+        {
+          "term": "sigir conference",
+          "score": 3.1241,
+          "evidence": []
+        },
+        {
+          "term": "acm conference",
+          "score": 3.1165,
+          "evidence": []
+        },
+        {
+          "term": "incremental updates",
+          "score": 2.8829,
+          "evidence": []
+        },
+        {
+          "term": "sequential recommendation",
+          "score": 2.7921,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "international conference",
+          "score": 180.9553,
+          "evidence": []
+        },
+        {
+          "term": "acm conference",
+          "score": 161.7106,
+          "evidence": []
+        },
+        {
+          "term": "sigir conference",
+          "score": 143.1099,
+          "evidence": []
+        },
+        {
+          "term": "web conference",
+          "score": 132.1951,
+          "evidence": []
+        },
+        {
+          "term": "lce layer",
+          "score": 125.581,
+          "evidence": []
+        },
+        {
+          "term": "lce emb",
+          "score": 124.3933,
+          "evidence": []
+        },
+        {
+          "term": "lce achieves",
+          "score": 113.4,
+          "evidence": []
+        },
+        {
+          "term": "incremental streaming",
+          "score": 103.8613,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "incremental streaming",
+          "score": 4.2289,
+          "evidence": []
+        },
+        {
+          "term": "lce layer",
+          "score": 3.9039,
+          "evidence": []
+        },
+        {
+          "term": "lce emb",
+          "score": 3.8861,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 3.3036,
+          "evidence": []
+        },
+        {
+          "term": "lce achieves",
+          "score": 3.1911,
+          "evidence": []
+        },
+        {
+          "term": "sigir conference",
+          "score": 3.1241,
+          "evidence": []
+        },
+        {
+          "term": "acm conference",
+          "score": 3.1165,
+          "evidence": []
+        },
+        {
+          "term": "incremental updates",
+          "score": 2.8829,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "lce emb",
+          "score": 132.8566,
+          "evidence": []
+        },
+        {
+          "term": "incremental streaming",
+          "score": 125.6289,
+          "evidence": []
+        },
+        {
+          "term": "bucket",
+          "score": 99.5937,
+          "evidence": []
+        },
+        {
+          "term": "skyline",
+          "score": 99.314,
+          "evidence": []
+        },
+        {
+          "term": "gcn layers",
+          "score": 98.0992,
+          "evidence": []
+        },
+        {
+          "term": "als",
+          "score": 95.1442,
+          "evidence": []
+        },
+        {
+          "term": "epinions",
+          "score": 89.8436,
+          "evidence": []
+        },
+        {
+          "term": "composi",
+          "score": 88.777,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

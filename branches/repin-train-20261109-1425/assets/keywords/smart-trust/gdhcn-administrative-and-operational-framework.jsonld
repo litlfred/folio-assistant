@@ -1,0 +1,4518 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "gdhcn-administrative-and-operational-framework",
+  "instance": "smart-trust",
+  "about": "library/gdhcn-administrative-and-operational-framework",
+  "corpus": {
+    "library": "smart-trust/library",
+    "sections": 22,
+    "terms": 323
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "public health",
+        "score": 12.5715,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health certificate",
+        "score": 11.1448,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 11.0264,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "participant public",
+        "score": 10.1846,
+        "evidence": []
+      },
+      {
+        "term": "health standards",
+        "score": 10.1122,
+        "evidence": []
+      },
+      {
+        "term": "public key",
+        "score": 10.0079,
+        "evidence": []
+      },
+      {
+        "term": "health security",
+        "score": 9.4318,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health regulations",
+        "score": 9.3899,
+        "evidence": []
+      },
+      {
+        "term": "health system",
+        "score": 9.3899,
+        "evidence": []
+      },
+      {
+        "term": "public infrastructure",
+        "score": 9.0488,
+        "evidence": []
+      },
+      {
+        "term": "international health",
+        "score": 9.0057,
+        "evidence": []
+      },
+      {
+        "term": "encryption public",
+        "score": 8.5672,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "public health",
+        "score": 77.4327,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "public key",
+        "score": 72.0498,
+        "evidence": []
+      },
+      {
+        "term": "health certificate",
+        "score": 66.7069,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 66.4492,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "encryption key",
+        "score": 61.1402,
+        "evidence": []
+      },
+      {
+        "term": "participant public",
+        "score": 60.104,
+        "evidence": []
+      },
+      {
+        "term": "key infrastructure",
+        "score": 59.5909,
+        "evidence": []
+      },
+      {
+        "term": "health standards",
+        "score": 57.5122,
+        "evidence": []
+      },
+      {
+        "term": "health regulations",
+        "score": 54.7327,
+        "evidence": []
+      },
+      {
+        "term": "health security",
+        "score": 54.7327,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health system",
+        "score": 54.7327,
+        "evidence": []
+      },
+      {
+        "term": "international health",
+        "score": 52.1571,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "public health",
+        "score": 12.6001,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health certificate",
+        "score": 11.1654,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 11.0356,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "participant public",
+        "score": 10.208,
+        "evidence": []
+      },
+      {
+        "term": "health standards",
+        "score": 10.1347,
+        "evidence": []
+      },
+      {
+        "term": "public key",
+        "score": 10.0142,
+        "evidence": []
+      },
+      {
+        "term": "health security",
+        "score": 9.4478,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health system",
+        "score": 9.4122,
+        "evidence": []
+      },
+      {
+        "term": "health regulations",
+        "score": 9.3986,
+        "evidence": []
+      },
+      {
+        "term": "public infrastructure",
+        "score": 9.0586,
+        "evidence": []
+      },
+      {
+        "term": "international health",
+        "score": 9.0258,
+        "evidence": []
+      },
+      {
+        "term": "encryption public",
+        "score": 8.5713,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "public health",
+        "score": 77.6145,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "public key",
+        "score": 72.1876,
+        "evidence": []
+      },
+      {
+        "term": "health certificate",
+        "score": 66.8463,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 66.4886,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "encryption key",
+        "score": 61.1119,
+        "evidence": []
+      },
+      {
+        "term": "participant public",
+        "score": 60.2523,
+        "evidence": []
+      },
+      {
+        "term": "key infrastructure",
+        "score": 59.6127,
+        "evidence": []
+      },
+      {
+        "term": "health standards",
+        "score": 57.6179,
+        "evidence": []
+      },
+      {
+        "term": "health system",
+        "score": 54.8471,
+        "evidence": []
+      },
+      {
+        "term": "health security",
+        "score": 54.8084,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health regulations",
+        "score": 54.7857,
+        "evidence": []
+      },
+      {
+        "term": "international health",
+        "score": 52.2636,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "public health",
+        "score": 12.6001,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health certificate",
+        "score": 11.1654,
+        "evidence": []
+      },
+      {
+        "term": "health services",
+        "score": 11.0356,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "participant public",
+        "score": 10.208,
+        "evidence": []
+      },
+      {
+        "term": "health standards",
+        "score": 10.1347,
+        "evidence": []
+      },
+      {
+        "term": "public key",
+        "score": 10.0142,
+        "evidence": []
+      },
+      {
+        "term": "health security",
+        "score": 9.4478,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "health system",
+        "score": 9.4122,
+        "evidence": []
+      },
+      {
+        "term": "health regulations",
+        "score": 9.3986,
+        "evidence": []
+      },
+      {
+        "term": "public infrastructure",
+        "score": 9.0586,
+        "evidence": []
+      },
+      {
+        "term": "international health",
+        "score": 9.0258,
+        "evidence": []
+      },
+      {
+        "term": "encryption public",
+        "score": 8.5713,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "nature",
+        "score": 92.5075,
+        "evidence": []
+      },
+      {
+        "term": "name",
+        "score": 85.3362,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "relating",
+        "score": 80.0506,
+        "evidence": []
+      },
+      {
+        "term": "test",
+        "score": 77.7218,
+        "evidence": []
+      },
+      {
+        "term": "immunities",
+        "score": 72.5867,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "officials",
+        "score": 72.5867,
+        "evidence": []
+      },
+      {
+        "term": "privileges",
+        "score": 72.5867,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "refer",
+        "score": 66.1176,
+        "evidence": []
+      },
+      {
+        "term": "world",
+        "score": 58.8339,
+        "evidence": []
+      },
+      {
+        "term": "world health",
+        "score": 58.8339,
+        "evidence": []
+      },
+      {
+        "term": "documents",
+        "score": 55.4514,
+        "evidence": []
+      },
+      {
+        "term": "vaccination",
+        "score": 48.4011,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-i-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "public infrastructure",
+          "score": 1.4945,
+          "evidence": []
+        },
+        {
+          "term": "governing bodies",
+          "score": 1.4582,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.2361,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 1.0087,
+          "evidence": []
+        },
+        {
+          "term": "open",
+          "score": 0.886,
+          "evidence": []
+        },
+        {
+          "term": "case",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "enable",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "mechanisms",
+          "score": 0.8724,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "health",
+          "score": 9.7041,
+          "evidence": []
+        },
+        {
+          "term": "public infrastructure",
+          "score": 8.7983,
+          "evidence": []
+        },
+        {
+          "term": "governing bodies",
+          "score": 7.9697,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 6.819,
+          "evidence": []
+        },
+        {
+          "term": "case",
+          "score": 4.7958,
+          "evidence": []
+        },
+        {
+          "term": "enable",
+          "score": 4.7958,
+          "evidence": []
+        },
+        {
+          "term": "mechanisms",
+          "score": 4.7958,
+          "evidence": []
+        },
+        {
+          "term": "open",
+          "score": 4.7958,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public infrastructure",
+          "score": 1.4939,
+          "evidence": []
+        },
+        {
+          "term": "governing bodies",
+          "score": 1.4582,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.2351,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 1.0076,
+          "evidence": []
+        },
+        {
+          "term": "open",
+          "score": 0.8853,
+          "evidence": []
+        },
+        {
+          "term": "mechanisms",
+          "score": 0.872,
+          "evidence": []
+        },
+        {
+          "term": "enable",
+          "score": 0.8716,
+          "evidence": []
+        },
+        {
+          "term": "case",
+          "score": 0.8707,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "health",
+          "score": 9.701,
+          "evidence": []
+        },
+        {
+          "term": "public infrastructure",
+          "score": 8.7944,
+          "evidence": []
+        },
+        {
+          "term": "governing bodies",
+          "score": 7.9681,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 6.8158,
+          "evidence": []
+        },
+        {
+          "term": "open",
+          "score": 4.7942,
+          "evidence": []
+        },
+        {
+          "term": "mechanisms",
+          "score": 4.794,
+          "evidence": []
+        },
+        {
+          "term": "scope",
+          "score": 4.7938,
+          "evidence": []
+        },
+        {
+          "term": "enable",
+          "score": 4.7937,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public infrastructure",
+          "score": 1.4939,
+          "evidence": []
+        },
+        {
+          "term": "governing bodies",
+          "score": 1.4582,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 1.2351,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 1.0076,
+          "evidence": []
+        },
+        {
+          "term": "open",
+          "score": 0.8853,
+          "evidence": []
+        },
+        {
+          "term": "mechanisms",
+          "score": 0.872,
+          "evidence": []
+        },
+        {
+          "term": "enable",
+          "score": 0.8716,
+          "evidence": []
+        },
+        {
+          "term": "case",
+          "score": 0.8707,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "governing bodies",
+          "score": 9.8982,
+          "evidence": []
+        },
+        {
+          "term": "case",
+          "score": 6.9384,
+          "evidence": []
+        },
+        {
+          "term": "mechanisms",
+          "score": 6.9383,
+          "evidence": []
+        },
+        {
+          "term": "enable",
+          "score": 6.93,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 5.8088,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 4.9604,
+          "evidence": []
+        },
+        {
+          "term": "facilitate",
+          "score": 4.9604,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 4.9601,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-ii-definitions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "certificate authority",
+          "score": 1.8175,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 1.7448,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public key",
+          "score": 1.4212,
+          "evidence": []
+        },
+        {
+          "term": "sub-national unit",
+          "score": 1.3698,
+          "evidence": []
+        },
+        {
+          "term": "unit thereof",
+          "score": 1.2722,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 0.8987,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.7347,
+          "evidence": []
+        },
+        {
+          "term": "agency",
+          "score": 0.7291,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "certificate authority",
+          "score": 14.7805,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 9.5916,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public key",
+          "score": 9.1779,
+          "evidence": []
+        },
+        {
+          "term": "sub-national unit",
+          "score": 7.3944,
+          "evidence": []
+        },
+        {
+          "term": "unit thereof",
+          "score": 6.819,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 4.7958,
+          "evidence": []
+        },
+        {
+          "term": "participant",
+          "score": 4.1589,
+          "evidence": []
+        },
+        {
+          "term": "agency",
+          "score": 3.9849,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "certificate authority",
+          "score": 1.8176,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 1.7446,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public key",
+          "score": 1.4211,
+          "evidence": []
+        },
+        {
+          "term": "sub-national unit",
+          "score": 1.37,
+          "evidence": []
+        },
+        {
+          "term": "unit thereof",
+          "score": 1.2722,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 0.8987,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.7344,
+          "evidence": []
+        },
+        {
+          "term": "agency",
+          "score": 0.7291,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "certificate authority",
+          "score": 14.7798,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 9.5893,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public key",
+          "score": 9.1744,
+          "evidence": []
+        },
+        {
+          "term": "sub-national unit",
+          "score": 7.3956,
+          "evidence": []
+        },
+        {
+          "term": "unit thereof",
+          "score": 6.8196,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 4.7954,
+          "evidence": []
+        },
+        {
+          "term": "participant",
+          "score": 4.1578,
+          "evidence": []
+        },
+        {
+          "term": "state",
+          "score": 3.9854,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "certificate authority",
+          "score": 1.8176,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 1.7446,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "public key",
+          "score": 1.4211,
+          "evidence": []
+        },
+        {
+          "term": "sub-national unit",
+          "score": 1.37,
+          "evidence": []
+        },
+        {
+          "term": "unit thereof",
+          "score": 1.2722,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 0.8987,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.7344,
+          "evidence": []
+        },
+        {
+          "term": "agency",
+          "score": 0.7291,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "definitions",
+          "score": 7.6108,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sub-national unit",
+          "score": 5.2745,
+          "evidence": []
+        },
+        {
+          "term": "certificate authority",
+          "score": 4.8063,
+          "evidence": []
+        },
+        {
+          "term": "associate",
+          "score": 4.6688,
+          "evidence": []
+        },
+        {
+          "term": "competent",
+          "score": 4.6688,
+          "evidence": []
+        },
+        {
+          "term": "effective",
+          "score": 4.6688,
+          "evidence": []
+        },
+        {
+          "term": "egovernment",
+          "score": 4.6688,
+          "evidence": []
+        },
+        {
+          "term": "entities",
+          "score": 4.6688,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-o-public-health-security-agency": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "public health",
+          "score": 5.5398,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health security",
+          "score": 4.5845,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 2.8313,
+          "evidence": []
+        },
+        {
+          "term": "establishing procedures",
+          "score": 2.4879,
+          "evidence": []
+        },
+        {
+          "term": "implementing procedures",
+          "score": 2.4643,
+          "evidence": []
+        },
+        {
+          "term": "health standards",
+          "score": 2.2931,
+          "evidence": []
+        },
+        {
+          "term": "encryption public",
+          "score": 2.2868,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 2.2237,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "public health",
+          "score": 70.191,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health security",
+          "score": 50.4785,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 32.488,
+          "evidence": []
+        },
+        {
+          "term": "health standards",
+          "score": 25.8524,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 24.6953,
+          "evidence": []
+        },
+        {
+          "term": "encryption public",
+          "score": 22.8248,
+          "evidence": []
+        },
+        {
+          "term": "public keys",
+          "score": 21.1201,
+          "evidence": []
+        },
+        {
+          "term": "key infrastructure",
+          "score": 19.5553,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "public health",
+          "score": 5.5403,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health security",
+          "score": 4.5848,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 2.8313,
+          "evidence": []
+        },
+        {
+          "term": "establishing procedures",
+          "score": 2.4878,
+          "evidence": []
+        },
+        {
+          "term": "implementing procedures",
+          "score": 2.4642,
+          "evidence": []
+        },
+        {
+          "term": "health standards",
+          "score": 2.2933,
+          "evidence": []
+        },
+        {
+          "term": "encryption public",
+          "score": 2.2868,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 2.2238,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "public health",
+          "score": 70.1927,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health security",
+          "score": 50.4792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 32.4882,
+          "evidence": []
+        },
+        {
+          "term": "health standards",
+          "score": 25.8529,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 24.696,
+          "evidence": []
+        },
+        {
+          "term": "encryption public",
+          "score": 22.825,
+          "evidence": []
+        },
+        {
+          "term": "public keys",
+          "score": 21.1205,
+          "evidence": []
+        },
+        {
+          "term": "key infrastructure",
+          "score": 19.5554,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "public health",
+          "score": 5.5403,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health security",
+          "score": 4.5848,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health services",
+          "score": 2.8313,
+          "evidence": []
+        },
+        {
+          "term": "establishing procedures",
+          "score": 2.4878,
+          "evidence": []
+        },
+        {
+          "term": "implementing procedures",
+          "score": 2.4642,
+          "evidence": []
+        },
+        {
+          "term": "health standards",
+          "score": 2.2933,
+          "evidence": []
+        },
+        {
+          "term": "encryption public",
+          "score": 2.2868,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 2.2238,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "implementing procedures",
+          "score": 4.3374,
+          "evidence": []
+        },
+        {
+          "term": "establishing procedures",
+          "score": 3.9572,
+          "evidence": []
+        },
+        {
+          "term": "public health",
+          "score": 3.9467,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health security",
+          "score": 3.7174,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "primary responsibility",
+          "score": 3.3455,
+          "evidence": []
+        },
+        {
+          "term": "referred",
+          "score": 2.5655,
+          "evidence": []
+        },
+        {
+          "term": "interoperable",
+          "score": 2.4222,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 2.3861,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-iv-principles": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "principles",
+          "score": 1.6581,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "human rights",
+          "score": 1.6015,
+          "evidence": []
+        },
+        {
+          "term": "personal data",
+          "score": 1.4259,
+          "evidence": []
+        },
+        {
+          "term": "intended",
+          "score": 1.3302,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 1.0371,
+          "evidence": []
+        },
+        {
+          "term": "innovation",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "learning",
+          "score": 0.8724,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "principles",
+          "score": 10.2285,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "intended",
+          "score": 9.9622,
+          "evidence": []
+        },
+        {
+          "term": "personal data",
+          "score": 9.0121,
+          "evidence": []
+        },
+        {
+          "term": "human rights",
+          "score": 8.7807,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 5.998,
+          "evidence": []
+        },
+        {
+          "term": "among",
+          "score": 4.7958,
+          "evidence": []
+        },
+        {
+          "term": "innovation",
+          "score": 4.7958,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "principles",
+          "score": 1.6586,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "human rights",
+          "score": 1.6016,
+          "evidence": []
+        },
+        {
+          "term": "personal data",
+          "score": 1.4242,
+          "evidence": []
+        },
+        {
+          "term": "intended",
+          "score": 1.3303,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 1.0355,
+          "evidence": []
+        },
+        {
+          "term": "innovation",
+          "score": 0.8723,
+          "evidence": []
+        },
+        {
+          "term": "learning",
+          "score": 0.8723,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "principles",
+          "score": 10.2295,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "intended",
+          "score": 9.9624,
+          "evidence": []
+        },
+        {
+          "term": "personal data",
+          "score": 9.0085,
+          "evidence": []
+        },
+        {
+          "term": "human rights",
+          "score": 8.781,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 5.9944,
+          "evidence": []
+        },
+        {
+          "term": "innovation",
+          "score": 4.7956,
+          "evidence": []
+        },
+        {
+          "term": "learning",
+          "score": 4.7956,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "principles",
+          "score": 1.6586,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "human rights",
+          "score": 1.6016,
+          "evidence": []
+        },
+        {
+          "term": "personal data",
+          "score": 1.4242,
+          "evidence": []
+        },
+        {
+          "term": "intended",
+          "score": 1.3303,
+          "evidence": []
+        },
+        {
+          "term": "data protection",
+          "score": 1.0355,
+          "evidence": []
+        },
+        {
+          "term": "innovation",
+          "score": 0.8723,
+          "evidence": []
+        },
+        {
+          "term": "learning",
+          "score": 0.8723,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "human rights",
+          "score": 24.8703,
+          "evidence": []
+        },
+        {
+          "term": "principles",
+          "score": 20.9815,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "intended",
+          "score": 15.442,
+          "evidence": []
+        },
+        {
+          "term": "manner",
+          "score": 14.3599,
+          "evidence": []
+        },
+        {
+          "term": "innovation",
+          "score": 14.359,
+          "evidence": []
+        },
+        {
+          "term": "learning",
+          "score": 14.359,
+          "evidence": []
+        },
+        {
+          "term": "personal data",
+          "score": 14.0501,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-v-gdhcn-operational-framework": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "operational framework",
+          "score": 2.0064,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "onboarding process",
+          "score": 1.0714,
+          "evidence": []
+        },
+        {
+          "term": "operationalized",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "proposed",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "domains",
+          "score": 0.7675,
+          "evidence": []
+        },
+        {
+          "term": "technical specifications",
+          "score": 0.6586,
+          "evidence": []
+        },
+        {
+          "term": "secretariat",
+          "score": 0.5855,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "operational framework",
+          "score": 10.7423,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "domains",
+          "score": 5.7257,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 5.5618,
+          "evidence": []
+        },
+        {
+          "term": "operationalized",
+          "score": 4.7958,
+          "evidence": []
+        },
+        {
+          "term": "proposed",
+          "score": 4.7958,
+          "evidence": []
+        },
+        {
+          "term": "secretariat",
+          "score": 4.1589,
+          "evidence": []
+        },
+        {
+          "term": "through",
+          "score": 3.0348,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "operational framework",
+          "score": 1.9997,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "onboarding process",
+          "score": 1.067,
+          "evidence": []
+        },
+        {
+          "term": "operationalized",
+          "score": 0.8699,
+          "evidence": []
+        },
+        {
+          "term": "proposed",
+          "score": 0.8699,
+          "evidence": []
+        },
+        {
+          "term": "domains",
+          "score": 0.7669,
+          "evidence": []
+        },
+        {
+          "term": "technical specifications",
+          "score": 0.6492,
+          "evidence": []
+        },
+        {
+          "term": "secretariat",
+          "score": 0.5848,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "operational framework",
+          "score": 10.7295,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "domains",
+          "score": 5.7227,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 5.5489,
+          "evidence": []
+        },
+        {
+          "term": "operationalized",
+          "score": 4.7908,
+          "evidence": []
+        },
+        {
+          "term": "proposed",
+          "score": 4.7908,
+          "evidence": []
+        },
+        {
+          "term": "secretariat",
+          "score": 4.157,
+          "evidence": []
+        },
+        {
+          "term": "through",
+          "score": 3.0317,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "operational framework",
+          "score": 1.9997,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "onboarding process",
+          "score": 1.067,
+          "evidence": []
+        },
+        {
+          "term": "operationalized",
+          "score": 0.8699,
+          "evidence": []
+        },
+        {
+          "term": "proposed",
+          "score": 0.8699,
+          "evidence": []
+        },
+        {
+          "term": "domains",
+          "score": 0.7669,
+          "evidence": []
+        },
+        {
+          "term": "technical specifications",
+          "score": 0.6492,
+          "evidence": []
+        },
+        {
+          "term": "secretariat",
+          "score": 0.5848,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "operational framework",
+          "score": 22.507,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "operationalized",
+          "score": 14.8198,
+          "evidence": []
+        },
+        {
+          "term": "proposed",
+          "score": 14.8198,
+          "evidence": []
+        },
+        {
+          "term": "initiated",
+          "score": 10.9973,
+          "evidence": []
+        },
+        {
+          "term": "operationalizes",
+          "score": 10.9973,
+          "evidence": []
+        },
+        {
+          "term": "providing",
+          "score": 10.7484,
+          "evidence": []
+        },
+        {
+          "term": "fees",
+          "score": 10.7154,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-vii-gdhcn-participant": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "administered",
+          "score": 0.5377,
+          "evidence": []
+        },
+        {
+          "term": "procedures",
+          "score": 0.5146,
+          "evidence": []
+        },
+        {
+          "term": "applicable",
+          "score": 0.5028,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "applicable",
+          "score": 2.5986,
+          "evidence": []
+        },
+        {
+          "term": "administered",
+          "score": 2.3979,
+          "evidence": []
+        },
+        {
+          "term": "procedures",
+          "score": 1.9924,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "administered",
+          "score": 0.537,
+          "evidence": []
+        },
+        {
+          "term": "procedures",
+          "score": 0.5131,
+          "evidence": []
+        },
+        {
+          "term": "applicable",
+          "score": 0.5015,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "applicable",
+          "score": 2.5944,
+          "evidence": []
+        },
+        {
+          "term": "administered",
+          "score": 2.3969,
+          "evidence": []
+        },
+        {
+          "term": "procedures",
+          "score": 1.9902,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "administered",
+          "score": 0.537,
+          "evidence": []
+        },
+        {
+          "term": "procedures",
+          "score": 0.5131,
+          "evidence": []
+        },
+        {
+          "term": "applicable",
+          "score": 0.5015,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "administered",
+          "score": 46.6748,
+          "evidence": []
+        },
+        {
+          "term": "resources",
+          "score": 31.4427,
+          "evidence": []
+        },
+        {
+          "term": "rules",
+          "score": 19.2363,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-vi-gdhcn-secretariat": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "encryption keys",
+          "score": 1.8967,
+          "evidence": []
+        },
+        {
+          "term": "encryption key",
+          "score": 1.8325,
+          "evidence": []
+        },
+        {
+          "term": "network gateway",
+          "score": 1.5509,
+          "evidence": []
+        },
+        {
+          "term": "according",
+          "score": 1.3489,
+          "evidence": []
+        },
+        {
+          "term": "certificate governance",
+          "score": 1.3023,
+          "evidence": []
+        },
+        {
+          "term": "technical specifications",
+          "score": 0.9475,
+          "evidence": []
+        },
+        {
+          "term": "found",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "defined",
+          "score": 0.6675,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "encryption key",
+          "score": 13.7209,
+          "evidence": []
+        },
+        {
+          "term": "encryption keys",
+          "score": 13.638,
+          "evidence": []
+        },
+        {
+          "term": "network gateway",
+          "score": 10.1948,
+          "evidence": []
+        },
+        {
+          "term": "according",
+          "score": 9.5916,
+          "evidence": []
+        },
+        {
+          "term": "key certificate",
+          "score": 7.8786,
+          "evidence": []
+        },
+        {
+          "term": "certificate governance",
+          "score": 7.7957,
+          "evidence": []
+        },
+        {
+          "term": "technical specifications",
+          "score": 5.8311,
+          "evidence": []
+        },
+        {
+          "term": "found",
+          "score": 4.7958,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "encryption keys",
+          "score": 1.8965,
+          "evidence": []
+        },
+        {
+          "term": "encryption key",
+          "score": 1.8322,
+          "evidence": []
+        },
+        {
+          "term": "network gateway",
+          "score": 1.5511,
+          "evidence": []
+        },
+        {
+          "term": "according",
+          "score": 1.3487,
+          "evidence": []
+        },
+        {
+          "term": "certificate governance",
+          "score": 1.3025,
+          "evidence": []
+        },
+        {
+          "term": "technical specifications",
+          "score": 0.9493,
+          "evidence": []
+        },
+        {
+          "term": "found",
+          "score": 0.8722,
+          "evidence": []
+        },
+        {
+          "term": "defined",
+          "score": 0.6675,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "encryption key",
+          "score": 13.7202,
+          "evidence": []
+        },
+        {
+          "term": "encryption keys",
+          "score": 13.6361,
+          "evidence": []
+        },
+        {
+          "term": "network gateway",
+          "score": 10.1943,
+          "evidence": []
+        },
+        {
+          "term": "according",
+          "score": 9.5896,
+          "evidence": []
+        },
+        {
+          "term": "key certificate",
+          "score": 7.8808,
+          "evidence": []
+        },
+        {
+          "term": "certificate governance",
+          "score": 7.7972,
+          "evidence": []
+        },
+        {
+          "term": "technical specifications",
+          "score": 5.8419,
+          "evidence": []
+        },
+        {
+          "term": "found",
+          "score": 4.7945,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "encryption keys",
+          "score": 1.8965,
+          "evidence": []
+        },
+        {
+          "term": "encryption key",
+          "score": 1.8322,
+          "evidence": []
+        },
+        {
+          "term": "network gateway",
+          "score": 1.5511,
+          "evidence": []
+        },
+        {
+          "term": "according",
+          "score": 1.3487,
+          "evidence": []
+        },
+        {
+          "term": "certificate governance",
+          "score": 1.3025,
+          "evidence": []
+        },
+        {
+          "term": "technical specifications",
+          "score": 0.9493,
+          "evidence": []
+        },
+        {
+          "term": "found",
+          "score": 0.8722,
+          "evidence": []
+        },
+        {
+          "term": "defined",
+          "score": 0.6675,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "according",
+          "score": 11.3956,
+          "evidence": []
+        },
+        {
+          "term": "found",
+          "score": 9.3038,
+          "evidence": []
+        },
+        {
+          "term": "encryption keys",
+          "score": 8.8178,
+          "evidence": []
+        },
+        {
+          "term": "securing",
+          "score": 7.3272,
+          "evidence": []
+        },
+        {
+          "term": "certificate governance",
+          "score": 6.8754,
+          "evidence": []
+        },
+        {
+          "term": "verifying",
+          "score": 6.7972,
+          "evidence": []
+        },
+        {
+          "term": "define",
+          "score": 6.6923,
+          "evidence": []
+        },
+        {
+          "term": "facilitating",
+          "score": 6.6923,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-viii-gdhcn-terms-of-participation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "top compliance",
+          "score": 2.1054,
+          "evidence": []
+        },
+        {
+          "term": "during initial",
+          "score": 1.8355,
+          "evidence": []
+        },
+        {
+          "term": "certificate authority",
+          "score": 1.6518,
+          "evidence": []
+        },
+        {
+          "term": "initial onboarding",
+          "score": 1.4397,
+          "evidence": []
+        },
+        {
+          "term": "sub-national unit",
+          "score": 1.3698,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 1.352,
+          "evidence": []
+        },
+        {
+          "term": "unit thereof",
+          "score": 1.2722,
+          "evidence": []
+        },
+        {
+          "term": "trusted services",
+          "score": 1.2312,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "top compliance",
+          "score": 16.3994,
+          "evidence": []
+        },
+        {
+          "term": "certificate authority",
+          "score": 12.099,
+          "evidence": []
+        },
+        {
+          "term": "during initial",
+          "score": 11.9546,
+          "evidence": []
+        },
+        {
+          "term": "initial onboarding",
+          "score": 8.4297,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 8.3427,
+          "evidence": []
+        },
+        {
+          "term": "time",
+          "score": 7.9697,
+          "evidence": []
+        },
+        {
+          "term": "sub-national unit",
+          "score": 7.3944,
+          "evidence": []
+        },
+        {
+          "term": "unit thereof",
+          "score": 6.819,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "top compliance",
+          "score": 2.1054,
+          "evidence": []
+        },
+        {
+          "term": "during initial",
+          "score": 1.8357,
+          "evidence": []
+        },
+        {
+          "term": "certificate authority",
+          "score": 1.6518,
+          "evidence": []
+        },
+        {
+          "term": "initial onboarding",
+          "score": 1.4399,
+          "evidence": []
+        },
+        {
+          "term": "sub-national unit",
+          "score": 1.3698,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 1.3522,
+          "evidence": []
+        },
+        {
+          "term": "unit thereof",
+          "score": 1.2722,
+          "evidence": []
+        },
+        {
+          "term": "trusted services",
+          "score": 1.2311,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "top compliance",
+          "score": 16.4004,
+          "evidence": []
+        },
+        {
+          "term": "certificate authority",
+          "score": 12.0996,
+          "evidence": []
+        },
+        {
+          "term": "during initial",
+          "score": 11.958,
+          "evidence": []
+        },
+        {
+          "term": "initial onboarding",
+          "score": 8.4336,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 8.3477,
+          "evidence": []
+        },
+        {
+          "term": "time",
+          "score": 7.9691,
+          "evidence": []
+        },
+        {
+          "term": "sub-national unit",
+          "score": 7.3934,
+          "evidence": []
+        },
+        {
+          "term": "unit thereof",
+          "score": 6.8185,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "top compliance",
+          "score": 2.1054,
+          "evidence": []
+        },
+        {
+          "term": "during initial",
+          "score": 1.8357,
+          "evidence": []
+        },
+        {
+          "term": "certificate authority",
+          "score": 1.6518,
+          "evidence": []
+        },
+        {
+          "term": "initial onboarding",
+          "score": 1.4399,
+          "evidence": []
+        },
+        {
+          "term": "sub-national unit",
+          "score": 1.3698,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 1.3522,
+          "evidence": []
+        },
+        {
+          "term": "unit thereof",
+          "score": 1.2722,
+          "evidence": []
+        },
+        {
+          "term": "trusted services",
+          "score": 1.2311,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "during initial",
+          "score": 6.9728,
+          "evidence": []
+        },
+        {
+          "term": "top compliance",
+          "score": 6.4343,
+          "evidence": []
+        },
+        {
+          "term": "sub-national unit",
+          "score": 5.1534,
+          "evidence": []
+        },
+        {
+          "term": "certificate authority",
+          "score": 5.1373,
+          "evidence": []
+        },
+        {
+          "term": "associate",
+          "score": 4.9033,
+          "evidence": []
+        },
+        {
+          "term": "competent",
+          "score": 4.9033,
+          "evidence": []
+        },
+        {
+          "term": "effective",
+          "score": 4.9033,
+          "evidence": []
+        },
+        {
+          "term": "egovernment",
+          "score": 4.9033,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-ix-gdhcn-letter-of-application": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "letter",
+          "score": 2.4982,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "owner representative",
+          "score": 2.2453,
+          "evidence": []
+        },
+        {
+          "term": "application",
+          "score": 1.9858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "secure channel",
+          "score": 1.9745,
+          "evidence": []
+        },
+        {
+          "term": "key master",
+          "score": 1.8937,
+          "evidence": []
+        },
+        {
+          "term": "legal representative",
+          "score": 1.801,
+          "evidence": []
+        },
+        {
+          "term": "key infrastructure",
+          "score": 1.6901,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 1.6097,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "letter",
+          "score": 20.7425,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "owner representative",
+          "score": 18.4338,
+          "evidence": []
+        },
+        {
+          "term": "application",
+          "score": 16.0319,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "legal representative",
+          "score": 15.9282,
+          "evidence": []
+        },
+        {
+          "term": "key master",
+          "score": 15.1901,
+          "evidence": []
+        },
+        {
+          "term": "key infrastructure",
+          "score": 13.8297,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 13.0757,
+          "evidence": []
+        },
+        {
+          "term": "secure channel",
+          "score": 12.7655,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "letter",
+          "score": 2.5,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "owner representative",
+          "score": 2.2459,
+          "evidence": []
+        },
+        {
+          "term": "application",
+          "score": 1.9885,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "secure channel",
+          "score": 1.9735,
+          "evidence": []
+        },
+        {
+          "term": "key master",
+          "score": 1.8927,
+          "evidence": []
+        },
+        {
+          "term": "legal representative",
+          "score": 1.8023,
+          "evidence": []
+        },
+        {
+          "term": "key infrastructure",
+          "score": 1.6895,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 1.61,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "letter",
+          "score": 20.7456,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "owner representative",
+          "score": 18.4349,
+          "evidence": []
+        },
+        {
+          "term": "application",
+          "score": 16.0361,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "legal representative",
+          "score": 15.9305,
+          "evidence": []
+        },
+        {
+          "term": "key master",
+          "score": 15.1896,
+          "evidence": []
+        },
+        {
+          "term": "key infrastructure",
+          "score": 13.8303,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 13.08,
+          "evidence": []
+        },
+        {
+          "term": "secure channel",
+          "score": 12.7623,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "letter",
+          "score": 2.5,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "owner representative",
+          "score": 2.2459,
+          "evidence": []
+        },
+        {
+          "term": "application",
+          "score": 1.9885,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "secure channel",
+          "score": 1.9735,
+          "evidence": []
+        },
+        {
+          "term": "key master",
+          "score": 1.8927,
+          "evidence": []
+        },
+        {
+          "term": "legal representative",
+          "score": 1.8023,
+          "evidence": []
+        },
+        {
+          "term": "key infrastructure",
+          "score": 1.6895,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 1.61,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "owner representative",
+          "score": 11.4003,
+          "evidence": []
+        },
+        {
+          "term": "letter",
+          "score": 10.9205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "secure channels",
+          "score": 10.7439,
+          "evidence": []
+        },
+        {
+          "term": "application",
+          "score": 8.3177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "key master",
+          "score": 8.313,
+          "evidence": []
+        },
+        {
+          "term": "applicant",
+          "score": 7.7247,
+          "evidence": []
+        },
+        {
+          "term": "technical preparations",
+          "score": 7.1508,
+          "evidence": []
+        },
+        {
+          "term": "authorized",
+          "score": 6.2545,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-x-gdhcn-advisory-committees": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "advisory committees",
+          "score": 5.759,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "established",
+          "score": 0.6251,
+          "evidence": []
+        },
+        {
+          "term": "mechanisms",
+          "score": 0.5504,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "advisory committees",
+          "score": 43.1621,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "established",
+          "score": 3.4095,
+          "evidence": []
+        },
+        {
+          "term": "mechanisms",
+          "score": 2.3979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "advisory committees",
+          "score": 5.7542,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "established",
+          "score": 0.6258,
+          "evidence": []
+        },
+        {
+          "term": "mechanisms",
+          "score": 0.5508,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "advisory committees",
+          "score": 43.1582,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "established",
+          "score": 3.4104,
+          "evidence": []
+        },
+        {
+          "term": "mechanisms",
+          "score": 2.3986,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "advisory committees",
+          "score": 5.7542,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "established",
+          "score": 0.6258,
+          "evidence": []
+        },
+        {
+          "term": "mechanisms",
+          "score": 0.5508,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "advisory committees",
+          "score": 168.7432,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "strategic",
+          "score": 25.4371,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 25.4256,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-xi-amendments-and-annexes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "amendments",
+          "score": 2.2237,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "representative",
+          "score": 0.8662,
+          "evidence": []
+        },
+        {
+          "term": "annexes",
+          "score": 0.6645,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "amendments",
+          "score": 15.9394,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "representative",
+          "score": 5.1142,
+          "evidence": []
+        },
+        {
+          "term": "annex",
+          "score": 3.4095,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "amendments",
+          "score": 2.2124,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "representative",
+          "score": 0.8629,
+          "evidence": []
+        },
+        {
+          "term": "annexes",
+          "score": 0.6561,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "amendments",
+          "score": 15.8895,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "representative",
+          "score": 5.107,
+          "evidence": []
+        },
+        {
+          "term": "annex",
+          "score": 3.3994,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "amendments",
+          "score": 2.2124,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "representative",
+          "score": 0.8629,
+          "evidence": []
+        },
+        {
+          "term": "annexes",
+          "score": 0.6561,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "amendments",
+          "score": 58.4068,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "communicated",
+          "score": 25.4531,
+          "evidence": []
+        },
+        {
+          "term": "website",
+          "score": 25.4531,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-xii-responsibility": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "personal data",
+          "score": 1.2323,
+          "evidence": []
+        },
+        {
+          "term": "public keys",
+          "score": 1.11,
+          "evidence": []
+        },
+        {
+          "term": "time",
+          "score": 0.9493,
+          "evidence": []
+        },
+        {
+          "term": "responsible",
+          "score": 0.8859,
+          "evidence": []
+        },
+        {
+          "term": "responsibility",
+          "score": 0.8136,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "issuance",
+          "score": 0.7291,
+          "evidence": []
+        },
+        {
+          "term": "participant",
+          "score": 0.5382,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.5015,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "personal data",
+          "score": 7.0197,
+          "evidence": []
+        },
+        {
+          "term": "time",
+          "score": 5.9773,
+          "evidence": []
+        },
+        {
+          "term": "responsible",
+          "score": 5.9264,
+          "evidence": []
+        },
+        {
+          "term": "public keys",
+          "score": 5.1971,
+          "evidence": []
+        },
+        {
+          "term": "issuance",
+          "score": 3.9849,
+          "evidence": []
+        },
+        {
+          "term": "responsibility",
+          "score": 3.4095,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "participant",
+          "score": 2.7726,
+          "evidence": []
+        },
+        {
+          "term": "requirements",
+          "score": 2.2903,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "personal data",
+          "score": 1.2317,
+          "evidence": []
+        },
+        {
+          "term": "public keys",
+          "score": 1.11,
+          "evidence": []
+        },
+        {
+          "term": "time",
+          "score": 0.9493,
+          "evidence": []
+        },
+        {
+          "term": "responsible",
+          "score": 0.8858,
+          "evidence": []
+        },
+        {
+          "term": "responsibility",
+          "score": 0.8136,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "issuance",
+          "score": 0.729,
+          "evidence": []
+        },
+        {
+          "term": "name",
+          "score": 0.5506,
+          "evidence": []
+        },
+        {
+          "term": "participant",
+          "score": 0.5383,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "personal data",
+          "score": 7.0241,
+          "evidence": []
+        },
+        {
+          "term": "time",
+          "score": 5.9776,
+          "evidence": []
+        },
+        {
+          "term": "responsible",
+          "score": 5.9264,
+          "evidence": []
+        },
+        {
+          "term": "public keys",
+          "score": 5.1961,
+          "evidence": []
+        },
+        {
+          "term": "issuance",
+          "score": 3.9848,
+          "evidence": []
+        },
+        {
+          "term": "responsibility",
+          "score": 3.4092,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "participant",
+          "score": 2.7721,
+          "evidence": []
+        },
+        {
+          "term": "indemnification",
+          "score": 2.3982,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "personal data",
+          "score": 1.2317,
+          "evidence": []
+        },
+        {
+          "term": "public keys",
+          "score": 1.11,
+          "evidence": []
+        },
+        {
+          "term": "time",
+          "score": 0.9493,
+          "evidence": []
+        },
+        {
+          "term": "responsible",
+          "score": 0.8858,
+          "evidence": []
+        },
+        {
+          "term": "responsibility",
+          "score": 0.8136,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "issuance",
+          "score": 0.729,
+          "evidence": []
+        },
+        {
+          "term": "participant",
+          "score": 0.5383,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.5016,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "amended",
+          "score": 10.4807,
+          "evidence": []
+        },
+        {
+          "term": "requirement",
+          "score": 10.4807,
+          "evidence": []
+        },
+        {
+          "term": "failure",
+          "score": 10.2448,
+          "evidence": []
+        },
+        {
+          "term": "proceedings",
+          "score": 10.2448,
+          "evidence": []
+        },
+        {
+          "term": "jurisdictions",
+          "score": 10.2408,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 10.2062,
+          "evidence": []
+        },
+        {
+          "term": "respective",
+          "score": 10.2062,
+          "evidence": []
+        },
+        {
+          "term": "issuance",
+          "score": 10.2045,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-xiv-who-name-and-emblem": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "name",
+          "score": 1.7448,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nature",
+          "score": 0.5377,
+          "evidence": []
+        },
+        {
+          "term": "refer",
+          "score": 0.5377,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "name",
+          "score": 9.5916,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nature",
+          "score": 2.3979,
+          "evidence": []
+        },
+        {
+          "term": "refer",
+          "score": 2.3979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "name",
+          "score": 1.7393,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "refer",
+          "score": 0.537,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.5367,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "name",
+          "score": 9.586,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "refer",
+          "score": 2.398,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 2.3976,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "name",
+          "score": 1.7393,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "refer",
+          "score": 0.537,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.5367,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "name",
+          "score": 197.7827,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "refer",
+          "score": 73.9178,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 73.8944,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-xv-termination-of-participation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "termination",
+          "score": 3.0612,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "notice",
+          "score": 1.3489,
+          "evidence": []
+        },
+        {
+          "term": "participation",
+          "score": 0.9763,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "purpose",
+          "score": 0.626,
+          "evidence": []
+        },
+        {
+          "term": "secretariat",
+          "score": 0.6257,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "termination",
+          "score": 23.979,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "notice",
+          "score": 9.5916,
+          "evidence": []
+        },
+        {
+          "term": "participation",
+          "score": 6.3077,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "secretariat",
+          "score": 4.852,
+          "evidence": []
+        },
+        {
+          "term": "purpose",
+          "score": 3.4095,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "termination",
+          "score": 3.0611,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "notice",
+          "score": 1.3491,
+          "evidence": []
+        },
+        {
+          "term": "participation",
+          "score": 0.9764,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "purpose",
+          "score": 0.626,
+          "evidence": []
+        },
+        {
+          "term": "secretariat",
+          "score": 0.6258,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "termination",
+          "score": 23.9787,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "notice",
+          "score": 9.592,
+          "evidence": []
+        },
+        {
+          "term": "participation",
+          "score": 6.3078,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "secretariat",
+          "score": 4.8523,
+          "evidence": []
+        },
+        {
+          "term": "purpose",
+          "score": 3.4095,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "termination",
+          "score": 3.0611,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "notice",
+          "score": 1.3491,
+          "evidence": []
+        },
+        {
+          "term": "participation",
+          "score": 0.9764,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "purpose",
+          "score": 0.626,
+          "evidence": []
+        },
+        {
+          "term": "secretariat",
+          "score": 0.6258,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "termination",
+          "score": 52.3855,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "notice",
+          "score": 25.074,
+          "evidence": []
+        },
+        {
+          "term": "provision",
+          "score": 15.5953,
+          "evidence": []
+        },
+        {
+          "term": "participation",
+          "score": 15.3789,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reason",
+          "score": 15.3649,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-xvi-surviving-provisions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "paragraphs",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "termination",
+          "score": 0.5921,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 0.5504,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "paragraphs",
+          "score": 4.7958,
+          "evidence": []
+        },
+        {
+          "term": "corresponding",
+          "score": 2.3979,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 2.3979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "paragraphs",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "termination",
+          "score": 0.5921,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 0.5504,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "paragraphs",
+          "score": 4.796,
+          "evidence": []
+        },
+        {
+          "term": "xvi",
+          "score": 2.3982,
+          "evidence": []
+        },
+        {
+          "term": "termination",
+          "score": 2.3981,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "paragraphs",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "termination",
+          "score": 0.5921,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 0.5504,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "paragraphs",
+          "score": 51.0137,
+          "evidence": []
+        },
+        {
+          "term": "corresponding",
+          "score": 38.4839,
+          "evidence": []
+        },
+        {
+          "term": "reason",
+          "score": 38.0585,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-xvii-settlement-of-disputes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "agreement",
+          "score": 0.5377,
+          "evidence": []
+        },
+        {
+          "term": "failure",
+          "score": 0.5377,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.5377,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "agreement",
+          "score": 2.3979,
+          "evidence": []
+        },
+        {
+          "term": "failure",
+          "score": 2.3979,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 2.3979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "latter",
+          "score": 0.5377,
+          "evidence": []
+        },
+        {
+          "term": "failure",
+          "score": 0.5377,
+          "evidence": []
+        },
+        {
+          "term": "proceedings",
+          "score": 0.5377,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "latter",
+          "score": 2.3978,
+          "evidence": []
+        },
+        {
+          "term": "failure",
+          "score": 2.3976,
+          "evidence": []
+        },
+        {
+          "term": "proceedings",
+          "score": 2.3976,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "latter",
+          "score": 0.5377,
+          "evidence": []
+        },
+        {
+          "term": "failure",
+          "score": 0.5377,
+          "evidence": []
+        },
+        {
+          "term": "proceedings",
+          "score": 0.5377,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "latter",
+          "score": 44.2767,
+          "evidence": []
+        },
+        {
+          "term": "modalities",
+          "score": 43.9429,
+          "evidence": []
+        },
+        {
+          "term": "failure",
+          "score": 43.9413,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-xviii-privileges-and-immunities": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "immunities",
+          "score": 1.0754,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "privileges",
+          "score": 1.0754,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "officials",
+          "score": 0.5377,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "immunities",
+          "score": 4.7958,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "privileges",
+          "score": 4.7958,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "officials",
+          "score": 2.3979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "immunities",
+          "score": 1.0724,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "privileges",
+          "score": 1.0724,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "officials",
+          "score": 0.5362,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "immunities",
+          "score": 4.7722,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "privileges",
+          "score": 4.7722,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "officials",
+          "score": 2.3861,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "immunities",
+          "score": 1.0724,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "privileges",
+          "score": 1.0724,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "officials",
+          "score": 0.5362,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "immunities",
+          "score": 161.3581,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "privileges",
+          "score": 161.3581,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "officials",
+          "score": 80.6791,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-use-cases": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cases",
+          "score": 0.7247,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "test",
+          "score": 0.567,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 0.5478,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "cases",
+          "score": 2.9632,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid",
+          "score": 2.9632,
+          "evidence": []
+        },
+        {
+          "term": "test",
+          "score": 2.3979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "test",
+          "score": 0.3503,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2482,
+          "evidence": []
+        },
+        {
+          "term": "ddcc",
+          "score": 0.2296,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "test",
+          "score": 1.6781,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 1.1124,
+          "evidence": []
+        },
+        {
+          "term": "ddcc",
+          "score": 0.9652,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "test",
+          "score": 0.3503,
+          "evidence": []
+        },
+        {
+          "term": "ddcc",
+          "score": 0.2296,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.1593,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "outlined",
+          "score": 44.7069,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 43.8503,
+          "evidence": []
+        },
+        {
+          "term": "covid",
+          "score": 38.301,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-technical-specifications": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "technical specifications",
+          "score": 1.6622,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "test",
+          "score": 1.1341,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.8724,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "technical specifications",
+          "score": 8.8896,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "test",
+          "score": 7.1937,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 4.7958,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "technical specifications",
+          "score": 1.5475,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "test",
+          "score": 1.1963,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.8012,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "technical specifications",
+          "score": 8.5162,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "test",
+          "score": 7.3563,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 4.5445,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "technical specifications",
+          "score": 1.5475,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "test",
+          "score": 1.1963,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.8012,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "test",
+          "score": 63.1824,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 56.0793,
+          "evidence": []
+        },
+        {
+          "term": "above",
+          "score": 41.8821,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-policy-and-regulatory-standards": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ensure",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "issued",
+          "score": 0.7237,
+          "evidence": []
+        },
+        {
+          "term": "necessary",
+          "score": 0.6251,
+          "evidence": []
+        },
+        {
+          "term": "standards",
+          "score": 0.5614,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ensure",
+          "score": 4.7958,
+          "evidence": []
+        },
+        {
+          "term": "issued",
+          "score": 3.9849,
+          "evidence": []
+        },
+        {
+          "term": "necessary",
+          "score": 3.4095,
+          "evidence": []
+        },
+        {
+          "term": "case",
+          "score": 2.3979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ensure",
+          "score": 0.8697,
+          "evidence": []
+        },
+        {
+          "term": "issued",
+          "score": 0.7212,
+          "evidence": []
+        },
+        {
+          "term": "necessary",
+          "score": 0.6245,
+          "evidence": []
+        },
+        {
+          "term": "standards",
+          "score": 0.56,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "ensure",
+          "score": 4.7839,
+          "evidence": []
+        },
+        {
+          "term": "issued",
+          "score": 3.9733,
+          "evidence": []
+        },
+        {
+          "term": "necessary",
+          "score": 3.4057,
+          "evidence": []
+        },
+        {
+          "term": "general",
+          "score": 2.3949,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ensure",
+          "score": 0.8697,
+          "evidence": []
+        },
+        {
+          "term": "issued",
+          "score": 0.7212,
+          "evidence": []
+        },
+        {
+          "term": "necessary",
+          "score": 0.6245,
+          "evidence": []
+        },
+        {
+          "term": "standards",
+          "score": 0.56,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ensure",
+          "score": 25.629,
+          "evidence": []
+        },
+        {
+          "term": "verifying",
+          "score": 19.0005,
+          "evidence": []
+        },
+        {
+          "term": "general",
+          "score": 18.9898,
+          "evidence": []
+        },
+        {
+          "term": "integrity",
+          "score": 18.989,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-transitive-trust---eu-dcc": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "waived during",
+          "score": 1.6313,
+          "evidence": []
+        },
+        {
+          "term": "during initial",
+          "score": 1.4826,
+          "evidence": []
+        },
+        {
+          "term": "initial onboarding",
+          "score": 1.4397,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 1.352,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 1.3364,
+          "evidence": []
+        },
+        {
+          "term": "key certificate",
+          "score": 1.2369,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "waived during",
+          "score": 8.7807,
+          "evidence": []
+        },
+        {
+          "term": "initial onboarding",
+          "score": 8.4297,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 8.3427,
+          "evidence": []
+        },
+        {
+          "term": "key certificate",
+          "score": 7.8786,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 7.8786,
+          "evidence": []
+        },
+        {
+          "term": "top",
+          "score": 5.9773,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "waived during",
+          "score": 1.6267,
+          "evidence": []
+        },
+        {
+          "term": "during initial",
+          "score": 1.479,
+          "evidence": []
+        },
+        {
+          "term": "initial onboarding",
+          "score": 1.4364,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 1.3472,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 1.3358,
+          "evidence": []
+        },
+        {
+          "term": "key certificate",
+          "score": 1.237,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "waived during",
+          "score": 8.7571,
+          "evidence": []
+        },
+        {
+          "term": "initial onboarding",
+          "score": 8.4094,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 8.3166,
+          "evidence": []
+        },
+        {
+          "term": "key certificate",
+          "score": 7.8688,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 7.8644,
+          "evidence": []
+        },
+        {
+          "term": "top",
+          "score": 5.9689,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "waived during",
+          "score": 1.6267,
+          "evidence": []
+        },
+        {
+          "term": "during initial",
+          "score": 1.479,
+          "evidence": []
+        },
+        {
+          "term": "initial onboarding",
+          "score": 1.4364,
+          "evidence": []
+        },
+        {
+          "term": "onboarding process",
+          "score": 1.3472,
+          "evidence": []
+        },
+        {
+          "term": "public key",
+          "score": 1.3358,
+          "evidence": []
+        },
+        {
+          "term": "key certificate",
+          "score": 1.237,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "waived during",
+          "score": 25.4014,
+          "evidence": []
+        },
+        {
+          "term": "during initial",
+          "score": 18.4271,
+          "evidence": []
+        },
+        {
+          "term": "signed",
+          "score": 16.8907,
+          "evidence": []
+        },
+        {
+          "term": "initial onboarding",
+          "score": 15.8318,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 12.5135,
+          "evidence": []
+        },
+        {
+          "term": "gpg",
+          "score": 12.5135,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "certificate authority",
+          "score": 1.1537,
+          "evidence": []
+        },
+        {
+          "term": "update",
+          "score": 1.1341,
+          "evidence": []
+        },
+        {
+          "term": "paragraph",
+          "score": 1.1118,
+          "evidence": []
+        },
+        {
+          "term": "viii",
+          "score": 0.8724,
+          "evidence": []
+        },
+        {
+          "term": "amendments",
+          "score": 0.7589,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.5015,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "paragraph",
+          "score": 7.9697,
+          "evidence": []
+        },
+        {
+          "term": "update",
+          "score": 7.1937,
+          "evidence": []
+        },
+        {
+          "term": "certificate authority",
+          "score": 6.0909,
+          "evidence": []
+        },
+        {
+          "term": "viii",
+          "score": 4.7958,
+          "evidence": []
+        },
+        {
+          "term": "amendments",
+          "score": 3.9849,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 1.7876,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "certificate authority",
+          "score": 1.1535,
+          "evidence": []
+        },
+        {
+          "term": "update",
+          "score": 1.1335,
+          "evidence": []
+        },
+        {
+          "term": "paragraph",
+          "score": 1.1107,
+          "evidence": []
+        },
+        {
+          "term": "viii",
+          "score": 0.8713,
+          "evidence": []
+        },
+        {
+          "term": "amendments",
+          "score": 0.7611,
+          "evidence": []
+        },
+        {
+          "term": "immunities",
+          "score": 0.5384,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "paragraph",
+          "score": 7.9652,
+          "evidence": []
+        },
+        {
+          "term": "update",
+          "score": 7.1904,
+          "evidence": []
+        },
+        {
+          "term": "certificate authority",
+          "score": 6.0922,
+          "evidence": []
+        },
+        {
+          "term": "viii",
+          "score": 4.7919,
+          "evidence": []
+        },
+        {
+          "term": "amendments",
+          "score": 3.9947,
+          "evidence": []
+        },
+        {
+          "term": "immunities",
+          "score": 2.4015,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "certificate authority",
+          "score": 1.1535,
+          "evidence": []
+        },
+        {
+          "term": "update",
+          "score": 1.1335,
+          "evidence": []
+        },
+        {
+          "term": "paragraph",
+          "score": 1.1107,
+          "evidence": []
+        },
+        {
+          "term": "viii",
+          "score": 0.8713,
+          "evidence": []
+        },
+        {
+          "term": "amendments",
+          "score": 0.7611,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.5025,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "update",
+          "score": 18.8208,
+          "evidence": []
+        },
+        {
+          "term": "viii",
+          "score": 16.6374,
+          "evidence": []
+        },
+        {
+          "term": "paragraph",
+          "score": 14.1102,
+          "evidence": []
+        },
+        {
+          "term": "identification",
+          "score": 12.3396,
+          "evidence": []
+        },
+        {
+          "term": "xvi",
+          "score": 12.2394,
+          "evidence": []
+        },
+        {
+          "term": "refer",
+          "score": 12.2193,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

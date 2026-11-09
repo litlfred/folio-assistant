@@ -1,0 +1,83 @@
+{
+  "$ref": "#/definitions/CacheInventoryEntry",
+  "definitions": {
+    "CacheInventoryEntry": {
+      "type": "object",
+      "properties": {
+        "repo": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "actions-cache",
+            "artifact-reuse",
+            "ghcr-image",
+            "git-ref",
+            "branch-store",
+            "on-disk",
+            "setup-action-cache"
+          ]
+        },
+        "locations": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "key": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "restoreKeys": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "holds": {
+          "type": "string"
+        },
+        "producer": {
+          "type": "string"
+        },
+        "consumers": {
+          "type": "string"
+        },
+        "savePolicy": {
+          "type": "string"
+        },
+        "keyDerivation": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "repo",
+        "id",
+        "kind",
+        "locations"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheInventoryEntrySchema.schema.json",
+  "title": "CacheInventoryEntrySchema",
+  "description": "Generated from `CacheInventoryEntrySchema` in schemas/sdlc/cache.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  }
+}

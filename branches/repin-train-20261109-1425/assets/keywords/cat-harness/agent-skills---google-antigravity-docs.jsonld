@@ -1,0 +1,1266 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "agent-skills---google-antigravity-docs",
+  "instance": "cat-harness",
+  "about": "library/agent-skills---google-antigravity-docs",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "agent skills",
+        "score": 5.6667,
+        "evidence": []
+      },
+      {
+        "term": "google antigravity",
+        "score": 5.373,
+        "evidence": []
+      },
+      {
+        "term": "antigravity docs",
+        "score": 5.2735,
+        "evidence": []
+      },
+      {
+        "term": "antigravity ide",
+        "score": 5.059,
+        "evidence": []
+      },
+      {
+        "term": "antigravity cli",
+        "score": 4.7569,
+        "evidence": []
+      },
+      {
+        "term": "skill looks",
+        "score": 4.1904,
+        "evidence": []
+      },
+      {
+        "term": "skill instructions",
+        "score": 4.1294,
+        "evidence": []
+      },
+      {
+        "term": "available skills",
+        "score": 4.0851,
+        "evidence": []
+      },
+      {
+        "term": "required skill",
+        "score": 3.7424,
+        "evidence": []
+      },
+      {
+        "term": "agent sees",
+        "score": 3.6644,
+        "evidence": []
+      },
+      {
+        "term": "agent reads",
+        "score": 3.465,
+        "evidence": []
+      },
+      {
+        "term": "get started",
+        "score": 2.8766,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "agent skills",
+        "score": 127.4147,
+        "evidence": []
+      },
+      {
+        "term": "skills google",
+        "score": 94.0904,
+        "evidence": []
+      },
+      {
+        "term": "google antigravity",
+        "score": 91.9902,
+        "evidence": []
+      },
+      {
+        "term": "antigravity docs",
+        "score": 91.0977,
+        "evidence": []
+      },
+      {
+        "term": "skill instructions",
+        "score": 89.1453,
+        "evidence": []
+      },
+      {
+        "term": "antigravity ide",
+        "score": 88.8165,
+        "evidence": []
+      },
+      {
+        "term": "available skills",
+        "score": 87.8741,
+        "evidence": []
+      },
+      {
+        "term": "skill looks",
+        "score": 85.5944,
+        "evidence": []
+      },
+      {
+        "term": "antigravity cli",
+        "score": 85.407,
+        "evidence": []
+      },
+      {
+        "term": "required skill",
+        "score": 81.4876,
+        "evidence": []
+      },
+      {
+        "term": "agent sees",
+        "score": 62.569,
+        "evidence": []
+      },
+      {
+        "term": "agent reads",
+        "score": 60.0498,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "agent skills",
+        "score": 2.7004,
+        "evidence": []
+      },
+      {
+        "term": "skill instructions",
+        "score": 2.4857,
+        "evidence": []
+      },
+      {
+        "term": "required skill",
+        "score": 2.1191,
+        "evidence": []
+      },
+      {
+        "term": "skill looks",
+        "score": 1.9235,
+        "evidence": []
+      },
+      {
+        "term": "available skills",
+        "score": 1.8488,
+        "evidence": []
+      },
+      {
+        "term": "skills google",
+        "score": 1.8287,
+        "evidence": []
+      },
+      {
+        "term": "agent reads",
+        "score": 1.23,
+        "evidence": []
+      },
+      {
+        "term": "claude",
+        "score": 1.1062,
+        "evidence": []
+      },
+      {
+        "term": "agent sees",
+        "score": 1.0051,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 0.8049,
+        "evidence": []
+      },
+      {
+        "term": "antigravity docs",
+        "score": 0.777,
+        "evidence": []
+      },
+      {
+        "term": "file",
+        "score": 0.7432,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "agent skills",
+        "score": 74.064,
+        "evidence": []
+      },
+      {
+        "term": "skill instructions",
+        "score": 68.1857,
+        "evidence": []
+      },
+      {
+        "term": "required skill",
+        "score": 61.8983,
+        "evidence": []
+      },
+      {
+        "term": "skill looks",
+        "score": 59.9404,
+        "evidence": []
+      },
+      {
+        "term": "available skills",
+        "score": 54.063,
+        "evidence": []
+      },
+      {
+        "term": "skills google",
+        "score": 54.063,
+        "evidence": []
+      },
+      {
+        "term": "agent reads",
+        "score": 23.0601,
+        "evidence": []
+      },
+      {
+        "term": "claude",
+        "score": 20.9399,
+        "evidence": []
+      },
+      {
+        "term": "agent sees",
+        "score": 20.001,
+        "evidence": []
+      },
+      {
+        "term": "defects",
+        "score": 14.622,
+        "evidence": []
+      },
+      {
+        "term": "task",
+        "score": 12.5692,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 9.6529,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "agent skills",
+        "score": 2.7004,
+        "evidence": []
+      },
+      {
+        "term": "skill instructions",
+        "score": 2.4857,
+        "evidence": []
+      },
+      {
+        "term": "required skill",
+        "score": 2.1191,
+        "evidence": []
+      },
+      {
+        "term": "skill looks",
+        "score": 1.9584,
+        "evidence": []
+      },
+      {
+        "term": "available skills",
+        "score": 1.8488,
+        "evidence": []
+      },
+      {
+        "term": "skills google",
+        "score": 1.8287,
+        "evidence": []
+      },
+      {
+        "term": "agent reads",
+        "score": 1.23,
+        "evidence": []
+      },
+      {
+        "term": "agent sees",
+        "score": 1.0809,
+        "evidence": []
+      },
+      {
+        "term": "code",
+        "score": 0.8049,
+        "evidence": []
+      },
+      {
+        "term": "antigravity docs",
+        "score": 0.777,
+        "evidence": []
+      },
+      {
+        "term": "file",
+        "score": 0.7432,
+        "evidence": []
+      },
+      {
+        "term": "scripts",
+        "score": 0.5811,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "keyboard arrow",
+        "score": 316.8427,
+        "evidence": []
+      },
+      {
+        "term": "antigravity docs",
+        "score": 258.7857,
+        "evidence": []
+      },
+      {
+        "term": "antigravity ide",
+        "score": 232.8369,
+        "evidence": []
+      },
+      {
+        "term": "upload",
+        "score": 189.2844,
+        "evidence": []
+      },
+      {
+        "term": "antigravity cli",
+        "score": 177.2685,
+        "evidence": []
+      },
+      {
+        "term": "google antigravity",
+        "score": 177.2685,
+        "evidence": []
+      },
+      {
+        "term": "plugins",
+        "score": 168.0588,
+        "evidence": []
+      },
+      {
+        "term": "workstation",
+        "score": 167.7635,
+        "evidence": []
+      },
+      {
+        "term": "subagents",
+        "score": 154.9619,
+        "evidence": []
+      },
+      {
+        "term": "workspaces",
+        "score": 148.9316,
+        "evidence": []
+      },
+      {
+        "term": "god",
+        "score": 145.3842,
+        "evidence": []
+      },
+      {
+        "term": "spawn",
+        "score": 136.2878,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "agent skills",
+          "score": 1.7726,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 1.354,
+          "evidence": []
+        },
+        {
+          "term": "required skill",
+          "score": 1.2345,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 0.8013,
+          "evidence": []
+        },
+        {
+          "term": "optional",
+          "score": 0.6497,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 0.644,
+          "evidence": []
+        },
+        {
+          "term": "schemas",
+          "score": 0.6383,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "agent skills",
+          "score": 49.3292,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 27.5018,
+          "evidence": []
+        },
+        {
+          "term": "required skill",
+          "score": 26.5491,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 14.6889,
+          "evidence": []
+        },
+        {
+          "term": "optional",
+          "score": 11.8106,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 11.3202,
+          "evidence": []
+        },
+        {
+          "term": "schemas",
+          "score": 8.8035,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "agent skills",
+          "score": 0.8869,
+          "evidence": []
+        },
+        {
+          "term": "required skill",
+          "score": 0.6888,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.3111,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.2399,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 0.1955,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 0.1879,
+          "evidence": []
+        },
+        {
+          "term": "docs",
+          "score": 0.1834,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent skills",
+          "score": 27.1617,
+          "evidence": []
+        },
+        {
+          "term": "required skill",
+          "score": 20.7433,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 6.6205,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 5.5004,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 4.4317,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 3.0851,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 3.0066,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "agent skills",
+          "score": 0.8869,
+          "evidence": []
+        },
+        {
+          "term": "required skill",
+          "score": 0.6888,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.2399,
+          "evidence": []
+        },
+        {
+          "term": "instructions",
+          "score": 0.1955,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 0.1879,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.1827,
+          "evidence": []
+        },
+        {
+          "term": "resources",
+          "score": 0.0966,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 54.7186,
+          "evidence": []
+        },
+        {
+          "term": "keyboard",
+          "score": 49.4635,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 48.1833,
+          "evidence": []
+        },
+        {
+          "term": "plugins",
+          "score": 47.111,
+          "evidence": []
+        },
+        {
+          "term": "workstation",
+          "score": 44.1311,
+          "evidence": []
+        },
+        {
+          "term": "subagents",
+          "score": 42.2867,
+          "evidence": []
+        },
+        {
+          "term": "form-filling",
+          "score": 39.4494,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "yaml frontmatter",
+          "score": 1.4331,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.8582,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.7696,
+          "evidence": []
+        },
+        {
+          "term": "reviewing",
+          "score": 0.7502,
+          "evidence": []
+        },
+        {
+          "term": "style",
+          "score": 0.6211,
+          "evidence": []
+        },
+        {
+          "term": "follow",
+          "score": 0.5894,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.5161,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "yaml frontmatter",
+          "score": 21.6697,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 19.4432,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 12.5949,
+          "evidence": []
+        },
+        {
+          "term": "reviewing",
+          "score": 10.4253,
+          "evidence": []
+        },
+        {
+          "term": "follow",
+          "score": 9.3686,
+          "evidence": []
+        },
+        {
+          "term": "description",
+          "score": 8.0654,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 7.7295,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.481,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3381,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.2885,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.2283,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2035,
+          "evidence": []
+        },
+        {
+          "term": "docs",
+          "score": 0.1936,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1716,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 12.8288,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 6.9304,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 4.6421,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 3.0655,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 3.053,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 2.458,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 2.2562,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.481,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3381,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2035,
+          "evidence": []
+        },
+        {
+          "term": "review",
+          "score": 0.1716,
+          "evidence": []
+        },
+        {
+          "term": "yaml frontmatter",
+          "score": 0.147,
+          "evidence": []
+        },
+        {
+          "term": "description",
+          "score": 0.1334,
+          "evidence": []
+        },
+        {
+          "term": "name",
+          "score": 0.126,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 39.8439,
+          "evidence": []
+        },
+        {
+          "term": "yaml frontmatter",
+          "score": 27.9345,
+          "evidence": []
+        },
+        {
+          "term": "form-filling",
+          "score": 26.5308,
+          "evidence": []
+        },
+        {
+          "term": "multipart",
+          "score": 26.267,
+          "evidence": []
+        },
+        {
+          "term": "keyboard",
+          "score": 25.8183,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 25.746,
+          "evidence": []
+        },
+        {
+          "term": "plugins",
+          "score": 25.1527,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "skill",
+          "score": 0.9896,
+          "evidence": []
+        },
+        {
+          "term": "decides",
+          "score": 0.756,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.7383,
+          "evidence": []
+        },
+        {
+          "term": "surface",
+          "score": 0.6225,
+          "evidence": []
+        },
+        {
+          "term": "descriptions",
+          "score": 0.5688,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 0.547,
+          "evidence": []
+        },
+        {
+          "term": "focused",
+          "score": 0.5401,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skill",
+          "score": 27.7759,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 17.3915,
+          "evidence": []
+        },
+        {
+          "term": "decides",
+          "score": 10.2653,
+          "evidence": []
+        },
+        {
+          "term": "surface",
+          "score": 8.6606,
+          "evidence": []
+        },
+        {
+          "term": "focused",
+          "score": 7.4927,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 7.3444,
+          "evidence": []
+        },
+        {
+          "term": "descriptions",
+          "score": 7.2743,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.5258,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.3081,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2741,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.1855,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1748,
+          "evidence": []
+        },
+        {
+          "term": "docs",
+          "score": 0.1718,
+          "evidence": []
+        },
+        {
+          "term": "platform",
+          "score": 0.1678,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 18.8239,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 6.6346,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 6.2942,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 3.9059,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 3.4488,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 2.9071,
+          "evidence": []
+        },
+        {
+          "term": "body",
+          "score": 2.5832,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.5258,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2741,
+          "evidence": []
+        },
+        {
+          "term": "scripts",
+          "score": 0.1557,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 0.1515,
+          "evidence": []
+        },
+        {
+          "term": "context",
+          "score": 0.1176,
+          "evidence": []
+        },
+        {
+          "term": "create",
+          "score": 0.0832,
+          "evidence": []
+        },
+        {
+          "term": "descriptions",
+          "score": 0.0772,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upload",
+          "score": 34.0452,
+          "evidence": []
+        },
+        {
+          "term": "form-filling",
+          "score": 27.6546,
+          "evidence": []
+        },
+        {
+          "term": "plugins",
+          "score": 27.367,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 26.5208,
+          "evidence": []
+        },
+        {
+          "term": "keyboard",
+          "score": 26.1637,
+          "evidence": []
+        },
+        {
+          "term": "bigquery-skill",
+          "score": 24.1007,
+          "evidence": []
+        },
+        {
+          "term": "workstation",
+          "score": 23.6751,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "keyboard arrow",
+          "score": 1.6949,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 1.5714,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 0.8875,
+          "evidence": []
+        },
+        {
+          "term": "locations",
+          "score": 0.6594,
+          "evidence": []
+        },
+        {
+          "term": "workspaces",
+          "score": 0.6307,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "antigravity",
+          "score": 38.5025,
+          "evidence": []
+        },
+        {
+          "term": "keyboard arrow",
+          "score": 23.4125,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 21.8221,
+          "evidence": []
+        },
+        {
+          "term": "locations",
+          "score": 9.039,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 7.7379,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skills",
+          "score": 0.2978,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2011,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.1984,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1292,
+          "evidence": []
+        },
+        {
+          "term": "files",
+          "score": 0.0905,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skills",
+          "score": 10.1728,
+          "evidence": []
+        },
+        {
+          "term": "defects",
+          "score": 3.7665,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 3.0428,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 2.9894,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 1.9753,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skills",
+          "score": 0.2978,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2011,
+          "evidence": []
+        },
+        {
+          "term": "docs",
+          "score": 0.0849,
+          "evidence": []
+        },
+        {
+          "term": "gemini",
+          "score": 0.0798,
+          "evidence": []
+        },
+        {
+          "term": "cli",
+          "score": 0.0715,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "keyboard arrow",
+          "score": 142.8593,
+          "evidence": []
+        },
+        {
+          "term": "god",
+          "score": 82.1454,
+          "evidence": []
+        },
+        {
+          "term": "antigravity",
+          "score": 76.8185,
+          "evidence": []
+        },
+        {
+          "term": "workstation",
+          "score": 76.7493,
+          "evidence": []
+        },
+        {
+          "term": "workspaces",
+          "score": 71.2976,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

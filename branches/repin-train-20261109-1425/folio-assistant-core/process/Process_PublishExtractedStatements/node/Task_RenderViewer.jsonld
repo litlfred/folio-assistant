@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderViewer.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderViewer",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Publish them in the shared viewer",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_PublishExtractedStatements",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/role/ingestion-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_PublishExtractedStatements/lane/Lane_0",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/skill/publish-extracted-statements"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p3"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_PublishExtractedStatements#flow/Flow_p4"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_PublishExtractedStatements/node/Task_RenderViewer"
+    }
+  ]
+}

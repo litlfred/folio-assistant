@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Hand new feedback to the row's agent; take over stalled rows",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:Task",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_ReviewLogWatch",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/role/authoring-agent",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_ReviewLogWatch/lane/Lane_Watcher",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/skill/review-log-watch"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF03"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/process/Process_ReviewLogWatch#flow/WF09"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/folio-assistant-core/directory/core-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/process/Process_ReviewLogWatch/node/Task_StallCheck"
+    }
+  ]
+}

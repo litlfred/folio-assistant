@@ -1,0 +1,39 @@
+{
+  "$ref": "#/definitions/DthStepTableSource",
+  "definitions": {
+    "DthStepTableSource": {
+      "type": "object",
+      "properties": {
+        "libraryId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sectionId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tableNumber": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "libraryId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$id": "http://smart.who.int/base/schema/zod/dth-step-table/DthStepTableSourceSchema.schema.json",
+  "title": "DthStepTableSourceSchema",
+  "description": "Generated from `DthStepTableSourceSchema` in schemas/dth-step-table.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  }
+}

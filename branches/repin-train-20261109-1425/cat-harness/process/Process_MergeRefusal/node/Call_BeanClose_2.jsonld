@@ -1,0 +1,39 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_MergeRefusal/node/Call_BeanClose_2.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_MergeRefusal/node/Call_BeanClose_2",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Close the bean",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:CallActivity",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_MergeRefusal",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/role/session-coordinator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_MergeRefusal/lane/Lane_Steward",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/skill/todo-manager"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "calledElement": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_BeanClose",
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_MergeRefusal#flow/r14",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_MergeRefusal#flow/r19",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_MergeRefusal#flow/r20"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/process/Process_MergeRefusal#flow/Flow_GW_BeanClosedHow"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MergeRefusal/node/Call_BeanClose_2"
+    }
+  ]
+}

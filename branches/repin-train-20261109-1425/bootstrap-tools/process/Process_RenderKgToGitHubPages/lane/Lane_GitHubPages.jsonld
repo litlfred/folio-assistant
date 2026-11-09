@@ -1,0 +1,22 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "repin-train/20261109-1425",
+    "sha": "400e830b27f191ef6354132c93beeb2f8f8f10b2",
+    "pr": "repin-train/20261109-1425",
+    "run": "42634660293"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Lane",
+      "name": "GitHub Pages",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/bootstrap-tools/process/Process_RenderKgToGitHubPages",
+      "bindsRole": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/bootstrap-tools/role/github-pages",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261109-1425/bootstrap-tools/directory/bootstrap-tools-processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/process/Process_RenderKgToGitHubPages/lane/Lane_GitHubPages"
+    }
+  ]
+}
