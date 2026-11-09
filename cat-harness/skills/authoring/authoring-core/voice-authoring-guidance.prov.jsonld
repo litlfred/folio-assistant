@@ -1,0 +1,53 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of voice-authoring-guidance.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "skills/authoring/authoring-core/voice-authoring-guidance.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "skills/authoring/authoring-core/voice-authoring-guidance.md#provenance-1"
+        },
+        {
+          "@id": "skills/authoring/authoring-core/voice-authoring-guidance.md#provenance-2"
+        },
+        {
+          "@id": "skills/authoring/authoring-core/voice-authoring-guidance.md#provenance-3"
+        }
+      ]
+    },
+    {
+      "@id": "skills/authoring/authoring-core/voice-authoring-guidance.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Read the voices before the first sentence, not after the first review",
+      "prov:value": "The active set is in the instance's config, its `index.config.json` entry\n(inline; a legacy `<name>.config.json` only until `index-config:migrate --inline`):\n\n```json\n{ \"voices\": { \"active\": [\"milnor\"] } }\n```"
+    },
+    {
+      "@id": "skills/authoring/authoring-core/voice-authoring-guidance.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Read the voices before the first sentence, not after the first review",
+      "prov:value": "This\ninstance activates none: folio-assistant's own documentation carries no voice\n(issue #208).",
+      "cat-harness:refs": [
+        "#208"
+      ]
+    },
+    {
+      "@id": "skills/authoring/authoring-core/voice-authoring-guidance.md#provenance-3",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "pr",
+      "cat-harness:section": "The rules most often broken by drafting on instinct",
+      "prov:value": "Two further examples stood here, both drawn from another instance's voices, and\nthey are gone because this is the PLATFORM. A voice's rules belong to the\ninstance that derived them, where each one carries the publication, page and\nverbatim quote it was read from. Restating a rule here reproduced it **without\nits citation**, in a subsystem whose whole argument is that a voice is auditable\nrather than asserted — and `check-voices.ts` exists because PR #210 shipped ten\nplausible rules with `source: null`, one of which asserted the opposite of what\nits own source says. The uncited copy is the one a reader meets first, and it is\nthe one nothing can check.",
+      "cat-harness:refs": [
+        "#210"
+      ]
+    }
+  ]
+}

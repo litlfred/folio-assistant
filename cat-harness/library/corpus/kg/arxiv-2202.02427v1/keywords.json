@@ -1,0 +1,719 @@
+{
+  "$schema": "folio-keywords/v1",
+  "entry": "arxiv-2202.02427v1",
+  "corpus": {
+    "library": "cat-harness/library",
+    "sections": 2176,
+    "terms": 14971,
+    "weighting": "log-entropy"
+  },
+  "document": [
+    {
+      "term": "incremental streaming",
+      "score": 28.6675,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "streaming recommendation",
+      "score": 25.4925,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "streaming graph",
+      "score": 25.0942,
+      "evidence": []
+    },
+    {
+      "term": "lce performance",
+      "score": 22.4384,
+      "evidence": []
+    },
+    {
+      "term": "lce model",
+      "score": 22.256,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "streaming setting",
+      "score": 20.98,
+      "evidence": []
+    },
+    {
+      "term": "lce layer",
+      "score": 20.5759,
+      "evidence": []
+    },
+    {
+      "term": "lce emb",
+      "score": 20.1385,
+      "evidence": []
+    },
+    {
+      "term": "method lce",
+      "score": 19.6661,
+      "evidence": []
+    },
+    {
+      "term": "streaming data",
+      "score": 19.5737,
+      "evidence": []
+    },
+    {
+      "term": "lce variants",
+      "score": 18.817,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "lce refers",
+      "score": 18.4095,
+      "evidence": []
+    }
+  ],
+  "sections": {
+    "sec-000-3-lightweight-compositional-embeddings": [
+      {
+        "term": "neville",
+        "score": 1.0076,
+        "evidence": []
+      },
+      {
+        "term": "tobias",
+        "score": 0.9082,
+        "evidence": []
+      },
+      {
+        "term": "microsoft",
+        "score": 0.8881,
+        "evidence": []
+      }
+    ],
+    "sec-001-abstract": [
+      {
+        "term": "static setting",
+        "score": 1.3491,
+        "evidence": []
+      },
+      {
+        "term": "lce",
+        "score": 1.1547,
+        "evidence": []
+      },
+      {
+        "term": "graph-based",
+        "score": 1.0957,
+        "evidence": []
+      },
+      {
+        "term": "streaming",
+        "score": 0.9286,
+        "evidence": []
+      },
+      {
+        "term": "nodes",
+        "score": 0.9042,
+        "evidence": []
+      },
+      {
+        "term": "recommendation",
+        "score": 0.8469,
+        "evidence": []
+      },
+      {
+        "term": "compositional",
+        "score": 0.7564,
+        "evidence": []
+      },
+      {
+        "term": "stream",
+        "score": 0.5682,
+        "evidence": []
+      }
+    ],
+    "sec-002-1-introduction": [
+      {
+        "term": "incremental streaming",
+        "score": 2.68,
+        "evidence": []
+      },
+      {
+        "term": "graph-based recommendation",
+        "score": 2.4189,
+        "evidence": []
+      },
+      {
+        "term": "incremental replay",
+        "score": 2.3569,
+        "evidence": []
+      },
+      {
+        "term": "lce performance",
+        "score": 2.2622,
+        "evidence": []
+      },
+      {
+        "term": "recommen dation",
+        "score": 2.128,
+        "evidence": []
+      },
+      {
+        "term": "utilize incremental",
+        "score": 2.1001,
+        "evidence": []
+      },
+      {
+        "term": "incremental updates",
+        "score": 2.0726,
+        "evidence": []
+      },
+      {
+        "term": "streaming setting",
+        "score": 1.9444,
+        "evidence": []
+      }
+    ],
+    "sec-003-2-problem-formulation-and-notation": [
+      {
+        "term": "𝐺𝑓𝑖𝑛𝑎𝑙",
+        "score": 1.2649,
+        "evidence": []
+      },
+      {
+        "term": "edges",
+        "score": 1.0198,
+        "evidence": []
+      },
+      {
+        "term": "nodes",
+        "score": 0.9819,
+        "evidence": []
+      },
+      {
+        "term": "𝐸𝑡𝐾and",
+        "score": 0.6306,
+        "evidence": []
+      },
+      {
+        "term": "assume",
+        "score": 0.5913,
+        "evidence": []
+      }
+    ],
+    "sec-004-32-offline-batch-training": [
+      {
+        "term": "lightweight compositional",
+        "score": 1.3754,
+        "evidence": []
+      },
+      {
+        "term": "edges",
+        "score": 1.1353,
+        "evidence": []
+      },
+      {
+        "term": "prediction target",
+        "score": 1.0546,
+        "evidence": []
+      },
+      {
+        "term": "offline",
+        "score": 0.8747,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "graph",
+        "score": 0.8158,
+        "evidence": []
+      },
+      {
+        "term": "lce",
+        "score": 0.7882,
+        "evidence": []
+      },
+      {
+        "term": "incremental",
+        "score": 0.7399,
+        "evidence": []
+      }
+    ],
+    "sec-005-31-lce-model": [
+      {
+        "term": "lce model",
+        "score": 3.1663,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "compositional embeddings",
+        "score": 2.3526,
+        "evidence": []
+      },
+      {
+        "term": "convolution layers",
+        "score": 2.3339,
+        "evidence": []
+      },
+      {
+        "term": "explicit embeddings",
+        "score": 1.9446,
+        "evidence": []
+      },
+      {
+        "term": "aggregation function",
+        "score": 1.8314,
+        "evidence": []
+      },
+      {
+        "term": "composition function",
+        "score": 1.5901,
+        "evidence": []
+      },
+      {
+        "term": "mean pooling",
+        "score": 1.5882,
+        "evidence": []
+      },
+      {
+        "term": "compose",
+        "score": 0.8289,
+        "evidence": []
+      }
+    ],
+    "sec-006-42-data": [
+      {
+        "term": "z𝑇 𝑢z𝑤",
+        "score": 2.0152,
+        "evidence": []
+      },
+      {
+        "term": "edges",
+        "score": 1.233,
+        "evidence": []
+      },
+      {
+        "term": "graph",
+        "score": 0.886,
+        "evidence": []
+      },
+      {
+        "term": "z𝑈",
+        "score": 0.8726,
+        "evidence": []
+      },
+      {
+        "term": "items",
+        "score": 0.8046,
+        "evidence": []
+      },
+      {
+        "term": "incremental",
+        "score": 0.7399,
+        "evidence": []
+      },
+      {
+        "term": "training",
+        "score": 0.7378,
+        "evidence": []
+      },
+      {
+        "term": "streaming",
+        "score": 0.7359,
+        "evidence": []
+      }
+    ],
+    "sec-007-33-online-incremental-streaming-updates": [
+      {
+        "term": "z𝑈",
+        "score": 0.8726,
+        "evidence": []
+      },
+      {
+        "term": "embeddings",
+        "score": 0.78,
+        "evidence": []
+      },
+      {
+        "term": "re-compute",
+        "score": 0.6306,
+        "evidence": []
+      }
+    ],
+    "sec-009-43-baselines": [
+      {
+        "term": "sec",
+        "score": 0.9554,
+        "evidence": []
+      },
+      {
+        "term": "lce",
+        "score": 0.7882,
+        "evidence": []
+      },
+      {
+        "term": "fig",
+        "score": 0.681,
+        "evidence": []
+      }
+    ],
+    "sec-010-41-replay-protocol": [
+      {
+        "term": "user-item graph",
+        "score": 2.8465,
+        "evidence": []
+      },
+      {
+        "term": "user-item interactions",
+        "score": 2.5354,
+        "evidence": []
+      },
+      {
+        "term": "yelp dataset",
+        "score": 2.2801,
+        "evidence": []
+      },
+      {
+        "term": "lce emb",
+        "score": 2.2722,
+        "evidence": []
+      },
+      {
+        "term": "lce layer",
+        "score": 2.2601,
+        "evidence": []
+      },
+      {
+        "term": "window months",
+        "score": 2.1688,
+        "evidence": []
+      },
+      {
+        "term": "user-user edges",
+        "score": 2.1596,
+        "evidence": []
+      },
+      {
+        "term": "cold-start items",
+        "score": 2.0907,
+        "evidence": []
+      }
+    ],
+    "sec-011-44-comparison-with-baseline-methods": [
+      {
+        "term": "streaming performance",
+        "score": 2.9047,
+        "evidence": []
+      },
+      {
+        "term": "streaming recommendation",
+        "score": 2.7688,
+        "evidence": []
+      },
+      {
+        "term": "streaming window",
+        "score": 2.7148,
+        "evidence": []
+      },
+      {
+        "term": "method lce",
+        "score": 2.5613,
+        "evidence": []
+      },
+      {
+        "term": "streaming data",
+        "score": 2.5187,
+        "evidence": []
+      },
+      {
+        "term": "recall ndcg",
+        "score": 2.2861,
+        "evidence": []
+      },
+      {
+        "term": "incremental updates",
+        "score": 2.269,
+        "evidence": []
+      },
+      {
+        "term": "model retraining",
+        "score": 2.2371,
+        "evidence": []
+      }
+    ],
+    "sec-012-45-comparison-with-lce-variants": [
+      {
+        "term": "lce",
+        "score": 4.4355,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "librarything month",
+        "score": 3.9091,
+        "evidence": []
+      },
+      {
+        "term": "month streaming",
+        "score": 3.7789,
+        "evidence": []
+      },
+      {
+        "term": "lce emb",
+        "score": 3.0938,
+        "evidence": []
+      },
+      {
+        "term": "skyline",
+        "score": 2.1712,
+        "evidence": []
+      },
+      {
+        "term": "als",
+        "score": 2.0641,
+        "evidence": []
+      },
+      {
+        "term": "slim",
+        "score": 1.9932,
+        "evidence": []
+      },
+      {
+        "term": "streaming data",
+        "score": 1.916,
+        "evidence": []
+      }
+    ],
+    "sec-013-46-explicit-vs-implicit-embeddings": [
+      {
+        "term": "explicit embeddings",
+        "score": 4.065,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "item embeddings",
+        "score": 2.3105,
+        "evidence": []
+      },
+      {
+        "term": "user embeddings",
+        "score": 1.9096,
+        "evidence": []
+      },
+      {
+        "term": "learn explicit",
+        "score": 1.5329,
+        "evidence": []
+      },
+      {
+        "term": "compositional function",
+        "score": 1.5284,
+        "evidence": []
+      },
+      {
+        "term": "node types",
+        "score": 1.3782,
+        "evidence": []
+      },
+      {
+        "term": "implicit",
+        "score": 1.3049,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lce-user",
+        "score": 1.2649,
+        "evidence": []
+      }
+    ],
+    "sec-014-47-evaluation-on-real-world-production-data": [
+      {
+        "term": "streaming data",
+        "score": 1.5107,
+        "evidence": []
+      },
+      {
+        "term": "lightgcn",
+        "score": 1.2373,
+        "evidence": []
+      },
+      {
+        "term": "lce",
+        "score": 0.9946,
+        "evidence": []
+      },
+      {
+        "term": "offline",
+        "score": 0.8747,
+        "evidence": []
+      },
+      {
+        "term": "teams",
+        "score": 0.8669,
+        "evidence": []
+      },
+      {
+        "term": "weeks",
+        "score": 0.8488,
+        "evidence": []
+      }
+    ],
+    "sec-017-53-cold-start-recommendation": [
+      {
+        "term": "recommendation",
+        "score": 1.6937,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "user-item",
+        "score": 0.8458,
+        "evidence": []
+      },
+      {
+        "term": "graph-based",
+        "score": 0.7479,
+        "evidence": []
+      },
+      {
+        "term": "incremental",
+        "score": 0.7399,
+        "evidence": []
+      }
+    ],
+    "sec-018-52-graph-based-recommendation-models": [
+      {
+        "term": "cold-start problem",
+        "score": 2.0017,
+        "evidence": []
+      },
+      {
+        "term": "recommendation",
+        "score": 1.6937,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "compositional embedding",
+        "score": 1.5285,
+        "evidence": []
+      },
+      {
+        "term": "lce",
+        "score": 1.1547,
+        "evidence": []
+      },
+      {
+        "term": "items",
+        "score": 0.9728,
+        "evidence": []
+      },
+      {
+        "term": "graph-based",
+        "score": 0.9438,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lightgcn",
+        "score": 0.8446,
+        "evidence": []
+      },
+      {
+        "term": "users",
+        "score": 0.7473,
+        "evidence": []
+      }
+    ],
+    "sec-019-6-conclusion": [
+      {
+        "term": "streaming setting",
+        "score": 1.5441,
+        "evidence": []
+      },
+      {
+        "term": "lce",
+        "score": 1.2855,
+        "evidence": []
+      },
+      {
+        "term": "recommendation",
+        "score": 0.7295,
+        "evidence": []
+      },
+      {
+        "term": "baselines",
+        "score": 0.5459,
+        "evidence": []
+      },
+      {
+        "term": "real-world",
+        "score": 0.5076,
+        "evidence": []
+      },
+      {
+        "term": "graph",
+        "score": 0.5002,
+        "evidence": []
+      }
+    ],
+    "sec-020-references": [
+      {
+        "term": "sigir conference",
+        "score": 3.8347,
+        "evidence": []
+      },
+      {
+        "term": "international conference",
+        "score": 3.6332,
+        "evidence": []
+      },
+      {
+        "term": "acm conference",
+        "score": 3.4516,
+        "evidence": []
+      },
+      {
+        "term": "lce emb",
+        "score": 3.2898,
+        "evidence": []
+      },
+      {
+        "term": "lce layer",
+        "score": 3.1874,
+        "evidence": []
+      },
+      {
+        "term": "incremental streaming",
+        "score": 3.157,
+        "evidence": []
+      },
+      {
+        "term": "recommender systems",
+        "score": 3.1163,
+        "evidence": []
+      },
+      {
+        "term": "web conference",
+        "score": 3.0323,
+        "evidence": []
+      }
+    ]
+  }
+}
