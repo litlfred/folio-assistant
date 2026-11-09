@@ -1,0 +1,17 @@
+{
+  "$schema": "folio-editor-checker/v1",
+  "id": "paper-latex",
+  "contentType": "paper",
+  "check": "adapters/paper/suggest/latex-check.ts#checkSuggestion",
+  "macros": "adapters/paper/suggest/latex-check.ts#macroTableFromKatex",
+  "crepe": {
+    "featureConfigs": "adapters/paper/suggest/crepe-latex.ts#crepeFeatureConfigs",
+    "nodeViews": {
+      "math_inline": "adapters/paper/suggest/crepe-latex.ts#inlineMathNodeView"
+    },
+    "remarkFirst": "adapters/paper/suggest/crepe-latex.ts#useLatexAtoms"
+  },
+  "rawFirstFor": ["equation", "proof", "definition", "theorem", "lemma", "proposition", "corollary", "conjecture"],
+  "tokens": "adapters/paper/suggest/latex-tokens.ts#latexReferenceTokens",
+  "rationale": "Bean folio-assistant-4dx7. The checker reports syntax errors (braces, \\begin/\\end, macro arity, unclosed $$) and KG reference warnings, and only what an edit introduces. The Crepe repairs make Crepe 7.22.2 valid for paper math: macros reach inline math, and LaTeX outside math is kept verbatim. Owner, 2026-10-14, on the editing surface: both. Crepe's math node, plus a raw-LaTeX pane offered up front for the kinds in rawFirstFor. The LaTeX references the shared edit-links runtime used to shield and check itself are this node's tokens (owner: \"cat-harness should not know about LaTeX\", \"latex should be in f-a-sci\")."
+}
