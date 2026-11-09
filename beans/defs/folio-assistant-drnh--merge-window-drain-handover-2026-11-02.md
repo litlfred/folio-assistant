@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-08T13:45:00Z
+updated_at: 2026-11-09T14:20:00Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -36,12 +36,12 @@ Resume prompt: "read bean folio-assistant-drnh on branch cat/cat-harness/beans o
 
 ## Drain PRs (as of 18:05Z: 26 of 35 done)
 
-- [ ] cat-harness#972 — green draft; content, waits on card Q-B1-2.
-- [ ] cat-harness#980 — checks running; merge on green.
-- [ ] cat-harness#959 — checks running; merge on green (meta-merge skill).
-- [ ] cat-harness-tools#1399 — checks running; merge on green.
-- [ ] who-iris#165 — waits on the re-pin train.
-- [ ] cat-harness-tools#1299 — waits on the re-pin train.
+- [x] cat-harness#972 — green draft; content, waits on card Q-B1-2 (merged `d3d7a4da093a`, `2026-11-08T10:16:42Z`, closing `cat-harness#971`).
+- [x] cat-harness#980 — checks running; merge on green.
+- [x] cat-harness#959 — checks running; merge on green (meta-merge skill).
+- [x] cat-harness-tools#1399 — checks running; merge on green.
+- [x] who-iris#165 — waits on the re-pin train.
+- [x] cat-harness-tools#1299 — waits on the re-pin train (closed `2026-11-08T07:20Z`).
 
 Report artifact: https://claude.ai/artifact/Qipen2fFHYXcAXsjakKNqr
 
@@ -320,6 +320,49 @@ _2026-11-08T16:10:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a3
   15. `litlfred/cat-harness-tools#1727` (`perf(kg-validate): memoize per-instance validators and directory maps`, fixing `smart-base#331` & `folio-assistant#3043` shard 2/4 `kg-validate-nested-instances.test.ts` 120s timeout: `198.2s -> 1.97s` ~100x speedup): `ready: 1f93380f6fc3f6f2b0836fe7ffbcfae507cdc814` (`#issuecomment-6724778152`).
 
 _2026-11-08T16:20:00Z_ — R6-Lane-1 (`folio-assistant-y4pw` Item 6): `litlfred/dth-sc#25` (`89e82c74d6b345114c31d742cbf270f61c5b3ccb`, branch `chore/y4pw-repin-smart-ra`) re-pins `dpi-h-ra` (`litlfred/smart-ra`) to `c14618fdb9b83a9f62fc06988aec039cc293525b` (keeping `["glossary", "archimate", "references"]`) and `cat-harness-tools` to `961b4d939d7d69874f44162d12407bd3f1d96c6b` with published layers cache ref `refs/cat/layers/402965e77a5ba5f3c431c6f3992f0110a8280e46ea614cbbef5af040f3ec0a73`. All 7 CI checks green (`gh pr checks 25 -R litlfred/dth-sc`), ready for review, labeled `ready-to-merge`, and commented `ready: 89e82c74d6b345114c31d742cbf270f61c5b3ccb` (`#issuecomment-6723927095`).
+
+_2026-11-09T14:20:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a380-8dd5bf5cc0f3`, Round 8 — R8-Lane-6 handover & bean rollup update):
+- **27 Round 7 PRs merged overnight (`2026-11-08T17:12Z` – `2026-11-09T10:36Z`):**
+  1. `litlfred/cat-harness-tools#1700` (`feat(index-config): harnesses instantiated vs layers mounted (P2a of cat-harness#1138)`) — merged at `e9bc8bad3cd5fc7b09c57a86752f55badef27f7b` (`2026-11-08T17:12:27Z`).
+  2. `litlfred/cat-harness#1143` (`docs(harness): instance means a node-kind instance; repositories are layers (P1 of #1138)`) — merged at `81da2983d82415f6f5aace859df24f8ba9feeffe` (`2026-11-08T17:12:31Z`).
+  3. `litlfred/cat-harness#1148` (`docs: "layer" where "instance" meant a repository (P3 of #1138)`) — merged at `469c4b482599d763bbf341423235c0ce49d15168` (`2026-11-08T17:12:36Z`).
+  4. `litlfred/cat-harness-tools#1706` (`docs: "layer" where "instance" meant a repository, comments only (P3 of cat-harness#1138)`) — merged at `4f2d1cd211208ff0c813c0754f8bc64f8371ccf7` (`2026-11-08T17:12:41Z`).
+  5. `litlfred/cat-harness-tools#1725` (`chore(beans): complete cat-tools-5fmc and cat-tools-pp9g; update cat-tools-sm8r`) — merged at `277c797958ed7925afed56f669e22a455bba180c` (`2026-11-08T17:12:45Z`).
+  6. `litlfred/fhir-harness#312` (`Prose: call a repository in the stack a layer, not an instance (P3)`) — merged at `281c1682748aac55ec3b5f16f70081cd003637ff` (`2026-11-08T17:12:49Z`).
+  7. `litlfred/folio-assistant-core#684` (`P3: say "layer" where prose meant a repository by "instance"`) — merged at `afeebc71d537bddd5d0e97b60ceb5cd1db984603` (`2026-11-08T17:12:53Z`).
+  8. `litlfred/bootstrap#47` (`P3: call a repository a layer, not an instance (prose only)`) — merged at `9435037232a09950ffe442bb4b00cb7da54b5985` (`2026-11-08T17:12:57Z`).
+  9. `litlfred/smart-base#327` (`P3: say "layer" where "instance" meant a repository (prose only)`) — merged at `081db44c7cef9f8a47a6038e66fd33e6fe280c07` (`2026-11-08T17:13:02Z`).
+  10. `litlfred/smart-trust-phw#53` (`Wording: "layer" for a repository in the stack (P3, prose only)`) — merged at `630ff2ac88fb7413ff767ca706400466d842c180` (`2026-11-08T17:13:06Z`).
+  11. `litlfred/cat-harness-tools#1726` (`derive-at-publish-order test: use a path that names no real file`) — merged at `2dba2c2ea9673202380a925b71132a14a3f24edb` (`2026-11-08T17:13:10Z`).
+  12. `litlfred/cat-harness-tools#1697` (`Keywords built at publish, in six comparable variants (cat-harness#1144)`) — merged at `cae4b0d4d9a1d4d08f7c96af47ba61c9b4c4adf4` (`2026-11-09T10:35:29Z`).
+  13. `litlfred/cat-harness#1146` (`Declare the keywords graph built at publish (cat-harness#1144)`) — merged at `d322dd4193c32e96d74775095ee50a844bae6b02` (`2026-11-09T10:35:33Z`).
+  14. `litlfred/folio-assistant-core#680` (`Ingestion skill: keywords built at publish, six variants (cat-harness#1144)`) — merged at `d4efe9524fcbd8f59dd0d2c4d435462bb1f11815` (`2026-11-09T10:35:38Z`).
+  15. `litlfred/folio-assistant-core#687` (`Content split step 3: move diff skill and /diff command to core (folio-core-knsj)`) — merged at `7fe2b769c8588728389dd506ded0d28ffe058c06` (`2026-11-09T10:35:43Z`).
+  16. `litlfred/cat-harness#1162` (`Content split step 3: remove diff skill and /diff command (moved to core, folio-core-knsj)`) — merged at `bb7b098419a11e78a75807d38f3dba0d482ef069` (`2026-11-09T10:35:47Z`).
+  17. `litlfred/cat-harness-tools#1720` (`Scope an IG site's page writers to the IG and its landing layer`) — merged at `265a83015eedc0b8c9cd1bcfa83ae3fd98dffbba` (`2026-11-09T10:35:52Z`).
+  18. `litlfred/cat-harness#1156` (`Declare a scope input on the processes, library, methodologies and state viewers`) — merged at `0571cf18cb21b803a475ac00ae49c100963bc7bf` (`2026-11-09T10:35:56Z`).
+  19. `litlfred/fhir-harness#315` (`Pass the IG site's scope to the site build`) — merged at `000f7479b479624abf6ffbdeb267d3ef99a01ecf` (`2026-11-09T10:36:01Z`).
+  20. `litlfred/folio-assistant-core#686` (`glossary-page and bibliography-page honour --scope`) — merged at `a61fa66c0e152364d516807bac690950cc0204c2` (`2026-11-09T10:36:05Z`).
+  21. `litlfred/cat-harness#1163` (`external-schemas: describe all operative BPMN 2.0 terms (#1150)`) — merged at `f6f1bcc3cdb1bb2d87ad622f4a0df28942bb1427` (`2026-11-09T10:36:09Z`).
+  22. `litlfred/cat-harness#1155` (`head_custom.html: template notes as Liquid comments, not HTML comments`) — merged at `c2e07113bbab32c85a637acfc27c157eb4d404ef` (`2026-11-09T10:36:14Z`).
+  23. `litlfred/cat-harness-tools#1727` (`perf(kg-validate): memoize per-instance directories and per-kind node schemas`) — merged at `8be6fbca9cbd3d1439cd22e3e667c4bbf7ff6718` (`2026-11-09T10:36:19Z`).
+  24. `litlfred/cat-harness-tools#1718` (`Guard: the chrome's includes carry no HTML comments into pages`) — merged at `5668e3dad27638c574b327039b99265d6935ddcd` (`2026-11-09T10:36:23Z`).
+  25. `litlfred/fhir-harness#317` (`Docs-site Library resources: CQL by URL, no embedded ELM`) — merged at `b916014e811778e2d9be56ece80d07e6a9d68445` (`2026-11-09T10:36:27Z`).
+  26. `litlfred/fhir-harness#314` (`Serve each AST resource once at the site root; stop publishing ast-data/`) — merged at `3b583fd90778073a6bac853345e64867f6acbf88` (`2026-11-09T10:36:33Z`).
+  27. `litlfred/smart-trust#171` (`Fix English source typos and markup mistakes in IG pages (#149)`) — merged at `ce5eafb8238b7ce681e6c846049f33dba2b42b53` (`2026-11-09T10:36:48Z`).
+- **10 newly readied Round 8 PRs handed off to the Merge Manager at `2026-11-09T14:10Z`:**
+  1. `litlfred/cat-harness#1147` (`Remove committed keywords.json: built at publish now (cat-harness#1144)`, keywords Step 2): `ready: 679eb3ad5b651aa843d22b31d08a679cbeb54742`.
+  2. `litlfred/folio-assistant-core#681` (`Remove committed keywords.json: built at publish now (cat-harness#1144)`, keywords Step 2): `ready: 30b1dba18dd8df2f3d720b1a61e54bdb3430dba8`.
+  3. `litlfred/who-iris#201` (`Remove committed keywords.json: built at publish now (cat-harness#1144)`, keywords Step 2): `ready: 48cc016bc0888d8172c3696b8f8e043d96377b4c`.
+  4. `litlfred/cat-harness#1166` (`Library: paths to corpus entries name the corpus and the group (bean 6fez)`, bean `6fez`): `ready: 0c59467d266800765b6cdc2d68ac1e8d9dd7467a`.
+  5. `litlfred/cat-harness-tools#1732` (`Comments name the corpus path of two library entries (bean 6fez)`, bean `6fez`): `ready: 7f033ce093a081e84b968a3818c3b5b341944eeb`.
+  6. `litlfred/folio-assistant-core#690` (`Review sheet: open Title in a template's whole-tab lock`, closing `#689`): `ready: 83ed15a3365bef001836e5ffdf9de37c285f6b1c` (merged at `12a75b892f50ebe48fc241d7c061bde577a86604` at `2026-11-09T14:10:13Z`).
+  7. `litlfred/cat-harness-tools#1735` (`page-layout.js: hash jumps are instant, not the theme's smooth scroll`, closing `#1734`): `ready: 255ce62786ccfea7bc66c8612c437b7451c19adc`.
+  8. `litlfred/folio-assistant-core#694` (`Open a lazy document page at its chapter without scrolling on load`, closing `#693`): `ready: 5a830fd5363cbd1b1b3aa81549d305bd0f057b07`.
+  9. `litlfred/cat-harness-tools#1731` (`YubiKey signing: sign.sh and verify-signatures workflow`, closing `#1730`): `ready: e48377b842c97580fad73d3935226bee1b43df41`.
+  10. `litlfred/fhir-harness#320` (`IG releases: a tag builds a draft release with packages and ast-data.zip`, closing `#319`): `ready: d1da9422cb30b9a0d0a85925e431dfea3d972f0a`.
+- **Bean rollup & audit updates:** completed `folio-assistant-tv20` (`folio-assistant#2953` merged at `bef2b0b1a6dafbd5ed558777f1d968b2019ad849` at `2026-11-08T18:29:09Z`), updated `folio-assistant-k3vv` (13/14 tracked children completed, Done-when Box 1 checked off, release-gated CI `#1158` Phases 1–4 recorded), `folio-assistant-9ml4` (`cat-harness-tools#1707` `839ee5d7`, `cat-harness-tools#1703` `dd0c48ba`, `folio-assistant#3038` `cc989094` merged), `folio-assistant-fwtz` (`folio-assistant#2875` `db9acd89`, `folio-assistant#2904` `97d2e407`, `cat-harness-tools#1707` `839ee5d7` merged), and `folio-assistant-k6dz` (`cat-harness#972` `d3d7a4da` merged closing `#971`; 79 `cat-harness` + 31 `folio-assistant-core` BPMN recount).
+
 
 
 

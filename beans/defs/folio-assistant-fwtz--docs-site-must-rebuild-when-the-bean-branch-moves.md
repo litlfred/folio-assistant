@@ -5,7 +5,7 @@ title: docs-site must rebuild when the bean branch moves (ref + concurrency)
 status: in-progress
 type: task
 created_at: 2026-10-04T06:29:09Z
-updated_at: 2026-11-02T19:53:09Z
+updated_at: 2026-11-09T14:20:00Z
 parent: folio-assistant-1xhc
 ---
 
@@ -262,3 +262,9 @@ _2026-11-02T07:15:00Z_ — What is left (harness drain, bean c1ev): none of the 
 _2026-11-02T07:08:00Z_ — [`litlfred/cat-harness-tools#1129`](https://github.com/litlfred/cat-harness-tools/pull/1129) merged (`99a2b49`, via the meta-merge tools#1385 at 07:03Z): remaining post-#1084 deploy stamps blanked and 22 more writers recordable. Still open: folio-assistant#2875 and #2904, a folio-assistant re-pin of tools to include `99a2b49`, cat-harness-tools#400 box 4, and this bean's three Done-when boxes (docs-site still `branches: [main]`, per-ref concurrency). Session https://claude.ai/code/session_01Qmmkt5kB8npnFWHCHTjq7j
 
 _2026-11-02T19:53:09Z_ — Close-out check (harness drain 4j43): NOT closable. On main, docs-site.yml still triggers on main only, with a per-ref concurrency group, so none of the 3 Done-when boxes is met. The owner's 2026-10-20 ruling ("leave as is") keeps boxes 1 and 2 open by design. The cone work still open is folio-assistant#2875 (writer-records QA trace; waits on tools#1272 and a re-pin) and #2904 (preview churn report). Both edit .github/workflows, which agents can't push, so the owner merges them. Status unchanged. Session https://claude.ai/code/session_01EucfRqHzqzMjJkqcnKNkY5
+
+_2026-11-09T14:20:00Z_ — Audit update (R8-Lane-6): all follow-on cone and writer-records PRs cited in the 2026-11-02 comments have since merged on `origin/main`:
+- [`litlfred/folio-assistant#2875`](https://github.com/litlfred/folio-assistant/pull/2875) (`writer-records: build the QA working copy traced`) merged at `db9acd89c8b675669d891cd49c9c3d6c2a2b72f7` (`2026-11-03T05:00:19Z`).
+- [`litlfred/folio-assistant#2904`](https://github.com/litlfred/folio-assistant/pull/2904) (`Previews publish the churn report beside writer-skip.txt`) merged at `97d2e407a91abab898e2a978461709ea566d301e` (`2026-11-03T05:00:29Z`).
+- [`litlfred/cat-harness-tools#400`](https://github.com/litlfred/cat-harness-tools/issues/400) closed (`2026-11-02T12:35:40Z`), `cat-harness-tools` re-pinned past `99a2b49` (`#1129`), and [`litlfred/cat-harness-tools#1707`](https://github.com/litlfred/cat-harness-tools/pull/1707) (`Writer records: re-pinner publishes them to a git ref, a gate checks them (#1702)`) merged at `839ee5d71862985d2b7db95d08066abd4a91eb27` (`2026-11-08T11:59:53Z`).
+- The three `Done when` boxes remain open by design under the owner's 2026-10-20 ruling (`"leave as is"` on the bean-branch trigger).
