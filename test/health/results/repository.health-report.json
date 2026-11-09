@@ -2,13 +2,13 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "ed14d383902c"
+    "script_hash": "55b50d949a50"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-11-08T10:20:29.667Z",
+  "updated_at": "2026-11-09T06:54:01.472Z",
   "verdict": "findings",
   "checks": [
     {
@@ -27,13 +27,13 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 2978733839,
+          "value": 3114849082,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 12,
+          "value": 8,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         }
@@ -84,13 +84,13 @@
       "measurements": [
         {
           "metric": "special-branch-bytes:qa-reports",
-          "value": 1760066385,
+          "value": 1617723408,
           "unit": "bytes",
           "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch (unique blobs summed)"
         },
         {
           "metric": "special-branch-bytes:beans",
-          "value": 9213319,
+          "value": 9238267,
           "unit": "bytes",
           "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch (unique blobs summed)"
         },
@@ -121,7 +121,7 @@
       ],
       "findings": [
         {
-          "summary": "`cat/cat-harness/qa-reports` is 1.64 GB, over the 500.0 MB budget (500 MB) for `qa-reports`.",
+          "summary": "`cat/cat-harness/qa-reports` is 1.51 GB, over the 500.0 MB budget (500 MB) for `qa-reports`.",
           "metric": "special-branch-bytes:qa-reports",
           "severity": "major",
           "action": "Report it to the owner with what the branch holds and its largest paths, and ask what to prune or whether the budget should change. Nothing here removes anything; the budget is the owner's."
@@ -160,25 +160,25 @@
           "metric": "pages-serving-instruments",
           "value": 1,
           "unit": "count",
-          "command": "qa:fetch main/9dd53013f5e22cc54cab4e59e5c958978fa0d2be health/pages-serving.json"
+          "command": "qa:fetch main/bef2b0b1a6dafbd5ed558777f1d968b2019ad849 health/pages-serving.json"
         },
         {
           "metric": "pages-serving-observation-age-days",
           "value": 0,
           "unit": "days",
-          "command": "qa:fetch main/9dd53013f5e22cc54cab4e59e5c958978fa0d2be health/pages-serving.json"
+          "command": "qa:fetch main/bef2b0b1a6dafbd5ed558777f1d968b2019ad849 health/pages-serving.json"
         },
         {
           "metric": "pages-serving-urls",
           "value": 41,
           "unit": "count",
-          "command": "qa:fetch main/9dd53013f5e22cc54cab4e59e5c958978fa0d2be health/pages-serving.json"
+          "command": "qa:fetch main/bef2b0b1a6dafbd5ed558777f1d968b2019ad849 health/pages-serving.json"
         },
         {
           "metric": "pages-serving-failing",
           "value": 0,
           "unit": "count",
-          "command": "qa:fetch main/9dd53013f5e22cc54cab4e59e5c958978fa0d2be health/pages-serving.json"
+          "command": "qa:fetch main/bef2b0b1a6dafbd5ed558777f1d968b2019ad849 health/pages-serving.json"
         }
       ],
       "findings": []
@@ -213,6 +213,23 @@
       "findings": []
     },
     {
+      "id": "lsi-indexes",
+      "state": "ok",
+      "summary": "Each declared prose graph that needs a latent semantic index: whether its stored index is fresh, and what each stored index found.",
+      "thresholds": [
+        {
+          "metric": "lsi-graphs-lacking-fresh-index",
+          "value": 0,
+          "unit": "count",
+          "basis": "a prose graph at or over the need-an-index threshold (100 units and 20,000 words, a house number with its basis in `scripts/lsi.ts`) with no fresh index answers `lsi query`, `lsi:near` and keyword extraction from a stale or missing index. `minor`: an index is a retrieval aid whose every output is a proposal (method `lsi`), so a missing one loses nothing; it moved here from the LSI viewer page (cat-harness#1144).",
+          "severity": "minor"
+        }
+      ],
+      "measurements": [],
+      "findings": [],
+      "reason": "not applicable: the LSI indexes are cat-harness's; this repository holds none"
+    },
+    {
       "id": "staging-preview-orphans",
       "state": "finding",
       "summary": "A `STAGING/` preview that no liveness signal claims — no open pull request, no branch carrying unmerged work, no recent commit. Retained by policy, not by mistake: this is the list a person needs in order to decide, never a list to act on unasked.",
@@ -228,53 +245,58 @@
       "measurements": [
         {
           "metric": "staging-orphan-count",
-          "value": 6,
+          "value": 7,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 1668564081,
+          "value": 3114828809,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         },
         {
           "metric": "staging-live-count",
-          "value": 5,
+          "value": 0,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug> + git ls-remote --heads origin, then merge-base --is-ancestor per matching branch"
         }
       ],
       "findings": [
         {
-          "summary": "`branches/repin-train-20261107-2003` (247.2 MB, 15616 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "summary": "`branches/repin-train-20261108-1150` (422.1 MB, 20556 files) — no open pull request; and no branch on the remote slugifies to it.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261107-2003` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261107-2003` and `cleanup_confirm: repin-train-20261107-2003`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `repin-train-20261108-1150` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1150` and `cleanup_confirm: repin-train-20261108-1150`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         },
         {
-          "summary": "`branches/repin-train-20261107-2025` (248.6 MB, 15682 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "summary": "`branches/repin-train-20261108-1227` (423.7 MB, 20577 files) — no open pull request; and no branch on the remote slugifies to it.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261107-2025` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261107-2025` and `cleanup_confirm: repin-train-20261107-2025`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `repin-train-20261108-1227` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1227` and `cleanup_confirm: repin-train-20261108-1227`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         },
         {
-          "summary": "`branches/repin-train-20261107-2224` (248.7 MB, 15871 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "summary": "`branches/repin-train-20261108-1329` (450.0 MB, 21802 files) — no open pull request; and no branch on the remote slugifies to it.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261107-2224` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261107-2224` and `cleanup_confirm: repin-train-20261107-2224`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `repin-train-20261108-1329` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1329` and `cleanup_confirm: repin-train-20261108-1329`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         },
         {
-          "summary": "`branches/repin-train-20261108-0044` (249.2 MB, 15877 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "summary": "`branches/repin-train-20261108-1423` (407.8 MB, 19077 files) — no open pull request; and no branch on the remote slugifies to it.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261108-0044` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-0044` and `cleanup_confirm: repin-train-20261108-0044`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `repin-train-20261108-1423` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1423` and `cleanup_confirm: repin-train-20261108-1423`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         },
         {
-          "summary": "`branches/repin-train-20261108-0645` (349.4 MB, 15834 files) — no open pull request; `repin-train/20261108-0645` is already in `main`, tip 3.6 h old.",
+          "summary": "`branches/repin-train-20261108-1622` (403.3 MB, 19064 files) — no open pull request; `repin-train/20261108-1622` is already in `main`, tip 14.5 h old.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261108-0645` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-0645` and `cleanup_confirm: repin-train-20261108-0645`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `repin-train-20261108-1622` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1622` and `cleanup_confirm: repin-train-20261108-1622`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         },
         {
-          "summary": "`branches/repin-train-20261108-0907` (248.2 MB, 15978 files) — no open pull request; `repin-train/20261108-0907` is already in `main`, tip 73 min old.",
+          "summary": "`branches/repin-train-20261108-1823` (431.8 MB, 20024 files) — no open pull request; `repin-train/20261108-1823` is already in `main`, tip 12.5 h old.",
           "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261108-0907` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-0907` and `cleanup_confirm: repin-train-20261108-0907`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+          "action": "Ask the owner whether the review of `repin-train-20261108-1823` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1823` and `cleanup_confirm: repin-train-20261108-1823`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+        },
+        {
+          "summary": "`branches/repin-train-20261108-2023` (431.8 MB, 20026 files) — no open pull request; `repin-train/20261108-2023` is already in `main`, tip 10.5 h old.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `repin-train-20261108-2023` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-2023` and `cleanup_confirm: repin-train-20261108-2023`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         }
       ]
     },
@@ -378,19 +400,19 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 99314991,
+          "value": 99325118,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 1289848134,
+          "value": 1284117419,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 998288384,
+          "value": 994231296,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
@@ -402,14 +424,14 @@
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 12.99,
+          "value": 12.93,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 1.20 GB against 94.7 MB of tracked content — 13.0x, in 3 pack(s).",
+          "summary": "`.git` is 1.20 GB against 94.7 MB of tracked content — 12.9x, in 3 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -487,13 +509,13 @@
         },
         {
           "metric": "bean-open",
-          "value": 28,
+          "value": 25,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 74,
+          "value": 77,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -523,7 +545,7 @@
         },
         {
           "metric": "bean-claimed",
-          "value": 16,
+          "value": 13,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -559,13 +581,13 @@
         },
         {
           "metric": "bean-claimed-with-criteria",
-          "value": 16,
+          "value": 13,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
         },
         {
           "metric": "bean-claimed-criteria-absent",
-          "value": 7,
+          "value": 5,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
         },
@@ -596,13 +618,13 @@
       ],
       "findings": [
         {
-          "summary": "`folio-assistant-tv20` has been `in-progress` with no change for 73 hours (\"CI speed II (c2): Feature Staging still builds its own site (cis4, closed undone)\") — 2 of 16 claims are quiet.",
+          "summary": "`folio-assistant-tv20` has been `in-progress` with no change for 94 hours (\"CI speed II (c2): Feature Staging still builds its own site (cis4, closed undone)\") — 2 of 13 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-fwtz` has been `in-progress` with no change for 134 hours (\"docs-site must rebuild when the bean branch moves (ref + concurrency)\") — 2 of 16 claims are quiet.",
+          "summary": "`folio-assistant-fwtz` has been `in-progress` with no change for 155 hours (\"docs-site must rebuild when the bean branch moves (ref + concurrency)\") — 2 of 13 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
