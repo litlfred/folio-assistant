@@ -403,5 +403,45 @@ _2026-11-10T16:51:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a3
 - **Bean `folio-assistant-cysv` audit (`R9-Lane-4`):**
   - Updated `folio-assistant-cysv` (`status: in-progress`, 3/3 proposal checkboxes `[x]`): all Stage 1 & Stage 2 platform deliverables are merged (`folio-assistant-core#462`, `#465`, `#489`, `#497`, `#566`, `#569`, `smart-base#270`, `cat-harness-tools#1705`) with 30/30 tests passing, and 3/5 DTH repos (`dth-hrh#72`, `dth-sc#8`, `dth-phc#7`) are migrated on `main`; only `dth-pc#8` and `dth-sfp#6` remain open on content branches under the `dth-*` content hold.
 
+_2026-11-10T18:10:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a380-8dd5bf5cc0f3`, Round 10 wave — Lanes 1–6 completion update):
+- **26 additional PRs merged on `2026-11-10` (`17:24Z–18:04Z`):**
+  - **19 of the 21 Rounds 8–9 `ready-to-merge` PRs + 1 Round 10 PR (`cat-harness#1165`) merged by Merge Manager (`20` from our queue + `6` sibling PRs):**
+    1. `litlfred/cat-harness-tools#1747` (`73295851b354`, `17:28:26Z`).
+    2. `litlfred/cat-harness-tools#1751` (`1ccb9f70f5d5`, `17:28:30Z`).
+    3. `litlfred/folio-assistant-core#700` (`b2672977e980`, `17:28:33Z`).
+    4. `litlfred/cat-harness#1171` (`a930e94f6378`, `17:28:37Z`).
+    5. `litlfred/cat-harness#1173` (`ce8f22112eea`, `17:32:17Z`).
+    6. `litlfred/folio-assistant#3060` (`0fdc1a8f5ac5`, `17:32:21Z`, closing bean `folio-assistant-7mwa` `.gitattributes` cleanup).
+    7. `litlfred/cat-harness#1174` (`5073dea2a7ba`, `17:32:25Z`, closing `cat-harness-tools#1745`).
+    8. `litlfred/cat-harness-tools#1746` (`701aafa028d8`, `17:32:30Z`, closing `cat-harness-tools#1745`).
+    9. `litlfred/cat-harness#1166` (`6e04685ba756`, `17:32:39Z`, bean `6fez`).
+    10. `litlfred/cat-harness-tools#1732` (`f1ff11199357`, `17:32:43Z`, bean `6fez`).
+    11. `litlfred/cat-harness#1147` (`91165cb3375b`, `17:32:49Z`, keywords Step 2 of `#1144`).
+    12. `litlfred/folio-assistant-core#681` (`da400a1327a4`, `17:32:54Z`, keywords Step 2 of `#1144`).
+    13. `litlfred/who-iris#201` (`9375ce0e3c12`, `17:33:00Z`, keywords Step 2 of `#1144`).
+    14. `litlfred/cat-harness-tools#1744` (`6d6e68a7d44a`, `17:33:04Z`, `standalone-fixture.test.ts` P3 sync).
+    15. `litlfred/cat-harness-tools#1735` (`2384d1563b5f`, `17:33:08Z`, closing `#1734`).
+    16. `litlfred/cat-harness-tools#1731` (`fb78d80dfc32`, `17:33:13Z`, closing `#1730`).
+    17. `litlfred/fhir-harness#320` (`14b42965bd8f`, `17:33:17Z`, closing `#319`).
+    18. `litlfred/folio-assistant-core#696` (`57e9933ed559`, `17:33:22Z`, closing `folio-assistant-core#695`).
+    19. `litlfred/folio-assistant-core#694` (`a51b27b44a6f`, `17:33:26Z`, closing `#693`).
+    20. `litlfred/smart-base#334` (`49118332fb66`, `17:33:31Z`, closing `smart-base#331`).
+    21. `litlfred/who-iris#204` (`07629be345b2`, `17:33:35Z`, closing `who-iris#203`).
+    22. `litlfred/cat-harness-tools#1748` (`affa1fc98e95`, `17:33:40Z`), `cat-harness-tools#1752` (`97e844c10081`, `17:33:45Z`), `who-iris#205` (`b2d76a43abf6`, `17:33:50Z`), `who-iris#206` (`e4505d073c00`, `17:52:39Z`), `fhir-harness#324` (`edecd37bf85c`, `17:50:03Z`), `fhir-harness#326` (`327a68e177e3`, `18:04:22Z`), `smart-immunizations#124` (`0232a9cdb96d`, `17:24:42Z`), `smart-immunizations#126` (`fdce5c5e52d4`, `17:59:01Z`).
+    23. **Round 10 `R10-Lane-2` (`litlfred/cat-harness#1165`):** merged `origin/main` (`35ec8665a90d`), marked ready + `ready-to-merge`, and merged at `01c289035196` (`17:42:29Z`), closing `litlfred/cat-harness#1164`.
+- **Issues closed in Round 10:**
+  1. `litlfred/cat-harness#1158` (`Release-gated CI: full suite gates releases, not merges to main`, `R10-Lane-1`): published all 4 staged `claude/layers-tmp-*` cache refs (`dth-sc` `0fcabff7...` @ `58a0521e`, `dth-hrh` `bf8f64cd...` @ `2c43251c`, `dth-phc` `42997551...` @ `d881b37d`, `smart-ra` `b08a7d78...` @ `ceb014a8` + `origin/main` `08f1ce9d...` @ `2fc96ae6`) to `refs/cat/layers/<sha256>` and `refs/cat/layers/main`, deleted the 4 temporary branches, checked off all 5 Phase checkboxes, and closed `#1158` (`#issuecomment-6774719114`).
+  2. `litlfred/cat-harness#1164` (`QA reports wording still says main reports are kept 90 days; the code keeps 14`, `R10-Lane-2`): closed by `litlfred/cat-harness#1165` (`01c289035196`).
+  3. `litlfred/cat-harness#1150` (`Stale generated files and declarations that turn instance gates red`): all 5 items merged across `#1146`, `#1697`/`#1147`/`#681`/`#201`, `#1743`/`#188`/`#1172`/`#1747`, `#1740`/`#1171`, and `#1163`; closed with summary comment `#issuecomment-6775285027`.
+  4. Plus 6 issues auto-closed when their Round 8–9 PRs merged (`folio-assistant-core#695`, `folio-assistant-core#693`, `who-iris#203`, `smart-base#331`, `cat-harness-tools#1745`, `cat-harness-tools#1734`, `cat-harness-tools#1730`, `fhir-harness#319`).
+- **4 new Round 10 PRs opened, verified green in CI, marked ready for review, labeled `ready-to-merge`, and commented `"ready: <sha>"` for Merge Manager:**
+  1. `litlfred/cat-harness-tools#1755` (`fix(index-config): accept layers in raw-JSON index.config.json readers (P2b of cat-harness#1138)`, `R10-Lane-3`): `ready: 75b7e6a4cd2c1c2a522dcd8995c62e8347fd0dd6`. (Also checked off `[x] P1 Vocabulary` and posted P2b/P3 measurements on `cat-harness#1138#issuecomment-6774697183`.)
+  2. `litlfred/cat-harness#1189` (`sdlc(feature-staging): model agent-built preview defer & off-critical-path verify in BPMN (folio-assistant#2881)`, `R10-Lane-4`): `ready: 7d646830b36531bf873f81b30beda6706904e9ee` (`#issuecomment-6775208303`).
+  3. `litlfred/cat-harness#1188` (`fix(translations): refresh BPMN .pot templates for merge-to-main and layer docs`, for `folio-assistant#3043`, `R10-Lane-5`): `ready: 67610f56b7218002efbf89b2f81da2d6b330474f` (`#issuecomment-6775122502`).
+  4. `litlfred/cat-harness-tools#1757` (`fix: include local skill pages in publishedIndex default and update who-iris e2e`, for `folio-assistant#3043`, `R10-Lane-5`): `ready: ed9b0746aa3ec69bd55fa0e27a67f940b3bdc0d5` (`#issuecomment-6775182254`).
+- **Impact Analysis posted on `litlfred/folio-assistant#3059` (`R10-Lane-6`):**
+  - Posted Step 1 `upstream-version-adoption` impact analysis for `graphviz` `16.1.0` → `16.1.1` (`#issuecomment-6774607860`).
+
+
 
 

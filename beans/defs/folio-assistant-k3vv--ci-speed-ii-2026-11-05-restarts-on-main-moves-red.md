@@ -8,7 +8,7 @@ priority: high
 tags:
     - ci-speed-ii
 created_at: 2026-11-05T08:25:48Z
-updated_at: 2026-11-09T14:20:00Z
+updated_at: 2026-11-10T18:10:00Z
 parent: folio-assistant-rwmf
 ---
 
@@ -56,3 +56,5 @@ _2026-11-05T08:40:00Z_ — Filed by https://claude.ai/code/session_01VQDpPejdhwK
 _2026-11-08T08:35:00Z_ — Progress update: 12/14 tracked child beans (`6h4p`, `tsh9`, `x35i`, `69lr`, `k2sg`, `hd58`, `ay33`, `pqlh`, `pdsq`, `uldr`, `mbd8`, `vgfp`) are `completed`; only `tv20` (`#2953`, actively managed by Merge Manager) and `xaa8` (owner-deferred item g) remain open.
 
 _2026-11-09T14:20:00Z_ — Progress update (R8-Lane-6): `folio-assistant-tv20` is now `completed` (`litlfred/folio-assistant#2953` merged at `bef2b0b1a6da` on `2026-11-08T18:29:09Z`), `cat-tools-5fmc` and `cat-tools-pp9g` (under `fn8q`) are `completed` (`litlfred/cat-harness-tools#1725` `277c797958ed` on `2026-11-08T17:12:45Z`), and release-gated CI (`litlfred/cat-harness#1158`) Phases 1–4 landed across `cat-harness#1159` (`1cfec870`), `cat-harness-tools#1721` (`6571d3f4`), `cat-harness-tools#1722` (`961b4d93`), `cat-harness-tools#1741` (`5c4cd89a`), `folio-assistant#3047` (`8915622d`), and 8 layer re-pins (cutting median PR runner-minutes: `cat-harness-tools` PR `38.0 -> 1.2`, `folio-assistant` CQG PR `79.1 -> 5.3`, `folio-assistant-core` PR `4.6 -> 1.5`). 13/14 tracked items in the table and Done-when Box 1 (`(a) to (f)`) are completed; epic remains `in-progress` while `folio-assistant-9ml4` (`in-progress`) and `folio-assistant-xaa8` (`todo`, owner-deferred item g) remain open.
+
+_2026-11-10T18:10:00Z_ — Progress update (R10-Lane-1): Published all 4 staged `claude/layers-tmp-*` cache refs (`dth-sc` `0fcabff7...` @ `58a0521e`, `dth-hrh` `bf8f64cd...` @ `2c43251c`, `dth-phc` `42997551...` @ `d881b37d`, `smart-ra` `b08a7d78...` @ `ceb014a8` + `origin/main` `08f1ce9d...` @ `2fc96ae6`) to `refs/cat/layers/<sha256>` and `refs/cat/layers/main`, deleted the 4 temporary branches, checked off all 5 Phase checkboxes on `litlfred/cat-harness#1158`, and closed `litlfred/cat-harness#1158` (`#issuecomment-6774719114`).
