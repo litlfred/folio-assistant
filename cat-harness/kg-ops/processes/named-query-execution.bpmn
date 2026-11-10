@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL"
+                  xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+                  xmlns:dc="http://www.omg.org/spec/DD/20100524/DC"
+                  xmlns:di="http://www.omg.org/spec/DD/20100524/DI"
+                  xmlns:bootstrap.processes="https://litlfred.github.io/bootstrap/v0/processes/ns/"
+                  xmlns:cat-harness.processes="https://litlfred.github.io/cat-harness/v0/processes/ns/"
+                  id="Definitions_Process_NamedQueryExecution" targetNamespace="https://litlfred.github.io/folio-assistant/workflows"
+                  exporter="folio-assistant" exporterVersion="1">
+  <bpmn:import namespace="https://litlfred.github.io/bootstrap/v0/processes/ns/" location="https://litlfred.github.io/bootstrap/v0/processes/ns.jsonld" importType="http://www.w3.org/ns/json-ld"/>
+  <bpmn:resource id="authoring-agent" name="Authoring agent"/>
+  <bpmn:resource id="build-pipeline" name="Build pipeline"/>
+  <bpmn:collaboration id="Collaboration_Process_NamedQueryExecution">
+    <bpmn:participant id="Participant_Process_NamedQueryExecution" name="Execute audited named queries over partitioned W3C N-Quads distributions" processRef="Process_NamedQueryExecution"/>
+  </bpmn:collaboration>
+  <bpmn:process id="Process_NamedQueryExecution" name="Execute audited named queries over partitioned W3C N-Quads distributions" isExecutable="false">
+    <bpmn:documentation>Universal execution of audited named SPARQL queries against W3C RDF 1.1 N-Quads distributions across CLI, MCP, and Web runtimes. Governed by skill `named-query-execution` and schema `schemas/kg/nquads-distribution.ts`.
+
+CRITICAL INVARIANTS:
+1. FAIL-CLOSED GRAPH AVAILABILITY GUARD: Execution verifies all declared requiredSubgraphs are present in the Oxigraph store before SPARQL evaluation; missing partitions raise MissingPartitionError rather than returning silently incomplete results.
+2. SPARQL INJECTION PREVENTION: Parameters are strictly validated against manifest NamedQueryDef parameter schemas; IRIs and literals are escaped and substituted into pre-audited templates.
+3. UNIFIED THREE-SURFACE PARITY: Identical query semantics and result envelopes across CLI (bun run cat nquads:query), MCP (nquads-query tool), and Web (oxigraph-query-client.js).
+4. SCOPED GRAPH MATCHING: Triple patterns match inside GRAPH ?g { ... } or GRAPH &lt;iri&gt; { ... } to conform to W3C N-Quads 4th-slot named graph semantics.</bpmn:documentation>
+    <bpmn:extensionElements>
+      <cat-harness.processes:policy enforcement="strict"/>
+    </bpmn:extensionElements>
+    <bpmn:laneSet id="LaneSet_Process_NamedQueryExecution">
+      <bpmn:lane id="Lane_Caller" name="Query Caller (CLI / MCP / Web)" partitionElementRef="authoring-agent">
+        <bpmn:documentation>The invoking entity (agent, CLI command, MCP tool call, or browser web client) requesting execution of an audited named query with typed arguments.</bpmn:documentation>
+        <bpmn:flowNodeRef>Start_QueryRequest</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_ValidateParams</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_ValidParams</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_RejectInvalidArgs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_InvalidParams</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_Success</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Engine" name="Universal Query Engine Runtime" partitionElementRef="build-pipeline">
+        <bpmn:documentation>The Oxigraph in-memory RDF store runtime (Node/Bun oxigraph or browser oxigraph.js WASM) enforcing graph availability, parameter binding, and query evaluation.</bpmn:documentation>
+        <bpmn:flowNodeRef>A_CheckSubgraphs</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_SubgraphsLoaded</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>GW_AutoFetch</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_FetchPartitions</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_RaiseMissingPartition</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>End_GuardFailed</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_BindExecute</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>A_FormatResponse</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+
+    <bpmn:startEvent id="Start_QueryRequest" name="Named query&#10;requested">
+      <bpmn:outgoing>Flow_Req1</bpmn:outgoing>
+    </bpmn:startEvent>
+
+    <bpmn:task id="A_ValidateParams" name="Validate Arguments&#10;against Parameter Schema">
+      <bpmn:documentation>Look up query definition by queryId in distribution manifest. Validate supplied arguments against parameter types, required fields, and pattern constraints.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="named-query-execution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Req1</bpmn:incoming>
+      <bpmn:outgoing>Flow_Req2</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_ValidParams" name="Arguments valid?">
+      <bpmn:incoming>Flow_Req2</bpmn:incoming>
+      <bpmn:outgoing>Flow_ParamsPass</bpmn:outgoing>
+      <bpmn:outgoing>Flow_ParamsFail</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="A_RejectInvalidArgs" name="Reject Request&#10;with ValidationError">
+      <bpmn:documentation>Abort execution immediately with detailed validation error describing missing or ill-typed arguments.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="named-query-execution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_ParamsFail</bpmn:incoming>
+      <bpmn:outgoing>Flow_AbortParams</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_InvalidParams" name="Query rejected on&#10;invalid arguments">
+      <bpmn:incoming>Flow_AbortParams</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:task id="A_CheckSubgraphs" name="Check Graph Availability Guard&#10;(requiredSubgraphs)">
+      <bpmn:documentation>Inspect query definition requiredSubgraphs list. Verify that each required subgraph is currently loaded into the Oxigraph store.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="named-query-execution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_ParamsPass</bpmn:incoming>
+      <bpmn:outgoing>Flow_GuardCheck</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:exclusiveGateway id="GW_SubgraphsLoaded" name="All required subgraphs&#10;loaded in store?">
+      <bpmn:incoming>Flow_GuardCheck</bpmn:incoming>
+      <bpmn:outgoing>Flow_GuardPass</bpmn:outgoing>
+      <bpmn:outgoing>Flow_GuardMissing</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:exclusiveGateway id="GW_AutoFetch" name="Auto-fetch enabled&#10;&amp; source reachable?">
+      <bpmn:incoming>Flow_GuardMissing</bpmn:incoming>
+      <bpmn:outgoing>Flow_AutoFetchYes</bpmn:outgoing>
+      <bpmn:outgoing>Flow_AutoFetchNo</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+
+    <bpmn:task id="A_FetchPartitions" name="Fetch &amp; Ingest&#10;Missing Subgraphs (.nq.gz)">
+      <bpmn:documentation>Fetch missing partition payloads over HTTP (servedRoute) or local files, decompress gzip streams, and ingest quads directly into store.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="named-query-execution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_AutoFetchYes</bpmn:incoming>
+      <bpmn:outgoing>Flow_Fetched</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="A_RaiseMissingPartition" name="Raise MissingPartitionError&#10;(Fail-Closed Guard)">
+      <bpmn:documentation>Fail execution fast: throw MissingPartitionError naming the required subgraphs that are absent. Never return silent partial answers.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="named-query-execution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_AutoFetchNo</bpmn:incoming>
+      <bpmn:outgoing>Flow_FailGuard</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_GuardFailed" name="Query aborted on&#10;missing partition">
+      <bpmn:incoming>Flow_FailGuard</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <bpmn:task id="A_BindExecute" name="Bind Typed Parameters&#10;&amp; Execute SPARQL">
+      <bpmn:documentation>Safely bind validated parameters into the audited SPARQL template with escaping. Execute SPARQL query against the Oxigraph store.</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="named-query-execution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_GuardPass</bpmn:incoming>
+      <bpmn:incoming>Flow_Fetched</bpmn:incoming>
+      <bpmn:outgoing>Flow_Executed</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:task id="A_FormatResponse" name="Format Universal Result&#10;Response Envelope">
+      <bpmn:documentation>Serialize query results into NamedQueryResponseSchema envelope: queryId, executionTimeMs, rowCount, bindings (for SELECT), boolean (for ASK), or quads (for CONSTRUCT).</bpmn:documentation>
+      <bpmn:extensionElements>
+        <bootstrap.processes:skill ref="named-query-execution"/>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_Executed</bpmn:incoming>
+      <bpmn:outgoing>Flow_ToCaller</bpmn:outgoing>
+    </bpmn:task>
+
+    <bpmn:endEvent id="End_Success" name="Query completed&#10;with verified result">
+      <bpmn:incoming>Flow_ToCaller</bpmn:incoming>
+    </bpmn:endEvent>
+
+    <!-- Sequence Flows -->
+    <bpmn:sequenceFlow id="Flow_Req1" sourceRef="Start_QueryRequest" targetRef="A_ValidateParams"/>
+    <bpmn:sequenceFlow id="Flow_Req2" sourceRef="A_ValidateParams" targetRef="GW_ValidParams"/>
+    <bpmn:sequenceFlow id="Flow_ParamsPass" name="Valid" sourceRef="GW_ValidParams" targetRef="A_CheckSubgraphs"/>
+    <bpmn:sequenceFlow id="Flow_ParamsFail" name="Invalid" sourceRef="GW_ValidParams" targetRef="A_RejectInvalidArgs"/>
+    <bpmn:sequenceFlow id="Flow_AbortParams" sourceRef="A_RejectInvalidArgs" targetRef="End_InvalidParams"/>
+    <bpmn:sequenceFlow id="Flow_GuardCheck" sourceRef="A_CheckSubgraphs" targetRef="GW_SubgraphsLoaded"/>
+    <bpmn:sequenceFlow id="Flow_GuardPass" name="All loaded" sourceRef="GW_SubgraphsLoaded" targetRef="A_BindExecute"/>
+    <bpmn:sequenceFlow id="Flow_GuardMissing" name="Missing" sourceRef="GW_SubgraphsLoaded" targetRef="GW_AutoFetch"/>
+    <bpmn:sequenceFlow id="Flow_AutoFetchYes" name="Can fetch" sourceRef="GW_AutoFetch" targetRef="A_FetchPartitions"/>
+    <bpmn:sequenceFlow id="Flow_AutoFetchNo" name="Cannot fetch" sourceRef="GW_AutoFetch" targetRef="A_RaiseMissingPartition"/>
+    <bpmn:sequenceFlow id="Flow_FailGuard" sourceRef="A_RaiseMissingPartition" targetRef="End_GuardFailed"/>
+    <bpmn:sequenceFlow id="Flow_Fetched" sourceRef="A_FetchPartitions" targetRef="A_BindExecute"/>
+    <bpmn:sequenceFlow id="Flow_Executed" sourceRef="A_BindExecute" targetRef="A_FormatResponse"/>
+    <bpmn:sequenceFlow id="Flow_ToCaller" sourceRef="A_FormatResponse" targetRef="End_Success"/>
+  </bpmn:process>
+
+  <bpmndi:BPMNDiagram id="Diagram_Process_NamedQueryExecution">
+    <bpmndi:BPMNPlane id="Plane_Process_NamedQueryExecution" bpmnElement="Collaboration_Process_NamedQueryExecution">
+      <bpmndi:BPMNShape id="Shape_Participant_Process_NamedQueryExecution" bpmnElement="Participant_Process_NamedQueryExecution" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="1360" height="630" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Caller" bpmnElement="Lane_Caller" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="1330" height="230" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Lane_Engine" bpmnElement="Lane_Engine" isHorizontal="true">
+        <dc:Bounds x="190" y="310" width="1330" height="400" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_Start_QueryRequest" bpmnElement="Start_QueryRequest">
+        <dc:Bounds x="232" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="222" y="185" width="90" height="54" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_ValidateParams" bpmnElement="A_ValidateParams">
+        <dc:Bounds x="320" y="100" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_ValidParams" bpmnElement="GW_ValidParams" isMarkerVisible="true">
+        <dc:Bounds x="515" y="135" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="495" y="92" width="90" height="36" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_RejectInvalidArgs" bpmnElement="A_RejectInvalidArgs">
+        <dc:Bounds x="630" y="100" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_InvalidParams" bpmnElement="End_InvalidParams">
+        <dc:Bounds x="800" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="773" y="185" width="90" height="72" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_CheckSubgraphs" bpmnElement="A_CheckSubgraphs">
+        <dc:Bounds x="480" y="340" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_SubgraphsLoaded" bpmnElement="GW_SubgraphsLoaded" isMarkerVisible="true">
+        <dc:Bounds x="655" y="375" width="50" height="50" />
+        <bpmndi:BPMNLabel><dc:Bounds x="615" y="320" width="130" height="48" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_GW_AutoFetch" bpmnElement="GW_AutoFetch" isMarkerVisible="true">
+        <dc:Bounds x="775" y="465" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="530" y="510" width="190" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_FetchPartitions" bpmnElement="A_FetchPartitions">
+        <dc:Bounds x="910" y="430" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_RaiseMissingPartition" bpmnElement="A_RaiseMissingPartition">
+        <dc:Bounds x="740" y="565" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_GuardFailed" bpmnElement="End_GuardFailed">
+        <dc:Bounds x="910" y="607" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="955" y="598" width="140" height="54" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_BindExecute" bpmnElement="A_BindExecute">
+        <dc:Bounds x="1070" y="340" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_A_FormatResponse" bpmnElement="A_FormatResponse">
+        <dc:Bounds x="1230" y="340" width="120" height="120" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Shape_End_Success" bpmnElement="End_Success">
+        <dc:Bounds x="1390" y="142" width="36" height="36" />
+        <bpmndi:BPMNLabel><dc:Bounds x="1363" y="185" width="90" height="54" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Edge_Flow_Req1" bpmnElement="Flow_Req1">
+        <di:waypoint x="268" y="160" />
+        <di:waypoint x="320" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Req2" bpmnElement="Flow_Req2">
+        <di:waypoint x="440" y="160" />
+        <di:waypoint x="515" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ParamsPass" bpmnElement="Flow_ParamsPass">
+        <di:waypoint x="540" y="185" />
+        <di:waypoint x="540" y="340" />
+        <bpmndi:BPMNLabel><dc:Bounds x="546" y="245" width="50" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ParamsFail" bpmnElement="Flow_ParamsFail">
+        <di:waypoint x="565" y="160" />
+        <di:waypoint x="630" y="160" />
+        <bpmndi:BPMNLabel><dc:Bounds x="572" y="136" width="50" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_AbortParams" bpmnElement="Flow_AbortParams">
+        <di:waypoint x="750" y="160" />
+        <di:waypoint x="800" y="160" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_GuardCheck" bpmnElement="Flow_GuardCheck">
+        <di:waypoint x="600" y="400" />
+        <di:waypoint x="655" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_GuardPass" bpmnElement="Flow_GuardPass">
+        <di:waypoint x="705" y="400" />
+        <di:waypoint x="1070" y="400" />
+        <bpmndi:BPMNLabel><dc:Bounds x="850" y="376" width="75" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_GuardMissing" bpmnElement="Flow_GuardMissing">
+        <di:waypoint x="680" y="425" />
+        <di:waypoint x="680" y="490" />
+        <di:waypoint x="775" y="490" />
+        <bpmndi:BPMNLabel><dc:Bounds x="688" y="466" width="60" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_AutoFetchYes" bpmnElement="Flow_AutoFetchYes">
+        <di:waypoint x="825" y="490" />
+        <di:waypoint x="910" y="490" />
+        <bpmndi:BPMNLabel><dc:Bounds x="832" y="466" width="70" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_AutoFetchNo" bpmnElement="Flow_AutoFetchNo">
+        <di:waypoint x="800" y="515" />
+        <di:waypoint x="800" y="565" />
+        <bpmndi:BPMNLabel><dc:Bounds x="808" y="530" width="85" height="18" /></bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_FailGuard" bpmnElement="Flow_FailGuard">
+        <di:waypoint x="860" y="625" />
+        <di:waypoint x="910" y="625" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Fetched" bpmnElement="Flow_Fetched">
+        <di:waypoint x="1030" y="490" />
+        <di:waypoint x="1130" y="490" />
+        <di:waypoint x="1130" y="460" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_Executed" bpmnElement="Flow_Executed">
+        <di:waypoint x="1190" y="400" />
+        <di:waypoint x="1230" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Edge_Flow_ToCaller" bpmnElement="Flow_ToCaller">
+        <di:waypoint x="1290" y="340" />
+        <di:waypoint x="1290" y="160" />
+        <di:waypoint x="1390" y="160" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

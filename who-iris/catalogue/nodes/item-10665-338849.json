@@ -1,0 +1,91 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/bf5eb00a-0238-4024-b010-be7e7cdf4848",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Recomendaciones provisionales para utilizar la vacuna contra la COVID-19 elaborada por Pfizer y BioNTech, BNT162b2, en el marco de la lista de uso en emergencias: orientaciones provisionales, 8 de enero de 2021",
+  "parents": [],
+  "handle": "10665/338849",
+  "metadataRef": "catalogue/records/10665-338849.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO-2019-nCoV-vaccines-SAGE_recommendation-BNT162b2-2021.1-spa.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 311112,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/75c7d070-8ba6-4bff-9e7e-da58b0607bc7/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum eb833cc923ef0928bcc8f11821bc2c27; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-338849-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 44367,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 425,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "WHO-2019-nCoV-vaccines-SAGE_recommendation-BNT162b2-2021.1-spa.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-338849-cover.png",
+        "purpose": "working",
+        "bytes": 44367,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "8d3ce29a22b6a17d668297b306b7090d8ca8b75f81921d58acd6c4d9f7681333",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "44,367 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (WHO-2019-nCoV-vaccines-SAGE_recommendation-BNT162b2-2021.1-spa.pdf, p. 8): \"© Organización Mundial de la Salud 2021. Algunos derechos reservados. Esta obra está disponible en virtud de la licencia CC BY-\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (WHO-2019-nCoV-vaccines-SAGE_recommendation-BNT162b2-2021.1-spa.pdf, p. 8): \"© Organización Mundial de la Salud 2021. Algunos derechos reservados. Esta obra está disponible en virtud de la licencia CC BY-\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of WHO-2019-nCoV-vaccines-SAGE_recommendation-BNT162b2-2021.1-spa.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 595.32x841.92pt page, from page 1 of WHO-2019-nCoV-vaccines-SAGE_recommendation-BNT162b2-2021.1-spa.pdf, fetched once from https://iris.who.int/bitstreams/75c7d070-8ba6-4bff-9e7e-da58b0607bc7/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 68cffcdd78a2e13d59cc7e7dd36405c0b277e53bce3637599ff0678fb5c8bc52) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. MASKED: the WHO emblem and wordmark are blanked to flat grey before these bytes are written -- see `maskedRegions`."
+      },
+      "maskedRegions": [
+        {
+          "x0": 198,
+          "y0": 98,
+          "x1": 280,
+          "y1": 123,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        }
+      ]
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/bf5eb00a-0238-4024-b010-be7e7cdf4848"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}

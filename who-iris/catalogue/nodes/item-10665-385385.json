@@ -1,0 +1,91 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/b89fc26c-9fdb-465a-ae3d-a325a35bd4e7",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Global hepatitis report 2026",
+  "parents": [],
+  "handle": "10665/385385",
+  "metadataRef": "catalogue/records/10665-385385.dc.json",
+  "bitstreams": [
+    {
+      "name": "9789240122383-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 5434197,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/6f6caedc-37a0-49ee-a02a-df9c3b78ff42/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 1247da727f4ccd1c821da98d1b23b4fb; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-385385-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 244126,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 425,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "9789240122383-eng.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-385385-cover.png",
+        "purpose": "working",
+        "bytes": 244126,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "44317cbe44ebb04d0d4092c574168e07d099cee958b6c004efc12c121abe5eb0",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "244,126 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (9789240122383-eng.pdf, p. 4): \"Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (9789240122383-eng.pdf, p. 4): \"Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of 9789240122383-eng.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 595.28x841.89pt page, from page 1 of 9789240122383-eng.pdf, fetched once from https://iris.who.int/bitstreams/6f6caedc-37a0-49ee-a02a-df9c3b78ff42/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 78c074427087f3cbefd94c1bbc705ead678c8c3a326a8681f559e3246aa2656d) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. MASKED: the WHO emblem and wordmark are blanked to flat grey before these bytes are written -- see `maskedRegions`."
+      },
+      "maskedRegions": [
+        {
+          "x0": 207,
+          "y0": 384,
+          "x1": 297,
+          "y1": 414,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        }
+      ]
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/b89fc26c-9fdb-465a-ae3d-a325a35bd4e7"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Publications\" (12760c88-43e7-4670-8d4a-5a2a70dbdb39), which is not a node here, so parents is [] (rule R10)."
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/a619f2a2-dad9-45eb-a31a-81ac93e303f2",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Sexual and reproductive health and rights: infographic snapshot: Kuwait 2021",
+  "parents": [],
+  "handle": "10665/349570",
+  "metadataRef": "catalogue/records/10665-349570.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO-SRH-21.112-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 2107516,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/20d0ca84-5839-423f-b2b8-d6b82ee24222/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum dc44c8b4bebd06293aaa737a297245bd; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-349570-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 47306,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 425,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "WHO-SRH-21.112-eng.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-349570-cover.png",
+        "purpose": "working",
+        "bytes": 47306,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "a51d410070db514b7546ba5dba7d16e2a6da76d0f3fd3e6cea0dd40dafab157f",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "47,306 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (WHO-SRH-21.112-eng.pdf, p. 10): \"WHO/SRH/21.112 – © WHO 2021. Some rights reserved. This work is available under the CC BY-NC-SA 3.0 IGO license\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (WHO-SRH-21.112-eng.pdf, p. 10): \"WHO/SRH/21.112 – © WHO 2021. Some rights reserved. This work is available under the CC BY-NC-SA 3.0 IGO license\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of WHO-SRH-21.112-eng.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 594.96x841.92pt page, from page 1 of WHO-SRH-21.112-eng.pdf, fetched once from https://iris.who.int/bitstreams/20d0ca84-5839-423f-b2b8-d6b82ee24222/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 6ef945822a09456f332f9077b355ea0c413cba0e3849f9ffb8714775120eb849) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. MASKED: the WHO emblem and wordmark are blanked to flat grey before these bytes are written -- see `maskedRegions`."
+      },
+      "maskedRegions": [
+        {
+          "x0": 124,
+          "y0": 391,
+          "x1": 177,
+          "y1": 410,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        }
+      ]
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/a619f2a2-dad9-45eb-a31a-81ac93e303f2"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}

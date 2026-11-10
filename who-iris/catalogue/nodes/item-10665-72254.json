@@ -1,0 +1,126 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/c5f9b5d3-db3a-4369-b271-f1834301836c",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Infections de l' appareil reproducteur : prévalence et facteurs de risques dans une région rurale du Bangladesh / Sarah Hawkes ... [et al.]",
+  "parents": [],
+  "handle": "10665/72254",
+  "metadataRef": "catalogue/records/10665-72254.dc.json",
+  "bitstreams": [
+    {
+      "name": "RA_123-143_fre.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 227175,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/225bf5a2-5e84-449b-b33a-a2dfbc028b9a/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum baa1cbc2dbf64206bf8492b421fa8b96; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-72254-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 38671,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 425,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "RA_123-143_fre.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-72254-cover.png",
+        "purpose": "working",
+        "bytes": 38671,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "9c3ca3555f12f6dc827ab60e07ecf65037e92a70806a85cdcd92a77c5fe4bee0",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "38,671 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "owner approval: special development authorization for WHO staff in development environment, 2026-10-08, extended to the IRIS pilot covers by the owner on 2026-11-10 (card Q-IRIS-7 = A); WHO emblem masked. The publication's own statement (RA_123-143_fre.pdf): p. 1: \"© Organisation mondiale de la Santé, 2002\"; p. 5: \"efforts pour obtenir des licences de ceux qui détiennent\"; p. 5: \"les brevets. Même si le total des redevances de licences\".",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner, card Q-IRIS-7 (2026-11-10)"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "owner approval: special development authorization for WHO staff in development environment, 2026-10-08, extended to the IRIS pilot covers by the owner on 2026-11-10 (card Q-IRIS-7 = A); WHO emblem masked. The publication's own statement (RA_123-143_fre.pdf): p. 1: \"© Organisation mondiale de la Santé, 2002\"; p. 5: \"efforts pour obtenir des licences de ceux qui détiennent\"; p. 5: \"les brevets. Même si le total des redevances de licences\".",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner, card Q-IRIS-7 (2026-11-10)"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of RA_123-143_fre.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 595.0x842.0pt page, from page 1 of RA_123-143_fre.pdf, fetched once from https://iris.who.int/bitstreams/225bf5a2-5e84-449b-b33a-a2dfbc028b9a/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 707a48b38dd78c637a16292e3dadb0d0c73f07b1017d4df96da2fb3fc3276223) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. MASKED: the WHO emblem and wordmark are blanked to flat grey before these bytes are written -- see `maskedRegions`."
+      },
+      "maskedRegions": [
+        {
+          "x0": 114,
+          "y0": 203,
+          "x1": 129,
+          "y1": 212,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        },
+        {
+          "x0": 26,
+          "y0": 207,
+          "x1": 62,
+          "y1": 216,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        },
+        {
+          "x0": 114,
+          "y0": 341,
+          "x1": 129,
+          "y1": 350,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        },
+        {
+          "x0": 26,
+          "y0": 345,
+          "x1": 62,
+          "y1": 354,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        },
+        {
+          "x0": 46,
+          "y0": 400,
+          "x1": 86,
+          "y1": 409,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        },
+        {
+          "x0": 139,
+          "y0": 400,
+          "x1": 180,
+          "y1": 409,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        }
+      ]
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/c5f9b5d3-db3a-4369-b271-f1834301836c"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Journal Articles - Bulletin\" (98348838-1e12-4bd1-9b7f-ba10d55bc4f9), which is not a node here, so parents is [] (rule R10)."
+  }
+}

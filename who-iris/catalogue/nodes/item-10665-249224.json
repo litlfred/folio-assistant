@@ -1,0 +1,98 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/2031a33d-3f6e-4b76-9083-7dde1290f461",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Programme élargi de vaccination (résolution)",
+  "parents": [],
+  "handle": "10665/249224",
+  "metadataRef": "catalogue/records/10665-249224.dc.json",
+  "bitstreams": [
+    {
+      "name": "WPR_RC065_Res05_2014_fr.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 130977,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/65415753-36e6-47fa-aa23-144a61d9ba89/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 9004f024c5c91605e3f5c2b92008516c; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-249224-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 16239,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 425,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "WPR_RC065_Res05_2014_fr.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-249224-cover.png",
+        "purpose": "working",
+        "bytes": 16239,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "52c3d56c2a7591fcf827edfacefa51be509cd6ac15aea62b0bcb483bfb04063a",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "16,239 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "owner approval: special development authorization for WHO staff in development environment, 2026-10-08, extended to the IRIS pilot covers by the owner on 2026-11-10 (card Q-IRIS-7 = A); WHO emblem masked. The publication's own statement (WPR_RC065_Res05_2014_fr.pdf): no copyright or licence statement found in its text.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner, card Q-IRIS-7 (2026-11-10)"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "owner approval: special development authorization for WHO staff in development environment, 2026-10-08, extended to the IRIS pilot covers by the owner on 2026-11-10 (card Q-IRIS-7 = A); WHO emblem masked. The publication's own statement (WPR_RC065_Res05_2014_fr.pdf): no copyright or licence statement found in its text.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner, card Q-IRIS-7 (2026-11-10)"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of WPR_RC065_Res05_2014_fr.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 595.44x841.68pt page, from page 1 of WPR_RC065_Res05_2014_fr.pdf, fetched once from https://iris.who.int/bitstreams/65415753-36e6-47fa-aa23-144a61d9ba89/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 9ee90a221e111d896b46cab2e38d36b185b38110985419c56a103f8740ec8234) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. MASKED: the WHO emblem and wordmark are blanked to flat grey before these bytes are written -- see `maskedRegions`."
+      },
+      "maskedRegions": [
+        {
+          "x0": 34,
+          "y0": 28,
+          "x1": 106,
+          "y1": 37,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        },
+        {
+          "x0": 132,
+          "y0": 16,
+          "x1": 238,
+          "y1": 51,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        }
+      ]
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/2031a33d-3f6e-4b76-9083-7dde1290f461"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"065th session: Manila, Philippines, 13 to 17 October 2014\" (d11709a1-1938-4684-888b-7335b6f52e13), which is not a node here, so parents is [] (rule R10)."
+  }
+}
