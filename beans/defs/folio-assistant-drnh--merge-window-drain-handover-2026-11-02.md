@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-09T14:20:00Z
+updated_at: 2026-11-10T16:40:00Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -372,7 +372,24 @@ _2026-11-09T15:14:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a3
   5. `litlfred/who-iris#204` (`fix(iris-pages): resolve LIBRARY_LISTING_ROUTE when library is a sub-graph`, closing `who-iris#203`): `ready: ae83ab8c0517282e0087cfce5d686a4d3af6601b` (`#issuecomment-6743517904`).
   6. `litlfred/smart-base#334` (`chore: re-pin cat-harness-tools to 21e99640 for kg-validate memoization`, closing `smart-base#331`, with published layers cache ref `refs/cat/layers/892dd166330c7fe3c22152bc80edd3db00562bb7358b5bc572b7659bce222b12`): `ready: fb00db479b22b5a4f62be73b2961c2d3d7063818`.
 
-
-
+_2026-11-10T16:40:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a380-8dd5bf5cc0f3`, Round 9 wave — `2026-11-10T16:33Z`, R9-Lane-6 handover & bean audit):
+- **Additional PRs merged on `2026-11-09` (`13:32Z–15:25Z`):**
+  1. `litlfred/cat-harness-tools#1742` (`layer-pr-checks: runner writer records off by default (#1702 follow-up)`) — merged at `e4d550559c797a9c86f4b9c8b994c9d1607f67e1` (`2026-11-09T13:32:12Z`).
+  2. `litlfred/cat-harness-tools#1740` (`gen-docs-pages: the base layer links its own repository in "generated from"`) — merged at `0816778051269d90fbaee93a84aa64ef72b2e320` (`2026-11-09T13:32:54Z`).
+  3. `litlfred/cat-harness-tools#1741` (`merge-guard: check 5 judges the preview/agent-build verify status`) — merged at `5c4cd89a89847171fd3944ad707db6cab4b778c7` (`2026-11-09T13:32:57Z`).
+  4. `litlfred/cat-harness-tools#1743` (`state-visualizer draws other layers' builtOnHostSite state-viewer pages`) — merged at `8e16797d1199ff28dae84c3372655c8f9ffe6060` (`2026-11-09T13:52:27Z`).
+  5. `litlfred/cat-harness-tools#1737` (`Scoped IG sites leave out the PDF viewer and images no page uses`) — merged at `da7d4a5700f1ee3deefb1f17479cf8d128f311b8` (`2026-11-09T13:54:56Z`).
+  6. `litlfred/cat-harness-tools#1739` (`IG sites load LHC-Forms, Crepe and harness images from a shared host (opt-in)`) — merged at `21e99640407c925a6e1f68b5a4a908f5130e8b73` (`2026-11-09T13:59:14Z`).
+  7. `litlfred/fhir-harness#322` (`Fix lint: drop unused 'm' in repLinks`) — merged at `cbeaa16f016db8123b3fd2e62f06c7aac6e705b9` (`2026-11-09T15:25:12Z`).
+  8. `litlfred/folio-assistant-sci#188` (`Declare the Editor checkers page here`) — merged at `c4bc9460b73e0e0d9dfc9d4ab3d0dce49340664d` (`2026-11-09T15:25:32Z`).
+  9. `litlfred/cat-harness#1172` (`Drop the Editor checkers page (moved to folio-assistant-sci)`) — merged at `9ddc0a25ca447eb6fefe9e1cab94102c90a58ccf` (`2026-11-09T15:25:39Z`).
+- **4 additional Round 9 PRs marked ready for review, labeled `ready-to-merge`, and commented `"ready: <sha>"` (`2026-11-10T16:33Z`) for Merge Manager:**
+  1. `litlfred/cat-harness#1171` (`Stop the generated-from links and subgraph context flipping per checkout (#1150, item 4)`): `ready: ec9b47ebe8f37c7a06271628a638a09ae5b3fd6a` (`#issuecomment-6743904484`, owner OK on card Q-CGI-5 A; merges after re-pin train `litlfred/folio-assistant#3056` lands carrying `cat-harness-tools#1740`).
+  2. `litlfred/cat-harness#1174` (`Show when a bookmark is selected`): `ready: 8c6ad804be7fcb92806f5ab349d048904b6b5132` (`#issuecomment-6773016298`).
+  3. `litlfred/cat-harness-tools#1746` (`Show when a bookmark is selected`): `ready: 324f8f56403582401ca61e22031efb78f751df01` (`#issuecomment-6773017959`).
+  4. `litlfred/cat-harness-tools#1747` (`derive:publish finds a host-site page's Tool in any layer`): `ready: 06aaa008829e1a41cf00532e4d39dce235300d25` (`#issuecomment-6773019775`).
+- **Round 9 audit of `litlfred/who-iris#104` and `folio-assistant-bmat`:**
+  - `litlfred/who-iris#104` (`IRIS CDN Exporter: follow-ups after the first slice`): all 5 repository code/verification/docs items remain verified and checked off (`[x]`, 5/7) on `litlfred/who-iris` `origin/main` (`48a2ecddc32b48b6c30bce1e0b3108cd62db9c2f` after `who-iris#197` `eae6e712e031` and `#202` `48a2ecddc32b`); the 2 remaining unchecked items (`IRIS_CDN_DID`/`IRIS_CDN_KEY_ID`/`IRIS_CDN_TRUST_ANCHOR_JWK` and Cloudflare R2/Artifacts/`IRIS_CDN_ENABLED=true`) stay open per owner ruling `Q-DQ-5 A` as owner provisioning actions for `WorldHealthOrganization/who-iris`.
+  - `folio-assistant-bmat` (`Document back matter: Glossary`): all 6 checklist steps are checked (`[x]`) with 5/6 merged on `origin/main`; only `litlfred/dth-sc#24` (`a97df08a3b6d558e74d3de9bd52e70db4935c233`, closing `dth-sc#23`) remains open under the `dth-*` content hold (`dth-sc/main` is at `ad30f7e9f3b3` with release-gated layer checks after `#27`).
 
 

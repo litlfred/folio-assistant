@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-02T18:30:00Z
-updated_at: 2026-11-08T07:10:00Z
+updated_at: 2026-11-10T16:40:00Z
 parent: folio-assistant-npuo
 tags:
     - document-structure
@@ -68,3 +68,5 @@ _2026-11-06T08:44Z_ — Resumed in Round 3 bean drain. `folio-assistant-core#622
 _2026-11-06T08:35:33Z_ — Claimed by agy (92bff8c9-777d-458a-a380-8dd5bf5cc0f3) with bean-claim-check: no other agent's commit in the window, no open PR naming it.
 
 _2026-11-08T07:10:00Z_ — `litlfred/smart-ra#234` (`28ddcb2b93`, merged as `c14618fdb9b8`, closing `#229`) and `litlfred/dth-phc#33` (`9cb61fb17ecd`, closing `#32`) are merged; only `litlfred/dth-sc#24` (`#23`, owned by the glossary thread) remains open.
+
+_2026-11-10T16:40:00Z_ — Round 9 audit: all 6 steps in `## Steps` remain checked (`[x]`), with 5/6 merged on `origin/main` (`litlfred/smart-ra#230` `8257473` + `litlfred/smart-ra#234` `c14618fdb9b8` closing `smart-ra#229`, `litlfred/dth-phc#33` `9cb61fb17ecd` closing `dth-phc#32`, `litlfred/folio-assistant-core#622` closing `core#621`, and `dth-hrh` requiring no change). Only `litlfred/dth-sc#24` (`a97df08a3b6d558e74d3de9bd52e70db4935c233`, closing `dth-sc#23`) remains open under the owner's `dth-*` content hold (`dth-sc/main` is now at `ad30f7e9f3b38d042f1bb4c62f752e86e3e20fd2` after `#26` `1196e78d5c28` and `#27` `ad30f7e9f3b3` re-pinned `cat-harness-tools` to `961b4d9` for release-gated layer checks, which retires the cross-layer `check:subgraph-coverage` and moved-file `check:foreign-paths` comparison reds from the `17f9d59ec4ec` base run).
