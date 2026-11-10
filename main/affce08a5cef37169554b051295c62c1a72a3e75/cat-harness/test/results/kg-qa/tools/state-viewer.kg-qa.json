@@ -1,0 +1,54 @@
+{
+  "$schema": "kg-qa/v1",
+  "subject": {
+    "kind": "tool",
+    "id": "state-viewer",
+    "path": null
+  },
+  "source_hash": "545ac663d296",
+  "criteria": {
+    "tool-invoke-path-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-satisfies-resolves": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-satisfies-contract-met": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-io-types-declared": {
+      "result": "pass",
+      "findings": []
+    },
+    "tool-args-shell-safe": {
+      "result": "fail",
+      "findings": [
+        {
+          "where": "state-viewer",
+          "detail": "command-line input \"scope\" is Text, which can carry a shell payload"
+        }
+      ]
+    },
+    "tool-alternative-selectable": {
+      "result": "n/a",
+      "findings": []
+    },
+    "tool-downstream-fresh": {
+      "result": "n/a",
+      "findings": []
+    },
+    "tool-maintains-in-tree": {
+      "result": "n/a",
+      "findings": []
+    }
+  },
+  "totals": {
+    "pass": 4,
+    "fail": 1,
+    "n/a": 3,
+    "unknown": 0
+  }
+}
