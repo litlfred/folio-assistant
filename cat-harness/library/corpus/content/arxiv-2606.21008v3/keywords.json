@@ -1,0 +1,1551 @@
+{
+  "$schema": "folio-keywords/v1",
+  "entry": "arxiv-2606.21008v3",
+  "corpus": {
+    "library": "cat-harness/library",
+    "sections": 2176,
+    "terms": 14971,
+    "weighting": "log-entropy"
+  },
+  "document": [
+    {
+      "term": "factual rating",
+      "score": 32.742,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "run anchor",
+      "score": 28.8906,
+      "evidence": []
+    },
+    {
+      "term": "factual axis",
+      "score": 28.8244,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "anchor score",
+      "score": 27.3647,
+      "evidence": []
+    },
+    {
+      "term": "evaluator factual",
+      "score": 27.2416,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "every rating",
+      "score": 27.1353,
+      "evidence": []
+    },
+    {
+      "term": "anchor own",
+      "score": 26.5074,
+      "evidence": []
+    },
+    {
+      "term": "reference anchor",
+      "score": 26.4891,
+      "evidence": []
+    },
+    {
+      "term": "factual judges",
+      "score": 26.4663,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "fixed anchor",
+      "score": 25.7248,
+      "evidence": [
+        "heading"
+      ]
+    },
+    {
+      "term": "anchor model",
+      "score": 25.6227,
+      "evidence": []
+    },
+    {
+      "term": "rating consistency",
+      "score": 24.9236,
+      "evidence": [
+        "heading"
+      ]
+    }
+  ],
+  "sections": {
+    "sec-000-the-metanym-game": [
+      {
+        "term": "game",
+        "score": 1.6791,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ground truth",
+        "score": 1.5018,
+        "evidence": []
+      },
+      {
+        "term": "gpqa",
+        "score": 0.9889,
+        "evidence": []
+      },
+      {
+        "term": "metanym",
+        "score": 0.9793,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "instantiates",
+        "score": 0.8755,
+        "evidence": []
+      },
+      {
+        "term": "judges",
+        "score": 0.8585,
+        "evidence": []
+      },
+      {
+        "term": "ratings",
+        "score": 0.8316,
+        "evidence": []
+      },
+      {
+        "term": "generators",
+        "score": 0.8261,
+        "evidence": []
+      }
+    ],
+    "sec-001-introduction": [
+      {
+        "term": "metanym game",
+        "score": 2.5531,
+        "evidence": []
+      },
+      {
+        "term": "true sentence",
+        "score": 1.8117,
+        "evidence": []
+      },
+      {
+        "term": "archetypal context",
+        "score": 1.6044,
+        "evidence": []
+      },
+      {
+        "term": "player",
+        "score": 1.488,
+        "evidence": []
+      },
+      {
+        "term": "key-free",
+        "score": 1.1202,
+        "evidence": []
+      },
+      {
+        "term": "factual",
+        "score": 1.0935,
+        "evidence": []
+      },
+      {
+        "term": "slots",
+        "score": 0.9884,
+        "evidence": []
+      },
+      {
+        "term": "template",
+        "score": 0.9676,
+        "evidence": []
+      }
+    ],
+    "sec-003-participants-and-protocol": [
+      {
+        "term": "portfolio",
+        "score": 0.8868,
+        "evidence": []
+      },
+      {
+        "term": "participants",
+        "score": 0.8797,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "disabled",
+        "score": 0.8506,
+        "evidence": []
+      },
+      {
+        "term": "anchor",
+        "score": 0.6191,
+        "evidence": []
+      },
+      {
+        "term": "pools",
+        "score": 0.5941,
+        "evidence": []
+      }
+    ],
+    "sec-004-the-rubric-and-the-anchor": [
+      {
+        "term": "metanym game",
+        "score": 1.8023,
+        "evidence": []
+      },
+      {
+        "term": "impressive length",
+        "score": 1.7309,
+        "evidence": []
+      },
+      {
+        "term": "idiomatic rewrite",
+        "score": 1.5885,
+        "evidence": []
+      },
+      {
+        "term": "rubric",
+        "score": 1.5785,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anchor",
+        "score": 1.2382,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "parallel context",
+        "score": 1.2042,
+        "evidence": []
+      },
+      {
+        "term": "archetypal",
+        "score": 1.1199,
+        "evidence": []
+      },
+      {
+        "term": "archetype",
+        "score": 1.0626,
+        "evidence": []
+      }
+    ],
+    "sec-005-two-key-free-estimators": [
+      {
+        "term": "evaluator competence",
+        "score": 2.8031,
+        "evidence": []
+      },
+      {
+        "term": "peer centrality",
+        "score": 1.8816,
+        "evidence": []
+      },
+      {
+        "term": "anchor model",
+        "score": 1.3592,
+        "evidence": []
+      },
+      {
+        "term": "leniency",
+        "score": 1.2849,
+        "evidence": []
+      },
+      {
+        "term": "rating",
+        "score": 1.0382,
+        "evidence": []
+      },
+      {
+        "term": "rescaled",
+        "score": 1.0076,
+        "evidence": []
+      },
+      {
+        "term": "factual",
+        "score": 0.9822,
+        "evidence": []
+      },
+      {
+        "term": "model reads",
+        "score": 0.8445,
+        "evidence": []
+      }
+    ],
+    "sec-006-council-total-rating-and-scaling-by-addition": [
+      {
+        "term": "council",
+        "score": 1.9544,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "metanym game",
+        "score": 1.4414,
+        "evidence": []
+      },
+      {
+        "term": "rating",
+        "score": 1.4174,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "total",
+        "score": 1.3208,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "contestant",
+        "score": 1.2149,
+        "evidence": []
+      },
+      {
+        "term": "contest",
+        "score": 1.2057,
+        "evidence": []
+      },
+      {
+        "term": "seat",
+        "score": 1.1977,
+        "evidence": []
+      },
+      {
+        "term": "archived",
+        "score": 1.1202,
+        "evidence": []
+      }
+    ],
+    "sec-008-anchoring-doubles-resolution": [
+      {
+        "term": "doubles",
+        "score": 1.071,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "portfolio",
+        "score": 0.7028,
+        "evidence": []
+      },
+      {
+        "term": "bootstrap",
+        "score": 0.6934,
+        "evidence": []
+      }
+    ],
+    "sec-009-evaluator-factual-competence": [
+      {
+        "term": "evaluator",
+        "score": 1.3772,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "claude-opus",
+        "score": 0.9513,
+        "evidence": []
+      },
+      {
+        "term": "judges",
+        "score": 0.6803,
+        "evidence": []
+      }
+    ],
+    "sec-010-rating-consistency-and-the-council": [
+      {
+        "term": "claude opus",
+        "score": 1.4435,
+        "evidence": []
+      },
+      {
+        "term": "consistency",
+        "score": 1.3528,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "council",
+        "score": 0.8417,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "gemini",
+        "score": 0.809,
+        "evidence": []
+      }
+    ],
+    "sec-011-the-official-leaderboard-judgement-is-the-bottle": [
+      {
+        "term": "factual judges",
+        "score": 1.5264,
+        "evidence": []
+      },
+      {
+        "term": "council",
+        "score": 1.2626,
+        "evidence": []
+      },
+      {
+        "term": "claude-opus",
+        "score": 0.9513,
+        "evidence": []
+      },
+      {
+        "term": "leaderboard",
+        "score": 0.9281,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "seat",
+        "score": 0.8175,
+        "evidence": []
+      },
+      {
+        "term": "five",
+        "score": 0.8174,
+        "evidence": []
+      },
+      {
+        "term": "anchor",
+        "score": 0.7812,
+        "evidence": []
+      }
+    ],
+    "sec-012-a-key-free-benchmark-replicates-a-keyed-one": [
+      {
+        "term": "gpqa diamond",
+        "score": 2.3153,
+        "evidence": []
+      },
+      {
+        "term": "runs pooled",
+        "score": 1.2941,
+        "evidence": []
+      },
+      {
+        "term": "leading eight",
+        "score": 1.2218,
+        "evidence": []
+      },
+      {
+        "term": "key-free",
+        "score": 1.1202,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "keyed",
+        "score": 1.0353,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "official total",
+        "score": 1.0324,
+        "evidence": []
+      },
+      {
+        "term": "twelve models",
+        "score": 0.9227,
+        "evidence": []
+      },
+      {
+        "term": "archetype",
+        "score": 0.9152,
+        "evidence": []
+      }
+    ],
+    "sec-013-robustness-to-regeneration": [
+      {
+        "term": "guard",
+        "score": 0.8527,
+        "evidence": []
+      },
+      {
+        "term": "seat",
+        "score": 0.8175,
+        "evidence": []
+      },
+      {
+        "term": "apart",
+        "score": 0.7497,
+        "evidence": []
+      },
+      {
+        "term": "factual",
+        "score": 0.6705,
+        "evidence": []
+      }
+    ],
+    "sec-014-related-work": [
+      {
+        "term": "metanym game",
+        "score": 1.4414,
+        "evidence": []
+      },
+      {
+        "term": "chollet",
+        "score": 1.0076,
+        "evidence": []
+      },
+      {
+        "term": "self-produced",
+        "score": 1.0076,
+        "evidence": []
+      },
+      {
+        "term": "mitchell",
+        "score": 0.8218,
+        "evidence": []
+      },
+      {
+        "term": "judge",
+        "score": 0.7933,
+        "evidence": []
+      },
+      {
+        "term": "lets",
+        "score": 0.7738,
+        "evidence": []
+      },
+      {
+        "term": "aggregation",
+        "score": 0.707,
+        "evidence": []
+      },
+      {
+        "term": "agreement",
+        "score": 0.6991,
+        "evidence": []
+      }
+    ],
+    "sec-015-discussion": [
+      {
+        "term": "metanym game",
+        "score": 2.8115,
+        "evidence": []
+      },
+      {
+        "term": "reasoning off",
+        "score": 2.1018,
+        "evidence": []
+      },
+      {
+        "term": "reasoning channel",
+        "score": 1.8011,
+        "evidence": []
+      },
+      {
+        "term": "topic domain",
+        "score": 1.6915,
+        "evidence": []
+      },
+      {
+        "term": "gpqa",
+        "score": 1.6426,
+        "evidence": []
+      },
+      {
+        "term": "parallel contexts",
+        "score": 1.6318,
+        "evidence": []
+      },
+      {
+        "term": "claude haiku",
+        "score": 1.5079,
+        "evidence": []
+      },
+      {
+        "term": "hypothesis",
+        "score": 1.4805,
+        "evidence": []
+      }
+    ],
+    "sec-016-limitations": [
+      {
+        "term": "optimised against",
+        "score": 1.3809,
+        "evidence": []
+      },
+      {
+        "term": "consensus",
+        "score": 1.0669,
+        "evidence": []
+      },
+      {
+        "term": "governing",
+        "score": 0.6306,
+        "evidence": []
+      },
+      {
+        "term": "non-council",
+        "score": 0.6306,
+        "evidence": []
+      },
+      {
+        "term": "dispersion",
+        "score": 0.5994,
+        "evidence": []
+      }
+    ],
+    "sec-017-conclusion": [
+      {
+        "term": "artificial intelligence",
+        "score": 2.1596,
+        "evidence": []
+      },
+      {
+        "term": "arxiv",
+        "score": 1.8154,
+        "evidence": []
+      },
+      {
+        "term": "reproducibility statement",
+        "score": 1.5682,
+        "evidence": []
+      },
+      {
+        "term": "analogical reasoning",
+        "score": 1.5624,
+        "evidence": []
+      },
+      {
+        "term": "language models",
+        "score": 1.5157,
+        "evidence": []
+      },
+      {
+        "term": "every rating",
+        "score": 1.4709,
+        "evidence": []
+      },
+      {
+        "term": "iclr",
+        "score": 1.4018,
+        "evidence": []
+      },
+      {
+        "term": "gpqa",
+        "score": 1.2782,
+        "evidence": []
+      }
+    ],
+    "sec-018-rating-estimators": [
+      {
+        "term": "rating",
+        "score": 1.4174,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "portfolio",
+        "score": 1.0296,
+        "evidence": []
+      },
+      {
+        "term": "anchor",
+        "score": 1.0097,
+        "evidence": []
+      },
+      {
+        "term": "grades",
+        "score": 0.9082,
+        "evidence": []
+      },
+      {
+        "term": "swept",
+        "score": 0.9082,
+        "evidence": []
+      },
+      {
+        "term": "port",
+        "score": 0.8091,
+        "evidence": []
+      }
+    ],
+    "sec-019-generation-rating": [
+      {
+        "term": "generation rating",
+        "score": 2.3364,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "submission",
+        "score": 0.7034,
+        "evidence": []
+      },
+      {
+        "term": "bootstrap",
+        "score": 0.6934,
+        "evidence": []
+      }
+    ],
+    "sec-020-factual-competence-and-generation-factuality-svd": [
+      {
+        "term": "factual competence",
+        "score": 3.5932,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "generator own",
+        "score": 1.6262,
+        "evidence": []
+      },
+      {
+        "term": "singular vector",
+        "score": 1.1792,
+        "evidence": []
+      },
+      {
+        "term": "rating",
+        "score": 1.0382,
+        "evidence": []
+      },
+      {
+        "term": "factuality",
+        "score": 1.0112,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "evaluator",
+        "score": 1.0088,
+        "evidence": []
+      },
+      {
+        "term": "centering",
+        "score": 1.0076,
+        "evidence": []
+      },
+      {
+        "term": "left singular",
+        "score": 1.0076,
+        "evidence": []
+      }
+    ],
+    "sec-021-rating-consistency": [
+      {
+        "term": "four per-archetype",
+        "score": 1.4773,
+        "evidence": []
+      },
+      {
+        "term": "pearson correlation",
+        "score": 1.4179,
+        "evidence": []
+      },
+      {
+        "term": "claude-opus",
+        "score": 1.3353,
+        "evidence": []
+      },
+      {
+        "term": "structural diversity",
+        "score": 1.245,
+        "evidence": []
+      },
+      {
+        "term": "factual",
+        "score": 1.1876,
+        "evidence": []
+      },
+      {
+        "term": "consistency",
+        "score": 1.0721,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "collapsed",
+        "score": 0.95,
+        "evidence": []
+      },
+      {
+        "term": "anchor",
+        "score": 0.9069,
+        "evidence": []
+      }
+    ],
+    "sec-022-the-council-and-the-total": [
+      {
+        "term": "bootstrap interval",
+        "score": 1.8604,
+        "evidence": []
+      },
+      {
+        "term": "council",
+        "score": 1.6834,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "anchor",
+        "score": 1.0965,
+        "evidence": []
+      },
+      {
+        "term": "replicate",
+        "score": 0.9837,
+        "evidence": []
+      },
+      {
+        "term": "dispersion",
+        "score": 0.95,
+        "evidence": []
+      },
+      {
+        "term": "archetype",
+        "score": 0.9152,
+        "evidence": []
+      },
+      {
+        "term": "submission",
+        "score": 0.8876,
+        "evidence": []
+      },
+      {
+        "term": "axis",
+        "score": 0.7837,
+        "evidence": []
+      }
+    ],
+    "sec-023-per-criterion-generator-quality-versus-evaluator": [
+      {
+        "term": "anchored cosine",
+        "score": 1.7941,
+        "evidence": []
+      },
+      {
+        "term": "both anchored",
+        "score": 1.414,
+        "evidence": []
+      },
+      {
+        "term": "cos",
+        "score": 1.0076,
+        "evidence": []
+      },
+      {
+        "term": "dist",
+        "score": 1.0076,
+        "evidence": []
+      }
+    ],
+    "sec-024-the-contest-the-ballast-and-the-guards": [
+      {
+        "term": "ballast",
+        "score": 3.7205,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "contest",
+        "score": 3.4499,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ballast blocks",
+        "score": 2.8714,
+        "evidence": []
+      },
+      {
+        "term": "guards",
+        "score": 2.8555,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "seats anchored",
+        "score": 2.061,
+        "evidence": []
+      },
+      {
+        "term": "factual axis",
+        "score": 1.859,
+        "evidence": []
+      },
+      {
+        "term": "council alone",
+        "score": 1.714,
+        "evidence": []
+      },
+      {
+        "term": "pooled corpus",
+        "score": 1.6186,
+        "evidence": []
+      }
+    ],
+    "sec-025-authority-versus-consistency-on-the-subjective-a": [
+      {
+        "term": "subjective axes",
+        "score": 2.9349,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "authority",
+        "score": 2.874,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "consistency",
+        "score": 1.7485,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "total preserves",
+        "score": 1.2741,
+        "evidence": []
+      },
+      {
+        "term": "spearman",
+        "score": 1.0084,
+        "evidence": []
+      },
+      {
+        "term": "judge",
+        "score": 0.921,
+        "evidence": []
+      },
+      {
+        "term": "credits",
+        "score": 0.9085,
+        "evidence": []
+      },
+      {
+        "term": "taste",
+        "score": 0.8289,
+        "evidence": []
+      }
+    ],
+    "sec-026-the-two-estimators-compared": [
+      {
+        "term": "estimators",
+        "score": 0.9535,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "judges",
+        "score": 0.8585,
+        "evidence": []
+      },
+      {
+        "term": "truth",
+        "score": 0.7284,
+        "evidence": []
+      },
+      {
+        "term": "sweep",
+        "score": 0.7018,
+        "evidence": []
+      }
+    ],
+    "sec-027-generation-and-evaluation-prompts": [
+      {
+        "term": "target submission",
+        "score": 1.4883,
+        "evidence": []
+      },
+      {
+        "term": "reference submission",
+        "score": 1.4836,
+        "evidence": []
+      },
+      {
+        "term": "anchor score",
+        "score": 1.1327,
+        "evidence": []
+      },
+      {
+        "term": "un-anchored",
+        "score": 0.8755,
+        "evidence": []
+      },
+      {
+        "term": "bootstrap",
+        "score": 0.875,
+        "evidence": []
+      }
+    ],
+    "sec-028-generation-prompt": [
+      {
+        "term": "cell signaling",
+        "score": 5.0243,
+        "evidence": []
+      },
+      {
+        "term": "archetypal contexts",
+        "score": 3.8115,
+        "evidence": []
+      },
+      {
+        "term": "signaling human",
+        "score": 3.6613,
+        "evidence": []
+      },
+      {
+        "term": "five archetypal",
+        "score": 3.5157,
+        "evidence": []
+      },
+      {
+        "term": "capital investment",
+        "score": 2.7113,
+        "evidence": []
+      },
+      {
+        "term": "parallel contexts",
+        "score": 2.6293,
+        "evidence": []
+      },
+      {
+        "term": "metanym table",
+        "score": 2.4523,
+        "evidence": []
+      },
+      {
+        "term": "investment theory",
+        "score": 2.3255,
+        "evidence": []
+      }
+    ],
+    "sec-029-evaluation-prompt-calibratedanchored": [
+      {
+        "term": "archetypal contexts",
+        "score": 3.674,
+        "evidence": []
+      },
+      {
+        "term": "same archetypal",
+        "score": 2.9387,
+        "evidence": []
+      },
+      {
+        "term": "reference submission",
+        "score": 2.9026,
+        "evidence": []
+      },
+      {
+        "term": "target submission",
+        "score": 2.7331,
+        "evidence": []
+      },
+      {
+        "term": "anchor score",
+        "score": 2.4967,
+        "evidence": []
+      },
+      {
+        "term": "parallel contexts",
+        "score": 2.4712,
+        "evidence": []
+      },
+      {
+        "term": "context template",
+        "score": 1.9933,
+        "evidence": []
+      },
+      {
+        "term": "metanym table",
+        "score": 1.8531,
+        "evidence": []
+      }
+    ],
+    "sec-030-bootstrap-note-the-un-anchored-form-41-initial-s": [
+      {
+        "term": "reference submission",
+        "score": 2.6788,
+        "evidence": []
+      },
+      {
+        "term": "target submission",
+        "score": 2.5006,
+        "evidence": []
+      },
+      {
+        "term": "anchor score",
+        "score": 2.1731,
+        "evidence": []
+      },
+      {
+        "term": "six criteria",
+        "score": 1.663,
+        "evidence": []
+      },
+      {
+        "term": "integers inclusive",
+        "score": 1.6379,
+        "evidence": []
+      },
+      {
+        "term": "calibration",
+        "score": 1.1784,
+        "evidence": []
+      },
+      {
+        "term": "un-anchored",
+        "score": 1.1048,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "justifying",
+        "score": 1.0076,
+        "evidence": []
+      }
+    ],
+    "sec-031-a-council-evaluation-worked": [
+      {
+        "term": "five evaluators",
+        "score": 1.7287,
+        "evidence": []
+      },
+      {
+        "term": "council",
+        "score": 1.6834,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "administrator",
+        "score": 0.9238,
+        "evidence": []
+      },
+      {
+        "term": "unit",
+        "score": 0.7268,
+        "evidence": []
+      },
+      {
+        "term": "portfolio",
+        "score": 0.7028,
+        "evidence": []
+      },
+      {
+        "term": "factual",
+        "score": 0.6705,
+        "evidence": []
+      },
+      {
+        "term": "score",
+        "score": 0.6481,
+        "evidence": []
+      }
+    ],
+    "sec-032-a-plain-error-and-the-council-converges": [
+      {
+        "term": "natural selections",
+        "score": 2.3516,
+        "evidence": []
+      },
+      {
+        "term": "ecosystems",
+        "score": 1.6351,
+        "evidence": []
+      },
+      {
+        "term": "idiomatic rewrite",
+        "score": 1.5885,
+        "evidence": []
+      },
+      {
+        "term": "reference precise",
+        "score": 1.5193,
+        "evidence": []
+      },
+      {
+        "term": "resource allocation",
+        "score": 1.374,
+        "evidence": []
+      },
+      {
+        "term": "parallel context",
+        "score": 1.328,
+        "evidence": []
+      },
+      {
+        "term": "factual errors",
+        "score": 1.2996,
+        "evidence": []
+      },
+      {
+        "term": "awkward",
+        "score": 1.2849,
+        "evidence": []
+      }
+    ],
+    "sec-033-judges-disagreeing-on-a-countable-quantity": [
+      {
+        "term": "reference templates",
+        "score": 1.3833,
+        "evidence": []
+      },
+      {
+        "term": "judges",
+        "score": 0.8585,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "words",
+        "score": 0.8112,
+        "evidence": []
+      },
+      {
+        "term": "rating",
+        "score": 0.7087,
+        "evidence": []
+      },
+      {
+        "term": "gradient-guided",
+        "score": 0.6306,
+        "evidence": []
+      }
+    ],
+    "sec-034-the-dissent-that-is-better-reasoned-than-the-maj": [
+      {
+        "term": "six archetypes",
+        "score": 2.6966,
+        "evidence": []
+      },
+      {
+        "term": "majority",
+        "score": 1.7665,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "resource allocation",
+        "score": 1.2744,
+        "evidence": []
+      },
+      {
+        "term": "reasoned",
+        "score": 1.2613,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "iterative refinement",
+        "score": 1.2222,
+        "evidence": []
+      },
+      {
+        "term": "contains six",
+        "score": 1.1733,
+        "evidence": []
+      },
+      {
+        "term": "emergence",
+        "score": 1.0078,
+        "evidence": []
+      },
+      {
+        "term": "containment",
+        "score": 0.9082,
+        "evidence": []
+      }
+    ],
+    "sec-036-the-correlation-decomposed": [
+      {
+        "term": "against gpqa",
+        "score": 2.3522,
+        "evidence": []
+      },
+      {
+        "term": "uncertainty propagated",
+        "score": 2.0596,
+        "evidence": []
+      },
+      {
+        "term": "leading eight",
+        "score": 2.0059,
+        "evidence": []
+      },
+      {
+        "term": "correlation",
+        "score": 1.6809,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "factual axis",
+        "score": 1.6297,
+        "evidence": []
+      },
+      {
+        "term": "full roster",
+        "score": 1.6271,
+        "evidence": []
+      },
+      {
+        "term": "measurement error",
+        "score": 1.4175,
+        "evidence": []
+      },
+      {
+        "term": "point estimates",
+        "score": 1.2213,
+        "evidence": []
+      }
+    ],
+    "sec-037-the-administration-disclosed": [
+      {
+        "term": "dedicated reasoning",
+        "score": 1.2537,
+        "evidence": []
+      },
+      {
+        "term": "reasoning channel",
+        "score": 1.1883,
+        "evidence": []
+      },
+      {
+        "term": "administration",
+        "score": 0.996,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "gemini",
+        "score": 0.9781,
+        "evidence": []
+      },
+      {
+        "term": "void",
+        "score": 0.9591,
+        "evidence": []
+      },
+      {
+        "term": "shuffled",
+        "score": 0.95,
+        "evidence": []
+      },
+      {
+        "term": "question",
+        "score": 0.8725,
+        "evidence": []
+      },
+      {
+        "term": "seat",
+        "score": 0.8175,
+        "evidence": []
+      }
+    ],
+    "sec-038-the-audit-no-leak-found": [
+      {
+        "term": "gpqa diamond",
+        "score": 1.98,
+        "evidence": []
+      },
+      {
+        "term": "terminal answer",
+        "score": 1.5532,
+        "evidence": []
+      },
+      {
+        "term": "first-pass log",
+        "score": 1.5151,
+        "evidence": []
+      },
+      {
+        "term": "raw records",
+        "score": 1.5146,
+        "evidence": []
+      },
+      {
+        "term": "twelve models",
+        "score": 1.2898,
+        "evidence": []
+      },
+      {
+        "term": "audit",
+        "score": 1.2526,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "gemini",
+        "score": 1.1044,
+        "evidence": []
+      },
+      {
+        "term": "inflate",
+        "score": 1.0076,
+        "evidence": []
+      }
+    ],
+    "sec-039-the-constructs-of-intelligence-the-metanym-game": [
+      {
+        "term": "metanym game",
+        "score": 4.2106,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "horn cattell",
+        "score": 2.4261,
+        "evidence": []
+      },
+      {
+        "term": "intelligence",
+        "score": 2.3287,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "fluid intelligence",
+        "score": 2.1639,
+        "evidence": []
+      },
+      {
+        "term": "convergent production",
+        "score": 1.8745,
+        "evidence": []
+      },
+      {
+        "term": "root analogy",
+        "score": 1.8332,
+        "evidence": []
+      },
+      {
+        "term": "higher-order relational",
+        "score": 1.7967,
+        "evidence": []
+      },
+      {
+        "term": "divergent production",
+        "score": 1.775,
+        "evidence": []
+      }
+    ],
+    "sec-040-the-three-runs-apart-and-pooled": [
+      {
+        "term": "pooled",
+        "score": 3.0175,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "runs",
+        "score": 1.988,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "run sits",
+        "score": 1.9769,
+        "evidence": []
+      },
+      {
+        "term": "twelve-evaluator basis",
+        "score": 1.8807,
+        "evidence": []
+      },
+      {
+        "term": "council basis",
+        "score": 1.6957,
+        "evidence": []
+      },
+      {
+        "term": "factual axis",
+        "score": 1.6033,
+        "evidence": []
+      },
+      {
+        "term": "apart",
+        "score": 1.4993,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "claude-opus",
+        "score": 1.4269,
+        "evidence": []
+      }
+    ],
+    "sec-041-what-anchoring-does-to-resolution": [
+      {
+        "term": "doubles",
+        "score": 0.8488,
+        "evidence": []
+      },
+      {
+        "term": "band",
+        "score": 0.7777,
+        "evidence": []
+      },
+      {
+        "term": "spread",
+        "score": 0.7764,
+        "evidence": []
+      },
+      {
+        "term": "anchored",
+        "score": 0.7755,
+        "evidence": []
+      }
+    ]
+  }
+}
