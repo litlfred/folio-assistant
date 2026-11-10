@@ -1,0 +1,16 @@
+# BEGIN index mounts (generated from index.config.json — do not edit)
+# END index mounts
+
+node_modules/
+
+# BEGIN built at publish (folio-assistant-sci.json `builtAtPublish`)
+# Owner, 2026-10-14 (B1): computed at the checkout's pins, so no commit of this
+# instance can hold it current.
+/ns/context/v1.jsonld
+# END built at publish
+
+# The QA working copy (folio-assistant-sci.json `qa`, storage `cat/cat-harness/qa-reports`).
+# Derived verdicts live on the qa-reports store branch, keyed by commit; a
+# local run writes them here and nothing commits them (bean folio-assistant-7mwa;
+# as cat-harness#857 and folio-assistant-core#482 did).
+/test/results/
