@@ -8,7 +8,7 @@
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-11-09T06:54:01.472Z",
+  "updated_at": "2026-11-10T06:46:40.176Z",
   "verdict": "findings",
   "checks": [
     {
@@ -27,7 +27,7 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 3114849082,
+          "value": 3181258147,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         },
@@ -84,13 +84,13 @@
       "measurements": [
         {
           "metric": "special-branch-bytes:qa-reports",
-          "value": 1617723408,
+          "value": 1420754557,
           "unit": "bytes",
           "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch (unique blobs summed)"
         },
         {
           "metric": "special-branch-bytes:beans",
-          "value": 9238267,
+          "value": 9255272,
           "unit": "bytes",
           "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch (unique blobs summed)"
         },
@@ -121,7 +121,7 @@
       ],
       "findings": [
         {
-          "summary": "`cat/cat-harness/qa-reports` is 1.51 GB, over the 500.0 MB budget (500 MB) for `qa-reports`.",
+          "summary": "`cat/cat-harness/qa-reports` is 1.32 GB, over the 500.0 MB budget (500 MB) for `qa-reports`.",
           "metric": "special-branch-bytes:qa-reports",
           "severity": "major",
           "action": "Report it to the owner with what the branch holds and its largest paths, and ask what to prune or whether the budget should change. Nothing here removes anything; the budget is the owner's."
@@ -251,7 +251,7 @@
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 3114828809,
+          "value": 3181235087,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         },
@@ -264,39 +264,39 @@
       ],
       "findings": [
         {
-          "summary": "`branches/repin-train-20261108-1150` (422.1 MB, 20556 files) — no open pull request; and no branch on the remote slugifies to it.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261108-1150` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1150` and `cleanup_confirm: repin-train-20261108-1150`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`branches/repin-train-20261108-1227` (423.7 MB, 20577 files) — no open pull request; and no branch on the remote slugifies to it.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261108-1227` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1227` and `cleanup_confirm: repin-train-20261108-1227`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`branches/repin-train-20261108-1329` (450.0 MB, 21802 files) — no open pull request; and no branch on the remote slugifies to it.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261108-1329` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1329` and `cleanup_confirm: repin-train-20261108-1329`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
           "summary": "`branches/repin-train-20261108-1423` (407.8 MB, 19077 files) — no open pull request; and no branch on the remote slugifies to it.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `repin-train-20261108-1423` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1423` and `cleanup_confirm: repin-train-20261108-1423`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         },
         {
-          "summary": "`branches/repin-train-20261108-1622` (403.3 MB, 19064 files) — no open pull request; `repin-train/20261108-1622` is already in `main`, tip 14.5 h old.",
+          "summary": "`branches/repin-train-20261108-1622` (403.3 MB, 19064 files) — no open pull request; `repin-train/20261108-1622` is already in `main`, tip 38.4 h old.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `repin-train-20261108-1622` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1622` and `cleanup_confirm: repin-train-20261108-1622`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         },
         {
-          "summary": "`branches/repin-train-20261108-1823` (431.8 MB, 20024 files) — no open pull request; `repin-train/20261108-1823` is already in `main`, tip 12.5 h old.",
+          "summary": "`branches/repin-train-20261108-1823` (431.8 MB, 20024 files) — no open pull request; `repin-train/20261108-1823` is already in `main`, tip 36.4 h old.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `repin-train-20261108-1823` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1823` and `cleanup_confirm: repin-train-20261108-1823`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         },
         {
-          "summary": "`branches/repin-train-20261108-2023` (431.8 MB, 20026 files) — no open pull request; `repin-train/20261108-2023` is already in `main`, tip 10.5 h old.",
+          "summary": "`branches/repin-train-20261108-2023` (431.8 MB, 20026 files) — no open pull request; `repin-train/20261108-2023` is already in `main`, tip 34.4 h old.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `repin-train-20261108-2023` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-2023` and `cleanup_confirm: repin-train-20261108-2023`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+        },
+        {
+          "summary": "`branches/repin-train-20261109-1039` (453.0 MB, 20323 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `repin-train-20261109-1039` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261109-1039` and `cleanup_confirm: repin-train-20261109-1039`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+        },
+        {
+          "summary": "`branches/repin-train-20261109-1354` (453.0 MB, 20323 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `repin-train-20261109-1354` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261109-1354` and `cleanup_confirm: repin-train-20261109-1354`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+        },
+        {
+          "summary": "`branches/repin-train-20261109-1425` (453.0 MB, 20323 files) — no open pull request; and no branch on the remote slugifies to it.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `repin-train-20261109-1425` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261109-1425` and `cleanup_confirm: repin-train-20261109-1425`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         }
       ]
     },
@@ -406,13 +406,13 @@
         },
         {
           "metric": "git-dir-bytes",
-          "value": 1284117419,
+          "value": 1276879405,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 994231296,
+          "value": 987450368,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
@@ -424,14 +424,14 @@
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 12.93,
+          "value": 12.86,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 1.20 GB against 94.7 MB of tracked content — 12.9x, in 3 pack(s).",
+          "summary": "`.git` is 1.19 GB against 94.7 MB of tracked content — 12.9x, in 3 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -509,13 +509,13 @@
         },
         {
           "metric": "bean-open",
-          "value": 25,
+          "value": 24,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
         {
           "metric": "bean-resolved-inline",
-          "value": 77,
+          "value": 78,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -545,7 +545,7 @@
         },
         {
           "metric": "bean-claimed",
-          "value": 13,
+          "value": 12,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -557,7 +557,7 @@
         },
         {
           "metric": "bean-quiet-claims-parenting-live-work",
-          "value": 3,
+          "value": 2,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -581,7 +581,7 @@
         },
         {
           "metric": "bean-claimed-with-criteria",
-          "value": 13,
+          "value": 12,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
         },
@@ -618,13 +618,13 @@
       ],
       "findings": [
         {
-          "summary": "`folio-assistant-tv20` has been `in-progress` with no change for 94 hours (\"CI speed II (c2): Feature Staging still builds its own site (cis4, closed undone)\") — 2 of 13 claims are quiet.",
+          "summary": "`folio-assistant-bsd1` has been `in-progress` with no change for 96 hours (\"BEAN STORE BEHIND ANY TOOL + STATE MACHINE STARTS ANY MODEL''S AGENT: proposal (WHO Assured AI / Gemini benchmarking context)\") — 2 of 12 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-fwtz` has been `in-progress` with no change for 155 hours (\"docs-site must rebuild when the bean branch moves (ref + concurrency)\") — 2 of 13 claims are quiet.",
+          "summary": "`folio-assistant-yj32` has been `in-progress` with no change for 199 hours (\"HARNESS AS INTERFACE: a harness instance''s default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system\") — 2 of 12 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
