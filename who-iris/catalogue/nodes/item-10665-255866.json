@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/a123adbf-66d3-4afe-b994-a20e0b05bf35",
+  "kind": "item",
+  "flavour": "item",
+  "title": "WHO technical brief: preventing HIV during pregnancy and breastfeeding in the context of PrEP",
+  "parents": [],
+  "handle": "10665/255866",
+  "metadataRef": "catalogue/records/10665-255866.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO-HIV-2017.09-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 502164,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/edb9798f-194f-4269-80bc-bb5c72eae1a5/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 16f28399096854d8e1338d8fd3984b7a; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/a123adbf-66d3-4afe-b994-a20e0b05bf35"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: cited by the HIV DAK (10665/375230 text, smart-hiv). IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}

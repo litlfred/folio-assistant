@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/8cff86ad-e9e0-4bc3-9863-a808b46c1159",
+  "kind": "item",
+  "flavour": "item",
+  "title": "WHO recommendations on maternal health: guidelines approved by the WHO Guidelines Review Committee",
+  "parents": [],
+  "handle": "10665/259268",
+  "metadataRef": "catalogue/records/10665-259268.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO-MCA-17.10-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 466150,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/74736cb2-9b92-4c1b-b4a2-9e3f95e529bd/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 62e393d459a57bc1458e00aedf1f55f8; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/8cff86ad-e9e0-4bc3-9863-a808b46c1159"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}

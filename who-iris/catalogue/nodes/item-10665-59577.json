@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/c2f7479f-fdce-451a-ab24-3a35943daa56",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Guidelines for the prevention and control of infection with LAV/HTLV III",
+  "parents": [],
+  "handle": "10665/59577",
+  "metadataRef": "catalogue/records/10665-59577.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO_CDS_AIDS_86.1.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 588414,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/b81bf125-f12a-4a01-b27b-0a2e6a19047c/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 0e598ec85523b1e057eae75d2764e29f; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/c2f7479f-fdce-451a-ab24-3a35943daa56"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/4695734e-0284-43f1-9a87-df07e115fdb7",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Vaccins antivarioliques secs",
+  "parents": [],
+  "handle": "10665/266214",
+  "metadataRef": "catalogue/records/10665-266214.dc.json",
+  "bitstreams": [
+    {
+      "name": "PMC2554091.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 2181854,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/1e7f1259-94a6-4b35-a1f6-94afc415b41e/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 5e06a8f02a4dd4b4ee4de87b32b8423b; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/4695734e-0284-43f1-9a87-df07e115fdb7"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Journal Articles - Bulletin\" (98348838-1e12-4bd1-9b7f-ba10d55bc4f9), which is not a node here, so parents is [] (rule R10)."
+  }
+}

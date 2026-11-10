@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/89d07373-2aea-47e0-9636-45fec9167520",
+  "kind": "item",
+  "flavour": "item",
+  "title": "甲委员会第一份报告：（草案）",
+  "parents": [],
+  "handle": "10665/83077",
+  "metadataRef": "catalogue/records/10665-83077.dc.json",
+  "bitstreams": [
+    {
+      "name": "ca35.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 144864,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/58b981ea-4a49-4d2c-b69b-96c00cb8b6bb/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum f06fe481b369886199ac3c4e7753e092; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/89d07373-2aea-47e0-9636-45fec9167520"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"WHA53\" (5b040119-32cc-4274-a163-e53c408cc230), which is not a node here, so parents is [] (rule R10)."
+  }
+}

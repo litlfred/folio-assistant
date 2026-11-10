@@ -1,0 +1,4 @@
+- A paper as a tree of **typed, validated blocks**
+- A **Lean 4 formalization** with zero `sorry`s and a clean axiom audit
+- **PDF + HTML** renders and an interactive blueprint
+- A reproducible **CI pipeline** (validate → build → render → publish)

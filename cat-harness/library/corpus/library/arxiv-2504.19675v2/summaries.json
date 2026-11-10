@@ -1,0 +1,500 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "arxiv-2504.19675v2",
+  "summaries": [
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-000",
+      "source": "sections/sec-000-introduction.md",
+      "source_hash": "1b48ecc16c7300e9c8070280c402053903d06c8616ddab03cc2d27431befa4f3",
+      "narrative": [
+        {
+          "text": "Introduction. Automated subject indexing has traditionally used NLP and machine learning, and accurate subject prediction with LLMs remains elusive; the LLMs4Subjects challenge invited LLM-based solutions on data from TIB's bilingual TIBKAT database. The authors have developed the open-source Annif toolkit since 2017 and entered to provide a strong baseline of traditional methods augmented with some LLM techniques. The block ends partway through the list of novel aspects, beginning with translating the subject vocabulary and records using LLMs.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-001",
+      "source": "sections/sec-001-synthetic-training-data.md",
+      "source_hash": "e69f3a062cfd75adbf2242383b52fc82d6b8894e4d95b1fa29e5bc3875e9fdc2",
+      "narrative": [
+        {
+          "text": "The rest of the introduction, under a heading the extraction misplaced. The remaining novel aspects are including XTransformer in an ensemble and generating suggestions with separate monolingual pipelines whose results are merged. The system ranked 1st in all-subjects and 2nd in tib-core-subjects quantitatively and 4th qualitatively, which the authors take to show that a mainly traditional approach stays competitive with systems using LLMs more heavily. Code, configurations and data sets are on GitHub, and the trained models on Hugging Face Hub.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-002",
+      "source": "sections/sec-002-background.md",
+      "source_hash": "7b2a196a6963193a547081952bcf5256ba6d5f45a35c035040ca047aa508792c",
+      "narrative": [
+        {
+          "text": "Background. The task is extreme multi-label text classification (XMTC): recommend GND subjects for a TIBKAT record from its title and abstract, with two vocabularies, all-subjects (200,035 subjects) and tib-core-subjects (78,741). The record sets had 81,937 / 13,666 / 27,986 train/development/test records for all-subjects and 41,923 / 7,001 / 6,119 for tib-core; the authors ignored the split by document type and language because records were similar across types and often mixed languages. They did not use an LLM to choose subjects, relying on Annif's traditional XMTC algorithms, but used LLMs to pre-process the data and generate synthetic training data.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-003",
+      "source": "sections/sec-003-system-overview.md",
+      "source_hash": "93b31120211dae9f553d011892b76d8e8e9543b140fdb7cbf7102e65e7c663d5",
+      "narrative": [
+        {
+          "text": "System overview. Three Annif backends were used: Omikuji in a Bonsai-style configuration (partitioned label trees); MLLM, a Maui-like lexical matcher of text to vocabulary terms; and XTransformer, a fine-tuned Transformer XMTC model from the PECOS framework based on xlm-roberta-base, whose Annif integration was experimental and refined during the task. Backends were combined in simple ensembles, which average their scores, and neural ensembles, which also train a network to adjust scores, for example to suppress frequent false positives.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-004",
+      "source": "sections/sec-004-translation-of-data-sets.md",
+      "source_hash": "76afb580ec9baa61bfa4db92c32fe224facc0f983d6bee7a35ffd9a17790c092",
+      "narrative": [
+        {
+          "text": "Translation and synthetic data. Llama-3.1-8B-Instruct translated every record into German-only and English-only versions, and GPT-4o-mini translated all GND preferred terms into English, since MLLM needs vocabulary and text in the same language (Figure 1 shows these pre-processing steps). Because the training set was small for the vocabulary's size, the same Llama model was given each training record with its subjects and asked to write a similar record with those subjects plus one random extra GND term, which made the output novel rather than a paraphrase and widened subject coverage.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-005",
+      "source": "sections/sec-005-experimental-setup.md",
+      "source_hash": "aee00279de866eab2bae9ce60d736f631e34679c537e9f26c5d1da7927b5fd06",
+      "narrative": [
+        {
+          "text": "A one-line opening of the Experimental setup section, cut off mid-sentence: the authors first set up, trained and evaluated the three kinds of base projects.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-006",
+      "source": "sections/sec-006-base-projects.md",
+      "source_hash": "0ea252a177c50ad959bdd3b84c79e854a4ddb6781b5b2c15ac1220f5f791ce20",
+      "narrative": [
+        {
+          "text": "Experimental setup and base projects. Base projects were tuned against the development set using F1@5 and nDCG@10, then combined into ensembles for the submitted output. Separate projects were set up for each vocabulary and language, four combinations in all, each with Bonsai, MLLM and XTransformer, managed with the Data Version Control tool and trained on the LLM-translated monolingual training records. Hyperparameters covered Snowball stemming or Simplemma lemmatisation, bigram features and a min_df of 2 to 5 for Bonsai, and a manual search for XTransformer; the final settings are on GitHub.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-007",
+      "source": "sections/sec-007-adding-synthetic-data.md",
+      "source_hash": "d659b9cae215f619da4a1294f2baffc5cb4452b9afe351b42e7cb7f17f3c5095",
+      "narrative": [
+        {
+          "text": "Adding synthetic data. Synthetic generation was repeated three times per language and vocabulary. Adding the first synthetic part raised Bonsai's nDCG@10 by about 0.02, and the second and third only modestly (Figure 3), so training stopped at one part original to three parts synthetic. Synthetic data was not used for MLLM or XTransformer; the block is cut off as the reason for MLLM begins.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-008",
+      "source": "sections/sec-008-results.md",
+      "source_hash": "0a34cbb875cb752eae2701bae3c713d068f9061b439134511cb8c3596aecb5a7",
+      "narrative": [
+        {
+          "text": "The end of the synthetic-data discussion and the base-project results. A sentence fragment notes that a project did not improve with synthetic data. In the development-set scores (Table 3), Bonsai was best in every case, followed by XTransformer and MLLM.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-009",
+      "source": "sections/sec-009-ensemble-projects.md",
+      "source_hash": "80a0aeef222ef5296aeb3f7b1cdc10cbc8dbb643a08916fcd5968043f43d9777",
+      "narrative": [
+        {
+          "text": "Ensemble projects (Figure 2, Table 1). Three ensembles were built: BM simple and BM neural (Bonsai and MLLM) and BMX simple (all three). Weights were tuned with annif hyperopt against development-set nDCG (Table 4): Bonsai carried 80-87% in BM and 47-62% in BMX, XTransformer 21-33%, and MLLM a minor share, matching the base projects' order. The authors explain that MLLM complements the other two, which cannot suggest low-frequency subjects, by matching any GND term that appears in the text. The neural ensembles were trained on development-set records, so their development scores were unrealistically good and only the official test results could judge them.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-010",
+      "source": "sections/sec-010-test-set-predictions.md",
+      "source_hash": "9d63b11209e8f9f7e4bb2740ff9171f3b6b8938d88458c00a647b4dc402c9cac",
+      "narrative": [
+        {
+          "text": "Test set predictions. Teams could submit up to 10 runs per vocabulary with up to 50 subjects per record. Test records were LLM-translated into German and English, and each of the three ensemble types gave three runs: German, English, and the two merged by summing subject scores and keeping the top 50, for 9 runs per vocabulary. The block ends at the Results heading.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-011",
+      "source": "sections/sec-011-qualitative-evaluation.md",
+      "source_hash": "de11eb30e6b55b4e38484ee590e496492c89781286ae365b7cf44ed528ce70fd",
+      "narrative": [
+        {
+          "text": "A fragment of the Results section, saying only that the evaluations were performed by the task organisers.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-012",
+      "source": "sections/sec-012-quantitative-evaluation.md",
+      "source_hash": "0f0afa3474d6c652845a5d6ac41eed492c7376b8d5bd5436f41886fe3d672509",
+      "narrative": [
+        {
+          "text": "Quantitative and qualitative evaluation. Quantitatively, predictions were scored against TIBKAT annotations by precision, recall and F1 at thresholds 5 to 50, ranked by average recall; run #9, the BMX simple ensemble with merged languages, ranked 1st in all-subjects (0.6295) and 2nd in tib-core-subjects (0.5899). Qualitatively, subject librarians rated the top 20 subjects of tib-core run #9 for 6-10 records from each of 14 subject classifications as correct (Y), technically correct but irrelevant (I) or incorrect; with Y and I counted correct (case 1) or only Y (case 2), and recall measured against TIBKAT subjects plus all suggestions judged correct, Annif ranked 4th in both cases (Table 2), behind DNB-AI-Project, DUTIR831 and RUC Team.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-013",
+      "source": "sections/sec-013-analysis.md",
+      "source_hash": "6655f3e79c19b85e4ea68307e3e2ce8f8a3b5153ab61198cb5ae0f34b9a9d339",
+      "narrative": [
+        {
+          "text": "Analysis (with Table 1, the full development and test results). The English variants beat the German ones in all but one case, which the authors attribute possibly to better English translations or to German's compound-rich structure being harder for traditional pipelines. Synthetic records raised Bonsai's nDCG by about 0.03 (the experimental section gives about 0.02 for the first synthetic part). BMX beat BM, so adding XTransformer helped, while the neural ensembles underperformed on the test set because training and evaluation data were structurally similar. Merging the monolingual predictions beat either language alone; without it they would have ranked 2nd and 3rd. The authors suggest their qualitative 4th place reflects predictions that track existing TIBKAT metadata, where LLM-heavier systems were less constrained, and note that no system exceeded 0.35 F1@5, possibly showing inconsistent TIBKAT subject metadata; they propose nDCG@50 for ranking 50-subject outputs.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-014",
+      "source": "sections/sec-014-conclusions.md",
+      "source_hash": "b2a8279171737a2787e7bcc6cd71da3bcd85f0f164136b4212fd74ea780a1e7f",
+      "narrative": [
+        {
+          "text": "A one-line opening of the Conclusions, cut off mid-sentence: participation in the task provided valuable insights.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-015",
+      "source": "sections/sec-015-performance.md",
+      "source_hash": "590cc4622d2008fcee877e9fb719d7c4d63077d3682fdd3098af821e8c8fee11",
+      "narrative": [
+        {
+          "text": "The rest of the conclusions, followed by the acknowledgments and references. Traditional XMTC algorithms (Omikuji Bonsai, MLLM, XTransformer) enhanced with LLM-generated translations and synthetic data gave competitive results, and the authors note that traditional methods need modest computation, energy and latency compared with LLMs. They thank the Finnish Computing Competence Infrastructure, University of Helsinki Scientific Computing Services, ZBW for the XTransformer integration, DNB for hyperparameter advice, and TIB. The references cover the task and dataset papers, LLM subject-assignment experiments, Llama 3, nDCG, Bonsai, Parabel, Maui, Annif and PECOS.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-016",
+      "source": "sections/sec-016-effect-of-synthetic-data.md",
+      "source_hash": "8a9758d71522d5ba307a5f934f048acc10ab205442bfc885047ef18a71371f17",
+      "narrative": [
+        {
+          "text": "Appendix A: Figure 3, the effect of adding synthetic training data on Omikuji Bonsai models, plotting development-set nDCG@10 against the proportion of original to synthetic data (1+0 to 1+3) for each vocabulary and language.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-017",
+      "source": "sections/sec-017-results-for-base-projects.md",
+      "source_hash": "e34a9c0fad926ab45fe15ad4f99a1400d97f19f8df5136c79c7c565d3d88e6b0",
+      "narrative": [
+        {
+          "text": "Appendix B: Table 3, development-set F1@5 and nDCG@10 for every base project. Bonsai scores highest in each vocabulary and language (for example nDCG@10 of 0.5532 for all-subjects English and 0.5807 for tib-core English), XTransformer next, and MLLM lowest.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-018",
+      "source": "sections/sec-018-ensemble-weights.md",
+      "source_hash": "c17ca54d8a4e37dccd3dd1e788955b5769f9eb0580917bca5f41a152402ca5f2",
+      "narrative": [
+        {
+          "text": "Appendix C: Table 4, the optimised ensemble weights. In the BM ensembles Bonsai takes 0.8070 to 0.8729 and MLLM the rest; in the BMX ensembles Bonsai takes 0.4713 to 0.6197, XTransformer 0.2132 to 0.3323, and MLLM 0.1417 to 0.1964.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-019",
+      "source": "sections/sec-019-details-about-llm-usage.md",
+      "source_hash": "f8df81ae06e08eaebbab380a387c205e2d7371488ca67d5f2727ca5e0caad191",
+      "narrative": [
+        {
+          "text": "Appendix D: LLM usage. Records were translated and synthesised with Llama-3.1-8B-Instruct through the vLLM inference engine on one 80 GB NVIDIA A100 GPU of the University of Helsinki's Turso cluster, and the GND was translated with GPT-4o-mini on Azure OpenAI Service. Throughput was about 4 records per second for translation and 8 for synthesis.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-020",
+      "source": "sections/sec-020-processing-example.md",
+      "source_hash": "b6d3376bc52445a75d92f2b764ed7a51cc055973e074fd286aa41c87d58c24ee",
+      "narrative": [
+        {
+          "text": "A one-line pointer: the LLM translation and record-synthesis process is illustrated in Figure 4.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-021",
+      "source": "sections/sec-021-prompt-templates.md",
+      "source_hash": "a46402e3a30c05d9d9215f9cae135961b1fdac5baa5f800098172c8adcd26ce0",
+      "narrative": [
+        {
+          "text": "A one-line note on the prompt templates that follow: the system prompt is in italics, and tags are replaced with each record's information.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-022",
+      "source": "sections/sec-022-record-translation.md",
+      "source_hash": "f802ab3bdb1ef27644089d0088c1803706b89140a50e66edd7b42b375257e433",
+      "narrative": [
+        {
+          "text": "The record-translation prompt: a professional translator of bibliographic metadata is asked to make sure a title and description are in <LANGUAGE>, translating only if needed, leaving text already in that language unchanged, and replying with the text only.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-023",
+      "source": "sections/sec-023-record-synthesis.md",
+      "source_hash": "631f5120b213e5d7b8d94d528a995c7dd0925c05235ccd10e156af5e4e598837",
+      "narrative": [
+        {
+          "text": "The record-synthesis prompt: a professional metadata manager is shown an example title and description in <LANGUAGE> with its subject keywords, and asked to write a new title and description matching a new keyword set, replying with only those.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-024",
+      "source": "sections/sec-024-gnd-translation.md",
+      "source_hash": "c83b6db939528a14fc9567135516b70f6524d0320b3549f8d2bab0ed2736c49a",
+      "narrative": [
+        {
+          "text": "The GND-translation prompt, used in batches of 100 terms, followed by Figure 4. The prompt asks a translator of controlled vocabularies to translate German GND preferred terms into English, keep the list structure, and treat sensitive subjects with accuracy and respect, with a four-term example. Figure 4 traces a thesis record on hydraulic engineering at tidal tributaries of the Elbe through translation into monolingual versions and into two synthetic records, each adding one random GND subject (\"Phosphorkomplexe\" and \"Stromlinie <Strömungsmechanik>\").",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2504.19675v2/blocks/prose-sec-front-matter",
+      "source": "sections/sec-front-matter.md",
+      "source_hash": "ba7b4c02f672e47c3cc1b8578b9e9588179032917bd9727e9de4545f56e5975b",
+      "narrative": [
+        {
+          "text": "Title, authors and abstract of \"Annif at SemEval-2025 Task 5: Traditional XMTC augmented by LLMs\" by Osma Suominen, Juho Inkinen and Mona Lehtinen (National Library of Finland, University of Helsinki). The paper describes the Annif system in the LLMs4Subjects shared task, which asked for GND subject predictions for records of the bilingual TIBKAT database. It combines traditional NLP and machine-learning methods from the Annif toolkit with LLM-based translation and synthetic data generation, and merges predictions from monolingual models. It ranked first in all-subjects and second in tib-core-subjects quantitatively, and fourth qualitatively.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24"
+        }
+      ]
+    }
+  ]
+}

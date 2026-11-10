@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/a8a380e4-3c6d-4ca4-967a-a2bc3eb84a2a",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Картирование риска желтой лихорадки и рекомендованная вакцинация для лиц, совершающих поездки",
+  "parents": [],
+  "handle": "10665/253894",
+  "metadataRef": "catalogue/records/10665-253894.dc.json",
+  "bitstreams": [
+    {
+      "name": "A68_R4-ru.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 82625,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/a5a39665-edca-42f1-8752-fca996017fcc/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 156072014de858505910a9093dab8946; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/a8a380e4-3c6d-4ca4-967a-a2bc3eb84a2a"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"WHA68\" (809ae0a0-794d-49cc-9632-fd8dd9c426cc), which is not a node here, so parents is [] (rule R10)."
+  }
+}

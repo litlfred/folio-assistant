@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/f6e09c12-7d7e-44c1-a67f-3a475d08f754",
+  "kind": "item",
+  "flavour": "item",
+  "title": "L’OMS recommande que des approches de dépistage du VIH qui s’appuient sur les réseaux sociaux soient offertes aux populations clés, dans le cadre d’un dispositif de services aux partenaires",
+  "parents": [],
+  "handle": "10665/331629",
+  "metadataRef": "catalogue/records/10665-331629.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHOCDSHIV19.32-fre.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 464210,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/6f6f06a1-31ca-4913-a3a0-7b2e5b34bdff/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 050547035895a962fda95043e59ec5c8; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/f6e09c12-7d7e-44c1-a67f-3a475d08f754"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: cited by the HIV DAK (10665/375230 text, smart-hiv). IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}

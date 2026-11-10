@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/004bc4fd-f0e5-469f-a573-0a4ce2ed7615",
+  "kind": "item",
+  "flavour": "item",
+  "title": "YELLOW-FEVER VACCINATING CENTRES_x000D_FOR INTERNATIONAL TRAVEL = CENTRES DE VACCINATION CONTRE LA FIÈVRE JAUNE POUR LES VOYAGES INTERNATIONAUX",
+  "parents": [],
+  "handle": "10665/218202",
+  "metadataRef": "catalogue/records/10665-218202.dc.json",
+  "bitstreams": [
+    {
+      "name": "WER4611_99-99.PDF",
+      "bundle": "ORIGINAL",
+      "bytes": 95972,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/c4bf8be1-82e7-4974-ba8c-7f024a520ab0/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 70bab38926291c07c376cfffbc73734f; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/004bc4fd-f0e5-469f-a573-0a4ce2ed7615"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Journal Articles\" (b48509a4-5089-4202-9852-a636aedc0e2a), which is not a node here, so parents is [] (rule R10)."
+  }
+}

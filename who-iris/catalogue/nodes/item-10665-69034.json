@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/8fb9825a-c9b2-45eb-abbf-0f8d4a173641",
+  "kind": "item",
+  "flavour": "item",
+  "title": "The immunization data quality self-assessment (DSQ) tool",
+  "parents": [],
+  "handle": "10665/69034",
+  "metadataRef": "catalogue/records/10665-69034.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO_IVB_05.04.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 354953,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/16f052dd-454d-4cdc-923c-36f1a8fe472b/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum f1bcf61fe215476cdaa4da2971f842c7; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/8fb9825a-c9b2-45eb-abbf-0f8d4a173641"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: cited by the immunization DAK (10665/380303 text, smart-immunizations). IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/9cc67c08-78e6-432a-996e-0fa06f47e6ce",
+  "kind": "item",
+  "flavour": "item",
+  "title": "National eHealth strategy toolkit",
+  "parents": [],
+  "handle": "10665/75211",
+  "metadataRef": "catalogue/records/10665-75211.dc.json",
+  "bitstreams": [
+    {
+      "name": "9789241548465_eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 5507190,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/473ac620-2b2d-4538-9680-40c8b8f22a5f/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum f6b59d8d83a514e591d6c28d8d2a3d1f; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "9789246548460_ara.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 9400739,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/96b6b423-dbed-4bac-826b-812a3ecec562/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum b10f74dcabc430fae91b05b3f6b9994d; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "9789248548468_por.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 4092611,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/a4be51af-0bb9-4aec-8436-073939915dd1/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 3892a7fb91ce153bb532b446e1d849c8; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "9789241548465_rus.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 2357738,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/f5233202-747b-43df-bf0f-725b1da56cd8/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 942aa5c63058ff4efa89f744a83e1cd2; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/9cc67c08-78e6-432a-996e-0fa06f47e6ce"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: cited by the immunization DAK (10665/380303 text, smart-immunizations). IRIS files it in the collection \"Publications\" (12760c88-43e7-4670-8d4a-5a2a70dbdb39), which is not a node here, so parents is [] (rule R10)."
+  }
+}

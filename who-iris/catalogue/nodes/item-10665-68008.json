@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/f498d923-fae8-414d-ac9a-da0fc4afb17c",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Country report : country, Upper Volta",
+  "parents": [],
+  "handle": "10665/68008",
+  "metadataRef": "catalogue/records/10665-68008.dc.json",
+  "bitstreams": [
+    {
+      "name": "SE_69.25.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 1433478,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/34d2f27c-68fe-4ea3-84a2-f9b70167ac35/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 7497f87bb3c6407111b3d4d0d125bda1; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/f498d923-fae8-414d-ac9a-da0fc4afb17c"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}

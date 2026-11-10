@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/4b94e368-8ad1-4e4a-a1a2-70f2aa9ccd26",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Проект четвертого доклада Комитета А",
+  "parents": [],
+  "handle": "10665/111245",
+  "metadataRef": "catalogue/records/10665-111245.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHA27_A-5_rus.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 1844238,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/bc4b9061-719f-4770-b71e-72e774a4d900/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum c271aea19fbfe402b6070261a78d0d8f; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/4b94e368-8ad1-4e4a-a1a2-70f2aa9ccd26"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"WHA27\" (5194cfa8-0522-433f-b6c7-b2d0a8dcff91), which is not a node here, so parents is [] (rule R10)."
+  }
+}
