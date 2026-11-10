@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.H.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.H.Collaboration">
+    <bpmn:participant id="PHW.H.Participant" name="H. Revocation and Suspension under a Data Sharing Agreement (DSA P13)" processRef="PHW.H" />
+  </bpmn:collaboration>
+  <bpmn:process id="PHW.H" name="H. Revocation and Suspension under a Data Sharing Agreement (DSA P13)" isExecutable="false">
+    <bpmn:documentation>Stops access under a data sharing agreement. Grant credentials are stopped by the W3C Bitstring Status List (`revocation` is final, `suspension` can be lifted). OAuth tokens and clients are stopped by revocation (RFC 7009) and by disabling the client. Keys are stopped by removing them from the trust list or by CRL. The decision is human and the mechanisms are computable, for computable and document-only agreements alike. Trust-anchor neutral: WHO GDHCN is one accepted anchor among others (a national X.509 PKI, the party's own did:web, or a local list); UDAP, as profiled by HL7 SSRAA (Security for Scalable Registration, Authentication, and Authorization IG), is approved for X.509 certificate-based registration and authentication (owner, 2026-10-30 20:28Z), and OpenID Federation is out of scope. Source: the data sharing agreement (DSA) process analysis for litlfred/folio-assistant#2702, §2 and §4.</bpmn:documentation>
+    <bpmn:laneSet id="PHW.H.LaneSet">
+      <bpmn:lane id="PHW.Lane.DataProvider" name="Data Provider (decides)">
+        <bpmn:documentation>The data provider, which decides what to stop. The decision is human; the mechanisms are computable.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.H.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.H.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.H.Gateway1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.H.Gateway2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.H.5</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.H.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.GrantIssuer" name="Grant Issuer (W3C Bitstring Status List)">
+        <bpmn:documentation>The issuer of the grant credentials and the publisher of their status list.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.H.2</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.AuthorizationServer" name="Provider Authorization Server (administrator + decision point)">
+        <bpmn:documentation>The provider's OAuth authorization server (RFC 6749 §1.1 (section from standing knowledge, unverified)). In NIST SP 800-207 terms it is the policy administrator. It is grouped with the policy decision point that runs process F.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.H.3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.TrustAnchor" name="Trust Anchor (GDHCN or another accepted anchor)">
+        <bpmn:documentation>Any trust anchor the agreement accepts. Trust-anchor neutral: WHO GDHCN is one accepted anchor among others (a national X.509 PKI, the party's own did:web, or a local list); UDAP, as profiled by HL7 SSRAA (Security for Scalable Registration, Authentication, and Authorization IG), is approved for X.509 certificate-based registration and authentication (owner, 2026-10-30 20:28Z), and OpenID Federation is out of scope.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.H.4</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.H.Start" name="Breach, project end, key compromise, or staff leaving">
+      <bpmn:documentation>Trigger: a breach (DSA P15), the end of a project, a compromised key, or a person leaving (DSA P13). A withdrawn consent needs no step here: the person sets `status` to `inactive` (process A, A4), and process F then finds no active Consent.</bpmn:documentation>
+      <bpmn:outgoing>PHW.H.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:userTask id="PHW.H.1" name="H1. Decide what to stop: revoke (final) or suspend (reversible)">
+      <bpmn:documentation>The provider decides what to stop and how. Revocation is final. Suspension can be lifted, for example while a dispute runs (DSA P15).</bpmn:documentation>
+      <bpmn:incoming>PHW.H.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.H.Flow2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="PHW.H.Gateway1" name="What is being stopped?">
+      <bpmn:documentation>A grant credential, an OAuth token or client, or a key.</bpmn:documentation>
+      <bpmn:incoming>PHW.H.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.H.Flow3</bpmn:outgoing>
+      <bpmn:outgoing>PHW.H.Flow4</bpmn:outgoing>
+      <bpmn:outgoing>PHW.H.Flow5</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="PHW.H.2" name="H2. Set the grant&apos;s bit in the Bitstring Status List">
+      <bpmn:documentation>The issuer sets the grant's bit with `statusPurpose` `revocation` (final) or `suspension` (reversible) (W3C Bitstring Status List §2.1). Process F step F4 then gives `deny`. IETF Token Status List is a draft and is not used.</bpmn:documentation>
+      <bpmn:incoming>PHW.H.Flow3</bpmn:incoming>
+      <bpmn:outgoing>PHW.H.Flow6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.H.3" name="H3. Revoke tokens and disable the client">
+      <bpmn:documentation>The authorization server revokes refresh tokens (RFC 7009 §2 (section from standing knowledge, unverified)) and disables the client registered in process D. Introspection then returns `active: false` (RFC 7662 §2.2 (section from standing knowledge, unverified)). Short token lifetimes bound the rest.</bpmn:documentation>
+      <bpmn:incoming>PHW.H.Flow4</bpmn:incoming>
+      <bpmn:outgoing>PHW.H.Flow7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.H.4" name="H4. Remove key from trust list or revoke certificate (CRL)">
+      <bpmn:documentation>GDHCN: delete the key (DSC) from the trust network. X.509: revoke the certificate by CRL (RFC 5280 §5 (section from standing knowledge, unverified)); smart-trust prefers CRLs to OCSP for privacy (`concepts_certificate_governance.md`). did:web: remove the `verificationMethod`. A VHL or HCERT QR code has no revocation of its own: it expires (`exp`, claim key 4; smart-trust `hcert_spec.md` §3.2.5, §6.1), and the VHL Sharer can stop serving the link.</bpmn:documentation>
+      <bpmn:incoming>PHW.H.Flow5</bpmn:incoming>
+      <bpmn:outgoing>PHW.H.Flow8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="PHW.H.Gateway2" name="">
+      <bpmn:documentation>Joins the three paths.</bpmn:documentation>
+      <bpmn:incoming>PHW.H.Flow6</bpmn:incoming>
+      <bpmn:incoming>PHW.H.Flow7</bpmn:incoming>
+      <bpmn:incoming>PHW.H.Flow8</bpmn:incoming>
+      <bpmn:outgoing>PHW.H.Flow9</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="PHW.H.5" name="H5. Record the revocation or suspension (process G)" calledElement="PHW.G">
+      <bpmn:documentation>The action is recorded in process G and cites the agreement version it affects.</bpmn:documentation>
+      <bpmn:incoming>PHW.H.Flow9</bpmn:incoming>
+      <bpmn:outgoing>PHW.H.Flow10</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:endEvent id="PHW.H.End" name="Access stopped">
+      <bpmn:documentation>Further requests under the stopped grant, token, client or key give `deny` in process F.</bpmn:documentation>
+      <bpmn:incoming>PHW.H.Flow10</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="PHW.H.Flow1" sourceRef="PHW.H.Start" targetRef="PHW.H.1" />
+    <bpmn:sequenceFlow id="PHW.H.Flow2" sourceRef="PHW.H.1" targetRef="PHW.H.Gateway1" />
+    <bpmn:sequenceFlow id="PHW.H.Flow3" name="grant credential" sourceRef="PHW.H.Gateway1" targetRef="PHW.H.2" />
+    <bpmn:sequenceFlow id="PHW.H.Flow4" name="token or client" sourceRef="PHW.H.Gateway1" targetRef="PHW.H.3" />
+    <bpmn:sequenceFlow id="PHW.H.Flow5" name="key" sourceRef="PHW.H.Gateway1" targetRef="PHW.H.4" />
+    <bpmn:sequenceFlow id="PHW.H.Flow6" sourceRef="PHW.H.2" targetRef="PHW.H.Gateway2" />
+    <bpmn:sequenceFlow id="PHW.H.Flow7" sourceRef="PHW.H.3" targetRef="PHW.H.Gateway2" />
+    <bpmn:sequenceFlow id="PHW.H.Flow8" sourceRef="PHW.H.4" targetRef="PHW.H.Gateway2" />
+    <bpmn:sequenceFlow id="PHW.H.Flow9" sourceRef="PHW.H.Gateway2" targetRef="PHW.H.5" />
+    <bpmn:sequenceFlow id="PHW.H.Flow10" sourceRef="PHW.H.5" targetRef="PHW.H.End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.H.Diagram">
+    <bpmndi:BPMNPlane id="PHW.H.Plane" bpmnElement="PHW.H.Collaboration">
+      <bpmndi:BPMNShape id="PHW.H.Participant_di" bpmnElement="PHW.H.Participant" isHorizontal="true"><dc:Bounds x="120" y="60" width="1555" height="600" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.DataProvider_di" bpmnElement="PHW.Lane.DataProvider" isHorizontal="true"><dc:Bounds x="150" y="60" width="1525" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.GrantIssuer_di" bpmnElement="PHW.Lane.GrantIssuer" isHorizontal="true"><dc:Bounds x="150" y="210" width="1525" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.AuthorizationServer_di" bpmnElement="PHW.Lane.AuthorizationServer" isHorizontal="true"><dc:Bounds x="150" y="360" width="1525" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.TrustAnchor_di" bpmnElement="PHW.Lane.TrustAnchor" isHorizontal="true"><dc:Bounds x="150" y="510" width="1525" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.H.Start_di" bpmnElement="PHW.H.Start"><dc:Bounds x="267" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.H.1_di" bpmnElement="PHW.H.1"><dc:Bounds x="405" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.H.Gateway1_di" bpmnElement="PHW.H.Gateway1" isMarkerVisible="true"><dc:Bounds x="670" y="110" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.H.2_di" bpmnElement="PHW.H.2"><dc:Bounds x="815" y="245" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.H.3_di" bpmnElement="PHW.H.3"><dc:Bounds x="815" y="395" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.H.4_di" bpmnElement="PHW.H.4"><dc:Bounds x="815" y="545" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.H.Gateway2_di" bpmnElement="PHW.H.Gateway2" isMarkerVisible="true"><dc:Bounds x="1080" y="110" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.H.5_di" bpmnElement="PHW.H.5"><dc:Bounds x="1225" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.H.End_di" bpmnElement="PHW.H.End"><dc:Bounds x="1497" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.H.Flow1_di" bpmnElement="PHW.H.Flow1">
+        <di:waypoint x="303" y="135" />
+        <di:waypoint x="405" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.H.Flow2_di" bpmnElement="PHW.H.Flow2">
+        <di:waypoint x="575" y="135" />
+        <di:waypoint x="670" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.H.Flow3_di" bpmnElement="PHW.H.Flow3">
+        <di:waypoint x="720" y="135" />
+        <di:waypoint x="800" y="135" />
+        <di:waypoint x="800" y="285" />
+        <di:waypoint x="815" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.H.Flow4_di" bpmnElement="PHW.H.Flow4">
+        <di:waypoint x="720" y="135" />
+        <di:waypoint x="800" y="135" />
+        <di:waypoint x="800" y="435" />
+        <di:waypoint x="815" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.H.Flow5_di" bpmnElement="PHW.H.Flow5">
+        <di:waypoint x="720" y="135" />
+        <di:waypoint x="800" y="135" />
+        <di:waypoint x="800" y="585" />
+        <di:waypoint x="815" y="585" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.H.Flow6_di" bpmnElement="PHW.H.Flow6">
+        <di:waypoint x="985" y="285" />
+        <di:waypoint x="1065" y="285" />
+        <di:waypoint x="1065" y="135" />
+        <di:waypoint x="1080" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.H.Flow7_di" bpmnElement="PHW.H.Flow7">
+        <di:waypoint x="985" y="435" />
+        <di:waypoint x="1065" y="435" />
+        <di:waypoint x="1065" y="135" />
+        <di:waypoint x="1080" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.H.Flow8_di" bpmnElement="PHW.H.Flow8">
+        <di:waypoint x="985" y="585" />
+        <di:waypoint x="1065" y="585" />
+        <di:waypoint x="1065" y="135" />
+        <di:waypoint x="1080" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.H.Flow9_di" bpmnElement="PHW.H.Flow9">
+        <di:waypoint x="1130" y="135" />
+        <di:waypoint x="1225" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.H.Flow10_di" bpmnElement="PHW.H.Flow10">
+        <di:waypoint x="1395" y="135" />
+        <di:waypoint x="1497" y="135" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
