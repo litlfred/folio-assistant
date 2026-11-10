@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/79264c53-7e20-4d0e-b3e6-c3cb24d1823c",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Acta resumida de la primera sesión",
+  "parents": [],
+  "handle": "10665/145614",
+  "metadataRef": "catalogue/records/10665-145614.dc.json",
+  "bitstreams": [
+    {
+      "name": "EB22_Min-1_spa.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 2671624,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/15bae09b-f0a7-4648-aa37-e6c96e412aaf/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 8f984e920823ed260679cc8cd5483897; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/79264c53-7e20-4d0e-b3e6-c3cb24d1823c"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"EB22\" (0c92bae9-61fd-404f-baf5-848011dc9f22), which is not a node here, so parents is [] (rule R10)."
+  }
+}

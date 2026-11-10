@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/cda32344-555a-41a4-818a-e813d426fe6e",
+  "kind": "item",
+  "flavour": "item",
+  "title": "OUTBREAK NEWS : Development of a vaccine effective against avian influenza H5N1 infection in humans",
+  "parents": [],
+  "handle": "10665/232378",
+  "metadataRef": "catalogue/records/10665-232378.dc.json",
+  "bitstreams": [
+    {
+      "name": "WER7904_25-40_ARA.PDF",
+      "bundle": "ORIGINAL",
+      "bytes": 174613,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/2b1f3521-556f-4dbb-bf66-06bbe36c331c/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 144eff9a33a3d06c81e89302af21946f; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/cda32344-555a-41a4-818a-e813d426fe6e"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Journal Articles\" (b48509a4-5089-4202-9852-a636aedc0e2a), which is not a node here, so parents is [] (rule R10)."
+  }
+}

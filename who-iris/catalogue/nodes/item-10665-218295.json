@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/13365de7-82f7-4d8b-a20c-637b65101eca",
+  "kind": "item",
+  "flavour": "item",
+  "title": "IMMUNIZATION SURVEY - 1970 = ENQUÊTE SUR LES VACCINATIONS — 1970",
+  "parents": [],
+  "handle": "10665/218295",
+  "metadataRef": "catalogue/records/10665-218295.dc.json",
+  "bitstreams": [
+    {
+      "name": "WER4618_174-174.PDF",
+      "bundle": "ORIGINAL",
+      "bytes": 55944,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/04fff9cd-cf2c-4b23-9cac-b4eda69a24ef/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 923e3ee6e5d587cb8cf9b0714020c5f8; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/13365de7-82f7-4d8b-a20c-637b65101eca"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Journal Articles\" (b48509a4-5089-4202-9852-a636aedc0e2a), which is not a node here, so parents is [] (rule R10)."
+  }
+}

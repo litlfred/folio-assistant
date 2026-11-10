@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/a80399cd-d23a-4a2a-a608-cd51771bb449",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Global smallpox vaccine reserve: report by the Secretariat",
+  "parents": [],
+  "handle": "10665/20231",
+  "metadataRef": "catalogue/records/10665-20231.dc.json",
+  "bitstreams": [
+    {
+      "name": "B115_36-en.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 30955,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/6fbc2e66-ee35-4e41-baba-793230232b69/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 465094ee92db306331f05f405ada0644; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/a80399cd-d23a-4a2a-a608-cd51771bb449"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"EB115\" (021c904f-fbef-46c4-9793-4cf8d88978a1), which is not a node here, so parents is [] (rule R10)."
+  }
+}

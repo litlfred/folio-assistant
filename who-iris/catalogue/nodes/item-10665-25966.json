@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/7bd60d5c-87c7-48e4-b726-fa8c895517a1",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Доклады о ходе работы: доклад Секретариата",
+  "parents": [],
+  "handle": "10665/25966",
+  "metadataRef": "catalogue/records/10665-25966.dc.json",
+  "bitstreams": [
+    {
+      "name": "B130_35Add2-ru.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 359136,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/5fd9f67e-a1fc-4064-b30f-c31e430baf44/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum b66b26a7ffb1c3c3a9a192b90eda138a; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/7bd60d5c-87c7-48e4-b726-fa8c895517a1"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"EB130\" (ea3b0a5f-bc39-4c18-9505-2a4e3866140e), which is not a node here, so parents is [] (rule R10)."
+  }
+}

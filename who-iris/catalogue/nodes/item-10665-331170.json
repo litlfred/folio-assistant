@@ -1,0 +1,44 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/9c30490a-8485-4eb7-8549-1209413fdc5f",
+  "kind": "item",
+  "flavour": "item",
+  "title": "WHO consolidated guidelines on tuberculosis: module 1: prevention: tuberculosis preventive treatment",
+  "parents": [],
+  "handle": "10665/331170",
+  "metadataRef": "catalogue/records/10665-331170.dc.json",
+  "bitstreams": [
+    {
+      "name": "9789240002678-eng.epub",
+      "bundle": "ORIGINAL",
+      "bytes": 5133396,
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/4e4dccaa-474f-4c39-a4b9-518c78fbafaa/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum dc1f9649264a980c470815497f742fbc; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "9789240001503-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 1124428,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/f4eae88f-c458-4c74-80d6-19ee96d09765/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 293d621d92778ccefca76541386bd1f7; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/9c30490a-8485-4eb7-8549-1209413fdc5f"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: cited by the HIV DAK (10665/375230 text, smart-hiv). IRIS files it in the collection \"Publications\" (12760c88-43e7-4670-8d4a-5a2a70dbdb39), which is not a node here, so parents is [] (rule R10)."
+  }
+}

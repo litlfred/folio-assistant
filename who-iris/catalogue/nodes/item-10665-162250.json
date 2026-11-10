@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/9fe38765-a3cb-4c0c-b5b1-560202f8aba0",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Fourth report of Committee A",
+  "parents": [],
+  "handle": "10665/162250",
+  "metadataRef": "catalogue/records/10665-162250.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHA39_49_eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 2580456,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/b09ee39a-8fea-4d63-93dc-54a653aaf37e/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum fee1b92299bde50ee525750eefe8a9d8; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/9fe38765-a3cb-4c0c-b5b1-560202f8aba0"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"WHA39\" (2ee41879-39eb-4f22-9e5a-22cbd1a13102), which is not a node here, so parents is [] (rule R10)."
+  }
+}

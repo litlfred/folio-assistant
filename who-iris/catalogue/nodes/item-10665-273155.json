@@ -1,0 +1,45 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/2e9f9882-cb0e-4a2a-ac56-25d4395b4920",
+  "kind": "item",
+  "flavour": "item",
+  "title": "HIV diagnosis and ARV use in HIV-exposed infants: a programmatic update",
+  "parents": [],
+  "handle": "10665/273155",
+  "metadataRef": "catalogue/records/10665-273155.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO-CDS-HIV-18.17-por.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 3131085,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/29cfaf69-608b-40b9-b6b3-cbe0ab381f2a/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 9a7d07b96c698f6b2f2aedb63382be22; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "WHO-CDS-HIV-18.17-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 1899332,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/ccfcbecf-bd9c-498d-b0b6-a00b71dcb3e0/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 323ac83c1026848ff2b52f42330c2ab0; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/2e9f9882-cb0e-4a2a-ac56-25d4395b4920"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: cited by the HIV DAK (10665/375230 text, smart-hiv). IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}

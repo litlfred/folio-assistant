@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/65954fd1-f19b-4961-94c6-5a376317ad2f",
+  "kind": "item",
+  "flavour": "item",
+  "title": "La vaccination dans le monde : vision et stratégie : rapport du Secrétariat",
+  "parents": [],
+  "handle": "10665/3278",
+  "metadataRef": "catalogue/records/10665-3278.dc.json",
+  "bitstreams": [
+    {
+      "name": "B128_9-fr.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 110358,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/cba31a8f-cba6-4405-ad96-02d38784207c/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum bdb66178e5cb9883588eafe838310476; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/65954fd1-f19b-4961-94c6-5a376317ad2f"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"EB128\" (bd62bc44-a203-4f4b-8f4c-5b1e62192b41), which is not a node here, so parents is [] (rule R10)."
+  }
+}

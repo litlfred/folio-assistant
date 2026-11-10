@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/95abf607-9c77-4185-8dbd-185fef57b936",
+  "kind": "item",
+  "flavour": "item",
+  "title": "HIV : to test or not to test?",
+  "parents": [],
+  "handle": "10665/47547",
+  "metadataRef": "catalogue/records/10665-47547.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHF_1989_10(3-4)_p422-428.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 457582,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/04090efb-932b-4ad8-a8b5-fcc947888ad7/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 4b18692842bb85e968e3719a3c754b89; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/95abf607-9c77-4185-8dbd-185fef57b936"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Journal Articles\" (b48509a4-5089-4202-9852-a636aedc0e2a), which is not a node here, so parents is [] (rule R10)."
+  }
+}

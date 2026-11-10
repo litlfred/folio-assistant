@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/6b357978-7516-423f-9689-e3200cdfb0f1",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Stratégie Mondiale de lutte contre le SIDA",
+  "parents": [],
+  "handle": "10665/179526",
+  "metadataRef": "catalogue/records/10665-179526.dc.json",
+  "bitstreams": [
+    {
+      "name": "EB89_R19_fre.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 2379930,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/b404626c-2bdf-4190-968c-f23a120213cd/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 1aa4d9e0304398ab92ec9210afdda5de; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/6b357978-7516-423f-9689-e3200cdfb0f1"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"EB89\" (3b6c3ba9-436d-4491-bd6f-334ecbed3f65), which is not a node here, so parents is [] (rule R10)."
+  }
+}

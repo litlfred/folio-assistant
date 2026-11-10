@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/b89fc26c-9fdb-465a-ae3d-a325a35bd4e7",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Global hepatitis report 2026",
+  "parents": [],
+  "handle": "10665/385385",
+  "metadataRef": "catalogue/records/10665-385385.dc.json",
+  "bitstreams": [
+    {
+      "name": "9789240122383-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 5434197,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/6f6caedc-37a0-49ee-a02a-df9c3b78ff42/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 1247da727f4ccd1c821da98d1b23b4fb; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/b89fc26c-9fdb-465a-ae3d-a325a35bd4e7"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Publications\" (12760c88-43e7-4670-8d4a-5a2a70dbdb39), which is not a node here, so parents is [] (rule R10)."
+  }
+}

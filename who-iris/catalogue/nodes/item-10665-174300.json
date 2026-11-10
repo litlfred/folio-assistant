@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/1ae14a32-287f-485f-a743-7acb079ae7ec",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Очередной обзор программ вакцинации БЦЖ",
+  "parents": [],
+  "handle": "10665/174300",
+  "metadataRef": "catalogue/records/10665-174300.dc.json",
+  "bitstreams": [
+    {
+      "name": "EB24_R20_rus.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 511057,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/b9874df1-f142-4c2a-930b-b7e7211bf66f/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 1cba6a4dea89d1caff3bac1e6639a3e4; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/1ae14a32-287f-485f-a743-7acb079ae7ec"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"EB24\" (434c334d-2dc3-49dd-92ac-082deab9cfb1), which is not a node here, so parents is [] (rule R10)."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/77643e31-6da6-416d-842b-ed9e8ef0cdcc",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Job aid for COVID-19 vaccine administration: Janssen–Cilag International NV (Belgium) Ad26.COV2.S COVID-19 vaccine (international non-proprietary name: Ad26.COV2.S COVID-19 Vaccine)",
+  "parents": [],
+  "handle": "10665/342490",
+  "metadataRef": "catalogue/records/10665-342490.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO-EURO-2021-2689-42445-58909-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 296029,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/58ebe4ab-1e47-4bb5-a6f3-a12097196448/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum a2182b0f4ec46af4f5a25d89c5216e01; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/77643e31-6da6-416d-842b-ed9e8ef0cdcc"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Technical documents\" (ce9d7267-1ccf-4daf-b1a7-f28e8a594e2b), which is not a node here, so parents is [] (rule R10)."
+  }
+}

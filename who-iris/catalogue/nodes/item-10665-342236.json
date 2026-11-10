@@ -1,0 +1,32 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/e9e5a483-e01a-4e08-a0d1-865868403705",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Contingency fund for emergencies: 2020 annual report",
+  "parents": [],
+  "handle": "10665/342236",
+  "metadataRef": "catalogue/records/10665-342236.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO-WHE-2021.06-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 4526994,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/3c462179-0510-449b-99a0-8cd4bd6a3409/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 1c1441754a5b9638531253ec14edc05b; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/e9e5a483-e01a-4e08-a0d1-865868403705"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}
