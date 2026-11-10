@@ -52,21 +52,15 @@
 cat-harness/docs/en/folio-assistant-core/glossary/index.md linguist-generated=true -diff -merge
 cat-harness/docs/folio-assistant-core/glossary/index.md linguist-generated=true -diff -merge
 cat-harness/docs/cat-harness/auto-docs/**               linguist-generated=true -diff -merge
-cat-harness/test/results/audit-coverage.qa-results.json linguist-generated=true -diff -merge
 # Bean `5gqn`. Rewritten whole by `gen-docs-pages.ts` from `beans/defs/`; reads nothing
 # back, and gated in CI by `docs:pages:check`.
 # NOTE: `cat-harness/docs/_data/harness.json` is deliberately NOT marked here:
 # `sync-docs-harness.ts` carries the previous repo URL forward when git remote is
 # unknown, so `-merge` would discard it silently.
 cat-harness/docs/assets/beans/index.json                linguist-generated=true -diff -merge
-# UNTRACKED on `main` since bean `tqjj` (2026-10-04), and the entry is kept on
-# purpose. A branch opened before that change still carries the file, and the
-# attribute is what makes its one conflict against a base that deleted it a
-# clean whole-file conflict. It is also the measurement this file's closing
-# paragraph predicted: the entry was correct, it did what it claimed, and the
-# path still conflicted on seven open pull requests — "Removing these
-# conflicts, rather than tidying them, needs the files off `main` altogether."
-cat-harness/test/results/tool-runs/lsi-index/cat-harness/skills.tool-run.json linguist-generated=true -diff -merge
+# The two `cat-harness/test/results/` entries (`audit-coverage.qa-results.json` and
+# `tool-runs/lsi-index/cat-harness/skills.tool-run.json`) are retired under bean `7mwa`
+# now that `test/results/` is untracked across all instances and stored on `qa-reports`.
 
 # Line endings the interpreters require, whatever core.autocrlf says.
 # bash chokes on CRLF; cmd.exe mis-parses some LF-only batch files. Both are
