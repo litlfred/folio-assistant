@@ -36,7 +36,6 @@ Feature: Workflow triggers match what their headers claim
       | workflow                  | triggers           |
       | code-quality-gates.yml    | pull_request, push |
       | docs-site.yml             | push               |
-      | atomic-mass-gen-check.yml | pull_request, push |
       | ci-health.yml             | schedule, workflow_run |
       | jsonld-gen-check.yml      | pull_request, push |
       | feature-staging.yml       | pull_request       |

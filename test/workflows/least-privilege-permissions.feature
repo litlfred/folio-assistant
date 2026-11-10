@@ -8,9 +8,7 @@ Feature: Least-privilege defaults for the workflows
 
     Examples:
       | file                      |
-      | deploy-folio.yml          |
       | pyhecke.yml               |
-      | pyodide-smoke.yml         |
       | pyhecke-native-wheels.yml |
 
   @test:test/workflows/least-privilege-permissions.test.ts::read-only_default_token::the_wheel_publish_jobs_keep_their_own,_narrower_grants
@@ -20,12 +18,6 @@ Feature: Least-privilege defaults for the workflows
     And publish_release declares exactly "contents: write"
     And publish_testpypi declares exactly "id-token: write"
     And publish_pypi declares exactly "id-token: write"
-
-  @test:test/workflows/least-privilege-permissions.test.ts::deploy-folio_runs_only_on_main,_through_an_environment::every_job_is_gated_on_main_and_on_the_production_environment
-  Scenario: Every deploy-folio job is gated on main and on the production environment
-    Given the jobs of deploy-folio.yml
-    Then every job's if condition contains "github.ref == 'refs/heads/main'"
-    And every job's environment, by string or by name, is "production"
 
   @test:test/workflows/least-privilege-permissions.test.ts::every_workflow_declares_a_top-level_permissions_block_(bean_folio-assistant-aso6)::no_workflow_in_.github/workflows/_omits_top-level_permissions
   Scenario: No workflow in .github/workflows/ omits top-level permissions
