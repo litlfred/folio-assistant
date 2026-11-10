@@ -1,0 +1,91 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/3f025641-c57d-44c8-97c5-ee458cb7e50c",
+  "kind": "item",
+  "flavour": "item",
+  "title": "WHO implementation tool for pre-exposure prophylaxis (PrEP) of HIV infection: module 3: counsellors",
+  "parents": [],
+  "handle": "10665/258517",
+  "metadataRef": "catalogue/records/10665-258517.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO-HIV-2017.25-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 1871640,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/9e135c3f-f66c-4a70-8dfd-d78f7ce2c499/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum bdd970d92a985fe736d4274f37d644df; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-258517-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 160477,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 425,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "WHO-HIV-2017.25-eng.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-258517-cover.png",
+        "purpose": "working",
+        "bytes": 160477,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "e066181f13ed3843b01c9fadc6efbd59b2df3941f9e247970ff7096890ed083d",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "160,477 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (WHO-HIV-2017.25-eng.pdf, p. 2): \"Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (WHO-HIV-2017.25-eng.pdf, p. 2): \"Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 IGO\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of WHO-HIV-2017.25-eng.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 595.28x841.89pt page, from page 1 of WHO-HIV-2017.25-eng.pdf, fetched once from https://iris.who.int/bitstreams/9e135c3f-f66c-4a70-8dfd-d78f7ce2c499/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 cc5cf1c3861481260f7cbb2e017041631eac43f9dd4d338fcf0e679930e00eb3) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. MASKED: the WHO emblem and wordmark are blanked to flat grey before these bytes are written -- see `maskedRegions`."
+      },
+      "maskedRegions": [
+        {
+          "x0": 14,
+          "y0": 385,
+          "x1": 85,
+          "y1": 410,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        }
+      ]
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/3f025641-c57d-44c8-97c5-ee458cb7e50c"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: cited by the HIV DAK (10665/375230 text, smart-hiv). IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}
