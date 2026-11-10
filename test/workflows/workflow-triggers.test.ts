@@ -170,7 +170,6 @@ describe("workflow triggers match what their headers claim", () => {
     const live: Record<string, string[]> = {
       "code-quality-gates.yml": ["pull_request", "push"],
       "docs-site.yml": ["push"],
-      "atomic-mass-gen-check.yml": ["pull_request", "push"],
       // `ci-health.yml` joined them 2026-09-30 (bean `kgho`). Both are pinned:
       // `schedule` is the quiet-stretch backstop `ynu8` built, `workflow_run` is
       // the active-stretch one, and they answer different questions — dropping
