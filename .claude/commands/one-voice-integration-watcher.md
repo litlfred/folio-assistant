@@ -6,7 +6,7 @@ generated: cat-harness-tools/scripts/gen-skill-commands.ts
 
 # /one-voice-integration-watcher
 
-Run the `one-voice-integration-watcher` skill. Read [`cat-harness/skills/authoring/authoring-core/one-voice-integration-watcher.md`](../../cat-harness/skills/authoring/authoring-core/one-voice-integration-watcher.md) and follow it.
+Run the `one-voice-integration-watcher` skill. Read [`cat-harness/editorial/skills/editorial-audits/one-voice-integration-watcher.md`](../../cat-harness/editorial/skills/editorial-audits/one-voice-integration-watcher.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the

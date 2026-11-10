@@ -6,7 +6,7 @@ generated: cat-harness-tools/scripts/gen-skill-commands.ts
 
 # /integration-audit
 
-Run the `integration-audit` skill. Read [`cat-harness/skills/authoring/authoring-core/integration-audit.md`](../../cat-harness/skills/authoring/authoring-core/integration-audit.md) and follow it.
+Run the `integration-audit` skill. Read [`cat-harness/editorial/skills/editorial-audits/integration-audit.md`](../../cat-harness/editorial/skills/editorial-audits/integration-audit.md) and follow it.
 
 This command is a pointer, generated from that skill's `user_invocable: true`; the
 instructions live in the skill and nowhere else. The same skill is also served as the
