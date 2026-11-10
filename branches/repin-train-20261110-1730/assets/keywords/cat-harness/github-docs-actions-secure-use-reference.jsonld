@@ -1,0 +1,4404 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "github-docs-actions-secure-use-reference",
+  "instance": "cat-harness",
+  "about": "library/github-docs-actions-secure-use-reference",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "github actions",
+        "score": 25.064,
+        "evidence": []
+      },
+      {
+        "term": "github workflows",
+        "score": 23.7932,
+        "evidence": []
+      },
+      {
+        "term": "github security",
+        "score": 20.8625,
+        "evidence": []
+      },
+      {
+        "term": "github docs",
+        "score": 20.1154,
+        "evidence": []
+      },
+      {
+        "term": "reference github",
+        "score": 19.9366,
+        "evidence": []
+      },
+      {
+        "term": "github advisory",
+        "score": 16.9629,
+        "evidence": []
+      },
+      {
+        "term": "github token",
+        "score": 16.8124,
+        "evidence": []
+      },
+      {
+        "term": "managing github",
+        "score": 16.3782,
+        "evidence": []
+      },
+      {
+        "term": "limiting github",
+        "score": 15.9549,
+        "evidence": []
+      },
+      {
+        "term": "repository security",
+        "score": 15.7193,
+        "evidence": []
+      },
+      {
+        "term": "github offers",
+        "score": 15.3258,
+        "evidence": []
+      },
+      {
+        "term": "secure workflow",
+        "score": 14.2082,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "github actions",
+        "score": 546.6878,
+        "evidence": []
+      },
+      {
+        "term": "github workflows",
+        "score": 491.1179,
+        "evidence": []
+      },
+      {
+        "term": "github security",
+        "score": 415.849,
+        "evidence": []
+      },
+      {
+        "term": "github docs",
+        "score": 375.4604,
+        "evidence": []
+      },
+      {
+        "term": "reference github",
+        "score": 366.8526,
+        "evidence": []
+      },
+      {
+        "term": "github advisory",
+        "score": 358.957,
+        "evidence": []
+      },
+      {
+        "term": "github token",
+        "score": 344.0207,
+        "evidence": []
+      },
+      {
+        "term": "self-hosted runners",
+        "score": 333.2223,
+        "evidence": []
+      },
+      {
+        "term": "managing github",
+        "score": 331.5005,
+        "evidence": []
+      },
+      {
+        "term": "limiting github",
+        "score": 327.2186,
+        "evidence": []
+      },
+      {
+        "term": "github offers",
+        "score": 320.1111,
+        "evidence": []
+      },
+      {
+        "term": "dependabot security",
+        "score": 312.0782,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "github actions",
+        "score": 13.9027,
+        "evidence": []
+      },
+      {
+        "term": "github workflows",
+        "score": 12.7127,
+        "evidence": []
+      },
+      {
+        "term": "github security",
+        "score": 12.5775,
+        "evidence": []
+      },
+      {
+        "term": "reference github",
+        "score": 11.4806,
+        "evidence": []
+      },
+      {
+        "term": "github docs",
+        "score": 10.788,
+        "evidence": []
+      },
+      {
+        "term": "repository security",
+        "score": 10.2133,
+        "evidence": []
+      },
+      {
+        "term": "dependabot security",
+        "score": 8.8251,
+        "evidence": []
+      },
+      {
+        "term": "github advisory",
+        "score": 8.7209,
+        "evidence": []
+      },
+      {
+        "term": "secure workflow",
+        "score": 8.6623,
+        "evidence": []
+      },
+      {
+        "term": "update actions",
+        "score": 8.5549,
+        "evidence": []
+      },
+      {
+        "term": "github token",
+        "score": 8.5062,
+        "evidence": []
+      },
+      {
+        "term": "security vulnerabilities",
+        "score": 8.3662,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "reference github",
+        "score": 223.0871,
+        "evidence": []
+      },
+      {
+        "term": "github actions",
+        "score": 190.7096,
+        "evidence": []
+      },
+      {
+        "term": "github workflows",
+        "score": 174.6426,
+        "evidence": []
+      },
+      {
+        "term": "github security",
+        "score": 161.9679,
+        "evidence": []
+      },
+      {
+        "term": "dependabot security",
+        "score": 156.5549,
+        "evidence": []
+      },
+      {
+        "term": "dependabot version",
+        "score": 124.4189,
+        "evidence": []
+      },
+      {
+        "term": "repository security",
+        "score": 121.7815,
+        "evidence": []
+      },
+      {
+        "term": "update actions",
+        "score": 118.3939,
+        "evidence": []
+      },
+      {
+        "term": "github advisory",
+        "score": 117.666,
+        "evidence": []
+      },
+      {
+        "term": "actions checkout",
+        "score": 114.7072,
+        "evidence": []
+      },
+      {
+        "term": "github docs",
+        "score": 112.9027,
+        "evidence": []
+      },
+      {
+        "term": "dependabot alerts",
+        "score": 110.4125,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "github actions",
+        "score": 13.9027,
+        "evidence": []
+      },
+      {
+        "term": "github workflows",
+        "score": 12.7127,
+        "evidence": []
+      },
+      {
+        "term": "github security",
+        "score": 12.5775,
+        "evidence": []
+      },
+      {
+        "term": "reference github",
+        "score": 11.4806,
+        "evidence": []
+      },
+      {
+        "term": "github docs",
+        "score": 10.788,
+        "evidence": []
+      },
+      {
+        "term": "repository security",
+        "score": 10.2133,
+        "evidence": []
+      },
+      {
+        "term": "dependabot security",
+        "score": 8.8251,
+        "evidence": []
+      },
+      {
+        "term": "github advisory",
+        "score": 8.7209,
+        "evidence": []
+      },
+      {
+        "term": "secure workflow",
+        "score": 8.6623,
+        "evidence": []
+      },
+      {
+        "term": "update actions",
+        "score": 8.5549,
+        "evidence": []
+      },
+      {
+        "term": "github token",
+        "score": 8.5062,
+        "evidence": []
+      },
+      {
+        "term": "security vulnerabilities",
+        "score": 8.3662,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "jit runners",
+        "score": 4932.0718,
+        "evidence": []
+      },
+      {
+        "term": "self-hosted runner",
+        "score": 4861.1661,
+        "evidence": []
+      },
+      {
+        "term": "github-hosted runners",
+        "score": 4675.1393,
+        "evidence": []
+      },
+      {
+        "term": "configuring dependabot",
+        "score": 3054.6684,
+        "evidence": []
+      },
+      {
+        "term": "openssf scorecards",
+        "score": 2729.5271,
+        "evidence": []
+      },
+      {
+        "term": "same runner",
+        "score": 2487.1323,
+        "evidence": []
+      },
+      {
+        "term": "dependabot alerts",
+        "score": 2231.6951,
+        "evidence": []
+      },
+      {
+        "term": "configure dependabot",
+        "score": 2229.9502,
+        "evidence": []
+      },
+      {
+        "term": "actions checkout",
+        "score": 1963.5932,
+        "evidence": []
+      },
+      {
+        "term": "hardening",
+        "score": 1852.8702,
+        "evidence": []
+      },
+      {
+        "term": "safer",
+        "score": 1845.8177,
+        "evidence": []
+      },
+      {
+        "term": "dependabot security",
+        "score": 1673.8471,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "page-001": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "github token",
+          "score": 1.9814,
+          "evidence": []
+        },
+        {
+          "term": "writing workflows",
+          "score": 1.853,
+          "evidence": []
+        },
+        {
+          "term": "sensitive information",
+          "score": 1.2822,
+          "evidence": []
+        },
+        {
+          "term": "sensitive data",
+          "score": 1.0597,
+          "evidence": []
+        },
+        {
+          "term": "mask",
+          "score": 1.0078,
+          "evidence": []
+        },
+        {
+          "term": "secrets",
+          "score": 1.0053,
+          "evidence": []
+        },
+        {
+          "term": "read access",
+          "score": 0.927,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "github token",
+          "score": 48.2691,
+          "evidence": []
+        },
+        {
+          "term": "writing workflows",
+          "score": 35.9909,
+          "evidence": []
+        },
+        {
+          "term": "sensitive information",
+          "score": 21.7727,
+          "evidence": []
+        },
+        {
+          "term": "sensitive data",
+          "score": 16.9681,
+          "evidence": []
+        },
+        {
+          "term": "secrets",
+          "score": 15.3979,
+          "evidence": []
+        },
+        {
+          "term": "mask",
+          "score": 14.0089,
+          "evidence": []
+        },
+        {
+          "term": "read access",
+          "score": 12.6182,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github token",
+          "score": 0.4918,
+          "evidence": []
+        },
+        {
+          "term": "writing workflows",
+          "score": 0.3996,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.3488,
+          "evidence": []
+        },
+        {
+          "term": "sensitive information",
+          "score": 0.3435,
+          "evidence": []
+        },
+        {
+          "term": "read access",
+          "score": 0.3129,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.2933,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.2697,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reference",
+          "score": 6.9806,
+          "evidence": []
+        },
+        {
+          "term": "github token",
+          "score": 5.8605,
+          "evidence": []
+        },
+        {
+          "term": "writing workflows",
+          "score": 4.711,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 4.6003,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 4.4391,
+          "evidence": []
+        },
+        {
+          "term": "package",
+          "score": 4.3069,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 3.8797,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github token",
+          "score": 0.4918,
+          "evidence": []
+        },
+        {
+          "term": "writing workflows",
+          "score": 0.3996,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.3488,
+          "evidence": []
+        },
+        {
+          "term": "sensitive information",
+          "score": 0.3435,
+          "evidence": []
+        },
+        {
+          "term": "read access",
+          "score": 0.3129,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.2933,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.2697,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "jit",
+          "score": 99.0779,
+          "evidence": []
+        },
+        {
+          "term": "runner",
+          "score": 97.2097,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted",
+          "score": 91.2424,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted",
+          "score": 90.1719,
+          "evidence": []
+        },
+        {
+          "term": "safer",
+          "score": 84.7223,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 80.3868,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 76.7196,
+          "evidence": []
+        }
+      ]
+    },
+    "page-002": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workflow logs",
+          "score": 2.7999,
+          "evidence": []
+        },
+        {
+          "term": "secret value",
+          "score": 2.6661,
+          "evidence": []
+        },
+        {
+          "term": "run logs",
+          "score": 2.3221,
+          "evidence": []
+        },
+        {
+          "term": "redacted",
+          "score": 1.7599,
+          "evidence": []
+        },
+        {
+          "term": "sensitive value",
+          "score": 1.3227,
+          "evidence": []
+        },
+        {
+          "term": "log output",
+          "score": 1.2005,
+          "evidence": []
+        },
+        {
+          "term": "rotate",
+          "score": 1.1625,
+          "evidence": []
+        },
+        {
+          "term": "invalid inputs",
+          "score": 1.1375,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "workflow logs",
+          "score": 84.7982,
+          "evidence": []
+        },
+        {
+          "term": "secret value",
+          "score": 81.6204,
+          "evidence": []
+        },
+        {
+          "term": "run logs",
+          "score": 60.3602,
+          "evidence": []
+        },
+        {
+          "term": "redacted",
+          "score": 39.5938,
+          "evidence": []
+        },
+        {
+          "term": "sensitive value",
+          "score": 22.6113,
+          "evidence": []
+        },
+        {
+          "term": "rotate",
+          "score": 18.9338,
+          "evidence": []
+        },
+        {
+          "term": "register",
+          "score": 18.2644,
+          "evidence": []
+        },
+        {
+          "term": "log output",
+          "score": 17.991,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workflow run",
+          "score": 0.5812,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 0.4457,
+          "evidence": []
+        },
+        {
+          "term": "workflow logs",
+          "score": 0.4322,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.3671,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.287,
+          "evidence": []
+        },
+        {
+          "term": "secret value",
+          "score": 0.2859,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.2663,
+          "evidence": []
+        },
+        {
+          "term": "sensitive value",
+          "score": 0.2598,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reference",
+          "score": 6.9914,
+          "evidence": []
+        },
+        {
+          "term": "workflow run",
+          "score": 6.397,
+          "evidence": []
+        },
+        {
+          "term": "workflow logs",
+          "score": 6.2967,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 5.5473,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 4.94,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 4.867,
+          "evidence": []
+        },
+        {
+          "term": "package",
+          "score": 4.065,
+          "evidence": []
+        },
+        {
+          "term": "secret value",
+          "score": 4.0058,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workflow run",
+          "score": 0.5812,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 0.4457,
+          "evidence": []
+        },
+        {
+          "term": "workflow logs",
+          "score": 0.4322,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.3671,
+          "evidence": []
+        },
+        {
+          "term": "secret value",
+          "score": 0.2859,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.2663,
+          "evidence": []
+        },
+        {
+          "term": "sensitive value",
+          "score": 0.2598,
+          "evidence": []
+        },
+        {
+          "term": "log output",
+          "score": 0.1999,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "jit",
+          "score": 178.2421,
+          "evidence": []
+        },
+        {
+          "term": "runner",
+          "score": 175.7851,
+          "evidence": []
+        },
+        {
+          "term": "neville",
+          "score": 174.0914,
+          "evidence": []
+        },
+        {
+          "term": "redacted",
+          "score": 172.88,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted",
+          "score": 160.3137,
+          "evidence": []
+        },
+        {
+          "term": "secret",
+          "score": 151.9616,
+          "evidence": []
+        },
+        {
+          "term": "secret value",
+          "score": 151.9616,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted",
+          "score": 141.1388,
+          "evidence": []
+        }
+      ]
+    },
+    "page-003": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "environment secrets",
+          "score": 2.2738,
+          "evidence": []
+        },
+        {
+          "term": "script injection",
+          "score": 1.573,
+          "evidence": []
+        },
+        {
+          "term": "environment variable",
+          "score": 1.5223,
+          "evidence": []
+        },
+        {
+          "term": "intermediate environment",
+          "score": 1.41,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 1.1942,
+          "evidence": []
+        },
+        {
+          "term": "octocat",
+          "score": 1.1602,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 0.9969,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 0.9179,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "environment secrets",
+          "score": 51.0521,
+          "evidence": []
+        },
+        {
+          "term": "environment variable",
+          "score": 26.0873,
+          "evidence": []
+        },
+        {
+          "term": "script injection",
+          "score": 26.0453,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 25.333,
+          "evidence": []
+        },
+        {
+          "term": "intermediate environment",
+          "score": 23.9272,
+          "evidence": []
+        },
+        {
+          "term": "octocat",
+          "score": 18.9338,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 18.4201,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 17.9335,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github",
+          "score": 0.3418,
+          "evidence": []
+        },
+        {
+          "term": "environment secrets",
+          "score": 0.3257,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.3078,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 0.2749,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.2588,
+          "evidence": []
+        },
+        {
+          "term": "context value",
+          "score": 0.2516,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.2494,
+          "evidence": []
+        },
+        {
+          "term": "environment variable",
+          "score": 0.2322,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reference",
+          "score": 4.4014,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 3.2398,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 3.1057,
+          "evidence": []
+        },
+        {
+          "term": "context value",
+          "score": 3.026,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 2.9496,
+          "evidence": []
+        },
+        {
+          "term": "injection",
+          "score": 2.8386,
+          "evidence": []
+        },
+        {
+          "term": "script injection",
+          "score": 2.8386,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 2.8149,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github",
+          "score": 0.3418,
+          "evidence": []
+        },
+        {
+          "term": "environment secrets",
+          "score": 0.3257,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 0.2749,
+          "evidence": []
+        },
+        {
+          "term": "context value",
+          "score": 0.2516,
+          "evidence": []
+        },
+        {
+          "term": "environment variable",
+          "score": 0.2322,
+          "evidence": []
+        },
+        {
+          "term": "script injection",
+          "score": 0.2075,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.1919,
+          "evidence": []
+        },
+        {
+          "term": "intermediate environment",
+          "score": 0.1799,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "jit",
+          "score": 86.1544,
+          "evidence": []
+        },
+        {
+          "term": "runner",
+          "score": 84.8528,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted",
+          "score": 78.6764,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted",
+          "score": 76.0158,
+          "evidence": []
+        },
+        {
+          "term": "redacted",
+          "score": 69.2078,
+          "evidence": []
+        },
+        {
+          "term": "neville",
+          "score": 66.7963,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 64.5318,
+          "evidence": []
+        },
+        {
+          "term": "safer",
+          "score": 63.6448,
+          "evidence": []
+        }
+      ]
+    },
+    "page-004": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "code scanning",
+          "score": 2.3863,
+          "evidence": []
+        },
+        {
+          "term": "workflow templates",
+          "score": 1.682,
+          "evidence": []
+        },
+        {
+          "term": "untrusted pull",
+          "score": 1.6511,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 1.3864,
+          "evidence": []
+        },
+        {
+          "term": "script injection",
+          "score": 1.3052,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 1.0653,
+          "evidence": []
+        },
+        {
+          "term": "codeql",
+          "score": 1.0078,
+          "evidence": []
+        },
+        {
+          "term": "checkout",
+          "score": 0.9169,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "code scanning",
+          "score": 50.129,
+          "evidence": []
+        },
+        {
+          "term": "workflow templates",
+          "score": 34.2285,
+          "evidence": []
+        },
+        {
+          "term": "untrusted pull",
+          "score": 28.0996,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 25.1069,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 24.5601,
+          "evidence": []
+        },
+        {
+          "term": "script injection",
+          "score": 18.6532,
+          "evidence": []
+        },
+        {
+          "term": "codeql",
+          "score": 14.0089,
+          "evidence": []
+        },
+        {
+          "term": "checkout",
+          "score": 12.6226,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code scanning",
+          "score": 0.429,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 0.4244,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.3742,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.3565,
+          "evidence": []
+        },
+        {
+          "term": "workflow templates",
+          "score": 0.3409,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 0.3386,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.3253,
+          "evidence": []
+        },
+        {
+          "term": "untrusted pull",
+          "score": 0.3003,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "code scanning",
+          "score": 8.8094,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 5.5949,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 4.7343,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 4.4957,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 4.3323,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 4.1203,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 3.9687,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 3.8831,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "code scanning",
+          "score": 0.429,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 0.4244,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.3742,
+          "evidence": []
+        },
+        {
+          "term": "workflow templates",
+          "score": 0.3577,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 0.3386,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.3253,
+          "evidence": []
+        },
+        {
+          "term": "untrusted pull",
+          "score": 0.3003,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.2402,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "safer",
+          "score": 117.7575,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 109.2032,
+          "evidence": []
+        },
+        {
+          "term": "checkout",
+          "score": 97.024,
+          "evidence": []
+        },
+        {
+          "term": "scorecards",
+          "score": 90.6311,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 88.1376,
+          "evidence": []
+        },
+        {
+          "term": "codeql",
+          "score": 80.9283,
+          "evidence": []
+        },
+        {
+          "term": "configuring",
+          "score": 80.3079,
+          "evidence": []
+        },
+        {
+          "term": "openssf",
+          "score": 78.6268,
+          "evidence": []
+        }
+      ]
+    },
+    "page-005": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workflow triggers",
+          "score": 2.2536,
+          "evidence": []
+        },
+        {
+          "term": "openssf scorecards",
+          "score": 2.1853,
+          "evidence": []
+        },
+        {
+          "term": "github actions",
+          "score": 1.6906,
+          "evidence": []
+        },
+        {
+          "term": "workflow run",
+          "score": 1.6428,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 1.6278,
+          "evidence": []
+        },
+        {
+          "term": "untrusted code",
+          "score": 1.407,
+          "evidence": []
+        },
+        {
+          "term": "request target",
+          "score": 1.2354,
+          "evidence": []
+        },
+        {
+          "term": "default setup",
+          "score": 1.1439,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "workflow triggers",
+          "score": 53.7099,
+          "evidence": []
+        },
+        {
+          "term": "workflow run",
+          "score": 37.4178,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 34.66,
+          "evidence": []
+        },
+        {
+          "term": "openssf scorecards",
+          "score": 32.9948,
+          "evidence": []
+        },
+        {
+          "term": "github actions",
+          "score": 32.7844,
+          "evidence": []
+        },
+        {
+          "term": "request target",
+          "score": 22.7461,
+          "evidence": []
+        },
+        {
+          "term": "untrusted code",
+          "score": 20.6566,
+          "evidence": []
+        },
+        {
+          "term": "default setup",
+          "score": 15.3291,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github actions",
+          "score": 0.983,
+          "evidence": []
+        },
+        {
+          "term": "workflow run",
+          "score": 0.5579,
+          "evidence": []
+        },
+        {
+          "term": "trigger workflows",
+          "score": 0.4649,
+          "evidence": []
+        },
+        {
+          "term": "untrusted code",
+          "score": 0.4375,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 0.4297,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.3662,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.3531,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.288,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "github actions",
+          "score": 12.2806,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 7.5393,
+          "evidence": []
+        },
+        {
+          "term": "untrusted code",
+          "score": 6.8251,
+          "evidence": []
+        },
+        {
+          "term": "trigger workflows",
+          "score": 6.1801,
+          "evidence": []
+        },
+        {
+          "term": "workflow run",
+          "score": 5.8643,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 5.8469,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 5.0095,
+          "evidence": []
+        },
+        {
+          "term": "package",
+          "score": 4.4436,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github actions",
+          "score": 0.983,
+          "evidence": []
+        },
+        {
+          "term": "workflow run",
+          "score": 0.5579,
+          "evidence": []
+        },
+        {
+          "term": "trigger workflows",
+          "score": 0.4649,
+          "evidence": []
+        },
+        {
+          "term": "untrusted code",
+          "score": 0.4375,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 0.4297,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.3662,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.3531,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.288,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "openssf scorecards",
+          "score": 204.996,
+          "evidence": []
+        },
+        {
+          "term": "safer",
+          "score": 142.7619,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 132.4597,
+          "evidence": []
+        },
+        {
+          "term": "checkout",
+          "score": 116.0755,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 109.4597,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted",
+          "score": 98.8652,
+          "evidence": []
+        },
+        {
+          "term": "configuring",
+          "score": 97.7855,
+          "evidence": []
+        },
+        {
+          "term": "codeql",
+          "score": 94.7265,
+          "evidence": []
+        }
+      ]
+    },
+    "page-006": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "commit sha",
+          "score": 2.939,
+          "evidence": []
+        },
+        {
+          "term": "action repository",
+          "score": 2.0492,
+          "evidence": []
+        },
+        {
+          "term": "github actions",
+          "score": 1.8361,
+          "evidence": []
+        },
+        {
+          "term": "pin actions",
+          "score": 1.6902,
+          "evidence": []
+        },
+        {
+          "term": "later job",
+          "score": 1.4678,
+          "evidence": []
+        },
+        {
+          "term": "pinning",
+          "score": 1.2152,
+          "evidence": []
+        },
+        {
+          "term": "organization level",
+          "score": 1.1488,
+          "evidence": []
+        },
+        {
+          "term": "secrets",
+          "score": 1.0053,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "commit sha",
+          "score": 62.295,
+          "evidence": []
+        },
+        {
+          "term": "action repository",
+          "score": 54.0292,
+          "evidence": []
+        },
+        {
+          "term": "github actions",
+          "score": 39.3413,
+          "evidence": []
+        },
+        {
+          "term": "pin actions",
+          "score": 29.6328,
+          "evidence": []
+        },
+        {
+          "term": "later job",
+          "score": 22.1165,
+          "evidence": []
+        },
+        {
+          "term": "pinning",
+          "score": 19.7969,
+          "evidence": []
+        },
+        {
+          "term": "organization level",
+          "score": 17.261,
+          "evidence": []
+        },
+        {
+          "term": "secrets",
+          "score": 15.3979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github actions",
+          "score": 0.9372,
+          "evidence": []
+        },
+        {
+          "term": "action repository",
+          "score": 0.5941,
+          "evidence": []
+        },
+        {
+          "term": "pin actions",
+          "score": 0.453,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.3331,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.3309,
+          "evidence": []
+        },
+        {
+          "term": "organization level",
+          "score": 0.2959,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.2784,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.2694,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "github actions",
+          "score": 11.8207,
+          "evidence": []
+        },
+        {
+          "term": "action repository",
+          "score": 10.4352,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 7.6231,
+          "evidence": []
+        },
+        {
+          "term": "commit sha",
+          "score": 6.3313,
+          "evidence": []
+        },
+        {
+          "term": "pin actions",
+          "score": 6.2869,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 5.2269,
+          "evidence": []
+        },
+        {
+          "term": "package",
+          "score": 4.6305,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 4.405,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github actions",
+          "score": 0.9372,
+          "evidence": []
+        },
+        {
+          "term": "action repository",
+          "score": 0.5941,
+          "evidence": []
+        },
+        {
+          "term": "pin actions",
+          "score": 0.4856,
+          "evidence": []
+        },
+        {
+          "term": "workflow",
+          "score": 0.3069,
+          "evidence": []
+        },
+        {
+          "term": "organization level",
+          "score": 0.2959,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 0.2689,
+          "evidence": []
+        },
+        {
+          "term": "secure",
+          "score": 0.2567,
+          "evidence": []
+        },
+        {
+          "term": "commit sha",
+          "score": 0.2466,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "digest",
+          "score": 179.822,
+          "evidence": []
+        },
+        {
+          "term": "blake",
+          "score": 146.3936,
+          "evidence": []
+        },
+        {
+          "term": "falcon",
+          "score": 142.5578,
+          "evidence": []
+        },
+        {
+          "term": "fips",
+          "score": 118.8569,
+          "evidence": []
+        },
+        {
+          "term": "commit sha",
+          "score": 118.3601,
+          "evidence": []
+        },
+        {
+          "term": "hashing",
+          "score": 116.0974,
+          "evidence": []
+        },
+        {
+          "term": "zlib",
+          "score": 114.9396,
+          "evidence": []
+        },
+        {
+          "term": "message-digest",
+          "score": 114.9396,
+          "evidence": []
+        }
+      ]
+    },
+    "page-007": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "github actions",
+          "score": 2.2108,
+          "evidence": []
+        },
+        {
+          "term": "github security",
+          "score": 1.9327,
+          "evidence": []
+        },
+        {
+          "term": "openid connect",
+          "score": 1.8494,
+          "evidence": []
+        },
+        {
+          "term": "code owners",
+          "score": 1.4985,
+          "evidence": []
+        },
+        {
+          "term": "cloud provider",
+          "score": 1.3428,
+          "evidence": []
+        },
+        {
+          "term": "security features",
+          "score": 1.3382,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 1.0599,
+          "evidence": []
+        },
+        {
+          "term": "workflow files",
+          "score": 1.0308,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "github actions",
+          "score": 63.8317,
+          "evidence": []
+        },
+        {
+          "term": "github security",
+          "score": 54.0836,
+          "evidence": []
+        },
+        {
+          "term": "openid connect",
+          "score": 29.7063,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 28.7799,
+          "evidence": []
+        },
+        {
+          "term": "security features",
+          "score": 25.6776,
+          "evidence": []
+        },
+        {
+          "term": "cloud provider",
+          "score": 19.5103,
+          "evidence": []
+        },
+        {
+          "term": "code owners",
+          "score": 19.4954,
+          "evidence": []
+        },
+        {
+          "term": "workflow files",
+          "score": 14.5442,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github actions",
+          "score": 0.8726,
+          "evidence": []
+        },
+        {
+          "term": "github security",
+          "score": 0.7906,
+          "evidence": []
+        },
+        {
+          "term": "security features",
+          "score": 0.4568,
+          "evidence": []
+        },
+        {
+          "term": "workflow files",
+          "score": 0.4272,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.3082,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.2794,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.271,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.267,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "github actions",
+          "score": 12.6006,
+          "evidence": []
+        },
+        {
+          "term": "github security",
+          "score": 11.0521,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 7.8705,
+          "evidence": []
+        },
+        {
+          "term": "security features",
+          "score": 5.9864,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 5.7883,
+          "evidence": []
+        },
+        {
+          "term": "workflow files",
+          "score": 5.3986,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 5.1493,
+          "evidence": []
+        },
+        {
+          "term": "code owners",
+          "score": 5.1493,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github actions",
+          "score": 0.8726,
+          "evidence": []
+        },
+        {
+          "term": "github security",
+          "score": 0.7906,
+          "evidence": []
+        },
+        {
+          "term": "security features",
+          "score": 0.4568,
+          "evidence": []
+        },
+        {
+          "term": "workflow files",
+          "score": 0.4272,
+          "evidence": []
+        },
+        {
+          "term": "code owners",
+          "score": 0.3139,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.2794,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.271,
+          "evidence": []
+        },
+        {
+          "term": "secure",
+          "score": 0.2477,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "jit",
+          "score": 81.4924,
+          "evidence": []
+        },
+        {
+          "term": "runner",
+          "score": 79.0819,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted",
+          "score": 76.6538,
+          "evidence": []
+        },
+        {
+          "term": "safer",
+          "score": 76.6263,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted",
+          "score": 76.1208,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 70.2137,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 68.9004,
+          "evidence": []
+        },
+        {
+          "term": "checkout",
+          "score": 61.79,
+          "evidence": []
+        }
+      ]
+    },
+    "page-008": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "code scanning",
+          "score": 2.1486,
+          "evidence": []
+        },
+        {
+          "term": "github actions",
+          "score": 2.031,
+          "evidence": []
+        },
+        {
+          "term": "scorecards action",
+          "score": 2.0197,
+          "evidence": []
+        },
+        {
+          "term": "actions workflows",
+          "score": 1.8589,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 1.5004,
+          "evidence": []
+        },
+        {
+          "term": "pull requests",
+          "score": 1.4062,
+          "evidence": []
+        },
+        {
+          "term": "chain practices",
+          "score": 1.2761,
+          "evidence": []
+        },
+        {
+          "term": "risky",
+          "score": 0.7744,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "github actions",
+          "score": 51.2221,
+          "evidence": []
+        },
+        {
+          "term": "actions workflows",
+          "score": 45.6907,
+          "evidence": []
+        },
+        {
+          "term": "code scanning",
+          "score": 40.0248,
+          "evidence": []
+        },
+        {
+          "term": "scorecards action",
+          "score": 38.2396,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 31.5564,
+          "evidence": []
+        },
+        {
+          "term": "pull requests",
+          "score": 24.1074,
+          "evidence": []
+        },
+        {
+          "term": "chain practices",
+          "score": 17.1341,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 11.0167,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github actions",
+          "score": 1.1572,
+          "evidence": []
+        },
+        {
+          "term": "actions workflows",
+          "score": 1.0066,
+          "evidence": []
+        },
+        {
+          "term": "code scanning",
+          "score": 0.5326,
+          "evidence": []
+        },
+        {
+          "term": "pull requests",
+          "score": 0.4686,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.4321,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.4269,
+          "evidence": []
+        },
+        {
+          "term": "scorecards action",
+          "score": 0.3651,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.3431,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "github actions",
+          "score": 15.761,
+          "evidence": []
+        },
+        {
+          "term": "actions workflows",
+          "score": 14.5208,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 9.6062,
+          "evidence": []
+        },
+        {
+          "term": "code scanning",
+          "score": 8.5457,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 7.5415,
+          "evidence": []
+        },
+        {
+          "term": "scorecards action",
+          "score": 7.3623,
+          "evidence": []
+        },
+        {
+          "term": "package",
+          "score": 5.8541,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 5.4121,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github actions",
+          "score": 1.1572,
+          "evidence": []
+        },
+        {
+          "term": "actions workflows",
+          "score": 1.0066,
+          "evidence": []
+        },
+        {
+          "term": "code scanning",
+          "score": 0.5326,
+          "evidence": []
+        },
+        {
+          "term": "pull requests",
+          "score": 0.4686,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.4321,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.4269,
+          "evidence": []
+        },
+        {
+          "term": "scorecards action",
+          "score": 0.3651,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.3431,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "safer",
+          "score": 180.5856,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 167.4588,
+          "evidence": []
+        },
+        {
+          "term": "checkout",
+          "score": 143.7857,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 138.0962,
+          "evidence": []
+        },
+        {
+          "term": "scorecards",
+          "score": 137.091,
+          "evidence": []
+        },
+        {
+          "term": "scorecards action",
+          "score": 137.091,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted",
+          "score": 130.7522,
+          "evidence": []
+        },
+        {
+          "term": "configuring",
+          "score": 122.9723,
+          "evidence": []
+        }
+      ]
+    },
+    "page-009": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "github-hosted runners",
+          "score": 3.9101,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted runners",
+          "score": 3.5846,
+          "evidence": []
+        },
+        {
+          "term": "virtual machines",
+          "score": 1.4008,
+          "evidence": []
+        },
+        {
+          "term": "sbom",
+          "score": 1.3397,
+          "evidence": []
+        },
+        {
+          "term": "images maintained",
+          "score": 1.3081,
+          "evidence": []
+        },
+        {
+          "term": "open pull",
+          "score": 1.0069,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 0.9969,
+          "evidence": []
+        },
+        {
+          "term": "hosts",
+          "score": 0.9944,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "github-hosted runners",
+          "score": 108.9961,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted runners",
+          "score": 98.5259,
+          "evidence": []
+        },
+        {
+          "term": "sbom",
+          "score": 29.1862,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 21.5202,
+          "evidence": []
+        },
+        {
+          "term": "virtual machines",
+          "score": 19.4028,
+          "evidence": []
+        },
+        {
+          "term": "images maintained",
+          "score": 17.8674,
+          "evidence": []
+        },
+        {
+          "term": "hosts",
+          "score": 16.185,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 15.9393,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github",
+          "score": 0.5679,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted runners",
+          "score": 0.5185,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.4503,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted runners",
+          "score": 0.4262,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.4167,
+          "evidence": []
+        },
+        {
+          "term": "open pull",
+          "score": 0.4092,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.3878,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.3871,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "self-hosted runners",
+          "score": 9.3906,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 9.3293,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted runners",
+          "score": 7.2061,
+          "evidence": []
+        },
+        {
+          "term": "enterprise",
+          "score": 7.1044,
+          "evidence": []
+        },
+        {
+          "term": "package",
+          "score": 7.0821,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 6.8021,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 6.3732,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 6.1099,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github",
+          "score": 0.5679,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted runners",
+          "score": 0.5185,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted runners",
+          "score": 0.4262,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.4167,
+          "evidence": []
+        },
+        {
+          "term": "open pull",
+          "score": 0.4092,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.3871,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.3679,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.3243,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "self-hosted runners",
+          "score": 808.2467,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted runners",
+          "score": 764.7854,
+          "evidence": []
+        },
+        {
+          "term": "jit",
+          "score": 447.8743,
+          "evidence": []
+        },
+        {
+          "term": "ephemeral",
+          "score": 267.8469,
+          "evidence": []
+        },
+        {
+          "term": "ubuntu",
+          "score": 246.7251,
+          "evidence": []
+        },
+        {
+          "term": "just-in-time",
+          "score": 238.7754,
+          "evidence": []
+        },
+        {
+          "term": "ssh",
+          "score": 235.4658,
+          "evidence": []
+        },
+        {
+          "term": "command-line",
+          "score": 235.4307,
+          "evidence": []
+        }
+      ]
+    },
+    "page-010": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "self-hosted runner",
+          "score": 4.1729,
+          "evidence": []
+        },
+        {
+          "term": "jit runners",
+          "score": 3.4209,
+          "evidence": []
+        },
+        {
+          "term": "same runner",
+          "score": 2.4937,
+          "evidence": []
+        },
+        {
+          "term": "sensitive information",
+          "score": 1.2041,
+          "evidence": []
+        },
+        {
+          "term": "rest api",
+          "score": 1.2005,
+          "evidence": []
+        },
+        {
+          "term": "job",
+          "score": 1.0555,
+          "evidence": []
+        },
+        {
+          "term": "environment",
+          "score": 0.8317,
+          "evidence": []
+        },
+        {
+          "term": "secrets",
+          "score": 0.7967,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "self-hosted runner",
+          "score": 132.5369,
+          "evidence": []
+        },
+        {
+          "term": "jit runners",
+          "score": 82.8109,
+          "evidence": []
+        },
+        {
+          "term": "same runner",
+          "score": 74.6727,
+          "evidence": []
+        },
+        {
+          "term": "sensitive information",
+          "score": 19.4517,
+          "evidence": []
+        },
+        {
+          "term": "job",
+          "score": 19.2288,
+          "evidence": []
+        },
+        {
+          "term": "environment",
+          "score": 18.1485,
+          "evidence": []
+        },
+        {
+          "term": "rest api",
+          "score": 17.0507,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 12.5748,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github",
+          "score": 0.579,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted runners",
+          "score": 0.5343,
+          "evidence": []
+        },
+        {
+          "term": "sensitive information",
+          "score": 0.4872,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.4645,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.4307,
+          "evidence": []
+        },
+        {
+          "term": "jit runners",
+          "score": 0.4082,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.3794,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.377,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "self-hosted runners",
+          "score": 10.1416,
+          "evidence": []
+        },
+        {
+          "term": "enterprise",
+          "score": 9.4376,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 8.0528,
+          "evidence": []
+        },
+        {
+          "term": "jit runners",
+          "score": 7.3046,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 7.0109,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 6.5121,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 6.1366,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 5.944,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github",
+          "score": 0.579,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted runners",
+          "score": 0.5343,
+          "evidence": []
+        },
+        {
+          "term": "sensitive information",
+          "score": 0.4872,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.4307,
+          "evidence": []
+        },
+        {
+          "term": "jit runners",
+          "score": 0.4082,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.3794,
+          "evidence": []
+        },
+        {
+          "term": "security",
+          "score": 0.377,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.3055,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "jit runners",
+          "score": 989.9927,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted runner",
+          "score": 975.448,
+          "evidence": []
+        },
+        {
+          "term": "same runner",
+          "score": 496.2928,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted",
+          "score": 415.4007,
+          "evidence": []
+        },
+        {
+          "term": "ephemeral",
+          "score": 306.5676,
+          "evidence": []
+        },
+        {
+          "term": "just-in-time",
+          "score": 280.444,
+          "evidence": []
+        },
+        {
+          "term": "ubuntu",
+          "score": 278.5896,
+          "evidence": []
+        },
+        {
+          "term": "command-line",
+          "score": 277.9555,
+          "evidence": []
+        }
+      ]
+    },
+    "page-011": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "self-hosted runners",
+          "score": 3.6512,
+          "evidence": []
+        },
+        {
+          "term": "organization level",
+          "score": 1.6751,
+          "evidence": []
+        },
+        {
+          "term": "openid connect",
+          "score": 1.4656,
+          "evidence": []
+        },
+        {
+          "term": "repository level",
+          "score": 1.2615,
+          "evidence": []
+        },
+        {
+          "term": "cloud provider",
+          "score": 1.187,
+          "evidence": []
+        },
+        {
+          "term": "team",
+          "score": 0.9741,
+          "evidence": []
+        },
+        {
+          "term": "add",
+          "score": 0.8927,
+          "evidence": []
+        },
+        {
+          "term": "centralized",
+          "score": 0.851,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "self-hosted runners",
+          "score": 104.6141,
+          "evidence": []
+        },
+        {
+          "term": "organization level",
+          "score": 37.6658,
+          "evidence": []
+        },
+        {
+          "term": "repository level",
+          "score": 23.0043,
+          "evidence": []
+        },
+        {
+          "term": "openid connect",
+          "score": 19.8042,
+          "evidence": []
+        },
+        {
+          "term": "team",
+          "score": 18.7317,
+          "evidence": []
+        },
+        {
+          "term": "add",
+          "score": 17.6935,
+          "evidence": []
+        },
+        {
+          "term": "cloud provider",
+          "score": 15.6629,
+          "evidence": []
+        },
+        {
+          "term": "management",
+          "score": 14.7199,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github",
+          "score": 0.3548,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted runners",
+          "score": 0.3295,
+          "evidence": []
+        },
+        {
+          "term": "organization level",
+          "score": 0.3146,
+          "evidence": []
+        },
+        {
+          "term": "repository level",
+          "score": 0.3043,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.2721,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.2477,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.2317,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.2093,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "self-hosted runners",
+          "score": 7.3508,
+          "evidence": []
+        },
+        {
+          "term": "enterprise",
+          "score": 6.608,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 6.2046,
+          "evidence": []
+        },
+        {
+          "term": "swot",
+          "score": 5.0896,
+          "evidence": []
+        },
+        {
+          "term": "organization level",
+          "score": 5.0311,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 4.8418,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 4.3022,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 4.186,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github",
+          "score": 0.3548,
+          "evidence": []
+        },
+        {
+          "term": "self-hosted runners",
+          "score": 0.3295,
+          "evidence": []
+        },
+        {
+          "term": "organization level",
+          "score": 0.3146,
+          "evidence": []
+        },
+        {
+          "term": "repository level",
+          "score": 0.3043,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.2093,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 0.208,
+          "evidence": []
+        },
+        {
+          "term": "enterprise",
+          "score": 0.1861,
+          "evidence": []
+        },
+        {
+          "term": "cloud provider",
+          "score": 0.1231,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "self-hosted runners",
+          "score": 785.0384,
+          "evidence": []
+        },
+        {
+          "term": "jit",
+          "score": 438.1793,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted",
+          "score": 343.3643,
+          "evidence": []
+        },
+        {
+          "term": "ephemeral",
+          "score": 253.9391,
+          "evidence": []
+        },
+        {
+          "term": "just-in-time",
+          "score": 232.2826,
+          "evidence": []
+        },
+        {
+          "term": "ubuntu",
+          "score": 231.1264,
+          "evidence": []
+        },
+        {
+          "term": "ssh",
+          "score": 230.2071,
+          "evidence": []
+        },
+        {
+          "term": "command-line",
+          "score": 229.9377,
+          "evidence": []
+        }
+      ]
+    },
+    "page-012": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "audit log",
+          "score": 1.977,
+          "evidence": []
+        },
+        {
+          "term": "log events",
+          "score": 1.9067,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 1.4521,
+          "evidence": []
+        },
+        {
+          "term": "security log",
+          "score": 1.4411,
+          "evidence": []
+        },
+        {
+          "term": "monitor activity",
+          "score": 1.2907,
+          "evidence": []
+        },
+        {
+          "term": "jobs",
+          "score": 0.8513,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "audit log",
+          "score": 43.2392,
+          "evidence": []
+        },
+        {
+          "term": "log events",
+          "score": 38.4266,
+          "evidence": []
+        },
+        {
+          "term": "security log",
+          "score": 28.7059,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 21.0975,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 15.9888,
+          "evidence": []
+        },
+        {
+          "term": "monitor activity",
+          "score": 15.7016,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "actions",
+          "score": 0.3077,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 0.3035,
+          "evidence": []
+        },
+        {
+          "term": "security log",
+          "score": 0.2966,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.2182,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.2118,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 0.2094,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reference",
+          "score": 4.6922,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 3.9125,
+          "evidence": []
+        },
+        {
+          "term": "security log",
+          "score": 3.7789,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 3.4782,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 3.1691,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 3.1688,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "actions",
+          "score": 0.3077,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 0.3035,
+          "evidence": []
+        },
+        {
+          "term": "security log",
+          "score": 0.2966,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.2182,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.2118,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 0.2094,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "safer",
+          "score": 80.4089,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 74.4978,
+          "evidence": []
+        },
+        {
+          "term": "jit",
+          "score": 72.1535,
+          "evidence": []
+        },
+        {
+          "term": "runner",
+          "score": 71.2611,
+          "evidence": []
+        },
+        {
+          "term": "github-hosted",
+          "score": 70.5122,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 68.0836,
+          "evidence": []
+        }
+      ]
+    },
+    "page-013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dependabot alerts",
+          "score": 2.6435,
+          "evidence": []
+        },
+        {
+          "term": "github advisory",
+          "score": 2.2478,
+          "evidence": []
+        },
+        {
+          "term": "advisory database",
+          "score": 2.0764,
+          "evidence": []
+        },
+        {
+          "term": "security advisories",
+          "score": 1.8341,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 1.6859,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 1.0341,
+          "evidence": []
+        },
+        {
+          "term": "repositories",
+          "score": 0.8899,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.8248,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dependabot alerts",
+          "score": 49.2739,
+          "evidence": []
+        },
+        {
+          "term": "github advisory",
+          "score": 47.5836,
+          "evidence": []
+        },
+        {
+          "term": "advisory database",
+          "score": 41.2056,
+          "evidence": []
+        },
+        {
+          "term": "security advisories",
+          "score": 31.871,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 29.7019,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 28.13,
+          "evidence": []
+        },
+        {
+          "term": "repositories",
+          "score": 16.4562,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 15.9888,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github advisory",
+          "score": 0.6065,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.4776,
+          "evidence": []
+        },
+        {
+          "term": "security advisories",
+          "score": 0.4742,
+          "evidence": []
+        },
+        {
+          "term": "dependabot alerts",
+          "score": 0.3993,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.3517,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 0.3383,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.3274,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.3055,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reference",
+          "score": 10.235,
+          "evidence": []
+        },
+        {
+          "term": "dependabot alerts",
+          "score": 9.2647,
+          "evidence": []
+        },
+        {
+          "term": "github advisory",
+          "score": 9.139,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 8.5538,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 8.0295,
+          "evidence": []
+        },
+        {
+          "term": "package",
+          "score": 6.5023,
+          "evidence": []
+        },
+        {
+          "term": "security advisories",
+          "score": 6.2525,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 6.0374,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github advisory",
+          "score": 0.6065,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.4776,
+          "evidence": []
+        },
+        {
+          "term": "security advisories",
+          "score": 0.4742,
+          "evidence": []
+        },
+        {
+          "term": "dependabot alerts",
+          "score": 0.3993,
+          "evidence": []
+        },
+        {
+          "term": "dependency graph",
+          "score": 0.3383,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 0.3274,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.3055,
+          "evidence": []
+        },
+        {
+          "term": "vulnerability",
+          "score": 0.3024,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "dependabot alerts",
+          "score": 195.1332,
+          "evidence": []
+        },
+        {
+          "term": "safer",
+          "score": 151.2067,
+          "evidence": []
+        },
+        {
+          "term": "checkout",
+          "score": 120.9883,
+          "evidence": []
+        },
+        {
+          "term": "scorecards",
+          "score": 113.0288,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 104.9566,
+          "evidence": []
+        },
+        {
+          "term": "configuring",
+          "score": 100.8667,
+          "evidence": []
+        },
+        {
+          "term": "openssf",
+          "score": 96.7992,
+          "evidence": []
+        },
+        {
+          "term": "codeql",
+          "score": 92.1827,
+          "evidence": []
+        }
+      ]
+    },
+    "page-014": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dependabot alerts",
+          "score": 3.3458,
+          "evidence": []
+        },
+        {
+          "term": "dependency review",
+          "score": 2.3487,
+          "evidence": []
+        },
+        {
+          "term": "dependency changes",
+          "score": 2.2825,
+          "evidence": []
+        },
+        {
+          "term": "pull requests",
+          "score": 1.6633,
+          "evidence": []
+        },
+        {
+          "term": "review action",
+          "score": 1.5203,
+          "evidence": []
+        },
+        {
+          "term": "security impact",
+          "score": 1.0043,
+          "evidence": []
+        },
+        {
+          "term": "tab",
+          "score": 0.9085,
+          "evidence": []
+        },
+        {
+          "term": "vulnerable",
+          "score": 0.8495,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dependabot alerts",
+          "score": 79.6139,
+          "evidence": []
+        },
+        {
+          "term": "dependency review",
+          "score": 66.0852,
+          "evidence": []
+        },
+        {
+          "term": "dependency changes",
+          "score": 61.9641,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 36.4398,
+          "evidence": []
+        },
+        {
+          "term": "review action",
+          "score": 31.3202,
+          "evidence": []
+        },
+        {
+          "term": "security impact",
+          "score": 14.7054,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 14.6889,
+          "evidence": []
+        },
+        {
+          "term": "vulnerable",
+          "score": 13.8196,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github",
+          "score": 0.4998,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.4604,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 0.4291,
+          "evidence": []
+        },
+        {
+          "term": "security impact",
+          "score": 0.4151,
+          "evidence": []
+        },
+        {
+          "term": "review action",
+          "score": 0.4114,
+          "evidence": []
+        },
+        {
+          "term": "dependabot alerts",
+          "score": 0.4022,
+          "evidence": []
+        },
+        {
+          "term": "dependency review",
+          "score": 0.3591,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.3493,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reference",
+          "score": 10.2587,
+          "evidence": []
+        },
+        {
+          "term": "review action",
+          "score": 9.917,
+          "evidence": []
+        },
+        {
+          "term": "dependabot alerts",
+          "score": 9.3626,
+          "evidence": []
+        },
+        {
+          "term": "dependency review",
+          "score": 8.1306,
+          "evidence": []
+        },
+        {
+          "term": "github",
+          "score": 7.3638,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 6.9853,
+          "evidence": []
+        },
+        {
+          "term": "package",
+          "score": 6.6663,
+          "evidence": []
+        },
+        {
+          "term": "workflows",
+          "score": 5.878,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github",
+          "score": 0.4998,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.4604,
+          "evidence": []
+        },
+        {
+          "term": "pull request",
+          "score": 0.4291,
+          "evidence": []
+        },
+        {
+          "term": "security impact",
+          "score": 0.4151,
+          "evidence": []
+        },
+        {
+          "term": "review action",
+          "score": 0.4114,
+          "evidence": []
+        },
+        {
+          "term": "dependabot alerts",
+          "score": 0.4022,
+          "evidence": []
+        },
+        {
+          "term": "dependency review",
+          "score": 0.3591,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.3493,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "dependabot alerts",
+          "score": 186.2652,
+          "evidence": []
+        },
+        {
+          "term": "safer",
+          "score": 143.156,
+          "evidence": []
+        },
+        {
+          "term": "checkout",
+          "score": 114.7047,
+          "evidence": []
+        },
+        {
+          "term": "scorecards",
+          "score": 105.3142,
+          "evidence": []
+        },
+        {
+          "term": "configuring",
+          "score": 94.2489,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 93.8339,
+          "evidence": []
+        },
+        {
+          "term": "openssf",
+          "score": 89.6845,
+          "evidence": []
+        },
+        {
+          "term": "codeql",
+          "score": 86.1651,
+          "evidence": []
+        }
+      ]
+    },
+    "page-015": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "configure dependabot",
+          "score": 3.0743,
+          "evidence": []
+        },
+        {
+          "term": "dependabot version",
+          "score": 3.0027,
+          "evidence": []
+        },
+        {
+          "term": "dependabot security",
+          "score": 2.9283,
+          "evidence": []
+        },
+        {
+          "term": "actions checkout",
+          "score": 2.5898,
+          "evidence": []
+        },
+        {
+          "term": "github actions",
+          "score": 2.3721,
+          "evidence": []
+        },
+        {
+          "term": "update actions",
+          "score": 2.0575,
+          "evidence": []
+        },
+        {
+          "term": "updates open",
+          "score": 1.6348,
+          "evidence": []
+        },
+        {
+          "term": "reusable workflows",
+          "score": 1.2807,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dependabot version",
+          "score": 115.6229,
+          "evidence": []
+        },
+        {
+          "term": "configure dependabot",
+          "score": 110.7092,
+          "evidence": []
+        },
+        {
+          "term": "dependabot security",
+          "score": 109.815,
+          "evidence": []
+        },
+        {
+          "term": "github actions",
+          "score": 79.1868,
+          "evidence": []
+        },
+        {
+          "term": "actions checkout",
+          "score": 75.7383,
+          "evidence": []
+        },
+        {
+          "term": "update actions",
+          "score": 65.0417,
+          "evidence": []
+        },
+        {
+          "term": "updates open",
+          "score": 39.8592,
+          "evidence": []
+        },
+        {
+          "term": "reusable workflows",
+          "score": 18.2539,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "github actions",
+          "score": 0.9782,
+          "evidence": []
+        },
+        {
+          "term": "update actions",
+          "score": 0.6494,
+          "evidence": []
+        },
+        {
+          "term": "dependabot security",
+          "score": 0.6066,
+          "evidence": []
+        },
+        {
+          "term": "actions checkout",
+          "score": 0.5763,
+          "evidence": []
+        },
+        {
+          "term": "dependabot version",
+          "score": 0.4351,
+          "evidence": []
+        },
+        {
+          "term": "reusable workflows",
+          "score": 0.3937,
+          "evidence": []
+        },
+        {
+          "term": "configure dependabot",
+          "score": 0.3676,
+          "evidence": []
+        },
+        {
+          "term": "pull requests",
+          "score": 0.364,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "github actions",
+          "score": 21.8952,
+          "evidence": []
+        },
+        {
+          "term": "dependabot security",
+          "score": 17.6392,
+          "evidence": []
+        },
+        {
+          "term": "dependabot version",
+          "score": 15.1606,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 14.3836,
+          "evidence": []
+        },
+        {
+          "term": "update actions",
+          "score": 13.9499,
+          "evidence": []
+        },
+        {
+          "term": "actions checkout",
+          "score": 13.4265,
+          "evidence": []
+        },
+        {
+          "term": "configure dependabot",
+          "score": 12.6034,
+          "evidence": []
+        },
+        {
+          "term": "package",
+          "score": 9.4066,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "github actions",
+          "score": 0.9782,
+          "evidence": []
+        },
+        {
+          "term": "update actions",
+          "score": 0.6494,
+          "evidence": []
+        },
+        {
+          "term": "dependabot security",
+          "score": 0.6066,
+          "evidence": []
+        },
+        {
+          "term": "actions checkout",
+          "score": 0.5763,
+          "evidence": []
+        },
+        {
+          "term": "dependabot version",
+          "score": 0.4351,
+          "evidence": []
+        },
+        {
+          "term": "reusable workflows",
+          "score": 0.3937,
+          "evidence": []
+        },
+        {
+          "term": "configure dependabot",
+          "score": 0.3676,
+          "evidence": []
+        },
+        {
+          "term": "pull requests",
+          "score": 0.364,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "configure dependabot",
+          "score": 287.9095,
+          "evidence": []
+        },
+        {
+          "term": "actions checkout",
+          "score": 243.5459,
+          "evidence": []
+        },
+        {
+          "term": "safer",
+          "score": 234.5678,
+          "evidence": []
+        },
+        {
+          "term": "dependabot security",
+          "score": 221.2768,
+          "evidence": []
+        },
+        {
+          "term": "dependabot version",
+          "score": 221.2768,
+          "evidence": []
+        },
+        {
+          "term": "scorecards",
+          "score": 171.0225,
+          "evidence": []
+        },
+        {
+          "term": "configuring",
+          "score": 153.5936,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 153.5091,
+          "evidence": []
+        }
+      ]
+    },
+    "page-016": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "repository maintainers",
+          "score": 2.1164,
+          "evidence": []
+        },
+        {
+          "term": "security advisories",
+          "score": 2.0256,
+          "evidence": []
+        },
+        {
+          "term": "security advisory",
+          "score": 1.9817,
+          "evidence": []
+        },
+        {
+          "term": "security vulnerability",
+          "score": 1.9351,
+          "evidence": []
+        },
+        {
+          "term": "actions you've",
+          "score": 1.5063,
+          "evidence": []
+        },
+        {
+          "term": "github docs",
+          "score": 1.4747,
+          "evidence": []
+        },
+        {
+          "term": "publish",
+          "score": 0.9606,
+          "evidence": []
+        },
+        {
+          "term": "community",
+          "score": 0.7942,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "security vulnerability",
+          "score": 52.7305,
+          "evidence": []
+        },
+        {
+          "term": "repository security",
+          "score": 50.0006,
+          "evidence": []
+        },
+        {
+          "term": "security advisory",
+          "score": 45.1457,
+          "evidence": []
+        },
+        {
+          "term": "security advisories",
+          "score": 43.2289,
+          "evidence": []
+        },
+        {
+          "term": "repository maintainers",
+          "score": 42.9606,
+          "evidence": []
+        },
+        {
+          "term": "github docs",
+          "score": 24.9164,
+          "evidence": []
+        },
+        {
+          "term": "actions you've",
+          "score": 21.5331,
+          "evidence": []
+        },
+        {
+          "term": "publish",
+          "score": 15.638,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "security vulnerability",
+          "score": 0.6139,
+          "evidence": []
+        },
+        {
+          "term": "repository security",
+          "score": 0.61,
+          "evidence": []
+        },
+        {
+          "term": "github docs",
+          "score": 0.5523,
+          "evidence": []
+        },
+        {
+          "term": "security advisory",
+          "score": 0.412,
+          "evidence": []
+        },
+        {
+          "term": "security advisories",
+          "score": 0.4114,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 0.3462,
+          "evidence": []
+        },
+        {
+          "term": "actions you've",
+          "score": 0.3462,
+          "evidence": []
+        },
+        {
+          "term": "repository maintainers",
+          "score": 0.2808,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "security vulnerability",
+          "score": 8.4807,
+          "evidence": []
+        },
+        {
+          "term": "repository security",
+          "score": 7.6999,
+          "evidence": []
+        },
+        {
+          "term": "reference",
+          "score": 7.6616,
+          "evidence": []
+        },
+        {
+          "term": "security advisory",
+          "score": 6.2675,
+          "evidence": []
+        },
+        {
+          "term": "security advisories",
+          "score": 5.9849,
+          "evidence": []
+        },
+        {
+          "term": "package",
+          "score": 5.7199,
+          "evidence": []
+        },
+        {
+          "term": "github docs",
+          "score": 5.2533,
+          "evidence": []
+        },
+        {
+          "term": "actions",
+          "score": 4.6601,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "security vulnerability",
+          "score": 0.6139,
+          "evidence": []
+        },
+        {
+          "term": "repository security",
+          "score": 0.61,
+          "evidence": []
+        },
+        {
+          "term": "github docs",
+          "score": 0.5523,
+          "evidence": []
+        },
+        {
+          "term": "security advisory",
+          "score": 0.412,
+          "evidence": []
+        },
+        {
+          "term": "security advisories",
+          "score": 0.4114,
+          "evidence": []
+        },
+        {
+          "term": "actions you've",
+          "score": 0.384,
+          "evidence": []
+        },
+        {
+          "term": "repository maintainers",
+          "score": 0.3168,
+          "evidence": []
+        },
+        {
+          "term": "information",
+          "score": 0.2449,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "safer",
+          "score": 101.4208,
+          "evidence": []
+        },
+        {
+          "term": "dependabot",
+          "score": 96.4045,
+          "evidence": []
+        },
+        {
+          "term": "checkout",
+          "score": 81.0014,
+          "evidence": []
+        },
+        {
+          "term": "scorecards",
+          "score": 76.6034,
+          "evidence": []
+        },
+        {
+          "term": "hardening",
+          "score": 72.6425,
+          "evidence": []
+        },
+        {
+          "term": "actions you've",
+          "score": 71.1742,
+          "evidence": []
+        },
+        {
+          "term": "configuring",
+          "score": 68.8798,
+          "evidence": []
+        },
+        {
+          "term": "openssf",
+          "score": 65.7969,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

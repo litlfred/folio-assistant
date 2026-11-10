@@ -1,0 +1,35 @@
+{
+  "$ref": "#/definitions/AlsoAbout",
+  "definitions": {
+    "AlsoAbout": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "const": "block"
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "required": [
+          "kind",
+          "label"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/note-anchor/AlsoAboutSchema.schema.json",
+  "title": "AlsoAboutSchema",
+  "description": "Generated from `AlsoAboutSchema` in schemas/ui/note-anchor.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261110-1730",
+    "sha": "efcb7241d4875fb9a2fe03c40fe0f707524c68d3",
+    "pr": "repin-train/20261110-1730",
+    "run": "42865924598"
+  }
+}

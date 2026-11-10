@@ -1,0 +1,18 @@
+{
+  "$ref": "#/definitions/RequirementRef",
+  "definitions": {
+    "RequirementRef": {
+      "type": "string",
+      "pattern": "^req:[a-z0-9][a-z0-9-]*(#[A-Za-z0-9][A-Za-z0-9_.-]*(\\/[A-Za-z0-9][A-Za-z0-9_.-]*)?)?$"
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/bootstrap-tools/schema/zod/requirement/RequirementRefSchema.schema.json",
+  "title": "RequirementRefSchema",
+  "description": "Generated from `RequirementRefSchema` in schemas/requirement.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "repin-train/20261110-1730",
+    "sha": "efcb7241d4875fb9a2fe03c40fe0f707524c68d3",
+    "pr": "repin-train/20261110-1730",
+    "run": "42865924598"
+  }
+}

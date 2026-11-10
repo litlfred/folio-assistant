@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness-tools/schema/cache.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/cache.jsonld",
+  "staging": {
+    "branch": "repin-train/20261110-1730",
+    "sha": "efcb7241d4875fb9a2fe03c40fe0f707524c68d3",
+    "pr": "repin-train/20261110-1730",
+    "run": "42865924598"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/cache",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "cache",
+      "title": "cache",
+      "summary": "Caches — one node per CI cache a layer DECLARES: its key recipe, where its",
+      "module": "schemas/sdlc/cache.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheInventoryEntrySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheInventorySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheKindSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/CacheSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/KeyRecipeSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/cache/TrustClassSchema.schema.json"
+      ]
+    }
+  ]
+}

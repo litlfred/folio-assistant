@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/skill/pending-show.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261110-1730",
+    "sha": "efcb7241d4875fb9a2fe03c40fe0f707524c68d3",
+    "pr": "repin-train/20261110-1730",
+    "run": "42865924598"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/skill/pending-show",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "pending-show",
+      "title": "/pending-show — what is this session working on?",
+      "description": "Show the current session's pending work — work items list + ledger intent. Read-only.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/pending-show.md",
+      "instructionLines": 55,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/pending-show"
+    }
+  ]
+}

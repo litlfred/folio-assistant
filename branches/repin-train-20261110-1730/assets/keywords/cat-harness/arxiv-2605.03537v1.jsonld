@@ -1,0 +1,3798 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2605.03537v1",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2605.03537v1",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "subject headings",
+        "score": 20.8048,
+        "evidence": []
+      },
+      {
+        "term": "marc subject",
+        "score": 16.4841,
+        "evidence": []
+      },
+      {
+        "term": "subject indexing",
+        "score": 15.8959,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "agent headings",
+        "score": 15.5653,
+        "evidence": []
+      },
+      {
+        "term": "baseline headings",
+        "score": 15.3928,
+        "evidence": []
+      },
+      {
+        "term": "lcsh subject",
+        "score": 14.8252,
+        "evidence": []
+      },
+      {
+        "term": "authorized headings",
+        "score": 13.9623,
+        "evidence": []
+      },
+      {
+        "term": "topical headings",
+        "score": 13.5712,
+        "evidence": []
+      },
+      {
+        "term": "congress subject",
+        "score": 13.1724,
+        "evidence": []
+      },
+      {
+        "term": "headings against",
+        "score": 13.1029,
+        "evidence": []
+      },
+      {
+        "term": "candidate headings",
+        "score": 12.9958,
+        "evidence": []
+      },
+      {
+        "term": "library cataloging",
+        "score": 12.9174,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "subject headings",
+        "score": 429.9869,
+        "evidence": []
+      },
+      {
+        "term": "baseline headings",
+        "score": 361.7364,
+        "evidence": []
+      },
+      {
+        "term": "agent headings",
+        "score": 337.9368,
+        "evidence": []
+      },
+      {
+        "term": "marc subject",
+        "score": 324.7145,
+        "evidence": []
+      },
+      {
+        "term": "subject indexing",
+        "score": 296.2427,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lcsh subject",
+        "score": 283.923,
+        "evidence": []
+      },
+      {
+        "term": "authorized headings",
+        "score": 267.2385,
+        "evidence": []
+      },
+      {
+        "term": "topical headings",
+        "score": 265.958,
+        "evidence": []
+      },
+      {
+        "term": "candidate headings",
+        "score": 260.0869,
+        "evidence": []
+      },
+      {
+        "term": "headings against",
+        "score": 252.8222,
+        "evidence": []
+      },
+      {
+        "term": "validated headings",
+        "score": 252.8168,
+        "evidence": []
+      },
+      {
+        "term": "headings manual",
+        "score": 250.7735,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "subject headings",
+        "score": 17.5696,
+        "evidence": []
+      },
+      {
+        "term": "lcsh subject",
+        "score": 13.5255,
+        "evidence": []
+      },
+      {
+        "term": "marc subject",
+        "score": 13.4833,
+        "evidence": []
+      },
+      {
+        "term": "agent headings",
+        "score": 12.753,
+        "evidence": []
+      },
+      {
+        "term": "baseline headings",
+        "score": 12.7118,
+        "evidence": []
+      },
+      {
+        "term": "subject indexing",
+        "score": 12.309,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "topical headings",
+        "score": 12.1635,
+        "evidence": []
+      },
+      {
+        "term": "headings against",
+        "score": 10.8738,
+        "evidence": []
+      },
+      {
+        "term": "congress subject",
+        "score": 10.8656,
+        "evidence": []
+      },
+      {
+        "term": "library cataloging",
+        "score": 10.7727,
+        "evidence": []
+      },
+      {
+        "term": "authorized headings",
+        "score": 10.7379,
+        "evidence": []
+      },
+      {
+        "term": "subject terms",
+        "score": 10.6832,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "baseline headings",
+        "score": 304.3568,
+        "evidence": []
+      },
+      {
+        "term": "subject headings",
+        "score": 285.3984,
+        "evidence": []
+      },
+      {
+        "term": "agent headings",
+        "score": 277.4591,
+        "evidence": []
+      },
+      {
+        "term": "agent skill",
+        "score": 234.8418,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "bolivia title",
+        "score": 215.5799,
+        "evidence": []
+      },
+      {
+        "term": "baseline record",
+        "score": 213.3774,
+        "evidence": []
+      },
+      {
+        "term": "topical headings",
+        "score": 204.269,
+        "evidence": []
+      },
+      {
+        "term": "marc subject",
+        "score": 194.4603,
+        "evidence": []
+      },
+      {
+        "term": "candidate headings",
+        "score": 188.2594,
+        "evidence": []
+      },
+      {
+        "term": "headings against",
+        "score": 185.1845,
+        "evidence": []
+      },
+      {
+        "term": "name headings",
+        "score": 183.9078,
+        "evidence": []
+      },
+      {
+        "term": "authorized headings",
+        "score": 182.7011,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "subject headings",
+        "score": 17.5696,
+        "evidence": []
+      },
+      {
+        "term": "lcsh subject",
+        "score": 13.5255,
+        "evidence": []
+      },
+      {
+        "term": "marc subject",
+        "score": 13.4833,
+        "evidence": []
+      },
+      {
+        "term": "agent headings",
+        "score": 12.753,
+        "evidence": []
+      },
+      {
+        "term": "baseline headings",
+        "score": 12.7118,
+        "evidence": []
+      },
+      {
+        "term": "subject indexing",
+        "score": 12.309,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "topical headings",
+        "score": 12.1635,
+        "evidence": []
+      },
+      {
+        "term": "headings against",
+        "score": 10.8738,
+        "evidence": []
+      },
+      {
+        "term": "congress subject",
+        "score": 10.8656,
+        "evidence": []
+      },
+      {
+        "term": "library cataloging",
+        "score": 10.7727,
+        "evidence": []
+      },
+      {
+        "term": "authorized headings",
+        "score": 10.7379,
+        "evidence": []
+      },
+      {
+        "term": "subject terms",
+        "score": 10.6832,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "bolivia toracari",
+        "score": 2534.5987,
+        "evidence": []
+      },
+      {
+        "term": "bolivia xpolitics",
+        "score": 2526.9952,
+        "evidence": []
+      },
+      {
+        "term": "peasants bolivia",
+        "score": 2526.9952,
+        "evidence": []
+      },
+      {
+        "term": "america bolivia",
+        "score": 2199.0142,
+        "evidence": []
+      },
+      {
+        "term": "land tenure",
+        "score": 1862.9132,
+        "evidence": []
+      },
+      {
+        "term": "chronological subdivision",
+        "score": 1694.0825,
+        "evidence": []
+      },
+      {
+        "term": "south america",
+        "score": 1659.9536,
+        "evidence": []
+      },
+      {
+        "term": "black holes",
+        "score": 1628.3415,
+        "evidence": []
+      },
+      {
+        "term": "geographic subdivision",
+        "score": 1615.2405,
+        "evidence": []
+      },
+      {
+        "term": "rural poor",
+        "score": 1598.4888,
+        "evidence": []
+      },
+      {
+        "term": "topical headings",
+        "score": 1343.9172,
+        "evidence": []
+      },
+      {
+        "term": "toracari government",
+        "score": 1286.6539,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "subject headings",
+          "score": 1.5465,
+          "evidence": []
+        },
+        {
+          "term": "controlled vocabulary",
+          "score": 1.0522,
+          "evidence": []
+        },
+        {
+          "term": "leaving",
+          "score": 0.7924,
+          "evidence": []
+        },
+        {
+          "term": "catalogers",
+          "score": 0.7782,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 0.6848,
+          "evidence": []
+        },
+        {
+          "term": "manual",
+          "score": 0.6325,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "subject headings",
+          "score": 26.1525,
+          "evidence": []
+        },
+        {
+          "term": "controlled vocabulary",
+          "score": 14.1783,
+          "evidence": []
+        },
+        {
+          "term": "leaving",
+          "score": 11.0007,
+          "evidence": []
+        },
+        {
+          "term": "catalogers",
+          "score": 10.79,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 9.1242,
+          "evidence": []
+        },
+        {
+          "term": "manual",
+          "score": 8.5928,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject headings",
+          "score": 0.7724,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.2905,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.2875,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 0.233,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 0.2233,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.222,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject headings",
+          "score": 7.9651,
+          "evidence": []
+        },
+        {
+          "term": "policy",
+          "score": 2.2104,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 2.0729,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 1.9272,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 1.8282,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 1.8021,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject headings",
+          "score": 0.7724,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.2905,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 0.233,
+          "evidence": []
+        },
+        {
+          "term": "indexing",
+          "score": 0.2122,
+          "evidence": []
+        },
+        {
+          "term": "controlled vocabulary",
+          "score": 0.1871,
+          "evidence": []
+        },
+        {
+          "term": "policy",
+          "score": 0.1261,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "backlogs",
+          "score": 78.1664,
+          "evidence": []
+        },
+        {
+          "term": "patrons",
+          "score": 78.1664,
+          "evidence": []
+        },
+        {
+          "term": "undiscoverable",
+          "score": 78.1664,
+          "evidence": []
+        },
+        {
+          "term": "quanti",
+          "score": 77.1985,
+          "evidence": []
+        },
+        {
+          "term": "subject-indexing",
+          "score": 77.1985,
+          "evidence": []
+        },
+        {
+          "term": "skill-based",
+          "score": 76.3579,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-traditional-machine-learning-approaches": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "national library",
+          "score": 1.54,
+          "evidence": []
+        },
+        {
+          "term": "national libraries",
+          "score": 1.4875,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 1.4509,
+          "evidence": []
+        },
+        {
+          "term": "kratt",
+          "score": 1.0078,
+          "evidence": []
+        },
+        {
+          "term": "sparsity",
+          "score": 1.0078,
+          "evidence": []
+        },
+        {
+          "term": "learning",
+          "score": 0.8972,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vocabularies",
+          "score": 0.8579,
+          "evidence": []
+        },
+        {
+          "term": "catalogers",
+          "score": 0.7782,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "subject indexing",
+          "score": 26.351,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 25.4329,
+          "evidence": []
+        },
+        {
+          "term": "national libraries",
+          "score": 23.3728,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 14.1028,
+          "evidence": []
+        },
+        {
+          "term": "kratt",
+          "score": 14.0089,
+          "evidence": []
+        },
+        {
+          "term": "sparsity",
+          "score": 14.0089,
+          "evidence": []
+        },
+        {
+          "term": "vocabularies",
+          "score": 13.8196,
+          "evidence": []
+        },
+        {
+          "term": "controlled",
+          "score": 11.6068,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject indexing",
+          "score": 0.9275,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 0.5552,
+          "evidence": []
+        },
+        {
+          "term": "national libraries",
+          "score": 0.4169,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.3563,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.3269,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.304,
+          "evidence": []
+        },
+        {
+          "term": "learning",
+          "score": 0.2556,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cataloging",
+          "score": 0.248,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject indexing",
+          "score": 10.7909,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 3.8587,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 3.7613,
+          "evidence": []
+        },
+        {
+          "term": "semeval",
+          "score": 3.4621,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 3.2587,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 3.017,
+          "evidence": []
+        },
+        {
+          "term": "all-subjects",
+          "score": 2.789,
+          "evidence": []
+        },
+        {
+          "term": "national libraries",
+          "score": 2.7847,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject indexing",
+          "score": 0.9275,
+          "evidence": []
+        },
+        {
+          "term": "national library",
+          "score": 0.5552,
+          "evidence": []
+        },
+        {
+          "term": "national libraries",
+          "score": 0.4169,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.3563,
+          "evidence": []
+        },
+        {
+          "term": "learning",
+          "score": 0.2556,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "traditional",
+          "score": 0.2473,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "terms",
+          "score": 0.2438,
+          "evidence": []
+        },
+        {
+          "term": "classification",
+          "score": 0.2268,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "xtrans",
+          "score": 54.3566,
+          "evidence": []
+        },
+        {
+          "term": "mllm",
+          "score": 47.7828,
+          "evidence": []
+        },
+        {
+          "term": "bonsai",
+          "score": 46.2848,
+          "evidence": []
+        },
+        {
+          "term": "ensembles",
+          "score": 43.6237,
+          "evidence": []
+        },
+        {
+          "term": "annif-llms4subjects",
+          "score": 43.4811,
+          "evidence": []
+        },
+        {
+          "term": "firstname",
+          "score": 42.6093,
+          "evidence": []
+        },
+        {
+          "term": "lastname",
+          "score": 42.6093,
+          "evidence": []
+        },
+        {
+          "term": "xiaoli",
+          "score": 41.3804,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-large-language-models-for-subject-indexing": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "subject indexing",
+          "score": 2.8402,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lcsh",
+          "score": 1.2166,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 1.0179,
+          "evidence": []
+        },
+        {
+          "term": "ai-generated",
+          "score": 1.0047,
+          "evidence": []
+        },
+        {
+          "term": "shared task",
+          "score": 0.9606,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.9372,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 0.8641,
+          "evidence": []
+        },
+        {
+          "term": "authority",
+          "score": 0.8593,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "subject indexing",
+          "score": 56.9567,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lcsh",
+          "score": 27.6392,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 16.6849,
+          "evidence": []
+        },
+        {
+          "term": "ai-generated",
+          "score": 16.185,
+          "evidence": []
+        },
+        {
+          "term": "shared task",
+          "score": 14.2626,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 13.6862,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 13.5357,
+          "evidence": []
+        },
+        {
+          "term": "assign",
+          "score": 13.4361,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject indexing",
+          "score": 3.1384,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "headings",
+          "score": 0.7303,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.6707,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.6355,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.6267,
+          "evidence": []
+        },
+        {
+          "term": "language",
+          "score": 0.6125,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shared task",
+          "score": 0.5661,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 0.5142,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject indexing",
+          "score": 37.3834,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shared task",
+          "score": 7.5431,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 7.1461,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 6.9079,
+          "evidence": []
+        },
+        {
+          "term": "chatgpt",
+          "score": 6.7953,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 5.7742,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 5.6765,
+          "evidence": []
+        },
+        {
+          "term": "semeval",
+          "score": 5.2618,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject indexing",
+          "score": 3.1384,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "headings",
+          "score": 0.7303,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.6355,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.6267,
+          "evidence": []
+        },
+        {
+          "term": "language",
+          "score": 0.6125,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "shared task",
+          "score": 0.5661,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 0.5142,
+          "evidence": []
+        },
+        {
+          "term": "llms",
+          "score": 0.4055,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "skill-based",
+          "score": 38.1196,
+          "evidence": []
+        },
+        {
+          "term": "alma",
+          "score": 36.9148,
+          "evidence": []
+        },
+        {
+          "term": "bertalis",
+          "score": 36.7091,
+          "evidence": []
+        },
+        {
+          "term": "neill",
+          "score": 36.7091,
+          "evidence": []
+        },
+        {
+          "term": "backlogs",
+          "score": 36.6563,
+          "evidence": []
+        },
+        {
+          "term": "patrons",
+          "score": 36.6563,
+          "evidence": []
+        },
+        {
+          "term": "undiscoverable",
+          "score": 36.6563,
+          "evidence": []
+        },
+        {
+          "term": "quanti",
+          "score": 35.302,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-present-contribution": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "marc fields",
+          "score": 1.4919,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 1.4509,
+          "evidence": []
+        },
+        {
+          "term": "headings against",
+          "score": 1.4181,
+          "evidence": []
+        },
+        {
+          "term": "tang jiang",
+          "score": 1.4007,
+          "evidence": []
+        },
+        {
+          "term": "authority files",
+          "score": 1.2736,
+          "evidence": []
+        },
+        {
+          "term": "brzustowicz",
+          "score": 1.2152,
+          "evidence": []
+        },
+        {
+          "term": "indexing workflow",
+          "score": 1.156,
+          "evidence": []
+        },
+        {
+          "term": "topic identification",
+          "score": 1.1201,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "subject indexing",
+          "score": 26.351,
+          "evidence": []
+        },
+        {
+          "term": "headings against",
+          "score": 25.6646,
+          "evidence": []
+        },
+        {
+          "term": "marc fields",
+          "score": 21.7934,
+          "evidence": []
+        },
+        {
+          "term": "brzustowicz",
+          "score": 19.7969,
+          "evidence": []
+        },
+        {
+          "term": "tang jiang",
+          "score": 18.8074,
+          "evidence": []
+        },
+        {
+          "term": "authority files",
+          "score": 18.2764,
+          "evidence": []
+        },
+        {
+          "term": "indexing workflow",
+          "score": 16.4477,
+          "evidence": []
+        },
+        {
+          "term": "chow",
+          "score": 15.899,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject indexing",
+          "score": 1.0861,
+          "evidence": []
+        },
+        {
+          "term": "headings against",
+          "score": 0.8447,
+          "evidence": []
+        },
+        {
+          "term": "marc fields",
+          "score": 0.715,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.5537,
+          "evidence": []
+        },
+        {
+          "term": "indexing workflow",
+          "score": 0.5513,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.5496,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.5432,
+          "evidence": []
+        },
+        {
+          "term": "authority files",
+          "score": 0.5187,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject indexing",
+          "score": 11.5281,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 11.0791,
+          "evidence": []
+        },
+        {
+          "term": "headings against",
+          "score": 9.0745,
+          "evidence": []
+        },
+        {
+          "term": "marc fields",
+          "score": 6.629,
+          "evidence": []
+        },
+        {
+          "term": "authority files",
+          "score": 5.5436,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 5.29,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 4.7461,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 4.5757,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject indexing",
+          "score": 1.0861,
+          "evidence": []
+        },
+        {
+          "term": "headings against",
+          "score": 0.8447,
+          "evidence": []
+        },
+        {
+          "term": "marc fields",
+          "score": 0.715,
+          "evidence": []
+        },
+        {
+          "term": "indexing workflow",
+          "score": 0.5513,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.5496,
+          "evidence": []
+        },
+        {
+          "term": "authority files",
+          "score": 0.5187,
+          "evidence": []
+        },
+        {
+          "term": "tang jiang",
+          "score": 0.3679,
+          "evidence": []
+        },
+        {
+          "term": "skills",
+          "score": 0.3586,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alma",
+          "score": 44.1605,
+          "evidence": []
+        },
+        {
+          "term": "ils",
+          "score": 41.1322,
+          "evidence": []
+        },
+        {
+          "term": "skill-based",
+          "score": 40.9351,
+          "evidence": []
+        },
+        {
+          "term": "subdi",
+          "score": 39.8826,
+          "evidence": []
+        },
+        {
+          "term": "quanti",
+          "score": 39.7064,
+          "evidence": []
+        },
+        {
+          "term": "subject-indexing",
+          "score": 39.7064,
+          "evidence": []
+        },
+        {
+          "term": "backlogs",
+          "score": 39.5132,
+          "evidence": []
+        },
+        {
+          "term": "patrons",
+          "score": 39.5132,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-source-material-and-skill-construction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "skill",
+          "score": 1.3284,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "joudrey",
+          "score": 0.8492,
+          "evidence": []
+        },
+        {
+          "term": "congress",
+          "score": 0.7371,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.687,
+          "evidence": []
+        },
+        {
+          "term": "four",
+          "score": 0.5919,
+          "evidence": []
+        },
+        {
+          "term": "conceptual",
+          "score": 0.5901,
+          "evidence": []
+        },
+        {
+          "term": "rules",
+          "score": 0.5687,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skill",
+          "score": 22.2208,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "joudrey",
+          "score": 11.8116,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 10.5238,
+          "evidence": []
+        },
+        {
+          "term": "congress",
+          "score": 9.9791,
+          "evidence": []
+        },
+        {
+          "term": "four",
+          "score": 9.3378,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 7.7568,
+          "evidence": []
+        },
+        {
+          "term": "conceptual",
+          "score": 7.5711,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.7922,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "subject",
+          "score": 0.2093,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.198,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.1893,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.1818,
+          "evidence": []
+        },
+        {
+          "term": "file",
+          "score": 0.1663,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.1618,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 18.5042,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "claude",
+          "score": 2.796,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 1.864,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 1.7499,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 1.7358,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 1.6675,
+          "evidence": []
+        },
+        {
+          "term": "task",
+          "score": 1.6652,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.7922,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "library",
+          "score": 0.1893,
+          "evidence": []
+        },
+        {
+          "term": "rules",
+          "score": 0.1382,
+          "evidence": []
+        },
+        {
+          "term": "construction",
+          "score": 0.1091,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "documents",
+          "score": 0.1006,
+          "evidence": []
+        },
+        {
+          "term": "congress",
+          "score": 0.089,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 0.0842,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "zunde",
+          "score": 44.8808,
+          "evidence": []
+        },
+        {
+          "term": "alma",
+          "score": 43.3477,
+          "evidence": []
+        },
+        {
+          "term": "dexter",
+          "score": 43.3413,
+          "evidence": []
+        },
+        {
+          "term": "olson",
+          "score": 43.3413,
+          "evidence": []
+        },
+        {
+          "term": "tonta",
+          "score": 43.3413,
+          "evidence": []
+        },
+        {
+          "term": "topicality",
+          "score": 43.3413,
+          "evidence": []
+        },
+        {
+          "term": "wolfram",
+          "score": 43.3413,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-the-four-skill-pipeline": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "marc synthesis",
+          "score": 3.3853,
+          "evidence": []
+        },
+        {
+          "term": "authority validation",
+          "score": 2.5491,
+          "evidence": []
+        },
+        {
+          "term": "candidate headings",
+          "score": 2.2914,
+          "evidence": []
+        },
+        {
+          "term": "genre form",
+          "score": 2.2295,
+          "evidence": []
+        },
+        {
+          "term": "authority file",
+          "score": 2.1867,
+          "evidence": []
+        },
+        {
+          "term": "authority records",
+          "score": 2.129,
+          "evidence": []
+        },
+        {
+          "term": "geographic subdivision",
+          "score": 2.122,
+          "evidence": []
+        },
+        {
+          "term": "quantitative filtering",
+          "score": 2.0534,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "marc synthesis",
+          "score": 105.1818,
+          "evidence": []
+        },
+        {
+          "term": "authority validation",
+          "score": 77.7855,
+          "evidence": []
+        },
+        {
+          "term": "authority file",
+          "score": 63.4858,
+          "evidence": []
+        },
+        {
+          "term": "authority records",
+          "score": 62.3394,
+          "evidence": []
+        },
+        {
+          "term": "candidate headings",
+          "score": 56.4687,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 55.5519,
+          "evidence": []
+        },
+        {
+          "term": "genre form",
+          "score": 54.7233,
+          "evidence": []
+        },
+        {
+          "term": "validated headings",
+          "score": 47.1553,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "validated headings",
+          "score": 1.3187,
+          "evidence": []
+        },
+        {
+          "term": "candidate headings",
+          "score": 1.3036,
+          "evidence": []
+        },
+        {
+          "term": "name headings",
+          "score": 1.2899,
+          "evidence": []
+        },
+        {
+          "term": "broader heading",
+          "score": 1.0777,
+          "evidence": []
+        },
+        {
+          "term": "authority records",
+          "score": 1.0687,
+          "evidence": []
+        },
+        {
+          "term": "marc synthesis",
+          "score": 1.0463,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.9642,
+          "evidence": []
+        },
+        {
+          "term": "geographic subdivision",
+          "score": 0.9522,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 47.0684,
+          "evidence": []
+        },
+        {
+          "term": "candidate headings",
+          "score": 27.7852,
+          "evidence": []
+        },
+        {
+          "term": "name headings",
+          "score": 26.8477,
+          "evidence": []
+        },
+        {
+          "term": "validated headings",
+          "score": 25.6014,
+          "evidence": []
+        },
+        {
+          "term": "marc synthesis",
+          "score": 24.3613,
+          "evidence": []
+        },
+        {
+          "term": "authority file",
+          "score": 20.749,
+          "evidence": []
+        },
+        {
+          "term": "authority records",
+          "score": 20.1794,
+          "evidence": []
+        },
+        {
+          "term": "broader heading",
+          "score": 20.1396,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "validated headings",
+          "score": 1.3187,
+          "evidence": []
+        },
+        {
+          "term": "candidate headings",
+          "score": 1.3036,
+          "evidence": []
+        },
+        {
+          "term": "name headings",
+          "score": 1.2899,
+          "evidence": []
+        },
+        {
+          "term": "broader heading",
+          "score": 1.0777,
+          "evidence": []
+        },
+        {
+          "term": "authority records",
+          "score": 1.0687,
+          "evidence": []
+        },
+        {
+          "term": "marc synthesis",
+          "score": 1.0463,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.9642,
+          "evidence": []
+        },
+        {
+          "term": "geographic subdivision",
+          "score": 0.9522,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "geographic subdivision",
+          "score": 120.8607,
+          "evidence": []
+        },
+        {
+          "term": "marc synthesis",
+          "score": 106.4293,
+          "evidence": []
+        },
+        {
+          "term": "holes",
+          "score": 78.2285,
+          "evidence": []
+        },
+        {
+          "term": "toracari",
+          "score": 77.8314,
+          "evidence": []
+        },
+        {
+          "term": "peasants",
+          "score": 77.6329,
+          "evidence": []
+        },
+        {
+          "term": "xpolitics",
+          "score": 77.6329,
+          "evidence": []
+        },
+        {
+          "term": "alma",
+          "score": 77.0492,
+          "evidence": []
+        },
+        {
+          "term": "ford",
+          "score": 77.0372,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-test-corpus": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "harvard library",
+          "score": 2.08,
+          "evidence": []
+        },
+        {
+          "term": "ten titles",
+          "score": 1.576,
+          "evidence": []
+        },
+        {
+          "term": "bibliographic records",
+          "score": 1.4785,
+          "evidence": []
+        },
+        {
+          "term": "alma",
+          "score": 0.6307,
+          "evidence": []
+        },
+        {
+          "term": "exported",
+          "score": 0.6307,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "harvard library",
+          "score": 42.1645,
+          "evidence": []
+        },
+        {
+          "term": "ten titles",
+          "score": 25.333,
+          "evidence": []
+        },
+        {
+          "term": "bibliographic records",
+          "score": 24.9126,
+          "evidence": []
+        },
+        {
+          "term": "sampled",
+          "score": 8.5928,
+          "evidence": []
+        },
+        {
+          "term": "active",
+          "score": 7.7379,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "harvard library",
+          "score": 0.3286,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.3106,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.2977,
+          "evidence": []
+        },
+        {
+          "term": "bibliographic records",
+          "score": 0.2779,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.1921,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "headings",
+          "score": 3.7916,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 3.4034,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 3.067,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 2.9032,
+          "evidence": []
+        },
+        {
+          "term": "baseline",
+          "score": 2.6278,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "harvard library",
+          "score": 0.3286,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.3106,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.2977,
+          "evidence": []
+        },
+        {
+          "term": "bibliographic records",
+          "score": 0.2779,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.1921,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alma",
+          "score": 74.8154,
+          "evidence": []
+        },
+        {
+          "term": "harvard library",
+          "score": 70.6819,
+          "evidence": []
+        },
+        {
+          "term": "holes",
+          "score": 69.1856,
+          "evidence": []
+        },
+        {
+          "term": "toracari",
+          "score": 68.662,
+          "evidence": []
+        },
+        {
+          "term": "peasants",
+          "score": 68.4002,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-evaluation-method": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "heading",
+          "score": 0.6754,
+          "evidence": []
+        },
+        {
+          "term": "indexer",
+          "score": 0.6307,
+          "evidence": []
+        },
+        {
+          "term": "interpretive",
+          "score": 0.6307,
+          "evidence": []
+        },
+        {
+          "term": "subdi",
+          "score": 0.6307,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "agent",
+          "score": 9.6619,
+          "evidence": []
+        },
+        {
+          "term": "heading",
+          "score": 8.879,
+          "evidence": []
+        },
+        {
+          "term": "indexer",
+          "score": 7.0044,
+          "evidence": []
+        },
+        {
+          "term": "interpretive",
+          "score": 7.0044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "headings",
+          "score": 0.2478,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.2063,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1549,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 0.1447,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "agent",
+          "score": 3.7543,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 3.5499,
+          "evidence": []
+        },
+        {
+          "term": "baseline",
+          "score": 3.0972,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 2.6779,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "headings",
+          "score": 0.2478,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.2063,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.1549,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 0.1447,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "holes",
+          "score": 84.7699,
+          "evidence": []
+        },
+        {
+          "term": "toracari",
+          "score": 83.9952,
+          "evidence": []
+        },
+        {
+          "term": "peasants",
+          "score": 83.6078,
+          "evidence": []
+        },
+        {
+          "term": "xpolitics",
+          "score": 83.6078,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-heading-by-heading-comparison": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "bolivia toracari",
+          "score": 3.8387,
+          "evidence": []
+        },
+        {
+          "term": "america bolivia",
+          "score": 3.4442,
+          "evidence": []
+        },
+        {
+          "term": "peasants bolivia",
+          "score": 3.1874,
+          "evidence": []
+        },
+        {
+          "term": "baseline headings",
+          "score": 3.1565,
+          "evidence": []
+        },
+        {
+          "term": "south america",
+          "score": 3.0484,
+          "evidence": []
+        },
+        {
+          "term": "toracari government",
+          "score": 3.0392,
+          "evidence": []
+        },
+        {
+          "term": "baseline record",
+          "score": 2.7864,
+          "evidence": []
+        },
+        {
+          "term": "black holes",
+          "score": 2.7769,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "baseline headings",
+          "score": 134.5933,
+          "evidence": []
+        },
+        {
+          "term": "agent headings",
+          "score": 110.5714,
+          "evidence": []
+        },
+        {
+          "term": "baseline record",
+          "score": 105.7183,
+          "evidence": []
+        },
+        {
+          "term": "bolivia toracari",
+          "score": 98.062,
+          "evidence": []
+        },
+        {
+          "term": "america bolivia",
+          "score": 80.5874,
+          "evidence": []
+        },
+        {
+          "term": "topical headings",
+          "score": 74.582,
+          "evidence": []
+        },
+        {
+          "term": "toracari government",
+          "score": 73.7153,
+          "evidence": []
+        },
+        {
+          "term": "peasants bolivia",
+          "score": 70.0443,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "bolivia toracari",
+          "score": 3.7789,
+          "evidence": []
+        },
+        {
+          "term": "baseline headings",
+          "score": 3.6232,
+          "evidence": []
+        },
+        {
+          "term": "america bolivia",
+          "score": 3.3529,
+          "evidence": []
+        },
+        {
+          "term": "agent headings",
+          "score": 3.204,
+          "evidence": []
+        },
+        {
+          "term": "peasants bolivia",
+          "score": 3.1489,
+          "evidence": []
+        },
+        {
+          "term": "baseline record",
+          "score": 3.0989,
+          "evidence": []
+        },
+        {
+          "term": "topical headings",
+          "score": 2.9617,
+          "evidence": []
+        },
+        {
+          "term": "toracari government",
+          "score": 2.8728,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "baseline headings",
+          "score": 140.0989,
+          "evidence": []
+        },
+        {
+          "term": "agent headings",
+          "score": 125.3655,
+          "evidence": []
+        },
+        {
+          "term": "baseline record",
+          "score": 105.0673,
+          "evidence": []
+        },
+        {
+          "term": "bolivia toracari",
+          "score": 89.8599,
+          "evidence": []
+        },
+        {
+          "term": "topical headings",
+          "score": 83.597,
+          "evidence": []
+        },
+        {
+          "term": "america bolivia",
+          "score": 73.8387,
+          "evidence": []
+        },
+        {
+          "term": "agent added",
+          "score": 69.1454,
+          "evidence": []
+        },
+        {
+          "term": "agent output",
+          "score": 65.8608,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "bolivia toracari",
+          "score": 3.7789,
+          "evidence": []
+        },
+        {
+          "term": "baseline headings",
+          "score": 3.6232,
+          "evidence": []
+        },
+        {
+          "term": "america bolivia",
+          "score": 3.3529,
+          "evidence": []
+        },
+        {
+          "term": "agent headings",
+          "score": 3.204,
+          "evidence": []
+        },
+        {
+          "term": "peasants bolivia",
+          "score": 3.1489,
+          "evidence": []
+        },
+        {
+          "term": "baseline record",
+          "score": 3.0989,
+          "evidence": []
+        },
+        {
+          "term": "topical headings",
+          "score": 2.9617,
+          "evidence": []
+        },
+        {
+          "term": "toracari government",
+          "score": 2.8728,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "bolivia toracari",
+          "score": 749.9727,
+          "evidence": []
+        },
+        {
+          "term": "peasants bolivia",
+          "score": 746.0238,
+          "evidence": []
+        },
+        {
+          "term": "america bolivia",
+          "score": 667.8853,
+          "evidence": []
+        },
+        {
+          "term": "land tenure",
+          "score": 542.3258,
+          "evidence": []
+        },
+        {
+          "term": "south america",
+          "score": 518.921,
+          "evidence": []
+        },
+        {
+          "term": "black holes",
+          "score": 490.5146,
+          "evidence": []
+        },
+        {
+          "term": "rural poor",
+          "score": 468.1004,
+          "evidence": []
+        },
+        {
+          "term": "toracari government",
+          "score": 418.5684,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-patterns-observed": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "bolivia title",
+          "score": 2.1692,
+          "evidence": []
+        },
+        {
+          "term": "baseline record",
+          "score": 2.1358,
+          "evidence": []
+        },
+        {
+          "term": "chronological subdivision",
+          "score": 1.8592,
+          "evidence": []
+        },
+        {
+          "term": "agent assigned",
+          "score": 1.4996,
+          "evidence": []
+        },
+        {
+          "term": "country level",
+          "score": 1.4924,
+          "evidence": []
+        },
+        {
+          "term": "name headings",
+          "score": 1.3961,
+          "evidence": []
+        },
+        {
+          "term": "geographic",
+          "score": 1.1403,
+          "evidence": []
+        },
+        {
+          "term": "toracari",
+          "score": 1.023,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "baseline record",
+          "score": 52.8591,
+          "evidence": []
+        },
+        {
+          "term": "bolivia title",
+          "score": 39.2768,
+          "evidence": []
+        },
+        {
+          "term": "agent assigned",
+          "score": 32.4381,
+          "evidence": []
+        },
+        {
+          "term": "name headings",
+          "score": 28.0336,
+          "evidence": []
+        },
+        {
+          "term": "chronological subdivision",
+          "score": 27.8143,
+          "evidence": []
+        },
+        {
+          "term": "country level",
+          "score": 25.2149,
+          "evidence": []
+        },
+        {
+          "term": "geographic",
+          "score": 21.1987,
+          "evidence": []
+        },
+        {
+          "term": "toracari",
+          "score": 14.0089,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "bolivia title",
+          "score": 1.2222,
+          "evidence": []
+        },
+        {
+          "term": "baseline record",
+          "score": 1.1066,
+          "evidence": []
+        },
+        {
+          "term": "name headings",
+          "score": 1.0346,
+          "evidence": []
+        },
+        {
+          "term": "chronological subdivision",
+          "score": 0.9578,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 0.7249,
+          "evidence": []
+        },
+        {
+          "term": "agent assigned",
+          "score": 0.7218,
+          "evidence": []
+        },
+        {
+          "term": "fiction",
+          "score": 0.6345,
+          "evidence": []
+        },
+        {
+          "term": "toracari",
+          "score": 0.6024,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "bolivia title",
+          "score": 29.241,
+          "evidence": []
+        },
+        {
+          "term": "baseline record",
+          "score": 28.5747,
+          "evidence": []
+        },
+        {
+          "term": "name headings",
+          "score": 20.737,
+          "evidence": []
+        },
+        {
+          "term": "agent assigned",
+          "score": 18.8303,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 15.4962,
+          "evidence": []
+        },
+        {
+          "term": "chronological subdivision",
+          "score": 13.0335,
+          "evidence": []
+        },
+        {
+          "term": "fiction",
+          "score": 12.8349,
+          "evidence": []
+        },
+        {
+          "term": "century",
+          "score": 11.7944,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "bolivia title",
+          "score": 1.2222,
+          "evidence": []
+        },
+        {
+          "term": "baseline record",
+          "score": 1.1066,
+          "evidence": []
+        },
+        {
+          "term": "name headings",
+          "score": 1.0346,
+          "evidence": []
+        },
+        {
+          "term": "chronological subdivision",
+          "score": 0.9578,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 0.7249,
+          "evidence": []
+        },
+        {
+          "term": "agent assigned",
+          "score": 0.7218,
+          "evidence": []
+        },
+        {
+          "term": "toracari",
+          "score": 0.6024,
+          "evidence": []
+        },
+        {
+          "term": "geographic",
+          "score": 0.4952,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "chronological subdivision",
+          "score": 270.5783,
+          "evidence": []
+        },
+        {
+          "term": "bolivia title",
+          "score": 269.2881,
+          "evidence": []
+        },
+        {
+          "term": "holes",
+          "score": 260.387,
+          "evidence": []
+        },
+        {
+          "term": "toracari",
+          "score": 255.6934,
+          "evidence": []
+        },
+        {
+          "term": "peasants",
+          "score": 253.3466,
+          "evidence": []
+        },
+        {
+          "term": "xpolitics",
+          "score": 253.3466,
+          "evidence": []
+        },
+        {
+          "term": "ford",
+          "score": 246.3062,
+          "evidence": []
+        },
+        {
+          "term": "rural",
+          "score": 246.3062,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-strengths-of-the-agent-skill-approach": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "skill",
+          "score": 1.3284,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heading decision",
+          "score": 1.2305,
+          "evidence": []
+        },
+        {
+          "term": "subdivision",
+          "score": 0.778,
+          "evidence": []
+        },
+        {
+          "term": "rule",
+          "score": 0.5809,
+          "evidence": []
+        },
+        {
+          "term": "policy",
+          "score": 0.5479,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 0.5191,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "skill",
+          "score": 22.2208,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heading decision",
+          "score": 14.8017,
+          "evidence": []
+        },
+        {
+          "term": "subdivision",
+          "score": 10.4253,
+          "evidence": []
+        },
+        {
+          "term": "policy",
+          "score": 7.4643,
+          "evidence": []
+        },
+        {
+          "term": "rule",
+          "score": 6.6311,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 6.2049,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "skill",
+          "score": 0.523,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heading decision",
+          "score": 0.2867,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.2403,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2374,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "policy",
+          "score": 0.1911,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.1909,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "skill",
+          "score": 14.8929,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "agent",
+          "score": 3.6968,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heading decision",
+          "score": 3.3908,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 2.8501,
+          "evidence": []
+        },
+        {
+          "term": "policy",
+          "score": 2.8038,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 2.357,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "skill",
+          "score": 0.523,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heading decision",
+          "score": 0.2867,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.2403,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2374,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "policy",
+          "score": 0.1911,
+          "evidence": []
+        },
+        {
+          "term": "rule",
+          "score": 0.1597,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "holes",
+          "score": 54.156,
+          "evidence": []
+        },
+        {
+          "term": "toracari",
+          "score": 53.7505,
+          "evidence": []
+        },
+        {
+          "term": "peasants",
+          "score": 53.5477,
+          "evidence": []
+        },
+        {
+          "term": "xpolitics",
+          "score": 53.5477,
+          "evidence": []
+        },
+        {
+          "term": "ford",
+          "score": 52.9394,
+          "evidence": []
+        },
+        {
+          "term": "rural",
+          "score": 52.9394,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-limitations-and-areas-for-improvement": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "subject indexing",
+          "score": 1.3873,
+          "evidence": []
+        },
+        {
+          "term": "subdivisions",
+          "score": 0.9888,
+          "evidence": []
+        },
+        {
+          "term": "geographic",
+          "score": 0.9822,
+          "evidence": []
+        },
+        {
+          "term": "disciplines",
+          "score": 0.7898,
+          "evidence": []
+        },
+        {
+          "term": "pipeline",
+          "score": 0.7723,
+          "evidence": []
+        },
+        {
+          "term": "heading",
+          "score": 0.6754,
+          "evidence": []
+        },
+        {
+          "term": "bibliographic",
+          "score": 0.6725,
+          "evidence": []
+        },
+        {
+          "term": "sciences",
+          "score": 0.6262,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "subject indexing",
+          "score": 23.6232,
+          "evidence": []
+        },
+        {
+          "term": "geographic",
+          "score": 15.899,
+          "evidence": []
+        },
+        {
+          "term": "subdivisions",
+          "score": 15.899,
+          "evidence": []
+        },
+        {
+          "term": "pipeline",
+          "score": 14.2178,
+          "evidence": []
+        },
+        {
+          "term": "disciplines",
+          "score": 11.0007,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 9.7297,
+          "evidence": []
+        },
+        {
+          "term": "bibliographic",
+          "score": 9.2131,
+          "evidence": []
+        },
+        {
+          "term": "heading",
+          "score": 8.879,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject indexing",
+          "score": 0.719,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.5727,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 0.343,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.3313,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 0.3275,
+          "evidence": []
+        },
+        {
+          "term": "subdivision",
+          "score": 0.327,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 0.3082,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.3003,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject indexing",
+          "score": 8.59,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 7.4129,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 6.0811,
+          "evidence": []
+        },
+        {
+          "term": "baseline",
+          "score": 5.5107,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 5.3649,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 5.1074,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 4.337,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 3.7282,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject indexing",
+          "score": 0.719,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 0.5727,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 0.3275,
+          "evidence": []
+        },
+        {
+          "term": "subdivisions",
+          "score": 0.2762,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.2598,
+          "evidence": []
+        },
+        {
+          "term": "geographic",
+          "score": 0.243,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 0.2356,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2322,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "holes",
+          "score": 117.7467,
+          "evidence": []
+        },
+        {
+          "term": "toracari",
+          "score": 116.0083,
+          "evidence": []
+        },
+        {
+          "term": "peasants",
+          "score": 115.139,
+          "evidence": []
+        },
+        {
+          "term": "xpolitics",
+          "score": 115.139,
+          "evidence": []
+        },
+        {
+          "term": "ford",
+          "score": 112.5314,
+          "evidence": []
+        },
+        {
+          "term": "rural",
+          "score": 112.5314,
+          "evidence": []
+        },
+        {
+          "term": "tenure",
+          "score": 112.5314,
+          "evidence": []
+        },
+        {
+          "term": "bolivia",
+          "score": 111.5831,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-comparison-baseline-considerations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "baseline",
+          "score": 1.1069,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "headings",
+          "score": 0.8073,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 0.6848,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "baseline",
+          "score": 13.8539,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "headings",
+          "score": 12.5136,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 9.1242,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "headings",
+          "score": 0.1778,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.1729,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.13,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "baseline",
+          "score": 4.0972,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "headings",
+          "score": 2.4511,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 1.8051,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "headings",
+          "score": 0.1778,
+          "evidence": []
+        },
+        {
+          "term": "subject",
+          "score": 0.1729,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.13,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "holes",
+          "score": 77.7871,
+          "evidence": []
+        },
+        {
+          "term": "toracari",
+          "score": 77.0782,
+          "evidence": []
+        },
+        {
+          "term": "peasants",
+          "score": 76.7237,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "arxiv preprint",
+          "score": 2.3556,
+          "evidence": []
+        },
+        {
+          "term": "lcsh subject",
+          "score": 2.1236,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 2.0894,
+          "evidence": []
+        },
+        {
+          "term": "harvard library",
+          "score": 1.8866,
+          "evidence": []
+        },
+        {
+          "term": "cata loging",
+          "score": 1.8587,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 1.6411,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 1.2961,
+          "evidence": []
+        },
+        {
+          "term": "semeval task",
+          "score": 1.1711,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "subject indexing",
+          "score": 61.4856,
+          "evidence": []
+        },
+        {
+          "term": "lcsh subject",
+          "score": 56.6148,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 46.5799,
+          "evidence": []
+        },
+        {
+          "term": "harvard library",
+          "score": 35.8225,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 31.9346,
+          "evidence": []
+        },
+        {
+          "term": "org abs",
+          "score": 26.0138,
+          "evidence": []
+        },
+        {
+          "term": "cata loging",
+          "score": 25.8205,
+          "evidence": []
+        },
+        {
+          "term": "pipeline",
+          "score": 17.7722,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lcsh subject",
+          "score": 2.1287,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 1.9822,
+          "evidence": []
+        },
+        {
+          "term": "harvard library",
+          "score": 1.2666,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 1.0169,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 0.9738,
+          "evidence": []
+        },
+        {
+          "term": "semeval task",
+          "score": 0.8817,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 0.734,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 0.6576,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "arxiv preprint",
+          "score": 37.1462,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 24.2945,
+          "evidence": []
+        },
+        {
+          "term": "lcsh subject",
+          "score": 21.8311,
+          "evidence": []
+        },
+        {
+          "term": "semeval task",
+          "score": 17.9168,
+          "evidence": []
+        },
+        {
+          "term": "agent skill",
+          "score": 14.516,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 9.5183,
+          "evidence": []
+        },
+        {
+          "term": "harvard library",
+          "score": 9.5071,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 6.8061,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lcsh subject",
+          "score": 2.1287,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 1.9822,
+          "evidence": []
+        },
+        {
+          "term": "harvard library",
+          "score": 1.2666,
+          "evidence": []
+        },
+        {
+          "term": "headings",
+          "score": 1.0169,
+          "evidence": []
+        },
+        {
+          "term": "arxiv preprint",
+          "score": 0.9738,
+          "evidence": []
+        },
+        {
+          "term": "semeval task",
+          "score": 0.8817,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 0.734,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 0.6369,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "cata loging",
+          "score": 99.365,
+          "evidence": []
+        },
+        {
+          "term": "dexter",
+          "score": 69.0894,
+          "evidence": []
+        },
+        {
+          "term": "olson",
+          "score": 69.0894,
+          "evidence": []
+        },
+        {
+          "term": "tonta",
+          "score": 69.0894,
+          "evidence": []
+        },
+        {
+          "term": "topicality",
+          "score": 69.0894,
+          "evidence": []
+        },
+        {
+          "term": "wolfram",
+          "score": 69.0894,
+          "evidence": []
+        },
+        {
+          "term": "hjørland",
+          "score": 69.0894,
+          "evidence": []
+        },
+        {
+          "term": "skill-based",
+          "score": 68.5333,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "congress subject",
+          "score": 2.1051,
+          "evidence": []
+        },
+        {
+          "term": "subject headings",
+          "score": 1.9624,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 1.8628,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 1.0124,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.9643,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 0.8883,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 0.8322,
+          "evidence": []
+        },
+        {
+          "term": "chow",
+          "score": 0.7748,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "congress subject",
+          "score": 49.9635,
+          "evidence": []
+        },
+        {
+          "term": "subject headings",
+          "score": 46.6902,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 46.646,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 21.0475,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 15.3979,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 11.2527,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 10.79,
+          "evidence": []
+        },
+        {
+          "term": "pipeline",
+          "score": 10.6633,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "subject headings",
+          "score": 1.1594,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 0.9091,
+          "evidence": []
+        },
+        {
+          "term": "congress subject",
+          "score": 0.7988,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.4532,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.4186,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 0.3588,
+          "evidence": []
+        },
+        {
+          "term": "cataloging",
+          "score": 0.3572,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 0.3355,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "subject headings",
+          "score": 17.1133,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 13.1583,
+          "evidence": []
+        },
+        {
+          "term": "congress subject",
+          "score": 10.8911,
+          "evidence": []
+        },
+        {
+          "term": "skill",
+          "score": 9.0207,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 5.3193,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 4.6555,
+          "evidence": []
+        },
+        {
+          "term": "lcgft",
+          "score": 4.5817,
+          "evidence": []
+        },
+        {
+          "term": "title",
+          "score": 4.198,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "subject headings",
+          "score": 1.1594,
+          "evidence": []
+        },
+        {
+          "term": "subject indexing",
+          "score": 0.9091,
+          "evidence": []
+        },
+        {
+          "term": "congress subject",
+          "score": 0.7988,
+          "evidence": []
+        },
+        {
+          "term": "library",
+          "score": 0.4532,
+          "evidence": []
+        },
+        {
+          "term": "lcsh",
+          "score": 0.4186,
+          "evidence": []
+        },
+        {
+          "term": "marc",
+          "score": 0.3588,
+          "evidence": []
+        },
+        {
+          "term": "agent skills",
+          "score": 0.3355,
+          "evidence": []
+        },
+        {
+          "term": "chow",
+          "score": 0.2527,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alma",
+          "score": 87.5507,
+          "evidence": []
+        },
+        {
+          "term": "skill-based",
+          "score": 81.7402,
+          "evidence": []
+        },
+        {
+          "term": "ils",
+          "score": 81.5268,
+          "evidence": []
+        },
+        {
+          "term": "subdi",
+          "score": 78.6423,
+          "evidence": []
+        },
+        {
+          "term": "backlogs",
+          "score": 77.5077,
+          "evidence": []
+        },
+        {
+          "term": "patrons",
+          "score": 77.5077,
+          "evidence": []
+        },
+        {
+          "term": "undiscoverable",
+          "score": 77.5077,
+          "evidence": []
+        },
+        {
+          "term": "quanti",
+          "score": 77.3746,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

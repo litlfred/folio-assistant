@@ -1,0 +1,36 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Watcher.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261110-1730",
+    "sha": "efcb7241d4875fb9a2fe03c40fe0f707524c68d3",
+    "pr": "repin-train/20261110-1730",
+    "run": "42865924598"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Watcher",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Schedule the refresh watcher",
+      "nodeKind": "activity",
+      "bpmnType": "bpmn:ServiceTask",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_MultiLocaleTranslation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_MultiLocaleTranslation/lane/Lane_ML_Lead",
+      "requires": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/skill/translation-refresh"
+      ],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_4"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_MultiLocaleTranslation#flow/Flow_ML_5"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_MultiLocaleTranslation/node/Task_ML_Watcher"
+    }
+  ]
+}

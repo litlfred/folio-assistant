@@ -1,0 +1,26 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/folio-assistant-core/schema/review-verdict.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "repin-train/20261110-1730",
+    "sha": "efcb7241d4875fb9a2fe03c40fe0f707524c68d3",
+    "pr": "repin-train/20261110-1730",
+    "run": "42865924598"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/folio-assistant-core/schema/review-verdict",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "review-verdict",
+      "title": "review-verdict",
+      "summary": "A reviewer's VERDICT on one version of one block: \"I read this, and here is",
+      "module": "schemas/review-verdict.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/folio-assistant-core/directory/core-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/schema/review-verdict",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/folio-assistant-core/schema/zod/review-verdict/ReviewVerdictSchema.schema.json"
+      ]
+    }
+  ]
+}

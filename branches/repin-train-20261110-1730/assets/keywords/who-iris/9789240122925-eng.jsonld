@@ -1,0 +1,6104 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "9789240122925-eng",
+  "instance": "who-iris",
+  "about": "library/9789240122925-eng",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 1478,
+    "terms": 11089
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "hwf density",
+        "score": 24.4058,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf stock",
+        "score": 23.6301,
+        "evidence": []
+      },
+      {
+        "term": "hwf ageing",
+        "score": 23.0786,
+        "evidence": []
+      },
+      {
+        "term": "global hwf",
+        "score": 22.8109,
+        "evidence": []
+      },
+      {
+        "term": "nhwa focal",
+        "score": 22.4447,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national hwf",
+        "score": 22.3246,
+        "evidence": []
+      },
+      {
+        "term": "projected hwf",
+        "score": 22.2204,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce accounts",
+        "score": 21.5728,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce levels",
+        "score": 20.7572,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "report hwf",
+        "score": 20.7468,
+        "evidence": []
+      },
+      {
+        "term": "hwf statistics",
+        "score": 20.5403,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf distribution",
+        "score": 19.4672,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "hwf density",
+        "score": 631.1069,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf stock",
+        "score": 593.2527,
+        "evidence": []
+      },
+      {
+        "term": "global hwf",
+        "score": 547.4183,
+        "evidence": []
+      },
+      {
+        "term": "projected hwf",
+        "score": 544.0639,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf ageing",
+        "score": 522.3175,
+        "evidence": []
+      },
+      {
+        "term": "nhwa focal",
+        "score": 521.9578,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "national hwf",
+        "score": 517.7527,
+        "evidence": []
+      },
+      {
+        "term": "nhwa platform",
+        "score": 484.9026,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce stock",
+        "score": 482.6727,
+        "evidence": []
+      },
+      {
+        "term": "age-specific hwf",
+        "score": 481.1905,
+        "evidence": []
+      },
+      {
+        "term": "report hwf",
+        "score": 476.4575,
+        "evidence": []
+      },
+      {
+        "term": "hwf statistics",
+        "score": 465.5639,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "hwf stock",
+        "score": 21.8627,
+        "evidence": []
+      },
+      {
+        "term": "hwf density",
+        "score": 21.0691,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "global hwf",
+        "score": 20.3519,
+        "evidence": []
+      },
+      {
+        "term": "national hwf",
+        "score": 20.1976,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 20.1792,
+        "evidence": []
+      },
+      {
+        "term": "nhwa focal",
+        "score": 19.735,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce accounts",
+        "score": 19.6693,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "projected hwf",
+        "score": 18.569,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "nhwa platform",
+        "score": 18.3079,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf ageing",
+        "score": 17.7552,
+        "evidence": []
+      },
+      {
+        "term": "hwf distribution",
+        "score": 17.7112,
+        "evidence": []
+      },
+      {
+        "term": "workforce levels",
+        "score": 17.5975,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hwf density",
+        "score": 637.7939,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf stock",
+        "score": 618.7556,
+        "evidence": []
+      },
+      {
+        "term": "projected hwf",
+        "score": 540.2554,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "global hwf",
+        "score": 530.1017,
+        "evidence": []
+      },
+      {
+        "term": "national hwf",
+        "score": 509.6411,
+        "evidence": []
+      },
+      {
+        "term": "age-specific hwf",
+        "score": 500.2583,
+        "evidence": []
+      },
+      {
+        "term": "hwf ageing",
+        "score": 480.247,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 467.529,
+        "evidence": []
+      },
+      {
+        "term": "nhwa focal",
+        "score": 462.0815,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf distribution",
+        "score": 454.7309,
+        "evidence": []
+      },
+      {
+        "term": "hwf topics",
+        "score": 454.2893,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "nhwa platform",
+        "score": 454.0664,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "hwf stock",
+        "score": 21.8627,
+        "evidence": []
+      },
+      {
+        "term": "hwf density",
+        "score": 21.0691,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "global hwf",
+        "score": 20.3519,
+        "evidence": []
+      },
+      {
+        "term": "national hwf",
+        "score": 20.1976,
+        "evidence": []
+      },
+      {
+        "term": "workforce stock",
+        "score": 20.1792,
+        "evidence": []
+      },
+      {
+        "term": "nhwa focal",
+        "score": 19.735,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "workforce accounts",
+        "score": 19.6693,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "projected hwf",
+        "score": 18.569,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "nhwa platform",
+        "score": 18.3079,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf ageing",
+        "score": 17.7552,
+        "evidence": []
+      },
+      {
+        "term": "hwf distribution",
+        "score": 17.7112,
+        "evidence": []
+      },
+      {
+        "term": "workforce levels",
+        "score": 17.5975,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "age-specific weights",
+        "score": 2291.901,
+        "evidence": []
+      },
+      {
+        "term": "masahiro zakoji",
+        "score": 1914.6511,
+        "evidence": []
+      },
+      {
+        "term": "income groupa",
+        "score": 1642.8265,
+        "evidence": []
+      },
+      {
+        "term": "age-specific hwf",
+        "score": 1616.9487,
+        "evidence": []
+      },
+      {
+        "term": "lennah etyang",
+        "score": 1545.754,
+        "evidence": []
+      },
+      {
+        "term": "age-standardized hwf",
+        "score": 1457.8517,
+        "evidence": []
+      },
+      {
+        "term": "million inhabitants",
+        "score": 1442.3072,
+        "evidence": []
+      },
+      {
+        "term": "projected hwf",
+        "score": 1407.5099,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "hwf ageing",
+        "score": 1338.5529,
+        "evidence": []
+      },
+      {
+        "term": "upper-middle-income",
+        "score": 1311.2614,
+        "evidence": []
+      },
+      {
+        "term": "upper-middle-income countries",
+        "score": 1311.2614,
+        "evidence": []
+      },
+      {
+        "term": "age-adjusted",
+        "score": 1245.6452,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workforce accounts",
+          "score": 1.0214,
+          "evidence": []
+        },
+        {
+          "term": "workforce policies",
+          "score": 0.9868,
+          "evidence": []
+        },
+        {
+          "term": "academy",
+          "score": 0.9421,
+          "evidence": []
+        },
+        {
+          "term": "appreciation",
+          "score": 0.8985,
+          "evidence": []
+        },
+        {
+          "term": "korea",
+          "score": 0.893,
+          "evidence": []
+        },
+        {
+          "term": "ireland",
+          "score": 0.8802,
+          "evidence": []
+        },
+        {
+          "term": "france",
+          "score": 0.8637,
+          "evidence": []
+        },
+        {
+          "term": "headquarters",
+          "score": 0.8258,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "workforce accounts",
+          "score": 15.9939,
+          "evidence": []
+        },
+        {
+          "term": "workforce policies",
+          "score": 15.5779,
+          "evidence": []
+        },
+        {
+          "term": "ireland",
+          "score": 13.5776,
+          "evidence": []
+        },
+        {
+          "term": "academy",
+          "score": 12.3997,
+          "evidence": []
+        },
+        {
+          "term": "appreciation",
+          "score": 11.8243,
+          "evidence": []
+        },
+        {
+          "term": "korea",
+          "score": 11.8243,
+          "evidence": []
+        },
+        {
+          "term": "headquarters",
+          "score": 11.6917,
+          "evidence": []
+        },
+        {
+          "term": "france",
+          "score": 11.378,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workforce accounts",
+          "score": 0.4774,
+          "evidence": []
+        },
+        {
+          "term": "republic",
+          "score": 0.3909,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.3817,
+          "evidence": []
+        },
+        {
+          "term": "workforce policies",
+          "score": 0.2781,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.2639,
+          "evidence": []
+        },
+        {
+          "term": "regional",
+          "score": 0.2607,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.2006,
+          "evidence": []
+        },
+        {
+          "term": "states",
+          "score": 0.1967,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "republic",
+          "score": 8.9032,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 8.1389,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 5.5934,
+          "evidence": []
+        },
+        {
+          "term": "workforce policies",
+          "score": 4.5855,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 2.9781,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 2.9666,
+          "evidence": []
+        },
+        {
+          "term": "regional",
+          "score": 2.6995,
+          "evidence": []
+        },
+        {
+          "term": "education",
+          "score": 2.4707,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workforce accounts",
+          "score": 0.4774,
+          "evidence": []
+        },
+        {
+          "term": "republic",
+          "score": 0.3909,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.3817,
+          "evidence": []
+        },
+        {
+          "term": "workforce policies",
+          "score": 0.2905,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.2639,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1825,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 0.1802,
+          "evidence": []
+        },
+        {
+          "term": "headquarters",
+          "score": 0.1373,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "zurn",
+          "score": 172.9881,
+          "evidence": []
+        },
+        {
+          "term": "mourtala",
+          "score": 158.7415,
+          "evidence": []
+        },
+        {
+          "term": "scotter",
+          "score": 158.7415,
+          "evidence": []
+        },
+        {
+          "term": "cometto",
+          "score": 158.3022,
+          "evidence": []
+        },
+        {
+          "term": "aurora",
+          "score": 144.3726,
+          "evidence": []
+        },
+        {
+          "term": "nuruzzaman",
+          "score": 144.3726,
+          "evidence": []
+        },
+        {
+          "term": "phyllida",
+          "score": 144.3726,
+          "evidence": []
+        },
+        {
+          "term": "saares",
+          "score": 144.3726,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-abbreviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "middle-income countries",
+          "score": 1.1401,
+          "evidence": []
+        },
+        {
+          "term": "human resources",
+          "score": 0.7336,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.5635,
+          "evidence": []
+        },
+        {
+          "term": "offices",
+          "score": 0.5497,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.4616,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.4074,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "middle-income countries",
+          "score": 15.4851,
+          "evidence": []
+        },
+        {
+          "term": "human resources",
+          "score": 9.4968,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 8.4632,
+          "evidence": []
+        },
+        {
+          "term": "offices",
+          "score": 7.1216,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 6.8598,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 4.5491,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "middle-income countries",
+          "score": 0.3712,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.3437,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.339,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.3321,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.302,
+          "evidence": []
+        },
+        {
+          "term": "human resources",
+          "score": 0.2442,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 4.4018,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 4.049,
+          "evidence": []
+        },
+        {
+          "term": "middle-income countries",
+          "score": 3.9629,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 3.9615,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 2.5892,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 2.1979,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "middle-income countries",
+          "score": 0.3712,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.339,
+          "evidence": []
+        },
+        {
+          "term": "human resources",
+          "score": 0.2442,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.2324,
+          "evidence": []
+        },
+        {
+          "term": "international",
+          "score": 0.1971,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.1698,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upper-middle-income",
+          "score": 46.2069,
+          "evidence": []
+        },
+        {
+          "term": "ghws",
+          "score": 43.2309,
+          "evidence": []
+        },
+        {
+          "term": "retire",
+          "score": 43.0161,
+          "evidence": []
+        },
+        {
+          "term": "fiscal",
+          "score": 42.8714,
+          "evidence": []
+        },
+        {
+          "term": "umics",
+          "score": 41.5054,
+          "evidence": []
+        },
+        {
+          "term": "lics",
+          "score": 41.3831,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-executive-summary": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hwf density",
+          "score": 2.7567,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 2.1105,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 1.9659,
+          "evidence": []
+        },
+        {
+          "term": "key hwf",
+          "score": 1.734,
+          "evidence": []
+        },
+        {
+          "term": "workers aged",
+          "score": 1.6802,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 1.6794,
+          "evidence": []
+        },
+        {
+          "term": "five years",
+          "score": 1.652,
+          "evidence": []
+        },
+        {
+          "term": "hics",
+          "score": 1.3736,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hwf density",
+          "score": 86.5916,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 55.742,
+          "evidence": []
+        },
+        {
+          "term": "key hwf",
+          "score": 52.7679,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 44.5318,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 36.802,
+          "evidence": []
+        },
+        {
+          "term": "five years",
+          "score": 35.3775,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 29.7786,
+          "evidence": []
+        },
+        {
+          "term": "hics",
+          "score": 28.8812,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hwf density",
+          "score": 2.0552,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 1.6692,
+          "evidence": []
+        },
+        {
+          "term": "key hwf",
+          "score": 1.4996,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 1.4325,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.3643,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 1.3483,
+          "evidence": []
+        },
+        {
+          "term": "income group",
+          "score": 1.1071,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 1.1036,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hwf density",
+          "score": 63.4484,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 44.6347,
+          "evidence": []
+        },
+        {
+          "term": "key hwf",
+          "score": 42.0059,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 33.2179,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 30.156,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 26.3905,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 23.8436,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 22.651,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hwf density",
+          "score": 2.0552,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 1.6692,
+          "evidence": []
+        },
+        {
+          "term": "key hwf",
+          "score": 1.4996,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 1.4325,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.3643,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 1.3483,
+          "evidence": []
+        },
+        {
+          "term": "income group",
+          "score": 1.1071,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 1.1036,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upper-middle-income",
+          "score": 85.271,
+          "evidence": []
+        },
+        {
+          "term": "age-adjusted",
+          "score": 75.6909,
+          "evidence": []
+        },
+        {
+          "term": "retire",
+          "score": 72.6891,
+          "evidence": []
+        },
+        {
+          "term": "groupa",
+          "score": 71.8794,
+          "evidence": []
+        },
+        {
+          "term": "age-specific",
+          "score": 70.7841,
+          "evidence": []
+        },
+        {
+          "term": "fiscal",
+          "score": 69.3,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 68.2295,
+          "evidence": []
+        },
+        {
+          "term": "lics",
+          "score": 67.6206,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-11-historical-overview-of-health-workforce-data": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workforce",
+          "score": 1.7439,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "report published",
+          "score": 1.6343,
+          "evidence": []
+        },
+        {
+          "term": "universal truth",
+          "score": 1.5535,
+          "evidence": []
+        },
+        {
+          "term": "nhwa handbook",
+          "score": 1.3991,
+          "evidence": []
+        },
+        {
+          "term": "workforce statistics",
+          "score": 1.3296,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.2393,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 1.1793,
+          "evidence": []
+        },
+        {
+          "term": "strengthening",
+          "score": 1.1477,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "workforce",
+          "score": 50.7793,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "report published",
+          "score": 39.0169,
+          "evidence": []
+        },
+        {
+          "term": "workforce statistics",
+          "score": 30.9869,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 30.3577,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 29.535,
+          "evidence": []
+        },
+        {
+          "term": "nhwa handbook",
+          "score": 27.0317,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 22.2497,
+          "evidence": []
+        },
+        {
+          "term": "universal truth",
+          "score": 21.387,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workforce",
+          "score": 1.5082,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.155,
+          "evidence": []
+        },
+        {
+          "term": "nhwa handbook",
+          "score": 1.0986,
+          "evidence": []
+        },
+        {
+          "term": "workforce statistics",
+          "score": 0.9747,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.8866,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.6999,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.6589,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.5937,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa handbook",
+          "score": 26.3696,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 23.7744,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf",
+          "score": 21.3881,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 17.0239,
+          "evidence": []
+        },
+        {
+          "term": "workforce statistics",
+          "score": 13.9795,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 9.8925,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 8.5615,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 7.3914,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workforce",
+          "score": 1.5082,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.155,
+          "evidence": []
+        },
+        {
+          "term": "nhwa handbook",
+          "score": 1.0986,
+          "evidence": []
+        },
+        {
+          "term": "workforce statistics",
+          "score": 0.9747,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.8866,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 0.6999,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.6589,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.5937,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ghws",
+          "score": 23.2809,
+          "evidence": []
+        },
+        {
+          "term": "ise",
+          "score": 23.1885,
+          "evidence": []
+        },
+        {
+          "term": "ghwa",
+          "score": 22.6865,
+          "evidence": []
+        },
+        {
+          "term": "plianbangchang",
+          "score": 22.4616,
+          "evidence": []
+        },
+        {
+          "term": "inaugural",
+          "score": 22.4577,
+          "evidence": []
+        },
+        {
+          "term": "ize",
+          "score": 22.2736,
+          "evidence": []
+        },
+        {
+          "term": "samlee",
+          "score": 21.829,
+          "evidence": []
+        },
+        {
+          "term": "gho",
+          "score": 21.6195,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-12-what-is-the-nhwa": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa",
+          "score": 2.9397,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa indicators",
+          "score": 2.3801,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 2.2686,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 1.8521,
+          "evidence": []
+        },
+        {
+          "term": "global hwf",
+          "score": 1.8118,
+          "evidence": []
+        },
+        {
+          "term": "wisn",
+          "score": 1.553,
+          "evidence": []
+        },
+        {
+          "term": "hlma",
+          "score": 1.4991,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 1.3674,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa",
+          "score": 145.9796,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa indicators",
+          "score": 95.1587,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 84.7832,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 79.9478,
+          "evidence": []
+        },
+        {
+          "term": "global hwf",
+          "score": 48.0397,
+          "evidence": []
+        },
+        {
+          "term": "wisn",
+          "score": 33.0401,
+          "evidence": []
+        },
+        {
+          "term": "hlma",
+          "score": 26.4212,
+          "evidence": []
+        },
+        {
+          "term": "key indicators",
+          "score": 26.3645,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 2.6217,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa indicators",
+          "score": 2.1276,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 1.8324,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 1.5995,
+          "evidence": []
+        },
+        {
+          "term": "global hwf",
+          "score": 1.4428,
+          "evidence": []
+        },
+        {
+          "term": "key indicators",
+          "score": 1.1087,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 0.9997,
+          "evidence": []
+        },
+        {
+          "term": "indicators related",
+          "score": 0.8168,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 114.3409,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa indicators",
+          "score": 76.6597,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 69.5661,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 61.2637,
+          "evidence": []
+        },
+        {
+          "term": "global hwf",
+          "score": 44.884,
+          "evidence": []
+        },
+        {
+          "term": "key indicators",
+          "score": 22.4001,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 20.5573,
+          "evidence": []
+        },
+        {
+          "term": "indicators related",
+          "score": 19.4893,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa",
+          "score": 2.6217,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa indicators",
+          "score": 2.1276,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 1.8324,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 1.5995,
+          "evidence": []
+        },
+        {
+          "term": "global hwf",
+          "score": 1.4428,
+          "evidence": []
+        },
+        {
+          "term": "key indicators",
+          "score": 1.1087,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 0.9997,
+          "evidence": []
+        },
+        {
+          "term": "indicators related",
+          "score": 0.8816,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "uhf",
+          "score": 49.7615,
+          "evidence": []
+        },
+        {
+          "term": "lauer",
+          "score": 33.9333,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 32.9056,
+          "evidence": []
+        },
+        {
+          "term": "leticia",
+          "score": 28.1953,
+          "evidence": []
+        },
+        {
+          "term": "casey",
+          "score": 26.7069,
+          "evidence": []
+        },
+        {
+          "term": "christian",
+          "score": 26.7069,
+          "evidence": []
+        },
+        {
+          "term": "pisani",
+          "score": 26.2272,
+          "evidence": []
+        },
+        {
+          "term": "country-owned",
+          "score": 26.0102,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-13-about-this-report": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "thematic topic",
+          "score": 1.2099,
+          "evidence": []
+        },
+        {
+          "term": "selected thematic",
+          "score": 1.122,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 0.9772,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf",
+          "score": 0.7915,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.7903,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "thematic topic",
+          "score": 15.3643,
+          "evidence": []
+        },
+        {
+          "term": "selected thematic",
+          "score": 14.1762,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 13.5166,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 12.6664,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf",
+          "score": 12.1431,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 0.3857,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.3374,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.2416,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.2201,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 0.21,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 10.3883,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 8.4157,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 3.2371,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 2.7648,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 2.6866,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa",
+          "score": 0.3857,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.3374,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.2416,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.2201,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 0.21,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "age-adjusted",
+          "score": 44.1076,
+          "evidence": []
+        },
+        {
+          "term": "age-specific",
+          "score": 41.0785,
+          "evidence": []
+        },
+        {
+          "term": "weights",
+          "score": 40.6154,
+          "evidence": []
+        },
+        {
+          "term": "inaugural",
+          "score": 39.9732,
+          "evidence": []
+        },
+        {
+          "term": "plianbangchang",
+          "score": 39.5706,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-21-nhwa-data-process": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa",
+          "score": 2.1922,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 1.8561,
+          "evidence": []
+        },
+        {
+          "term": "triangulation",
+          "score": 0.7566,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.7183,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "release",
+          "score": 0.7102,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.6818,
+          "evidence": []
+        },
+        {
+          "term": "sdg",
+          "score": 0.642,
+          "evidence": []
+        },
+        {
+          "term": "portal",
+          "score": 0.6254,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa",
+          "score": 59.4732,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 35.8582,
+          "evidence": []
+        },
+        {
+          "term": "triangulation",
+          "score": 9.9917,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 9.1073,
+          "evidence": []
+        },
+        {
+          "term": "release",
+          "score": 8.5078,
+          "evidence": []
+        },
+        {
+          "term": "portal",
+          "score": 8.1591,
+          "evidence": []
+        },
+        {
+          "term": "cycle",
+          "score": 7.8623,
+          "evidence": []
+        },
+        {
+          "term": "sdg",
+          "score": 7.8623,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 1.5395,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 0.7668,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.5433,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.4548,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.3679,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 0.3642,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 0.2861,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2854,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 47.0938,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 12.5326,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 12.1014,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 7.0928,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 5.9018,
+          "evidence": []
+        },
+        {
+          "term": "indicators",
+          "score": 5.6689,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 4.4483,
+          "evidence": []
+        },
+        {
+          "term": "hrh",
+          "score": 4.407,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa",
+          "score": 1.5395,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 0.7668,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.5433,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.4548,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.2854,
+          "evidence": []
+        },
+        {
+          "term": "global",
+          "score": 0.281,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 0.2336,
+          "evidence": []
+        },
+        {
+          "term": "release",
+          "score": 0.2306,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "angola",
+          "score": 34.1614,
+          "evidence": []
+        },
+        {
+          "term": "bahamas",
+          "score": 34.1614,
+          "evidence": []
+        },
+        {
+          "term": "uhf",
+          "score": 32.8126,
+          "evidence": []
+        },
+        {
+          "term": "gho",
+          "score": 31.1981,
+          "evidence": []
+        },
+        {
+          "term": "armenia",
+          "score": 31.1519,
+          "evidence": []
+        },
+        {
+          "term": "ghws",
+          "score": 30.9685,
+          "evidence": []
+        },
+        {
+          "term": "penultimate",
+          "score": 30.9359,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 29.9843,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ]
+    },
+    "sec-009-22-status-of-nhwa-focal-points-in-2025": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "focal points",
+          "score": 2.1672,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 1.223,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "december",
+          "score": 0.7273,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "focal points",
+          "score": 25.5416,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 16.22,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "december",
+          "score": 8.3259,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "focal points",
+          "score": 0.6496,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 0.6055,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.3225,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 13.0932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 8.0834,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf",
+          "score": 3.372,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "focal points",
+          "score": 0.6496,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa",
+          "score": 0.6055,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.3225,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "gulf",
+          "score": 48.5197,
+          "evidence": []
+        },
+        {
+          "term": "taiwan",
+          "score": 48.1622,
+          "evidence": []
+        },
+        {
+          "term": "compass",
+          "score": 43.9799,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-23-status-of-health-workforce-data-in-2025": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hwf topics",
+          "score": 2.7628,
+          "evidence": []
+        },
+        {
+          "term": "mediterranean region",
+          "score": 2.6539,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 2.65,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 2.5605,
+          "evidence": []
+        },
+        {
+          "term": "african region",
+          "score": 2.5386,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 2.5339,
+          "evidence": []
+        },
+        {
+          "term": "fiscal year",
+          "score": 2.5052,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 2.4789,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa platform",
+          "score": 113.7362,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 107.39,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 103.4831,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 102.0865,
+          "evidence": []
+        },
+        {
+          "term": "mediterranean region",
+          "score": 92.7431,
+          "evidence": []
+        },
+        {
+          "term": "countries reporting",
+          "score": 92.7183,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 90.9352,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 90.7611,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa focal",
+          "score": 2.9407,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 2.6951,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 2.6393,
+          "evidence": []
+        },
+        {
+          "term": "mediterranean region",
+          "score": 2.4812,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 2.4484,
+          "evidence": []
+        },
+        {
+          "term": "african region",
+          "score": 2.4286,
+          "evidence": []
+        },
+        {
+          "term": "key hwf",
+          "score": 2.3844,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 2.3633,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa platform",
+          "score": 121.6217,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 117.9802,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 102.4355,
+          "evidence": []
+        },
+        {
+          "term": "nhwa implementation",
+          "score": 100.3522,
+          "evidence": []
+        },
+        {
+          "term": "countries reporting",
+          "score": 97.9651,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 96.4026,
+          "evidence": []
+        },
+        {
+          "term": "mediterranean region",
+          "score": 91.9776,
+          "evidence": []
+        },
+        {
+          "term": "african region",
+          "score": 90.7968,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa focal",
+          "score": 2.9407,
+          "evidence": []
+        },
+        {
+          "term": "hwf topics",
+          "score": 2.6951,
+          "evidence": []
+        },
+        {
+          "term": "nhwa platform",
+          "score": 2.6393,
+          "evidence": []
+        },
+        {
+          "term": "mediterranean region",
+          "score": 2.4812,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 2.4484,
+          "evidence": []
+        },
+        {
+          "term": "african region",
+          "score": 2.4286,
+          "evidence": []
+        },
+        {
+          "term": "key hwf",
+          "score": 2.3844,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 2.3633,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fiscal year",
+          "score": 82.6879,
+          "evidence": []
+        },
+        {
+          "term": "upper-middle-income",
+          "score": 74.9937,
+          "evidence": []
+        },
+        {
+          "term": "retire",
+          "score": 67.1926,
+          "evidence": []
+        },
+        {
+          "term": "groupa",
+          "score": 66.6023,
+          "evidence": []
+        },
+        {
+          "term": "lics",
+          "score": 64.1267,
+          "evidence": []
+        },
+        {
+          "term": "umics",
+          "score": 62.9864,
+          "evidence": []
+        },
+        {
+          "term": "millions",
+          "score": 62.687,
+          "evidence": []
+        },
+        {
+          "term": "ghws",
+          "score": 60.307,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-31-global-and-regional-estimates": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "regional estimates",
+          "score": 3.8859,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "laboratory technicians",
+          "score": 3.1802,
+          "evidence": []
+        },
+        {
+          "term": "prosthetic technicians",
+          "score": 3.1719,
+          "evidence": []
+        },
+        {
+          "term": "african region",
+          "score": 2.9804,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 2.8989,
+          "evidence": []
+        },
+        {
+          "term": "lowest density",
+          "score": 2.8167,
+          "evidence": []
+        },
+        {
+          "term": "equipment technicians",
+          "score": 2.7531,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 2.6895,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "african region",
+          "score": 127.1015,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 120.6262,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 113.0224,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 108.9594,
+          "evidence": []
+        },
+        {
+          "term": "nursing personnel",
+          "score": 108.3822,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 103.9337,
+          "evidence": []
+        },
+        {
+          "term": "medical doctors",
+          "score": 101.6895,
+          "evidence": []
+        },
+        {
+          "term": "laboratory technicians",
+          "score": 100.319,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prosthetic technicians",
+          "score": 3.2013,
+          "evidence": []
+        },
+        {
+          "term": "laboratory technicians",
+          "score": 3.077,
+          "evidence": []
+        },
+        {
+          "term": "medical doctors",
+          "score": 3.0024,
+          "evidence": []
+        },
+        {
+          "term": "regional estimates",
+          "score": 2.9232,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nursing personnel",
+          "score": 2.7972,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 2.7681,
+          "evidence": []
+        },
+        {
+          "term": "dental assistants",
+          "score": 2.7674,
+          "evidence": []
+        },
+        {
+          "term": "pharmaceutical technicians",
+          "score": 2.748,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "african region",
+          "score": 121.5119,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 116.0778,
+          "evidence": []
+        },
+        {
+          "term": "pacific region",
+          "score": 110.0325,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 106.877,
+          "evidence": []
+        },
+        {
+          "term": "nursing personnel",
+          "score": 106.6178,
+          "evidence": []
+        },
+        {
+          "term": "medical doctors",
+          "score": 103.1357,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 100.7485,
+          "evidence": []
+        },
+        {
+          "term": "laboratory technicians",
+          "score": 96.0638,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prosthetic technicians",
+          "score": 3.2013,
+          "evidence": []
+        },
+        {
+          "term": "laboratory technicians",
+          "score": 3.077,
+          "evidence": []
+        },
+        {
+          "term": "medical doctors",
+          "score": 3.0024,
+          "evidence": []
+        },
+        {
+          "term": "regional estimates",
+          "score": 2.9232,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nursing personnel",
+          "score": 2.7972,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 2.7681,
+          "evidence": []
+        },
+        {
+          "term": "dental assistants",
+          "score": 2.7674,
+          "evidence": []
+        },
+        {
+          "term": "pharmaceutical technicians",
+          "score": 2.748,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "prosthetic technicians",
+          "score": 196.0216,
+          "evidence": []
+        },
+        {
+          "term": "dental prosthetic",
+          "score": 176.7323,
+          "evidence": []
+        },
+        {
+          "term": "dental assistants",
+          "score": 169.5976,
+          "evidence": []
+        },
+        {
+          "term": "paramedical practitioners",
+          "score": 132.8421,
+          "evidence": []
+        },
+        {
+          "term": "gynecologists",
+          "score": 123.1129,
+          "evidence": []
+        },
+        {
+          "term": "pediatricians",
+          "score": 123.1129,
+          "evidence": []
+        },
+        {
+          "term": "psychiatrists",
+          "score": 123.1129,
+          "evidence": []
+        },
+        {
+          "term": "laboratory technicians",
+          "score": 115.1694,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-32-global-and-regional-trends": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hwf density",
+          "score": 1.7005,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 1.2583,
+          "evidence": []
+        },
+        {
+          "term": "release",
+          "score": 1.1583,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 1.1484,
+          "evidence": []
+        },
+        {
+          "term": "statistics world",
+          "score": 1.0984,
+          "evidence": []
+        },
+        {
+          "term": "medical doctors",
+          "score": 1.0341,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.8034,
+          "evidence": []
+        },
+        {
+          "term": "densities",
+          "score": 0.7908,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hwf density",
+          "score": 28.117,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 25.2425,
+          "evidence": []
+        },
+        {
+          "term": "release",
+          "score": 21.2696,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 17.5287,
+          "evidence": []
+        },
+        {
+          "term": "year",
+          "score": 14.049,
+          "evidence": []
+        },
+        {
+          "term": "statistics world",
+          "score": 13.8871,
+          "evidence": []
+        },
+        {
+          "term": "medical doctors",
+          "score": 12.0218,
+          "evidence": []
+        },
+        {
+          "term": "densities",
+          "score": 10.438,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hwf density",
+          "score": 0.803,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 0.6242,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "medical doctors",
+          "score": 0.5963,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.5946,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 0.5793,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.4971,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 0.4482,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.4452,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hwf density",
+          "score": 16.323,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 13.6168,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 10.8191,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 10.2678,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 9.5265,
+          "evidence": []
+        },
+        {
+          "term": "medical doctors",
+          "score": 8.9613,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 8.4458,
+          "evidence": []
+        },
+        {
+          "term": "stock",
+          "score": 7.8604,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hwf density",
+          "score": 0.803,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 0.6242,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "medical doctors",
+          "score": 0.5963,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 0.5946,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 0.5793,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.4971,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 0.4482,
+          "evidence": []
+        },
+        {
+          "term": "statistics world",
+          "score": 0.4235,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upper-middle-income",
+          "score": 85.9028,
+          "evidence": []
+        },
+        {
+          "term": "groupa",
+          "score": 78.7367,
+          "evidence": []
+        },
+        {
+          "term": "age-adjusted",
+          "score": 78.2223,
+          "evidence": []
+        },
+        {
+          "term": "millions",
+          "score": 76.146,
+          "evidence": []
+        },
+        {
+          "term": "fiscal",
+          "score": 76.0028,
+          "evidence": []
+        },
+        {
+          "term": "retire",
+          "score": 73.759,
+          "evidence": []
+        },
+        {
+          "term": "lics",
+          "score": 72.3017,
+          "evidence": []
+        },
+        {
+          "term": "age-specific",
+          "score": 70.2304,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-4-thematic-analysis-population-and-health-workfo": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "ageing",
+          "score": 1.8973,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population",
+          "score": 1.0124,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce",
+          "score": 1.0123,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "ageing",
+          "score": 28.8812,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population",
+          "score": 15.2023,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce",
+          "score": 13.5411,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workforce",
+          "score": 0.3194,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population",
+          "score": 0.2489,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf",
+          "score": 0.1794,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "population",
+          "score": 5.3056,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf",
+          "score": 4.82,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 4.2398,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workforce",
+          "score": 0.3194,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population",
+          "score": 0.2489,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hwf",
+          "score": 0.1794,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ageing",
+          "score": 143.2271,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weights",
+          "score": 119.8488,
+          "evidence": []
+        },
+        {
+          "term": "age-specific",
+          "score": 115.181,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-41-global-population-demographic-changes-2024203": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "population aged",
+          "score": 2.0532,
+          "evidence": []
+        },
+        {
+          "term": "million inhabitants",
+          "score": 1.9608,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 1.9283,
+          "evidence": []
+        },
+        {
+          "term": "income group",
+          "score": 1.7641,
+          "evidence": []
+        },
+        {
+          "term": "income level",
+          "score": 1.507,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 1.4975,
+          "evidence": []
+        },
+        {
+          "term": "total population",
+          "score": 1.3839,
+          "evidence": []
+        },
+        {
+          "term": "fiscal year",
+          "score": 1.3505,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "population",
+          "score": 64.6096,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population aged",
+          "score": 51.559,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 39.8628,
+          "evidence": []
+        },
+        {
+          "term": "total population",
+          "score": 38.8462,
+          "evidence": []
+        },
+        {
+          "term": "income group",
+          "score": 35.9582,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 34.4207,
+          "evidence": []
+        },
+        {
+          "term": "income level",
+          "score": 30.4969,
+          "evidence": []
+        },
+        {
+          "term": "million inhabitants",
+          "score": 28.0665,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "population",
+          "score": 0.8273,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "income group",
+          "score": 0.8006,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 0.7823,
+          "evidence": []
+        },
+        {
+          "term": "population aged",
+          "score": 0.7681,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 0.7224,
+          "evidence": []
+        },
+        {
+          "term": "fiscal year",
+          "score": 0.6418,
+          "evidence": []
+        },
+        {
+          "term": "total population",
+          "score": 0.5892,
+          "evidence": []
+        },
+        {
+          "term": "income level",
+          "score": 0.5739,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "population",
+          "score": 17.9107,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population aged",
+          "score": 16.7329,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 16.357,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 14.8432,
+          "evidence": []
+        },
+        {
+          "term": "density",
+          "score": 12.0104,
+          "evidence": []
+        },
+        {
+          "term": "total population",
+          "score": 11.5844,
+          "evidence": []
+        },
+        {
+          "term": "income group",
+          "score": 10.8745,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 9.1222,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "population",
+          "score": 0.8273,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "income group",
+          "score": 0.8006,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 0.7823,
+          "evidence": []
+        },
+        {
+          "term": "population aged",
+          "score": 0.7681,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 0.7224,
+          "evidence": []
+        },
+        {
+          "term": "fiscal year",
+          "score": 0.6418,
+          "evidence": []
+        },
+        {
+          "term": "total population",
+          "score": 0.5892,
+          "evidence": []
+        },
+        {
+          "term": "income level",
+          "score": 0.5739,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "million inhabitants",
+          "score": 235.2846,
+          "evidence": []
+        },
+        {
+          "term": "upper-middle-income",
+          "score": 232.2118,
+          "evidence": []
+        },
+        {
+          "term": "groupa",
+          "score": 185.7539,
+          "evidence": []
+        },
+        {
+          "term": "fiscal year",
+          "score": 183.4796,
+          "evidence": []
+        },
+        {
+          "term": "age-adjusted",
+          "score": 182.3195,
+          "evidence": []
+        },
+        {
+          "term": "retire",
+          "score": 180.2316,
+          "evidence": []
+        },
+        {
+          "term": "age-specific",
+          "score": 178.0431,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 173.1572,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-42-health-workforce-ageing-by-occupation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workforce ageing",
+          "score": 3.4055,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aged years",
+          "score": 2.8869,
+          "evidence": []
+        },
+        {
+          "term": "percentage aged",
+          "score": 2.6849,
+          "evidence": []
+        },
+        {
+          "term": "upper-middle-income countries",
+          "score": 2.5882,
+          "evidence": []
+        },
+        {
+          "term": "workers aged",
+          "score": 2.5079,
+          "evidence": []
+        },
+        {
+          "term": "lower-middle-income countries",
+          "score": 2.4442,
+          "evidence": []
+        },
+        {
+          "term": "high-income countries",
+          "score": 2.2033,
+          "evidence": []
+        },
+        {
+          "term": "low-income countries",
+          "score": 2.1021,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "aged years",
+          "score": 90.6233,
+          "evidence": []
+        },
+        {
+          "term": "workers aged",
+          "score": 74.2887,
+          "evidence": []
+        },
+        {
+          "term": "percentage aged",
+          "score": 74.218,
+          "evidence": []
+        },
+        {
+          "term": "upper-middle-income countries",
+          "score": 68.1112,
+          "evidence": []
+        },
+        {
+          "term": "lower-middle-income countries",
+          "score": 65.3386,
+          "evidence": []
+        },
+        {
+          "term": "workforce ageing",
+          "score": 62.7341,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "high-income countries",
+          "score": 61.2922,
+          "evidence": []
+        },
+        {
+          "term": "low-income countries",
+          "score": 59.3223,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "workforce ageing",
+          "score": 1.9959,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "income group",
+          "score": 1.1861,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 1.1192,
+          "evidence": []
+        },
+        {
+          "term": "workers aged",
+          "score": 1.0845,
+          "evidence": []
+        },
+        {
+          "term": "fiscal year",
+          "score": 1.0536,
+          "evidence": []
+        },
+        {
+          "term": "high-income countries",
+          "score": 0.9709,
+          "evidence": []
+        },
+        {
+          "term": "low-income countries",
+          "score": 0.9614,
+          "evidence": []
+        },
+        {
+          "term": "income level",
+          "score": 0.9475,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "workforce ageing",
+          "score": 40.2838,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "high-income countries",
+          "score": 30.646,
+          "evidence": []
+        },
+        {
+          "term": "upper-middle-income countries",
+          "score": 30.6266,
+          "evidence": []
+        },
+        {
+          "term": "low-income countries",
+          "score": 30.3306,
+          "evidence": []
+        },
+        {
+          "term": "lower-middle-income countries",
+          "score": 30.0575,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 29.2211,
+          "evidence": []
+        },
+        {
+          "term": "workers aged",
+          "score": 26.8225,
+          "evidence": []
+        },
+        {
+          "term": "income group",
+          "score": 23.2331,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "workforce ageing",
+          "score": 1.9959,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "income group",
+          "score": 1.1861,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 1.1192,
+          "evidence": []
+        },
+        {
+          "term": "workers aged",
+          "score": 1.0845,
+          "evidence": []
+        },
+        {
+          "term": "fiscal year",
+          "score": 1.0536,
+          "evidence": []
+        },
+        {
+          "term": "high-income countries",
+          "score": 0.9709,
+          "evidence": []
+        },
+        {
+          "term": "low-income countries",
+          "score": 0.9614,
+          "evidence": []
+        },
+        {
+          "term": "income level",
+          "score": 0.9475,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "upper-middle-income countries",
+          "score": 223.9325,
+          "evidence": []
+        },
+        {
+          "term": "ageing",
+          "score": 199.8088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce ageing",
+          "score": 199.8088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lower-middle-income countries",
+          "score": 167.553,
+          "evidence": []
+        },
+        {
+          "term": "groupa",
+          "score": 161.1648,
+          "evidence": []
+        },
+        {
+          "term": "fiscal year",
+          "score": 159.6128,
+          "evidence": []
+        },
+        {
+          "term": "retire",
+          "score": 156.7319,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 146.5961,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-43-health-workforce-gap-due-to-population-and-he": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "projected stock",
+          "score": 2.6209,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 2.4382,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 2.2401,
+          "evidence": []
+        },
+        {
+          "term": "ageing",
+          "score": 2.2027,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gap",
+          "score": 1.8135,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population",
+          "score": 1.3821,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "double standardization",
+          "score": 1.3327,
+          "evidence": []
+        },
+        {
+          "term": "age-standardized",
+          "score": 1.1942,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hwf density",
+          "score": 65.3123,
+          "evidence": []
+        },
+        {
+          "term": "projected stock",
+          "score": 61.2475,
+          "evidence": []
+        },
+        {
+          "term": "european region",
+          "score": 53.0715,
+          "evidence": []
+        },
+        {
+          "term": "ageing",
+          "score": 38.5083,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gap",
+          "score": 31.178,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "population",
+          "score": 30.4045,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "age-standardized",
+          "score": 18.5995,
+          "evidence": []
+        },
+        {
+          "term": "increase",
+          "score": 18.445,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hwf density",
+          "score": 1.4239,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 1.4101,
+          "evidence": []
+        },
+        {
+          "term": "projected stock",
+          "score": 1.3063,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 1.1703,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european region",
+          "score": 1.1309,
+          "evidence": []
+        },
+        {
+          "term": "ageing",
+          "score": 1.027,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce",
+          "score": 0.8569,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "age group",
+          "score": 0.8076,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hwf density",
+          "score": 65.9649,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 52.4877,
+          "evidence": []
+        },
+        {
+          "term": "projected stock",
+          "score": 39.9856,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 36.1034,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ageing",
+          "score": 24.6417,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european region",
+          "score": 23.3938,
+          "evidence": []
+        },
+        {
+          "term": "age-specific",
+          "score": 19.2928,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 17.5592,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hwf density",
+          "score": 1.4239,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 1.4101,
+          "evidence": []
+        },
+        {
+          "term": "projected stock",
+          "score": 1.3063,
+          "evidence": []
+        },
+        {
+          "term": "population",
+          "score": 1.1703,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "european region",
+          "score": 1.1309,
+          "evidence": []
+        },
+        {
+          "term": "ageing",
+          "score": 1.027,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "workforce",
+          "score": 0.8569,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "age group",
+          "score": 0.8076,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ageing",
+          "score": 205.0126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weights",
+          "score": 166.1458,
+          "evidence": []
+        },
+        {
+          "term": "age-specific",
+          "score": 164.3217,
+          "evidence": []
+        },
+        {
+          "term": "age-adjusted",
+          "score": 163.5973,
+          "evidence": []
+        },
+        {
+          "term": "upper-middle-income",
+          "score": 142.9732,
+          "evidence": []
+        },
+        {
+          "term": "projected stock",
+          "score": 137.9646,
+          "evidence": []
+        },
+        {
+          "term": "groupa",
+          "score": 118.5294,
+          "evidence": []
+        },
+        {
+          "term": "retire",
+          "score": 115.7092,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-5-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "hwf density",
+          "score": 2.0103,
+          "evidence": []
+        },
+        {
+          "term": "conclusion",
+          "score": 1.0898,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 1.0836,
+          "evidence": []
+        },
+        {
+          "term": "efforts towards",
+          "score": 0.9386,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.8583,
+          "evidence": []
+        },
+        {
+          "term": "projected",
+          "score": 0.7855,
+          "evidence": []
+        },
+        {
+          "term": "affects",
+          "score": 0.7767,
+          "evidence": []
+        },
+        {
+          "term": "stock",
+          "score": 0.7542,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "hwf density",
+          "score": 44.7992,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 16.22,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 13.8967,
+          "evidence": []
+        },
+        {
+          "term": "efforts towards",
+          "score": 13.005,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 12.7708,
+          "evidence": []
+        },
+        {
+          "term": "conclusion",
+          "score": 11.378,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "stock",
+          "score": 10.6549,
+          "evidence": []
+        },
+        {
+          "term": "affects",
+          "score": 10.2024,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hwf density",
+          "score": 1.1174,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.6727,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.5586,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 0.5453,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.495,
+          "evidence": []
+        },
+        {
+          "term": "stock",
+          "score": 0.4528,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.3911,
+          "evidence": []
+        },
+        {
+          "term": "efforts towards",
+          "score": 0.3214,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hwf density",
+          "score": 32.8984,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 17.0672,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 9.9977,
+          "evidence": []
+        },
+        {
+          "term": "stock",
+          "score": 8.3638,
+          "evidence": []
+        },
+        {
+          "term": "projected",
+          "score": 7.5419,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 6.8747,
+          "evidence": []
+        },
+        {
+          "term": "age-specific",
+          "score": 6.6547,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 6.2873,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hwf density",
+          "score": 1.1174,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 0.6727,
+          "evidence": []
+        },
+        {
+          "term": "countries",
+          "score": 0.5586,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 0.5453,
+          "evidence": []
+        },
+        {
+          "term": "workforce",
+          "score": 0.495,
+          "evidence": []
+        },
+        {
+          "term": "stock",
+          "score": 0.4528,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.3911,
+          "evidence": []
+        },
+        {
+          "term": "efforts towards",
+          "score": 0.3214,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "age-adjusted",
+          "score": 65.9659,
+          "evidence": []
+        },
+        {
+          "term": "age-specific",
+          "score": 63.6,
+          "evidence": []
+        },
+        {
+          "term": "weights",
+          "score": 62.9477,
+          "evidence": []
+        },
+        {
+          "term": "upper-middle-income",
+          "score": 58.4664,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 53.5152,
+          "evidence": []
+        },
+        {
+          "term": "age-standardized",
+          "score": 52.5023,
+          "evidence": []
+        },
+        {
+          "term": "retire",
+          "score": 52.1219,
+          "evidence": []
+        },
+        {
+          "term": "fiscal",
+          "score": 50.8396,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "world nursing",
+          "score": 2.2091,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 2.1141,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 2.043,
+          "evidence": []
+        },
+        {
+          "term": "universal truth",
+          "score": 1.881,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 1.8287,
+          "evidence": []
+        },
+        {
+          "term": "south-east asia",
+          "score": 1.785,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.7754,
+          "evidence": []
+        },
+        {
+          "term": "asia region",
+          "score": 1.6927,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "igo",
+          "score": 110.1484,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 109.0894,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 96.1409,
+          "evidence": []
+        },
+        {
+          "term": "world nursing",
+          "score": 88.0674,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 84.8449,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 65.2882,
+          "evidence": []
+        },
+        {
+          "term": "care workforce",
+          "score": 59.3249,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 57.1632,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world nursing",
+          "score": 2.18,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.6612,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 1.5529,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 1.5353,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 1.5218,
+          "evidence": []
+        },
+        {
+          "term": "care workforce",
+          "score": 1.5195,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 1.5043,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 1.4301,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "igo",
+          "score": 103.8226,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 101.7244,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 94.0748,
+          "evidence": []
+        },
+        {
+          "term": "world nursing",
+          "score": 91.9358,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 91.0985,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 64.5358,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 61.8345,
+          "evidence": []
+        },
+        {
+          "term": "care workforce",
+          "score": 54.0821,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "world nursing",
+          "score": 2.18,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.6612,
+          "evidence": []
+        },
+        {
+          "term": "united nations",
+          "score": 1.5529,
+          "evidence": []
+        },
+        {
+          "term": "global strategy",
+          "score": 1.5353,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 1.5218,
+          "evidence": []
+        },
+        {
+          "term": "care workforce",
+          "score": 1.5195,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 1.5043,
+          "evidence": []
+        },
+        {
+          "term": "regional office",
+          "score": 1.4301,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "poz",
+          "score": 44.9076,
+          "evidence": []
+        },
+        {
+          "term": "titus",
+          "score": 43.5879,
+          "evidence": []
+        },
+        {
+          "term": "armenia",
+          "score": 41.1672,
+          "evidence": []
+        },
+        {
+          "term": "mcquide",
+          "score": 40.0716,
+          "evidence": []
+        },
+        {
+          "term": "aud",
+          "score": 39.5475,
+          "evidence": []
+        },
+        {
+          "term": "chadha",
+          "score": 39.5475,
+          "evidence": []
+        },
+        {
+          "term": "hear",
+          "score": 39.5475,
+          "evidence": []
+        },
+        {
+          "term": "inequal",
+          "score": 39.5475,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-annex-1-list-of-occupations-covered-by-the-nhwa": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "technicians medical",
+          "score": 2.4721,
+          "evidence": []
+        },
+        {
+          "term": "prosthetic technicians",
+          "score": 2.4626,
+          "evidence": []
+        },
+        {
+          "term": "associate professionals",
+          "score": 2.2812,
+          "evidence": []
+        },
+        {
+          "term": "medical practitioners",
+          "score": 2.2239,
+          "evidence": []
+        },
+        {
+          "term": "specialists practitioners",
+          "score": 2.191,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 1.9633,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "occupational title",
+          "score": 1.8734,
+          "evidence": []
+        },
+        {
+          "term": "isco code",
+          "score": 1.8495,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "technicians medical",
+          "score": 62.1504,
+          "evidence": []
+        },
+        {
+          "term": "medical practitioners",
+          "score": 60.9977,
+          "evidence": []
+        },
+        {
+          "term": "specialists practitioners",
+          "score": 48.4424,
+          "evidence": []
+        },
+        {
+          "term": "associate professionals",
+          "score": 47.9816,
+          "evidence": []
+        },
+        {
+          "term": "prosthetic technicians",
+          "score": 47.911,
+          "evidence": []
+        },
+        {
+          "term": "occupational title",
+          "score": 37.2643,
+          "evidence": []
+        },
+        {
+          "term": "isco code",
+          "score": 35.3263,
+          "evidence": []
+        },
+        {
+          "term": "medical doctors",
+          "score": 33.6981,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "occupations",
+          "score": 2.153,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "technicians medical",
+          "score": 2.1054,
+          "evidence": []
+        },
+        {
+          "term": "associate professionals",
+          "score": 2.0275,
+          "evidence": []
+        },
+        {
+          "term": "prosthetic technicians",
+          "score": 1.9341,
+          "evidence": []
+        },
+        {
+          "term": "medical practitioners",
+          "score": 1.7758,
+          "evidence": []
+        },
+        {
+          "term": "isco code",
+          "score": 1.4706,
+          "evidence": []
+        },
+        {
+          "term": "occupational title",
+          "score": 1.4355,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 1.4008,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "technicians medical",
+          "score": 53.1638,
+          "evidence": []
+        },
+        {
+          "term": "associate professionals",
+          "score": 49.4517,
+          "evidence": []
+        },
+        {
+          "term": "medical practitioners",
+          "score": 44.1441,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 41.7574,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prosthetic technicians",
+          "score": 37.0272,
+          "evidence": []
+        },
+        {
+          "term": "medical doctors",
+          "score": 31.049,
+          "evidence": []
+        },
+        {
+          "term": "isco code",
+          "score": 28.5457,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 26.4093,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "occupations",
+          "score": 2.153,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "technicians medical",
+          "score": 2.1054,
+          "evidence": []
+        },
+        {
+          "term": "associate professionals",
+          "score": 2.0275,
+          "evidence": []
+        },
+        {
+          "term": "prosthetic technicians",
+          "score": 1.9341,
+          "evidence": []
+        },
+        {
+          "term": "medical practitioners",
+          "score": 1.7758,
+          "evidence": []
+        },
+        {
+          "term": "isco code",
+          "score": 1.4706,
+          "evidence": []
+        },
+        {
+          "term": "occupational title",
+          "score": 1.4355,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 1.4008,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "prosthetic technicians",
+          "score": 427.8268,
+          "evidence": []
+        },
+        {
+          "term": "gynecologists",
+          "score": 317.8336,
+          "evidence": []
+        },
+        {
+          "term": "pediatricians",
+          "score": 317.8336,
+          "evidence": []
+        },
+        {
+          "term": "psychiatrists",
+          "score": 317.8336,
+          "evidence": []
+        },
+        {
+          "term": "wcmsp",
+          "score": 281.7766,
+          "evidence": []
+        },
+        {
+          "term": "audiologists",
+          "score": 264.2116,
+          "evidence": []
+        },
+        {
+          "term": "dieticians",
+          "score": 264.2116,
+          "evidence": []
+        },
+        {
+          "term": "inspectors",
+          "score": 264.2116,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-annex-2-nhwa-methodology": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa",
+          "score": 2.6859,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa secretariat",
+          "score": 2.3361,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 1.6622,
+          "evidence": []
+        },
+        {
+          "term": "isco codes",
+          "score": 1.6144,
+          "evidence": []
+        },
+        {
+          "term": "population estimates",
+          "score": 1.4373,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 1.2583,
+          "evidence": []
+        },
+        {
+          "term": "quality checks",
+          "score": 1.146,
+          "evidence": []
+        },
+        {
+          "term": "countries through",
+          "score": 1.1406,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa",
+          "score": 108.133,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa secretariat",
+          "score": 74.8853,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 27.9959,
+          "evidence": []
+        },
+        {
+          "term": "population estimates",
+          "score": 25.1724,
+          "evidence": []
+        },
+        {
+          "term": "isco codes",
+          "score": 25.087,
+          "evidence": []
+        },
+        {
+          "term": "countries through",
+          "score": 22.3652,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 21.2504,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 17.5287,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa",
+          "score": 2.4387,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa secretariat",
+          "score": 1.513,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.2321,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 1.0845,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 0.9526,
+          "evidence": []
+        },
+        {
+          "term": "countries through",
+          "score": 0.8694,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.838,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 0.8048,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa",
+          "score": 86.4365,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa secretariat",
+          "score": 48.301,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 23.4619,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 18.7631,
+          "evidence": []
+        },
+        {
+          "term": "countries through",
+          "score": 16.5118,
+          "evidence": []
+        },
+        {
+          "term": "occupations",
+          "score": 14.5665,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 14.294,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 11.551,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa",
+          "score": 2.4387,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nhwa secretariat",
+          "score": 1.513,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.2321,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 1.0845,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 0.9526,
+          "evidence": []
+        },
+        {
+          "term": "countries through",
+          "score": 0.8694,
+          "evidence": []
+        },
+        {
+          "term": "hwf",
+          "score": 0.838,
+          "evidence": []
+        },
+        {
+          "term": "midwifery personnel",
+          "score": 0.8048,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ghws",
+          "score": 27.5097,
+          "evidence": []
+        },
+        {
+          "term": "gho",
+          "score": 27.4059,
+          "evidence": []
+        },
+        {
+          "term": "nhwa",
+          "score": 26.0325,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "penultimate",
+          "score": 25.8597,
+          "evidence": []
+        },
+        {
+          "term": "compass",
+          "score": 25.8467,
+          "evidence": []
+        },
+        {
+          "term": "gynecologists",
+          "score": 25.5712,
+          "evidence": []
+        },
+        {
+          "term": "pediatricians",
+          "score": 25.5712,
+          "evidence": []
+        },
+        {
+          "term": "psychiatrists",
+          "score": 25.5712,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-annex-3-methodology-to-estimate-health-workforce": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "age-specific weights",
+          "score": 4.2745,
+          "evidence": []
+        },
+        {
+          "term": "age-specific hwf",
+          "score": 3.7758,
+          "evidence": []
+        },
+        {
+          "term": "projected hwf",
+          "score": 3.2501,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 3.1166,
+          "evidence": []
+        },
+        {
+          "term": "projected stock",
+          "score": 2.9788,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 2.1447,
+          "evidence": []
+        },
+        {
+          "term": "standard curve",
+          "score": 2.0757,
+          "evidence": []
+        },
+        {
+          "term": "hwf size",
+          "score": 2.0143,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "age-specific hwf",
+          "score": 125.8777,
+          "evidence": []
+        },
+        {
+          "term": "hwf density",
+          "score": 122.3125,
+          "evidence": []
+        },
+        {
+          "term": "age-specific weights",
+          "score": 114.4352,
+          "evidence": []
+        },
+        {
+          "term": "projected hwf",
+          "score": 109.748,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 89.6441,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 76.4145,
+          "evidence": []
+        },
+        {
+          "term": "hwf size",
+          "score": 65.7,
+          "evidence": []
+        },
+        {
+          "term": "age structure",
+          "score": 54.3582,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hwf density",
+          "score": 1.4548,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 1.3286,
+          "evidence": []
+        },
+        {
+          "term": "projected stock",
+          "score": 1.2894,
+          "evidence": []
+        },
+        {
+          "term": "age-specific hwf",
+          "score": 1.0433,
+          "evidence": []
+        },
+        {
+          "term": "age group",
+          "score": 0.9975,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 0.9659,
+          "evidence": []
+        },
+        {
+          "term": "hwf size",
+          "score": 0.9033,
+          "evidence": []
+        },
+        {
+          "term": "age structure",
+          "score": 0.806,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hwf density",
+          "score": 123.9567,
+          "evidence": []
+        },
+        {
+          "term": "projected hwf",
+          "score": 111.6468,
+          "evidence": []
+        },
+        {
+          "term": "age-specific hwf",
+          "score": 109.2888,
+          "evidence": []
+        },
+        {
+          "term": "hwf stock",
+          "score": 89.4951,
+          "evidence": []
+        },
+        {
+          "term": "age-specific weights",
+          "score": 73.9182,
+          "evidence": []
+        },
+        {
+          "term": "hwf size",
+          "score": 72.4529,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 71.0633,
+          "evidence": []
+        },
+        {
+          "term": "age structure",
+          "score": 42.3925,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hwf density",
+          "score": 1.4548,
+          "evidence": []
+        },
+        {
+          "term": "population age",
+          "score": 1.3286,
+          "evidence": []
+        },
+        {
+          "term": "projected stock",
+          "score": 1.2894,
+          "evidence": []
+        },
+        {
+          "term": "age-specific hwf",
+          "score": 1.0433,
+          "evidence": []
+        },
+        {
+          "term": "age group",
+          "score": 0.9975,
+          "evidence": []
+        },
+        {
+          "term": "aged years",
+          "score": 0.9659,
+          "evidence": []
+        },
+        {
+          "term": "hwf size",
+          "score": 0.9033,
+          "evidence": []
+        },
+        {
+          "term": "age structure",
+          "score": 0.806,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "age-specific weights",
+          "score": 487.2751,
+          "evidence": []
+        },
+        {
+          "term": "age-specific hwf",
+          "score": 280.1612,
+          "evidence": []
+        },
+        {
+          "term": "age-adjusted",
+          "score": 221.6426,
+          "evidence": []
+        },
+        {
+          "term": "projected hwf",
+          "score": 195.9686,
+          "evidence": []
+        },
+        {
+          "term": "projected stock",
+          "score": 175.3433,
+          "evidence": []
+        },
+        {
+          "term": "upper-middle-income",
+          "score": 151.9469,
+          "evidence": []
+        },
+        {
+          "term": "flat",
+          "score": 139.1144,
+          "evidence": []
+        },
+        {
+          "term": "dividing",
+          "score": 135.4332,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-annex-4-nhwa-focal-points-at-national-level-who": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nhwa focal",
+          "score": 2.6859,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 2.1672,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "silva",
+          "score": 1.6925,
+          "evidence": []
+        },
+        {
+          "term": "mohamed",
+          "score": 1.5374,
+          "evidence": []
+        },
+        {
+          "term": "ali",
+          "score": 1.4138,
+          "evidence": []
+        },
+        {
+          "term": "paul",
+          "score": 1.3903,
+          "evidence": []
+        },
+        {
+          "term": "contributed",
+          "score": 1.3798,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "moses",
+          "score": 1.355,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nhwa focal",
+          "score": 37.3512,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "silva",
+          "score": 37.199,
+          "evidence": []
+        },
+        {
+          "term": "mohamed",
+          "score": 35.7085,
+          "evidence": []
+        },
+        {
+          "term": "ali",
+          "score": 27.5334,
+          "evidence": []
+        },
+        {
+          "term": "paul",
+          "score": 26.7627,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 25.5416,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "maria",
+          "score": 24.9793,
+          "evidence": []
+        },
+        {
+          "term": "moses",
+          "score": 23.6486,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "nhwa focal",
+          "score": 2.8953,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "silva",
+          "score": 1.603,
+          "evidence": []
+        },
+        {
+          "term": "paul",
+          "score": 1.5902,
+          "evidence": []
+        },
+        {
+          "term": "maria",
+          "score": 1.5855,
+          "evidence": []
+        },
+        {
+          "term": "contributed",
+          "score": 1.5533,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mohamed",
+          "score": 1.3511,
+          "evidence": []
+        },
+        {
+          "term": "lopez",
+          "score": 1.2832,
+          "evidence": []
+        },
+        {
+          "term": "jean",
+          "score": 1.2606,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa focal",
+          "score": 34.9235,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "silva",
+          "score": 33.1135,
+          "evidence": []
+        },
+        {
+          "term": "mohamed",
+          "score": 30.4777,
+          "evidence": []
+        },
+        {
+          "term": "paul",
+          "score": 30.0603,
+          "evidence": []
+        },
+        {
+          "term": "maria",
+          "score": 29.836,
+          "evidence": []
+        },
+        {
+          "term": "lopez",
+          "score": 22.2977,
+          "evidence": []
+        },
+        {
+          "term": "ali",
+          "score": 21.8042,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 21.5706,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "nhwa focal",
+          "score": 2.8953,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "focal points",
+          "score": 1.9454,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "silva",
+          "score": 1.603,
+          "evidence": []
+        },
+        {
+          "term": "paul",
+          "score": 1.5902,
+          "evidence": []
+        },
+        {
+          "term": "maria",
+          "score": 1.5855,
+          "evidence": []
+        },
+        {
+          "term": "contributed",
+          "score": 1.5533,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mohamed",
+          "score": 1.3511,
+          "evidence": []
+        },
+        {
+          "term": "lopez",
+          "score": 1.2832,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alejandra",
+          "score": 555.084,
+          "evidence": []
+        },
+        {
+          "term": "perez",
+          "score": 555.084,
+          "evidence": []
+        },
+        {
+          "term": "samuel",
+          "score": 555.084,
+          "evidence": []
+        },
+        {
+          "term": "omar",
+          "score": 549.5776,
+          "evidence": []
+        },
+        {
+          "term": "cristina",
+          "score": 510.4817,
+          "evidence": []
+        },
+        {
+          "term": "sosa",
+          "score": 510.4817,
+          "evidence": []
+        },
+        {
+          "term": "alexandre",
+          "score": 498.4206,
+          "evidence": []
+        },
+        {
+          "term": "moussa",
+          "score": 498.4206,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-annex-5-staff-at-who-country-offices-regional-of": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "regional offices",
+          "score": 2.3752,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "country offices",
+          "score": 2.1734,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "masahiro zakoji",
+          "score": 2.0056,
+          "evidence": []
+        },
+        {
+          "term": "tomas zapata",
+          "score": 1.6547,
+          "evidence": []
+        },
+        {
+          "term": "headquarters",
+          "score": 1.6516,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "paul",
+          "score": 1.3903,
+          "evidence": []
+        },
+        {
+          "term": "maria",
+          "score": 1.2811,
+          "evidence": []
+        },
+        {
+          "term": "garcia",
+          "score": 1.0928,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "regional offices",
+          "score": 37.208,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "country offices",
+          "score": 34.8649,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "paul",
+          "score": 26.7627,
+          "evidence": []
+        },
+        {
+          "term": "masahiro zakoji",
+          "score": 26.4212,
+          "evidence": []
+        },
+        {
+          "term": "maria",
+          "score": 24.9793,
+          "evidence": []
+        },
+        {
+          "term": "headquarters",
+          "score": 23.3835,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tomas zapata",
+          "score": 21.816,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 18.9319,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "regional offices",
+          "score": 1.134,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "maria",
+          "score": 0.7339,
+          "evidence": []
+        },
+        {
+          "term": "paul",
+          "score": 0.7167,
+          "evidence": []
+        },
+        {
+          "term": "silva",
+          "score": 0.6317,
+          "evidence": []
+        },
+        {
+          "term": "diallo",
+          "score": 0.6289,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.6062,
+          "evidence": []
+        },
+        {
+          "term": "mohamed",
+          "score": 0.5946,
+          "evidence": []
+        },
+        {
+          "term": "garcia",
+          "score": 0.585,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "regional offices",
+          "score": 13.0422,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "silva",
+          "score": 12.2854,
+          "evidence": []
+        },
+        {
+          "term": "mohamed",
+          "score": 12.0942,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 11.7236,
+          "evidence": []
+        },
+        {
+          "term": "maria",
+          "score": 11.4537,
+          "evidence": []
+        },
+        {
+          "term": "paul",
+          "score": 11.3593,
+          "evidence": []
+        },
+        {
+          "term": "david",
+          "score": 8.9987,
+          "evidence": []
+        },
+        {
+          "term": "lopez",
+          "score": 8.6444,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "regional offices",
+          "score": 1.134,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "maria",
+          "score": 0.7339,
+          "evidence": []
+        },
+        {
+          "term": "paul",
+          "score": 0.7167,
+          "evidence": []
+        },
+        {
+          "term": "silva",
+          "score": 0.6317,
+          "evidence": []
+        },
+        {
+          "term": "country offices",
+          "score": 0.6196,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "region",
+          "score": 0.6062,
+          "evidence": []
+        },
+        {
+          "term": "garcia",
+          "score": 0.585,
+          "evidence": []
+        },
+        {
+          "term": "jean",
+          "score": 0.5703,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "masahiro zakoji",
+          "score": 1632.8067,
+          "evidence": []
+        },
+        {
+          "term": "aurora",
+          "score": 868.6327,
+          "evidence": []
+        },
+        {
+          "term": "nuruzzaman",
+          "score": 868.6327,
+          "evidence": []
+        },
+        {
+          "term": "phyllida",
+          "score": 868.6327,
+          "evidence": []
+        },
+        {
+          "term": "saares",
+          "score": 868.6327,
+          "evidence": []
+        },
+        {
+          "term": "travis",
+          "score": 868.6327,
+          "evidence": []
+        },
+        {
+          "term": "tomas zapata",
+          "score": 814.9227,
+          "evidence": []
+        },
+        {
+          "term": "etyang",
+          "score": 658.108,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "workforce ageing",
+          "score": 1.8397,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 1.5503,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 1.4754,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 1.4292,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 1.31,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 1.2225,
+          "evidence": []
+        },
+        {
+          "term": "focal points",
+          "score": 1.0836,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 1.0127,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "workforce ageing",
+          "score": 41.5229,
+          "evidence": []
+        },
+        {
+          "term": "workforce levels",
+          "score": 37.7221,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 35.3731,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 26.7856,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 21.2235,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 17.8039,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 17.2564,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 17.1434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "creative commons",
+          "score": 1.2024,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 1.1537,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.9945,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.8883,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.8067,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.7573,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 0.7396,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 0.7252,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "nhwa focal",
+          "score": 18.386,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 18.3722,
+          "evidence": []
+        },
+        {
+          "term": "workforce accounts",
+          "score": 16.4735,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 15.4648,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 15.3647,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 14.5794,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 13.949,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 13.5689,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "creative commons",
+          "score": 1.2024,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 1.1537,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.9945,
+          "evidence": []
+        },
+        {
+          "term": "igo",
+          "score": 0.8883,
+          "evidence": []
+        },
+        {
+          "term": "material",
+          "score": 0.8067,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.7573,
+          "evidence": []
+        },
+        {
+          "term": "by-nc-sa",
+          "score": 0.7396,
+          "evidence": []
+        },
+        {
+          "term": "nhwa focal",
+          "score": 0.7252,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "creative commons",
+          "score": 106.1879,
+          "evidence": []
+        },
+        {
+          "term": "suggested citation",
+          "score": 84.8412,
+          "evidence": []
+        },
+        {
+          "term": "third-party-owned",
+          "score": 76.884,
+          "evidence": []
+        },
+        {
+          "term": "llc",
+          "score": 64.6301,
+          "evidence": []
+        },
+        {
+          "term": "rrd",
+          "score": 64.6301,
+          "evidence": []
+        },
+        {
+          "term": "cip",
+          "score": 63.2147,
+          "evidence": []
+        },
+        {
+          "term": "infringement",
+          "score": 63.2147,
+          "evidence": []
+        },
+        {
+          "term": "suggestion",
+          "score": 63.2147,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

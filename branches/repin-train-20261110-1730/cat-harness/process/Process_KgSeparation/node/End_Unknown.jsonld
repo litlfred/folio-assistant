@@ -1,0 +1,34 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_KgSeparation/node/End_Unknown.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261110-1730",
+    "sha": "efcb7241d4875fb9a2fe03c40fe0f707524c68d3",
+    "pr": "repin-train/20261110-1730",
+    "run": "42865924598"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_KgSeparation/node/End_Unknown",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "UNKNOWN — stop. Not clean",
+      "nodeKind": "end",
+      "bpmnType": "bpmn:EndEvent",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_KgSeparation",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/role/administrator",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_KgSeparation/lane/Lane_Admin",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_KgSeparation#flow/F10",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_KgSeparation#flow/F16",
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/process/Process_KgSeparation#flow/F19"
+      ],
+      "outgoing": [],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/directory/processes",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_KgSeparation/node/End_Unknown"
+    }
+  ]
+}

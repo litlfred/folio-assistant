@@ -1,0 +1,706 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "strauch-carbno-2025-spdx-3-1-supply-chain",
+  "instance": "cat-harness",
+  "about": "library/strauch-carbno-2025-spdx-3-1-supply-chain",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "bulk hardware",
+        "score": 3.8081,
+        "evidence": []
+      },
+      {
+        "term": "chain profile",
+        "score": 3.5345,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "licensed",
+        "score": 3.2034,
+        "evidence": []
+      },
+      {
+        "term": "alfred",
+        "score": 3.1639,
+        "evidence": []
+      },
+      {
+        "term": "product passport",
+        "score": 3.0237,
+        "evidence": []
+      },
+      {
+        "term": "regulatory compliance",
+        "score": 2.9444,
+        "evidence": []
+      },
+      {
+        "term": "regulatory requirements",
+        "score": 2.9134,
+        "evidence": []
+      },
+      {
+        "term": "smart talk",
+        "score": 2.8063,
+        "evidence": []
+      },
+      {
+        "term": "com www",
+        "score": 2.7451,
+        "evidence": []
+      },
+      {
+        "term": "solution ltd",
+        "score": 2.7244,
+        "evidence": []
+      },
+      {
+        "term": "spdx history",
+        "score": 2.6765,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "digital product",
+        "score": 2.4627,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "chain profile",
+        "score": 234.7089,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "licensed",
+        "score": 217.5163,
+        "evidence": []
+      },
+      {
+        "term": "alfred",
+        "score": 178.172,
+        "evidence": []
+      },
+      {
+        "term": "spdx history",
+        "score": 150.0228,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "bulk hardware",
+        "score": 134.3091,
+        "evidence": []
+      },
+      {
+        "term": "product passport",
+        "score": 102.8621,
+        "evidence": []
+      },
+      {
+        "term": "com www",
+        "score": 101.4569,
+        "evidence": []
+      },
+      {
+        "term": "digital product",
+        "score": 90.1673,
+        "evidence": []
+      },
+      {
+        "term": "regulatory requirements",
+        "score": 90.0014,
+        "evidence": []
+      },
+      {
+        "term": "accumulated product",
+        "score": 81.3706,
+        "evidence": []
+      },
+      {
+        "term": "regulatory compliance",
+        "score": 79.3343,
+        "evidence": []
+      },
+      {
+        "term": "smart talk",
+        "score": 67.6554,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "chain profile",
+        "score": 3.9265,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "bulk hardware",
+        "score": 3.5507,
+        "evidence": []
+      },
+      {
+        "term": "regulatory compliance",
+        "score": 3.0131,
+        "evidence": []
+      },
+      {
+        "term": "spdx profile",
+        "score": 3.0127,
+        "evidence": []
+      },
+      {
+        "term": "licensed",
+        "score": 3.0119,
+        "evidence": []
+      },
+      {
+        "term": "product passport",
+        "score": 2.9418,
+        "evidence": []
+      },
+      {
+        "term": "regulatory requirements",
+        "score": 2.9336,
+        "evidence": []
+      },
+      {
+        "term": "spdx history",
+        "score": 2.9333,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "alfred",
+        "score": 2.8895,
+        "evidence": []
+      },
+      {
+        "term": "smart talk",
+        "score": 2.718,
+        "evidence": []
+      },
+      {
+        "term": "com www",
+        "score": 2.7085,
+        "evidence": []
+      },
+      {
+        "term": "solution ltd",
+        "score": 2.5577,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "chain profile",
+        "score": 237.9419,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "licensed",
+        "score": 215.4707,
+        "evidence": []
+      },
+      {
+        "term": "alfred",
+        "score": 176.2472,
+        "evidence": []
+      },
+      {
+        "term": "spdx history",
+        "score": 153.9386,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "bulk hardware",
+        "score": 133.0476,
+        "evidence": []
+      },
+      {
+        "term": "product passport",
+        "score": 102.8263,
+        "evidence": []
+      },
+      {
+        "term": "com www",
+        "score": 101.224,
+        "evidence": []
+      },
+      {
+        "term": "regulatory requirements",
+        "score": 90.6029,
+        "evidence": []
+      },
+      {
+        "term": "digital product",
+        "score": 90.3698,
+        "evidence": []
+      },
+      {
+        "term": "accumulated product",
+        "score": 81.5319,
+        "evidence": []
+      },
+      {
+        "term": "regulatory compliance",
+        "score": 79.728,
+        "evidence": []
+      },
+      {
+        "term": "smart talk",
+        "score": 67.7376,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "chain profile",
+        "score": 3.9265,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "bulk hardware",
+        "score": 3.5507,
+        "evidence": []
+      },
+      {
+        "term": "regulatory compliance",
+        "score": 3.0131,
+        "evidence": []
+      },
+      {
+        "term": "spdx profile",
+        "score": 3.0127,
+        "evidence": []
+      },
+      {
+        "term": "licensed",
+        "score": 3.0119,
+        "evidence": []
+      },
+      {
+        "term": "product passport",
+        "score": 2.9418,
+        "evidence": []
+      },
+      {
+        "term": "regulatory requirements",
+        "score": 2.9336,
+        "evidence": []
+      },
+      {
+        "term": "spdx history",
+        "score": 2.9333,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "alfred",
+        "score": 2.8895,
+        "evidence": []
+      },
+      {
+        "term": "smart talk",
+        "score": 2.718,
+        "evidence": []
+      },
+      {
+        "term": "com www",
+        "score": 2.7085,
+        "evidence": []
+      },
+      {
+        "term": "solution ltd",
+        "score": 2.5577,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "neville",
+        "score": 206.7373,
+        "evidence": []
+      },
+      {
+        "term": "bulk hardware",
+        "score": 173.5971,
+        "evidence": []
+      },
+      {
+        "term": "alfred",
+        "score": 145.2571,
+        "evidence": []
+      },
+      {
+        "term": "custody",
+        "score": 131.3783,
+        "evidence": []
+      },
+      {
+        "term": "licensed",
+        "score": 125.9361,
+        "evidence": []
+      },
+      {
+        "term": "traceability",
+        "score": 125.812,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "tobias",
+        "score": 125.5054,
+        "evidence": []
+      },
+      {
+        "term": "ltd",
+        "score": 124.9381,
+        "evidence": []
+      },
+      {
+        "term": "solution ltd",
+        "score": 124.9381,
+        "evidence": []
+      },
+      {
+        "term": "regulatory compliance",
+        "score": 122.2512,
+        "evidence": []
+      },
+      {
+        "term": "airplane",
+        "score": 120.3365,
+        "evidence": []
+      },
+      {
+        "term": "paper airplane",
+        "score": 120.3365,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-document": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "bulk hardware",
+          "score": 3.8081,
+          "evidence": []
+        },
+        {
+          "term": "chain profile",
+          "score": 3.5345,
+          "evidence": []
+        },
+        {
+          "term": "licensed",
+          "score": 3.2034,
+          "evidence": []
+        },
+        {
+          "term": "alfred",
+          "score": 3.1639,
+          "evidence": []
+        },
+        {
+          "term": "product passport",
+          "score": 3.0237,
+          "evidence": []
+        },
+        {
+          "term": "regulatory compliance",
+          "score": 2.9444,
+          "evidence": []
+        },
+        {
+          "term": "regulatory requirements",
+          "score": 2.9134,
+          "evidence": []
+        },
+        {
+          "term": "smart talk",
+          "score": 2.8063,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "chain profile",
+          "score": 234.7089,
+          "evidence": []
+        },
+        {
+          "term": "licensed",
+          "score": 217.5163,
+          "evidence": []
+        },
+        {
+          "term": "alfred",
+          "score": 178.172,
+          "evidence": []
+        },
+        {
+          "term": "spdx history",
+          "score": 150.0228,
+          "evidence": []
+        },
+        {
+          "term": "bulk hardware",
+          "score": 134.3091,
+          "evidence": []
+        },
+        {
+          "term": "product passport",
+          "score": 102.8621,
+          "evidence": []
+        },
+        {
+          "term": "com www",
+          "score": 101.4569,
+          "evidence": []
+        },
+        {
+          "term": "digital product",
+          "score": 90.1673,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "chain profile",
+          "score": 3.9265,
+          "evidence": []
+        },
+        {
+          "term": "bulk hardware",
+          "score": 3.5507,
+          "evidence": []
+        },
+        {
+          "term": "regulatory compliance",
+          "score": 3.0131,
+          "evidence": []
+        },
+        {
+          "term": "spdx profile",
+          "score": 3.0127,
+          "evidence": []
+        },
+        {
+          "term": "licensed",
+          "score": 3.0119,
+          "evidence": []
+        },
+        {
+          "term": "product passport",
+          "score": 2.9418,
+          "evidence": []
+        },
+        {
+          "term": "regulatory requirements",
+          "score": 2.9336,
+          "evidence": []
+        },
+        {
+          "term": "spdx history",
+          "score": 2.9333,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "chain profile",
+          "score": 237.9419,
+          "evidence": []
+        },
+        {
+          "term": "licensed",
+          "score": 215.4707,
+          "evidence": []
+        },
+        {
+          "term": "alfred",
+          "score": 176.2472,
+          "evidence": []
+        },
+        {
+          "term": "spdx history",
+          "score": 153.9386,
+          "evidence": []
+        },
+        {
+          "term": "bulk hardware",
+          "score": 133.0476,
+          "evidence": []
+        },
+        {
+          "term": "product passport",
+          "score": 102.8263,
+          "evidence": []
+        },
+        {
+          "term": "com www",
+          "score": 101.224,
+          "evidence": []
+        },
+        {
+          "term": "regulatory requirements",
+          "score": 90.6029,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "chain profile",
+          "score": 3.9265,
+          "evidence": []
+        },
+        {
+          "term": "bulk hardware",
+          "score": 3.5507,
+          "evidence": []
+        },
+        {
+          "term": "regulatory compliance",
+          "score": 3.0131,
+          "evidence": []
+        },
+        {
+          "term": "spdx profile",
+          "score": 3.0127,
+          "evidence": []
+        },
+        {
+          "term": "licensed",
+          "score": 3.0119,
+          "evidence": []
+        },
+        {
+          "term": "product passport",
+          "score": 2.9418,
+          "evidence": []
+        },
+        {
+          "term": "regulatory requirements",
+          "score": 2.9336,
+          "evidence": []
+        },
+        {
+          "term": "spdx history",
+          "score": 2.9333,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "neville",
+          "score": 206.7373,
+          "evidence": []
+        },
+        {
+          "term": "bulk hardware",
+          "score": 173.5971,
+          "evidence": []
+        },
+        {
+          "term": "alfred",
+          "score": 145.2571,
+          "evidence": []
+        },
+        {
+          "term": "custody",
+          "score": 131.3783,
+          "evidence": []
+        },
+        {
+          "term": "licensed",
+          "score": 125.9361,
+          "evidence": []
+        },
+        {
+          "term": "traceability",
+          "score": 125.812,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 125.5054,
+          "evidence": []
+        },
+        {
+          "term": "ltd",
+          "score": 124.9381,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

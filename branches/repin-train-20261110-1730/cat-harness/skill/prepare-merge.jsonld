@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/skill/prepare-merge.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "repin-train/20261110-1730",
+    "sha": "efcb7241d4875fb9a2fe03c40fe0f707524c68d3",
+    "pr": "repin-train/20261110-1730",
+    "run": "42865924598"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/skill/prepare-merge",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "prepare-merge",
+      "title": "Prepare-merge — get a feature branch ready to land",
+      "description": "Take a feature branch to a clean, conflict-free, green, pushed state so it can be merged with no surprises: base merged in, generated files regenerated, the folio's content-type gates run, then pushed. It does NOT merge and does NOT push to the default branch. Use for \"prepare-merge\", \"make it mergeable\", \"ship it\".",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/package/sdlc-core"
+      ],
+      "instructionsPath": "sdlc/skills/sdlc-core/prepare-merge.md",
+      "instructionLines": 554,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/repin-train-20261110-1730/cat-harness/directory/sdlc",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/prepare-merge"
+    }
+  ]
+}

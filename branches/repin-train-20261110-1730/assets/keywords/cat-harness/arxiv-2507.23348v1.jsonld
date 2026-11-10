@@ -1,0 +1,6168 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "arxiv-2507.23348v1",
+  "instance": "cat-harness",
+  "about": "library/arxiv-2507.23348v1",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "fault localization",
+        "score": 32.5978,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "issue localization",
+        "score": 32.5891,
+        "evidence": []
+      },
+      {
+        "term": "multi-agent debate",
+        "score": 30.7621,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "localization chain",
+        "score": 29.7485,
+        "evidence": []
+      },
+      {
+        "term": "competitive debate",
+        "score": 28.5439,
+        "evidence": []
+      },
+      {
+        "term": "code localization",
+        "score": 28.4323,
+        "evidence": []
+      },
+      {
+        "term": "plan debate",
+        "score": 25.9333,
+        "evidence": []
+      },
+      {
+        "term": "issue resolution",
+        "score": 24.0145,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "localization through",
+        "score": 23.9513,
+        "evidence": []
+      },
+      {
+        "term": "debate process",
+        "score": 23.9489,
+        "evidence": []
+      },
+      {
+        "term": "debate framework",
+        "score": 23.8183,
+        "evidence": []
+      },
+      {
+        "term": "agent debate",
+        "score": 23.6813,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "issue localization",
+        "score": 740.1114,
+        "evidence": []
+      },
+      {
+        "term": "issue django",
+        "score": 736.2873,
+        "evidence": []
+      },
+      {
+        "term": "fault localization",
+        "score": 657.1658,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "localization chain",
+        "score": 642.183,
+        "evidence": []
+      },
+      {
+        "term": "code localization",
+        "score": 580.0803,
+        "evidence": []
+      },
+      {
+        "term": "multi-agent debate",
+        "score": 556.7642,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "competitive debate",
+        "score": 521.4391,
+        "evidence": []
+      },
+      {
+        "term": "issue resolution",
+        "score": 509.8452,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "plan debate",
+        "score": 497.0046,
+        "evidence": []
+      },
+      {
+        "term": "localization through",
+        "score": 494.771,
+        "evidence": []
+      },
+      {
+        "term": "competing localization",
+        "score": 462.0467,
+        "evidence": []
+      },
+      {
+        "term": "localization accuracy",
+        "score": 452.8579,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "issue localization",
+        "score": 27.1422,
+        "evidence": []
+      },
+      {
+        "term": "fault localization",
+        "score": 26.5858,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "localization chain",
+        "score": 26.1991,
+        "evidence": []
+      },
+      {
+        "term": "code localization",
+        "score": 24.1026,
+        "evidence": []
+      },
+      {
+        "term": "multi-agent debate",
+        "score": 24.0146,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "competitive debate",
+        "score": 22.7081,
+        "evidence": []
+      },
+      {
+        "term": "plan debate",
+        "score": 21.4622,
+        "evidence": []
+      },
+      {
+        "term": "issue resolution",
+        "score": 21.1176,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "issue django",
+        "score": 20.5178,
+        "evidence": []
+      },
+      {
+        "term": "code modification",
+        "score": 20.201,
+        "evidence": []
+      },
+      {
+        "term": "competing localization",
+        "score": 19.6854,
+        "evidence": []
+      },
+      {
+        "term": "localization through",
+        "score": 19.5965,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "issue django",
+        "score": 758.0749,
+        "evidence": []
+      },
+      {
+        "term": "issue localization",
+        "score": 684.7112,
+        "evidence": []
+      },
+      {
+        "term": "localization chain",
+        "score": 585.1033,
+        "evidence": []
+      },
+      {
+        "term": "fault localization",
+        "score": 537.8259,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "issue resolution",
+        "score": 502.9911,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "code localization",
+        "score": 490.5505,
+        "evidence": []
+      },
+      {
+        "term": "quantum tensorproduct",
+        "score": 485.1141,
+        "evidence": []
+      },
+      {
+        "term": "sympy physics",
+        "score": 485.0078,
+        "evidence": []
+      },
+      {
+        "term": "software issue",
+        "score": 470.1418,
+        "evidence": []
+      },
+      {
+        "term": "code modification",
+        "score": 449.1718,
+        "evidence": []
+      },
+      {
+        "term": "multi-agent debate",
+        "score": 436.0609,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "competitive debate",
+        "score": 434.3122,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "issue localization",
+        "score": 27.1422,
+        "evidence": []
+      },
+      {
+        "term": "fault localization",
+        "score": 26.5858,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "localization chain",
+        "score": 26.1991,
+        "evidence": []
+      },
+      {
+        "term": "code localization",
+        "score": 24.1026,
+        "evidence": []
+      },
+      {
+        "term": "multi-agent debate",
+        "score": 24.0146,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "competitive debate",
+        "score": 22.7081,
+        "evidence": []
+      },
+      {
+        "term": "plan debate",
+        "score": 21.4622,
+        "evidence": []
+      },
+      {
+        "term": "issue resolution",
+        "score": 21.1176,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "issue django",
+        "score": 20.5178,
+        "evidence": []
+      },
+      {
+        "term": "code modification",
+        "score": 20.201,
+        "evidence": []
+      },
+      {
+        "term": "competing localization",
+        "score": 19.6854,
+        "evidence": []
+      },
+      {
+        "term": "localization through",
+        "score": 19.5965,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "shanghai jiao",
+        "score": 8611.9643,
+        "evidence": []
+      },
+      {
+        "term": "jiao tong",
+        "score": 4699.2842,
+        "evidence": []
+      },
+      {
+        "term": "huawei",
+        "score": 3951.5247,
+        "evidence": []
+      },
+      {
+        "term": "qianxiang",
+        "score": 3538.7818,
+        "evidence": []
+      },
+      {
+        "term": "qianxiang wang",
+        "score": 3538.7818,
+        "evidence": []
+      },
+      {
+        "term": "yuling shi",
+        "score": 3267.5317,
+        "evidence": []
+      },
+      {
+        "term": "china",
+        "score": 3067.6424,
+        "evidence": []
+      },
+      {
+        "term": "quantum tensorproduct",
+        "score": 2992.6537,
+        "evidence": []
+      },
+      {
+        "term": "shaoxin",
+        "score": 2370.1449,
+        "evidence": []
+      },
+      {
+        "term": "shaoxin lin",
+        "score": 2370.1449,
+        "evidence": []
+      },
+      {
+        "term": "simp mul",
+        "score": 2259.4838,
+        "evidence": []
+      },
+      {
+        "term": "physics quantum",
+        "score": 2176.1219,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-abstract": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "consolidated fix",
+          "score": 1.6558,
+          "evidence": []
+        },
+        {
+          "term": "fault propagation",
+          "score": 1.4122,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 1.3984,
+          "evidence": []
+        },
+        {
+          "term": "fix plan",
+          "score": 1.1042,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate",
+          "score": 0.9141,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.6657,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 0.655,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "consolidated fix",
+          "score": 25.5045,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 19.5404,
+          "evidence": []
+        },
+        {
+          "term": "fault propagation",
+          "score": 18.4427,
+          "evidence": []
+        },
+        {
+          "term": "fix plan",
+          "score": 14.5845,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate",
+          "score": 14.4216,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 9.8445,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 9.3074,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "fault propagation",
+          "score": 0.6469,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.4633,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.4621,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.388,
+          "evidence": []
+        },
+        {
+          "term": "fix plan",
+          "score": 0.3825,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3622,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "fault propagation",
+          "score": 9.6566,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 8.9775,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 7.0989,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 6.7798,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 6.2827,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 6.2306,
+          "evidence": []
+        },
+        {
+          "term": "fix plan",
+          "score": 5.6127,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "fault propagation",
+          "score": 0.6469,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 0.6392,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.4621,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.388,
+          "evidence": []
+        },
+        {
+          "term": "fix plan",
+          "score": 0.3825,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3622,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 0.3035,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fault propagation",
+          "score": 71.928,
+          "evidence": []
+        },
+        {
+          "term": "h1n",
+          "score": 68.1083,
+          "evidence": []
+        },
+        {
+          "term": "swe-bench-lite",
+          "score": 64.0493,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 62.7904,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 61.958,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 58.312,
+          "evidence": []
+        },
+        {
+          "term": "agation",
+          "score": 55.8447,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "fault localization",
+          "score": 2.9088,
+          "evidence": []
+        },
+        {
+          "term": "fault prop",
+          "score": 2.5724,
+          "evidence": []
+        },
+        {
+          "term": "fault propagation",
+          "score": 2.5274,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 2.4029,
+          "evidence": []
+        },
+        {
+          "term": "potential fault",
+          "score": 2.0656,
+          "evidence": []
+        },
+        {
+          "term": "prop agation",
+          "score": 1.958,
+          "evidence": []
+        },
+        {
+          "term": "code snippets",
+          "score": 1.8861,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 1.8607,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "fault localization",
+          "score": 85.3106,
+          "evidence": []
+        },
+        {
+          "term": "fault propagation",
+          "score": 68.3398,
+          "evidence": []
+        },
+        {
+          "term": "fault prop",
+          "score": 67.4322,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 62.4685,
+          "evidence": []
+        },
+        {
+          "term": "potential fault",
+          "score": 59.9728,
+          "evidence": []
+        },
+        {
+          "term": "debate framework",
+          "score": 41.3947,
+          "evidence": []
+        },
+        {
+          "term": "code snippets",
+          "score": 40.3888,
+          "evidence": []
+        },
+        {
+          "term": "issue description",
+          "score": 38.7627,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "fault localization",
+          "score": 2.6816,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 2.3583,
+          "evidence": []
+        },
+        {
+          "term": "fault propagation",
+          "score": 2.017,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 2.0009,
+          "evidence": []
+        },
+        {
+          "term": "debate framework",
+          "score": 1.8967,
+          "evidence": []
+        },
+        {
+          "term": "modification plan",
+          "score": 1.7789,
+          "evidence": []
+        },
+        {
+          "term": "potential fault",
+          "score": 1.5597,
+          "evidence": []
+        },
+        {
+          "term": "fault prop",
+          "score": 1.4712,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "fault localization",
+          "score": 52.8236,
+          "evidence": []
+        },
+        {
+          "term": "modification plan",
+          "score": 42.0045,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 40.7766,
+          "evidence": []
+        },
+        {
+          "term": "fault propagation",
+          "score": 39.3686,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 37.1493,
+          "evidence": []
+        },
+        {
+          "term": "debate framework",
+          "score": 32.7969,
+          "evidence": []
+        },
+        {
+          "term": "issue description",
+          "score": 29.6573,
+          "evidence": []
+        },
+        {
+          "term": "potential fault",
+          "score": 29.0077,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "fault localization",
+          "score": 2.6816,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 2.3583,
+          "evidence": []
+        },
+        {
+          "term": "fault propagation",
+          "score": 2.017,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 2.0009,
+          "evidence": []
+        },
+        {
+          "term": "debate framework",
+          "score": 1.8967,
+          "evidence": []
+        },
+        {
+          "term": "modification plan",
+          "score": 1.7789,
+          "evidence": []
+        },
+        {
+          "term": "potential fault",
+          "score": 1.5597,
+          "evidence": []
+        },
+        {
+          "term": "fault prop",
+          "score": 1.4712,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "prop agation",
+          "score": 87.7123,
+          "evidence": []
+        },
+        {
+          "term": "fault localization",
+          "score": 75.0365,
+          "evidence": []
+        },
+        {
+          "term": "fault propagation",
+          "score": 64.2981,
+          "evidence": []
+        },
+        {
+          "term": "swe-bench-lite",
+          "score": 56.6496,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 55.6487,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 54.3984,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 51.857,
+          "evidence": []
+        },
+        {
+          "term": "three-stage",
+          "score": 49.1268,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-2-motivation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "individual exploration",
+          "score": 2.16,
+          "evidence": []
+        },
+        {
+          "term": "architectural trade-offs",
+          "score": 2.1323,
+          "evidence": []
+        },
+        {
+          "term": "modification plans",
+          "score": 1.7385,
+          "evidence": []
+        },
+        {
+          "term": "single-agent individual",
+          "score": 1.7381,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 1.6864,
+          "evidence": []
+        },
+        {
+          "term": "foo display",
+          "score": 1.6309,
+          "evidence": []
+        },
+        {
+          "term": "django",
+          "score": 1.6051,
+          "evidence": []
+        },
+        {
+          "term": "approaches fail",
+          "score": 1.5577,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "individual exploration",
+          "score": 62.9239,
+          "evidence": []
+        },
+        {
+          "term": "single-agent individual",
+          "score": 39.8546,
+          "evidence": []
+        },
+        {
+          "term": "architectural trade-offs",
+          "score": 37.3517,
+          "evidence": []
+        },
+        {
+          "term": "approaches fail",
+          "score": 32.2003,
+          "evidence": []
+        },
+        {
+          "term": "django",
+          "score": 30.4407,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 29.7289,
+          "evidence": []
+        },
+        {
+          "term": "field display",
+          "score": 29.2753,
+          "evidence": []
+        },
+        {
+          "term": "modification plans",
+          "score": 26.2463,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "multi-agent debate",
+          "score": 1.3133,
+          "evidence": []
+        },
+        {
+          "term": "modification plans",
+          "score": 0.9101,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.7793,
+          "evidence": []
+        },
+        {
+          "term": "different agents",
+          "score": 0.7458,
+          "evidence": []
+        },
+        {
+          "term": "get foo",
+          "score": 0.7387,
+          "evidence": []
+        },
+        {
+          "term": "foo display",
+          "score": 0.6987,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.6815,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.6404,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "multi-agent debate",
+          "score": 20.8487,
+          "evidence": []
+        },
+        {
+          "term": "modification plans",
+          "score": 16.3503,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 15.3582,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 14.3718,
+          "evidence": []
+        },
+        {
+          "term": "foo display",
+          "score": 13.7117,
+          "evidence": []
+        },
+        {
+          "term": "different agents",
+          "score": 13.0053,
+          "evidence": []
+        },
+        {
+          "term": "get foo",
+          "score": 12.7472,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 11.5889,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "multi-agent debate",
+          "score": 1.3133,
+          "evidence": []
+        },
+        {
+          "term": "modification plans",
+          "score": 0.9101,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.7793,
+          "evidence": []
+        },
+        {
+          "term": "different agents",
+          "score": 0.7458,
+          "evidence": []
+        },
+        {
+          "term": "get foo",
+          "score": 0.7387,
+          "evidence": []
+        },
+        {
+          "term": "foo display",
+          "score": 0.6987,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.6815,
+          "evidence": []
+        },
+        {
+          "term": "display method",
+          "score": 0.5734,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "swe-bench-lite",
+          "score": 44.9212,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 44.1088,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 43.2866,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 41.4108,
+          "evidence": []
+        },
+        {
+          "term": "mutation-based",
+          "score": 39.7836,
+          "evidence": []
+        },
+        {
+          "term": "agation",
+          "score": 39.734,
+          "evidence": []
+        },
+        {
+          "term": "search-based",
+          "score": 39.13,
+          "evidence": []
+        },
+        {
+          "term": "three-stage",
+          "score": 38.9999,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-33-multi-agent-debate": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "foo display",
+          "score": 3.114,
+          "evidence": []
+        },
+        {
+          "term": "display self",
+          "score": 3.0433,
+          "evidence": []
+        },
+        {
+          "term": "foo bar",
+          "score": 2.9137,
+          "evidence": []
+        },
+        {
+          "term": "get foo",
+          "score": 2.9086,
+          "evidence": []
+        },
+        {
+          "term": "field self",
+          "score": 2.5352,
+          "evidence": []
+        },
+        {
+          "term": "fields init",
+          "score": 2.3063,
+          "evidence": []
+        },
+        {
+          "term": "display method",
+          "score": 2.088,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 1.9504,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "foo display",
+          "score": 101.4976,
+          "evidence": []
+        },
+        {
+          "term": "display self",
+          "score": 94.8593,
+          "evidence": []
+        },
+        {
+          "term": "get display",
+          "score": 90.4914,
+          "evidence": []
+        },
+        {
+          "term": "field display",
+          "score": 78.6814,
+          "evidence": []
+        },
+        {
+          "term": "bar display",
+          "score": 76.3981,
+          "evidence": []
+        },
+        {
+          "term": "display method",
+          "score": 69.8964,
+          "evidence": []
+        },
+        {
+          "term": "fields init",
+          "score": 47.5452,
+          "evidence": []
+        },
+        {
+          "term": "django",
+          "score": 42.617,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "debate",
+          "score": 1.3222,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modification plan",
+          "score": 0.8845,
+          "evidence": []
+        },
+        {
+          "term": "get foo",
+          "score": 0.7966,
+          "evidence": []
+        },
+        {
+          "term": "get display",
+          "score": 0.7494,
+          "evidence": []
+        },
+        {
+          "term": "display self",
+          "score": 0.7365,
+          "evidence": []
+        },
+        {
+          "term": "foo bar",
+          "score": 0.6917,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.6747,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "get field",
+          "score": 0.6712,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "debate",
+          "score": 28.8651,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modification plan",
+          "score": 23.2829,
+          "evidence": []
+        },
+        {
+          "term": "get foo",
+          "score": 20.1914,
+          "evidence": []
+        },
+        {
+          "term": "foo display",
+          "score": 18.4812,
+          "evidence": []
+        },
+        {
+          "term": "foo bar",
+          "score": 18.4708,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 17.0203,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 15.2877,
+          "evidence": []
+        },
+        {
+          "term": "display self",
+          "score": 14.7803,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "debate",
+          "score": 1.3222,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modification plan",
+          "score": 0.8845,
+          "evidence": []
+        },
+        {
+          "term": "get foo",
+          "score": 0.7966,
+          "evidence": []
+        },
+        {
+          "term": "get display",
+          "score": 0.7494,
+          "evidence": []
+        },
+        {
+          "term": "display self",
+          "score": 0.7365,
+          "evidence": []
+        },
+        {
+          "term": "foo bar",
+          "score": 0.6917,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.6747,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "get field",
+          "score": 0.6712,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "debate",
+          "score": 60.1575,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "swe-bench-lite",
+          "score": 45.8897,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 45.244,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 43.8846,
+          "evidence": []
+        },
+        {
+          "term": "mutation-based",
+          "score": 42.9247,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 42.5238,
+          "evidence": []
+        },
+        {
+          "term": "charfield",
+          "score": 42.0919,
+          "evidence": []
+        },
+        {
+          "term": "foobar",
+          "score": 41.6472,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-31-problem-formulation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "modification disambiguation",
+          "score": 1.9015,
+          "evidence": []
+        },
+        {
+          "term": "code entities",
+          "score": 1.796,
+          "evidence": []
+        },
+        {
+          "term": "fault propagation",
+          "score": 1.5941,
+          "evidence": []
+        },
+        {
+          "term": "structural relationships",
+          "score": 1.3128,
+          "evidence": []
+        },
+        {
+          "term": "propagation paths",
+          "score": 1.2812,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.84,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.6996,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.6797,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "modification disambiguation",
+          "score": 31.5375,
+          "evidence": []
+        },
+        {
+          "term": "code entities",
+          "score": 30.6658,
+          "evidence": []
+        },
+        {
+          "term": "fault propagation",
+          "score": 22.9623,
+          "evidence": []
+        },
+        {
+          "term": "structural relationships",
+          "score": 21.6693,
+          "evidence": []
+        },
+        {
+          "term": "propagation paths",
+          "score": 17.0152,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 13.3184,
+          "evidence": []
+        },
+        {
+          "term": "employ",
+          "score": 9.4037,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 8.879,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "fault propagation",
+          "score": 0.688,
+          "evidence": []
+        },
+        {
+          "term": "code entities",
+          "score": 0.5651,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.5036,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.4962,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.4039,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.3821,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 0.3809,
+          "evidence": []
+        },
+        {
+          "term": "modification disambiguation",
+          "score": 0.3809,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "fault propagation",
+          "score": 12.796,
+          "evidence": []
+        },
+        {
+          "term": "code entities",
+          "score": 10.7675,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 9.448,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 8.9727,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 8.6024,
+          "evidence": []
+        },
+        {
+          "term": "modification disambiguation",
+          "score": 8.6024,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 8.5405,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 8.3297,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "fault propagation",
+          "score": 0.688,
+          "evidence": []
+        },
+        {
+          "term": "code entities",
+          "score": 0.5651,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.5036,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.4962,
+          "evidence": []
+        },
+        {
+          "term": "modification disambiguation",
+          "score": 0.4286,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.3821,
+          "evidence": []
+        },
+        {
+          "term": "propagation paths",
+          "score": 0.3763,
+          "evidence": []
+        },
+        {
+          "term": "structural relationships",
+          "score": 0.3326,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fault propagation",
+          "score": 61.9292,
+          "evidence": []
+        },
+        {
+          "term": "swe-bench-lite",
+          "score": 53.8903,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 52.9214,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 51.4878,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 49.5118,
+          "evidence": []
+        },
+        {
+          "term": "mutation-based",
+          "score": 47.8403,
+          "evidence": []
+        },
+        {
+          "term": "agation",
+          "score": 47.602,
+          "evidence": []
+        },
+        {
+          "term": "search-based",
+          "score": 46.7559,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-32-fault-propagation-traces-proposal": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "fault propagation",
+          "score": 5.9195,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "propagation traces",
+          "score": 4.9957,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "localization chain",
+          "score": 3.4948,
+          "evidence": []
+        },
+        {
+          "term": "modification proposals",
+          "score": 3.3078,
+          "evidence": []
+        },
+        {
+          "term": "modification plan",
+          "score": 3.0947,
+          "evidence": []
+        },
+        {
+          "term": "synthesize modification",
+          "score": 3.0593,
+          "evidence": []
+        },
+        {
+          "term": "foo bar",
+          "score": 2.939,
+          "evidence": []
+        },
+        {
+          "term": "plan debate",
+          "score": 2.8745,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "fault propagation",
+          "score": 165.9846,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "localization chain",
+          "score": 127.6281,
+          "evidence": []
+        },
+        {
+          "term": "propagation traces",
+          "score": 117.0031,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modification plan",
+          "score": 114.4845,
+          "evidence": []
+        },
+        {
+          "term": "modification proposals",
+          "score": 104.9279,
+          "evidence": []
+        },
+        {
+          "term": "plan debate",
+          "score": 97.3404,
+          "evidence": []
+        },
+        {
+          "term": "competitive debate",
+          "score": 94.7011,
+          "evidence": []
+        },
+        {
+          "term": "chain selection",
+          "score": 93.03,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "fault propagation",
+          "score": 5.6947,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "propagation traces",
+          "score": 3.9358,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fault localization",
+          "score": 3.7879,
+          "evidence": []
+        },
+        {
+          "term": "localization chain",
+          "score": 3.692,
+          "evidence": []
+        },
+        {
+          "term": "competitive debate",
+          "score": 3.3343,
+          "evidence": []
+        },
+        {
+          "term": "plan debate",
+          "score": 3.2792,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 3.2682,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 3.0169,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "fault propagation",
+          "score": 164.3271,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "localization chain",
+          "score": 117.9551,
+          "evidence": []
+        },
+        {
+          "term": "propagation traces",
+          "score": 97.622,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "competitive debate",
+          "score": 94.0106,
+          "evidence": []
+        },
+        {
+          "term": "plan debate",
+          "score": 93.6981,
+          "evidence": []
+        },
+        {
+          "term": "modification plan",
+          "score": 92.1733,
+          "evidence": []
+        },
+        {
+          "term": "modification proposals",
+          "score": 80.8828,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 79.5814,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "fault propagation",
+          "score": 5.6947,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "propagation traces",
+          "score": 3.9358,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fault localization",
+          "score": 3.7879,
+          "evidence": []
+        },
+        {
+          "term": "localization chain",
+          "score": 3.692,
+          "evidence": []
+        },
+        {
+          "term": "competitive debate",
+          "score": 3.3343,
+          "evidence": []
+        },
+        {
+          "term": "plan debate",
+          "score": 3.2792,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 3.2682,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 3.0169,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fault propagation",
+          "score": 121.7204,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "propagation traces",
+          "score": 115.8855,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fault localization",
+          "score": 70.7915,
+          "evidence": []
+        },
+        {
+          "term": "modification proposals",
+          "score": 58.0869,
+          "evidence": []
+        },
+        {
+          "term": "synthesize modification",
+          "score": 57.3862,
+          "evidence": []
+        },
+        {
+          "term": "localization chains",
+          "score": 54.4123,
+          "evidence": []
+        },
+        {
+          "term": "struc tured",
+          "score": 53.422,
+          "evidence": []
+        },
+        {
+          "term": "swe-bench-lite",
+          "score": 51.8546,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-34-patch-generation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "modification plan",
+          "score": 1.9284,
+          "evidence": []
+        },
+        {
+          "term": "mcts process",
+          "score": 1.9185,
+          "evidence": []
+        },
+        {
+          "term": "search tree",
+          "score": 1.8083,
+          "evidence": []
+        },
+        {
+          "term": "exploration",
+          "score": 0.9428,
+          "evidence": []
+        },
+        {
+          "term": "codebase",
+          "score": 0.9376,
+          "evidence": []
+        },
+        {
+          "term": "strategic",
+          "score": 0.8256,
+          "evidence": []
+        },
+        {
+          "term": "edit",
+          "score": 0.7058,
+          "evidence": []
+        },
+        {
+          "term": "reaches",
+          "score": 0.6896,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "search tree",
+          "score": 36.1789,
+          "evidence": []
+        },
+        {
+          "term": "modification plan",
+          "score": 35.4,
+          "evidence": []
+        },
+        {
+          "term": "mcts process",
+          "score": 31.5851,
+          "evidence": []
+        },
+        {
+          "term": "exploration",
+          "score": 18.9278,
+          "evidence": []
+        },
+        {
+          "term": "codebase",
+          "score": 15.1756,
+          "evidence": []
+        },
+        {
+          "term": "strategic",
+          "score": 12.26,
+          "evidence": []
+        },
+        {
+          "term": "action",
+          "score": 10.4896,
+          "evidence": []
+        },
+        {
+          "term": "edit",
+          "score": 9.7287,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "modification plan",
+          "score": 0.4928,
+          "evidence": []
+        },
+        {
+          "term": "mcts process",
+          "score": 0.3857,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.3231,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.3117,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.31,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.297,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.2909,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.2896,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "modification plan",
+          "score": 9.4198,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 6.0232,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 5.9631,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 5.6331,
+          "evidence": []
+        },
+        {
+          "term": "mcts process",
+          "score": 5.6033,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 4.9237,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 4.5145,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 4.4701,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "modification plan",
+          "score": 0.4928,
+          "evidence": []
+        },
+        {
+          "term": "mcts process",
+          "score": 0.3857,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.3117,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.31,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.2896,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.2671,
+          "evidence": []
+        },
+        {
+          "term": "search tree",
+          "score": 0.2182,
+          "evidence": []
+        },
+        {
+          "term": "patch",
+          "score": 0.1907,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "swe-bench-lite",
+          "score": 42.7269,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 42.3204,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 40.9493,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 39.3018,
+          "evidence": []
+        },
+        {
+          "term": "mutation-based",
+          "score": 39.008,
+          "evidence": []
+        },
+        {
+          "term": "three-stage",
+          "score": 38.2203,
+          "evidence": []
+        },
+        {
+          "term": "agation",
+          "score": 38.0731,
+          "evidence": []
+        },
+        {
+          "term": "spectrum-based",
+          "score": 38.036,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-42-datasets": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "fault localization",
+          "score": 1.6906,
+          "evidence": []
+        },
+        {
+          "term": "patch generation",
+          "score": 1.3017,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 1.1395,
+          "evidence": []
+        },
+        {
+          "term": "environments through",
+          "score": 1.0265,
+          "evidence": []
+        },
+        {
+          "term": "following baselines",
+          "score": 0.9623,
+          "evidence": []
+        },
+        {
+          "term": "repair",
+          "score": 0.85,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate",
+          "score": 0.7244,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 0.707,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "fault localization",
+          "score": 26.797,
+          "evidence": []
+        },
+        {
+          "term": "patch generation",
+          "score": 19.0205,
+          "evidence": []
+        },
+        {
+          "term": "environments through",
+          "score": 15.5889,
+          "evidence": []
+        },
+        {
+          "term": "following baselines",
+          "score": 14.4898,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 13.6176,
+          "evidence": []
+        },
+        {
+          "term": "repair",
+          "score": 13.5586,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 11.0167,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate",
+          "score": 9.6144,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "fault localization",
+          "score": 0.633,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 0.4872,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3956,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.3179,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.2911,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.2429,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.2348,
+          "evidence": []
+        },
+        {
+          "term": "patch generation",
+          "score": 0.2195,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "fault localization",
+          "score": 8.6744,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 6.6988,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 4.8436,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 4.3834,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 4.2652,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 4.1198,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 3.2623,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 3.2339,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "fault localization",
+          "score": 0.633,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 0.4872,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3956,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.2911,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.2348,
+          "evidence": []
+        },
+        {
+          "term": "patch generation",
+          "score": 0.2195,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate",
+          "score": 0.2185,
+          "evidence": []
+        },
+        {
+          "term": "environments through",
+          "score": 0.1596,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fault localization",
+          "score": 87.8656,
+          "evidence": []
+        },
+        {
+          "term": "swe-bench-lite",
+          "score": 70.1564,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 69.1983,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 69.1197,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 63.5913,
+          "evidence": []
+        },
+        {
+          "term": "multi-hop",
+          "score": 59.9084,
+          "evidence": []
+        },
+        {
+          "term": "three-stage",
+          "score": 59.4852,
+          "evidence": []
+        },
+        {
+          "term": "agation",
+          "score": 59.1216,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-44-metrics": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "localization",
+          "score": 0.8577,
+          "evidence": []
+        },
+        {
+          "term": "metrics",
+          "score": 0.6752,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modification",
+          "score": 0.6744,
+          "evidence": []
+        },
+        {
+          "term": "grained",
+          "score": 0.6307,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "localization",
+          "score": 13.3184,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 8.2845,
+          "evidence": []
+        },
+        {
+          "term": "metric",
+          "score": 8.0174,
+          "evidence": []
+        },
+        {
+          "term": "grained",
+          "score": 7.0044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "localization",
+          "score": 0.1562,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.1523,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.1268,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1177,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "localization",
+          "score": 2.5197,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 2.3781,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 2.2204,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 2.118,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "localization",
+          "score": 0.1562,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.1268,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.1177,
+          "evidence": []
+        },
+        {
+          "term": "metrics",
+          "score": 0.1125,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "swe-bench-lite",
+          "score": 34.8271,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 33.9294,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 33.3001,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 31.7804,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-45-implementation-details": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "multi-agent debate",
+          "score": 1.5981,
+          "evidence": []
+        },
+        {
+          "term": "testbed",
+          "score": 0.6307,
+          "evidence": []
+        },
+        {
+          "term": "breadth",
+          "score": 0.5942,
+          "evidence": []
+        },
+        {
+          "term": "unsuccessful",
+          "score": 0.5942,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "multi-agent debate",
+          "score": 24.6157,
+          "evidence": []
+        },
+        {
+          "term": "testbed",
+          "score": 7.0044,
+          "evidence": []
+        },
+        {
+          "term": "breadth",
+          "score": 6.599,
+          "evidence": []
+        },
+        {
+          "term": "unsuccessful",
+          "score": 6.599,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "multi-agent debate",
+          "score": 0.4249,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.2407,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.2018,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.1973,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "multi-agent debate",
+          "score": 5.6112,
+          "evidence": []
+        },
+        {
+          "term": "entry",
+          "score": 3.6365,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 3.5433,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 3.3658,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "multi-agent debate",
+          "score": 0.4249,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.2407,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.2018,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.1671,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "swe-bench-lite",
+          "score": 44.2327,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 43.1866,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 42.9528,
+          "evidence": []
+        },
+        {
+          "term": "transcend",
+          "score": 41.6097,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-5-results": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "official",
+          "score": 0.5825,
+          "evidence": []
+        },
+        {
+          "term": "sions",
+          "score": 0.5683,
+          "evidence": []
+        },
+        {
+          "term": "deepseek-v",
+          "score": 0.4808,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "official",
+          "score": 7.9198,
+          "evidence": []
+        },
+        {
+          "term": "sions",
+          "score": 6.3113,
+          "evidence": []
+        },
+        {
+          "term": "addressing",
+          "score": 5.0585,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "code",
+          "score": 0.0446,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 0.0383,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.0338,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "answer",
+          "score": 0.4541,
+          "evidence": []
+        },
+        {
+          "term": "question",
+          "score": 0.4276,
+          "evidence": []
+        },
+        {
+          "term": "swot",
+          "score": 0.3449,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "repository",
+          "score": 0.0336,
+          "evidence": []
+        },
+        {
+          "term": "analysis",
+          "score": 0.0293,
+          "evidence": []
+        },
+        {
+          "term": "across",
+          "score": 0.0271,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "knn",
+          "score": 40.4867,
+          "evidence": []
+        },
+        {
+          "term": "xgb",
+          "score": 40.4867,
+          "evidence": []
+        },
+        {
+          "term": "route-auc",
+          "score": 34.4951,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-51-rq1-effectiveness-on-issue-resolution": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "issue resolution",
+          "score": 2.5706,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "swe-debate achieves",
+          "score": 1.9163,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 1.5981,
+          "evidence": []
+        },
+        {
+          "term": "deepseek-v",
+          "score": 1.524,
+          "evidence": []
+        },
+        {
+          "term": "competitive multi-agent",
+          "score": 1.3889,
+          "evidence": []
+        },
+        {
+          "term": "strongest baseline",
+          "score": 1.3445,
+          "evidence": []
+        },
+        {
+          "term": "gpt-4o",
+          "score": 1.0524,
+          "evidence": []
+        },
+        {
+          "term": "effectiveness",
+          "score": 1.027,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "swe-debate achieves",
+          "score": 41.1431,
+          "evidence": []
+        },
+        {
+          "term": "deepseek-v",
+          "score": 40.4681,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 33.158,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 24.6157,
+          "evidence": []
+        },
+        {
+          "term": "gpt-4o",
+          "score": 21.4819,
+          "evidence": []
+        },
+        {
+          "term": "competitive multi-agent",
+          "score": 20.8574,
+          "evidence": []
+        },
+        {
+          "term": "strongest baseline",
+          "score": 19.3478,
+          "evidence": []
+        },
+        {
+          "term": "swe-agent",
+          "score": 15.1756,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "issue resolution",
+          "score": 1.0259,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 0.5554,
+          "evidence": []
+        },
+        {
+          "term": "competitive multi-agent",
+          "score": 0.4237,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate achieves",
+          "score": 0.3922,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.36,
+          "evidence": []
+        },
+        {
+          "term": "strongest baseline",
+          "score": 0.2729,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.2634,
+          "evidence": []
+        },
+        {
+          "term": "openhands",
+          "score": 0.2523,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "issue resolution",
+          "score": 15.4235,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "openhands",
+          "score": 7.9075,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 7.7106,
+          "evidence": []
+        },
+        {
+          "term": "competitive multi-agent",
+          "score": 5.8725,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 5.2803,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 4.1515,
+          "evidence": []
+        },
+        {
+          "term": "gemini",
+          "score": 4.1,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 3.9949,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "issue resolution",
+          "score": 1.0259,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 0.5554,
+          "evidence": []
+        },
+        {
+          "term": "competitive multi-agent",
+          "score": 0.4237,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate achieves",
+          "score": 0.3922,
+          "evidence": []
+        },
+        {
+          "term": "strongest baseline",
+          "score": 0.2729,
+          "evidence": []
+        },
+        {
+          "term": "openhands",
+          "score": 0.2523,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 0.2489,
+          "evidence": []
+        },
+        {
+          "term": "table",
+          "score": 0.2019,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "swe-bench-lite",
+          "score": 83.3738,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 83.0308,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 80.5091,
+          "evidence": []
+        },
+        {
+          "term": "transcend",
+          "score": 78.4042,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 75.322,
+          "evidence": []
+        },
+        {
+          "term": "file-level",
+          "score": 72.0209,
+          "evidence": []
+        },
+        {
+          "term": "agation",
+          "score": 67.1348,
+          "evidence": []
+        },
+        {
+          "term": "search-based",
+          "score": 65.6878,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-52-rq2-ablation-study": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "multi-agent debate",
+          "score": 1.8438,
+          "evidence": []
+        },
+        {
+          "term": "chain generation",
+          "score": 1.776,
+          "evidence": []
+        },
+        {
+          "term": "edit plan",
+          "score": 1.6043,
+          "evidence": []
+        },
+        {
+          "term": "multiple chain",
+          "score": 1.5964,
+          "evidence": []
+        },
+        {
+          "term": "ablation",
+          "score": 1.4887,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "performance drop",
+          "score": 1.4288,
+          "evidence": []
+        },
+        {
+          "term": "percentage point",
+          "score": 1.3316,
+          "evidence": []
+        },
+        {
+          "term": "exploration",
+          "score": 0.8469,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "multi-agent debate",
+          "score": 33.4946,
+          "evidence": []
+        },
+        {
+          "term": "chain generation",
+          "score": 28.9892,
+          "evidence": []
+        },
+        {
+          "term": "multiple chain",
+          "score": 26.8223,
+          "evidence": []
+        },
+        {
+          "term": "edit plan",
+          "score": 25.6098,
+          "evidence": []
+        },
+        {
+          "term": "performance drop",
+          "score": 24.6385,
+          "evidence": []
+        },
+        {
+          "term": "percentage point",
+          "score": 21.2161,
+          "evidence": []
+        },
+        {
+          "term": "ablation",
+          "score": 19.6999,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "component",
+          "score": 16.9004,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "multi-agent debate",
+          "score": 0.8944,
+          "evidence": []
+        },
+        {
+          "term": "multiple chain",
+          "score": 0.6764,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.5456,
+          "evidence": []
+        },
+        {
+          "term": "chain generation",
+          "score": 0.5401,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.4309,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.4072,
+          "evidence": []
+        },
+        {
+          "term": "edit plan",
+          "score": 0.3804,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 0.37,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "multi-agent debate",
+          "score": 13.1355,
+          "evidence": []
+        },
+        {
+          "term": "multiple chain",
+          "score": 12.0213,
+          "evidence": []
+        },
+        {
+          "term": "chain generation",
+          "score": 10.631,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 8.8835,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 7.7139,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 7.1089,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 6.9819,
+          "evidence": []
+        },
+        {
+          "term": "competitive",
+          "score": 5.5197,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "multi-agent debate",
+          "score": 0.8944,
+          "evidence": []
+        },
+        {
+          "term": "multiple chain",
+          "score": 0.6764,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.5456,
+          "evidence": []
+        },
+        {
+          "term": "chain generation",
+          "score": 0.5401,
+          "evidence": []
+        },
+        {
+          "term": "edit plan",
+          "score": 0.3804,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 0.37,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate",
+          "score": 0.3591,
+          "evidence": []
+        },
+        {
+          "term": "competitive",
+          "score": 0.3414,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "swe-bench-lite",
+          "score": 45.2787,
+          "evidence": []
+        },
+        {
+          "term": "transcend",
+          "score": 44.6662,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 44.0251,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 43.0981,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 41.314,
+          "evidence": []
+        },
+        {
+          "term": "file-level",
+          "score": 41.0906,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 39.3755,
+          "evidence": []
+        },
+        {
+          "term": "agation",
+          "score": 39.1266,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-53-rq3-localization-performance-comparison": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "localization performance",
+          "score": 4.1974,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "file-level localization",
+          "score": 2.4877,
+          "evidence": []
+        },
+        {
+          "term": "localization accuracy",
+          "score": 2.0932,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate achieves",
+          "score": 2.059,
+          "evidence": []
+        },
+        {
+          "term": "deepseek-v model",
+          "score": 1.7418,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 1.5419,
+          "evidence": []
+        },
+        {
+          "term": "strongest baseline",
+          "score": 1.4569,
+          "evidence": []
+        },
+        {
+          "term": "sonnet",
+          "score": 1.3192,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "localization performance",
+          "score": 118.7344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "file-level localization",
+          "score": 62.0322,
+          "evidence": []
+        },
+        {
+          "term": "localization accuracy",
+          "score": 57.7184,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate achieves",
+          "score": 44.8894,
+          "evidence": []
+        },
+        {
+          "term": "sonnet",
+          "score": 36.3061,
+          "evidence": []
+        },
+        {
+          "term": "deepseek-v model",
+          "score": 34.5148,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 31.5564,
+          "evidence": []
+        },
+        {
+          "term": "claude",
+          "score": 26.4959,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "localization performance",
+          "score": 1.985,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "localization accuracy",
+          "score": 0.9414,
+          "evidence": []
+        },
+        {
+          "term": "file-level localization",
+          "score": 0.7999,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate achieves",
+          "score": 0.6981,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.664,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.5126,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.4738,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.4425,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "localization performance",
+          "score": 30.5194,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "localization accuracy",
+          "score": 14.4578,
+          "evidence": []
+        },
+        {
+          "term": "file-level localization",
+          "score": 12.3789,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 11.542,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 10.0845,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 9.6396,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 8.8122,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 8.532,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "localization performance",
+          "score": 1.985,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "localization accuracy",
+          "score": 0.9414,
+          "evidence": []
+        },
+        {
+          "term": "file-level localization",
+          "score": 0.7999,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate achieves",
+          "score": 0.6981,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.664,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.5126,
+          "evidence": []
+        },
+        {
+          "term": "deepseek-v model",
+          "score": 0.4115,
+          "evidence": []
+        },
+        {
+          "term": "strongest baseline",
+          "score": 0.4024,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "file-level localization",
+          "score": 126.5081,
+          "evidence": []
+        },
+        {
+          "term": "localization performance",
+          "score": 106.2876,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "swe-bench-lite",
+          "score": 84.1219,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 81.1096,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 80.5878,
+          "evidence": []
+        },
+        {
+          "term": "transcend",
+          "score": 79.8778,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 75.9863,
+          "evidence": []
+        },
+        {
+          "term": "agation",
+          "score": 69.1497,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-54-rq4-impact-of-the-chain-depth": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "chain depth",
+          "score": 5.9705,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reasoning depth",
+          "score": 2.3464,
+          "evidence": []
+        },
+        {
+          "term": "accurate localization",
+          "score": 1.5366,
+          "evidence": []
+        },
+        {
+          "term": "localization decisions",
+          "score": 1.4795,
+          "evidence": []
+        },
+        {
+          "term": "debate process",
+          "score": 1.2737,
+          "evidence": []
+        },
+        {
+          "term": "impact",
+          "score": 1.132,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "acc",
+          "score": 0.8161,
+          "evidence": []
+        },
+        {
+          "term": "trade-off",
+          "score": 0.7341,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "chain depth",
+          "score": 148.1706,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reasoning depth",
+          "score": 55.188,
+          "evidence": []
+        },
+        {
+          "term": "accurate localization",
+          "score": 25.1751,
+          "evidence": []
+        },
+        {
+          "term": "localization decisions",
+          "score": 24.3396,
+          "evidence": []
+        },
+        {
+          "term": "impact",
+          "score": 17.6124,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "debate process",
+          "score": 17.2994,
+          "evidence": []
+        },
+        {
+          "term": "acc",
+          "score": 11.2363,
+          "evidence": []
+        },
+        {
+          "term": "trade-off",
+          "score": 9.9791,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "chain depth",
+          "score": 0.8591,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "debate process",
+          "score": 0.4687,
+          "evidence": []
+        },
+        {
+          "term": "localization decisions",
+          "score": 0.3902,
+          "evidence": []
+        },
+        {
+          "term": "accurate localization",
+          "score": 0.3438,
+          "evidence": []
+        },
+        {
+          "term": "reasoning depth",
+          "score": 0.3127,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.2696,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.2525,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.2336,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "chain depth",
+          "score": 23.8205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "debate process",
+          "score": 8.909,
+          "evidence": []
+        },
+        {
+          "term": "reasoning depth",
+          "score": 6.9363,
+          "evidence": []
+        },
+        {
+          "term": "accurate localization",
+          "score": 6.7825,
+          "evidence": []
+        },
+        {
+          "term": "localization decisions",
+          "score": 6.7825,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 6.5745,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 5.9592,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 5.3373,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "chain depth",
+          "score": 0.8591,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "debate process",
+          "score": 0.4687,
+          "evidence": []
+        },
+        {
+          "term": "localization decisions",
+          "score": 0.3902,
+          "evidence": []
+        },
+        {
+          "term": "accurate localization",
+          "score": 0.3806,
+          "evidence": []
+        },
+        {
+          "term": "reasoning depth",
+          "score": 0.3127,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 0.1556,
+          "evidence": []
+        },
+        {
+          "term": "accuracy",
+          "score": 0.1168,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 0.1158,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "chain depth",
+          "score": 67.2025,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "neville",
+          "score": 49.8411,
+          "evidence": []
+        },
+        {
+          "term": "swe-bench-lite",
+          "score": 41.2736,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 40.133,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 39.4415,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 38.4869,
+          "evidence": []
+        },
+        {
+          "term": "file-level",
+          "score": 37.5629,
+          "evidence": []
+        },
+        {
+          "term": "transcend",
+          "score": 37.5391,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-55-case-study": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "expand tensorproduct",
+          "score": 3.1132,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 2.595,
+          "evidence": []
+        },
+        {
+          "term": "simp mul",
+          "score": 2.5051,
+          "evidence": []
+        },
+        {
+          "term": "localization chain",
+          "score": 2.1369,
+          "evidence": []
+        },
+        {
+          "term": "eval expand",
+          "score": 1.7345,
+          "evidence": []
+        },
+        {
+          "term": "symbolic",
+          "score": 1.6064,
+          "evidence": []
+        },
+        {
+          "term": "debate process",
+          "score": 1.2737,
+          "evidence": []
+        },
+        {
+          "term": "pauli",
+          "score": 1.2615,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "expand tensorproduct",
+          "score": 89.9378,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 56.1406,
+          "evidence": []
+        },
+        {
+          "term": "product simp",
+          "score": 50.9011,
+          "evidence": []
+        },
+        {
+          "term": "simp mul",
+          "score": 46.5255,
+          "evidence": []
+        },
+        {
+          "term": "localization chain",
+          "score": 37.3248,
+          "evidence": []
+        },
+        {
+          "term": "symbolic",
+          "score": 32.9948,
+          "evidence": []
+        },
+        {
+          "term": "eval expand",
+          "score": 26.7087,
+          "evidence": []
+        },
+        {
+          "term": "pauli",
+          "score": 21.0133,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "localization chain",
+          "score": 1.2359,
+          "evidence": []
+        },
+        {
+          "term": "expand tensorproduct",
+          "score": 0.989,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 0.8527,
+          "evidence": []
+        },
+        {
+          "term": "debate process",
+          "score": 0.8088,
+          "evidence": []
+        },
+        {
+          "term": "simp mul",
+          "score": 0.7726,
+          "evidence": []
+        },
+        {
+          "term": "eval expand",
+          "score": 0.6574,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate",
+          "score": 0.4917,
+          "evidence": []
+        },
+        {
+          "term": "quantum",
+          "score": 0.4531,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "expand tensorproduct",
+          "score": 71.952,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 43.35,
+          "evidence": []
+        },
+        {
+          "term": "product simp",
+          "score": 30.6259,
+          "evidence": []
+        },
+        {
+          "term": "simp mul",
+          "score": 29.9253,
+          "evidence": []
+        },
+        {
+          "term": "quantum",
+          "score": 28.884,
+          "evidence": []
+        },
+        {
+          "term": "eval expand",
+          "score": 25.0324,
+          "evidence": []
+        },
+        {
+          "term": "physics",
+          "score": 22.6919,
+          "evidence": []
+        },
+        {
+          "term": "localization chain",
+          "score": 22.3211,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "localization chain",
+          "score": 1.2359,
+          "evidence": []
+        },
+        {
+          "term": "expand tensorproduct",
+          "score": 0.989,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 0.8527,
+          "evidence": []
+        },
+        {
+          "term": "debate process",
+          "score": 0.8088,
+          "evidence": []
+        },
+        {
+          "term": "simp mul",
+          "score": 0.7726,
+          "evidence": []
+        },
+        {
+          "term": "eval expand",
+          "score": 0.6574,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.4425,
+          "evidence": []
+        },
+        {
+          "term": "power",
+          "score": 0.3534,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "simp mul",
+          "score": 545.5952,
+          "evidence": []
+        },
+        {
+          "term": "expand tensorproduct",
+          "score": 421.6822,
+          "evidence": []
+        },
+        {
+          "term": "product simp",
+          "score": 381.1632,
+          "evidence": []
+        },
+        {
+          "term": "quantum",
+          "score": 367.1723,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 330.3728,
+          "evidence": []
+        },
+        {
+          "term": "pauli",
+          "score": 321.6017,
+          "evidence": []
+        },
+        {
+          "term": "pow",
+          "score": 292.9166,
+          "evidence": []
+        },
+        {
+          "term": "eval expand",
+          "score": 228.5529,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-61-strengths": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "quantum tensorproduct",
+          "score": 6.1372,
+          "evidence": []
+        },
+        {
+          "term": "physics quantum",
+          "score": 4.9397,
+          "evidence": []
+        },
+        {
+          "term": "expand tensorproduct",
+          "score": 4.4586,
+          "evidence": []
+        },
+        {
+          "term": "return tensorproduct",
+          "score": 4.2448,
+          "evidence": []
+        },
+        {
+          "term": "simp mul",
+          "score": 3.8303,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 3.8112,
+          "evidence": []
+        },
+        {
+          "term": "tensorproduct class",
+          "score": 3.7734,
+          "evidence": []
+        },
+        {
+          "term": "sympy physics",
+          "score": 3.4612,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "quantum tensorproduct",
+          "score": 364.2303,
+          "evidence": []
+        },
+        {
+          "term": "expand tensorproduct",
+          "score": 270.9333,
+          "evidence": []
+        },
+        {
+          "term": "return tensorproduct",
+          "score": 263.9543,
+          "evidence": []
+        },
+        {
+          "term": "tensorproduct class",
+          "score": 250.6956,
+          "evidence": []
+        },
+        {
+          "term": "physics quantum",
+          "score": 213.1121,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 158.8944,
+          "evidence": []
+        },
+        {
+          "term": "tensor functions",
+          "score": 127.2254,
+          "evidence": []
+        },
+        {
+          "term": "sympy physics",
+          "score": 113.8338,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "quantum tensorproduct",
+          "score": 2.6553,
+          "evidence": []
+        },
+        {
+          "term": "expand tensorproduct",
+          "score": 2.2354,
+          "evidence": []
+        },
+        {
+          "term": "return tensorproduct",
+          "score": 2.1081,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 2.0033,
+          "evidence": []
+        },
+        {
+          "term": "physics quantum",
+          "score": 1.9862,
+          "evidence": []
+        },
+        {
+          "term": "tensorproduct class",
+          "score": 1.9188,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 1.8795,
+          "evidence": []
+        },
+        {
+          "term": "simp mul",
+          "score": 1.7626,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "quantum tensorproduct",
+          "score": 358.3899,
+          "evidence": []
+        },
+        {
+          "term": "expand tensorproduct",
+          "score": 274.625,
+          "evidence": []
+        },
+        {
+          "term": "return tensorproduct",
+          "score": 265.1298,
+          "evidence": []
+        },
+        {
+          "term": "tensorproduct class",
+          "score": 253.1643,
+          "evidence": []
+        },
+        {
+          "term": "physics quantum",
+          "score": 199.1933,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 162.6966,
+          "evidence": []
+        },
+        {
+          "term": "tensor functions",
+          "score": 130.1746,
+          "evidence": []
+        },
+        {
+          "term": "simp mul",
+          "score": 114.1313,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "quantum tensorproduct",
+          "score": 2.6553,
+          "evidence": []
+        },
+        {
+          "term": "expand tensorproduct",
+          "score": 2.2354,
+          "evidence": []
+        },
+        {
+          "term": "return tensorproduct",
+          "score": 2.1081,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 2.0033,
+          "evidence": []
+        },
+        {
+          "term": "physics quantum",
+          "score": 1.9862,
+          "evidence": []
+        },
+        {
+          "term": "tensorproduct class",
+          "score": 1.9188,
+          "evidence": []
+        },
+        {
+          "term": "tensor product",
+          "score": 1.8795,
+          "evidence": []
+        },
+        {
+          "term": "simp mul",
+          "score": 1.7626,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "quantum tensorproduct",
+          "score": 1124.0595,
+          "evidence": []
+        },
+        {
+          "term": "simp mul",
+          "score": 845.822,
+          "evidence": []
+        },
+        {
+          "term": "physics quantum",
+          "score": 826.1966,
+          "evidence": []
+        },
+        {
+          "term": "expand tensorproduct",
+          "score": 652.5599,
+          "evidence": []
+        },
+        {
+          "term": "product simp",
+          "score": 587.695,
+          "evidence": []
+        },
+        {
+          "term": "return tensorproduct",
+          "score": 573.0499,
+          "evidence": []
+        },
+        {
+          "term": "tensorproduct class",
+          "score": 553.0053,
+          "evidence": []
+        },
+        {
+          "term": "pow expressions",
+          "score": 530.2334,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-62-limitations-and-future-work": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "future work",
+          "score": 2.2773,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "graph construction",
+          "score": 1.019,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.9752,
+          "evidence": []
+        },
+        {
+          "term": "analytical",
+          "score": 0.7452,
+          "evidence": []
+        },
+        {
+          "term": "diversity",
+          "score": 0.6914,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 0.655,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 0.6274,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "integration",
+          "score": 0.5863,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "future work",
+          "score": 38.1976,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "debate",
+          "score": 17.7579,
+          "evidence": []
+        },
+        {
+          "term": "graph construction",
+          "score": 12.9143,
+          "evidence": []
+        },
+        {
+          "term": "analytical",
+          "score": 10.2653,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 9.3074,
+          "evidence": []
+        },
+        {
+          "term": "diversity",
+          "score": 9.3061,
+          "evidence": []
+        },
+        {
+          "term": "integration",
+          "score": 7.9198,
+          "evidence": []
+        },
+        {
+          "term": "explore",
+          "score": 7.6115,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "future work",
+          "score": 0.3125,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "localization",
+          "score": 0.256,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.2528,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.2311,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.2214,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1994,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.199,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.1954,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "future work",
+          "score": 5.0491,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reasoning",
+          "score": 4.5045,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 3.8943,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 3.6493,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 3.4835,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 3.433,
+          "evidence": []
+        },
+        {
+          "term": "graph construction",
+          "score": 3.2086,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 3.0718,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "future work",
+          "score": 0.3125,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "debate",
+          "score": 0.2528,
+          "evidence": []
+        },
+        {
+          "term": "process",
+          "score": 0.1994,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 0.1919,
+          "evidence": []
+        },
+        {
+          "term": "models",
+          "score": 0.1786,
+          "evidence": []
+        },
+        {
+          "term": "graph construction",
+          "score": 0.174,
+          "evidence": []
+        },
+        {
+          "term": "limitations",
+          "score": 0.1579,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "analysis",
+          "score": 0.1233,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "swe-bench-lite",
+          "score": 29.8035,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 29.2673,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 28.8646,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 27.3678,
+          "evidence": []
+        },
+        {
+          "term": "agation",
+          "score": 26.2874,
+          "evidence": []
+        },
+        {
+          "term": "spectrum-based",
+          "score": 25.9733,
+          "evidence": []
+        },
+        {
+          "term": "multi-hop",
+          "score": 25.9278,
+          "evidence": []
+        },
+        {
+          "term": "three-stage",
+          "score": 25.8261,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-7-threats-to-validity": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "internal threat",
+          "score": 1.3966,
+          "evidence": []
+        },
+        {
+          "term": "foundation models",
+          "score": 1.0157,
+          "evidence": []
+        },
+        {
+          "term": "future work",
+          "score": 0.8867,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.84,
+          "evidence": []
+        },
+        {
+          "term": "swe-bench-verified",
+          "score": 0.829,
+          "evidence": []
+        },
+        {
+          "term": "deepseek-v",
+          "score": 0.762,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 0.7605,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.6536,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "internal threat",
+          "score": 21.8895,
+          "evidence": []
+        },
+        {
+          "term": "foundation models",
+          "score": 13.6796,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 13.3184,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 12.4098,
+          "evidence": []
+        },
+        {
+          "term": "future work",
+          "score": 12.3566,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 11.9963,
+          "evidence": []
+        },
+        {
+          "term": "swe-bench-verified",
+          "score": 11.5033,
+          "evidence": []
+        },
+        {
+          "term": "deepseek-v",
+          "score": 10.117,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "debate",
+          "score": 0.2994,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.2928,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.2488,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.2359,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.233,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.2292,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 0.2259,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.2051,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reasoning",
+          "score": 5.2288,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 4.0841,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 3.8873,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 3.3865,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 3.3598,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 3.349,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 3.187,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 2.6778,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "debate",
+          "score": 0.2994,
+          "evidence": []
+        },
+        {
+          "term": "foundation models",
+          "score": 0.2276,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 0.2259,
+          "evidence": []
+        },
+        {
+          "term": "dataset",
+          "score": 0.1696,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 0.1633,
+          "evidence": []
+        },
+        {
+          "term": "across",
+          "score": 0.158,
+          "evidence": []
+        },
+        {
+          "term": "evaluation",
+          "score": 0.1513,
+          "evidence": []
+        },
+        {
+          "term": "diverse",
+          "score": 0.1382,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "swe-bench-lite",
+          "score": 34.2755,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 33.4935,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 33.4526,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 31.0506,
+          "evidence": []
+        },
+        {
+          "term": "agation",
+          "score": 28.9001,
+          "evidence": []
+        },
+        {
+          "term": "multi-hop",
+          "score": 28.3837,
+          "evidence": []
+        },
+        {
+          "term": "search-based",
+          "score": 28.2592,
+          "evidence": []
+        },
+        {
+          "term": "three-stage",
+          "score": 28.1869,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-81-fault-localization": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "fault localization",
+          "score": 3.469,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mutation-based",
+          "score": 0.6307,
+          "evidence": []
+        },
+        {
+          "term": "spectrum-based",
+          "score": 0.6307,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "fault localization",
+          "score": 53.754,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mutation-based",
+          "score": 7.0044,
+          "evidence": []
+        },
+        {
+          "term": "spectrum-based",
+          "score": 7.0044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "fault localization",
+          "score": 0.3795,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "debate",
+          "score": 0.0965,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.0899,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "fault localization",
+          "score": 7.8974,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "debate",
+          "score": 2.0374,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 1.8937,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "fault localization",
+          "score": 0.3795,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "code",
+          "score": 0.0899,
+          "evidence": []
+        },
+        {
+          "term": "methods",
+          "score": 0.0509,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fault localization",
+          "score": 249.2013,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mutation-based",
+          "score": 94.8583,
+          "evidence": []
+        },
+        {
+          "term": "spectrum-based",
+          "score": 94.0057,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-026-82-repository-level-issue-resolution": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "issue resolution",
+          "score": 3.8151,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fault localization",
+          "score": 2.3774,
+          "evidence": []
+        },
+        {
+          "term": "localization through",
+          "score": 1.9751,
+          "evidence": []
+        },
+        {
+          "term": "issue descriptions",
+          "score": 1.6226,
+          "evidence": []
+        },
+        {
+          "term": "competitive multi-agent",
+          "score": 1.38,
+          "evidence": []
+        },
+        {
+          "term": "repository-level",
+          "score": 0.9288,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "analysis tools",
+          "score": 0.8482,
+          "evidence": []
+        },
+        {
+          "term": "struggle",
+          "score": 0.7478,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "issue resolution",
+          "score": 72.2387,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fault localization",
+          "score": 53.5939,
+          "evidence": []
+        },
+        {
+          "term": "localization through",
+          "score": 50.0055,
+          "evidence": []
+        },
+        {
+          "term": "issue descriptions",
+          "score": 28.0039,
+          "evidence": []
+        },
+        {
+          "term": "competitive multi-agent",
+          "score": 21.4364,
+          "evidence": []
+        },
+        {
+          "term": "graphs",
+          "score": 11.4173,
+          "evidence": []
+        },
+        {
+          "term": "repository",
+          "score": 11.0167,
+          "evidence": []
+        },
+        {
+          "term": "analysis tools",
+          "score": 10.8,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "issue resolution",
+          "score": 1.7864,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fault localization",
+          "score": 1.1903,
+          "evidence": []
+        },
+        {
+          "term": "localization through",
+          "score": 0.8986,
+          "evidence": []
+        },
+        {
+          "term": "competitive multi-agent",
+          "score": 0.8235,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.6252,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.5424,
+          "evidence": []
+        },
+        {
+          "term": "issue descriptions",
+          "score": 0.5197,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.4568,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "issue resolution",
+          "score": 31.4228,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fault localization",
+          "score": 21.0378,
+          "evidence": []
+        },
+        {
+          "term": "localization through",
+          "score": 15.9068,
+          "evidence": []
+        },
+        {
+          "term": "competitive multi-agent",
+          "score": 12.8248,
+          "evidence": []
+        },
+        {
+          "term": "issue descriptions",
+          "score": 12.7952,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 10.8692,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 10.1326,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 8.6056,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "issue resolution",
+          "score": 1.7864,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "fault localization",
+          "score": 1.1903,
+          "evidence": []
+        },
+        {
+          "term": "localization through",
+          "score": 0.8986,
+          "evidence": []
+        },
+        {
+          "term": "competitive multi-agent",
+          "score": 0.8235,
+          "evidence": []
+        },
+        {
+          "term": "issue descriptions",
+          "score": 0.588,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.5424,
+          "evidence": []
+        },
+        {
+          "term": "reasoning",
+          "score": 0.3878,
+          "evidence": []
+        },
+        {
+          "term": "exploration",
+          "score": 0.305,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "fault localization",
+          "score": 75.3054,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 72.4148,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "swe-bench-lite",
+          "score": 57.0657,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 56.1724,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 55.485,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 52.4567,
+          "evidence": []
+        },
+        {
+          "term": "mutation-based",
+          "score": 50.2801,
+          "evidence": []
+        },
+        {
+          "term": "multi-hop",
+          "score": 49.7027,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-027-83-llm-multi-agent-systems": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "multi-agent debate",
+          "score": 1.9658,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 1.1603,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "collaborative",
+          "score": 0.9086,
+          "evidence": []
+        },
+        {
+          "term": "paradigms",
+          "score": 0.7769,
+          "evidence": []
+        },
+        {
+          "term": "analytical",
+          "score": 0.7452,
+          "evidence": []
+        },
+        {
+          "term": "competing",
+          "score": 0.707,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.6797,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.6443,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "multi-agent debate",
+          "score": 37.2604,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 17.938,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "collaborative",
+          "score": 16.3466,
+          "evidence": []
+        },
+        {
+          "term": "paradigms",
+          "score": 10.79,
+          "evidence": []
+        },
+        {
+          "term": "analytical",
+          "score": 10.2653,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 9.8445,
+          "evidence": []
+        },
+        {
+          "term": "competing",
+          "score": 9.6144,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 8.879,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "multi-agent debate",
+          "score": 0.8694,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.4664,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.4359,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 0.3936,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 0.373,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "issue",
+          "score": 0.3528,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 0.3344,
+          "evidence": []
+        },
+        {
+          "term": "code",
+          "score": 0.3259,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "multi-agent debate",
+          "score": 11.9651,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 8.5926,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 7.1281,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 6.599,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "modification",
+          "score": 6.1878,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 5.9804,
+          "evidence": []
+        },
+        {
+          "term": "fault",
+          "score": 5.8642,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 4.9679,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "multi-agent debate",
+          "score": 0.8694,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.4664,
+          "evidence": []
+        },
+        {
+          "term": "agents",
+          "score": 0.4359,
+          "evidence": []
+        },
+        {
+          "term": "systems",
+          "score": 0.373,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reasoning",
+          "score": 0.2936,
+          "evidence": []
+        },
+        {
+          "term": "competitive",
+          "score": 0.2832,
+          "evidence": []
+        },
+        {
+          "term": "software",
+          "score": 0.2539,
+          "evidence": []
+        },
+        {
+          "term": "through",
+          "score": 0.2043,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "swe-bench-lite",
+          "score": 47.3069,
+          "evidence": []
+        },
+        {
+          "term": "codeactagent",
+          "score": 46.5752,
+          "evidence": []
+        },
+        {
+          "term": "swesyninfer",
+          "score": 45.5881,
+          "evidence": []
+        },
+        {
+          "term": "locagent",
+          "score": 43.5978,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent debate",
+          "score": 43.5947,
+          "evidence": []
+        },
+        {
+          "term": "spectrum-based",
+          "score": 42.5303,
+          "evidence": []
+        },
+        {
+          "term": "mutation-based",
+          "score": 42.528,
+          "evidence": []
+        },
+        {
+          "term": "agation",
+          "score": 41.8256,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-028-9-conclusion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "fault localization",
+          "score": 1.7345,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 1.4379,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate",
+          "score": 0.7244,
+          "evidence": []
+        },
+        {
+          "term": "grant",
+          "score": 0.6519,
+          "evidence": []
+        },
+        {
+          "term": "shanghai",
+          "score": 0.6425,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "fault localization",
+          "score": 26.877,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 20.4264,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate",
+          "score": 9.6144,
+          "evidence": []
+        },
+        {
+          "term": "grant",
+          "score": 8.9574,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 7.5315,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "fault localization",
+          "score": 0.5679,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 0.4267,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.3077,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate",
+          "score": 0.2053,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.2052,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "fault localization",
+          "score": 9.0529,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 6.6387,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 4.7185,
+          "evidence": []
+        },
+        {
+          "term": "modification",
+          "score": 4.326,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 3.4756,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "fault localization",
+          "score": 0.5679,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 0.4267,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.3077,
+          "evidence": []
+        },
+        {
+          "term": "swe-debate",
+          "score": 0.2053,
+          "evidence": []
+        },
+        {
+          "term": "multi-agent",
+          "score": 0.2011,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "shanghai",
+          "score": 357.4422,
+          "evidence": []
+        },
+        {
+          "term": "huawei",
+          "score": 266.6787,
+          "evidence": []
+        },
+        {
+          "term": "qianxiang",
+          "score": 235.5699,
+          "evidence": []
+        },
+        {
+          "term": "jiao",
+          "score": 221.9239,
+          "evidence": []
+        },
+        {
+          "term": "china",
+          "score": 206.4173,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-029-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "neighbor entity",
+          "score": 4.0593,
+          "evidence": []
+        },
+        {
+          "term": "sympy",
+          "score": 3.7757,
+          "evidence": []
+        },
+        {
+          "term": "max entities",
+          "score": 3.5746,
+          "evidence": []
+        },
+        {
+          "term": "django",
+          "score": 3.5395,
+          "evidence": []
+        },
+        {
+          "term": "localization chain",
+          "score": 3.2677,
+          "evidence": []
+        },
+        {
+          "term": "software issue",
+          "score": 3.2451,
+          "evidence": []
+        },
+        {
+          "term": "wei liu",
+          "score": 3.1912,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 3.1707,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "sympy",
+          "score": 329.9482,
+          "evidence": []
+        },
+        {
+          "term": "django",
+          "score": 310.495,
+          "evidence": []
+        },
+        {
+          "term": "software issue",
+          "score": 211.2133,
+          "evidence": []
+        },
+        {
+          "term": "issue description",
+          "score": 177.1042,
+          "evidence": []
+        },
+        {
+          "term": "max entities",
+          "score": 175.0184,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 171.1534,
+          "evidence": []
+        },
+        {
+          "term": "issue resolving",
+          "score": 169.6488,
+          "evidence": []
+        },
+        {
+          "term": "neighbor entity",
+          "score": 165.4101,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "neighbor entity",
+          "score": 4.1435,
+          "evidence": []
+        },
+        {
+          "term": "sympy",
+          "score": 3.6686,
+          "evidence": []
+        },
+        {
+          "term": "max entities",
+          "score": 3.5797,
+          "evidence": []
+        },
+        {
+          "term": "django",
+          "score": 3.4782,
+          "evidence": []
+        },
+        {
+          "term": "localization chain",
+          "score": 3.3388,
+          "evidence": []
+        },
+        {
+          "term": "software issue",
+          "score": 3.3145,
+          "evidence": []
+        },
+        {
+          "term": "entity names",
+          "score": 3.1989,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 3.1907,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sympy",
+          "score": 327.9007,
+          "evidence": []
+        },
+        {
+          "term": "django",
+          "score": 310.1438,
+          "evidence": []
+        },
+        {
+          "term": "software issue",
+          "score": 216.0598,
+          "evidence": []
+        },
+        {
+          "term": "issue description",
+          "score": 181.5738,
+          "evidence": []
+        },
+        {
+          "term": "issue resolution",
+          "score": 175.4384,
+          "evidence": []
+        },
+        {
+          "term": "max entities",
+          "score": 174.5038,
+          "evidence": []
+        },
+        {
+          "term": "issue resolving",
+          "score": 173.8702,
+          "evidence": []
+        },
+        {
+          "term": "neighbor entity",
+          "score": 165.86,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "neighbor entity",
+          "score": 4.1435,
+          "evidence": []
+        },
+        {
+          "term": "sympy",
+          "score": 3.6686,
+          "evidence": []
+        },
+        {
+          "term": "max entities",
+          "score": 3.5797,
+          "evidence": []
+        },
+        {
+          "term": "django",
+          "score": 3.4782,
+          "evidence": []
+        },
+        {
+          "term": "localization chain",
+          "score": 3.3388,
+          "evidence": []
+        },
+        {
+          "term": "software issue",
+          "score": 3.3145,
+          "evidence": []
+        },
+        {
+          "term": "entity names",
+          "score": 3.1989,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 3.1907,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "jürgen schmidhuber",
+          "score": 57.4517,
+          "evidence": []
+        },
+        {
+          "term": "daoguang zan",
+          "score": 57.2733,
+          "evidence": []
+        },
+        {
+          "term": "fault localization",
+          "score": 46.4259,
+          "evidence": []
+        },
+        {
+          "term": "mutation-based",
+          "score": 38.9797,
+          "evidence": []
+        },
+        {
+          "term": "yingwei",
+          "score": 32.9526,
+          "evidence": []
+        },
+        {
+          "term": "sympy",
+          "score": 32.5792,
+          "evidence": []
+        },
+        {
+          "term": "binhua",
+          "score": 32.3755,
+          "evidence": []
+        },
+        {
+          "term": "rongyu",
+          "score": 32.3755,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "shanghai jiao",
+          "score": 2.4476,
+          "evidence": []
+        },
+        {
+          "term": "jiao tong",
+          "score": 2.1762,
+          "evidence": []
+        },
+        {
+          "term": "tong university",
+          "score": 1.8238,
+          "evidence": []
+        },
+        {
+          "term": "china",
+          "score": 1.723,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "china",
+          "score": 47.6971,
+          "evidence": []
+        },
+        {
+          "term": "shanghai jiao",
+          "score": 39.9471,
+          "evidence": []
+        },
+        {
+          "term": "huawei",
+          "score": 36.5288,
+          "evidence": []
+        },
+        {
+          "term": "jiao tong",
+          "score": 35.4349,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "wang",
+          "score": 0.1069,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.0993,
+          "evidence": []
+        },
+        {
+          "term": "localization",
+          "score": 0.0941,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.092,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "wang",
+          "score": 2.7609,
+          "evidence": []
+        },
+        {
+          "term": "zhang",
+          "score": 2.309,
+          "evidence": []
+        },
+        {
+          "term": "lunch",
+          "score": 1.9326,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 1.6926,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "wang",
+          "score": 0.1069,
+          "evidence": []
+        },
+        {
+          "term": "debate",
+          "score": 0.0993,
+          "evidence": []
+        },
+        {
+          "term": "issue",
+          "score": 0.0902,
+          "evidence": []
+        },
+        {
+          "term": "com",
+          "score": 0.0765,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "shanghai jiao",
+          "score": 7502.5102,
+          "evidence": []
+        },
+        {
+          "term": "jiao tong",
+          "score": 4237.4826,
+          "evidence": []
+        },
+        {
+          "term": "huawei",
+          "score": 3615.4943,
+          "evidence": []
+        },
+        {
+          "term": "qianxiang",
+          "score": 2964.6616,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

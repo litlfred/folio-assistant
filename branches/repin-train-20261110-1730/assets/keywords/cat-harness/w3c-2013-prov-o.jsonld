@@ -1,0 +1,5958 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "w3c-2013-prov-o",
+  "instance": "cat-harness",
+  "about": "library/w3c-2013-prov-o",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "entity prov",
+        "score": 66.626,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "activity prov",
+        "score": 62.259,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prefix prov",
+        "score": 61.0347,
+        "evidence": []
+      },
+      {
+        "term": "wasattributedto prov",
+        "score": 54.2378,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "invalidation prov",
+        "score": 54.1145,
+        "evidence": []
+      },
+      {
+        "term": "derivation prov",
+        "score": 53.6349,
+        "evidence": []
+      },
+      {
+        "term": "wasgeneratedby prov",
+        "score": 53.4097,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "wasassociatedwith prov",
+        "score": 53.2349,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "wasderivedfrom prov",
+        "score": 52.89,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "agent prov",
+        "score": 52.6316,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "derek prov",
+        "score": 52.1895,
+        "evidence": []
+      },
+      {
+        "term": "datetime prov",
+        "score": 51.7525,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "entity prov",
+        "score": 8717.8901,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prefix prov",
+        "score": 8436.1127,
+        "evidence": []
+      },
+      {
+        "term": "activity prov",
+        "score": 8200.5467,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "agent prov",
+        "score": 7576.8041,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "derek prov",
+        "score": 7492.7013,
+        "evidence": []
+      },
+      {
+        "term": "invalidation prov",
+        "score": 7466.7031,
+        "evidence": []
+      },
+      {
+        "term": "datetime prov",
+        "score": 7436.8811,
+        "evidence": []
+      },
+      {
+        "term": "derivation prov",
+        "score": 7422.4878,
+        "evidence": []
+      },
+      {
+        "term": "wasattributedto prov",
+        "score": 7421.9633,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "influence prov",
+        "score": 7406.2788,
+        "evidence": []
+      },
+      {
+        "term": "chart prov",
+        "score": 7404.4956,
+        "evidence": []
+      },
+      {
+        "term": "usage prov",
+        "score": 7398.4361,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "entity prov",
+        "score": 64.8715,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "activity prov",
+        "score": 61.3213,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prefix prov",
+        "score": 59.3541,
+        "evidence": []
+      },
+      {
+        "term": "derivation prov",
+        "score": 52.6347,
+        "evidence": []
+      },
+      {
+        "term": "invalidation prov",
+        "score": 52.5626,
+        "evidence": []
+      },
+      {
+        "term": "wasattributedto prov",
+        "score": 52.2327,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "wasgeneratedby prov",
+        "score": 52.1621,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "datetime prov",
+        "score": 51.2973,
+        "evidence": []
+      },
+      {
+        "term": "wasderivedfrom prov",
+        "score": 51.2658,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "derek prov",
+        "score": 51.1306,
+        "evidence": []
+      },
+      {
+        "term": "agent prov",
+        "score": 51.084,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "wasassociatedwith prov",
+        "score": 50.9934,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "entity prov",
+        "score": 8702.8161,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prefix prov",
+        "score": 8465.9941,
+        "evidence": []
+      },
+      {
+        "term": "activity prov",
+        "score": 8235.1781,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "agent prov",
+        "score": 7585.991,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "derek prov",
+        "score": 7502.7695,
+        "evidence": []
+      },
+      {
+        "term": "invalidation prov",
+        "score": 7461.9174,
+        "evidence": []
+      },
+      {
+        "term": "datetime prov",
+        "score": 7455.5752,
+        "evidence": []
+      },
+      {
+        "term": "derivation prov",
+        "score": 7434.5959,
+        "evidence": []
+      },
+      {
+        "term": "chart prov",
+        "score": 7419.8108,
+        "evidence": []
+      },
+      {
+        "term": "influence prov",
+        "score": 7418.6139,
+        "evidence": []
+      },
+      {
+        "term": "wasattributedto prov",
+        "score": 7414.2358,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "usage prov",
+        "score": 7398.2874,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "entity prov",
+        "score": 64.8715,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "activity prov",
+        "score": 61.3213,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "prefix prov",
+        "score": 59.3541,
+        "evidence": []
+      },
+      {
+        "term": "derivation prov",
+        "score": 52.6347,
+        "evidence": []
+      },
+      {
+        "term": "invalidation prov",
+        "score": 52.5626,
+        "evidence": []
+      },
+      {
+        "term": "wasattributedto prov",
+        "score": 52.2327,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "wasgeneratedby prov",
+        "score": 52.1621,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "datetime prov",
+        "score": 51.2973,
+        "evidence": []
+      },
+      {
+        "term": "wasderivedfrom prov",
+        "score": 51.2658,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "derek prov",
+        "score": 51.1306,
+        "evidence": []
+      },
+      {
+        "term": "agent prov",
+        "score": 51.084,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "wasassociatedwith prov",
+        "score": 50.9934,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "stian soiland-reyes",
+        "score": 4218.7845,
+        "evidence": []
+      },
+      {
+        "term": "universidad politécnica",
+        "score": 4218.7845,
+        "evidence": []
+      },
+      {
+        "term": "rensselaer polytechnic",
+        "score": 4006.5662,
+        "evidence": []
+      },
+      {
+        "term": "deborah mcguinness",
+        "score": 3795.5763,
+        "evidence": []
+      },
+      {
+        "term": "curt tilmes",
+        "score": 3742.8609,
+        "evidence": []
+      },
+      {
+        "term": "yolanda gil",
+        "score": 3650.9334,
+        "evidence": []
+      },
+      {
+        "term": "khalid belhajjame",
+        "score": 3501.0903,
+        "evidence": []
+      },
+      {
+        "term": "luc moreau",
+        "score": 3374.6237,
+        "evidence": []
+      },
+      {
+        "term": "stephan zednik",
+        "score": 3094.8256,
+        "evidence": []
+      },
+      {
+        "term": "paolo missier",
+        "score": 3015.3321,
+        "evidence": []
+      },
+      {
+        "term": "satya sahoo",
+        "score": 2699.8275,
+        "evidence": []
+      },
+      {
+        "term": "timothy lebo",
+        "score": 2624.5137,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-w3c-recommendation-30-april-2013": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rensselaer polytechnic",
+          "score": 2.5433,
+          "evidence": []
+        },
+        {
+          "term": "polytechnic institute",
+          "score": 2.0442,
+          "evidence": []
+        },
+        {
+          "term": "w3c",
+          "score": 1.3187,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "university",
+          "score": 0.9795,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.9689,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "rensselaer polytechnic",
+          "score": 42.0266,
+          "evidence": []
+        },
+        {
+          "term": "polytechnic institute",
+          "score": 32.8224,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 21.0475,
+          "evidence": []
+        },
+        {
+          "term": "w3c",
+          "score": 16.9274,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "usa",
+          "score": 16.0348,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "w3c",
+          "score": 0.9429,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation",
+          "score": 0.3568,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "polytechnic institute",
+          "score": 0.2791,
+          "evidence": []
+        },
+        {
+          "term": "rensselaer polytechnic",
+          "score": 0.276,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.2386,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "w3c",
+          "score": 11.7662,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "url",
+          "score": 3.8816,
+          "evidence": []
+        },
+        {
+          "term": "rfc",
+          "score": 2.2898,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 2.1221,
+          "evidence": []
+        },
+        {
+          "term": "april",
+          "score": 1.8575,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "w3c",
+          "score": 0.9429,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation",
+          "score": 0.3568,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "polytechnic institute",
+          "score": 0.2791,
+          "evidence": []
+        },
+        {
+          "term": "rensselaer polytechnic",
+          "score": 0.276,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.2386,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "rensselaer polytechnic",
+          "score": 2305.9697,
+          "evidence": []
+        },
+        {
+          "term": "polytechnic institute",
+          "score": 1328.1088,
+          "evidence": []
+        },
+        {
+          "term": "belhajjame",
+          "score": 1253.8882,
+          "evidence": []
+        },
+        {
+          "term": "corsar",
+          "score": 1253.8882,
+          "evidence": []
+        },
+        {
+          "term": "edinburgh",
+          "score": 1253.8882,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-abstract": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prov ontology",
+          "score": 2.0173,
+          "evidence": []
+        },
+        {
+          "term": "owl",
+          "score": 1.0737,
+          "evidence": []
+        },
+        {
+          "term": "provenance information",
+          "score": 0.9017,
+          "evidence": []
+        },
+        {
+          "term": "prov-o",
+          "score": 0.6898,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prov ontology",
+          "score": 32.0855,
+          "evidence": []
+        },
+        {
+          "term": "owl",
+          "score": 18.6122,
+          "evidence": []
+        },
+        {
+          "term": "provenance information",
+          "score": 10.7927,
+          "evidence": []
+        },
+        {
+          "term": "prov-o",
+          "score": 9.1242,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prov ontology",
+          "score": 0.8145,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 0.2486,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 0.2269,
+          "evidence": []
+        },
+        {
+          "term": "provenance information",
+          "score": 0.178,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prov ontology",
+          "score": 19.454,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 3.2234,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 3.2209,
+          "evidence": []
+        },
+        {
+          "term": "owl",
+          "score": 2.5354,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prov ontology",
+          "score": 0.8145,
+          "evidence": []
+        },
+        {
+          "term": "provenance information",
+          "score": 0.178,
+          "evidence": []
+        },
+        {
+          "term": "prov-o",
+          "score": 0.1665,
+          "evidence": []
+        },
+        {
+          "term": "owl",
+          "score": 0.1589,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "qualifiedspecialization",
+          "score": 39.4125,
+          "evidence": []
+        },
+        {
+          "term": "prov-dictionary",
+          "score": 39.2482,
+          "evidence": []
+        },
+        {
+          "term": "prov-links",
+          "score": 39.2482,
+          "evidence": []
+        },
+        {
+          "term": "prov-dc",
+          "score": 37.6951,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-status-of-this-document": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "status",
+          "score": 0.7213,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "document",
+          "score": 0.7026,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "w3c",
+          "score": 0.6594,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "w3c",
+          "score": 8.4637,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 8.3378,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "status",
+          "score": 7.6115,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "document",
+          "score": 0.1961,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "w3c",
+          "score": 0.1115,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 0.0621,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "w3c",
+          "score": 2.8032,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 2.5572,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "url",
+          "score": 2.3171,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "document",
+          "score": 0.1961,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "w3c",
+          "score": 0.1115,
+          "evidence": []
+        },
+        {
+          "term": "publication",
+          "score": 0.0344,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "kasten",
+          "score": 126.3541,
+          "evidence": []
+        },
+        {
+          "term": "paehler",
+          "score": 126.3541,
+          "evidence": []
+        },
+        {
+          "term": "myles",
+          "score": 116.4183,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-prov-family-of-documents": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prov",
+          "score": 2.8337,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov data",
+          "score": 1.8089,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 1.4023,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov-overview",
+          "score": 1.112,
+          "evidence": []
+        },
+        {
+          "term": "prov-constraints",
+          "score": 1.0078,
+          "evidence": []
+        },
+        {
+          "term": "prov-dc",
+          "score": 1.0078,
+          "evidence": []
+        },
+        {
+          "term": "prov-sem",
+          "score": 1.0078,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prov",
+          "score": 58.17,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov data",
+          "score": 35.4864,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 25.8559,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov-overview",
+          "score": 18.2644,
+          "evidence": []
+        },
+        {
+          "term": "note",
+          "score": 17.538,
+          "evidence": []
+        },
+        {
+          "term": "provenance",
+          "score": 16.0348,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 14.9091,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prov",
+          "score": 1.833,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov data",
+          "score": 1.0695,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.4324,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "w3c",
+          "score": 0.3669,
+          "evidence": []
+        },
+        {
+          "term": "data model",
+          "score": 0.2841,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 0.2724,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 0.2582,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prov",
+          "score": 54.0904,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov data",
+          "score": 28.918,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 6.7925,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "entity",
+          "score": 4.8171,
+          "evidence": []
+        },
+        {
+          "term": "data model",
+          "score": 3.9127,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 3.6555,
+          "evidence": []
+        },
+        {
+          "term": "w3c",
+          "score": 3.3303,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prov",
+          "score": 1.833,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov data",
+          "score": 1.0695,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.4324,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "data model",
+          "score": 0.2841,
+          "evidence": []
+        },
+        {
+          "term": "prov-o",
+          "score": 0.2246,
+          "evidence": []
+        },
+        {
+          "term": "ontology",
+          "score": 0.1857,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.1824,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "prov-dictionary",
+          "score": 357.8019,
+          "evidence": []
+        },
+        {
+          "term": "prov-links",
+          "score": 357.8019,
+          "evidence": []
+        },
+        {
+          "term": "prov-dc",
+          "score": 332.6531,
+          "evidence": []
+        },
+        {
+          "term": "prov-sem",
+          "score": 332.6531,
+          "evidence": []
+        },
+        {
+          "term": "groth",
+          "score": 322.194,
+          "evidence": []
+        },
+        {
+          "term": "primer",
+          "score": 319.4664,
+          "evidence": []
+        },
+        {
+          "term": "prov-overview",
+          "score": 294.0629,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-endorsed-by-w3c": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "w3c",
+          "score": 1.9319,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "endorsed",
+          "score": 1.1884,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation",
+          "score": 0.5789,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "w3c",
+          "score": 33.8547,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "endorsed",
+          "score": 13.1979,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recommendation",
+          "score": 7.4546,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "w3c",
+          "score": 0.4056,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "url",
+          "score": 0.1187,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 0.1119,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "w3c",
+          "score": 11.8722,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "url",
+          "score": 4.7664,
+          "evidence": []
+        },
+        {
+          "term": "rfc",
+          "score": 2.4549,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "w3c",
+          "score": 0.4056,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "document",
+          "score": 0.1119,
+          "evidence": []
+        },
+        {
+          "term": "recommendation",
+          "score": 0.1029,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "myles",
+          "score": 152.928,
+          "evidence": []
+        },
+        {
+          "term": "steidl",
+          "score": 152.928,
+          "evidence": []
+        },
+        {
+          "term": "kasten",
+          "score": 151.7113,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-please-send-comments": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "w3c patent",
+          "score": 2.2784,
+          "evidence": []
+        },
+        {
+          "term": "patent policy",
+          "score": 1.8805,
+          "evidence": []
+        },
+        {
+          "term": "comments",
+          "score": 1.2228,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "w3c patent",
+          "score": 42.2246,
+          "evidence": []
+        },
+        {
+          "term": "patent policy",
+          "score": 34.5053,
+          "evidence": []
+        },
+        {
+          "term": "comments",
+          "score": 16.8043,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "w3c patent",
+          "score": 0.4378,
+          "evidence": []
+        },
+        {
+          "term": "patent policy",
+          "score": 0.2115,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.1926,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "w3c patent",
+          "score": 11.0029,
+          "evidence": []
+        },
+        {
+          "term": "contributor",
+          "score": 5.4211,
+          "evidence": []
+        },
+        {
+          "term": "patent policy",
+          "score": 5.133,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "w3c patent",
+          "score": 0.4378,
+          "evidence": []
+        },
+        {
+          "term": "patent policy",
+          "score": 0.2115,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.1926,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "kasten",
+          "score": 195.4128,
+          "evidence": []
+        },
+        {
+          "term": "paehler",
+          "score": 195.4128,
+          "evidence": []
+        },
+        {
+          "term": "myles",
+          "score": 152.2321,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-2-prov-o-at-a-glance": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prov ontology",
+          "score": 3.141,
+          "evidence": []
+        },
+        {
+          "term": "prov-o",
+          "score": 3.011,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov-o classes",
+          "score": 2.6222,
+          "evidence": []
+        },
+        {
+          "term": "represent provenance",
+          "score": 2.0297,
+          "evidence": []
+        },
+        {
+          "term": "prov data",
+          "score": 1.9849,
+          "evidence": []
+        },
+        {
+          "term": "namespace prefixes",
+          "score": 1.9249,
+          "evidence": []
+        },
+        {
+          "term": "ontology language",
+          "score": 1.9095,
+          "evidence": []
+        },
+        {
+          "term": "provenance information",
+          "score": 1.8561,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prov ontology",
+          "score": 92.7937,
+          "evidence": []
+        },
+        {
+          "term": "prov-o",
+          "score": 91.2416,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov-o classes",
+          "score": 73.3286,
+          "evidence": []
+        },
+        {
+          "term": "ontology language",
+          "score": 55.0482,
+          "evidence": []
+        },
+        {
+          "term": "represent provenance",
+          "score": 52.3774,
+          "evidence": []
+        },
+        {
+          "term": "provenance information",
+          "score": 48.4129,
+          "evidence": []
+        },
+        {
+          "term": "prov data",
+          "score": 47.3461,
+          "evidence": []
+        },
+        {
+          "term": "owl",
+          "score": 41.8775,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prov data",
+          "score": 1.8024,
+          "evidence": []
+        },
+        {
+          "term": "prov ontology",
+          "score": 1.7858,
+          "evidence": []
+        },
+        {
+          "term": "prov-o",
+          "score": 0.8614,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov-o classes",
+          "score": 0.8157,
+          "evidence": []
+        },
+        {
+          "term": "data model",
+          "score": 0.6093,
+          "evidence": []
+        },
+        {
+          "term": "ontology language",
+          "score": 0.6001,
+          "evidence": []
+        },
+        {
+          "term": "rdf",
+          "score": 0.5782,
+          "evidence": []
+        },
+        {
+          "term": "qualified terms",
+          "score": 0.5759,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prov data",
+          "score": 48.1519,
+          "evidence": []
+        },
+        {
+          "term": "prov ontology",
+          "score": 47.743,
+          "evidence": []
+        },
+        {
+          "term": "prov-o",
+          "score": 14.5165,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "point terms",
+          "score": 12.1642,
+          "evidence": []
+        },
+        {
+          "term": "prov-o classes",
+          "score": 12.0651,
+          "evidence": []
+        },
+        {
+          "term": "expanded terms",
+          "score": 11.3789,
+          "evidence": []
+        },
+        {
+          "term": "json-ld",
+          "score": 10.4525,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 9.7591,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prov data",
+          "score": 1.8024,
+          "evidence": []
+        },
+        {
+          "term": "prov ontology",
+          "score": 1.7858,
+          "evidence": []
+        },
+        {
+          "term": "prov-o",
+          "score": 0.8614,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov-o classes",
+          "score": 0.8157,
+          "evidence": []
+        },
+        {
+          "term": "data model",
+          "score": 0.6093,
+          "evidence": []
+        },
+        {
+          "term": "ontology language",
+          "score": 0.6001,
+          "evidence": []
+        },
+        {
+          "term": "rdf",
+          "score": 0.5782,
+          "evidence": []
+        },
+        {
+          "term": "qualified terms",
+          "score": 0.5759,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "prov-dictionary",
+          "score": 55.9059,
+          "evidence": []
+        },
+        {
+          "term": "prov-links",
+          "score": 55.9059,
+          "evidence": []
+        },
+        {
+          "term": "prov-dc",
+          "score": 52.955,
+          "evidence": []
+        },
+        {
+          "term": "prov-sem",
+          "score": 52.955,
+          "evidence": []
+        },
+        {
+          "term": "groth",
+          "score": 50.5191,
+          "evidence": []
+        },
+        {
+          "term": "primer",
+          "score": 49.9176,
+          "evidence": []
+        },
+        {
+          "term": "prov-overview",
+          "score": 47.271,
+          "evidence": []
+        },
+        {
+          "term": "prov-constraints",
+          "score": 46.6985,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-31-starting-point-terms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "aggregationactivity prov",
+          "score": 4.9756,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 4.8374,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 4.8225,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 4.7938,
+          "evidence": []
+        },
+        {
+          "term": "wasinformedby prov",
+          "score": 4.7512,
+          "evidence": []
+        },
+        {
+          "term": "starting point",
+          "score": 4.7415,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 4.6326,
+          "evidence": []
+        },
+        {
+          "term": "wasgeneratedby prov",
+          "score": 4.5785,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "activity prov",
+          "score": 529.2815,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 525.85,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 515.1252,
+          "evidence": []
+        },
+        {
+          "term": "aggregationactivity prov",
+          "score": 514.9201,
+          "evidence": []
+        },
+        {
+          "term": "wasinformedby prov",
+          "score": 507.0735,
+          "evidence": []
+        },
+        {
+          "term": "wasgeneratedby prov",
+          "score": 499.8933,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 499.2262,
+          "evidence": []
+        },
+        {
+          "term": "properties prov",
+          "score": 497.5021,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "entity prov",
+          "score": 5.5858,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 5.2977,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 4.8616,
+          "evidence": []
+        },
+        {
+          "term": "wasgeneratedby prov",
+          "score": 4.7095,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 4.6613,
+          "evidence": []
+        },
+        {
+          "term": "wasderivedfrom prov",
+          "score": 4.6491,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 4.6165,
+          "evidence": []
+        },
+        {
+          "term": "datetime prov",
+          "score": 4.5875,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "entity prov",
+          "score": 536.9833,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 534.6608,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 500.4132,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 488.5058,
+          "evidence": []
+        },
+        {
+          "term": "wasgeneratedby prov",
+          "score": 486.1435,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 485.1118,
+          "evidence": []
+        },
+        {
+          "term": "datetime prov",
+          "score": 484.8573,
+          "evidence": []
+        },
+        {
+          "term": "wasderivedfrom prov",
+          "score": 484.4947,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "entity prov",
+          "score": 5.5858,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 5.2977,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 4.8616,
+          "evidence": []
+        },
+        {
+          "term": "wasgeneratedby prov",
+          "score": 4.7095,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 4.6613,
+          "evidence": []
+        },
+        {
+          "term": "wasderivedfrom prov",
+          "score": 4.6491,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 4.6165,
+          "evidence": []
+        },
+        {
+          "term": "datetime prov",
+          "score": 4.5875,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "aggregationactivity prov",
+          "score": 46.4634,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 46.4112,
+          "evidence": []
+        },
+        {
+          "term": "wasgeneratedby prov",
+          "score": 46.3082,
+          "evidence": []
+        },
+        {
+          "term": "wasderivedfrom prov",
+          "score": 45.9107,
+          "evidence": []
+        },
+        {
+          "term": "wasinformedby prov",
+          "score": 45.63,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 45.3629,
+          "evidence": []
+        },
+        {
+          "term": "yellow ovals",
+          "score": 41.882,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 40.4604,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-32-expanded-terms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "derek prov",
+          "score": 5.671,
+          "evidence": []
+        },
+        {
+          "term": "post sioc",
+          "score": 5.2187,
+          "evidence": []
+        },
+        {
+          "term": "post9821v sioc",
+          "score": 5.1793,
+          "evidence": []
+        },
+        {
+          "term": "publicationactivity prov",
+          "score": 4.8936,
+          "evidence": []
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 4.6492,
+          "evidence": []
+        },
+        {
+          "term": "datetime prov",
+          "score": 4.609,
+          "evidence": []
+        },
+        {
+          "term": "inc prov",
+          "score": 4.4027,
+          "evidence": []
+        },
+        {
+          "term": "crimedata prov",
+          "score": 4.3901,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "derek prov",
+          "score": 662.3446,
+          "evidence": []
+        },
+        {
+          "term": "datetime prov",
+          "score": 576.4403,
+          "evidence": []
+        },
+        {
+          "term": "publicationactivity prov",
+          "score": 555.8617,
+          "evidence": []
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 549.27,
+          "evidence": []
+        },
+        {
+          "term": "inc prov",
+          "score": 544.6473,
+          "evidence": []
+        },
+        {
+          "term": "crimedata prov",
+          "score": 534.8484,
+          "evidence": []
+        },
+        {
+          "term": "government prov",
+          "score": 530.2913,
+          "evidence": []
+        },
+        {
+          "term": "type prov",
+          "score": 524.3859,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "derek prov",
+          "score": 5.4499,
+          "evidence": []
+        },
+        {
+          "term": "publicationactivity prov",
+          "score": 4.7483,
+          "evidence": []
+        },
+        {
+          "term": "datetime prov",
+          "score": 4.6623,
+          "evidence": []
+        },
+        {
+          "term": "crimedata prov",
+          "score": 4.6233,
+          "evidence": []
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 4.6148,
+          "evidence": []
+        },
+        {
+          "term": "inc prov",
+          "score": 4.52,
+          "evidence": []
+        },
+        {
+          "term": "post sioc",
+          "score": 4.4187,
+          "evidence": []
+        },
+        {
+          "term": "expanded terms",
+          "score": 4.3471,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "derek prov",
+          "score": 660.5751,
+          "evidence": []
+        },
+        {
+          "term": "datetime prov",
+          "score": 576.8315,
+          "evidence": []
+        },
+        {
+          "term": "publicationactivity prov",
+          "score": 555.7386,
+          "evidence": []
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 553.0564,
+          "evidence": []
+        },
+        {
+          "term": "inc prov",
+          "score": 549.31,
+          "evidence": []
+        },
+        {
+          "term": "crimedata prov",
+          "score": 541.5243,
+          "evidence": []
+        },
+        {
+          "term": "government prov",
+          "score": 533.1575,
+          "evidence": []
+        },
+        {
+          "term": "properties prov",
+          "score": 530.6631,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "derek prov",
+          "score": 5.4499,
+          "evidence": []
+        },
+        {
+          "term": "publicationactivity prov",
+          "score": 4.7483,
+          "evidence": []
+        },
+        {
+          "term": "datetime prov",
+          "score": 4.6623,
+          "evidence": []
+        },
+        {
+          "term": "crimedata prov",
+          "score": 4.6233,
+          "evidence": []
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 4.6148,
+          "evidence": []
+        },
+        {
+          "term": "inc prov",
+          "score": 4.52,
+          "evidence": []
+        },
+        {
+          "term": "post sioc",
+          "score": 4.4187,
+          "evidence": []
+        },
+        {
+          "term": "expanded terms",
+          "score": 4.3471,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "post9821v sioc",
+          "score": 56.9373,
+          "evidence": []
+        },
+        {
+          "term": "publicationactivity prov",
+          "score": 45.6586,
+          "evidence": []
+        },
+        {
+          "term": "yellow ovals",
+          "score": 45.1144,
+          "evidence": []
+        },
+        {
+          "term": "crimedata prov",
+          "score": 45.0197,
+          "evidence": []
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 43.3419,
+          "evidence": []
+        },
+        {
+          "term": "derek prov",
+          "score": 42.8551,
+          "evidence": []
+        },
+        {
+          "term": "post sioc",
+          "score": 42.254,
+          "evidence": []
+        },
+        {
+          "term": "derek blog",
+          "score": 41.052,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-33-qualified-terms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "entity prov",
+          "score": 5.5616,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 5.3814,
+          "evidence": []
+        },
+        {
+          "term": "qualify prov",
+          "score": 4.7266,
+          "evidence": []
+        },
+        {
+          "term": "attime prov",
+          "score": 4.7085,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 4.6261,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedassociation prov",
+          "score": 4.5136,
+          "evidence": []
+        },
+        {
+          "term": "usage prov",
+          "score": 4.4382,
+          "evidence": []
+        },
+        {
+          "term": "association prov",
+          "score": 4.3641,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "entity prov",
+          "score": 813.7777,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 787.1029,
+          "evidence": []
+        },
+        {
+          "term": "property prov",
+          "score": 704.8169,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 697.2416,
+          "evidence": []
+        },
+        {
+          "term": "usage prov",
+          "score": 690.0972,
+          "evidence": []
+        },
+        {
+          "term": "attime prov",
+          "score": 686.8473,
+          "evidence": []
+        },
+        {
+          "term": "qualify prov",
+          "score": 685.7989,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 679.2952,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "entity prov",
+          "score": 5.6526,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 5.444,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 4.7191,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 4.6204,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 4.5746,
+          "evidence": []
+        },
+        {
+          "term": "association prov",
+          "score": 4.5501,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedassociation prov",
+          "score": 4.5274,
+          "evidence": []
+        },
+        {
+          "term": "datetime prov",
+          "score": 4.4892,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "entity prov",
+          "score": 807.5548,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 771.2147,
+          "evidence": []
+        },
+        {
+          "term": "property prov",
+          "score": 705.2385,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 701.3422,
+          "evidence": []
+        },
+        {
+          "term": "usage prov",
+          "score": 690.7611,
+          "evidence": []
+        },
+        {
+          "term": "attime prov",
+          "score": 689.48,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 687.1431,
+          "evidence": []
+        },
+        {
+          "term": "qualify prov",
+          "score": 683.6204,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "entity prov",
+          "score": 5.6526,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 5.444,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 4.7191,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 4.6204,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 4.5746,
+          "evidence": []
+        },
+        {
+          "term": "association prov",
+          "score": 4.5501,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedassociation prov",
+          "score": 4.5274,
+          "evidence": []
+        },
+        {
+          "term": "datetime prov",
+          "score": 4.4892,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "qualifiedderivation prov",
+          "score": 57.1714,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedassociation prov",
+          "score": 56.8941,
+          "evidence": []
+        },
+        {
+          "term": "attime prov",
+          "score": 56.0072,
+          "evidence": []
+        },
+        {
+          "term": "qualify prov",
+          "score": 55.4712,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith prov",
+          "score": 55.441,
+          "evidence": []
+        },
+        {
+          "term": "wasendedby prov",
+          "score": 55.1695,
+          "evidence": []
+        },
+        {
+          "term": "qualifieddelegation prov",
+          "score": 55.1558,
+          "evidence": []
+        },
+        {
+          "term": "wasstartedby prov",
+          "score": 55.1019,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-41-starting-point-terms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 3.0742,
+          "evidence": []
+        },
+        {
+          "term": "illustrationactivity prov",
+          "score": 2.9252,
+          "evidence": []
+        },
+        {
+          "term": "newspaper inc",
+          "score": 1.9958,
+          "evidence": []
+        },
+        {
+          "term": "national newspaper",
+          "score": 1.8773,
+          "evidence": []
+        },
+        {
+          "term": "bar chart",
+          "score": 1.6189,
+          "evidence": []
+        },
+        {
+          "term": "derek",
+          "score": 1.0601,
+          "evidence": []
+        },
+        {
+          "term": "aggregated data",
+          "score": 0.8868,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 81.7933,
+          "evidence": []
+        },
+        {
+          "term": "illustrationactivity prov",
+          "score": 76.4344,
+          "evidence": []
+        },
+        {
+          "term": "newspaper inc",
+          "score": 31.4696,
+          "evidence": []
+        },
+        {
+          "term": "national newspaper",
+          "score": 29.4463,
+          "evidence": []
+        },
+        {
+          "term": "bar chart",
+          "score": 20.2753,
+          "evidence": []
+        },
+        {
+          "term": "derek",
+          "score": 16.5011,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 15.4591,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 1.6924,
+          "evidence": []
+        },
+        {
+          "term": "illustrationactivity prov",
+          "score": 1.5786,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 0.7068,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 0.6619,
+          "evidence": []
+        },
+        {
+          "term": "bar chart",
+          "score": 0.6003,
+          "evidence": []
+        },
+        {
+          "term": "derek",
+          "score": 0.4177,
+          "evidence": []
+        },
+        {
+          "term": "starting",
+          "score": 0.3775,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 66.138,
+          "evidence": []
+        },
+        {
+          "term": "illustrationactivity prov",
+          "score": 63.1329,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 11.8147,
+          "evidence": []
+        },
+        {
+          "term": "derek",
+          "score": 10.0781,
+          "evidence": []
+        },
+        {
+          "term": "bar chart",
+          "score": 9.0614,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 8.6523,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 6.6339,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 1.6924,
+          "evidence": []
+        },
+        {
+          "term": "illustrationactivity prov",
+          "score": 1.5786,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 0.7068,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 0.6619,
+          "evidence": []
+        },
+        {
+          "term": "bar chart",
+          "score": 0.6003,
+          "evidence": []
+        },
+        {
+          "term": "derek",
+          "score": 0.4177,
+          "evidence": []
+        },
+        {
+          "term": "starting",
+          "score": 0.3775,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 54.2958,
+          "evidence": []
+        },
+        {
+          "term": "illustrationactivity prov",
+          "score": 53.8773,
+          "evidence": []
+        },
+        {
+          "term": "bar chart",
+          "score": 46.8292,
+          "evidence": []
+        },
+        {
+          "term": "stylist",
+          "score": 31.9715,
+          "evidence": []
+        },
+        {
+          "term": "donquixote",
+          "score": 31.6684,
+          "evidence": []
+        },
+        {
+          "term": "variablea",
+          "score": 31.6684,
+          "evidence": []
+        },
+        {
+          "term": "variableb",
+          "score": 31.6684,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-42-expanded-terms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prefix prov",
+          "score": 6.5925,
+          "evidence": []
+        },
+        {
+          "term": "forecast prov",
+          "score": 6.3385,
+          "evidence": []
+        },
+        {
+          "term": "invalidation prov",
+          "score": 5.5844,
+          "evidence": []
+        },
+        {
+          "term": "prefix rdfs",
+          "score": 5.5201,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 5.4122,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 5.3659,
+          "evidence": []
+        },
+        {
+          "term": "london forecast",
+          "score": 5.3529,
+          "evidence": []
+        },
+        {
+          "term": "specializationof prov",
+          "score": 5.2652,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prefix prov",
+          "score": 1281.0954,
+          "evidence": []
+        },
+        {
+          "term": "forecast prov",
+          "score": 1014.7821,
+          "evidence": []
+        },
+        {
+          "term": "invalidation prov",
+          "score": 976.282,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 951.141,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 941.3033,
+          "evidence": []
+        },
+        {
+          "term": "specializationof prov",
+          "score": 929.4917,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 928.9404,
+          "evidence": []
+        },
+        {
+          "term": "publicationactivity prov",
+          "score": 924.2717,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prefix prov",
+          "score": 7.3306,
+          "evidence": []
+        },
+        {
+          "term": "prefix rdfs",
+          "score": 6.0738,
+          "evidence": []
+        },
+        {
+          "term": "prefix owl",
+          "score": 5.9277,
+          "evidence": []
+        },
+        {
+          "term": "forecast prov",
+          "score": 5.8781,
+          "evidence": []
+        },
+        {
+          "term": "invalidation prov",
+          "score": 5.7466,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 5.646,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 5.4597,
+          "evidence": []
+        },
+        {
+          "term": "prefix sioc",
+          "score": 5.4375,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prefix prov",
+          "score": 1278.2775,
+          "evidence": []
+        },
+        {
+          "term": "forecast prov",
+          "score": 1004.7318,
+          "evidence": []
+        },
+        {
+          "term": "invalidation prov",
+          "score": 973.9578,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 946.2192,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 941.2959,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 930.6839,
+          "evidence": []
+        },
+        {
+          "term": "specializationof prov",
+          "score": 926.5023,
+          "evidence": []
+        },
+        {
+          "term": "post prov",
+          "score": 924.3172,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prefix prov",
+          "score": 7.3306,
+          "evidence": []
+        },
+        {
+          "term": "prefix rdfs",
+          "score": 6.0738,
+          "evidence": []
+        },
+        {
+          "term": "prefix owl",
+          "score": 5.9277,
+          "evidence": []
+        },
+        {
+          "term": "forecast prov",
+          "score": 5.8781,
+          "evidence": []
+        },
+        {
+          "term": "invalidation prov",
+          "score": 5.7466,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 5.646,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 5.4597,
+          "evidence": []
+        },
+        {
+          "term": "prefix sioc",
+          "score": 5.4375,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "the-painter prov",
+          "score": 59.0095,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 58.8652,
+          "evidence": []
+        },
+        {
+          "term": "swissair flight",
+          "score": 57.4084,
+          "evidence": []
+        },
+        {
+          "term": "entity precedes",
+          "score": 56.3209,
+          "evidence": []
+        },
+        {
+          "term": "invalidated prov",
+          "score": 54.9819,
+          "evidence": []
+        },
+        {
+          "term": "forecast prov",
+          "score": 54.1396,
+          "evidence": []
+        },
+        {
+          "term": "publicationactivity prov",
+          "score": 53.9139,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto prov",
+          "score": 53.7645,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-43-qualified-terms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prefix prov",
+          "score": 7.2356,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 6.8909,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 6.5811,
+          "evidence": []
+        },
+        {
+          "term": "chart prov",
+          "score": 6.5721,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 6.3826,
+          "evidence": []
+        },
+        {
+          "term": "invalidation prov",
+          "score": 6.3039,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 6.2883,
+          "evidence": []
+        },
+        {
+          "term": "derek prov",
+          "score": 5.9854,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prefix prov",
+          "score": 2679.2536,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 2665.7184,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 2533.672,
+          "evidence": []
+        },
+        {
+          "term": "chart prov",
+          "score": 2362.2991,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 2361.8269,
+          "evidence": []
+        },
+        {
+          "term": "invalidation prov",
+          "score": 2350.6281,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 2330.8604,
+          "evidence": []
+        },
+        {
+          "term": "usage prov",
+          "score": 2319.1599,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prefix prov",
+          "score": 7.9317,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 7.6432,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 7.2993,
+          "evidence": []
+        },
+        {
+          "term": "chart prov",
+          "score": 6.6753,
+          "evidence": []
+        },
+        {
+          "term": "prefix rdfs",
+          "score": 6.6312,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 6.5968,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 6.5383,
+          "evidence": []
+        },
+        {
+          "term": "invalidation prov",
+          "score": 6.5009,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prefix prov",
+          "score": 2679.8026,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 2671.1396,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 2538.8414,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 2359.5961,
+          "evidence": []
+        },
+        {
+          "term": "chart prov",
+          "score": 2357.8279,
+          "evidence": []
+        },
+        {
+          "term": "invalidation prov",
+          "score": 2347.8795,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 2329.6967,
+          "evidence": []
+        },
+        {
+          "term": "usage prov",
+          "score": 2320.5065,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prefix prov",
+          "score": 7.9317,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 7.6432,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 7.2993,
+          "evidence": []
+        },
+        {
+          "term": "chart prov",
+          "score": 6.6753,
+          "evidence": []
+        },
+        {
+          "term": "prefix rdfs",
+          "score": 6.6312,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 6.5968,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 6.5383,
+          "evidence": []
+        },
+        {
+          "term": "invalidation prov",
+          "score": 6.5009,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "style-guide prov",
+          "score": 65.7113,
+          "evidence": []
+        },
+        {
+          "term": "illustratonist prov",
+          "score": 65.3863,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 63.4428,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedassociation prov",
+          "score": 62.4043,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedderivation prov",
+          "score": 62.331,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 62.2887,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedusage prov",
+          "score": 61.6486,
+          "evidence": []
+        },
+        {
+          "term": "swissair flight",
+          "score": 61.5689,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-60-property-provqualifiedprimarysource-opback-to": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prov",
+          "score": 5.3297,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prefix prov",
+          "score": 4.7788,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 4.7242,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 3.9782,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 3.9481,
+          "evidence": []
+        },
+        {
+          "term": "nationalregionslist prov",
+          "score": 3.6781,
+          "evidence": []
+        },
+        {
+          "term": "draft prov",
+          "score": 3.5008,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 3.4439,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prov",
+          "score": 484.7501,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "entity prov",
+          "score": 349.6957,
+          "evidence": []
+        },
+        {
+          "term": "prefix prov",
+          "score": 323.4971,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 265.9983,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 265.3817,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 256.9673,
+          "evidence": []
+        },
+        {
+          "term": "draft prov",
+          "score": 256.6568,
+          "evidence": []
+        },
+        {
+          "term": "nationalregionslist prov",
+          "score": 256.3839,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prov",
+          "score": 4.0892,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prefix prov",
+          "score": 3.3699,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 3.3235,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 2.6481,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 2.5788,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 2.4579,
+          "evidence": []
+        },
+        {
+          "term": "qualified properties",
+          "score": 2.4155,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "range prov",
+          "score": 2.4138,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prov",
+          "score": 491.8533,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prefix prov",
+          "score": 322.6609,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 314.4914,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 254.2635,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 252.8119,
+          "evidence": []
+        },
+        {
+          "term": "range prov",
+          "score": 251.8153,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 251.4078,
+          "evidence": []
+        },
+        {
+          "term": "draft prov",
+          "score": 249.4972,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prov",
+          "score": 4.0892,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prefix prov",
+          "score": 3.3699,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 3.3235,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 2.6481,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 2.5788,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 2.4579,
+          "evidence": []
+        },
+        {
+          "term": "qualified properties",
+          "score": 2.4155,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "range prov",
+          "score": 2.4138,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "super-properties prov",
+          "score": 56.8739,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedprimarysource",
+          "score": 56.4783,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qualifies prov",
+          "score": 55.54,
+          "evidence": []
+        },
+        {
+          "term": "qualified",
+          "score": 53.8837,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qualified properties",
+          "score": 53.8837,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nationalregionslist prov",
+          "score": 50.6558,
+          "evidence": []
+        },
+        {
+          "term": "prefix prov",
+          "score": 49.5569,
+          "evidence": []
+        },
+        {
+          "term": "prefix rdfs",
+          "score": 49.4282,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-64-property-provqualifiedinvalidation-opback-to": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prov",
+          "score": 5.0591,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prefix prov",
+          "score": 4.4277,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 4.2391,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 3.6608,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 3.6349,
+          "evidence": []
+        },
+        {
+          "term": "checking prov",
+          "score": 3.5628,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 3.1323,
+          "evidence": []
+        },
+        {
+          "term": "prefix rdfs",
+          "score": 3.0484,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prov",
+          "score": 387.8001,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "activity prov",
+          "score": 257.8553,
+          "evidence": []
+        },
+        {
+          "term": "prefix prov",
+          "score": 251.3615,
+          "evidence": []
+        },
+        {
+          "term": "checking prov",
+          "score": 212.7074,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 211.6175,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 211.155,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 202.6554,
+          "evidence": []
+        },
+        {
+          "term": "range prov",
+          "score": 200.067,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prov",
+          "score": 4.1406,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prefix prov",
+          "score": 3.3714,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 3.1483,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 2.6465,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 2.5655,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 2.4803,
+          "evidence": []
+        },
+        {
+          "term": "range prov",
+          "score": 2.4025,
+          "evidence": []
+        },
+        {
+          "term": "qualified properties",
+          "score": 2.3652,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prov",
+          "score": 400.8428,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prefix prov",
+          "score": 262.781,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 232.1453,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 207.5,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 206.1604,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 205.8316,
+          "evidence": []
+        },
+        {
+          "term": "range prov",
+          "score": 205.5976,
+          "evidence": []
+        },
+        {
+          "term": "checking prov",
+          "score": 201.9178,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prov",
+          "score": 4.1406,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prefix prov",
+          "score": 3.3714,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 3.1483,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 2.6465,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 2.5655,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 2.4803,
+          "evidence": []
+        },
+        {
+          "term": "range prov",
+          "score": 2.4025,
+          "evidence": []
+        },
+        {
+          "term": "qualified properties",
+          "score": 2.3652,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "super-properties prov",
+          "score": 69.8744,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedinvalidation",
+          "score": 69.8271,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "swissair flight",
+          "score": 68.8863,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 68.1958,
+          "evidence": []
+        },
+        {
+          "term": "qualified",
+          "score": 65.9923,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qualified properties",
+          "score": 65.9923,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "flight crash",
+          "score": 61.1246,
+          "evidence": []
+        },
+        {
+          "term": "prefix prov",
+          "score": 61.0176,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-67-property-provqualifiedcommunication-opback-to": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prov",
+          "score": 7.0637,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prefix prov",
+          "score": 6.3495,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 5.8759,
+          "evidence": []
+        },
+        {
+          "term": "qualified properties",
+          "score": 5.8533,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chart prov",
+          "score": 5.4545,
+          "evidence": []
+        },
+        {
+          "term": "derek prov",
+          "score": 5.4321,
+          "evidence": []
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 5.3379,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 5.19,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prov",
+          "score": 2003.6337,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prefix prov",
+          "score": 1245.1831,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 1206.4738,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 1084.9094,
+          "evidence": []
+        },
+        {
+          "term": "derek prov",
+          "score": 1062.3207,
+          "evidence": []
+        },
+        {
+          "term": "chart prov",
+          "score": 1057.9982,
+          "evidence": []
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 1054.9692,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 1043.1576,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prov",
+          "score": 7.2414,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "activity prov",
+          "score": 5.8461,
+          "evidence": []
+        },
+        {
+          "term": "prefix prov",
+          "score": 5.7594,
+          "evidence": []
+        },
+        {
+          "term": "chart prov",
+          "score": 5.2696,
+          "evidence": []
+        },
+        {
+          "term": "qualified properties",
+          "score": 5.169,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qualifies prov",
+          "score": 5.022,
+          "evidence": []
+        },
+        {
+          "term": "derek prov",
+          "score": 4.9785,
+          "evidence": []
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 4.9465,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prov",
+          "score": 2004.3758,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prefix prov",
+          "score": 1240.5496,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 1197.9359,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 1089.0602,
+          "evidence": []
+        },
+        {
+          "term": "chart prov",
+          "score": 1065.273,
+          "evidence": []
+        },
+        {
+          "term": "derek prov",
+          "score": 1060.1912,
+          "evidence": []
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 1054.9309,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 1046.5123,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prov",
+          "score": 7.2414,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "activity prov",
+          "score": 5.8461,
+          "evidence": []
+        },
+        {
+          "term": "prefix prov",
+          "score": 5.7594,
+          "evidence": []
+        },
+        {
+          "term": "chart prov",
+          "score": 5.2696,
+          "evidence": []
+        },
+        {
+          "term": "qualified properties",
+          "score": 5.169,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qualifies prov",
+          "score": 5.022,
+          "evidence": []
+        },
+        {
+          "term": "derek prov",
+          "score": 4.9785,
+          "evidence": []
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 4.9465,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "style-guide prov",
+          "score": 69.541,
+          "evidence": []
+        },
+        {
+          "term": "super-properties prov",
+          "score": 67.081,
+          "evidence": []
+        },
+        {
+          "term": "qualifies prov",
+          "score": 65.8174,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedcommunication",
+          "score": 65.0215,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qualified",
+          "score": 64.1036,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qualified properties",
+          "score": 64.1036,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aggregatedbyregions prov",
+          "score": 63.6918,
+          "evidence": []
+        },
+        {
+          "term": "illustrationactivity prov",
+          "score": 63.245,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-44-term-index": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "entry",
+          "score": 2.924,
+          "evidence": []
+        },
+        {
+          "term": "cross reference",
+          "score": 1.1862,
+          "evidence": []
+        },
+        {
+          "term": "term",
+          "score": 0.8924,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov-o",
+          "score": 0.6898,
+          "evidence": []
+        },
+        {
+          "term": "index",
+          "score": 0.6593,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "entity",
+          "score": 0.6471,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 0.6169,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 0.3523,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "entry",
+          "score": 301.91,
+          "evidence": []
+        },
+        {
+          "term": "cross reference",
+          "score": 15.337,
+          "evidence": []
+        },
+        {
+          "term": "term",
+          "score": 10.1541,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov-o",
+          "score": 9.1242,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 6.7075,
+          "evidence": []
+        },
+        {
+          "term": "index",
+          "score": 6.5817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "activity",
+          "score": 6.3955,
+          "evidence": []
+        },
+        {
+          "term": "agent",
+          "score": 3.8648,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prov",
+          "score": 0.7141,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 0.5761,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 0.4907,
+          "evidence": []
+        },
+        {
+          "term": "prefix",
+          "score": 0.4213,
+          "evidence": []
+        },
+        {
+          "term": "term",
+          "score": 0.4103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qualified",
+          "score": 0.3407,
+          "evidence": []
+        },
+        {
+          "term": "wasassociatedwith",
+          "score": 0.3381,
+          "evidence": []
+        },
+        {
+          "term": "derek",
+          "score": 0.3364,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "entry",
+          "score": 299.6907,
+          "evidence": []
+        },
+        {
+          "term": "term",
+          "score": 17.1185,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cross reference",
+          "score": 17.0131,
+          "evidence": []
+        },
+        {
+          "term": "prov-o",
+          "score": 7.938,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 7.5035,
+          "evidence": []
+        },
+        {
+          "term": "emptycollection",
+          "score": 6.5343,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 6.4739,
+          "evidence": []
+        },
+        {
+          "term": "wasattributedto",
+          "score": 6.4182,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "entity",
+          "score": 0.5761,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 0.4907,
+          "evidence": []
+        },
+        {
+          "term": "term",
+          "score": 0.4103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "agent",
+          "score": 0.2678,
+          "evidence": []
+        },
+        {
+          "term": "prov-o",
+          "score": 0.2412,
+          "evidence": []
+        },
+        {
+          "term": "entry",
+          "score": 0.162,
+          "evidence": []
+        },
+        {
+          "term": "cross reference",
+          "score": 0.15,
+          "evidence": []
+        },
+        {
+          "term": "index",
+          "score": 0.1123,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "entry",
+          "score": 659.7053,
+          "evidence": []
+        },
+        {
+          "term": "emptycollection",
+          "score": 563.7051,
+          "evidence": []
+        },
+        {
+          "term": "neville",
+          "score": 269.27,
+          "evidence": []
+        },
+        {
+          "term": "cross",
+          "score": 194.649,
+          "evidence": []
+        },
+        {
+          "term": "cross reference",
+          "score": 194.649,
+          "evidence": []
+        },
+        {
+          "term": "hadmember",
+          "score": 173.5324,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 153.1742,
+          "evidence": []
+        },
+        {
+          "term": "invalidatedattime",
+          "score": 153.1679,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-a-prov-o-owl-profile": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "owl",
+          "score": 3.8564,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "domain prov",
+          "score": 3.2478,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 2.911,
+          "evidence": []
+        },
+        {
+          "term": "hadactivity rdfs",
+          "score": 2.9034,
+          "evidence": []
+        },
+        {
+          "term": "wasinfluencedby rdfs",
+          "score": 2.8123,
+          "evidence": []
+        },
+        {
+          "term": "hadrole rdfs",
+          "score": 2.6387,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 2.5771,
+          "evidence": []
+        },
+        {
+          "term": "atlocation rdfs",
+          "score": 2.5755,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "owl",
+          "score": 158.2038,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "domain prov",
+          "score": 135.2031,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 109.775,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 105.9788,
+          "evidence": []
+        },
+        {
+          "term": "hadactivity rdfs",
+          "score": 73.8748,
+          "evidence": []
+        },
+        {
+          "term": "wasinfluencedby rdfs",
+          "score": 70.3598,
+          "evidence": []
+        },
+        {
+          "term": "atlocation rdfs",
+          "score": 64.7742,
+          "evidence": []
+        },
+        {
+          "term": "hadrole rdfs",
+          "score": 64.6002,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "activity prov",
+          "score": 2.3852,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 2.0343,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 1.9919,
+          "evidence": []
+        },
+        {
+          "term": "owl",
+          "score": 1.0435,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov-o",
+          "score": 0.8383,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "entity",
+          "score": 0.7573,
+          "evidence": []
+        },
+        {
+          "term": "hadrole rdfs",
+          "score": 0.6837,
+          "evidence": []
+        },
+        {
+          "term": "hadactivity rdfs",
+          "score": 0.6807,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "activity prov",
+          "score": 122.1358,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 110.3296,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 107.8737,
+          "evidence": []
+        },
+        {
+          "term": "owl",
+          "score": 37.2219,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "hadrole rdfs",
+          "score": 25.8267,
+          "evidence": []
+        },
+        {
+          "term": "prefix",
+          "score": 21.851,
+          "evidence": []
+        },
+        {
+          "term": "hadactivity rdfs",
+          "score": 20.3124,
+          "evidence": []
+        },
+        {
+          "term": "atlocation rdfs",
+          "score": 19.0693,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "activity prov",
+          "score": 2.3852,
+          "evidence": []
+        },
+        {
+          "term": "domain prov",
+          "score": 2.0343,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 1.9919,
+          "evidence": []
+        },
+        {
+          "term": "owl",
+          "score": 1.0435,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prov-o",
+          "score": 0.8383,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "entity",
+          "score": 0.7573,
+          "evidence": []
+        },
+        {
+          "term": "hadrole rdfs",
+          "score": 0.6837,
+          "evidence": []
+        },
+        {
+          "term": "hadactivity rdfs",
+          "score": 0.6807,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "owl",
+          "score": 54.3794,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "qualifiedspecialization",
+          "score": 53.4229,
+          "evidence": []
+        },
+        {
+          "term": "hadactivity rdfs",
+          "score": 50.6323,
+          "evidence": []
+        },
+        {
+          "term": "hadrole rdfs",
+          "score": 49.7643,
+          "evidence": []
+        },
+        {
+          "term": "provext",
+          "score": 48.0472,
+          "evidence": []
+        },
+        {
+          "term": "wasinfluencedby rdfs",
+          "score": 47.3516,
+          "evidence": []
+        },
+        {
+          "term": "atlocation rdfs",
+          "score": 45.4626,
+          "evidence": []
+        },
+        {
+          "term": "altlabel",
+          "score": 44.2706,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-b-names-of-inverse-properties": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "entity prov",
+          "score": 5.2683,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 4.8623,
+          "evidence": []
+        },
+        {
+          "term": "union prov",
+          "score": 4.5383,
+          "evidence": []
+        },
+        {
+          "term": "invalidated prov",
+          "score": 4.2568,
+          "evidence": []
+        },
+        {
+          "term": "inverse",
+          "score": 4.2162,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "derivation prov",
+          "score": 4.1318,
+          "evidence": []
+        },
+        {
+          "term": "alternateof prov",
+          "score": 4.0919,
+          "evidence": []
+        },
+        {
+          "term": "wasinfluencedby prov",
+          "score": 4.0302,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "entity prov",
+          "score": 698.7157,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 648.9549,
+          "evidence": []
+        },
+        {
+          "term": "union prov",
+          "score": 624.308,
+          "evidence": []
+        },
+        {
+          "term": "invalidated prov",
+          "score": 608.2495,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 604.9218,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 604.7135,
+          "evidence": []
+        },
+        {
+          "term": "alternateof prov",
+          "score": 603.2067,
+          "evidence": []
+        },
+        {
+          "term": "wasinvalidatedby prov",
+          "score": 602.3958,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "entity prov",
+          "score": 4.702,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 4.4876,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 3.7862,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 3.7302,
+          "evidence": []
+        },
+        {
+          "term": "influence prov",
+          "score": 3.715,
+          "evidence": []
+        },
+        {
+          "term": "wasgeneratedby prov",
+          "score": 3.6863,
+          "evidence": []
+        },
+        {
+          "term": "usage prov",
+          "score": 3.6665,
+          "evidence": []
+        },
+        {
+          "term": "association prov",
+          "score": 3.6063,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "entity prov",
+          "score": 697.6083,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 659.5974,
+          "evidence": []
+        },
+        {
+          "term": "influence prov",
+          "score": 609.9501,
+          "evidence": []
+        },
+        {
+          "term": "wasgeneratedby prov",
+          "score": 596.6553,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 594.674,
+          "evidence": []
+        },
+        {
+          "term": "usage prov",
+          "score": 592.1132,
+          "evidence": []
+        },
+        {
+          "term": "union prov",
+          "score": 590.4735,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 586.7604,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "entity prov",
+          "score": 4.702,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 4.4876,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 3.7862,
+          "evidence": []
+        },
+        {
+          "term": "agent prov",
+          "score": 3.7302,
+          "evidence": []
+        },
+        {
+          "term": "influence prov",
+          "score": 3.715,
+          "evidence": []
+        },
+        {
+          "term": "wasgeneratedby prov",
+          "score": 3.6863,
+          "evidence": []
+        },
+        {
+          "term": "usage prov",
+          "score": 3.6665,
+          "evidence": []
+        },
+        {
+          "term": "association prov",
+          "score": 3.6063,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "wasinvalidatedby prov",
+          "score": 53.7195,
+          "evidence": []
+        },
+        {
+          "term": "wasgeneratedby prov",
+          "score": 53.2375,
+          "evidence": []
+        },
+        {
+          "term": "invalidated prov",
+          "score": 53.1936,
+          "evidence": []
+        },
+        {
+          "term": "wasinfluencedby prov",
+          "score": 52.835,
+          "evidence": []
+        },
+        {
+          "term": "derivation prov",
+          "score": 49.7572,
+          "evidence": []
+        },
+        {
+          "term": "alternateof prov",
+          "score": 48.9602,
+          "evidence": []
+        },
+        {
+          "term": "entity prov",
+          "score": 48.3305,
+          "evidence": []
+        },
+        {
+          "term": "activity prov",
+          "score": 47.6654,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-c-changes-since-wd-prov-o-20120724": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prov",
+          "score": 1.9294,
+          "evidence": []
+        },
+        {
+          "term": "wasinformedby",
+          "score": 1.0683,
+          "evidence": []
+        },
+        {
+          "term": "added",
+          "score": 0.9698,
+          "evidence": []
+        },
+        {
+          "term": "subproperty",
+          "score": 0.9502,
+          "evidence": []
+        },
+        {
+          "term": "instantaneousevent",
+          "score": 0.8504,
+          "evidence": []
+        },
+        {
+          "term": "trig",
+          "score": 0.7961,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedcommunication",
+          "score": 0.7911,
+          "evidence": []
+        },
+        {
+          "term": "owl",
+          "score": 0.7329,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prov",
+          "score": 71.0967,
+          "evidence": []
+        },
+        {
+          "term": "added",
+          "score": 17.8522,
+          "evidence": []
+        },
+        {
+          "term": "wasinformedby",
+          "score": 16.8544,
+          "evidence": []
+        },
+        {
+          "term": "subproperty",
+          "score": 13.1979,
+          "evidence": []
+        },
+        {
+          "term": "usage",
+          "score": 11.477,
+          "evidence": []
+        },
+        {
+          "term": "instantaneousevent",
+          "score": 11.0007,
+          "evidence": []
+        },
+        {
+          "term": "trig",
+          "score": 11.0007,
+          "evidence": []
+        },
+        {
+          "term": "qualifiedcommunication",
+          "score": 10.5994,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "prov",
+          "score": 1.2919,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 0.5734,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 0.5292,
+          "evidence": []
+        },
+        {
+          "term": "prefix",
+          "score": 0.3571,
+          "evidence": []
+        },
+        {
+          "term": "prov-dm",
+          "score": 0.3033,
+          "evidence": []
+        },
+        {
+          "term": "owl",
+          "score": 0.2834,
+          "evidence": []
+        },
+        {
+          "term": "ref",
+          "score": 0.2722,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 0.2663,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prov",
+          "score": 68.1708,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 11.2187,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 10.3029,
+          "evidence": []
+        },
+        {
+          "term": "prefix",
+          "score": 4.7894,
+          "evidence": []
+        },
+        {
+          "term": "qualified",
+          "score": 3.9987,
+          "evidence": []
+        },
+        {
+          "term": "influence",
+          "score": 3.7935,
+          "evidence": []
+        },
+        {
+          "term": "hadrole",
+          "score": 3.1803,
+          "evidence": []
+        },
+        {
+          "term": "rdfs",
+          "score": 3.1752,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "prov",
+          "score": 1.2919,
+          "evidence": []
+        },
+        {
+          "term": "owl",
+          "score": 0.2834,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 0.2663,
+          "evidence": []
+        },
+        {
+          "term": "influence",
+          "score": 0.25,
+          "evidence": []
+        },
+        {
+          "term": "usage",
+          "score": 0.2451,
+          "evidence": []
+        },
+        {
+          "term": "association",
+          "score": 0.2353,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 0.2053,
+          "evidence": []
+        },
+        {
+          "term": "wasinformedby",
+          "score": 0.1617,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "stylist",
+          "score": 22.4344,
+          "evidence": []
+        },
+        {
+          "term": "dividend",
+          "score": 22.2352,
+          "evidence": []
+        },
+        {
+          "term": "divisor",
+          "score": 22.2352,
+          "evidence": []
+        },
+        {
+          "term": "donquixote",
+          "score": 22.2352,
+          "evidence": []
+        },
+        {
+          "term": "making-bar-chart",
+          "score": 22.2352,
+          "evidence": []
+        },
+        {
+          "term": "spoon",
+          "score": 22.2352,
+          "evidence": []
+        },
+        {
+          "term": "variablea",
+          "score": 22.2352,
+          "evidence": []
+        },
+        {
+          "term": "variableb",
+          "score": 22.2352,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-026-d-changes-since-cr-prov-o-20121211": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "updated prov",
+          "score": 2.0909,
+          "evidence": []
+        },
+        {
+          "term": "cross reference",
+          "score": 1.1862,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 1.0553,
+          "evidence": []
+        },
+        {
+          "term": "exemplar",
+          "score": 0.9502,
+          "evidence": []
+        },
+        {
+          "term": "added",
+          "score": 0.8712,
+          "evidence": []
+        },
+        {
+          "term": "prov-dm",
+          "score": 0.8036,
+          "evidence": []
+        },
+        {
+          "term": "changed",
+          "score": 0.6616,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "updated prov",
+          "score": 37.7331,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 16.7688,
+          "evidence": []
+        },
+        {
+          "term": "cross reference",
+          "score": 15.337,
+          "evidence": []
+        },
+        {
+          "term": "added",
+          "score": 14.2818,
+          "evidence": []
+        },
+        {
+          "term": "exemplar",
+          "score": 13.1979,
+          "evidence": []
+        },
+        {
+          "term": "prov-dm",
+          "score": 12.4267,
+          "evidence": []
+        },
+        {
+          "term": "changed",
+          "score": 8.8035,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "updated prov",
+          "score": 1.0471,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 0.4729,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 0.4188,
+          "evidence": []
+        },
+        {
+          "term": "prefix",
+          "score": 0.2754,
+          "evidence": []
+        },
+        {
+          "term": "ref",
+          "score": 0.2572,
+          "evidence": []
+        },
+        {
+          "term": "property",
+          "score": 0.2565,
+          "evidence": []
+        },
+        {
+          "term": "definitions",
+          "score": 0.2498,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "prov",
+          "score": 27.4798,
+          "evidence": []
+        },
+        {
+          "term": "updated prov",
+          "score": 27.4798,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 7.9776,
+          "evidence": []
+        },
+        {
+          "term": "entry",
+          "score": 4.3943,
+          "evidence": []
+        },
+        {
+          "term": "activity",
+          "score": 3.8368,
+          "evidence": []
+        },
+        {
+          "term": "prefix",
+          "score": 3.799,
+          "evidence": []
+        },
+        {
+          "term": "term",
+          "score": 2.888,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "updated prov",
+          "score": 1.0471,
+          "evidence": []
+        },
+        {
+          "term": "entity",
+          "score": 0.4729,
+          "evidence": []
+        },
+        {
+          "term": "property",
+          "score": 0.2565,
+          "evidence": []
+        },
+        {
+          "term": "prov-dm",
+          "score": 0.2385,
+          "evidence": []
+        },
+        {
+          "term": "type",
+          "score": 0.217,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 0.2097,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 0.1676,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "groth",
+          "score": 27.3976,
+          "evidence": []
+        },
+        {
+          "term": "prov-dictionary",
+          "score": 27.3535,
+          "evidence": []
+        },
+        {
+          "term": "prov-links",
+          "score": 27.3535,
+          "evidence": []
+        },
+        {
+          "term": "yolanda",
+          "score": 25.7078,
+          "evidence": []
+        },
+        {
+          "term": "prov-dc",
+          "score": 25.6489,
+          "evidence": []
+        },
+        {
+          "term": "prov-sem",
+          "score": 25.6489,
+          "evidence": []
+        },
+        {
+          "term": "emptycollection",
+          "score": 25.1195,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-028-f-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "invited expert",
+          "score": 3.6232,
+          "evidence": []
+        },
+        {
+          "term": "rensselaer polytechnic",
+          "score": 3.57,
+          "evidence": []
+        },
+        {
+          "term": "polytechnic institute",
+          "score": 2.9438,
+          "evidence": []
+        },
+        {
+          "term": "ghent university",
+          "score": 2.4034,
+          "evidence": []
+        },
+        {
+          "term": "w3c ercim",
+          "score": 2.0764,
+          "evidence": []
+        },
+        {
+          "term": "national archives",
+          "score": 1.9072,
+          "evidence": []
+        },
+        {
+          "term": "w3c mit",
+          "score": 1.8856,
+          "evidence": []
+        },
+        {
+          "term": "page cross",
+          "score": 1.717,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "invited expert",
+          "score": 118.2466,
+          "evidence": []
+        },
+        {
+          "term": "rensselaer polytechnic",
+          "score": 84.0531,
+          "evidence": []
+        },
+        {
+          "term": "polytechnic institute",
+          "score": 69.5812,
+          "evidence": []
+        },
+        {
+          "term": "ghent university",
+          "score": 66.6277,
+          "evidence": []
+        },
+        {
+          "term": "w3c ercim",
+          "score": 38.0136,
+          "evidence": []
+        },
+        {
+          "term": "w3c mit",
+          "score": 34.8973,
+          "evidence": []
+        },
+        {
+          "term": "national archives",
+          "score": 34.54,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 30.7954,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "w3c mit",
+          "score": 1.7322,
+          "evidence": []
+        },
+        {
+          "term": "prov working",
+          "score": 1.6994,
+          "evidence": []
+        },
+        {
+          "term": "w3c ercim",
+          "score": 1.6685,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 1.3182,
+          "evidence": []
+        },
+        {
+          "term": "polytechnic institute",
+          "score": 0.9109,
+          "evidence": []
+        },
+        {
+          "term": "rensselaer polytechnic",
+          "score": 0.9052,
+          "evidence": []
+        },
+        {
+          "term": "invited expert",
+          "score": 0.888,
+          "evidence": []
+        },
+        {
+          "term": "ghent university",
+          "score": 0.8645,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "w3c mit",
+          "score": 24.7116,
+          "evidence": []
+        },
+        {
+          "term": "w3c ercim",
+          "score": 24.1682,
+          "evidence": []
+        },
+        {
+          "term": "prov working",
+          "score": 15.806,
+          "evidence": []
+        },
+        {
+          "term": "invited expert",
+          "score": 14.9097,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 13.9813,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 12.7586,
+          "evidence": []
+        },
+        {
+          "term": "computing science",
+          "score": 11.0081,
+          "evidence": []
+        },
+        {
+          "term": "ghent university",
+          "score": 10.862,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "w3c mit",
+          "score": 1.7322,
+          "evidence": []
+        },
+        {
+          "term": "prov working",
+          "score": 1.6994,
+          "evidence": []
+        },
+        {
+          "term": "w3c ercim",
+          "score": 1.6685,
+          "evidence": []
+        },
+        {
+          "term": "working group",
+          "score": 1.3182,
+          "evidence": []
+        },
+        {
+          "term": "polytechnic institute",
+          "score": 0.9109,
+          "evidence": []
+        },
+        {
+          "term": "rensselaer polytechnic",
+          "score": 0.9052,
+          "evidence": []
+        },
+        {
+          "term": "invited expert",
+          "score": 0.888,
+          "evidence": []
+        },
+        {
+          "term": "ghent university",
+          "score": 0.8645,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "rensselaer polytechnic",
+          "score": 1457.4058,
+          "evidence": []
+        },
+        {
+          "term": "polytechnic institute",
+          "score": 845.5599,
+          "evidence": []
+        },
+        {
+          "term": "belhajjame",
+          "score": 784.3218,
+          "evidence": []
+        },
+        {
+          "term": "corsar",
+          "score": 784.3218,
+          "evidence": []
+        },
+        {
+          "term": "edinburgh",
+          "score": 784.3218,
+          "evidence": []
+        },
+        {
+          "term": "madrid",
+          "score": 784.3218,
+          "evidence": []
+        },
+        {
+          "term": "politécnica",
+          "score": 784.3218,
+          "evidence": []
+        },
+        {
+          "term": "soiland-reyes",
+          "score": 784.3218,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-030-g1-normative-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "paolo missier",
+          "score": 2.3605,
+          "evidence": []
+        },
+        {
+          "term": "w3c recommendation",
+          "score": 2.3441,
+          "evidence": []
+        },
+        {
+          "term": "luc moreau",
+          "score": 2.1618,
+          "evidence": []
+        },
+        {
+          "term": "april",
+          "score": 1.1129,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 1.1008,
+          "evidence": []
+        },
+        {
+          "term": "eds",
+          "score": 0.9584,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "w3c recommendation",
+          "score": 56.2184,
+          "evidence": []
+        },
+        {
+          "term": "paolo missier",
+          "score": 38.7307,
+          "evidence": []
+        },
+        {
+          "term": "luc moreau",
+          "score": 35.4349,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 26.8302,
+          "evidence": []
+        },
+        {
+          "term": "april",
+          "score": 19.9581,
+          "evidence": []
+        },
+        {
+          "term": "eds",
+          "score": 14.9686,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "w3c recommendation",
+          "score": 1.1909,
+          "evidence": []
+        },
+        {
+          "term": "prov data",
+          "score": 0.7275,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 0.6057,
+          "evidence": []
+        },
+        {
+          "term": "rfc",
+          "score": 0.4736,
+          "evidence": []
+        },
+        {
+          "term": "json",
+          "score": 0.3685,
+          "evidence": []
+        },
+        {
+          "term": "ietf",
+          "score": 0.3677,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "w3c recommendation",
+          "score": 31.0356,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 25.3155,
+          "evidence": []
+        },
+        {
+          "term": "rfc",
+          "score": 11.2975,
+          "evidence": []
+        },
+        {
+          "term": "ietf",
+          "score": 8.2147,
+          "evidence": []
+        },
+        {
+          "term": "prov data",
+          "score": 7.4665,
+          "evidence": []
+        },
+        {
+          "term": "rdf",
+          "score": 4.7558,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "w3c recommendation",
+          "score": 1.1909,
+          "evidence": []
+        },
+        {
+          "term": "prov data",
+          "score": 0.7275,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 0.6057,
+          "evidence": []
+        },
+        {
+          "term": "rfc",
+          "score": 0.4736,
+          "evidence": []
+        },
+        {
+          "term": "luc moreau",
+          "score": 0.3523,
+          "evidence": []
+        },
+        {
+          "term": "paolo missier",
+          "score": 0.2861,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "luc moreau",
+          "score": 793.0327,
+          "evidence": []
+        },
+        {
+          "term": "paolo missier",
+          "score": 726.3282,
+          "evidence": []
+        },
+        {
+          "term": "groth",
+          "score": 402.8151,
+          "evidence": []
+        },
+        {
+          "term": "prov-dictionary",
+          "score": 400.7132,
+          "evidence": []
+        },
+        {
+          "term": "prov-links",
+          "score": 400.7132,
+          "evidence": []
+        },
+        {
+          "term": "cyganiak",
+          "score": 386.5411,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-031-g2-informative-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "w3c note",
+          "score": 2.171,
+          "evidence": []
+        },
+        {
+          "term": "w3c recommendation",
+          "score": 2.0181,
+          "evidence": []
+        },
+        {
+          "term": "luc moreau",
+          "score": 1.7132,
+          "evidence": []
+        },
+        {
+          "term": "paul groth",
+          "score": 1.6611,
+          "evidence": []
+        },
+        {
+          "term": "april",
+          "score": 1.5194,
+          "evidence": []
+        },
+        {
+          "term": "eds",
+          "score": 1.4376,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 1.2851,
+          "evidence": []
+        },
+        {
+          "term": "prov",
+          "score": 1.1025,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "w3c note",
+          "score": 59.8563,
+          "evidence": []
+        },
+        {
+          "term": "w3c recommendation",
+          "score": 49.773,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 40.2452,
+          "evidence": []
+        },
+        {
+          "term": "april",
+          "score": 39.9162,
+          "evidence": []
+        },
+        {
+          "term": "eds",
+          "score": 34.9267,
+          "evidence": []
+        },
+        {
+          "term": "luc moreau",
+          "score": 23.6233,
+          "evidence": []
+        },
+        {
+          "term": "paul groth",
+          "score": 22.1553,
+          "evidence": []
+        },
+        {
+          "term": "trig",
+          "score": 16.5011,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "w3c recommendation",
+          "score": 1.3744,
+          "evidence": []
+        },
+        {
+          "term": "w3c note",
+          "score": 1.1078,
+          "evidence": []
+        },
+        {
+          "term": "prov",
+          "score": 0.8928,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 0.6513,
+          "evidence": []
+        },
+        {
+          "term": "rfc",
+          "score": 0.4464,
+          "evidence": []
+        },
+        {
+          "term": "luc moreau",
+          "score": 0.4398,
+          "evidence": []
+        },
+        {
+          "term": "json",
+          "score": 0.4062,
+          "evidence": []
+        },
+        {
+          "term": "ietf",
+          "score": 0.3779,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "w3c recommendation",
+          "score": 36.9465,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 33.0868,
+          "evidence": []
+        },
+        {
+          "term": "w3c note",
+          "score": 31.9971,
+          "evidence": []
+        },
+        {
+          "term": "prov",
+          "score": 15.4067,
+          "evidence": []
+        },
+        {
+          "term": "rfc",
+          "score": 11.9982,
+          "evidence": []
+        },
+        {
+          "term": "ietf",
+          "score": 9.536,
+          "evidence": []
+        },
+        {
+          "term": "april",
+          "score": 5.421,
+          "evidence": []
+        },
+        {
+          "term": "luc moreau",
+          "score": 4.9704,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "w3c recommendation",
+          "score": 1.3744,
+          "evidence": []
+        },
+        {
+          "term": "w3c note",
+          "score": 1.1078,
+          "evidence": []
+        },
+        {
+          "term": "prov",
+          "score": 0.8928,
+          "evidence": []
+        },
+        {
+          "term": "url",
+          "score": 0.6513,
+          "evidence": []
+        },
+        {
+          "term": "luc moreau",
+          "score": 0.4398,
+          "evidence": []
+        },
+        {
+          "term": "rdf",
+          "score": 0.337,
+          "evidence": []
+        },
+        {
+          "term": "paul groth",
+          "score": 0.3335,
+          "evidence": []
+        },
+        {
+          "term": "schema",
+          "score": 0.3241,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "luc moreau",
+          "score": 994.341,
+          "evidence": []
+        },
+        {
+          "term": "paul groth",
+          "score": 670.0419,
+          "evidence": []
+        },
+        {
+          "term": "prov-dictionary",
+          "score": 606.4111,
+          "evidence": []
+        },
+        {
+          "term": "prov-links",
+          "score": 606.4111,
+          "evidence": []
+        },
+        {
+          "term": "yolanda",
+          "score": 558.1949,
+          "evidence": []
+        },
+        {
+          "term": "primer",
+          "score": 553.9369,
+          "evidence": []
+        },
+        {
+          "term": "prov-dc",
+          "score": 548.6902,
+          "evidence": []
+        },
+        {
+          "term": "prov-sem",
+          "score": 548.6902,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

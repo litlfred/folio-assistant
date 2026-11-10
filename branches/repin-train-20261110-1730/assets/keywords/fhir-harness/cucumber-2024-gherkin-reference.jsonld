@@ -1,0 +1,2736 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "cucumber-2024-gherkin-reference",
+  "instance": "fhir-harness",
+  "about": "library/cucumber-2024-gherkin-reference",
+  "corpus": {
+    "library": "fhir-harness/library",
+    "sections": 38,
+    "terms": 336
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "step definition",
+        "score": 6.8912,
+        "evidence": []
+      },
+      {
+        "term": "cucumber support",
+        "score": 6.081,
+        "evidence": []
+      },
+      {
+        "term": "like text",
+        "score": 5.8043,
+        "evidence": []
+      },
+      {
+        "term": "cucumber implementation",
+        "score": 5.3191,
+        "evidence": []
+      },
+      {
+        "term": "gherkin document",
+        "score": 5.1473,
+        "evidence": []
+      },
+      {
+        "term": "cucumber executes",
+        "score": 4.963,
+        "evidence": []
+      },
+      {
+        "term": "external system",
+        "score": 4.4428,
+        "evidence": []
+      },
+      {
+        "term": "feature file",
+        "score": 3.9958,
+        "evidence": []
+      },
+      {
+        "term": "business rule",
+        "score": 3.9518,
+        "evidence": []
+      },
+      {
+        "term": "keyword",
+        "score": 3.9197,
+        "evidence": []
+      },
+      {
+        "term": "spoken languages",
+        "score": 3.8229,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "tools like",
+        "score": 3.6297,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "step definition",
+        "score": 45.4716,
+        "evidence": []
+      },
+      {
+        "term": "cucumber support",
+        "score": 40.6894,
+        "evidence": []
+      },
+      {
+        "term": "like text",
+        "score": 34.6851,
+        "evidence": []
+      },
+      {
+        "term": "cucumber implementation",
+        "score": 33.7636,
+        "evidence": []
+      },
+      {
+        "term": "gherkin document",
+        "score": 32.5168,
+        "evidence": []
+      },
+      {
+        "term": "external system",
+        "score": 32.2548,
+        "evidence": []
+      },
+      {
+        "term": "cucumber executes",
+        "score": 30.8192,
+        "evidence": []
+      },
+      {
+        "term": "business rule",
+        "score": 27.8225,
+        "evidence": []
+      },
+      {
+        "term": "keyword",
+        "score": 27.0668,
+        "evidence": []
+      },
+      {
+        "term": "scenarios",
+        "score": 26.3659,
+        "evidence": []
+      },
+      {
+        "term": "feature file",
+        "score": 24.4012,
+        "evidence": []
+      },
+      {
+        "term": "expected outcome",
+        "score": 24.0672,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "step definition",
+        "score": 6.8901,
+        "evidence": []
+      },
+      {
+        "term": "cucumber support",
+        "score": 6.0823,
+        "evidence": []
+      },
+      {
+        "term": "like text",
+        "score": 5.8058,
+        "evidence": []
+      },
+      {
+        "term": "cucumber implementation",
+        "score": 5.3198,
+        "evidence": []
+      },
+      {
+        "term": "gherkin document",
+        "score": 5.1476,
+        "evidence": []
+      },
+      {
+        "term": "cucumber executes",
+        "score": 4.9627,
+        "evidence": []
+      },
+      {
+        "term": "external system",
+        "score": 4.4411,
+        "evidence": []
+      },
+      {
+        "term": "feature file",
+        "score": 3.9962,
+        "evidence": []
+      },
+      {
+        "term": "business rule",
+        "score": 3.9545,
+        "evidence": []
+      },
+      {
+        "term": "keyword",
+        "score": 3.92,
+        "evidence": []
+      },
+      {
+        "term": "spoken languages",
+        "score": 3.8215,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "tools like",
+        "score": 3.6319,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "step definition",
+        "score": 45.4702,
+        "evidence": []
+      },
+      {
+        "term": "cucumber support",
+        "score": 40.6958,
+        "evidence": []
+      },
+      {
+        "term": "like text",
+        "score": 34.6902,
+        "evidence": []
+      },
+      {
+        "term": "cucumber implementation",
+        "score": 33.7661,
+        "evidence": []
+      },
+      {
+        "term": "gherkin document",
+        "score": 32.5163,
+        "evidence": []
+      },
+      {
+        "term": "external system",
+        "score": 32.2496,
+        "evidence": []
+      },
+      {
+        "term": "cucumber executes",
+        "score": 30.819,
+        "evidence": []
+      },
+      {
+        "term": "business rule",
+        "score": 27.8286,
+        "evidence": []
+      },
+      {
+        "term": "keyword",
+        "score": 27.0704,
+        "evidence": []
+      },
+      {
+        "term": "scenarios",
+        "score": 26.3637,
+        "evidence": []
+      },
+      {
+        "term": "feature file",
+        "score": 24.3957,
+        "evidence": []
+      },
+      {
+        "term": "expected outcome",
+        "score": 24.0686,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "step definition",
+        "score": 6.8901,
+        "evidence": []
+      },
+      {
+        "term": "cucumber support",
+        "score": 6.0823,
+        "evidence": []
+      },
+      {
+        "term": "like text",
+        "score": 5.8058,
+        "evidence": []
+      },
+      {
+        "term": "cucumber implementation",
+        "score": 5.3198,
+        "evidence": []
+      },
+      {
+        "term": "gherkin document",
+        "score": 5.1476,
+        "evidence": []
+      },
+      {
+        "term": "cucumber executes",
+        "score": 4.9627,
+        "evidence": []
+      },
+      {
+        "term": "external system",
+        "score": 4.4411,
+        "evidence": []
+      },
+      {
+        "term": "feature file",
+        "score": 3.9962,
+        "evidence": []
+      },
+      {
+        "term": "business rule",
+        "score": 3.9545,
+        "evidence": []
+      },
+      {
+        "term": "keyword",
+        "score": 3.92,
+        "evidence": []
+      },
+      {
+        "term": "spoken languages",
+        "score": 3.8215,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "tools like",
+        "score": 3.6319,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "free-form descriptions",
+        "score": 90.733,
+        "evidence": []
+      },
+      {
+        "term": "delimited parameters",
+        "score": 79.5341,
+        "evidence": []
+      },
+      {
+        "term": "html formatter",
+        "score": 77.9559,
+        "evidence": []
+      },
+      {
+        "term": "official html",
+        "score": 77.9559,
+        "evidence": []
+      },
+      {
+        "term": "placed underneath",
+        "score": 77.0386,
+        "evidence": []
+      },
+      {
+        "term": "write",
+        "score": 73.037,
+        "evidence": []
+      },
+      {
+        "term": "express",
+        "score": 67.4788,
+        "evidence": []
+      },
+      {
+        "term": "external system",
+        "score": 51.9793,
+        "evidence": []
+      },
+      {
+        "term": "cucumber executes",
+        "score": 50.7725,
+        "evidence": []
+      },
+      {
+        "term": "cucumber implementation",
+        "score": 49.9305,
+        "evidence": []
+      },
+      {
+        "term": "supports",
+        "score": 49.3412,
+        "evidence": []
+      },
+      {
+        "term": "initial context",
+        "score": 47.2423,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "s001-gherkin-reference": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "gherkin",
+          "score": 1.6507,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reference",
+          "score": 1.5692,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spaces",
+          "score": 1.172,
+          "evidence": []
+        },
+        {
+          "term": "followed",
+          "score": 1.0241,
+          "evidence": []
+        },
+        {
+          "term": "comments",
+          "score": 0.9064,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "gherkin",
+          "score": 13.5334,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reference",
+          "score": 10.1559,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spaces",
+          "score": 8.8333,
+          "evidence": []
+        },
+        {
+          "term": "followed",
+          "score": 7.6169,
+          "evidence": []
+        },
+        {
+          "term": "keywords",
+          "score": 6.0844,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "gherkin",
+          "score": 1.6504,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reference",
+          "score": 1.5696,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spaces",
+          "score": 1.172,
+          "evidence": []
+        },
+        {
+          "term": "followed",
+          "score": 1.024,
+          "evidence": []
+        },
+        {
+          "term": "comments",
+          "score": 0.906,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "gherkin",
+          "score": 13.5328,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reference",
+          "score": 10.1563,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spaces",
+          "score": 8.8334,
+          "evidence": []
+        },
+        {
+          "term": "followed",
+          "score": 7.6167,
+          "evidence": []
+        },
+        {
+          "term": "some",
+          "score": 6.0839,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "gherkin",
+          "score": 1.6504,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reference",
+          "score": 1.5696,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spaces",
+          "score": 1.172,
+          "evidence": []
+        },
+        {
+          "term": "followed",
+          "score": 1.024,
+          "evidence": []
+        },
+        {
+          "term": "comments",
+          "score": 0.906,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "reference",
+          "score": 25.5178,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spaces",
+          "score": 19.6365,
+          "evidence": []
+        },
+        {
+          "term": "comments",
+          "score": 17.3449,
+          "evidence": []
+        },
+        {
+          "term": "followed",
+          "score": 15.5103,
+          "evidence": []
+        },
+        {
+          "term": "gherkin",
+          "score": 13.7235,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ]
+    },
+    "s002-keywords": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "keywords",
+          "score": 1.9637,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gherkin",
+          "score": 0.7109,
+          "evidence": []
+        },
+        {
+          "term": "doc",
+          "score": 0.586,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "keywords",
+          "score": 16.2252,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gherkin",
+          "score": 5.075,
+          "evidence": []
+        },
+        {
+          "term": "line",
+          "score": 3.6917,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "keywords",
+          "score": 1.9627,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gherkin",
+          "score": 0.7107,
+          "evidence": []
+        },
+        {
+          "term": "doc",
+          "score": 0.5865,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "keywords",
+          "score": 16.2209,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gherkin",
+          "score": 5.0742,
+          "evidence": []
+        },
+        {
+          "term": "line",
+          "score": 3.6917,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "keywords",
+          "score": 1.9627,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "gherkin",
+          "score": 0.7107,
+          "evidence": []
+        },
+        {
+          "term": "doc",
+          "score": 0.5865,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "keywords",
+          "score": 38.107,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "equivalent",
+          "score": 24.0697,
+          "evidence": []
+        },
+        {
+          "term": "tags",
+          "score": 24.0636,
+          "evidence": []
+        }
+      ]
+    },
+    "s003-feature": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "feature",
+          "score": 2.1979,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "description",
+          "score": 1.5698,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 0.9064,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.9064,
+          "evidence": []
+        },
+        {
+          "term": "reporting",
+          "score": 0.9064,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "feature",
+          "score": 18.0103,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "description",
+          "score": 14.7222,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 5.8889,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 5.8889,
+          "evidence": []
+        },
+        {
+          "term": "reporting",
+          "score": 5.8889,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "feature",
+          "score": 2.1965,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "description",
+          "score": 1.5679,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 0.9058,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.9056,
+          "evidence": []
+        },
+        {
+          "term": "reporting",
+          "score": 0.9042,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "feature",
+          "score": 18.0082,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "description",
+          "score": 14.7192,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 5.8883,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 5.8881,
+          "evidence": []
+        },
+        {
+          "term": "reporting",
+          "score": 5.8855,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "feature",
+          "score": 2.1965,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "description",
+          "score": 1.5679,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 0.9058,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 0.9056,
+          "evidence": []
+        },
+        {
+          "term": "reporting",
+          "score": 0.9042,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "feature",
+          "score": 28.4619,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "description",
+          "score": 21.21,
+          "evidence": []
+        },
+        {
+          "term": "reporting",
+          "score": 16.7814,
+          "evidence": []
+        },
+        {
+          "term": "group",
+          "score": 16.7673,
+          "evidence": []
+        },
+        {
+          "term": "document",
+          "score": 16.7667,
+          "evidence": []
+        }
+      ]
+    },
+    "s004-descriptions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "descriptions",
+          "score": 2.0483,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "markdown",
+          "score": 0.5719,
+          "evidence": []
+        },
+        {
+          "term": "formatter",
+          "score": 0.5611,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "descriptions",
+          "score": 15.2338,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "formatter",
+          "score": 2.9444,
+          "evidence": []
+        },
+        {
+          "term": "html",
+          "score": 2.9444,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "descriptions",
+          "score": 2.0473,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "markdown",
+          "score": 0.5722,
+          "evidence": []
+        },
+        {
+          "term": "formatter",
+          "score": 0.5612,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "descriptions",
+          "score": 15.2333,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "markdown",
+          "score": 2.9448,
+          "evidence": []
+        },
+        {
+          "term": "formatter",
+          "score": 2.9445,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "descriptions",
+          "score": 2.0473,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "markdown",
+          "score": 0.5722,
+          "evidence": []
+        },
+        {
+          "term": "formatter",
+          "score": 0.5612,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "descriptions",
+          "score": 100.3598,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "write",
+          "score": 41.6521,
+          "evidence": []
+        },
+        {
+          "term": "formatter",
+          "score": 41.6502,
+          "evidence": []
+        }
+      ]
+    },
+    "s005-rule": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "rule",
+          "score": 3.1397,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business rule",
+          "score": 2.3544,
+          "evidence": []
+        },
+        {
+          "term": "cucumber implementation",
+          "score": 1.5376,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "rule",
+          "score": 29.4444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business rule",
+          "score": 19.8001,
+          "evidence": []
+        },
+        {
+          "term": "cucumber implementation",
+          "score": 10.5633,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "rule",
+          "score": 3.1399,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business rule",
+          "score": 2.3547,
+          "evidence": []
+        },
+        {
+          "term": "cucumber implementation",
+          "score": 1.5377,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "rule",
+          "score": 29.444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business rule",
+          "score": 19.7998,
+          "evidence": []
+        },
+        {
+          "term": "cucumber implementation",
+          "score": 10.5632,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "rule",
+          "score": 3.1399,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business rule",
+          "score": 2.3547,
+          "evidence": []
+        },
+        {
+          "term": "cucumber implementation",
+          "score": 1.5377,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "rule",
+          "score": 61.1819,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "business rule",
+          "score": 48.5458,
+          "evidence": []
+        },
+        {
+          "term": "cucumber implementation",
+          "score": 30.382,
+          "evidence": []
+        }
+      ]
+    },
+    "s006-example": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "documentation",
+          "score": 0.7516,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 0.616,
+          "evidence": []
+        },
+        {
+          "term": "rule",
+          "score": 0.6073,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "steps",
+          "score": 5.6306,
+          "evidence": []
+        },
+        {
+          "term": "documentation",
+          "score": 4.5026,
+          "evidence": []
+        },
+        {
+          "term": "keyword",
+          "score": 3.3834,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "documentation",
+          "score": 0.7473,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 0.617,
+          "evidence": []
+        },
+        {
+          "term": "rule",
+          "score": 0.6053,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "steps",
+          "score": 5.63,
+          "evidence": []
+        },
+        {
+          "term": "documentation",
+          "score": 4.4891,
+          "evidence": []
+        },
+        {
+          "term": "keyword",
+          "score": 3.3787,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "documentation",
+          "score": 0.7473,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 0.617,
+          "evidence": []
+        },
+        {
+          "term": "rule",
+          "score": 0.6053,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "having",
+          "score": 19.3067,
+          "evidence": []
+        },
+        {
+          "term": "executable",
+          "score": 19.3057,
+          "evidence": []
+        },
+        {
+          "term": "too",
+          "score": 19.3049,
+          "evidence": []
+        }
+      ]
+    },
+    "s007-steps": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "step definition",
+          "score": 1.4839,
+          "evidence": []
+        },
+        {
+          "term": "cucumber",
+          "score": 0.6312,
+          "evidence": []
+        },
+        {
+          "term": "account",
+          "score": 0.5719,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "step definition",
+          "score": 13.0367,
+          "evidence": []
+        },
+        {
+          "term": "cucumber",
+          "score": 4.6744,
+          "evidence": []
+        },
+        {
+          "term": "account",
+          "score": 2.9444,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "step definition",
+          "score": 1.4835,
+          "evidence": []
+        },
+        {
+          "term": "cucumber",
+          "score": 0.6313,
+          "evidence": []
+        },
+        {
+          "term": "account",
+          "score": 0.5722,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "step definition",
+          "score": 13.0363,
+          "evidence": []
+        },
+        {
+          "term": "cucumber",
+          "score": 4.6748,
+          "evidence": []
+        },
+        {
+          "term": "account",
+          "score": 2.9455,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "step definition",
+          "score": 1.4835,
+          "evidence": []
+        },
+        {
+          "term": "cucumber",
+          "score": 0.6313,
+          "evidence": []
+        },
+        {
+          "term": "account",
+          "score": 0.5722,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "written",
+          "score": 24.8499,
+          "evidence": []
+        },
+        {
+          "term": "means",
+          "score": 24.8497,
+          "evidence": []
+        },
+        {
+          "term": "executes",
+          "score": 24.849,
+          "evidence": []
+        }
+      ]
+    },
+    "s008-given": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "system",
+          "score": 1.1069,
+          "evidence": []
+        },
+        {
+          "term": "state",
+          "score": 0.9064,
+          "evidence": []
+        },
+        {
+          "term": "executes",
+          "score": 0.5611,
+          "evidence": []
+        },
+        {
+          "term": "external",
+          "score": 0.5611,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "system",
+          "score": 10.1407,
+          "evidence": []
+        },
+        {
+          "term": "state",
+          "score": 5.8889,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 3.2175,
+          "evidence": []
+        },
+        {
+          "term": "executes",
+          "score": 2.9444,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "system",
+          "score": 1.1067,
+          "evidence": []
+        },
+        {
+          "term": "state",
+          "score": 0.906,
+          "evidence": []
+        },
+        {
+          "term": "initial",
+          "score": 0.5615,
+          "evidence": []
+        },
+        {
+          "term": "logged",
+          "score": 0.5612,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "system",
+          "score": 10.1393,
+          "evidence": []
+        },
+        {
+          "term": "state",
+          "score": 5.8876,
+          "evidence": []
+        },
+        {
+          "term": "steps",
+          "score": 3.2177,
+          "evidence": []
+        },
+        {
+          "term": "initial",
+          "score": 2.9452,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "system",
+          "score": 1.1067,
+          "evidence": []
+        },
+        {
+          "term": "state",
+          "score": 0.906,
+          "evidence": []
+        },
+        {
+          "term": "initial",
+          "score": 0.5615,
+          "evidence": []
+        },
+        {
+          "term": "logged",
+          "score": 0.5612,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "state",
+          "score": 27.4289,
+          "evidence": []
+        },
+        {
+          "term": "logged",
+          "score": 20.3293,
+          "evidence": []
+        },
+        {
+          "term": "interacting",
+          "score": 20.3287,
+          "evidence": []
+        },
+        {
+          "term": "external",
+          "score": 20.3247,
+          "evidence": []
+        }
+      ]
+    },
+    "s009-when": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "event",
+          "score": 0.9064,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.6787,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.5719,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "event",
+          "score": 5.8889,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 4.0563,
+          "evidence": []
+        },
+        {
+          "term": "another",
+          "score": 2.9444,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "event",
+          "score": 0.9051,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.679,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.5716,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "event",
+          "score": 5.8868,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 4.0577,
+          "evidence": []
+        },
+        {
+          "term": "technology",
+          "score": 2.9486,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "event",
+          "score": 0.9051,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 0.679,
+          "evidence": []
+        },
+        {
+          "term": "implementation",
+          "score": 0.5716,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "event",
+          "score": 41.1076,
+          "evidence": []
+        },
+        {
+          "term": "technology",
+          "score": 30.6326,
+          "evidence": []
+        },
+        {
+          "term": "interacting",
+          "score": 30.5836,
+          "evidence": []
+        }
+      ]
+    },
+    "s010-then": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "expected outcome",
+          "score": 2.3059,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 1.1069,
+          "evidence": []
+        },
+        {
+          "term": "database",
+          "score": 1.0241,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.5945,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "expected outcome",
+          "score": 18.5837,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 10.1407,
+          "evidence": []
+        },
+        {
+          "term": "database",
+          "score": 7.6169,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 4.005,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "expected outcome",
+          "score": 2.3063,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 1.1063,
+          "evidence": []
+        },
+        {
+          "term": "database",
+          "score": 1.0216,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.5936,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "expected outcome",
+          "score": 18.5848,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 10.1387,
+          "evidence": []
+        },
+        {
+          "term": "database",
+          "score": 7.6135,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 4.0025,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "expected outcome",
+          "score": 2.3063,
+          "evidence": []
+        },
+        {
+          "term": "system",
+          "score": 1.1063,
+          "evidence": []
+        },
+        {
+          "term": "database",
+          "score": 1.0216,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.5936,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "expected outcome",
+          "score": 58.4095,
+          "evidence": []
+        },
+        {
+          "term": "database",
+          "score": 25.2476,
+          "evidence": []
+        },
+        {
+          "term": "message",
+          "score": 20.8746,
+          "evidence": []
+        },
+        {
+          "term": "inside",
+          "score": 20.8737,
+          "evidence": []
+        }
+      ]
+    },
+    "s011-and-but": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "express",
+          "score": 0.5611,
+          "evidence": []
+        },
+        {
+          "term": "expressed",
+          "score": 0.5611,
+          "evidence": []
+        },
+        {
+          "term": "supports",
+          "score": 0.5611,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "express",
+          "score": 2.9444,
+          "evidence": []
+        },
+        {
+          "term": "expressed",
+          "score": 2.9444,
+          "evidence": []
+        },
+        {
+          "term": "supports",
+          "score": 2.9444,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "expressed",
+          "score": 0.5612,
+          "evidence": []
+        },
+        {
+          "term": "supports",
+          "score": 0.561,
+          "evidence": []
+        },
+        {
+          "term": "write",
+          "score": 0.5609,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "expressed",
+          "score": 2.9454,
+          "evidence": []
+        },
+        {
+          "term": "express",
+          "score": 2.9424,
+          "evidence": []
+        },
+        {
+          "term": "supports",
+          "score": 2.9423,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "expressed",
+          "score": 0.5612,
+          "evidence": []
+        },
+        {
+          "term": "supports",
+          "score": 0.561,
+          "evidence": []
+        },
+        {
+          "term": "write",
+          "score": 0.5609,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "express",
+          "score": 46.3945,
+          "evidence": []
+        },
+        {
+          "term": "expressed",
+          "score": 46.3903,
+          "evidence": []
+        },
+        {
+          "term": "write",
+          "score": 46.3853,
+          "evidence": []
+        }
+      ]
+    },
+    "s012-background": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "background",
+          "score": 1.8127,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "scenarios",
+          "score": 1.0632,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 0.9064,
+          "evidence": []
+        },
+        {
+          "term": "different",
+          "score": 0.78,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "background",
+          "score": 11.7778,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "scenarios",
+          "score": 10.1407,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 5.8889,
+          "evidence": []
+        },
+        {
+          "term": "different",
+          "score": 5.0779,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "background",
+          "score": 1.8127,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "scenarios",
+          "score": 1.0632,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 0.9064,
+          "evidence": []
+        },
+        {
+          "term": "different",
+          "score": 0.78,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "background",
+          "score": 11.7763,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "scenarios",
+          "score": 10.14,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 5.8883,
+          "evidence": []
+        },
+        {
+          "term": "different",
+          "score": 5.0781,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "background",
+          "score": 1.8127,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "scenarios",
+          "score": 1.0632,
+          "evidence": []
+        },
+        {
+          "term": "level",
+          "score": 0.9064,
+          "evidence": []
+        },
+        {
+          "term": "different",
+          "score": 0.78,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "background",
+          "score": 45.339,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "level",
+          "score": 22.6681,
+          "evidence": []
+        },
+        {
+          "term": "every",
+          "score": 16.7681,
+          "evidence": []
+        },
+        {
+          "term": "check",
+          "score": 16.7541,
+          "evidence": []
+        }
+      ]
+    },
+    "s013-tips-for-using-background": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "names",
+          "score": 1.172,
+          "evidence": []
+        },
+        {
+          "term": "background",
+          "score": 1.1437,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "section",
+          "score": 1.0008,
+          "evidence": []
+        },
+        {
+          "term": "short",
+          "score": 0.9064,
+          "evidence": []
+        },
+        {
+          "term": "don't",
+          "score": 0.8996,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "names",
+          "score": 8.8333,
+          "evidence": []
+        },
+        {
+          "term": "section",
+          "score": 7.6169,
+          "evidence": []
+        },
+        {
+          "term": "don't",
+          "score": 6.7539,
+          "evidence": []
+        },
+        {
+          "term": "background",
+          "score": 5.8889,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "short",
+          "score": 5.8889,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "names",
+          "score": 1.1724,
+          "evidence": []
+        },
+        {
+          "term": "background",
+          "score": 1.1434,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "section",
+          "score": 1.0007,
+          "evidence": []
+        },
+        {
+          "term": "short",
+          "score": 0.9064,
+          "evidence": []
+        },
+        {
+          "term": "don't",
+          "score": 0.8999,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "names",
+          "score": 8.8348,
+          "evidence": []
+        },
+        {
+          "term": "section",
+          "score": 7.6157,
+          "evidence": []
+        },
+        {
+          "term": "don't",
+          "score": 6.7544,
+          "evidence": []
+        },
+        {
+          "term": "short",
+          "score": 5.8886,
+          "evidence": []
+        },
+        {
+          "term": "background",
+          "score": 5.8873,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "names",
+          "score": 1.1724,
+          "evidence": []
+        },
+        {
+          "term": "background",
+          "score": 1.1434,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "section",
+          "score": 1.0007,
+          "evidence": []
+        },
+        {
+          "term": "short",
+          "score": 0.9064,
+          "evidence": []
+        },
+        {
+          "term": "don't",
+          "score": 0.8999,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "names",
+          "score": 27.4276,
+          "evidence": []
+        },
+        {
+          "term": "short",
+          "score": 24.2742,
+          "evidence": []
+        },
+        {
+          "term": "background",
+          "score": 23.2828,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "overview",
+          "score": 17.9588,
+          "evidence": []
+        },
+        {
+          "term": "consider",
+          "score": 17.9585,
+          "evidence": []
+        }
+      ]
+    },
+    "s014-scenario-outline": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "scenario",
+          "score": 1.1505,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "values",
+          "score": 0.7932,
+          "evidence": []
+        },
+        {
+          "term": "different",
+          "score": 0.78,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "scenario",
+          "score": 7.3833,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "different",
+          "score": 5.0779,
+          "evidence": []
+        },
+        {
+          "term": "values",
+          "score": 5.0779,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "scenario",
+          "score": 1.1484,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "values",
+          "score": 0.7924,
+          "evidence": []
+        },
+        {
+          "term": "different",
+          "score": 0.7796,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "scenario",
+          "score": 7.3837,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "values",
+          "score": 5.078,
+          "evidence": []
+        },
+        {
+          "term": "different",
+          "score": 5.0779,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "scenario",
+          "score": 1.1484,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "values",
+          "score": 0.7924,
+          "evidence": []
+        },
+        {
+          "term": "different",
+          "score": 0.7796,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "express",
+          "score": 36.0778,
+          "evidence": []
+        },
+        {
+          "term": "delimited",
+          "score": 36.0681,
+          "evidence": []
+        },
+        {
+          "term": "template",
+          "score": 36.0681,
+          "evidence": []
+        }
+      ]
+    },
+    "s015-examples": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "parameters",
+          "score": 1.388,
+          "evidence": []
+        },
+        {
+          "term": "section",
+          "score": 0.7932,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.5945,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "parameters",
+          "score": 11.7778,
+          "evidence": []
+        },
+        {
+          "term": "section",
+          "score": 5.0779,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 4.005,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "parameters",
+          "score": 1.3881,
+          "evidence": []
+        },
+        {
+          "term": "section",
+          "score": 0.7932,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.5946,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "parameters",
+          "score": 11.7776,
+          "evidence": []
+        },
+        {
+          "term": "section",
+          "score": 5.0775,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 4.0044,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "parameters",
+          "score": 1.3881,
+          "evidence": []
+        },
+        {
+          "term": "section",
+          "score": 0.7932,
+          "evidence": []
+        },
+        {
+          "term": "step",
+          "score": 0.5946,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "parameters",
+          "score": 36.9115,
+          "evidence": []
+        },
+        {
+          "term": "delimited",
+          "score": 22.6981,
+          "evidence": []
+        },
+        {
+          "term": "template",
+          "score": 22.6981,
+          "evidence": []
+        }
+      ]
+    },
+    "s017-doc-strings": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "doc strings",
+          "score": 4.1567,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "content types",
+          "score": 2.2944,
+          "evidence": []
+        },
+        {
+          "term": "tool support",
+          "score": 2.1693,
+          "evidence": []
+        },
+        {
+          "term": "cucumber support",
+          "score": 1.7632,
+          "evidence": []
+        },
+        {
+          "term": "like text",
+          "score": 1.5673,
+          "evidence": []
+        },
+        {
+          "term": "step definition",
+          "score": 1.4374,
+          "evidence": []
+        },
+        {
+          "term": "indentation",
+          "score": 1.0008,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "doc strings",
+          "score": 29.4444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "content types",
+          "score": 17.6666,
+          "evidence": []
+        },
+        {
+          "term": "tool support",
+          "score": 17.1453,
+          "evidence": []
+        },
+        {
+          "term": "cucumber support",
+          "score": 14.3727,
+          "evidence": []
+        },
+        {
+          "term": "like text",
+          "score": 13.0215,
+          "evidence": []
+        },
+        {
+          "term": "step definition",
+          "score": 10.8775,
+          "evidence": []
+        },
+        {
+          "term": "indentation",
+          "score": 7.6169,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "doc strings",
+          "score": 4.154,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "content types",
+          "score": 2.2903,
+          "evidence": []
+        },
+        {
+          "term": "tool support",
+          "score": 2.1677,
+          "evidence": []
+        },
+        {
+          "term": "cucumber support",
+          "score": 1.762,
+          "evidence": []
+        },
+        {
+          "term": "like text",
+          "score": 1.566,
+          "evidence": []
+        },
+        {
+          "term": "step definition",
+          "score": 1.4383,
+          "evidence": []
+        },
+        {
+          "term": "indentation",
+          "score": 1.0002,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "doc strings",
+          "score": 29.4362,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "content types",
+          "score": 17.653,
+          "evidence": []
+        },
+        {
+          "term": "tool support",
+          "score": 17.1395,
+          "evidence": []
+        },
+        {
+          "term": "cucumber support",
+          "score": 14.3679,
+          "evidence": []
+        },
+        {
+          "term": "like text",
+          "score": 13.0176,
+          "evidence": []
+        },
+        {
+          "term": "step definition",
+          "score": 10.8785,
+          "evidence": []
+        },
+        {
+          "term": "indentation",
+          "score": 7.615,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "doc strings",
+          "score": 4.154,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "content types",
+          "score": 2.2903,
+          "evidence": []
+        },
+        {
+          "term": "tool support",
+          "score": 2.1677,
+          "evidence": []
+        },
+        {
+          "term": "cucumber support",
+          "score": 1.762,
+          "evidence": []
+        },
+        {
+          "term": "like text",
+          "score": 1.566,
+          "evidence": []
+        },
+        {
+          "term": "step definition",
+          "score": 1.4383,
+          "evidence": []
+        },
+        {
+          "term": "indentation",
+          "score": 1.0002,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "doc strings",
+          "score": 60.4324,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "content types",
+          "score": 31.345,
+          "evidence": []
+        },
+        {
+          "term": "tool support",
+          "score": 27.3606,
+          "evidence": []
+        },
+        {
+          "term": "cucumber support",
+          "score": 15.0435,
+          "evidence": []
+        },
+        {
+          "term": "yet",
+          "score": 14.1528,
+          "evidence": []
+        },
+        {
+          "term": "markdown",
+          "score": 14.1512,
+          "evidence": []
+        },
+        {
+          "term": "like text",
+          "score": 13.92,
+          "evidence": []
+        }
+      ]
+    },
+    "s021-spoken-languages": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "languages",
+          "score": 2.0483,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spoken",
+          "score": 1.5692,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "header",
+          "score": 1.172,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "languages",
+          "score": 15.2338,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spoken",
+          "score": 10.1559,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "header",
+          "score": 8.8333,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "languages",
+          "score": 2.0482,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spoken",
+          "score": 1.5691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "header",
+          "score": 1.172,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "languages",
+          "score": 15.234,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spoken",
+          "score": 10.1561,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "header",
+          "score": 8.8333,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "languages",
+          "score": 2.0482,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spoken",
+          "score": 1.5691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "header",
+          "score": 1.172,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "languages",
+          "score": 44.5024,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "spoken",
+          "score": 36.7569,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "header",
+          "score": 28.0584,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

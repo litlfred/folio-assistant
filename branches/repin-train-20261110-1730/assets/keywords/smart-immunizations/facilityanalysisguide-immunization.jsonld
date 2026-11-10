@@ -1,0 +1,5110 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "facilityanalysisguide-immunization",
+  "instance": "smart-immunizations",
+  "about": "library/facilityanalysisguide-immunization",
+  "corpus": {
+    "library": "smart-immunizations/library",
+    "sections": 62,
+    "terms": 2413
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "dpt doses",
+        "score": 10.0088,
+        "evidence": []
+      },
+      {
+        "term": "coverage estimates",
+        "score": 8.6004,
+        "evidence": []
+      },
+      {
+        "term": "doses administered",
+        "score": 8.542,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "facility reporting",
+        "score": 8.3727,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "penta coverage",
+        "score": 8.2794,
+        "evidence": []
+      },
+      {
+        "term": "children reported",
+        "score": 7.885,
+        "evidence": []
+      },
+      {
+        "term": "bcg doses",
+        "score": 7.6561,
+        "evidence": []
+      },
+      {
+        "term": "vial wastage",
+        "score": 7.6556,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "programme managers",
+        "score": 7.2671,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "wastage rate",
+        "score": 7.0614,
+        "evidence": []
+      },
+      {
+        "term": "reporting completeness",
+        "score": 7.0224,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "reporting system",
+        "score": 7.0028,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "vial wastage",
+        "score": 64.8788,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dpt doses",
+        "score": 63.4528,
+        "evidence": []
+      },
+      {
+        "term": "dpt dropout",
+        "score": 59.3386,
+        "evidence": []
+      },
+      {
+        "term": "mcv dropout",
+        "score": 57.2909,
+        "evidence": []
+      },
+      {
+        "term": "facility reporting",
+        "score": 55.8802,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "coverage estimates",
+        "score": 55.8487,
+        "evidence": []
+      },
+      {
+        "term": "penta coverage",
+        "score": 55.4435,
+        "evidence": []
+      },
+      {
+        "term": "district level",
+        "score": 54.2291,
+        "evidence": []
+      },
+      {
+        "term": "wastage rate",
+        "score": 54.0114,
+        "evidence": []
+      },
+      {
+        "term": "reporting completeness",
+        "score": 53.1406,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "closed vial",
+        "score": 52.1391,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "reported values",
+        "score": 51.9943,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "dpt doses",
+        "score": 10.0085,
+        "evidence": []
+      },
+      {
+        "term": "coverage estimates",
+        "score": 8.6001,
+        "evidence": []
+      },
+      {
+        "term": "doses administered",
+        "score": 8.5417,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "facility reporting",
+        "score": 8.3726,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "penta coverage",
+        "score": 8.2795,
+        "evidence": []
+      },
+      {
+        "term": "children reported",
+        "score": 7.8886,
+        "evidence": []
+      },
+      {
+        "term": "bcg doses",
+        "score": 7.6559,
+        "evidence": []
+      },
+      {
+        "term": "vial wastage",
+        "score": 7.6553,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "programme managers",
+        "score": 7.2671,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "wastage rate",
+        "score": 7.061,
+        "evidence": []
+      },
+      {
+        "term": "reporting completeness",
+        "score": 7.0224,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "reporting system",
+        "score": 7.0026,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "vial wastage",
+        "score": 64.8783,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dpt doses",
+        "score": 63.4529,
+        "evidence": []
+      },
+      {
+        "term": "dpt dropout",
+        "score": 59.3383,
+        "evidence": []
+      },
+      {
+        "term": "mcv dropout",
+        "score": 57.2894,
+        "evidence": []
+      },
+      {
+        "term": "facility reporting",
+        "score": 55.8801,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "coverage estimates",
+        "score": 55.8484,
+        "evidence": []
+      },
+      {
+        "term": "penta coverage",
+        "score": 55.4439,
+        "evidence": []
+      },
+      {
+        "term": "district level",
+        "score": 54.2292,
+        "evidence": []
+      },
+      {
+        "term": "wastage rate",
+        "score": 54.0106,
+        "evidence": []
+      },
+      {
+        "term": "reporting completeness",
+        "score": 53.1406,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "closed vial",
+        "score": 52.139,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "reported values",
+        "score": 51.9936,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "dpt doses",
+        "score": 10.0085,
+        "evidence": []
+      },
+      {
+        "term": "coverage estimates",
+        "score": 8.6001,
+        "evidence": []
+      },
+      {
+        "term": "doses administered",
+        "score": 8.5417,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "facility reporting",
+        "score": 8.3726,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "penta coverage",
+        "score": 8.2795,
+        "evidence": []
+      },
+      {
+        "term": "children reported",
+        "score": 7.8886,
+        "evidence": []
+      },
+      {
+        "term": "bcg doses",
+        "score": 7.6559,
+        "evidence": []
+      },
+      {
+        "term": "vial wastage",
+        "score": 7.6553,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "programme managers",
+        "score": 7.2671,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "wastage rate",
+        "score": 7.061,
+        "evidence": []
+      },
+      {
+        "term": "reporting completeness",
+        "score": 7.0224,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "reporting system",
+        "score": 7.0026,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "temperature alarms",
+        "score": 1651.6821,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "examine",
+        "score": 1114.4998,
+        "evidence": []
+      },
+      {
+        "term": "indicates",
+        "score": 1062.521,
+        "evidence": []
+      },
+      {
+        "term": "indicative",
+        "score": 974.6992,
+        "evidence": []
+      },
+      {
+        "term": "planned sessions",
+        "score": 872.7815,
+        "evidence": []
+      },
+      {
+        "term": "graph",
+        "score": 804.8018,
+        "evidence": []
+      },
+      {
+        "term": "reporting completeness",
+        "score": 758.1552,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "year-to-year",
+        "score": 747.2978,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "turned",
+        "score": 742.6206,
+        "evidence": []
+      },
+      {
+        "term": "sure",
+        "score": 731.4271,
+        "evidence": []
+      },
+      {
+        "term": "functional refrigerators",
+        "score": 688.5742,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "working document",
+        "score": 686.9476,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-audience": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "information system",
+          "score": 1.2468,
+          "evidence": []
+        },
+        {
+          "term": "audience",
+          "score": 1.1535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routine",
+          "score": 0.6975,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 0.6103,
+          "evidence": []
+        },
+        {
+          "term": "institutes",
+          "score": 0.5862,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "audience",
+          "score": 6.868,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "information system",
+          "score": 6.1476,
+          "evidence": []
+        },
+        {
+          "term": "staff",
+          "score": 4.6866,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 4.3624,
+          "evidence": []
+        },
+        {
+          "term": "section",
+          "score": 4.0954,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "information system",
+          "score": 1.2468,
+          "evidence": []
+        },
+        {
+          "term": "audience",
+          "score": 1.1535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routine",
+          "score": 0.6975,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 0.6103,
+          "evidence": []
+        },
+        {
+          "term": "institutes",
+          "score": 0.5862,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "audience",
+          "score": 6.868,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "information system",
+          "score": 6.1476,
+          "evidence": []
+        },
+        {
+          "term": "staff",
+          "score": 4.6866,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 4.3624,
+          "evidence": []
+        },
+        {
+          "term": "surveys",
+          "score": 4.0954,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "information system",
+          "score": 1.2468,
+          "evidence": []
+        },
+        {
+          "term": "audience",
+          "score": 1.1535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routine",
+          "score": 0.6975,
+          "evidence": []
+        },
+        {
+          "term": "decision",
+          "score": 0.6103,
+          "evidence": []
+        },
+        {
+          "term": "institutes",
+          "score": 0.5862,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "audience",
+          "score": 475.8804,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "wide",
+          "score": 237.9402,
+          "evidence": []
+        },
+        {
+          "term": "focuses",
+          "score": 237.9402,
+          "evidence": []
+        },
+        {
+          "term": "focused",
+          "score": 237.9402,
+          "evidence": []
+        },
+        {
+          "term": "investigations",
+          "score": 158.2937,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "acknowledgements",
+          "score": 1.1725,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "working document",
+          "score": 0.7726,
+          "evidence": []
+        },
+        {
+          "term": "programme managers",
+          "score": 0.7575,
+          "evidence": []
+        },
+        {
+          "term": "core",
+          "score": 0.6861,
+          "evidence": []
+        },
+        {
+          "term": "initiative",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "acknowledgements",
+          "score": 6.868,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "working document",
+          "score": 5.4484,
+          "evidence": []
+        },
+        {
+          "term": "core",
+          "score": 5.0354,
+          "evidence": []
+        },
+        {
+          "term": "programme managers",
+          "score": 4.6073,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 3.7103,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "acknowledgements",
+          "score": 1.1724,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "working document",
+          "score": 0.7726,
+          "evidence": []
+        },
+        {
+          "term": "programme managers",
+          "score": 0.7575,
+          "evidence": []
+        },
+        {
+          "term": "core",
+          "score": 0.686,
+          "evidence": []
+        },
+        {
+          "term": "initiative",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "acknowledgements",
+          "score": 6.8679,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "working document",
+          "score": 5.4484,
+          "evidence": []
+        },
+        {
+          "term": "core",
+          "score": 5.0353,
+          "evidence": []
+        },
+        {
+          "term": "programme managers",
+          "score": 4.6073,
+          "evidence": []
+        },
+        {
+          "term": "guidance",
+          "score": 3.7103,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "acknowledgements",
+          "score": 1.1724,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "working document",
+          "score": 0.7726,
+          "evidence": []
+        },
+        {
+          "term": "programme managers",
+          "score": 0.7575,
+          "evidence": []
+        },
+        {
+          "term": "core",
+          "score": 0.686,
+          "evidence": []
+        },
+        {
+          "term": "initiative",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "acknowledgements",
+          "score": 400.7419,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "initiative",
+          "score": 301.0565,
+          "evidence": []
+        },
+        {
+          "term": "stocks",
+          "score": 200.3708,
+          "evidence": []
+        },
+        {
+          "term": "core",
+          "score": 171.6038,
+          "evidence": []
+        },
+        {
+          "term": "agency",
+          "score": 119.8226,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-1-about-the-data": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "middle income",
+          "score": 1.6588,
+          "evidence": []
+        },
+        {
+          "term": "income countries",
+          "score": 1.3672,
+          "evidence": []
+        },
+        {
+          "term": "adverse events",
+          "score": 1.1632,
+          "evidence": []
+        },
+        {
+          "term": "events following",
+          "score": 0.9967,
+          "evidence": []
+        },
+        {
+          "term": "extracted",
+          "score": 0.9195,
+          "evidence": []
+        },
+        {
+          "term": "lower",
+          "score": 0.744,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.6407,
+          "evidence": []
+        },
+        {
+          "term": "reported",
+          "score": 0.6334,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "middle income",
+          "score": 12.3497,
+          "evidence": []
+        },
+        {
+          "term": "income countries",
+          "score": 8.59,
+          "evidence": []
+        },
+        {
+          "term": "adverse events",
+          "score": 8.4578,
+          "evidence": []
+        },
+        {
+          "term": "extracted",
+          "score": 6.868,
+          "evidence": []
+        },
+        {
+          "term": "events following",
+          "score": 6.7278,
+          "evidence": []
+        },
+        {
+          "term": "lower",
+          "score": 5.4817,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 4.6707,
+          "evidence": []
+        },
+        {
+          "term": "section",
+          "score": 4.0954,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "middle income",
+          "score": 1.6588,
+          "evidence": []
+        },
+        {
+          "term": "income countries",
+          "score": 1.3672,
+          "evidence": []
+        },
+        {
+          "term": "adverse events",
+          "score": 1.1632,
+          "evidence": []
+        },
+        {
+          "term": "events following",
+          "score": 0.9967,
+          "evidence": []
+        },
+        {
+          "term": "extracted",
+          "score": 0.9195,
+          "evidence": []
+        },
+        {
+          "term": "lower",
+          "score": 0.744,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.6407,
+          "evidence": []
+        },
+        {
+          "term": "reported",
+          "score": 0.6334,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "middle income",
+          "score": 12.3496,
+          "evidence": []
+        },
+        {
+          "term": "income countries",
+          "score": 8.5899,
+          "evidence": []
+        },
+        {
+          "term": "adverse events",
+          "score": 8.4578,
+          "evidence": []
+        },
+        {
+          "term": "extracted",
+          "score": 6.868,
+          "evidence": []
+        },
+        {
+          "term": "events following",
+          "score": 6.7278,
+          "evidence": []
+        },
+        {
+          "term": "lower",
+          "score": 5.4817,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 4.6708,
+          "evidence": []
+        },
+        {
+          "term": "systematic",
+          "score": 4.0954,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "middle income",
+          "score": 1.6588,
+          "evidence": []
+        },
+        {
+          "term": "income countries",
+          "score": 1.3672,
+          "evidence": []
+        },
+        {
+          "term": "adverse events",
+          "score": 1.1632,
+          "evidence": []
+        },
+        {
+          "term": "events following",
+          "score": 0.9967,
+          "evidence": []
+        },
+        {
+          "term": "extracted",
+          "score": 0.9195,
+          "evidence": []
+        },
+        {
+          "term": "lower",
+          "score": 0.744,
+          "evidence": []
+        },
+        {
+          "term": "chain",
+          "score": 0.6407,
+          "evidence": []
+        },
+        {
+          "term": "reported",
+          "score": 0.6334,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "middle income",
+          "score": 176.9623,
+          "evidence": []
+        },
+        {
+          "term": "supervisors",
+          "score": 96.6159,
+          "evidence": []
+        },
+        {
+          "term": "excel-based",
+          "score": 96.6159,
+          "evidence": []
+        },
+        {
+          "term": "surviving",
+          "score": 96.6159,
+          "evidence": []
+        },
+        {
+          "term": "tracking",
+          "score": 96.6158,
+          "evidence": []
+        },
+        {
+          "term": "discussion",
+          "score": 96.6158,
+          "evidence": []
+        },
+        {
+          "term": "extracted",
+          "score": 77.0927,
+          "evidence": []
+        },
+        {
+          "term": "lower",
+          "score": 77.0926,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-2-data-quality": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "reported values",
+          "score": 3.0383,
+          "evidence": []
+        },
+        {
+          "term": "desk review",
+          "score": 2.146,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 1.7754,
+          "evidence": []
+        },
+        {
+          "term": "external consistency",
+          "score": 1.7545,
+          "evidence": []
+        },
+        {
+          "term": "verification survey",
+          "score": 1.7489,
+          "evidence": []
+        },
+        {
+          "term": "internal consistency",
+          "score": 1.6916,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 1.6144,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "discussed below",
+          "score": 1.5702,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "reported values",
+          "score": 40.4149,
+          "evidence": []
+        },
+        {
+          "term": "desk review",
+          "score": 24.1207,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 19.3418,
+          "evidence": []
+        },
+        {
+          "term": "external consistency",
+          "score": 16.6959,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 16.5577,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "verification survey",
+          "score": 15.7439,
+          "evidence": []
+        },
+        {
+          "term": "internal consistency",
+          "score": 15.5769,
+          "evidence": []
+        },
+        {
+          "term": "check",
+          "score": 15.1426,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "reported values",
+          "score": 3.0383,
+          "evidence": []
+        },
+        {
+          "term": "desk review",
+          "score": 2.146,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 1.7754,
+          "evidence": []
+        },
+        {
+          "term": "external consistency",
+          "score": 1.7545,
+          "evidence": []
+        },
+        {
+          "term": "verification survey",
+          "score": 1.7489,
+          "evidence": []
+        },
+        {
+          "term": "internal consistency",
+          "score": 1.6916,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 1.6144,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "discussed below",
+          "score": 1.5702,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reported values",
+          "score": 40.4149,
+          "evidence": []
+        },
+        {
+          "term": "desk review",
+          "score": 24.1207,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 19.3418,
+          "evidence": []
+        },
+        {
+          "term": "external consistency",
+          "score": 16.6959,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 16.5577,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "verification survey",
+          "score": 15.7439,
+          "evidence": []
+        },
+        {
+          "term": "internal consistency",
+          "score": 15.5769,
+          "evidence": []
+        },
+        {
+          "term": "check",
+          "score": 15.1426,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "reported values",
+          "score": 3.0383,
+          "evidence": []
+        },
+        {
+          "term": "desk review",
+          "score": 2.146,
+          "evidence": []
+        },
+        {
+          "term": "district level",
+          "score": 1.7754,
+          "evidence": []
+        },
+        {
+          "term": "external consistency",
+          "score": 1.7545,
+          "evidence": []
+        },
+        {
+          "term": "verification survey",
+          "score": 1.7489,
+          "evidence": []
+        },
+        {
+          "term": "internal consistency",
+          "score": 1.6916,
+          "evidence": []
+        },
+        {
+          "term": "quality",
+          "score": 1.6144,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "discussed below",
+          "score": 1.5702,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "reported values",
+          "score": 82.5864,
+          "evidence": []
+        },
+        {
+          "term": "field investigations",
+          "score": 54.3049,
+          "evidence": []
+        },
+        {
+          "term": "discussed below",
+          "score": 53.6366,
+          "evidence": []
+        },
+        {
+          "term": "dhis",
+          "score": 52.8416,
+          "evidence": []
+        },
+        {
+          "term": "desk review",
+          "score": 48.3518,
+          "evidence": []
+        },
+        {
+          "term": "look",
+          "score": 46.8592,
+          "evidence": []
+        },
+        {
+          "term": "patterns",
+          "score": 46.8591,
+          "evidence": []
+        },
+        {
+          "term": "internal consistency",
+          "score": 45.8592,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-disaggregations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "geographic region",
+          "score": 2.1197,
+          "evidence": []
+        },
+        {
+          "term": "dpt doses",
+          "score": 2.0561,
+          "evidence": []
+        },
+        {
+          "term": "mcv dropout",
+          "score": 1.8014,
+          "evidence": []
+        },
+        {
+          "term": "bcg doses",
+          "score": 1.7254,
+          "evidence": []
+        },
+        {
+          "term": "vial wastage",
+          "score": 1.6095,
+          "evidence": []
+        },
+        {
+          "term": "measles containing",
+          "score": 1.4294,
+          "evidence": []
+        },
+        {
+          "term": "chain equipment",
+          "score": 1.2246,
+          "evidence": []
+        },
+        {
+          "term": "aefi",
+          "score": 0.8727,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "geographic region",
+          "score": 23.8656,
+          "evidence": []
+        },
+        {
+          "term": "dpt doses",
+          "score": 18.3649,
+          "evidence": []
+        },
+        {
+          "term": "mcv dropout",
+          "score": 17.1554,
+          "evidence": []
+        },
+        {
+          "term": "vial wastage",
+          "score": 13.0267,
+          "evidence": []
+        },
+        {
+          "term": "bcg doses",
+          "score": 12.031,
+          "evidence": []
+        },
+        {
+          "term": "measles containing",
+          "score": 10.2385,
+          "evidence": []
+        },
+        {
+          "term": "chain equipment",
+          "score": 8.7661,
+          "evidence": []
+        },
+        {
+          "term": "aefi",
+          "score": 6.057,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "geographic region",
+          "score": 2.1197,
+          "evidence": []
+        },
+        {
+          "term": "dpt doses",
+          "score": 2.0561,
+          "evidence": []
+        },
+        {
+          "term": "mcv dropout",
+          "score": 1.8014,
+          "evidence": []
+        },
+        {
+          "term": "bcg doses",
+          "score": 1.7254,
+          "evidence": []
+        },
+        {
+          "term": "vial wastage",
+          "score": 1.6095,
+          "evidence": []
+        },
+        {
+          "term": "measles containing",
+          "score": 1.4294,
+          "evidence": []
+        },
+        {
+          "term": "chain equipment",
+          "score": 1.2246,
+          "evidence": []
+        },
+        {
+          "term": "aefi",
+          "score": 0.8727,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "geographic region",
+          "score": 23.8656,
+          "evidence": []
+        },
+        {
+          "term": "dpt doses",
+          "score": 18.3649,
+          "evidence": []
+        },
+        {
+          "term": "mcv dropout",
+          "score": 17.1555,
+          "evidence": []
+        },
+        {
+          "term": "vial wastage",
+          "score": 13.0268,
+          "evidence": []
+        },
+        {
+          "term": "bcg doses",
+          "score": 12.031,
+          "evidence": []
+        },
+        {
+          "term": "measles containing",
+          "score": 10.2385,
+          "evidence": []
+        },
+        {
+          "term": "chain equipment",
+          "score": 8.7661,
+          "evidence": []
+        },
+        {
+          "term": "sessions",
+          "score": 6.057,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "geographic region",
+          "score": 2.1197,
+          "evidence": []
+        },
+        {
+          "term": "dpt doses",
+          "score": 2.0561,
+          "evidence": []
+        },
+        {
+          "term": "mcv dropout",
+          "score": 1.8014,
+          "evidence": []
+        },
+        {
+          "term": "bcg doses",
+          "score": 1.7254,
+          "evidence": []
+        },
+        {
+          "term": "vial wastage",
+          "score": 1.6095,
+          "evidence": []
+        },
+        {
+          "term": "measles containing",
+          "score": 1.4294,
+          "evidence": []
+        },
+        {
+          "term": "chain equipment",
+          "score": 1.2246,
+          "evidence": []
+        },
+        {
+          "term": "aefi",
+          "score": 0.8727,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "geographic region",
+          "score": 145.8822,
+          "evidence": []
+        },
+        {
+          "term": "refrigerators",
+          "score": 99.0594,
+          "evidence": []
+        },
+        {
+          "term": "demanded",
+          "score": 99.0546,
+          "evidence": []
+        },
+        {
+          "term": "exceeds",
+          "score": 99.0539,
+          "evidence": []
+        },
+        {
+          "term": "vials",
+          "score": 99.0539,
+          "evidence": []
+        },
+        {
+          "term": "breakage",
+          "score": 99.0529,
+          "evidence": []
+        },
+        {
+          "term": "freezing",
+          "score": 99.0529,
+          "evidence": []
+        },
+        {
+          "term": "spoiled",
+          "score": 99.0529,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-purpose": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "recent performance",
+          "score": 1.7701,
+          "evidence": []
+        },
+        {
+          "term": "penta coverage",
+          "score": 1.7556,
+          "evidence": []
+        },
+        {
+          "term": "doses administered",
+          "score": 1.412,
+          "evidence": []
+        },
+        {
+          "term": "progress towards",
+          "score": 1.3834,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 1.1974,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 0.8399,
+          "evidence": []
+        },
+        {
+          "term": "delivered",
+          "score": 0.823,
+          "evidence": []
+        },
+        {
+          "term": "programme managers",
+          "score": 0.7575,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "recent performance",
+          "score": 16.737,
+          "evidence": []
+        },
+        {
+          "term": "penta coverage",
+          "score": 16.3449,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 10.302,
+          "evidence": []
+        },
+        {
+          "term": "progress towards",
+          "score": 9.7061,
+          "evidence": []
+        },
+        {
+          "term": "doses administered",
+          "score": 7.681,
+          "evidence": []
+        },
+        {
+          "term": "delivered",
+          "score": 7.0061,
+          "evidence": []
+        },
+        {
+          "term": "dpt",
+          "score": 6.1431,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 5.4736,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "recent performance",
+          "score": 1.77,
+          "evidence": []
+        },
+        {
+          "term": "penta coverage",
+          "score": 1.7556,
+          "evidence": []
+        },
+        {
+          "term": "doses administered",
+          "score": 1.412,
+          "evidence": []
+        },
+        {
+          "term": "progress towards",
+          "score": 1.3833,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 1.1973,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 0.8398,
+          "evidence": []
+        },
+        {
+          "term": "delivered",
+          "score": 0.823,
+          "evidence": []
+        },
+        {
+          "term": "programme managers",
+          "score": 0.7575,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "recent performance",
+          "score": 16.7369,
+          "evidence": []
+        },
+        {
+          "term": "penta coverage",
+          "score": 16.3449,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 10.3018,
+          "evidence": []
+        },
+        {
+          "term": "progress towards",
+          "score": 9.706,
+          "evidence": []
+        },
+        {
+          "term": "doses administered",
+          "score": 7.6809,
+          "evidence": []
+        },
+        {
+          "term": "delivered",
+          "score": 7.0061,
+          "evidence": []
+        },
+        {
+          "term": "dpt",
+          "score": 6.1431,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 5.4736,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "recent performance",
+          "score": 1.77,
+          "evidence": []
+        },
+        {
+          "term": "penta coverage",
+          "score": 1.7556,
+          "evidence": []
+        },
+        {
+          "term": "doses administered",
+          "score": 1.412,
+          "evidence": []
+        },
+        {
+          "term": "progress towards",
+          "score": 1.3833,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 1.1973,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 0.8398,
+          "evidence": []
+        },
+        {
+          "term": "delivered",
+          "score": 0.823,
+          "evidence": []
+        },
+        {
+          "term": "programme managers",
+          "score": 0.7575,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "map",
+          "score": 160.164,
+          "evidence": []
+        },
+        {
+          "term": "recent performance",
+          "score": 138.5019,
+          "evidence": []
+        },
+        {
+          "term": "progress towards",
+          "score": 121.972,
+          "evidence": []
+        },
+        {
+          "term": "chart",
+          "score": 106.4429,
+          "evidence": []
+        },
+        {
+          "term": "fraction",
+          "score": 106.4429,
+          "evidence": []
+        },
+        {
+          "term": "sub-national",
+          "score": 106.4429,
+          "evidence": []
+        },
+        {
+          "term": "around",
+          "score": 106.4427,
+          "evidence": []
+        },
+        {
+          "term": "immunizing",
+          "score": 106.4427,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-monitoring-access": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "indicates",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "indicative",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.5613,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "indicates",
+          "score": 3.434,
+          "evidence": []
+        },
+        {
+          "term": "indicative",
+          "score": 3.434,
+          "evidence": []
+        },
+        {
+          "term": "like",
+          "score": 3.0285,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "indicative",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "indicates",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.5613,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "indicative",
+          "score": 3.434,
+          "evidence": []
+        },
+        {
+          "term": "indicates",
+          "score": 3.434,
+          "evidence": []
+        },
+        {
+          "term": "penta",
+          "score": 3.0285,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "indicative",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "indicates",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "access",
+          "score": 0.5613,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indicates",
+          "score": 726.6873,
+          "evidence": []
+        },
+        {
+          "term": "indicative",
+          "score": 726.6815,
+          "evidence": []
+        },
+        {
+          "term": "proportion",
+          "score": 290.0721,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-monitoring-overall-performance-of-immunization-s": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "tracer",
+          "score": 0.9292,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 0.9206,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunized",
+          "score": 0.816,
+          "evidence": []
+        },
+        {
+          "term": "officials",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "immunized",
+          "score": 7.0061,
+          "evidence": []
+        },
+        {
+          "term": "tracer",
+          "score": 6.868,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 5.4817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "officials",
+          "score": 3.434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "tracer",
+          "score": 0.9291,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 0.9206,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunized",
+          "score": 0.816,
+          "evidence": []
+        },
+        {
+          "term": "officials",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "immunized",
+          "score": 7.006,
+          "evidence": []
+        },
+        {
+          "term": "tracer",
+          "score": 6.8679,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 5.4816,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "officials",
+          "score": 3.4339,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "tracer",
+          "score": 0.9291,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 0.9206,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunized",
+          "score": 0.816,
+          "evidence": []
+        },
+        {
+          "term": "officials",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "tracer",
+          "score": 387.0963,
+          "evidence": []
+        },
+        {
+          "term": "officials",
+          "score": 290.0725,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 289.0724,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunized",
+          "score": 133.3406,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-misclassification": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dpt",
+          "score": 0.8653,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 0.5195,
+          "evidence": []
+        },
+        {
+          "term": "discussed",
+          "score": 0.4694,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dpt",
+          "score": 8.1908,
+          "evidence": []
+        },
+        {
+          "term": "discussed",
+          "score": 2.7408,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 2.7408,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dpt",
+          "score": 0.8653,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 0.5195,
+          "evidence": []
+        },
+        {
+          "term": "discussed",
+          "score": 0.4694,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dpt",
+          "score": 8.1907,
+          "evidence": []
+        },
+        {
+          "term": "discussed",
+          "score": 2.7408,
+          "evidence": []
+        },
+        {
+          "term": "overall",
+          "score": 2.7408,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dpt",
+          "score": 0.8653,
+          "evidence": []
+        },
+        {
+          "term": "report",
+          "score": 0.5195,
+          "evidence": []
+        },
+        {
+          "term": "discussed",
+          "score": 0.4694,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "overall",
+          "score": 306.8652,
+          "evidence": []
+        },
+        {
+          "term": "discussed",
+          "score": 245.2924,
+          "evidence": []
+        },
+        {
+          "term": "enough",
+          "score": 152.9328,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-monitoring-coverage-with-all-vaccines-in-the-sch": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccines",
+          "score": 0.9227,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "coverage",
+          "score": 0.6383,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "schedule",
+          "score": 0.6256,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "detected",
+          "score": 3.434,
+          "evidence": []
+        },
+        {
+          "term": "line",
+          "score": 3.0285,
+          "evidence": []
+        },
+        {
+          "term": "sure",
+          "score": 3.0285,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccines",
+          "score": 0.9227,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "coverage",
+          "score": 0.6383,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "schedule",
+          "score": 0.6256,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "detected",
+          "score": 3.434,
+          "evidence": []
+        },
+        {
+          "term": "sure",
+          "score": 3.0285,
+          "evidence": []
+        },
+        {
+          "term": "line",
+          "score": 3.0285,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccines",
+          "score": 0.9227,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "coverage",
+          "score": 0.6383,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "schedule",
+          "score": 0.6256,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "detected",
+          "score": 639.3561,
+          "evidence": []
+        },
+        {
+          "term": "sure",
+          "score": 425.9048,
+          "evidence": []
+        },
+        {
+          "term": "line",
+          "score": 425.9039,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-age-dis-aggregations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "children immunized",
+          "score": 1.568,
+          "evidence": []
+        },
+        {
+          "term": "delayed coverage",
+          "score": 1.455,
+          "evidence": []
+        },
+        {
+          "term": "mcv",
+          "score": 1.2977,
+          "evidence": []
+        },
+        {
+          "term": "measles containing",
+          "score": 1.2665,
+          "evidence": []
+        },
+        {
+          "term": "age",
+          "score": 1.1584,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mcv",
+          "score": 16.3815,
+          "evidence": []
+        },
+        {
+          "term": "delayed coverage",
+          "score": 11.6252,
+          "evidence": []
+        },
+        {
+          "term": "children immunized",
+          "score": 11.1626,
+          "evidence": []
+        },
+        {
+          "term": "percentage",
+          "score": 8.7249,
+          "evidence": []
+        },
+        {
+          "term": "measles containing",
+          "score": 8.1908,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "children immunized",
+          "score": 1.5687,
+          "evidence": []
+        },
+        {
+          "term": "delayed coverage",
+          "score": 1.4549,
+          "evidence": []
+        },
+        {
+          "term": "mcv",
+          "score": 1.2976,
+          "evidence": []
+        },
+        {
+          "term": "measles containing",
+          "score": 1.2665,
+          "evidence": []
+        },
+        {
+          "term": "age",
+          "score": 1.1584,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "mcv",
+          "score": 16.3813,
+          "evidence": []
+        },
+        {
+          "term": "delayed coverage",
+          "score": 11.6252,
+          "evidence": []
+        },
+        {
+          "term": "children immunized",
+          "score": 11.1642,
+          "evidence": []
+        },
+        {
+          "term": "percentage",
+          "score": 8.7248,
+          "evidence": []
+        },
+        {
+          "term": "measles containing",
+          "score": 8.1908,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "children immunized",
+          "score": 1.5687,
+          "evidence": []
+        },
+        {
+          "term": "delayed coverage",
+          "score": 1.4549,
+          "evidence": []
+        },
+        {
+          "term": "mcv",
+          "score": 1.2976,
+          "evidence": []
+        },
+        {
+          "term": "measles containing",
+          "score": 1.2665,
+          "evidence": []
+        },
+        {
+          "term": "age",
+          "score": 1.1584,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "percentage",
+          "score": 165.3249,
+          "evidence": []
+        },
+        {
+          "term": "protected",
+          "score": 137.6037,
+          "evidence": []
+        },
+        {
+          "term": "children immunized",
+          "score": 106.7208,
+          "evidence": []
+        },
+        {
+          "term": "choose",
+          "score": 82.1625,
+          "evidence": []
+        },
+        {
+          "term": "exception",
+          "score": 58.4019,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-unnecessary-dis-aggregations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "reporting forms",
+          "score": 1.032,
+          "evidence": []
+        },
+        {
+          "term": "findings",
+          "score": 0.8442,
+          "evidence": []
+        },
+        {
+          "term": "disaggregated",
+          "score": 0.6835,
+          "evidence": []
+        },
+        {
+          "term": "collected",
+          "score": 0.6279,
+          "evidence": []
+        },
+        {
+          "term": "further",
+          "score": 0.5912,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.5144,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "reporting forms",
+          "score": 8.3799,
+          "evidence": []
+        },
+        {
+          "term": "findings",
+          "score": 6.057,
+          "evidence": []
+        },
+        {
+          "term": "disaggregated",
+          "score": 5.0354,
+          "evidence": []
+        },
+        {
+          "term": "further",
+          "score": 4.0954,
+          "evidence": []
+        },
+        {
+          "term": "collected",
+          "score": 3.8598,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 3.4585,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "reporting forms",
+          "score": 1.032,
+          "evidence": []
+        },
+        {
+          "term": "findings",
+          "score": 0.8442,
+          "evidence": []
+        },
+        {
+          "term": "disaggregated",
+          "score": 0.6835,
+          "evidence": []
+        },
+        {
+          "term": "collected",
+          "score": 0.6279,
+          "evidence": []
+        },
+        {
+          "term": "further",
+          "score": 0.5912,
+          "evidence": []
+        },
+        {
+          "term": "analyst",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "reporting forms",
+          "score": 8.3799,
+          "evidence": []
+        },
+        {
+          "term": "findings",
+          "score": 6.057,
+          "evidence": []
+        },
+        {
+          "term": "disaggregated",
+          "score": 5.0354,
+          "evidence": []
+        },
+        {
+          "term": "further",
+          "score": 4.0954,
+          "evidence": []
+        },
+        {
+          "term": "collected",
+          "score": 3.8598,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 3.4585,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "reporting forms",
+          "score": 1.032,
+          "evidence": []
+        },
+        {
+          "term": "findings",
+          "score": 0.8442,
+          "evidence": []
+        },
+        {
+          "term": "disaggregated",
+          "score": 0.6835,
+          "evidence": []
+        },
+        {
+          "term": "collected",
+          "score": 0.6279,
+          "evidence": []
+        },
+        {
+          "term": "further",
+          "score": 0.5912,
+          "evidence": []
+        },
+        {
+          "term": "child",
+          "score": 0.5144,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "analyst",
+          "score": 187.3412,
+          "evidence": []
+        },
+        {
+          "term": "catchment",
+          "score": 187.341,
+          "evidence": []
+        },
+        {
+          "term": "promote",
+          "score": 124.5607,
+          "evidence": []
+        },
+        {
+          "term": "identifying",
+          "score": 124.5606,
+          "evidence": []
+        },
+        {
+          "term": "outreach",
+          "score": 124.5603,
+          "evidence": []
+        },
+        {
+          "term": "fixed",
+          "score": 124.5602,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-denominators": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "population estimates",
+          "score": 1.2505,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 1.0499,
+          "evidence": []
+        },
+        {
+          "term": "missed",
+          "score": 0.6861,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.6534,
+          "evidence": []
+        },
+        {
+          "term": "denominator",
+          "score": 0.6367,
+          "evidence": []
+        },
+        {
+          "term": "local",
+          "score": 0.5538,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 0.532,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "population estimates",
+          "score": 9.0711,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 6.6179,
+          "evidence": []
+        },
+        {
+          "term": "missed",
+          "score": 5.0354,
+          "evidence": []
+        },
+        {
+          "term": "denominator",
+          "score": 4.6707,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 4.6707,
+          "evidence": []
+        },
+        {
+          "term": "local",
+          "score": 4.5256,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 3.6491,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "population estimates",
+          "score": 1.2505,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 1.0499,
+          "evidence": []
+        },
+        {
+          "term": "missed",
+          "score": 0.6861,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.6534,
+          "evidence": []
+        },
+        {
+          "term": "denominator",
+          "score": 0.6367,
+          "evidence": []
+        },
+        {
+          "term": "rigorous",
+          "score": 0.5862,
+          "evidence": []
+        },
+        {
+          "term": "official",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "population estimates",
+          "score": 9.071,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 6.6179,
+          "evidence": []
+        },
+        {
+          "term": "missed",
+          "score": 5.0354,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 4.6707,
+          "evidence": []
+        },
+        {
+          "term": "denominator",
+          "score": 4.6707,
+          "evidence": []
+        },
+        {
+          "term": "local",
+          "score": 4.5257,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 3.6491,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "population estimates",
+          "score": 1.2505,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 1.0499,
+          "evidence": []
+        },
+        {
+          "term": "missed",
+          "score": 0.6861,
+          "evidence": []
+        },
+        {
+          "term": "infant",
+          "score": 0.6534,
+          "evidence": []
+        },
+        {
+          "term": "denominator",
+          "score": 0.6367,
+          "evidence": []
+        },
+        {
+          "term": "local",
+          "score": 0.5538,
+          "evidence": []
+        },
+        {
+          "term": "source",
+          "score": 0.532,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "surviving",
+          "score": 143.2252,
+          "evidence": []
+        },
+        {
+          "term": "deaths",
+          "score": 143.2252,
+          "evidence": []
+        },
+        {
+          "term": "official",
+          "score": 143.2252,
+          "evidence": []
+        },
+        {
+          "term": "lowest",
+          "score": 143.2252,
+          "evidence": []
+        },
+        {
+          "term": "uncertain",
+          "score": 143.2252,
+          "evidence": []
+        },
+        {
+          "term": "minus",
+          "score": 143.2252,
+          "evidence": []
+        },
+        {
+          "term": "over-reporting",
+          "score": 143.2251,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-year-to-year-fluctuations-in-the-denominator": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "graph",
+          "score": 1.3612,
+          "evidence": []
+        },
+        {
+          "term": "year-to-year",
+          "score": 1.1535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "denominator",
+          "score": 0.8035,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "graph",
+          "score": 13.7359,
+          "evidence": []
+        },
+        {
+          "term": "year-to-year",
+          "score": 6.868,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "denominator",
+          "score": 4.6707,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "graph",
+          "score": 1.3612,
+          "evidence": []
+        },
+        {
+          "term": "year-to-year",
+          "score": 1.1535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "denominator",
+          "score": 0.8035,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "graph",
+          "score": 13.7359,
+          "evidence": []
+        },
+        {
+          "term": "year-to-year",
+          "score": 6.868,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "denominator",
+          "score": 4.6708,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "graph",
+          "score": 1.3612,
+          "evidence": []
+        },
+        {
+          "term": "year-to-year",
+          "score": 1.1535,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "denominator",
+          "score": 0.8035,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "year-to-year",
+          "score": 998.5609,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "graph",
+          "score": 666.0413,
+          "evidence": []
+        },
+        {
+          "term": "revealing",
+          "score": 499.2813,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-028-time-series-see-graphs-6-7-8": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "graph",
+          "score": 0.9292,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 0.8668,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 0.744,
+          "evidence": []
+        },
+        {
+          "term": "completeness",
+          "score": 0.6522,
+          "evidence": []
+        },
+        {
+          "term": "caution",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "trends",
+          "score": 7.5531,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 6.868,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 5.4817,
+          "evidence": []
+        },
+        {
+          "term": "completeness",
+          "score": 5.1877,
+          "evidence": []
+        },
+        {
+          "term": "reporting",
+          "score": 3.5481,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "graph",
+          "score": 0.9292,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 0.8668,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 0.744,
+          "evidence": []
+        },
+        {
+          "term": "completeness",
+          "score": 0.6522,
+          "evidence": []
+        },
+        {
+          "term": "caution",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "trends",
+          "score": 7.5531,
+          "evidence": []
+        },
+        {
+          "term": "graph",
+          "score": 6.868,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 5.4817,
+          "evidence": []
+        },
+        {
+          "term": "completeness",
+          "score": 5.1877,
+          "evidence": []
+        },
+        {
+          "term": "reporting",
+          "score": 3.5481,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "graph",
+          "score": 0.9292,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 0.8668,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 0.744,
+          "evidence": []
+        },
+        {
+          "term": "completeness",
+          "score": 0.6522,
+          "evidence": []
+        },
+        {
+          "term": "caution",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "caution",
+          "score": 249.1407,
+          "evidence": []
+        },
+        {
+          "term": "showing",
+          "score": 249.1406,
+          "evidence": []
+        },
+        {
+          "term": "trend",
+          "score": 249.1406,
+          "evidence": []
+        },
+        {
+          "term": "fluctuations",
+          "score": 249.1405,
+          "evidence": []
+        },
+        {
+          "term": "missing",
+          "score": 199.1125,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-030-comparison-with-survey-estimates": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "survey estimates",
+          "score": 3.0962,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "confidence intervals",
+          "score": 1.4302,
+          "evidence": []
+        },
+        {
+          "term": "bias",
+          "score": 0.9292,
+          "evidence": []
+        },
+        {
+          "term": "sample",
+          "score": 0.9141,
+          "evidence": []
+        },
+        {
+          "term": "size",
+          "score": 0.8218,
+          "evidence": []
+        },
+        {
+          "term": "error",
+          "score": 0.7749,
+          "evidence": []
+        },
+        {
+          "term": "card",
+          "score": 0.6025,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "survey estimates",
+          "score": 29.5194,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "confidence intervals",
+          "score": 10.5171,
+          "evidence": []
+        },
+        {
+          "term": "bias",
+          "score": 6.868,
+          "evidence": []
+        },
+        {
+          "term": "sample",
+          "score": 6.868,
+          "evidence": []
+        },
+        {
+          "term": "error",
+          "score": 6.5437,
+          "evidence": []
+        },
+        {
+          "term": "size",
+          "score": 6.057,
+          "evidence": []
+        },
+        {
+          "term": "card",
+          "score": 4.3624,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "survey estimates",
+          "score": 3.0962,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "confidence intervals",
+          "score": 1.4302,
+          "evidence": []
+        },
+        {
+          "term": "bias",
+          "score": 0.9292,
+          "evidence": []
+        },
+        {
+          "term": "sample",
+          "score": 0.9141,
+          "evidence": []
+        },
+        {
+          "term": "size",
+          "score": 0.8218,
+          "evidence": []
+        },
+        {
+          "term": "error",
+          "score": 0.7749,
+          "evidence": []
+        },
+        {
+          "term": "card",
+          "score": 0.6025,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "survey estimates",
+          "score": 29.5194,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "confidence intervals",
+          "score": 10.5171,
+          "evidence": []
+        },
+        {
+          "term": "bias",
+          "score": 6.868,
+          "evidence": []
+        },
+        {
+          "term": "sample",
+          "score": 6.868,
+          "evidence": []
+        },
+        {
+          "term": "error",
+          "score": 6.5437,
+          "evidence": []
+        },
+        {
+          "term": "size",
+          "score": 6.057,
+          "evidence": []
+        },
+        {
+          "term": "card",
+          "score": 4.3624,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "survey estimates",
+          "score": 3.0962,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "confidence intervals",
+          "score": 1.4302,
+          "evidence": []
+        },
+        {
+          "term": "bias",
+          "score": 0.9292,
+          "evidence": []
+        },
+        {
+          "term": "sample",
+          "score": 0.9141,
+          "evidence": []
+        },
+        {
+          "term": "size",
+          "score": 0.8218,
+          "evidence": []
+        },
+        {
+          "term": "error",
+          "score": 0.7749,
+          "evidence": []
+        },
+        {
+          "term": "card",
+          "score": 0.6025,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "confidence intervals",
+          "score": 245.8413,
+          "evidence": []
+        },
+        {
+          "term": "survey estimates",
+          "score": 220.9079,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bias",
+          "score": 200.3711,
+          "evidence": []
+        },
+        {
+          "term": "interview",
+          "score": 150.0283,
+          "evidence": []
+        },
+        {
+          "term": "effect",
+          "score": 150.0283,
+          "evidence": []
+        },
+        {
+          "term": "provincial",
+          "score": 150.0283,
+          "evidence": []
+        },
+        {
+          "term": "size",
+          "score": 150.0283,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-032-purpose": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dropout rates",
+          "score": 1.7301,
+          "evidence": []
+        },
+        {
+          "term": "same dropout",
+          "score": 1.2537,
+          "evidence": []
+        },
+        {
+          "term": "table presents",
+          "score": 1.2121,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 0.6869,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dropout rates",
+          "score": 18.2957,
+          "evidence": []
+        },
+        {
+          "term": "same dropout",
+          "score": 11.0116,
+          "evidence": []
+        },
+        {
+          "term": "table presents",
+          "score": 8.1292,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 5.0354,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dropout rates",
+          "score": 1.7301,
+          "evidence": []
+        },
+        {
+          "term": "same dropout",
+          "score": 1.2537,
+          "evidence": []
+        },
+        {
+          "term": "table presents",
+          "score": 1.2121,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 0.6869,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dropout rates",
+          "score": 18.2957,
+          "evidence": []
+        },
+        {
+          "term": "same dropout",
+          "score": 11.0116,
+          "evidence": []
+        },
+        {
+          "term": "table presents",
+          "score": 8.1293,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 5.0354,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dropout rates",
+          "score": 1.7301,
+          "evidence": []
+        },
+        {
+          "term": "same dropout",
+          "score": 1.2537,
+          "evidence": []
+        },
+        {
+          "term": "table presents",
+          "score": 1.2121,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 0.6869,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indicative",
+          "score": 275.0175,
+          "evidence": []
+        },
+        {
+          "term": "year-to-year",
+          "score": 275.0155,
+          "evidence": []
+        },
+        {
+          "term": "dropout rates",
+          "score": 238.4683,
+          "evidence": []
+        },
+        {
+          "term": "table presents",
+          "score": 192.9445,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-035-classification-of-districtsprovinces-based-upon": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "districts",
+          "score": 0.9206,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dpt",
+          "score": 0.7453,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 0.5708,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dpt",
+          "score": 6.1431,
+          "evidence": []
+        },
+        {
+          "term": "districts",
+          "score": 5.4817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "classified",
+          "score": 3.0285,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "districts",
+          "score": 0.9207,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dpt",
+          "score": 0.7453,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 0.5708,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dpt",
+          "score": 6.1431,
+          "evidence": []
+        },
+        {
+          "term": "districts",
+          "score": 5.4817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "classified",
+          "score": 3.0285,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "districts",
+          "score": 0.9207,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dpt",
+          "score": 0.7453,
+          "evidence": []
+        },
+        {
+          "term": "performance",
+          "score": 0.5708,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "districts",
+          "score": 613.7255,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "classified",
+          "score": 409.4832,
+          "evidence": []
+        },
+        {
+          "term": "geographic",
+          "score": 110.9536,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-037-purpose": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vial wastage",
+          "score": 2.1588,
+          "evidence": []
+        },
+        {
+          "term": "closed vial",
+          "score": 2.1131,
+          "evidence": []
+        },
+        {
+          "term": "open vial",
+          "score": 1.7635,
+          "evidence": []
+        },
+        {
+          "term": "wastage rate",
+          "score": 1.4193,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 1.1522,
+          "evidence": []
+        },
+        {
+          "term": "full availability",
+          "score": 1.1319,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vial wastage",
+          "score": 23.5358,
+          "evidence": []
+        },
+        {
+          "term": "closed vial",
+          "score": 20.811,
+          "evidence": []
+        },
+        {
+          "term": "open vial",
+          "score": 16.9509,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 14.5964,
+          "evidence": []
+        },
+        {
+          "term": "wastage rate",
+          "score": 13.9234,
+          "evidence": []
+        },
+        {
+          "term": "full availability",
+          "score": 8.5758,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vial wastage",
+          "score": 2.1588,
+          "evidence": []
+        },
+        {
+          "term": "closed vial",
+          "score": 2.1131,
+          "evidence": []
+        },
+        {
+          "term": "open vial",
+          "score": 1.7635,
+          "evidence": []
+        },
+        {
+          "term": "wastage rate",
+          "score": 1.4193,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 1.1522,
+          "evidence": []
+        },
+        {
+          "term": "full availability",
+          "score": 1.1319,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vial wastage",
+          "score": 23.5358,
+          "evidence": []
+        },
+        {
+          "term": "closed vial",
+          "score": 20.811,
+          "evidence": []
+        },
+        {
+          "term": "open vial",
+          "score": 16.9509,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 14.5964,
+          "evidence": []
+        },
+        {
+          "term": "wastage rate",
+          "score": 13.9234,
+          "evidence": []
+        },
+        {
+          "term": "full availability",
+          "score": 8.5758,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vial wastage",
+          "score": 2.1588,
+          "evidence": []
+        },
+        {
+          "term": "closed vial",
+          "score": 2.1131,
+          "evidence": []
+        },
+        {
+          "term": "open vial",
+          "score": 1.7635,
+          "evidence": []
+        },
+        {
+          "term": "wastage rate",
+          "score": 1.4193,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 1.1522,
+          "evidence": []
+        },
+        {
+          "term": "full availability",
+          "score": 1.1319,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "closed vial",
+          "score": 239.9695,
+          "evidence": []
+        },
+        {
+          "term": "vial wastage",
+          "score": 219.5448,
+          "evidence": []
+        },
+        {
+          "term": "open vial",
+          "score": 195.0358,
+          "evidence": []
+        },
+        {
+          "term": "dec",
+          "score": 167.5104,
+          "evidence": []
+        },
+        {
+          "term": "sub-section",
+          "score": 167.5095,
+          "evidence": []
+        },
+        {
+          "term": "wastage rate",
+          "score": 118.0046,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-038-monitor-cold-chain-equipment": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "temperature alarms",
+          "score": 2.2897,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.6343,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.601,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "temperature alarms",
+          "score": 22.1849,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 4.9267,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 4.5413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "temperature alarms",
+          "score": 2.2897,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.6343,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.601,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "temperature alarms",
+          "score": 22.1849,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 4.9267,
+          "evidence": []
+        },
+        {
+          "term": "number",
+          "score": 4.5413,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "temperature alarms",
+          "score": 2.2897,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.6343,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.601,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "temperature alarms",
+          "score": 1082.1877,
+          "evidence": []
+        },
+        {
+          "term": "refrigerators",
+          "score": 532.6273,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 102.2827,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-041-monitoring-for-full-availability": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "demand",
+          "score": 0.9292,
+          "evidence": []
+        },
+        {
+          "term": "full",
+          "score": 0.6457,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "know",
+          "score": 0.6367,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "demand",
+          "score": 6.868,
+          "evidence": []
+        },
+        {
+          "term": "know",
+          "score": 4.6707,
+          "evidence": []
+        },
+        {
+          "term": "full",
+          "score": 3.6491,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "demand",
+          "score": 0.9291,
+          "evidence": []
+        },
+        {
+          "term": "full",
+          "score": 0.6456,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "know",
+          "score": 0.6367,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "demand",
+          "score": 6.8679,
+          "evidence": []
+        },
+        {
+          "term": "know",
+          "score": 4.6707,
+          "evidence": []
+        },
+        {
+          "term": "full",
+          "score": 3.649,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "demand",
+          "score": 0.9291,
+          "evidence": []
+        },
+        {
+          "term": "full",
+          "score": 0.6456,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "know",
+          "score": 0.6367,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "demand",
+          "score": 666.0404,
+          "evidence": []
+        },
+        {
+          "term": "demanded",
+          "score": 499.2821,
+          "evidence": []
+        },
+        {
+          "term": "turned",
+          "score": 499.2804,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-042-monitoring-closed-vial-wastage": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "closed vial",
+          "score": 3.698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vial wastage",
+          "score": 3.6323,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heat exposure",
+          "score": 1.6015,
+          "evidence": []
+        },
+        {
+          "term": "breakage",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vial wastage",
+          "score": 33.3517,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "closed vial",
+          "score": 31.5512,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heat exposure",
+          "score": 11.5387,
+          "evidence": []
+        },
+        {
+          "term": "reason",
+          "score": 3.6491,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "closed vial",
+          "score": 3.698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vial wastage",
+          "score": 3.6323,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heat exposure",
+          "score": 1.6015,
+          "evidence": []
+        },
+        {
+          "term": "turned",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vial wastage",
+          "score": 33.3517,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "closed vial",
+          "score": 31.5512,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heat exposure",
+          "score": 11.5387,
+          "evidence": []
+        },
+        {
+          "term": "reason",
+          "score": 3.6491,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "closed vial",
+          "score": 3.698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vial wastage",
+          "score": 3.6323,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heat exposure",
+          "score": 1.6015,
+          "evidence": []
+        },
+        {
+          "term": "turned",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "closed vial",
+          "score": 608.252,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vial wastage",
+          "score": 493.1385,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "heat exposure",
+          "score": 399.9837,
+          "evidence": []
+        },
+        {
+          "term": "breakage",
+          "score": 270.339,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-043-monitoring-open-vial-wastage": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "doses administered",
+          "score": 1.6468,
+          "evidence": []
+        },
+        {
+          "term": "wastage",
+          "score": 1.1198,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children reported",
+          "score": 1.0945,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "doses administered",
+          "score": 10.7203,
+          "evidence": []
+        },
+        {
+          "term": "wastage",
+          "score": 7.2982,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children reported",
+          "score": 5.5224,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "doses administered",
+          "score": 1.6467,
+          "evidence": []
+        },
+        {
+          "term": "wastage",
+          "score": 1.1197,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children reported",
+          "score": 1.0955,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "doses administered",
+          "score": 10.7203,
+          "evidence": []
+        },
+        {
+          "term": "wastage",
+          "score": 7.2979,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children reported",
+          "score": 5.526,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "doses administered",
+          "score": 1.6467,
+          "evidence": []
+        },
+        {
+          "term": "wastage",
+          "score": 1.1197,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "children reported",
+          "score": 1.0955,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "indicates",
+          "score": 362.8178,
+          "evidence": []
+        },
+        {
+          "term": "open",
+          "score": 143.5257,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "wastage",
+          "score": 130.307,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ]
+    },
+    "sec-044-monitoring-vaccine-temperature-alarms": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "alarms",
+          "score": 1.6884,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "temperature",
+          "score": 0.9069,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "alarms",
+          "score": 12.1141,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "temperature",
+          "score": 5.0354,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 3.434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "alarms",
+          "score": 1.6884,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "temperature",
+          "score": 0.9069,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "alarms",
+          "score": 12.1141,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "temperature",
+          "score": 5.0354,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "recorders",
+          "score": 3.434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "alarms",
+          "score": 1.6884,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "temperature",
+          "score": 0.9069,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "alarms",
+          "score": 793.4812,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "digital",
+          "score": 695.0434,
+          "evidence": []
+        },
+        {
+          "term": "recorders",
+          "score": 695.0433,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-048-purpose": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "serious aefi",
+          "score": 2.6502,
+          "evidence": []
+        },
+        {
+          "term": "severe cases",
+          "score": 1.5796,
+          "evidence": []
+        },
+        {
+          "term": "non-serious",
+          "score": 1.1974,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.601,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "serious aefi",
+          "score": 29.848,
+          "evidence": []
+        },
+        {
+          "term": "severe cases",
+          "score": 12.9584,
+          "evidence": []
+        },
+        {
+          "term": "non-serious",
+          "score": 10.302,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 4.9267,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "serious aefi",
+          "score": 2.65,
+          "evidence": []
+        },
+        {
+          "term": "severe cases",
+          "score": 1.5796,
+          "evidence": []
+        },
+        {
+          "term": "non-serious",
+          "score": 1.1973,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.601,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "serious aefi",
+          "score": 29.8477,
+          "evidence": []
+        },
+        {
+          "term": "severe cases",
+          "score": 12.9583,
+          "evidence": []
+        },
+        {
+          "term": "non-serious",
+          "score": 10.3019,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 4.9266,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "serious aefi",
+          "score": 2.65,
+          "evidence": []
+        },
+        {
+          "term": "severe cases",
+          "score": 1.5796,
+          "evidence": []
+        },
+        {
+          "term": "non-serious",
+          "score": 1.1973,
+          "evidence": []
+        },
+        {
+          "term": "region",
+          "score": 0.601,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "serious aefi",
+          "score": 473.1529,
+          "evidence": []
+        },
+        {
+          "term": "non-serious",
+          "score": 327.952,
+          "evidence": []
+        },
+        {
+          "term": "market",
+          "score": 145.2008,
+          "evidence": []
+        },
+        {
+          "term": "withdrawal",
+          "score": 145.2006,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-052-purpose": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "sessions",
+          "score": 1.0466,
+          "evidence": []
+        },
+        {
+          "term": "planned",
+          "score": 0.823,
+          "evidence": []
+        },
+        {
+          "term": "completion",
+          "score": 0.6832,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "sessions",
+          "score": 9.0856,
+          "evidence": []
+        },
+        {
+          "term": "planned",
+          "score": 7.0061,
+          "evidence": []
+        },
+        {
+          "term": "completion",
+          "score": 5.0354,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sessions",
+          "score": 1.0466,
+          "evidence": []
+        },
+        {
+          "term": "planned",
+          "score": 0.823,
+          "evidence": []
+        },
+        {
+          "term": "completion",
+          "score": 0.6832,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sessions",
+          "score": 9.0856,
+          "evidence": []
+        },
+        {
+          "term": "planned",
+          "score": 7.0061,
+          "evidence": []
+        },
+        {
+          "term": "completion",
+          "score": 5.0354,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sessions",
+          "score": 1.0466,
+          "evidence": []
+        },
+        {
+          "term": "planned",
+          "score": 0.823,
+          "evidence": []
+        },
+        {
+          "term": "completion",
+          "score": 0.6832,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "sessions",
+          "score": 443.6948,
+          "evidence": []
+        },
+        {
+          "term": "supervisors",
+          "score": 443.6943,
+          "evidence": []
+        },
+        {
+          "term": "completion",
+          "score": 295.4632,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-053-completeness-of-reporting": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "completeness",
+          "score": 1.5143,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting",
+          "score": 0.7039,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "trends",
+          "score": 0.6869,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "completeness",
+          "score": 13.8339,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "trends",
+          "score": 5.0354,
+          "evidence": []
+        },
+        {
+          "term": "reporting",
+          "score": 4.7308,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "completeness",
+          "score": 1.5143,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting",
+          "score": 0.7039,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "trends",
+          "score": 0.6869,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "completeness",
+          "score": 13.8339,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "trends",
+          "score": 5.0354,
+          "evidence": []
+        },
+        {
+          "term": "reporting",
+          "score": 4.7308,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "completeness",
+          "score": 1.5143,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "reporting",
+          "score": 0.7039,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "trends",
+          "score": 0.6869,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "completeness",
+          "score": 559.7193,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "compiled",
+          "score": 336.0316,
+          "evidence": []
+        },
+        {
+          "term": "trends",
+          "score": 305.3924,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-056-disaggregation-of-reporting-completeness": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "completeness",
+          "score": 0.6522,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "examine",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "regional",
+          "score": 0.5595,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "regional",
+          "score": 4.0954,
+          "evidence": []
+        },
+        {
+          "term": "completeness",
+          "score": 3.4585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "examine",
+          "score": 3.434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "completeness",
+          "score": 0.6522,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "examine",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "regional",
+          "score": 0.5595,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "regional",
+          "score": 4.0954,
+          "evidence": []
+        },
+        {
+          "term": "completeness",
+          "score": 3.4585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "examine",
+          "score": 3.434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "completeness",
+          "score": 0.6522,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "examine",
+          "score": 0.5767,
+          "evidence": []
+        },
+        {
+          "term": "regional",
+          "score": 0.5595,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "examine",
+          "score": 1142.4998,
+          "evidence": []
+        },
+        {
+          "term": "regional",
+          "score": 456.3999,
+          "evidence": []
+        },
+        {
+          "term": "differences",
+          "score": 380.1666,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "programme managers",
+          "score": 0.7575,
+          "evidence": []
+        },
+        {
+          "term": "working document",
+          "score": 0.6851,
+          "evidence": []
+        },
+        {
+          "term": "reserved",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "programme managers",
+          "score": 4.6073,
+          "evidence": []
+        },
+        {
+          "term": "working document",
+          "score": 4.4568,
+          "evidence": []
+        },
+        {
+          "term": "reserved",
+          "score": 3.434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "programme managers",
+          "score": 0.7575,
+          "evidence": []
+        },
+        {
+          "term": "working document",
+          "score": 0.6851,
+          "evidence": []
+        },
+        {
+          "term": "reserved",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "programme managers",
+          "score": 4.6073,
+          "evidence": []
+        },
+        {
+          "term": "working document",
+          "score": 4.4568,
+          "evidence": []
+        },
+        {
+          "term": "reserved",
+          "score": 3.434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "programme managers",
+          "score": 0.7575,
+          "evidence": []
+        },
+        {
+          "term": "working document",
+          "score": 0.6851,
+          "evidence": []
+        },
+        {
+          "term": "reserved",
+          "score": 0.5767,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "reserved",
+          "score": 695.0432,
+          "evidence": []
+        },
+        {
+          "term": "rights",
+          "score": 695.0432,
+          "evidence": []
+        },
+        {
+          "term": "whole",
+          "score": 463.029,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

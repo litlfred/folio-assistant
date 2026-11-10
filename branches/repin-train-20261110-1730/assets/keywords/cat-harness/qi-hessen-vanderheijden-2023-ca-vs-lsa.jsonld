@@ -1,0 +1,4884 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "qi-hessen-vanderheijden-2023-ca-vs-lsa",
+  "instance": "cat-harness",
+  "about": "library/qi-hessen-vanderheijden-2023-ca-vs-lsa",
+  "corpus": {
+    "library": "cat-harness/library/corpus",
+    "sections": 2203,
+    "terms": 15063
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "lsa raw",
+        "score": 27.6084,
+        "evidence": []
+      },
+      {
+        "term": "lsa nrowl",
+        "score": 22.4377,
+        "evidence": []
+      },
+      {
+        "term": "raw document-term",
+        "score": 20.247,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "lsa tfidf",
+        "score": 19.9845,
+        "evidence": []
+      },
+      {
+        "term": "raw matrix",
+        "score": 18.5536,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "both lsa",
+        "score": 17.8219,
+        "evidence": []
+      },
+      {
+        "term": "lsa involves",
+        "score": 17.684,
+        "evidence": []
+      },
+      {
+        "term": "weighting exponent",
+        "score": 17.4009,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﬁrst dimensions",
+        "score": 15.8377,
+        "evidence": []
+      },
+      {
+        "term": "initial dimensions",
+        "score": 15.3836,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "intelligent information",
+        "score": 14.6707,
+        "evidence": []
+      },
+      {
+        "term": "weighting elements",
+        "score": 14.4924,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "lsa raw",
+        "score": 879.3996,
+        "evidence": []
+      },
+      {
+        "term": "lsa nrowl",
+        "score": 708.2675,
+        "evidence": []
+      },
+      {
+        "term": "lsa tfidf",
+        "score": 628.81,
+        "evidence": []
+      },
+      {
+        "term": "both lsa",
+        "score": 585.0717,
+        "evidence": []
+      },
+      {
+        "term": "lsa involves",
+        "score": 581.2284,
+        "evidence": []
+      },
+      {
+        "term": "raw matrix",
+        "score": 461.0907,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "raw document-term",
+        "score": 450.7224,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "raw data",
+        "score": 334.5189,
+        "evidence": []
+      },
+      {
+        "term": "optimal map",
+        "score": 325.6193,
+        "evidence": []
+      },
+      {
+        "term": "map ﬁrst",
+        "score": 320.2598,
+        "evidence": []
+      },
+      {
+        "term": "table map",
+        "score": 308.9001,
+        "evidence": []
+      },
+      {
+        "term": "initial dimensions",
+        "score": 306.5654,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "lsa raw",
+        "score": 28.1877,
+        "evidence": []
+      },
+      {
+        "term": "lsa nrowl",
+        "score": 23.9314,
+        "evidence": []
+      },
+      {
+        "term": "lsa tfidf",
+        "score": 20.7562,
+        "evidence": []
+      },
+      {
+        "term": "both lsa",
+        "score": 18.735,
+        "evidence": []
+      },
+      {
+        "term": "lsa involves",
+        "score": 18.5137,
+        "evidence": []
+      },
+      {
+        "term": "raw matrix",
+        "score": 18.4606,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "raw document-term",
+        "score": 18.1798,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "weighting exponent",
+        "score": 15.6859,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﬁrst dimensions",
+        "score": 15.0246,
+        "evidence": []
+      },
+      {
+        "term": "initial dimensions",
+        "score": 14.3935,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "euclidean distances",
+        "score": 14.1999,
+        "evidence": []
+      },
+      {
+        "term": "weighting elements",
+        "score": 13.6324,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "lsa raw",
+        "score": 961.8068,
+        "evidence": []
+      },
+      {
+        "term": "lsa nrowl",
+        "score": 826.437,
+        "evidence": []
+      },
+      {
+        "term": "lsa tfidf",
+        "score": 723.5552,
+        "evidence": []
+      },
+      {
+        "term": "both lsa",
+        "score": 671.0821,
+        "evidence": []
+      },
+      {
+        "term": "lsa involves",
+        "score": 646.8659,
+        "evidence": []
+      },
+      {
+        "term": "raw matrix",
+        "score": 462.3742,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "raw document-term",
+        "score": 401.0311,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "raw data",
+        "score": 340.8724,
+        "evidence": []
+      },
+      {
+        "term": "optimal map",
+        "score": 320.9708,
+        "evidence": []
+      },
+      {
+        "term": "map ﬁrst",
+        "score": 312.6943,
+        "evidence": []
+      },
+      {
+        "term": "table map",
+        "score": 310.1964,
+        "evidence": []
+      },
+      {
+        "term": "map values",
+        "score": 293.5241,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "lsa raw",
+        "score": 28.1877,
+        "evidence": []
+      },
+      {
+        "term": "lsa nrowl",
+        "score": 23.9314,
+        "evidence": []
+      },
+      {
+        "term": "lsa tfidf",
+        "score": 20.7562,
+        "evidence": []
+      },
+      {
+        "term": "both lsa",
+        "score": 18.735,
+        "evidence": []
+      },
+      {
+        "term": "lsa involves",
+        "score": 18.5137,
+        "evidence": []
+      },
+      {
+        "term": "raw matrix",
+        "score": 18.4606,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "raw document-term",
+        "score": 18.1798,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "weighting exponent",
+        "score": 15.6859,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ﬁrst dimensions",
+        "score": 15.0246,
+        "evidence": []
+      },
+      {
+        "term": "initial dimensions",
+        "score": 14.3935,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "euclidean distances",
+        "score": 14.1999,
+        "evidence": []
+      },
+      {
+        "term": "weighting elements",
+        "score": 13.6324,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "lsa tfidf",
+        "score": 3524.1217,
+        "evidence": []
+      },
+      {
+        "term": "bbcsport newsgroups",
+        "score": 3364.803,
+        "evidence": []
+      },
+      {
+        "term": "lsa nrowl",
+        "score": 3323.1234,
+        "evidence": []
+      },
+      {
+        "term": "porsche ferrari",
+        "score": 3233.784,
+        "evidence": []
+      },
+      {
+        "term": "tiger cheetah",
+        "score": 3233.784,
+        "evidence": []
+      },
+      {
+        "term": "cheetah jaguar",
+        "score": 3124.1415,
+        "evidence": []
+      },
+      {
+        "term": "lion tiger",
+        "score": 3027.026,
+        "evidence": []
+      },
+      {
+        "term": "raw document-term",
+        "score": 2781.1667,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "ca-tfidf",
+        "score": 2612.5226,
+        "evidence": []
+      },
+      {
+        "term": "ca-nrowl",
+        "score": 2612.5226,
+        "evidence": []
+      },
+      {
+        "term": "euclidean distances",
+        "score": 2450.0116,
+        "evidence": []
+      },
+      {
+        "term": "ca-raw",
+        "score": 2421.9047,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-abstract": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "weighting exponent",
+          "score": 1.7691,
+          "evidence": []
+        },
+        {
+          "term": "value weighting",
+          "score": 1.3508,
+          "evidence": []
+        },
+        {
+          "term": "marginal effects",
+          "score": 1.3147,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 1.1817,
+          "evidence": []
+        },
+        {
+          "term": "singular value",
+          "score": 1.1663,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 1.1361,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "weighting exponent",
+          "score": 30.2816,
+          "evidence": []
+        },
+        {
+          "term": "value weighting",
+          "score": 22.1079,
+          "evidence": []
+        },
+        {
+          "term": "singular value",
+          "score": 18.662,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 18.4316,
+          "evidence": []
+        },
+        {
+          "term": "marginal effects",
+          "score": 17.9898,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 17.0849,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lsa",
+          "score": 0.6319,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 0.5473,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 0.4987,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 0.473,
+          "evidence": []
+        },
+        {
+          "term": "value weighting",
+          "score": 0.4312,
+          "evidence": []
+        },
+        {
+          "term": "raw",
+          "score": 0.3802,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa",
+          "score": 16.1808,
+          "evidence": []
+        },
+        {
+          "term": "raw",
+          "score": 7.7208,
+          "evidence": []
+        },
+        {
+          "term": "matrix",
+          "score": 6.1931,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 5.8878,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 5.7987,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 5.5198,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lsa",
+          "score": 0.6319,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 0.5473,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 0.4987,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 0.473,
+          "evidence": []
+        },
+        {
+          "term": "value weighting",
+          "score": 0.4312,
+          "evidence": []
+        },
+        {
+          "term": "raw",
+          "score": 0.3802,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ca-tfidf",
+          "score": 102.8147,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 102.8147,
+          "evidence": []
+        },
+        {
+          "term": "tfidf",
+          "score": 102.0927,
+          "evidence": []
+        },
+        {
+          "term": "nrowl",
+          "score": 94.5635,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 91.8046,
+          "evidence": []
+        },
+        {
+          "term": "ﬁgures",
+          "score": 91.1811,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-1-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "southampton",
+          "score": 1.2651,
+          "evidence": []
+        },
+        {
+          "term": "hessen",
+          "score": 0.9481,
+          "evidence": []
+        },
+        {
+          "term": "heijden",
+          "score": 0.6358,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "southampton",
+          "score": 21.0133,
+          "evidence": []
+        },
+        {
+          "term": "hessen",
+          "score": 13.1979,
+          "evidence": []
+        },
+        {
+          "term": "sciences",
+          "score": 8.5272,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lsa",
+          "score": 0.1502,
+          "evidence": []
+        },
+        {
+          "term": "retrieval",
+          "score": 0.1361,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.1292,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "documents",
+          "score": 1.823,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 1.4785,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 1.4647,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "retrieval",
+          "score": 0.1361,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.1292,
+          "evidence": []
+        },
+        {
+          "term": "journal",
+          "score": 0.1162,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "heijden",
+          "score": 418.6518,
+          "evidence": []
+        },
+        {
+          "term": "hessen",
+          "score": 366.567,
+          "evidence": []
+        },
+        {
+          "term": "southampton",
+          "score": 353.0377,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-21-lsa": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lsa",
+          "score": 2.9713,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighting exponent",
+          "score": 2.2072,
+          "evidence": []
+        },
+        {
+          "term": "bullinaria levy",
+          "score": 2.1297,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 1.8966,
+          "evidence": []
+        },
+        {
+          "term": "value weighting",
+          "score": 1.614,
+          "evidence": []
+        },
+        {
+          "term": "word embeddings",
+          "score": 1.5831,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 1.4619,
+          "evidence": []
+        },
+        {
+          "term": "yin shen",
+          "score": 1.4522,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lsa",
+          "score": 107.728,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighting exponent",
+          "score": 47.6051,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 43.9104,
+          "evidence": []
+        },
+        {
+          "term": "bullinaria levy",
+          "score": 34.7655,
+          "evidence": []
+        },
+        {
+          "term": "value weighting",
+          "score": 32.3414,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 31.8103,
+          "evidence": []
+        },
+        {
+          "term": "singular value",
+          "score": 27.1725,
+          "evidence": []
+        },
+        {
+          "term": "word embeddings",
+          "score": 26.2893,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lsa",
+          "score": 3.2405,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "information retrieval",
+          "score": 1.2931,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 1.2349,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 1.1856,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 1.123,
+          "evidence": []
+        },
+        {
+          "term": "value weighting",
+          "score": 0.9294,
+          "evidence": []
+        },
+        {
+          "term": "raw",
+          "score": 0.8214,
+          "evidence": []
+        },
+        {
+          "term": "word embeddings",
+          "score": 0.6864,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa",
+          "score": 90.9146,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw",
+          "score": 20.5337,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 17.6686,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 16.7831,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 16.6238,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 15.0628,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 14.571,
+          "evidence": []
+        },
+        {
+          "term": "value weighting",
+          "score": 12.0566,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lsa",
+          "score": 3.2405,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "information retrieval",
+          "score": 1.2931,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 1.2349,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 1.1856,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 1.123,
+          "evidence": []
+        },
+        {
+          "term": "value weighting",
+          "score": 0.9294,
+          "evidence": []
+        },
+        {
+          "term": "raw",
+          "score": 0.8214,
+          "evidence": []
+        },
+        {
+          "term": "word embeddings",
+          "score": 0.6864,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "bullinaria levy",
+          "score": 103.3768,
+          "evidence": []
+        },
+        {
+          "term": "ca-tfidf",
+          "score": 90.6707,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 90.6707,
+          "evidence": []
+        },
+        {
+          "term": "tfidf",
+          "score": 90.15,
+          "evidence": []
+        },
+        {
+          "term": "nrowl",
+          "score": 84.366,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 83.3359,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ca-raw",
+          "score": 82.8008,
+          "evidence": []
+        },
+        {
+          "term": "ﬁgures",
+          "score": 82.3461,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-2-lsa-and-ca": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lsa",
+          "score": 2.9713,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw document-term",
+          "score": 2.3905,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 2.1362,
+          "evidence": []
+        },
+        {
+          "term": "dot similarity",
+          "score": 1.747,
+          "evidence": []
+        },
+        {
+          "term": "cosine similarity",
+          "score": 1.5894,
+          "evidence": []
+        },
+        {
+          "term": "weight ing",
+          "score": 1.5013,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 1.461,
+          "evidence": []
+        },
+        {
+          "term": "ﬁrst columns",
+          "score": 1.4353,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lsa",
+          "score": 107.728,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw document-term",
+          "score": 49.7272,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 48.6165,
+          "evidence": []
+        },
+        {
+          "term": "weight ing",
+          "score": 27.6275,
+          "evidence": []
+        },
+        {
+          "term": "dot similarity",
+          "score": 27.1366,
+          "evidence": []
+        },
+        {
+          "term": "cosine similarity",
+          "score": 25.2256,
+          "evidence": []
+        },
+        {
+          "term": "ﬁrst columns",
+          "score": 21.7934,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 19.5787,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lsa",
+          "score": 2.2589,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "document-term matrix",
+          "score": 1.2084,
+          "evidence": []
+        },
+        {
+          "term": "raw document-term",
+          "score": 1.1952,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 0.9836,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 0.9293,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 0.8949,
+          "evidence": []
+        },
+        {
+          "term": "dot similarity",
+          "score": 0.6569,
+          "evidence": []
+        },
+        {
+          "term": "weighting",
+          "score": 0.6441,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa",
+          "score": 84.0938,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw document-term",
+          "score": 25.5589,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 22.6237,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 15.3793,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 14.9774,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 14.858,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 13.731,
+          "evidence": []
+        },
+        {
+          "term": "nrowl",
+          "score": 11.2905,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lsa",
+          "score": 2.2589,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "document-term matrix",
+          "score": 1.2084,
+          "evidence": []
+        },
+        {
+          "term": "raw document-term",
+          "score": 1.1952,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 0.9836,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 0.9293,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 0.8949,
+          "evidence": []
+        },
+        {
+          "term": "dot similarity",
+          "score": 0.6569,
+          "evidence": []
+        },
+        {
+          "term": "weighting",
+          "score": 0.6441,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "raw document-term",
+          "score": 107.2735,
+          "evidence": []
+        },
+        {
+          "term": "ca-tfidf",
+          "score": 99.1439,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 99.1439,
+          "evidence": []
+        },
+        {
+          "term": "tfidf",
+          "score": 96.7982,
+          "evidence": []
+        },
+        {
+          "term": "nrowl",
+          "score": 89.847,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 88.5096,
+          "evidence": []
+        },
+        {
+          "term": "ﬁgures",
+          "score": 87.2915,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 79.761,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-22-ca": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cheetah jaguar",
+          "score": 3.5888,
+          "evidence": []
+        },
+        {
+          "term": "jaguar porsche",
+          "score": 3.5888,
+          "evidence": []
+        },
+        {
+          "term": "porsche ferrari",
+          "score": 3.305,
+          "evidence": []
+        },
+        {
+          "term": "tiger cheetah",
+          "score": 3.305,
+          "evidence": []
+        },
+        {
+          "term": "lion tiger",
+          "score": 3.2347,
+          "evidence": []
+        },
+        {
+          "term": "car documents",
+          "score": 3.0993,
+          "evidence": []
+        },
+        {
+          "term": "car terms",
+          "score": 2.9616,
+          "evidence": []
+        },
+        {
+          "term": "cat documents",
+          "score": 2.9179,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "car documents",
+          "score": 106.505,
+          "evidence": []
+        },
+        {
+          "term": "cat documents",
+          "score": 99.4089,
+          "evidence": []
+        },
+        {
+          "term": "car terms",
+          "score": 94.7512,
+          "evidence": []
+        },
+        {
+          "term": "cheetah jaguar",
+          "score": 84.0531,
+          "evidence": []
+        },
+        {
+          "term": "jaguar porsche",
+          "score": 84.0531,
+          "evidence": []
+        },
+        {
+          "term": "porsche ferrari",
+          "score": 70.0443,
+          "evidence": []
+        },
+        {
+          "term": "tiger cheetah",
+          "score": 70.0443,
+          "evidence": []
+        },
+        {
+          "term": "lion tiger",
+          "score": 68.017,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "document-term matrix",
+          "score": 1.4593,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 1.3211,
+          "evidence": []
+        },
+        {
+          "term": "diagonal matrix",
+          "score": 1.1551,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 1.1336,
+          "evidence": []
+        },
+        {
+          "term": "car documents",
+          "score": 1.0681,
+          "evidence": []
+        },
+        {
+          "term": "car terms",
+          "score": 1.0258,
+          "evidence": []
+        },
+        {
+          "term": "cat documents",
+          "score": 0.9977,
+          "evidence": []
+        },
+        {
+          "term": "raw",
+          "score": 0.9128,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "car documents",
+          "score": 43.3273,
+          "evidence": []
+        },
+        {
+          "term": "cat documents",
+          "score": 41.6798,
+          "evidence": []
+        },
+        {
+          "term": "car terms",
+          "score": 39.2715,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 30.2465,
+          "evidence": []
+        },
+        {
+          "term": "diagonal matrix",
+          "score": 28.8034,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 28.6487,
+          "evidence": []
+        },
+        {
+          "term": "column points",
+          "score": 16.7782,
+          "evidence": []
+        },
+        {
+          "term": "row points",
+          "score": 16.6058,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "document-term matrix",
+          "score": 1.4593,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 1.3211,
+          "evidence": []
+        },
+        {
+          "term": "diagonal matrix",
+          "score": 1.1551,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 1.1336,
+          "evidence": []
+        },
+        {
+          "term": "car documents",
+          "score": 1.0681,
+          "evidence": []
+        },
+        {
+          "term": "car terms",
+          "score": 1.0258,
+          "evidence": []
+        },
+        {
+          "term": "cat documents",
+          "score": 0.9977,
+          "evidence": []
+        },
+        {
+          "term": "column points",
+          "score": 0.9018,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "porsche ferrari",
+          "score": 519.905,
+          "evidence": []
+        },
+        {
+          "term": "tiger cheetah",
+          "score": 519.905,
+          "evidence": []
+        },
+        {
+          "term": "cheetah jaguar",
+          "score": 517.0358,
+          "evidence": []
+        },
+        {
+          "term": "lion tiger",
+          "score": 487.2109,
+          "evidence": []
+        },
+        {
+          "term": "neville",
+          "score": 264.3694,
+          "evidence": []
+        },
+        {
+          "term": "two-dimensional plot",
+          "score": 187.056,
+          "evidence": []
+        },
+        {
+          "term": "k-dimensional subspace",
+          "score": 177.7611,
+          "evidence": []
+        },
+        {
+          "term": "tobias",
+          "score": 155.8956,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-3-methodology": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "inﬂuence",
+          "score": 0.5942,
+          "evidence": []
+        },
+        {
+          "term": "document-term",
+          "score": 0.4868,
+          "evidence": []
+        },
+        {
+          "term": "studied",
+          "score": 0.4016,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "inﬂuence",
+          "score": 6.599,
+          "evidence": []
+        },
+        {
+          "term": "document-term",
+          "score": 5.2127,
+          "evidence": []
+        },
+        {
+          "term": "studied",
+          "score": 4.3303,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "matrix",
+          "score": 0.0797,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 0.0694,
+          "evidence": []
+        },
+        {
+          "term": "raw",
+          "score": 0.0544,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "matrix",
+          "score": 1.433,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 0.9196,
+          "evidence": []
+        },
+        {
+          "term": "raw",
+          "score": 0.4495,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "matrix",
+          "score": 0.0797,
+          "evidence": []
+        },
+        {
+          "term": "dimensions",
+          "score": 0.0494,
+          "evidence": []
+        },
+        {
+          "term": "document-term",
+          "score": 0.0349,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ca-tfidf",
+          "score": 62.0398,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 62.0398,
+          "evidence": []
+        },
+        {
+          "term": "tfidf",
+          "score": 59.3321,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-31-ca-of-a-document-term-matrix-of-weighted-freq": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "document-term matrix",
+          "score": 4.143,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighted frequencies",
+          "score": 2.775,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw document-term",
+          "score": 2.1781,
+          "evidence": []
+        },
+        {
+          "term": "weighting",
+          "score": 1.0581,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "document-term matrix",
+          "score": 91.7622,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw document-term",
+          "score": 40.8243,
+          "evidence": []
+        },
+        {
+          "term": "weighted frequencies",
+          "score": 38.1489,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighting",
+          "score": 21.4819,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "document-term matrix",
+          "score": 0.9395,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw document-term",
+          "score": 0.4732,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 0.4287,
+          "evidence": []
+        },
+        {
+          "term": "weighted frequencies",
+          "score": 0.2935,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "document-term matrix",
+          "score": 24.5628,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa",
+          "score": 12.2232,
+          "evidence": []
+        },
+        {
+          "term": "raw document-term",
+          "score": 7.6729,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 4.5665,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "document-term matrix",
+          "score": 0.9395,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw document-term",
+          "score": 0.4732,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 0.4287,
+          "evidence": []
+        },
+        {
+          "term": "weighted frequencies",
+          "score": 0.2935,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "document-term matrix",
+          "score": 171.8675,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw document-term",
+          "score": 148.2594,
+          "evidence": []
+        },
+        {
+          "term": "ca-tfidf",
+          "score": 141.4728,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 141.4728,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-32-changing-the-contributions-of-the-initial-dim": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "initial dimensions",
+          "score": 3.0268,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighting exponent",
+          "score": 1.9008,
+          "evidence": []
+        },
+        {
+          "term": "squared singular",
+          "score": 1.8552,
+          "evidence": []
+        },
+        {
+          "term": "coordinates instead",
+          "score": 1.6346,
+          "evidence": []
+        },
+        {
+          "term": "dimension accounts",
+          "score": 1.5898,
+          "evidence": []
+        },
+        {
+          "term": "singular values",
+          "score": 1.5701,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 1.5642,
+          "evidence": []
+        },
+        {
+          "term": "ﬁrst dimension",
+          "score": 1.5333,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "initial dimensions",
+          "score": 54.9271,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "squared singular",
+          "score": 38.7154,
+          "evidence": []
+        },
+        {
+          "term": "singular values",
+          "score": 37.1725,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 34.647,
+          "evidence": []
+        },
+        {
+          "term": "coordinates instead",
+          "score": 30.6139,
+          "evidence": []
+        },
+        {
+          "term": "dimension accounts",
+          "score": 28.0306,
+          "evidence": []
+        },
+        {
+          "term": "ﬁrst dimension",
+          "score": 26.9474,
+          "evidence": []
+        },
+        {
+          "term": "row points",
+          "score": 24.3165,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "initial dimensions",
+          "score": 1.8156,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa",
+          "score": 0.999,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 0.9959,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 0.9131,
+          "evidence": []
+        },
+        {
+          "term": "intelligent information",
+          "score": 0.7128,
+          "evidence": []
+        },
+        {
+          "term": "ﬁrst dimension",
+          "score": 0.6747,
+          "evidence": []
+        },
+        {
+          "term": "raw",
+          "score": 0.6729,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.6168,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa",
+          "score": 21.4359,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 16.7723,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw",
+          "score": 9.7475,
+          "evidence": []
+        },
+        {
+          "term": "matrix",
+          "score": 8.9386,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 8.2929,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 7.5785,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 7.3783,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 6.9133,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "initial dimensions",
+          "score": 1.8156,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa",
+          "score": 0.999,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 0.9959,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 0.9131,
+          "evidence": []
+        },
+        {
+          "term": "intelligent information",
+          "score": 0.7128,
+          "evidence": []
+        },
+        {
+          "term": "ﬁrst dimension",
+          "score": 0.6747,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 0.6168,
+          "evidence": []
+        },
+        {
+          "term": "lsa-raw",
+          "score": 0.5496,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "ca-tfidf",
+          "score": 83.7647,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 83.7647,
+          "evidence": []
+        },
+        {
+          "term": "cheetah",
+          "score": 82.8568,
+          "evidence": []
+        },
+        {
+          "term": "ferrari",
+          "score": 82.8568,
+          "evidence": []
+        },
+        {
+          "term": "porsche",
+          "score": 82.8568,
+          "evidence": []
+        },
+        {
+          "term": "tiger",
+          "score": 82.8568,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 82.637,
+          "evidence": []
+        },
+        {
+          "term": "jaguar",
+          "score": 79.7484,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-33-design": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "cheetah jaguar",
+          "score": 2.0362,
+          "evidence": []
+        },
+        {
+          "term": "jaguar porsche",
+          "score": 2.0362,
+          "evidence": []
+        },
+        {
+          "term": "porsche ferrari",
+          "score": 2.0265,
+          "evidence": []
+        },
+        {
+          "term": "tiger cheetah",
+          "score": 2.0265,
+          "evidence": []
+        },
+        {
+          "term": "lion tiger",
+          "score": 1.9834,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "raw document-term",
+          "score": 28.8765,
+          "evidence": []
+        },
+        {
+          "term": "tf-idf matrix",
+          "score": 28.8439,
+          "evidence": []
+        },
+        {
+          "term": "cheetah jaguar",
+          "score": 28.0177,
+          "evidence": []
+        },
+        {
+          "term": "jaguar porsche",
+          "score": 28.0177,
+          "evidence": []
+        },
+        {
+          "term": "porsche ferrari",
+          "score": 28.0177,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "raw document-term",
+          "score": 0.937,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 0.7715,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 0.7394,
+          "evidence": []
+        },
+        {
+          "term": "tf-idf matrix",
+          "score": 0.5214,
+          "evidence": []
+        },
+        {
+          "term": "euclidean",
+          "score": 0.5,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa",
+          "score": 19.7051,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 13.1937,
+          "evidence": []
+        },
+        {
+          "term": "raw document-term",
+          "score": 12.4966,
+          "evidence": []
+        },
+        {
+          "term": "tf-idf matrix",
+          "score": 11.2091,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 7.4752,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "raw document-term",
+          "score": 0.937,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 0.7715,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 0.7394,
+          "evidence": []
+        },
+        {
+          "term": "tf-idf matrix",
+          "score": 0.5214,
+          "evidence": []
+        },
+        {
+          "term": "weighting",
+          "score": 0.4779,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "porsche ferrari",
+          "score": 716.8743,
+          "evidence": []
+        },
+        {
+          "term": "tiger cheetah",
+          "score": 716.8743,
+          "evidence": []
+        },
+        {
+          "term": "cheetah jaguar",
+          "score": 702.1617,
+          "evidence": []
+        },
+        {
+          "term": "lion tiger",
+          "score": 672.6433,
+          "evidence": []
+        },
+        {
+          "term": "raw document-term",
+          "score": 356.6026,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-34-datasets": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "wilhelmus dataset",
+          "score": 3.0133,
+          "evidence": []
+        },
+        {
+          "term": "bbcsport dataset",
+          "score": 2.5811,
+          "evidence": []
+        },
+        {
+          "term": "newsgroups dataset",
+          "score": 2.3784,
+          "evidence": []
+        },
+        {
+          "term": "bbcnews dataset",
+          "score": 2.3703,
+          "evidence": []
+        },
+        {
+          "term": "dutch dataset",
+          "score": 2.3337,
+          "evidence": []
+        },
+        {
+          "term": "ﬁve categories",
+          "score": 2.03,
+          "evidence": []
+        },
+        {
+          "term": "english datasets",
+          "score": 1.8394,
+          "evidence": []
+        },
+        {
+          "term": "four categories",
+          "score": 1.7953,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "wilhelmus dataset",
+          "score": 102.6967,
+          "evidence": []
+        },
+        {
+          "term": "bbcsport dataset",
+          "score": 79.9851,
+          "evidence": []
+        },
+        {
+          "term": "bbcnews dataset",
+          "score": 73.1677,
+          "evidence": []
+        },
+        {
+          "term": "newsgroups dataset",
+          "score": 73.1677,
+          "evidence": []
+        },
+        {
+          "term": "dutch dataset",
+          "score": 69.3413,
+          "evidence": []
+        },
+        {
+          "term": "ﬁve categories",
+          "score": 45.5733,
+          "evidence": []
+        },
+        {
+          "term": "four categories",
+          "score": 43.4078,
+          "evidence": []
+        },
+        {
+          "term": "english datasets",
+          "score": 40.462,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "information retrieval",
+          "score": 0.5434,
+          "evidence": []
+        },
+        {
+          "term": "wilhelmus dataset",
+          "score": 0.473,
+          "evidence": []
+        },
+        {
+          "term": "newsgroups dataset",
+          "score": 0.4518,
+          "evidence": []
+        },
+        {
+          "term": "bbcnews dataset",
+          "score": 0.4499,
+          "evidence": []
+        },
+        {
+          "term": "bbcsport dataset",
+          "score": 0.447,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 0.4216,
+          "evidence": []
+        },
+        {
+          "term": "dutch dataset",
+          "score": 0.3641,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.3407,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "datasets",
+          "score": 9.9131,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa",
+          "score": 9.3265,
+          "evidence": []
+        },
+        {
+          "term": "wilhelmus dataset",
+          "score": 9.2266,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 9.0998,
+          "evidence": []
+        },
+        {
+          "term": "newsgroups dataset",
+          "score": 8.6937,
+          "evidence": []
+        },
+        {
+          "term": "bbcsport dataset",
+          "score": 8.671,
+          "evidence": []
+        },
+        {
+          "term": "bbcnews dataset",
+          "score": 8.5835,
+          "evidence": []
+        },
+        {
+          "term": "dutch dataset",
+          "score": 7.7637,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "information retrieval",
+          "score": 0.5434,
+          "evidence": []
+        },
+        {
+          "term": "wilhelmus dataset",
+          "score": 0.473,
+          "evidence": []
+        },
+        {
+          "term": "newsgroups dataset",
+          "score": 0.4518,
+          "evidence": []
+        },
+        {
+          "term": "bbcnews dataset",
+          "score": 0.4499,
+          "evidence": []
+        },
+        {
+          "term": "bbcsport dataset",
+          "score": 0.447,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 0.4216,
+          "evidence": []
+        },
+        {
+          "term": "dutch dataset",
+          "score": 0.4048,
+          "evidence": []
+        },
+        {
+          "term": "documents",
+          "score": 0.3407,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "dutch dataset",
+          "score": 287.7898,
+          "evidence": []
+        },
+        {
+          "term": "heijden",
+          "score": 273.1061,
+          "evidence": []
+        },
+        {
+          "term": "wilhelmus dataset",
+          "score": 252.6702,
+          "evidence": []
+        },
+        {
+          "term": "bbcsport dataset",
+          "score": 246.142,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 240.9047,
+          "evidence": []
+        },
+        {
+          "term": "ﬁndings",
+          "score": 233.4769,
+          "evidence": []
+        },
+        {
+          "term": "indonesian",
+          "score": 231.8832,
+          "evidence": []
+        },
+        {
+          "term": "qianqian",
+          "score": 223.8389,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-35-evaluation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "documents retrieved",
+          "score": 2.5221,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 2.1403,
+          "evidence": []
+        },
+        {
+          "term": "cosine similarity",
+          "score": 2.1019,
+          "evidence": []
+        },
+        {
+          "term": "ordered list",
+          "score": 1.9922,
+          "evidence": []
+        },
+        {
+          "term": "ﬁrst documents",
+          "score": 1.9804,
+          "evidence": []
+        },
+        {
+          "term": "relevant documents",
+          "score": 1.9105,
+          "evidence": []
+        },
+        {
+          "term": "query vector",
+          "score": 1.6607,
+          "evidence": []
+        },
+        {
+          "term": "maximum precision",
+          "score": 1.5469,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "documents retrieved",
+          "score": 84.9129,
+          "evidence": []
+        },
+        {
+          "term": "relevant documents",
+          "score": 64.5976,
+          "evidence": []
+        },
+        {
+          "term": "ﬁrst documents",
+          "score": 61.3015,
+          "evidence": []
+        },
+        {
+          "term": "ordered list",
+          "score": 46.4396,
+          "evidence": []
+        },
+        {
+          "term": "cosine similarity",
+          "score": 46.0117,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 39.1574,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 33.6684,
+          "evidence": []
+        },
+        {
+          "term": "maximum precision",
+          "score": 31.4784,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "ﬁrst documents",
+          "score": 0.6881,
+          "evidence": []
+        },
+        {
+          "term": "relevant documents",
+          "score": 0.6608,
+          "evidence": []
+        },
+        {
+          "term": "documents retrieved",
+          "score": 0.594,
+          "evidence": []
+        },
+        {
+          "term": "query vector",
+          "score": 0.4927,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 0.4709,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 0.4405,
+          "evidence": []
+        },
+        {
+          "term": "retrieval",
+          "score": 0.4331,
+          "evidence": []
+        },
+        {
+          "term": "cosine similarity",
+          "score": 0.4047,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "relevant documents",
+          "score": 18.3108,
+          "evidence": []
+        },
+        {
+          "term": "ﬁrst documents",
+          "score": 17.8353,
+          "evidence": []
+        },
+        {
+          "term": "documents retrieved",
+          "score": 17.5012,
+          "evidence": []
+        },
+        {
+          "term": "terms",
+          "score": 12.9658,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 12.0763,
+          "evidence": []
+        },
+        {
+          "term": "query vector",
+          "score": 11.049,
+          "evidence": []
+        },
+        {
+          "term": "lsi",
+          "score": 8.6289,
+          "evidence": []
+        },
+        {
+          "term": "cosine similarity",
+          "score": 8.4456,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "ﬁrst documents",
+          "score": 0.6881,
+          "evidence": []
+        },
+        {
+          "term": "relevant documents",
+          "score": 0.6608,
+          "evidence": []
+        },
+        {
+          "term": "documents retrieved",
+          "score": 0.594,
+          "evidence": []
+        },
+        {
+          "term": "query vector",
+          "score": 0.4927,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 0.4709,
+          "evidence": []
+        },
+        {
+          "term": "cosine similarity",
+          "score": 0.4047,
+          "evidence": []
+        },
+        {
+          "term": "recall",
+          "score": 0.3159,
+          "evidence": []
+        },
+        {
+          "term": "total number",
+          "score": 0.291,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "euclidean distance",
+          "score": 48.5848,
+          "evidence": []
+        },
+        {
+          "term": "heijden",
+          "score": 47.1721,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 44.1647,
+          "evidence": []
+        },
+        {
+          "term": "ca-tfidf",
+          "score": 43.8844,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 43.8844,
+          "evidence": []
+        },
+        {
+          "term": "ﬁgures",
+          "score": 43.3084,
+          "evidence": []
+        },
+        {
+          "term": "hessen",
+          "score": 43.1516,
+          "evidence": []
+        },
+        {
+          "term": "tfidf",
+          "score": 41.5723,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-411-map-as-a-function-of-the-number-of-dimension": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lsa nrowl",
+          "score": 3.8713,
+          "evidence": []
+        },
+        {
+          "term": "four versions",
+          "score": 3.4575,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa raw",
+          "score": 3.3546,
+          "evidence": []
+        },
+        {
+          "term": "lsa tfidf",
+          "score": 3.3423,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 3.1983,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "map",
+          "score": 2.6581,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "both lsa",
+          "score": 2.2129,
+          "evidence": []
+        },
+        {
+          "term": "dimensions",
+          "score": 2.0346,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lsa",
+          "score": 253.9302,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa nrowl",
+          "score": 183.7666,
+          "evidence": []
+        },
+        {
+          "term": "lsa raw",
+          "score": 167.5578,
+          "evidence": []
+        },
+        {
+          "term": "lsa tfidf",
+          "score": 153.361,
+          "evidence": []
+        },
+        {
+          "term": "both lsa",
+          "score": 130.4434,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 95.907,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "four versions",
+          "score": 83.7347,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighting exponent",
+          "score": 51.8325,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lsa",
+          "score": 2.9964,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighting exponent",
+          "score": 2.9177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa raw",
+          "score": 2.5462,
+          "evidence": []
+        },
+        {
+          "term": "lsa nrowl",
+          "score": 2.1768,
+          "evidence": []
+        },
+        {
+          "term": "lsa tfidf",
+          "score": 1.8663,
+          "evidence": []
+        },
+        {
+          "term": "dimensions",
+          "score": 1.8095,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "both lsa",
+          "score": 1.6358,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 1.5521,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa",
+          "score": 213.1477,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa raw",
+          "score": 162.6486,
+          "evidence": []
+        },
+        {
+          "term": "lsa nrowl",
+          "score": 139.3107,
+          "evidence": []
+        },
+        {
+          "term": "lsa tfidf",
+          "score": 120.8156,
+          "evidence": []
+        },
+        {
+          "term": "both lsa",
+          "score": 108.5422,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 95.2252,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighting exponent",
+          "score": 67.8615,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dimensions",
+          "score": 54.3837,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lsa",
+          "score": 2.9964,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighting exponent",
+          "score": 2.9177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa raw",
+          "score": 2.5462,
+          "evidence": []
+        },
+        {
+          "term": "lsa nrowl",
+          "score": 2.1768,
+          "evidence": []
+        },
+        {
+          "term": "lsa tfidf",
+          "score": 1.8663,
+          "evidence": []
+        },
+        {
+          "term": "dimensions",
+          "score": 1.8095,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "both lsa",
+          "score": 1.6358,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 1.5521,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "lsa tfidf",
+          "score": 331.0901,
+          "evidence": []
+        },
+        {
+          "term": "lsa nrowl",
+          "score": 311.1212,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 265.2529,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ca-tfidf",
+          "score": 238.7532,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 238.7532,
+          "evidence": []
+        },
+        {
+          "term": "ﬁgures",
+          "score": 222.121,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 220.3548,
+          "evidence": []
+        },
+        {
+          "term": "lsa raw",
+          "score": 210.7044,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-412-map-as-a-function-of-the-weighting-exponent": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dimensions",
+          "score": 3.0221,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "map",
+          "score": 2.5406,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa-raw improves",
+          "score": 2.4006,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 2.0877,
+          "evidence": []
+        },
+        {
+          "term": "later dimensions",
+          "score": 2.0697,
+          "evidence": []
+        },
+        {
+          "term": "varying",
+          "score": 1.5766,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "optimal number",
+          "score": 1.5706,
+          "evidence": []
+        },
+        {
+          "term": "bbcnews dataset",
+          "score": 1.4819,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dimensions",
+          "score": 124.8556,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "map",
+          "score": 83.9187,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "initial dimensions",
+          "score": 71.5302,
+          "evidence": []
+        },
+        {
+          "term": "later dimensions",
+          "score": 70.1227,
+          "evidence": []
+        },
+        {
+          "term": "lsa-raw improves",
+          "score": 61.4746,
+          "evidence": []
+        },
+        {
+          "term": "optimal number",
+          "score": 38.5504,
+          "evidence": []
+        },
+        {
+          "term": "varying",
+          "score": 25.7783,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "bbcnews dataset",
+          "score": 22.6719,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "lsa",
+          "score": 1.8478,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dimensions",
+          "score": 1.1834,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighting",
+          "score": 1.1352,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "map",
+          "score": 1.0558,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "initial dimensions",
+          "score": 0.8265,
+          "evidence": []
+        },
+        {
+          "term": "exponent",
+          "score": 0.7713,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa-raw improves",
+          "score": 0.708,
+          "evidence": []
+        },
+        {
+          "term": "later dimensions",
+          "score": 0.6791,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa",
+          "score": 66.605,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "map",
+          "score": 34.7161,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dimensions",
+          "score": 17.9472,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw",
+          "score": 17.9298,
+          "evidence": []
+        },
+        {
+          "term": "weighting",
+          "score": 15.0153,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "initial dimensions",
+          "score": 11.325,
+          "evidence": []
+        },
+        {
+          "term": "nrowl",
+          "score": 10.3542,
+          "evidence": []
+        },
+        {
+          "term": "later dimensions",
+          "score": 9.5579,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "lsa",
+          "score": 1.8478,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dimensions",
+          "score": 1.1834,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weighting",
+          "score": 1.1352,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "map",
+          "score": 1.0558,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "initial dimensions",
+          "score": 0.8265,
+          "evidence": []
+        },
+        {
+          "term": "exponent",
+          "score": 0.7713,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa-raw improves",
+          "score": 0.708,
+          "evidence": []
+        },
+        {
+          "term": "later dimensions",
+          "score": 0.6791,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "tfidf",
+          "score": 179.15,
+          "evidence": []
+        },
+        {
+          "term": "ca-tfidf",
+          "score": 174.5516,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 174.5516,
+          "evidence": []
+        },
+        {
+          "term": "ﬁgures",
+          "score": 165.8788,
+          "evidence": []
+        },
+        {
+          "term": "nrowl",
+          "score": 164.4718,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 164.3698,
+          "evidence": []
+        },
+        {
+          "term": "lsa-raw improves",
+          "score": 145.8604,
+          "evidence": []
+        },
+        {
+          "term": "lsa-nrowl",
+          "score": 139.4826,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-421-weighting-the-elements-of-the-raw-document-t": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "raw document-term",
+          "score": 5.3916,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw matrix",
+          "score": 5.0397,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa raw",
+          "score": 3.6444,
+          "evidence": []
+        },
+        {
+          "term": "table map",
+          "score": 2.216,
+          "evidence": []
+        },
+        {
+          "term": "weighting",
+          "score": 2.1161,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nrowl",
+          "score": 1.8481,
+          "evidence": []
+        },
+        {
+          "term": "bbcsport newsgroups",
+          "score": 1.7568,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 1.5951,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "raw document-term",
+          "score": 227.5042,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw matrix",
+          "score": 226.4713,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa raw",
+          "score": 187.9702,
+          "evidence": []
+        },
+        {
+          "term": "table map",
+          "score": 91.1516,
+          "evidence": []
+        },
+        {
+          "term": "nrowl",
+          "score": 50.4902,
+          "evidence": []
+        },
+        {
+          "term": "weighting",
+          "score": 42.9638,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa-raw",
+          "score": 39.3269,
+          "evidence": []
+        },
+        {
+          "term": "euclidean",
+          "score": 38.9149,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "raw document-term",
+          "score": 3.5205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw matrix",
+          "score": 3.0932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa raw",
+          "score": 2.597,
+          "evidence": []
+        },
+        {
+          "term": "weighting",
+          "score": 1.7853,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "table map",
+          "score": 1.1933,
+          "evidence": []
+        },
+        {
+          "term": "intelligent information",
+          "score": 1.0298,
+          "evidence": []
+        },
+        {
+          "term": "euclidean",
+          "score": 0.9252,
+          "evidence": []
+        },
+        {
+          "term": "dimensions",
+          "score": 0.9053,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa raw",
+          "score": 168.6436,
+          "evidence": []
+        },
+        {
+          "term": "raw document-term",
+          "score": 145.5606,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw matrix",
+          "score": 134.6706,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "table map",
+          "score": 61.3045,
+          "evidence": []
+        },
+        {
+          "term": "weighting",
+          "score": 47.8646,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nrowl",
+          "score": 34.5952,
+          "evidence": []
+        },
+        {
+          "term": "euclidean",
+          "score": 30.9338,
+          "evidence": []
+        },
+        {
+          "term": "dimensions",
+          "score": 27.5418,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "raw document-term",
+          "score": 3.5205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw matrix",
+          "score": 3.0932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa raw",
+          "score": 2.597,
+          "evidence": []
+        },
+        {
+          "term": "weighting",
+          "score": 1.7853,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "table map",
+          "score": 1.1933,
+          "evidence": []
+        },
+        {
+          "term": "intelligent information",
+          "score": 1.0298,
+          "evidence": []
+        },
+        {
+          "term": "euclidean",
+          "score": 0.9252,
+          "evidence": []
+        },
+        {
+          "term": "dimensions",
+          "score": 0.9053,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "raw document-term",
+          "score": 744.2825,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw matrix",
+          "score": 391.7206,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tfidf",
+          "score": 383.6629,
+          "evidence": []
+        },
+        {
+          "term": "ca-tfidf",
+          "score": 372.4673,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 372.4673,
+          "evidence": []
+        },
+        {
+          "term": "bbcsport newsgroups",
+          "score": 354.8016,
+          "evidence": []
+        },
+        {
+          "term": "nrowl",
+          "score": 351.7995,
+          "evidence": []
+        },
+        {
+          "term": "ﬁgures",
+          "score": 350.5653,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-422-map-as-a-function-of-the-weighting-exponent": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "map",
+          "score": 2.3313,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw",
+          "score": 1.7664,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 1.3937,
+          "evidence": []
+        },
+        {
+          "term": "optimal number",
+          "score": 1.3506,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 1.3193,
+          "evidence": []
+        },
+        {
+          "term": "function",
+          "score": 1.2325,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa",
+          "score": 1.2054,
+          "evidence": []
+        },
+        {
+          "term": "euclidean",
+          "score": 1.0741,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "raw",
+          "score": 77.4951,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 65.9361,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa",
+          "score": 30.7794,
+          "evidence": []
+        },
+        {
+          "term": "optimal number",
+          "score": 28.229,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 24.4294,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 24.3525,
+          "evidence": []
+        },
+        {
+          "term": "function",
+          "score": 20.4006,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "euclidean",
+          "score": 19.4574,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "weighting",
+          "score": 1.255,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "map",
+          "score": 1.1403,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa",
+          "score": 1.0881,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 0.9259,
+          "evidence": []
+        },
+        {
+          "term": "exponent",
+          "score": 0.8617,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw",
+          "score": 0.7734,
+          "evidence": []
+        },
+        {
+          "term": "euclidean",
+          "score": 0.6543,
+          "evidence": []
+        },
+        {
+          "term": "lsa-raw",
+          "score": 0.6229,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa",
+          "score": 52.7515,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 51.0604,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw",
+          "score": 28.7836,
+          "evidence": []
+        },
+        {
+          "term": "weighting",
+          "score": 23.1088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "initial dimensions",
+          "score": 16.9803,
+          "evidence": []
+        },
+        {
+          "term": "nrowl",
+          "score": 16.7018,
+          "evidence": []
+        },
+        {
+          "term": "euclidean",
+          "score": 14.8964,
+          "evidence": []
+        },
+        {
+          "term": "lsa-raw",
+          "score": 12.4384,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "weighting",
+          "score": 1.255,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "map",
+          "score": 1.1403,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa",
+          "score": 1.0881,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 0.9259,
+          "evidence": []
+        },
+        {
+          "term": "exponent",
+          "score": 0.8617,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw",
+          "score": 0.7734,
+          "evidence": []
+        },
+        {
+          "term": "euclidean",
+          "score": 0.6543,
+          "evidence": []
+        },
+        {
+          "term": "lsa-raw",
+          "score": 0.6229,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "tfidf",
+          "score": 247.4934,
+          "evidence": []
+        },
+        {
+          "term": "ca-tfidf",
+          "score": 240.2056,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 240.2056,
+          "evidence": []
+        },
+        {
+          "term": "nrowl",
+          "score": 227.2898,
+          "evidence": []
+        },
+        {
+          "term": "ﬁgures",
+          "score": 226.139,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 223.833,
+          "evidence": []
+        },
+        {
+          "term": "lsa-nrowl",
+          "score": 191.826,
+          "evidence": []
+        },
+        {
+          "term": "lsa-tfidf",
+          "score": 185.1771,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-5-results-for-dot-similarity-and-cosine-similari": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dot similarity",
+          "score": 5.3256,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cosine similarity",
+          "score": 4.5932,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "euclidean distance",
+          "score": 2.2619,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 1.5951,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 0.9128,
+          "evidence": []
+        },
+        {
+          "term": "dimensions",
+          "score": 0.5743,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dot similarity",
+          "score": 127.5097,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cosine similarity",
+          "score": 109.0757,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "euclidean distance",
+          "score": 44.0218,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 36.5288,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 17.9826,
+          "evidence": []
+        },
+        {
+          "term": "dimensions",
+          "score": 7.3444,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dot similarity",
+          "score": 0.6824,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cosine similarity",
+          "score": 0.6049,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lsa",
+          "score": 0.5583,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 0.5353,
+          "evidence": []
+        },
+        {
+          "term": "raw",
+          "score": 0.4159,
+          "evidence": []
+        },
+        {
+          "term": "dimensions",
+          "score": 0.3817,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa",
+          "score": 15.7504,
+          "evidence": []
+        },
+        {
+          "term": "cosine similarity",
+          "score": 8.9432,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dot similarity",
+          "score": 8.7133,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "raw",
+          "score": 8.0163,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 7.6086,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distance",
+          "score": 5.695,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dot similarity",
+          "score": 0.6824,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cosine similarity",
+          "score": 0.6049,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "euclidean distance",
+          "score": 0.5353,
+          "evidence": []
+        },
+        {
+          "term": "dimensions",
+          "score": 0.3817,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 0.3417,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 0.2057,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "tfidf",
+          "score": 221.6536,
+          "evidence": []
+        },
+        {
+          "term": "dot similarity",
+          "score": 219.0587,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ﬁgures",
+          "score": 215.4478,
+          "evidence": []
+        },
+        {
+          "term": "ca-tfidf",
+          "score": 215.3822,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 215.3822,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 212.9473,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-6-conclusions-and-discussions": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "euclidean distances",
+          "score": 3.0087,
+          "evidence": []
+        },
+        {
+          "term": "dot similarity",
+          "score": 2.4664,
+          "evidence": []
+        },
+        {
+          "term": "decomposed matrix",
+          "score": 2.3066,
+          "evidence": []
+        },
+        {
+          "term": "cosine similarity",
+          "score": 2.2357,
+          "evidence": []
+        },
+        {
+          "term": "weighting elements",
+          "score": 2.0189,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 1.9491,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 1.8767,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 1.8081,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "lsa",
+          "score": 100.0331,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 77.4881,
+          "evidence": []
+        },
+        {
+          "term": "decomposed matrix",
+          "score": 57.8173,
+          "evidence": []
+        },
+        {
+          "term": "dot similarity",
+          "score": 54.2732,
+          "evidence": []
+        },
+        {
+          "term": "cosine similarity",
+          "score": 50.4512,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 48.2207,
+          "evidence": []
+        },
+        {
+          "term": "weighting elements",
+          "score": 47.7905,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 40.152,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "raw document-term",
+          "score": 2.3809,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 2.0547,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 2.0442,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 1.9414,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 1.8823,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 1.7959,
+          "evidence": []
+        },
+        {
+          "term": "weighting elements",
+          "score": 1.772,
+          "evidence": []
+        },
+        {
+          "term": "intelligent information",
+          "score": 1.4664,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "lsa",
+          "score": 91.9008,
+          "evidence": []
+        },
+        {
+          "term": "raw document-term",
+          "score": 57.3268,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 35.6459,
+          "evidence": []
+        },
+        {
+          "term": "map",
+          "score": 35.2823,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 34.2013,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 31.9941,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 30.1015,
+          "evidence": []
+        },
+        {
+          "term": "decomposed matrix",
+          "score": 29.1807,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "raw document-term",
+          "score": 2.3809,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 2.0547,
+          "evidence": []
+        },
+        {
+          "term": "weighting exponent",
+          "score": 2.0442,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 1.9414,
+          "evidence": []
+        },
+        {
+          "term": "initial dimensions",
+          "score": 1.8823,
+          "evidence": []
+        },
+        {
+          "term": "document-term matrix",
+          "score": 1.7959,
+          "evidence": []
+        },
+        {
+          "term": "weighting elements",
+          "score": 1.772,
+          "evidence": []
+        },
+        {
+          "term": "intelligent information",
+          "score": 1.4664,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "raw document-term",
+          "score": 155.5188,
+          "evidence": []
+        },
+        {
+          "term": "ca-tfidf",
+          "score": 150.0165,
+          "evidence": []
+        },
+        {
+          "term": "ca-nrowl",
+          "score": 150.0165,
+          "evidence": []
+        },
+        {
+          "term": "tfidf",
+          "score": 149.5997,
+          "evidence": []
+        },
+        {
+          "term": "euclidean distances",
+          "score": 138.5186,
+          "evidence": []
+        },
+        {
+          "term": "nrowl",
+          "score": 138.2182,
+          "evidence": []
+        },
+        {
+          "term": "ca-raw",
+          "score": 135.7896,
+          "evidence": []
+        },
+        {
+          "term": "ﬁgures",
+          "score": 135.2582,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-acknowledgements": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "commons licence",
+          "score": 2.7488,
+          "evidence": []
+        },
+        {
+          "term": "author qianqian",
+          "score": 2.3033,
+          "evidence": []
+        },
+        {
+          "term": "article creative",
+          "score": 2.2946,
+          "evidence": []
+        },
+        {
+          "term": "newsgroups dataset",
+          "score": 1.8925,
+          "evidence": []
+        },
+        {
+          "term": "author peter",
+          "score": 1.781,
+          "evidence": []
+        },
+        {
+          "term": "wilhelmus dataset",
+          "score": 1.7113,
+          "evidence": []
+        },
+        {
+          "term": "der heijden",
+          "score": 1.7096,
+          "evidence": []
+        },
+        {
+          "term": "bbcsport dataset",
+          "score": 1.704,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "article creative",
+          "score": 56.5016,
+          "evidence": []
+        },
+        {
+          "term": "commons licence",
+          "score": 51.0244,
+          "evidence": []
+        },
+        {
+          "term": "author qianqian",
+          "score": 49.75,
+          "evidence": []
+        },
+        {
+          "term": "author peter",
+          "score": 39.1662,
+          "evidence": []
+        },
+        {
+          "term": "author david",
+          "score": 37.735,
+          "evidence": []
+        },
+        {
+          "term": "newsgroups dataset",
+          "score": 37.5352,
+          "evidence": []
+        },
+        {
+          "term": "bbcsport dataset",
+          "score": 31.994,
+          "evidence": []
+        },
+        {
+          "term": "bbcnews dataset",
+          "score": 31.6294,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "license",
+          "score": 0.2732,
+          "evidence": []
+        },
+        {
+          "term": "rights",
+          "score": 0.1763,
+          "evidence": []
+        },
+        {
+          "term": "wilhelmus dataset",
+          "score": 0.1732,
+          "evidence": []
+        },
+        {
+          "term": "author david",
+          "score": 0.1726,
+          "evidence": []
+        },
+        {
+          "term": "newsgroups dataset",
+          "score": 0.1677,
+          "evidence": []
+        },
+        {
+          "term": "bbcnews dataset",
+          "score": 0.1672,
+          "evidence": []
+        },
+        {
+          "term": "author peter",
+          "score": 0.1515,
+          "evidence": []
+        },
+        {
+          "term": "copyright",
+          "score": 0.1464,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "license",
+          "score": 4.7551,
+          "evidence": []
+        },
+        {
+          "term": "work",
+          "score": 3.4388,
+          "evidence": []
+        },
+        {
+          "term": "rights",
+          "score": 2.7408,
+          "evidence": []
+        },
+        {
+          "term": "wilhelmus dataset",
+          "score": 2.5416,
+          "evidence": []
+        },
+        {
+          "term": "author david",
+          "score": 2.3126,
+          "evidence": []
+        },
+        {
+          "term": "raci",
+          "score": 2.2867,
+          "evidence": []
+        },
+        {
+          "term": "doi",
+          "score": 2.1842,
+          "evidence": []
+        },
+        {
+          "term": "bbcnews dataset",
+          "score": 2.1528,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "wilhelmus dataset",
+          "score": 0.1732,
+          "evidence": []
+        },
+        {
+          "term": "author david",
+          "score": 0.1726,
+          "evidence": []
+        },
+        {
+          "term": "newsgroups dataset",
+          "score": 0.1677,
+          "evidence": []
+        },
+        {
+          "term": "bbcnews dataset",
+          "score": 0.1672,
+          "evidence": []
+        },
+        {
+          "term": "bbcsport dataset",
+          "score": 0.1628,
+          "evidence": []
+        },
+        {
+          "term": "author peter",
+          "score": 0.1515,
+          "evidence": []
+        },
+        {
+          "term": "author qianqian",
+          "score": 0.1256,
+          "evidence": []
+        },
+        {
+          "term": "article creative",
+          "score": 0.11,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "commons licence",
+          "score": 531.5064,
+          "evidence": []
+        },
+        {
+          "term": "der heijden",
+          "score": 439.2291,
+          "evidence": []
+        },
+        {
+          "term": "author qianqian",
+          "score": 367.5588,
+          "evidence": []
+        },
+        {
+          "term": "ﬁndings",
+          "score": 339.1837,
+          "evidence": []
+        },
+        {
+          "term": "hessen",
+          "score": 328.4881,
+          "evidence": []
+        },
+        {
+          "term": "creative commons",
+          "score": 262.6402,
+          "evidence": []
+        },
+        {
+          "term": "anthem",
+          "score": 252.2835,
+          "evidence": []
+        },
+        {
+          "term": "mikekestemont",
+          "score": 234.2728,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-references": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "international conference",
+          "score": 2.812,
+          "evidence": []
+        },
+        {
+          "term": "correspondence analysis",
+          "score": 2.5874,
+          "evidence": []
+        },
+        {
+          "term": "international journal",
+          "score": 2.5254,
+          "evidence": []
+        },
+        {
+          "term": "latent semantic",
+          "score": 2.2757,
+          "evidence": []
+        },
+        {
+          "term": "text classiﬁcation",
+          "score": 1.9655,
+          "evidence": []
+        },
+        {
+          "term": "word embeddings",
+          "score": 1.876,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 1.8528,
+          "evidence": []
+        },
+        {
+          "term": "intelligent information",
+          "score": 1.8296,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "international conference",
+          "score": 83.4825,
+          "evidence": []
+        },
+        {
+          "term": "correspondence analysis",
+          "score": 77.5896,
+          "evidence": []
+        },
+        {
+          "term": "semantic analysis",
+          "score": 73.2931,
+          "evidence": []
+        },
+        {
+          "term": "latent semantic",
+          "score": 72.4587,
+          "evidence": []
+        },
+        {
+          "term": "international journal",
+          "score": 70.3264,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 59.9555,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 56.9024,
+          "evidence": []
+        },
+        {
+          "term": "intelligent information",
+          "score": 52.2731,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "semantic analysis",
+          "score": 2.1681,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 2.135,
+          "evidence": []
+        },
+        {
+          "term": "latent semantic",
+          "score": 2.1269,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 1.7366,
+          "evidence": []
+        },
+        {
+          "term": "international journal",
+          "score": 1.6832,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 1.6077,
+          "evidence": []
+        },
+        {
+          "term": "correspondence analysis",
+          "score": 1.5544,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 1.5214,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "international conference",
+          "score": 63.8638,
+          "evidence": []
+        },
+        {
+          "term": "international journal",
+          "score": 39.9665,
+          "evidence": []
+        },
+        {
+          "term": "proceedings",
+          "score": 34.791,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 29.1803,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 29.0104,
+          "evidence": []
+        },
+        {
+          "term": "semantic analysis",
+          "score": 26.694,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 24.7178,
+          "evidence": []
+        },
+        {
+          "term": "machine learning",
+          "score": 24.0085,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "semantic analysis",
+          "score": 2.1681,
+          "evidence": []
+        },
+        {
+          "term": "international conference",
+          "score": 2.135,
+          "evidence": []
+        },
+        {
+          "term": "latent semantic",
+          "score": 2.1269,
+          "evidence": []
+        },
+        {
+          "term": "information retrieval",
+          "score": 1.7366,
+          "evidence": []
+        },
+        {
+          "term": "international journal",
+          "score": 1.6832,
+          "evidence": []
+        },
+        {
+          "term": "lsa",
+          "score": 1.6077,
+          "evidence": []
+        },
+        {
+          "term": "correspondence analysis",
+          "score": 1.5544,
+          "evidence": []
+        },
+        {
+          "term": "information systems",
+          "score": 1.5214,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "heijden",
+          "score": 58.9153,
+          "evidence": []
+        },
+        {
+          "term": "hessen",
+          "score": 58.6758,
+          "evidence": []
+        },
+        {
+          "term": "al-qahtani",
+          "score": 58.3165,
+          "evidence": []
+        },
+        {
+          "term": "amsler",
+          "score": 57.5015,
+          "evidence": []
+        },
+        {
+          "term": "choueka",
+          "score": 57.5015,
+          "evidence": []
+        },
+        {
+          "term": "lusignan",
+          "score": 57.5015,
+          "evidence": []
+        },
+        {
+          "term": "lesk",
+          "score": 56.4593,
+          "evidence": []
+        },
+        {
+          "term": "salton",
+          "score": 54.5187,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}
