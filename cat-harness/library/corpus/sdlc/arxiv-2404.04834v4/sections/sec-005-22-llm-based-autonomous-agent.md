@@ -1,0 +1,101 @@
+---
+doc_id: arxiv-2404.04834v4
+doc_title: "LLM-Based Multi-Agent Systems for Software Engineering: Literature Review, Vision and the Road Ahead"
+section_id: sec-005-22-llm-based-autonomous-agent
+section_title: "LLM-based Autonomous Agent"
+section_number: 2.2
+pages: 3-5
+source_pdf: arxiv-2404.04834v4.pdf
+source_sha256: df742fea7776a7c0
+toc_source: outline
+---
+Formally speaking, an LLM-based agent can be described by the tuple ⟨𝐿,𝑂, 𝑀, 𝑃,𝐴, 𝑅⟩[24], where:
+• 𝐿symbolizes the Large Language Model, serving as the agent’s cognitive core. It is equipped
+with extensive knowledge, potentially fine-tuned for specific domains, allowing it to make
+informed decisions based on observations, feedback, and rewards. Typically, an LLM suited for
+this role is trained on vast corpora of diverse textual data and comprises billions of parameters,
+such as models like ChatGPT1, Claude2, and Gemini3. These models exhibit strong zero-shot and
+few-shot learning capabilities, meaning they can generalize well to new tasks with little to no
+additional training. Interaction with the LLM typically occurs through prompts, which guide its
+reasoning and responses.
+• 𝑂stands for the Objective, the desired outcome or goal the agent aims to achieve. This defines
+the agent’s focus, driving its strategic planning and task breakdown.
+• 𝑀represents Memory, which holds information on both historical and current states, as well as
+feedback from external interactions.
+• 𝑃represents Perception, which represents the agent’s ability to sense, interpret, and understand
+its surroundings and inputs. This perception can involve processing structured and unstructured
+data from various sources such as text, visual inputs, or sensor data. Perception allows the agent
+to interpret the environment, transforming raw information into meaningful insights that guide
+decision-making and actions.
+• 𝐴signifies Action, encompassing the range of executions of the agent, from utilizing tools to
+communicating with other agents.
+1https://openai.com/chatgpt/
+2https://claude.ai/
+3https://gemini.google.com/app
+, Vol. 1, No. 1, Article . Publication date: July 2025.
+4
+Junda He, Christoph Treude, and David Lo
+• 𝑅refers to Rethink, a post-action reflective thinking process that evaluates the results and
+feedback, along with stored memories. Guided by this insight, the LLM-based agent then takes
+subsequent actions.
+2.3
+LLM-Based Multi-Agent Systems
+A multi-agent system is a computational framework composed of multiple interacting intelligent
+agents that interact and collaborate to solve complex problems or achieve goals beyond the capability
+of any single agent [144]. These agents communicate, coordinate, and share knowledge, often
+bringing specialized expertise to address tasks across diverse domains.
+With the integration of LLMs, LLM-Based Multi-Agent Systems have emerged. In this paper, we
+define that an LMA system comprises two primary components: an orchestration platform and
+LLM-based agents.
+2.3.1
+Orchestration Platform. The orchestration platform serves as the core infrastructure that
+manages interactions and information flow among agents. It facilitates coordination, communica-
+tion, planning, and learning, ensuring efficient and coherent operation. The orchestration platform
+defines various key characteristics:
+(1) Coordination Models: Defines how agents interact, such as cooperative (collaborating towards
+shared goals) [1], competitive (pursuing individual goals that may conflict) [147], hierarchical
+(organized with leader-follower relationships) [166], or mixed models.
+(2) Communication Mechanisms: Determines how the information flows between the agents: It
+defines the organization of communication channels, including centralized (a central agent
+facilitates communication [4]), decentralized (agents communicate directly [22]), or hierar-
+chical (information flows through layers of authority [166]). Moreover, it specifies the data
+exchanged among agents, often in text form. In software engineering contexts, this may include
+code snippets, commit messages [169], forum posts [42–44], bug reports [12], or vulnerability
+reports [55].
+(3) Planning and Learning Styles: The orchestration platform specifies how planning and learning are
+conducted within the multi-agent system. It determines how tasks are allocated and coordinated
+among agents. It includes strategies like Centralized Planning, Decentralized Execution (CPDE)
+– planning is conducted centrally, but agents execute tasks independently, or Decentralized
+Planning, Decentralized Execution (DPDE) – both planning and execution are distributed among
+agents.
+2.3.2
+LLM-Based Agents. Each agent may have unique abilities and specialized roles, enhancing
+the system’s ability to handle diverse tasks effectively. Agents can be:
+(1) Predefined or Dynamically Generated: Agent profiles can be explicitly predefined [48] or
+dynamically generated by LLMs [134], allowing for flexibility and adaptability.
+(2) Homogeneous or Heterogeneous: Agents may have identical functions (homogeneous) or
+diverse functions and expertise (heterogeneous).
+Each LLM-based agent can be represented as a node 𝑣𝑖in a graph 𝐺(𝑉, 𝐸), where edges 𝑒𝑖,𝑗∈𝐸
+represent interactions between agents 𝑣𝑖and 𝑣𝑗.
+3
+LITERATURE REVIEW
+In this section, we review recent studies on LMA systems in software engineering, organizing these
+applications across various stages of the software development lifecycle, including requirements
+engineering, code generation, quality assurance, and software maintenance. We also examine
+, Vol. 1, No. 1, Article . Publication date: July 2025.
+LLM-Based Multi-Agent Systems for Software Engineering:
+Literature Review, Vision and the Road Ahead
+5
+studies on LMA systems for end-to-end software development, covering multiple SDLC phases
+rather than isolated stages.
+Search Strategy: We conduct a keyword-based search on the DBLP publication database [28] to
+match paper titles. DBLP is a widely used resource in software engineering surveys [20, 23, 161],
+which indexes over 7.5 million publications across 1,800 journals and 6,700 academic conferences
+in computer science.
+Our search included two sets of keywords: one set targeting LLM-based Multi-Agent Systems
+(called [agent words]) and the other focusing on specific software engineering activities (called
+[SE words]). Papers may use variations of the same keyword. For example, the term “vulnerability”
+may appear as “vulnerable” or “vulnerabilities.” To address this, we use truncated terms like
+“vulnerab” to capture all related forms. For LMA systems, we used keywords: “Agent” OR “LLM” OR
+“Large Language Model” OR “Collaborat”. To ensure comprehensive coverage of SE activities, we
+incorporated phase-specific keywords for each stage of the SDLC into our search queries:
