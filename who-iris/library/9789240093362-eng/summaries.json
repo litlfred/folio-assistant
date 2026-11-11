@@ -1,0 +1,918 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "9789240093362-eng",
+  "summaries": [
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-000",
+      "source": "sections/sec-000-acknowledgements.md",
+      "source_hash": "1b2e3449752f52c3d9be8d499f700c72c9310ed9bcc2bcbaf28692c0ccdd851e",
+      "narrative": [
+        {
+          "text": "Credits the core development team from the WHO Department of Digital Health and Innovations, the WHO Department of Sexual and Reproductive Health and Research, Jhpiego, and Ona, lists external reviewers and consultative workshop participants, and acknowledges funding from the UK Foreign, Commonwealth and Development Office (FCDO) and the HRP Special Programme.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-001",
+      "source": "sections/sec-001-abbreviations.md",
+      "source_hash": "34b77e9147947af4845bb5792e2901510d7cf6d7b10e32c18e5951ba6ea93a22",
+      "narrative": [
+        {
+          "text": "Defines abbreviations and acronyms used throughout the handbook, including ANC, API, BPMN, CRDM, DAK, DHA, DICOM, DIIG, EA, FHIR, HL7, HRP, ICD-11, ICF, ICHI, IHE, ITU, JSON, LOINC, MAPS, MVP, OpenHIE, PCPOSS (person-centred point of service system), PHC, POS, SDG, SNOMED-GPS, UAT, UI, WHO, and WHO-FIC.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-002",
+      "source": "sections/sec-002-glossary.md",
+      "source_hash": "c8110fd73585e48cc2c2e364a8802b2d8ae1b6b9b197f62c2ccafd8d86cc17c4",
+      "narrative": [
+        {
+          "text": "Provides an alphabetical glossary of key digital health, software engineering, and primary health care terms used in the handbook—including algorithm, business process, care pathway, data dictionary, decision support logic/system/table, digital adaptation kits (DAKs), digitization, digitalization, digital transformation, enterprise architecture, functional and non-functional requirements, interoperability, longitudinal tracking, minimum viable product (MVP), person-centred point of service system (PCPOSS), SMART Guidelines, technical debt, user persona, user story, wireframes, and workflow—along with the opening glossary reference.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-003",
+      "source": "sections/sec-003-introduction.md",
+      "source_hash": "7403fdfc9b5eb6120794eb31507dbe5dfecfcbf5bc8b18e0b4166bc54f7c5d83",
+      "narrative": [
+        {
+          "text": "Completes the glossary reference list (items 2–24) and introduces Chapter 1, framing the progression from paper-based records through digitization and digitalization to digital transformation (Fig. 1), situating person-centred point of service systems (PCPOSSs) within the 2019 WHO digital health guideline Recommendation 8 on digital client tracking with decision support (Fig. 2) and within an integrated primary health care digital ecosystem (Fig. 3), and explaining how workflow-based needs assessments and SMART Guidelines support PCPOSS implementation.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-004",
+      "source": "sections/sec-004-11-person-centred-point-of-service-systems.md",
+      "source_hash": "301993090bb7454197b9caadc874e398b087cb2d2923e7c767d981306926bb1b",
+      "narrative": [
+        {
+          "text": "Defines person-centred point of service systems (PCPOSSs) as digital systems combining decision support systems, community-based information systems, electronic health records, and personal health records across WHO digital health intervention classifications; contrasts the clerical and quality burdens of paper or siloed reporting systems with a combined PCPOSS built on the 'collect once, use for many purposes' principle (Fig. 4) and semantic/syntactic interoperability standards (such as ICD-11, SNOMED-GPS, and HL7 FHIR).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-005",
+      "source": "sections/sec-005-12-smart-guidelines.md",
+      "source_hash": "f0b838fac6f8da5d82f3d599a63d7cea3d80bb8d022a6c3e4d56b45ddb2cf718",
+      "narrative": [
+        {
+          "text": "Summarizes the WHO SMART Guidelines approach and its five reusable knowledge layers—L1 Narrative (enhanced guidelines), L2 Operational (Digital adaptation kits), L3 Machine readable (implementation guides), L4 Executable (reference applications), and L5 Dynamic (precision health models)—and illustrates how countries adapt and localize these layers when implementing a PCPOSS (Fig. 5).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-006",
+      "source": "sections/sec-006-13-how-this-handbook-was-developed.md",
+      "source_hash": "48a27c14053ce35d682d9d793bf7d3190859b70ab30b7578dfd7116be23d6217",
+      "narrative": [
+        {
+          "text": "Describes the handbook's development through expert consultations, implementation studies in Bangladesh, Pakistan, and Indonesia, the Collaborative Requirements Development Methodology (CRDM), and the Principles for Digital Development ('establish people-first data practices' and 'design with people'), notes conflict-of-interest declarations, and introduces Chapter 2 on how stakeholders can use the software- and health-area-agnostic handbook.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-007",
+      "source": "sections/sec-007-21-targeted-scenarios-of-digital-readiness.md",
+      "source_hash": "25deafb9f5ff510ae3ae9a87deb5cc9c4ed623573b37cc17ae23c0cabb592c85",
+      "narrative": [
+        {
+          "text": "Defines the two primary digital readiness scenarios targeted by the handbook: transitioning from a paper-only point-of-care system to an optimized digital system, and consolidating or upgrading partially digitized, siloed PCPOSSs operating alongside paper records into an integrated, interoperable PCPOSS.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-008",
+      "source": "sections/sec-008-22-targeted-users.md",
+      "source_hash": "53de0593f6664897a63bff21a15c6ea9bd3cd420502b0eaa2c07936c270ccc5a",
+      "narrative": [
+        {
+          "text": "Identifies the primary audience of the handbook as business analysts, solution designers, health informaticians, public health programme teams, implementing partners, and software vendors bridging clinical/public health domains and technology, while emphasizing that end-users (health workers and health service users) must be actively engaged throughout requirements gathering, validation, and testing.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-009",
+      "source": "sections/sec-009-23-before-using-this-resource.md",
+      "source_hash": "fc54fa1699baacf80dafe748501aa604b9b2279174b043e42053c68b50d379d9",
+      "narrative": [
+        {
+          "text": "Outlines strategic and infrastructural prerequisites required before using the handbook—situating it in Phase 5 (Determining health content requirements) of the seven-phase digital health enterprise lifecycle (Fig. 6)—and provides a readiness checklist covering value proposition, alignment with national strategy, scope control, unique identification (Box 1), data privacy governance, sustainable financing, target end-users, product ownership, and interoperability.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-010",
+      "source": "sections/sec-010-24-the-stepwise-approaches-to-digitizing.md",
+      "source_hash": "39e188a45448b4485951e332964fdc4652dc32b80f79e73edbd4cee9e2d53ee8",
+      "narrative": [
+        {
+          "text": "Summarizes the four core phases structuring the handbook—understanding user requirements, undertaking design and adaptation, conducting training, testing and roll-out, and preparing for scale-up—and explains how teams apply them iteratively using agile prototyping and continuous user feedback loops from minimum viable product (MVP) to subsequent releases (Fig. 7).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-011",
+      "source": "sections/sec-011-25-choices-for-software-and-digital-applications.md",
+      "source_hash": "7ab088e8e31de90f28468c8beb25ba4798db0b6df897a7c83f0d61dc29e682a0",
+      "narrative": [
+        {
+          "text": "Clarifies that the handbook is software-neutral and recommends thorough documentation and collaboration tools during requirements gathering and design, then introduces Chapter 3 (Understand user requirements) with an overview of stakeholder roles, required strategic and clinical inputs, Annex worksheet tools (Annexes 3–13 and WHO DAKs), and expected requirements documentation outputs.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-012",
+      "source": "sections/sec-012-31-follow-key-requirement-gathering-methods.md",
+      "source_hash": "1b5ef80dae4e22d78a7830006b17e9eab24848918f03687eac5acb6b1b7b01c5",
+      "narrative": [
+        {
+          "text": "Details four complementary requirement-gathering methods—desk reviews of local registers, reporting tools, and WHO Digital adaptation kits (DAKs); workplace observations of health workers with attention to minimizing the Hawthorne effect; semi-structured and follow-up interviews using broad-to-narrow questioning and the '5 Whys' root-cause technique (Fig. 8); and multi-stakeholder requirements-gathering validation workshops.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-013",
+      "source": "sections/sec-013-32-get-to-know-the-users.md",
+      "source_hash": "7857cf4bb4602c375999be89e0833cdb5f038e9793ea16d1523370b5374007f6",
+      "narrative": [
+        {
+          "text": "Explains how to apply human-centred design to understand target users by creating comprehensive user personas (or interim proto-personas validated in the field) covering demographics, work environment, official and actual duties, challenges, and motivations; documenting illustrative use cases; and authoring structured 'As a… I want to… so that…' user stories that translate into functional requirements.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-014",
+      "source": "sections/sec-014-33-map-business-processes-and-workflows.md",
+      "source_hash": "7de912e89123ad363abe941f2fbde3e27032afdabed6e8cff14b979f50454a47",
+      "narrative": [
+        {
+          "text": "Describes how to inventory clinical and operational care pathways in a business process matrix (illustrated with the family planning DAK, Fig. 9), map current ('as-is') and optimized ('to-be') workflows using Business Process Model and Notation (BPMN 2.0) symbols (Table 1), label and annotate workflow steps (illustrated with the ANC DAK registration workflow, Figs. 10–11), and conduct as-is/to-be analyses to eliminate redundancies and bottlenecks.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-015",
+      "source": "sections/sec-015-34-streamline-data-collection-and-indicator-repo.md",
+      "source_hash": "0c4366038848c4615076ca9f3f7a05dd68abf3515fb1986effcf1906ee36ea76",
+      "narrative": [
+        {
+          "text": "Presents a five-step process for streamlining paper registers into a PCPOSS: inventorying primary service delivery and summary reporting forms (Annex 7), mapping form data elements in a consolidated spreadsheet (Annex 8), compiling aggregate indicators calculated from primary point-of-care data under the 'collect once, use for many purposes' principle (Annex 9), and removing duplicated, orphaned, or non-essential data elements.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-016",
+      "source": "sections/sec-016-35-create-a-data-dictionary.md",
+      "source_hash": "4bdc2887db7ce949ff90539f70f2f8ab3f71807d6497732cd5a8631725a2cba4",
+      "narrative": [
+        {
+          "text": "Provides the decision table for reconciling duplicated, non-essential, and orphaned data elements (Fig. 12 continuation) and explains how to construct a streamlined data dictionary—distinguishing database-design vs. UI-design data dictionaries—and map data elements to standardized semantic classifications and terminologies (such as WHO-FIC/ICD-11, LOINC, and SNOMED-GPS) and syntactic standards (HL7 FHIR), leveraging WHO DAKs and terminology services such as Open Concept Lab.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-017",
+      "source": "sections/sec-017-36-determine-decision-support-logic.md",
+      "source_hash": "57918a5da82054b54f5c3d4a22247d8ebce143680c15a3a69c846f855fa021f6",
+      "narrative": [
+        {
+          "text": "Explains how to document clinical care pathway decision-support logic—covering scheduling, clinical prompts, risk assessment/triage, and medical eligibility grounded in WHO or national guidelines—using a decision-support logic matrix (illustrated from the HIV DAK, Fig. 13), visual decision trees (illustrated from the ANC DAK, Fig. 14), and DMN-aligned decision-support tables (Annex 11).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-018",
+      "source": "sections/sec-018-37-map-health-service-schedules.md",
+      "source_hash": "4bc92d9efbcf57b0cd952783070daf22cdb07795e3a089a0890be90791ffb158",
+      "narrative": [
+        {
+          "text": "Describes how to document recurring and prescribed health service schedules (such as antenatal care contacts, immunizations, and laboratory follow-ups) in spreadsheets organized by health worker occupational group, capturing trigger events, intervals, follow-up actions, expiration criteria, and schedule deviations (Annex 12).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-019",
+      "source": "sections/sec-019-38-gather-and-prioritize-requirements.md",
+      "source_hash": "ea3aafb7ba6a3d64a2032e1aba61e987366981528cbd6809bc66b541dbc76581",
+      "narrative": [
+        {
+          "text": "Explains how to translate user stories, workflows, and data dictionaries into functional and non-functional requirements, prioritize them into high, medium, and low tiers using IEEE software requirements specification criteria (Annex 13), verify completion of Chapter 3 checkpoints, and transition to Chapter 4 (Undertake design and adaptation) with an overview of technology partner roles, inputs, tools, and outputs.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-020",
+      "source": "sections/sec-020-41-finalize-software-and-vendor-selection.md",
+      "source_hash": "6f40091d8b42f5e1631e7a60e86d2fb377ac14aa67bb55dfa75e41425c8677d8",
+      "narrative": [
+        {
+          "text": "Outlines how to conduct an objective landscape analysis and scorecard evaluation to select software and vendors—including leveraging SMART Guidelines L4 executable reference applications such as the WHO Digital ANC module—and provides a four-part checklist covering pre-evaluation, software features and interoperability, software ownership and total cost of ownership, and vendor reputation and support.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-021",
+      "source": "sections/sec-021-42-validate-functional-requirements.md",
+      "source_hash": "6fb38e1ed4c291f38f5ab57be743111177cf1fe94c17ccfc62ef69b71314dc29",
+      "narrative": [
+        {
+          "text": "Recommends holding iterative, component-by-component stakeholder workshops with the selected technology partner to validate and confirm functional requirements prior to software construction, ensuring alignment with business processes and preventing costly rework.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-022",
+      "source": "sections/sec-022-43-develop-and-test-prototype-design.md",
+      "source_hash": "141743a272a37f22707f7559fe00c967df42d450e7d459756a914ea047de0841",
+      "narrative": [
+        {
+          "text": "Describes progressive UI design and prototyping across increasing fidelity levels—paper sketches, wireframes, visual mock-ups, and clickable high-fidelity prototypes (Fig. 15)—and details a five-step user-centred design testing cycle (designing test use cases, creating multiple prototypes, validating with end-users via role play, documenting structured feedback, and iterating while guarding against scope creep).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-023",
+      "source": "sections/sec-023-44-design-system-architecture.md",
+      "source_hash": "dab6b08cf6c278b7256aec9b5e5687198078a3fc0b8fe601071fc7bd195d4a0f",
+      "narrative": [
+        {
+          "text": "Explains how to design a PCPOSS system architecture within a broader Enterprise Architecture (EA) using frameworks such as TOGAF (business, data, application, and technology domains, Table 2) and OpenHIE; defines syntactic, semantic, organizational, and legal interoperability (Table 3); and catalogues global open standards across terminology/classification (WHO-FIC, ICD-11, ICF, ICHI, LOINC, SNOMED-GPS), health content (DAKs, WHO guidelines), communication (HL7 FHIR, IHE, DICOM, GS1), and privacy protection laws (Table 4).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-024",
+      "source": "sections/sec-024-45-build-and-quality-assurance.md",
+      "source_hash": "e0a691610e1231dbcb4adbb8a908c5b50ea8080f124f98ff512869f107aa6291",
+      "narrative": [
+        {
+          "text": "Outlines key elements of an agile software build (continuous user engagement, vendor communication, comprehensive documentation, and safety-first quality assurance), specifies seven categories of QA system testing (installation, stress, security, graphic UI, integration, general QA, and accessibility testing), provides the Chapter 4 completion checkpoint, and introduces Chapter 5 (Conduct training, testing and roll-out) with its stakeholder roles, inputs, tools, and outputs.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-025",
+      "source": "sections/sec-025-51-develop-and-conduct-training.md",
+      "source_hash": "46f76226b0c66d617bb9ae310ccb98c06744b0a8a732cc51b8de1cee32cec8d1",
+      "narrative": [
+        {
+          "text": "Identifies the three categories of training required before wide deployment—training end-users on PCPOSS use, training technical staff on PCPOSS maintenance, and training on clinical service delivery changes (managed by national health programmes)—and recommends piloting the training curriculum on a small scale first.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-026",
+      "source": "sections/sec-026-52-test-user-acceptance-and-deployment-readiness.md",
+      "source_hash": "697c96ab0bb3d91f0d5ae702b8c348b314405e228afbf12a4cbab3e45fa24627",
+      "narrative": [
+        {
+          "text": "Describes conducting user acceptance testing (UAT) of the beta PCPOSS with a small group of trained end-users and advisers in real workflows to catch bugs and usability barriers before production roll-out, alongside detailed guidance on culturally tailored, competency-based end-user training (including device familiarization and training of trainers) and ongoing maintenance training for local technology partners.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-027",
+      "source": "sections/sec-027-53-deploy-the-system.md",
+      "source_hash": "2cba5df02911d7df37767a8bb1c1e1dc99a1eb83d57843a33da7fc7e71cfa09d",
+      "narrative": [
+        {
+          "text": "Details the creation of realistic UAT test cases and test data (including edge cases and clinical decision-support verification) and outlines the operational steps led by the technology partner to deploy the validated PCPOSS into a production environment—covering site infrastructure, hardware logistics, software installation, data migration, account configuration, site testing, non-disruptive scheduling, and building user trust.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-028",
+      "source": "sections/sec-028-54-manage-feedback-and-system-maintenance.md",
+      "source_hash": "4ec4788c893291a71b985c8f1b16a1d64f1752ec6122f873d471dc96c40f8ce5",
+      "narrative": [
+        {
+          "text": "Covers establishing standard operating procedures for continuous feedback management, bug resolution, hardware/software maintenance, and post-deployment monitoring and evaluation during roll-out, then introduces Chapter 6 (Prepare for scale-up) with an overview of stakeholder roles, inputs, M&E and MAPS toolkit resources, and outputs for phasing out paper and legacy systems.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-029",
+      "source": "sections/sec-029-61-determine-readiness-for-scaling-up.md",
+      "source_hash": "34a85e81196304cd18f489a6de27df115bae69f5a1a27f2f89b0f7754d2a411a",
+      "narrative": [
+        {
+          "text": "States the prerequisite for scale-up: verifying both that the PCPOSS is technically and operationally ready to scale and that the broader health system is ready to phase out paper and legacy systems.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-030",
+      "source": "sections/sec-030-62-plan-for-phase-out-of-legacy-systems.md",
+      "source_hash": "5e7e89edd2bb3696f0603bdd89611326266ffee69ce2cf6784c06c7129158792",
+      "narrative": [
+        {
+          "text": "Explains how to assess scale-up readiness using the WHO MAPS toolkit and Digital Health Atlas and how to set SMART (specific, measurable, attainable, relevant, time-bound) objectives and legal/operational policies (including paper backup SOPs for downtime) for phasing out legacy systems, illustrated by Table 5's comprehensive indicators across system functionality, connectivity, power, user adoption, efficiency, care quality, costs, and health outcomes.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-031",
+      "source": "sections/sec-031-63-monitor-and-evaluate-progress-on-objectives.md",
+      "source_hash": "403abf8149953e904f8a73aea537e14e2f6b1b7ae684f28781c6da865af6b0ce",
+      "narrative": [
+        {
+          "text": "Emphasizes establishing a rigorous monitoring and evaluation plan to track progress against scale-up objectives and points implementers, researchers, and policy-makers to WHO's Monitoring and evaluating digital health interventions guide for assessing implementation fidelity and impact.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-032",
+      "source": "sections/sec-032-64-phase-out-of-legacy-systems.md",
+      "source_hash": "07c41d98b8594259d3a382ae7879abc6247839ec57ac8f885e76aa0d50001c7f",
+      "narrative": [
+        {
+          "text": "Advises phasing out paper and legacy digital systems in a staged, region-by-region or province-by-province manner rather than waiting for nationwide readiness, enabling manageable resource allocation and cross-provincial learning in coordination with key stakeholders.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-033",
+      "source": "sections/sec-033-65-adopt-change-management-practices.md",
+      "source_hash": "a10594d03d146966363b1b925b19fd68c61280b8d4ac5a7b7eef02c22be1f646",
+      "narrative": [
+        {
+          "text": "Discusses embedding multi-level change management strategies and cultivating a culture of electronic data use across health workers, supervisors, and programme managers—linking mature data use to SMART Guidelines Layer 5 (Dynamic guidelines and advanced analytics)—while warning that a backup paper system must always remain available for crisis or cybersecurity resilience.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-034",
+      "source": "sections/sec-034-references.md",
+      "source_hash": "6a3a252738119cdff284c25d279f964ba7059313fb5c60e88440bb530d4aa9f1",
+      "narrative": [
+        {
+          "text": "Lists the 107 bibliographic references cited across the handbook, spanning WHO digital health guidelines, SMART Guidelines and Digital adaptation kits (DAKs), business process management and BPMN standards, human-centred design toolkits, enterprise architecture and interoperability frameworks (TOGAF, OpenHIE, HL7 FHIR, WHO-FIC, LOINC, SNOMED-GPS), data protection laws, and M&E/scale-up toolkits, and introduces the Annexes section.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-035",
+      "source": "sections/sec-035-principles-for-digital-development.md",
+      "source_hash": "2beb771bda15c40fc56e314a08137157700cf4a43d208f3636825334abac0e94",
+      "narrative": [
+        {
+          "text": "Presents Annex 1 (summarizing the nine Principles for Digital Development: understand the existing ecosystem, share/reuse/improve, design with people, design for inclusion, build for sustainability, establish people-first data practices, create open and transparent practices, anticipate and mitigate harms, and use evidence to improve outcomes) and Annex 2 (a structured facility-visit interview worksheet for capturing health workers' background, daily tasks, patient load, outreach, referrals, communication, barriers, and motivations).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-036",
+      "source": "sections/sec-036-observations-worksheet.md",
+      "source_hash": "04f703ac579d47b6efacd1058c8eecb683836e1df042beaab6d34c4ae6139393",
+      "narrative": [
+        {
+          "text": "Presents Annex 3, a two-part facility observations worksheet for recording (1) the facility work environment—services provided, catchment population, staffing counts, electricity, network connectivity, device usage, and operating hours—and (2) the step-by-step path and duration of each observed health service user visit from clinic arrival through departure and external follow-up.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-037",
+      "source": "sections/sec-037-user-persona-worksheet.md",
+      "source_hash": "7c8da07cca6f801b7cafbebdde1445ca928706286fa0c9bea828ac6cb7ab2e62",
+      "narrative": [
+        {
+          "text": "Presents Annex 4, a structured user persona worksheet for profiling each end-user type across demographics, persona name/photo/occupational group, expected vs. actual daily/weekly/monthly responsibilities, work context and infrastructure connectivity, routine challenges (with interview quotes), and personal/professional motivations and performance metrics.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-038",
+      "source": "sections/sec-038-user-stories-worksheet.md",
+      "source_hash": "b3614ee42799d4eb6fa46e5d3d7d66c1b9dceb52f18ed8790a9f544f948d98c4",
+      "narrative": [
+        {
+          "text": "Presents Annex 5, a three-column worksheet template ('As a…', 'I want to…', 'So that…') with an obstetric referral example for capturing end-user needs and translating them into functional and non-functional system requirements.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-039",
+      "source": "sections/sec-039-business-process-matrix-guide.md",
+      "source_hash": "285e836b5ab924ff4812780e74ce1f2d8b42b51675a777190d18ec67608cdbdd",
+      "narrative": [
+        {
+          "text": "Presents Annex 6, a guide defining the six columns of a business process matrix—business process number, process name, process ID (e.g., DAK convention FP.B), participating personas (corresponding to BPMN swim lanes), process objectives, and task set with start/end triggers.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-040",
+      "source": "sections/sec-040-form-inventory-guide.md",
+      "source_hash": "78a2630250308131e62989d0c8feae74e028c90fa37cae5f90676e7cda7de6c0",
+      "narrative": [
+        {
+          "text": "Presents Annex 7, a column-by-column guide for logging paper and digital forms in a forms inventory table, capturing form ID, form version/date, local and translated form titles, form type (service delivery register vs. supervisory reporting form), responsible and receiving occupational groups, submission frequency, linked workflow activity ID, and owning authority.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-041",
+      "source": "sections/sec-041-form-data-mapping-guide.md",
+      "source_hash": "4494e34561d8caa66a81439cdac934eb66b1f2962cbf8ce3fb5d4f997876c6dd",
+      "narrative": [
+        {
+          "text": "Presents Annex 8, a comprehensive column guide for mapping form data elements in a spreadsheet—covering activity ID, form ID, original and standardized data element labels, definitions, HL7 FHIR/UCUM-aligned data types and quantity subtypes, calculations, optionality (R/O/C) and conditionality, duplication flags, functional groupings, linkages to aggregate indicators, decision-support tables, and scheduling tables, orphaned record flags, and mappings/relationships to standardized terminologies (ICD-11, SNOMED-GPS, LOINC).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-042",
+      "source": "sections/sec-042-aggregate-indicator-mapping-guide.md",
+      "source_hash": "4c1cc90a75525fb549c3715d1bbf5104571386094e4c2bccc7471d279aba8a97",
+      "narrative": [
+        {
+          "text": "Presents Annex 9 (a guide for documenting aggregate indicators calculated from point-of-care data, including indicator ID, name, definition, numerator/denominator descriptions and data-dictionary-linked formulas, reporting frequency, disaggregation, targets/alerts, and guideline references), Annex 10 (guides for the decision-support logic overview matrix and scheduling logic overview matrix, with links to five WHO DAKs), and the opening field definitions and DMN hit policy indicators (Unique, Rule order, First) of Annex 11.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-043",
+      "source": "sections/sec-043-template-for-a-decision-support-table.md",
+      "source_hash": "571631c92d936b8fa39ced96103a41ea28b8def746a3c74f2079d1e446108550",
+      "narrative": [
+        {
+          "text": "Presents the DMN-adapted decision-support table template for Annex 11—showing how hit policy (U/R/F), rule IDs, conjunctive (same-row AND) and disjunctive (different-row OR) input expressions, system actions, data-element outputs, health worker guidance displays, annotations, and guideline references are structured—along with links to five WHO DAKs containing detailed decision-support table examples.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-044",
+      "source": "sections/sec-044-scheduling-logic-table-guide.md",
+      "source_hash": "34b8c89db73fb83b9098458a42a560dc795fbfbd31ae3cf6ef6880f753e9c0fd",
+      "narrative": [
+        {
+          "text": "Presents Annex 12, an illustrative guide and worked example (using the hepatitis B birth dose vaccination schedule) for documenting health service scheduling logic across service name, description, trigger event and date, creation condition, due/overdue/expiration date formulas, completion action, safety risks and alternative schedules, implementation comments, and WHO guideline references.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-045",
+      "source": "sections/sec-045-prioritization-of-requirements-guide.md",
+      "source_hash": "15dd7aac7c415e2f29b93c4ded2eb73f0cad7ef1735a59498eb47fd64562af5f",
+      "narrative": [
+        {
+          "text": "Presents Annex 13, a table guide for transparently documenting and prioritizing system requirements by recording requirement ID, description, type (functional vs. non-functional), priority tier (high/'need-to-have', medium/'should-have', low/'nice-to-have'), stakeholder/guideline/regulatory sources, and stakeholder validation comments.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-046",
+      "source": "sections/sec-046-hl7-fhir-standard-components.md",
+      "source_hash": "df323e9eb5127056f57fcf97d6042d934e0d5087b6584f376134def7766e975b",
+      "narrative": [
+        {
+          "text": "Presents Annex 14, defining the core components of the HL7 FHIR standard—FHIR Resources, FHIR Implementation Guides (including their role as SMART Guidelines Layer 3 machine-readable artefacts building on Layer 2 DAKs), FHIR Profiles, FHIR Stores, and FHIR APIs—followed by Annex 14 references and back-matter WHO contact details.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    },
+    {
+      "block": "library/9789240093362-eng/blocks/prose-sec-front-matter",
+      "source": "sections/sec-front-matter.md",
+      "source_hash": "e5627ce18d7397292fe8f728401017c6e2a2d00da827a377480ce15723c838c3",
+      "narrative": [
+        {
+          "text": "Presents the title page, ISBNs (978-92-4-009336-2 electronic; 978-92-4-009337-9 print), 2024 World Health Organization copyright and CC BY-NC-SA 3.0 IGO licensing terms, suggested citation, disclaimers, and full table of contents (Chapters 1–6, References, and Annexes 1–14) for the Digital transformation handbook for primary health care: optimizing person-centred point of service systems.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://1608b136-6ef0-46a7-8822-4a3063d6f630"
+          },
+          "drafted_at": "2026-10-28"
+        }
+      ]
+    }
+  ]
+}
