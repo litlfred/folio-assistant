@@ -2032,6 +2032,14 @@ jobs:
       - name: tool definitions
         run: bun run cat check:tools
 
+      # Every workflow step that produces something is a registered Tool linked
+      # to a process, per layer against that layer's own baseline
+      # (cat-harness-tools `check-workflow-tools.ts`, d59aad64). It was a check
+      # script no workflow ran, which `gates-workflows.test.ts` > "no check
+      # script is unrun" refuses: a check nothing runs is green by absence.
+      - name: workflow steps are Tools linked to a process
+        run: bun run cat check:workflow-tools
+
       # Every voice rule cites a library section that is actually there.
       #
       # A voice is a rule set OVERLAID on the house voice, and 36 of this
