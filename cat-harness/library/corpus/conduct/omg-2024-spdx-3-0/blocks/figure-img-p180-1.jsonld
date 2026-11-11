@@ -1,0 +1,95 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/omg-2024-spdx-3-0/blocks/figure-img-p180-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p180-1.png",
+  "pageStart": 180,
+  "pageEnd": 180,
+  "narrative": [
+    {
+      "text": "UML class diagram of the Security profile. Vulnerability (publishedTime, modifiedTime, withdrawnTime) specialises Core/Artifact. The abstract VulnAssessmentRelationship specialises Core/Relationship, constrains 'to' to exactly one Element, and adds assessedElement, suppliedBy and the three times; it is specialised by CvssV2/V3/V4VulnAssessmentRelationship (score, severity, vectorString), EpssVulnAssessmentRelationship (probability, percentile), ExploitCatalogVulnAssessmentRelationship (catalogType, exploited, locator), SsvcVulnAssessmentRelationship (decisionType) and the abstract VexVulnAssessmentRelationship (vexVersion, statusNotes). The VEX class has four subclasses: VexAffected (actionStatement[1], actionStatementTime), VexFixed, VexNotAffected (justificationType, impactStatement, impactStatementTime) and VexUnderInvestigation. Enumerations: CvssSeverityType, ExploitCatalogType, SsvcDecisionType, VexJustificationType.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+      },
+      "drafted_at": "2026-10-03",
+      "lang": "en"
+    },
+    {
+      "text": "Diagramme de classes UML du profil Security. Vulnerability (publishedTime, modifiedTime, withdrawnTime) spécialise Core/Artifact. La classe abstraite VulnAssessmentRelationship spécialise Core/Relationship, restreint « to » à exactement un Element et ajoute assessedElement, suppliedBy et les trois dates ; elle est spécialisée par CvssV2/V3/V4VulnAssessmentRelationship (score, severity, vectorString), EpssVulnAssessmentRelationship (probability, percentile), ExploitCatalogVulnAssessmentRelationship (catalogType, exploited, locator), SsvcVulnAssessmentRelationship (decisionType) et la classe abstraite VexVulnAssessmentRelationship (vexVersion, statusNotes). La classe VEX a quatre sous-classes : VexAffected (actionStatement[1], actionStatementTime), VexFixed, VexNotAffected (justificationType, impactStatement, impactStatementTime) et VexUnderInvestigation. Énumérations : CvssSeverityType, ExploitCatalogType, SsvcDecisionType, VexJustificationType.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "fr"
+    },
+    {
+      "text": "Diagrama de clases UML del perfil Security. Vulnerability (publishedTime, modifiedTime, withdrawnTime) especializa Core/Artifact. La clase abstracta VulnAssessmentRelationship especializa Core/Relationship, restringe «to» a exactamente un Element y añade assessedElement, suppliedBy y las tres fechas; la especializan CvssV2/V3/V4VulnAssessmentRelationship (score, severity, vectorString), EpssVulnAssessmentRelationship (probability, percentile), ExploitCatalogVulnAssessmentRelationship (catalogType, exploited, locator), SsvcVulnAssessmentRelationship (decisionType) y la clase abstracta VexVulnAssessmentRelationship (vexVersion, statusNotes). La clase VEX tiene cuatro subclases: VexAffected (actionStatement[1], actionStatementTime), VexFixed, VexNotAffected (justificationType, impactStatement, impactStatementTime) y VexUnderInvestigation. Enumeraciones: CvssSeverityType, ExploitCatalogType, SsvcDecisionType, VexJustificationType.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "es"
+    },
+    {
+      "text": "مخطط أصناف UML لملف التعريف Security. يخصّص Vulnerability (publishedTime، modifiedTime، withdrawnTime) الصنفَ Core/Artifact. والصنف المجرّد VulnAssessmentRelationship يخصّص Core/Relationship، ويقيّد «to» بعنصر Element واحد بالضبط، ويضيف assessedElement وsuppliedBy والأوقات الثلاثة؛ وتخصّصه الأصناف CvssV2/V3/V4VulnAssessmentRelationship (score، severity، vectorString) وEpssVulnAssessmentRelationship (probability، percentile) وExploitCatalogVulnAssessmentRelationship (catalogType، exploited، locator) وSsvcVulnAssessmentRelationship (decisionType) والصنف المجرّد VexVulnAssessmentRelationship (vexVersion، statusNotes). ولصنف VEX أربعة أصناف فرعية: VexAffected (actionStatement[1]، actionStatementTime) وVexFixed وVexNotAffected (justificationType، impactStatement، impactStatementTime) وVexUnderInvestigation. التعدادات: CvssSeverityType وExploitCatalogType وSsvcDecisionType وVexJustificationType.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ar"
+    },
+    {
+      "text": "Диаграмма классов UML профиля Security. Vulnerability (publishedTime, modifiedTime, withdrawnTime) специализирует Core/Artifact. Абстрактный VulnAssessmentRelationship специализирует Core/Relationship, ограничивает «to» ровно одним Element и добавляет assessedElement, suppliedBy и три отметки времени; его специализируют CvssV2/V3/V4VulnAssessmentRelationship (score, severity, vectorString), EpssVulnAssessmentRelationship (probability, percentile), ExploitCatalogVulnAssessmentRelationship (catalogType, exploited, locator), SsvcVulnAssessmentRelationship (decisionType) и абстрактный VexVulnAssessmentRelationship (vexVersion, statusNotes). У класса VEX четыре подкласса: VexAffected (actionStatement[1], actionStatementTime), VexFixed, VexNotAffected (justificationType, impactStatement, impactStatementTime) и VexUnderInvestigation. Перечисления: CvssSeverityType, ExploitCatalogType, SsvcDecisionType, VexJustificationType.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ru"
+    },
+    {
+      "text": "Security 配置文件的 UML 类图。Vulnerability（publishedTime、modifiedTime、withdrawnTime）特化 Core/Artifact。抽象类 VulnAssessmentRelationship 特化 Core/Relationship，将“to”限定为恰好一个 Element，并增加 assessedElement、suppliedBy 和三个时间；特化它的有 CvssV2/V3/V4VulnAssessmentRelationship（score、severity、vectorString）、EpssVulnAssessmentRelationship（probability、percentile）、ExploitCatalogVulnAssessmentRelationship（catalogType、exploited、locator）、SsvcVulnAssessmentRelationship（decisionType）以及抽象类 VexVulnAssessmentRelationship（vexVersion、statusNotes）。VEX 类有四个子类：VexAffected（actionStatement[1]、actionStatementTime）、VexFixed、VexNotAffected（justificationType、impactStatement、impactStatementTime）和 VexUnderInvestigation。枚举：CvssSeverityType、ExploitCatalogType、SsvcDecisionType、VexJustificationType。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/omg-2024-spdx-3-0/sections/sec-325",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/omg-2024-spdx-3-0",
+  "provenance": "ingested"
+}
