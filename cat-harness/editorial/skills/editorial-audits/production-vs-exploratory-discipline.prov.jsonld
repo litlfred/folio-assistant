@@ -1,0 +1,27 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of production-vs-exploratory-discipline.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "editorial/skills/editorial-audits/production-vs-exploratory-discipline.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "editorial/skills/editorial-audits/production-vs-exploratory-discipline.md#provenance-1"
+        }
+      ]
+    },
+    {
+      "@id": "editorial/skills/editorial-audits/production-vs-exploratory-discipline.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Why this skill exists",
+      "prov:value": "## Why this skill exists\n\nThe single most common churn-inducing antipattern in a results-driven\nproject: **an agent probes empirically, finds a numerical near-match,\nand promotes it to production** before the near-match has any\nderivation. A \"5.6 ppm match\" found by a search at one parameter value\nis, much more often than not, a coincidence — not structure. This skill\ncodifies the discipline that short-circuits the propose → flag → restore\ncycle: escalate *up front* rather than after review catches it."
+    }
+  ]
+}

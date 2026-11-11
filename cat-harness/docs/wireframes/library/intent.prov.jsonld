@@ -1,0 +1,170 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of intent.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/library/intent.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/library/intent.md#provenance-1"
+        },
+        {
+          "@id": "docs/wireframes/library/intent.md#provenance-2"
+        },
+        {
+          "@id": "docs/wireframes/library/intent.md#provenance-3"
+        },
+        {
+          "@id": "docs/wireframes/library/intent.md#provenance-4"
+        },
+        {
+          "@id": "docs/wireframes/library/intent.md#provenance-5"
+        },
+        {
+          "@id": "docs/wireframes/library/intent.md#provenance-6"
+        },
+        {
+          "@id": "docs/wireframes/library/intent.md#provenance-7"
+        },
+        {
+          "@id": "docs/wireframes/library/intent.md#provenance-8"
+        },
+        {
+          "@id": "docs/wireframes/library/intent.md#provenance-9"
+        },
+        {
+          "@id": "docs/wireframes/library/intent.md#provenance-10"
+        },
+        {
+          "@id": "docs/wireframes/library/intent.md#provenance-11"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/library/intent.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Library visualiser — as-is intent",
+      "prov:value": "**Who it is for:** a librarian or maintainer of an instance's L1 corpus (the ingested documents). The generator quotes the owner: *\"need (srotable) lisiting (w/ metadata) and folio/desktop view\"*."
+    },
+    {
+      "@id": "docs/wireframes/library/intent.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Library visualiser — as-is intent",
+      "prov:value": "source changed\", \"rejected — back in the queue\", \"not yet summarised\". Owner, 2026-09-24: *\"on library/ page, the extract of a node is shown, but no agentic summary\"*; and on scope, *\"Make as QA sidecar as part of general doc ingestion to slowly drain.\"*\n- see how much of the summary drain is left: a badge counts the prose blocks not yet summarised and the agent drafts awaiting a person, and an opened entry states its own count.",
+      "cat-harness:refs": [
+        "2026-09-24"
+      ],
+      "dcterms:date": [
+        "2026-09-24"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/library/intent.md#provenance-3",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Library visualiser — as-is intent",
+      "prov:value": "The page is otherwise read-only by the owner's ruling (*\"just on that subgraph w/o edit functionality\"*)."
+    },
+    {
+      "@id": "docs/wireframes/library/intent.md#provenance-4",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Observed on main (re-checked against main 0bcf94bd)",
+      "prov:value": "Since e112deae the generator adds a cover avatar per entry (bean `zrvt`, issue #1006) and moves \"Pull out to folio\" from the last cell to the first.",
+      "cat-harness:refs": [
+        "bean zrvt",
+        "#1006"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/library/intent.md#provenance-5",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "Findings",
+      "prov:value": "**Five columns are off-screen even at desktop width.** The page action is now reachable: \"Pull out to folio\" moved to the first cell, so finding 1 of the earlier drawing (the action past the right edge) is fixed. But the first cell is now 391 px and does not wrap, and the table has grown to 1820 px."
+    },
+    {
+      "@id": "docs/wireframes/library/intent.md#provenance-6",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Findings",
+      "prov:value": "## Update, 2026-09-24: the agent summary beside the extract\n\nThe blocks panel (bean `lrmo`) showed a prose block's extract and, in its last column, only a narrative STATE. It now carries the block's agent summary from the entry's `summaries.json` sidecar (`schemas/block-summary.ts`) **beside** the extract, never in its place: two columns at 1280 px, stacked with the extract first at 390 px.",
+      "cat-harness:refs": [
+        "bean lrmo",
+        "2026-09-24"
+      ],
+      "dcterms:date": [
+        "2026-09-24"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/library/intent.md#provenance-7",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Update, 2026-09-24: the agent summary beside the extract",
+      "prov:value": "## Update, 2026-10-02: findings re-measured and worked (bean `gnqa`, issue #1838)\n\nRe-measured on a local build of `main` cf3e62487 (`preview:site`, served at `/folio-assistant/`), at 1280×800 and 390×844. Pictures in `rendered-2026-10-02/` (`before-*` is that build, `after-*` the branch). The as-is drawing above is NOT re-drawn; it records the page as it was.",
+      "cat-harness:refs": [
+        "bean gnqa",
+        "#1838",
+        "2026-10-02"
+      ],
+      "dcterms:date": [
+        "2026-10-02"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/library/intent.md#provenance-8",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Update, 2026-10-02: findings re-measured and worked (bean `gnqa`, issue #1838)",
+      "prov:value": "3. **No longer holds** (already recorded fixed 2026-09-29). The handle is at 0–28 and the h1 at 52.\n4. **No longer holds** (#1592). Each title is a link to the entry's README.",
+      "cat-harness:refs": [
+        "#1592",
+        "2026-09-29"
+      ],
+      "dcterms:date": [
+        "2026-09-29"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/library/intent.md#provenance-9",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Update, 2026-10-02: findings re-measured and worked (bean `gnqa`, issue #1838)",
+      "prov:value": "The 34×46 px cover is an open design question on the PR."
+    },
+    {
+      "@id": "docs/wireframes/library/intent.md#provenance-10",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Update, 2026-10-02: findings re-measured and worked (bean `gnqa`, issue #1838)",
+      "prov:value": "## Update, 2026-10-02: titles of entries with no catalogue record (bean `w6fu`, issue #1838)\n\nThe owner ruled on finding 5's open half: **both, in order**. (a) The PDF ingest path now resolves a title from the sources that can vouch for it: the PDF's `Title` metadata, page 1's largest heading, and the outline, before the text walk (`scripts/_pdf_title.py`, shared by both PDF rungs and `ingest-document.ts --refresh-title`).",
+      "cat-harness:refs": [
+        "bean w6fu",
+        "#1838",
+        "2026-10-02"
+      ],
+      "dcterms:date": [
+        "2026-10-02"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/library/intent.md#provenance-11",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Update, 2026-10-02: titles of entries with no catalogue record (bean `w6fu`, issue #1838)",
+      "prov:value": "`titles-before-*` uses #1839's library index and `titles-after-*` uses this branch's.",
+      "cat-harness:refs": [
+        "#1839"
+      ]
+    }
+  ]
+}

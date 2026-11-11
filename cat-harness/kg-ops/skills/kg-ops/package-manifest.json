@@ -1,0 +1,18 @@
+{
+  "name": "kg-ops",
+  "version": "0.1.0",
+  "description": "Knowledge-graph operations a layer reaches for rarely: N-Quads distribution and named SPARQL queries, edge kinds and blast radius, and domain fencing. Moved out of `graph-management` into the opt-in `kg-ops` sub-graph (owner, 2026-11-10, card Q-SG-1 C, wave 2).",
+  "skills": [
+    "domain-fencing",
+    "edge-kinds-and-blast-radius",
+    "named-query-execution",
+    "nquads-distribution"
+  ],
+  "docker": {
+    "baseImage": "ubuntu:24.04",
+    "aptPackages": []
+  },
+  "providesCapabilities": [],
+  "requiresCapabilities": [],
+  "lifecycleStages": []
+}

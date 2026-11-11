@@ -1,0 +1,15 @@
+{
+  "_comment": "The graphs inside core's `board` sub-graph, declared FROM WITHIN (#980). Paths are relative to THIS directory. OPT-IN (`optIn: true` on its entry): off in every layer unless that layer lists `folio-assistant-core.board` in its own `enableSubgraphs` (owner, 2026-11-10, card Q-SG-1 C, wave 3).",
+  "name": "board",
+  "directories": [
+    {
+      "id": "board-skills",
+      "path": "skills/",
+      "subgraph": true,
+      "description": "The `board` skill package.",
+      "graphTypologies": [
+        "skills"
+      ]
+    }
+  ]
+}

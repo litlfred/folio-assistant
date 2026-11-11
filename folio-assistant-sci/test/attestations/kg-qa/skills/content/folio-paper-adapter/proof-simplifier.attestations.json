@@ -1,0 +1,19 @@
+{
+  "$schema": "qa-attestations/v1",
+  "family": "kg-qa",
+  "subject": {
+    "kind": "skill",
+    "id": "proof-simplifier",
+    "path": "skills/content/folio-paper-adapter/proof-simplifier.md"
+  },
+  "pair_attestations": [
+    {
+      "kind": "co-located",
+      "prose": "folio-assistant-sci/skills/content/folio-paper-adapter/proof-simplifier.md",
+      "code": "folio-assistant-sci/skills/content/folio-paper-adapter/proof-simplifier.ts",
+      "prose_hash": "aa9ec8da93b8",
+      "code_hash": "b4a18c47751b",
+      "by": "baseline"
+    }
+  ]
+}

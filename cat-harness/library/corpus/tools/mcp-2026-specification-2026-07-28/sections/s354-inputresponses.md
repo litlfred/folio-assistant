@@ -1,0 +1,16 @@
+---
+doc_id: mcp-2026-specification-2026-07-28
+doc_title: "Model Context Protocol Specification, version 2026-07-28"
+section_id: s354-inputresponses
+section_title: "`InputResponses`"
+file: "docs/specification/2026-07-28/schema.mdx"
+lines: 820-828
+source_sha256: bdfb232898c79aef
+granularity: heading
+---
+### `InputResponses`
+
+<div class="tsd-signature"><span class="tsd-kind-interface">InputResponses</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div> <div class="tsd-comment tsd-typography"><p>A map of client responses to server-initiated requests.
+Keys correspond to the keys in the <a href="#inputrequests" class="tsd-kind-interface">InputRequests</a> map;
+values are the client's result for each request.</p> </div> <div class="tsd-comment tsd-typography"> <details class="tsd-tag-example"> <summary class="tsd-anchor-link">Example: Elicitation and sampling input responses<a href="#inputresponses-example-elicitation-and-sampling-input-responses" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"/></svg></a></summary><pre id="inputresponses-example-elicitation-and-sampling-input-responses"><code class="json"><span class="hl-0">&#x7B;</span><br/><span class="hl-0">  </span><span class="hl-1">&quot;github&#x5F;login&quot;</span><span class="hl-0">: &#x7B;</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;action&quot;</span><span class="hl-0">: </span><span class="hl-2">&quot;accept&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;content&quot;</span><span class="hl-0">: &#x7B;</span><br/><span class="hl-0">      </span><span class="hl-1">&quot;name&quot;</span><span class="hl-0">: </span><span class="hl-2">&quot;octocat&quot;</span><br/><span class="hl-0">    }</span><br/><span class="hl-0">  },</span><br/><span class="hl-0">  </span><span class="hl-1">&quot;capital&#x5F;of&#x5F;france&quot;</span><span class="hl-0">: &#x7B;</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;role&quot;</span><span class="hl-0">: </span><span class="hl-2">&quot;assistant&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;content&quot;</span><span class="hl-0">: &#x7B;</span><br/><span class="hl-0">      </span><span class="hl-1">&quot;type&quot;</span><span class="hl-0">: </span><span class="hl-2">&quot;text&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">      </span><span class="hl-1">&quot;text&quot;</span><span class="hl-0">: </span><span class="hl-2">&quot;The capital of France is Paris.&quot;</span><br/><span class="hl-0">    },</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;model&quot;</span><span class="hl-0">: </span><span class="hl-2">&quot;claude-3-sonnet-20240307&quot;</span><span class="hl-0">,</span><br/><span class="hl-0">    </span><span class="hl-1">&quot;stopReason&quot;</span><span class="hl-0">: </span><span class="hl-2">&quot;endTurn&quot;</span><br/><span class="hl-0">  }</span><br/><span class="hl-0">}</span> </code><button type="button">Copy</button></pre> </details></div>
+</div>
