@@ -1,0 +1,17 @@
+{
+  "$schema": "folio-catalogue/v1",
+  "id": "smart-trust-phw",
+  "title": "GDHCN Trust Network — Personal Health Wallet Upstream Normative Specifications Catalogue",
+  "system": "FHIR IG Publisher / IHE Profiles (profiles.ihe.net)",
+  "baseUrl": "https://profiles.ihe.net/ITI",
+  "totalItemsUpstream": 7,
+  "totalFilesUpstream": 4,
+  "totalBytesUpstream": 31208,
+  "sizeBasis": "Measured 2026-10-30 from the two materialized IHE IT Infrastructure Technical Framework supplements governing patient privacy consent and verifiable health link workflows in smart-trust-phw: IHE ITI Privacy Consent on FHIR (PCF) v1.1.0 (`ihe-iti-pcf-1-1-0`) and IHE ITI Verifiable Health Links (VHL) v1.0.0-comment (`ihe-iti-vhl-1-0-0-comment`). Bean sl5v. Since bean folio-assistant-djj5 (2026-11-03) the catalogue also holds the 5 works the IG cites that are not ingested, as `referenced` items with no bytes held; `totalFilesUpstream` and `totalBytesUpstream` still count only the two materialized supplements.",
+  "nodesDir": "nodes",
+  "sourceLoss": {
+    "container": "LOST WITH THE SOURCE. A container node holds only a title and upstream URL.",
+    "referencedItem": "METADATA SURVIVES, BYTES DO NOT. A referenced item keeps its node and its folio-dublin-core/v1 record; a cited work's capture is recorded in `uploads/<slug>/intake.json`.",
+    "materializedItem": "THE ARCHIVAL COPY SURVIVES. A materialized item's bytes are held in `library/` with a recorded sha256 verified by `check:materialized-fixity`, alongside its qualified Dublin Core (`folio-dublin-core/v1`) record and CC BY 4.0 licence record."
+  }
+}

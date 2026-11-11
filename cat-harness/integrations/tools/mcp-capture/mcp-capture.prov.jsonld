@@ -1,0 +1,40 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of mcp-capture.json: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "integrations/tools/mcp-capture/mcp-capture.json",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "integrations/tools/mcp-capture/mcp-capture.json#provenance-1"
+        },
+        {
+          "@id": "integrations/tools/mcp-capture/mcp-capture.json#provenance-2"
+        }
+      ]
+    },
+    {
+      "@id": "integrations/tools/mcp-capture/mcp-capture.json#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "tool.selection.when",
+      "prov:value": "Also the source data for migrating `src/tools/` into Tool nodes (bean `ce65`).",
+      "cat-harness:refs": [
+        "bean ce65"
+      ]
+    },
+    {
+      "@id": "integrations/tools/mcp-capture/mcp-capture.json#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "history",
+      "cat-harness:section": "tool.selection.limits",
+      "prov:value": "INTROSPECTION, deliberately, not source parsing. The first attempt read `server.tool(...)` with a regex and produced wrong input lists — words followed by a colon inside a DESCRIPTION came back as parameter names, so `skill_fetch` appeared to take `Examples` and `Local`. Authoring a node's `io` from that would ship a contract agreeing with nothing, which is worse than no contract because a contract is what the next check trusts."
+    }
+  ]
+}
