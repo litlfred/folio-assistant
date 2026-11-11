@@ -1,0 +1,138 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/ihe-iti-vhl-1-0-0-comment",
+  "kind": "item",
+  "flavour": "item",
+  "title": "IHE IT Infrastructure Technical Framework Supplement — Verifiable Health Links (VHL)",
+  "parents": [],
+  "libraryId": "ihe-iti-vhl-1-0-0-comment",
+  "metadataRef": "catalogue/records/ihe-iti-vhl-1-0-0-comment.dc.json",
+  "bitstreams": [
+    {
+      "name": "ihe-iti-vhl-1-0-0-comment.md",
+      "bundle": "ORIGINAL",
+      "bytes": 9893,
+      "mediaType": "text/markdown",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "upstream": "https://profiles.ihe.net/ITI/VHL/1.0.0-comment/"
+        },
+        "localPath": "library/ihe-iti-vhl-1-0-0-comment/ihe-iti-vhl-1-0-0-comment.md",
+        "purpose": "both",
+        "bytes": 9893,
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "e2775b089a9763ffcf84a7af86cdebc12a50899927a67ed7d7719b91cb21cb5e",
+          "verifiedAt": "2026-10-30"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "Compact normative markdown and structure snapshot of IHE ITI VHL v1.0.0-comment"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0) by IHE International (https://profiles.ihe.net/ITI/VHL/1.0.0-comment/); only attribution is required, which `licence.json` and `catalogue/records/` provide.",
+            "decidedAt": "2026-10-30",
+            "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "archival and working L1 specification snapshot kept in `library/` with SHA-256 fixity"
+          },
+          "sourceLoss": {
+            "verdict": "permitted",
+            "basis": "materialized snapshot held locally with recorded SHA-256 digest verified by `check:materialized-fixity`"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "IHE International grants a permanent, royalty-free, non-exclusive license under CC BY 4.0 (https://profiles.ihe.net/ITI/VHL/1.0.0-comment/, `license: \"CC-BY-4.0\"` in ImplementationGuide resource).",
+            "decidedAt": "2026-10-30",
+            "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+          }
+        }
+      }
+    },
+    {
+      "name": "structure.json",
+      "bundle": "TEXT",
+      "bytes": 4544,
+      "mediaType": "application/json",
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "library/ihe-iti-vhl-1-0-0-comment/ihe-iti-vhl-1-0-0-comment.md"
+        },
+        "localPath": "library/ihe-iti-vhl-1-0-0-comment/structure.json",
+        "purpose": "working",
+        "bytes": 4544,
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "389183810518df0edc6f4daa3181060ef0b411292f1d84b38db1779555eaa5b9",
+          "verifiedAt": "2026-10-30"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "Compact normative markdown and structure snapshot of IHE ITI VHL v1.0.0-comment"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0) by IHE International (https://profiles.ihe.net/ITI/VHL/1.0.0-comment/); only attribution is required, which `licence.json` and `catalogue/records/` provide.",
+            "decidedAt": "2026-10-30",
+            "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "archival and working L1 specification snapshot kept in `library/` with SHA-256 fixity"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "derived structure is not the archival source; the ORIGINAL bitstream answers sourceLoss"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "IHE International grants a permanent, royalty-free, non-exclusive license under CC BY 4.0 (https://profiles.ihe.net/ITI/VHL/1.0.0-comment/, `license: \"CC-BY-4.0\"` in ImplementationGuide resource).",
+            "decidedAt": "2026-10-30",
+            "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+          }
+        }
+      }
+    }
+  ],
+  "materialization": {
+    "state": "materialized",
+    "provenance": {
+      "upstream": "https://profiles.ihe.net/ITI/VHL/1.0.0-comment/"
+    },
+    "localPath": "library/ihe-iti-vhl-1-0-0-comment",
+    "purpose": "working",
+    "gates": {
+      "size": {
+        "verdict": "permitted",
+        "basis": "Compact normative markdown and structure snapshot of IHE ITI VHL v1.0.0-comment"
+      },
+      "restrictions": {
+        "verdict": "permitted",
+        "basis": "Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0) by IHE International (https://profiles.ihe.net/ITI/VHL/1.0.0-comment/); only attribution is required, which `licence.json` and `catalogue/records/` provide.",
+        "decidedAt": "2026-10-30",
+        "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+      },
+      "retention": {
+        "verdict": "permitted",
+        "basis": "archival and working L1 specification snapshot kept in `library/` with SHA-256 fixity"
+      },
+      "sourceLoss": {
+        "verdict": "unknown",
+        "basis": "derived sections are not the archival source; the ORIGINAL bitstream answers sourceLoss"
+      },
+      "copyright": {
+        "verdict": "permitted",
+        "basis": "IHE International grants a permanent, royalty-free, non-exclusive license under CC BY 4.0 (https://profiles.ihe.net/ITI/VHL/1.0.0-comment/, `license: \"CC-BY-4.0\"` in ImplementationGuide resource).",
+        "decidedAt": "2026-10-30",
+        "decidedBy": "owner ruling, 2026-10-30 (bean sl5v, epic negd)"
+      }
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "@context": {
+    "@base": "https://litlfred.github.io/cat-harness/v0/",
+    "prov": "http://www.w3.org/ns/prov#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "cat-harness": "https://litlfred.github.io/cat-harness/v0/ns/"
+  },
+  "dcterms:description": "Provenance moved out of the narrative of intent.md: who decided, when, and under which work item or proposal. The document keeps the rules and their reasons; this log is rendered in its footer.",
+  "@graph": [
+    {
+      "@id": "docs/wireframes/fsh-guts/intent.md",
+      "@type": "prov:Entity",
+      "prov:wasInfluencedBy": [
+        {
+          "@id": "docs/wireframes/fsh-guts/intent.md#provenance-1"
+        },
+        {
+          "@id": "docs/wireframes/fsh-guts/intent.md#provenance-2"
+        },
+        {
+          "@id": "docs/wireframes/fsh-guts/intent.md#provenance-3"
+        },
+        {
+          "@id": "docs/wireframes/fsh-guts/intent.md#provenance-4"
+        },
+        {
+          "@id": "docs/wireframes/fsh-guts/intent.md#provenance-5"
+        },
+        {
+          "@id": "docs/wireframes/fsh-guts/intent.md#provenance-6"
+        },
+        {
+          "@id": "docs/wireframes/fsh-guts/intent.md#provenance-7"
+        },
+        {
+          "@id": "docs/wireframes/fsh-guts/intent.md#provenance-8"
+        },
+        {
+          "@id": "docs/wireframes/fsh-guts/intent.md#provenance-9"
+        }
+      ]
+    },
+    {
+      "@id": "docs/wireframes/fsh-guts/intent.md#provenance-1",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Covers",
+      "prov:value": "`/fsh-guts/` is its alias)` is tile `fsh-guts` in `cat-harness/docs/_data/harness.json`, with surfaces `navbar`, `board` and, since #1010, `glass`.",
+      "cat-harness:refs": [
+        "#1010"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/fsh-guts/intent.md#provenance-2",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Covers",
+      "prov:value": "`fsh-guts/` is kept on a branch, so the page is built at publish by `derive:publish` after `state:mount` (bean `0b8c`, #2230).",
+      "cat-harness:refs": [
+        "bean 0b8c",
+        "#2230"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/fsh-guts/intent.md#provenance-3",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Covers",
+      "prov:value": "2. **The dead-fish viewer.** Bean `folio-assistant-7vhe` (status in-progress): *\"only available under settings at dead fish icon … has counter on icon … dialog to select and display them\"*.",
+      "cat-harness:refs": [
+        "bean folio-assistant-7vhe"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/fsh-guts/intent.md#provenance-4",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Covers",
+      "prov:value": "3. **The folio glass** (`mountGlass`, #1010).",
+      "cat-harness:refs": [
+        "#1010"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/fsh-guts/intent.md#provenance-5",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Who it is for, and what they need to do",
+      "prov:value": "From the page and the bean:\n- **Readers:** a maintainer or agent who wants to see what was thrown away instead of deleted, so that nobody re-enters a dead end, and so that an item can be restored."
+    },
+    {
+      "@id": "docs/wireframes/fsh-guts/intent.md#provenance-6",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "What it must show",
+      "prov:value": "## Observed (current checkout: main with #1010 `zrvt` merged)",
+      "cat-harness:refs": [
+        "#1010"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/fsh-guts/intent.md#provenance-7",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "issue",
+      "cat-harness:section": "Observed (current checkout: main with #1010 `zrvt` merged)",
+      "prov:value": "Page (`/fsh-guts/`), unchanged since the last draw, in reading order, inside the standard chrome. The chrome is the strip (mark, ☰, five icons, ⌂; the harness initials left it when #1022 folded the Harnesses group), the \"▾ Folio\" handle, search and footer.",
+      "cat-harness:refs": [
+        "#1022"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/fsh-guts/intent.md#provenance-8",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "bean",
+      "cat-harness:section": "Findings",
+      "prov:value": "Since #1010, every page also has a ⚙ **Settings** tile on the glass's bottom strip, larger and labelled. It does not hold the fish, and it does not point to the Settings that does. The bean's *\"under settings at dead fish icon\"* now matches one of two Settings.",
+      "cat-harness:refs": [
+        "#1010"
+      ]
+    },
+    {
+      "@id": "docs/wireframes/fsh-guts/intent.md#provenance-9",
+      "@type": "prov:Entity",
+      "cat-harness:provenanceKind": "owner-decision",
+      "cat-harness:section": "Findings",
+      "prov:value": "## What PR #1010 (bean `zrvt`, merged) changed\n\n- **The fish did not move.** The ▦ Actions → Settings view, with the Discarded tile, is unchanged. That means screen 2's path is unchanged, and so is its count of 9.\n- **The glass gained its own ⚙ Settings** (theme, avatars, opacity, blur, tidy, defaults). It is a separate panel and holds no Discarded tile. It is drawn as screen 3, and it is the cause of the second half of finding 3.\n- **The fsh-guts tile gained the `glass` surface**, so the page is on the glass's bottom strip, on branches/ previews only (finding 6). This answers the owner's *\"where are the todo, fsh guts etc tiles on bottom of glass?\"* for the page, not for the viewer.\n- The `/fsh-guts/` page itself is generated and was not touched.\n\nAlso in this checkout, from #1022: the strip at rest lost its harness initials, because the Harnesses group now arrives folded. The chrome in screen 1 is redrawn to match.",
+      "cat-harness:refs": [
+        "bean zrvt",
+        "PR #1010",
+        "#1022"
+      ]
+    }
+  ]
+}

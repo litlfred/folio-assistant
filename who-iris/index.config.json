@@ -1,0 +1,156 @@
+{
+  "$schema": "folio-index-config/v1",
+  "instances": [
+    {
+      "name": "who-iris",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/site-home.md",
+          "sourceSteps": [
+            "site:catalogue",
+            "site:home"
+          ],
+          "keep": [
+            "ns"
+          ]
+        }
+      }
+    },
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "remote": {
+          "repository": "litlfred/folio-assistant-core",
+          "ref": "15dd79a03525701b0593897ea82dc81f9397be37",
+          "overrides": {
+            "folio-assistant-core": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            },
+            "cat-harness-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-11",
+              "ref": "15dd79a03525701b0593897ea82dc81f9397be37",
+              "evidence": "litlfred, 2026-11-11 02:58Z, card Q-FIG-3 'A: Merge after #1850 + re-pin' (who-iris#229, thread cmsg_017WNUkNK8kdDziPK58Pv6G9MgLzYE4CC933YWuugjFYV2); merge manager asked to move all pins to current mains."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "c79654460f1267aa6b85e0ca35b2a53a62455b7b",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-11",
+              "ref": "c79654460f1267aa6b85e0ca35b2a53a62455b7b",
+              "evidence": "litlfred, 2026-11-11 02:58Z, card Q-FIG-3 'A: Merge after #1850 + re-pin' (who-iris#229, thread cmsg_017WNUkNK8kdDziPK58Pv6G9MgLzYE4CC933YWuugjFYV2); merge manager asked to move all pins to current mains."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "ee36dcb23fee580b728ec2a28a0bc1133e87a1cc",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-11",
+              "ref": "ee36dcb23fee580b728ec2a28a0bc1133e87a1cc",
+              "evidence": "litlfred, 2026-11-11 03:03Z, card 'How should the errata PR who-iris#230 land?' option 'A. Merge after #1848 + re-pin' (thread cmsg_017WNUkNK8kdDziPK58Pv6G93WQmGmifCFfexR63a3h4wh). cat-harness-tools re-pinned to #1848's merge commit (errata.json and footnotes.json in the L1 schema)."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "1c36aef5ab70d7e95ee6026124cd004cab0c0990",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-11",
+              "ref": "1c36aef5ab70d7e95ee6026124cd004cab0c0990",
+              "evidence": "litlfred, 2026-11-11 02:58Z, card Q-FIG-3 'A: Merge after #1850 + re-pin' (who-iris#229, thread cmsg_017WNUkNK8kdDziPK58Pv6G9MgLzYE4CC933YWuugjFYV2); merge manager asked to move all pins to current mains."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "30c4585d5dfbf6960e3ecca86b18d131d6cd3921",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-11",
+              "ref": "30c4585d5dfbf6960e3ecca86b18d131d6cd3921",
+              "evidence": "litlfred, 2026-11-11 02:58Z, card Q-FIG-3 'A: Merge after #1850 + re-pin' (who-iris#229, thread cmsg_017WNUkNK8kdDziPK58Pv6G9MgLzYE4CC933YWuugjFYV2); merge manager asked to move all pins to current mains."
+            }
+          }
+        }
+      }
+    }
+  ],
+  "site": {
+    "landing": "who-iris"
+  }
+}

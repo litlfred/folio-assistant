@@ -1,0 +1,3404 @@
+{
+  "$schema": "folio-vector-labels/v1",
+  "doc_id": "arxiv-2604.00554v1",
+  "pages": [
+    {
+      "page": 2,
+      "rotation": 0,
+      "drawings": 1,
+      "rasterImagesOnPage": 2,
+      "captionCandidates": [
+        "Figure 1: Illustration of two scanned pages from zbMATH Open, showcasing the end of one document (blue), four complete documents (red), and the start of another (green). https://zbmath.org/?q=an%3A0001.12001."
+      ],
+      "labels": [
+        {
+          "text": "Pluzhnikov et al.",
+          "bbox": [
+            510.58,
+            61.27,
+            558.2,
+            68.24
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinBiolinumT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "The goal of this research is to split the Optical Character Recog-",
+          "bbox": [
+            327.92,
+            86.98,
+            559.71,
+            95.88
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.91
+          ]
+        },
+        {
+          "text": "nition (OCR) output (LaTeX representation of scanned documents)",
+          "bbox": [
+            317.95,
+            97.93,
+            558.74,
+            106.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.91
+          ]
+        },
+        {
+          "text": "from the zbMATH Open volumes and associate the resulting output",
+          "bbox": [
+            317.95,
+            108.92,
+            558.2,
+            117.79
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "with the metadata of the corresponding documents in the zbMATH",
+          "bbox": [
+            317.62,
+            119.88,
+            558.2,
+            128.75
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "Open database.",
+          "bbox": [
+            317.95,
+            130.77,
+            373.55,
+            139.73
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "This paper makes the following key contributions. It introduces",
+          "bbox": [
+            327.92,
+            141.77,
+            558.2,
+            150.68
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.91
+          ]
+        },
+        {
+          "text": "a problem-specific methodology for automatic document splitting",
+          "bbox": [
+            317.95,
+            152.69,
+            558.2,
+            161.65
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.96
+          ]
+        },
+        {
+          "text": "by leveraging modern generative LLMs. These models, which have",
+          "bbox": [
+            317.95,
+            163.7,
+            558.2,
+            172.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.89
+          ]
+        },
+        {
+          "text": "shown significant success in natural language processing tasks, are",
+          "bbox": [
+            317.95,
+            174.67,
+            558.2,
+            183.55
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "adapted for mathematical text separation, achieving high accuracy",
+          "bbox": [
+            317.95,
+            185.61,
+            558.43,
+            194.51
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.91
+          ]
+        },
+        {
+          "text": "in data processing. The research evaluates OCR tools and docu-",
+          "bbox": [
+            317.95,
+            196.45,
+            559.71,
+            205.51
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "ment splitting techniques using established metrics such as BLEU",
+          "bbox": [
+            317.95,
+            207.47,
+            558.2,
+            216.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.98
+          ]
+        },
+        {
+          "text": "and Edit Distance for OCR engines, and accuracy for document",
+          "bbox": [
+            317.95,
+            218.37,
+            558.2,
+            227.43
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "splitting. These metrics offer a quantitative assessment of the pro-",
+          "bbox": [
+            317.95,
+            229.4,
+            559.72,
+            238.36
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "posed methods’ performance. Comparative analysis demonstrates",
+          "bbox": [
+            317.95,
+            240.36,
+            558.2,
+            249.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.96
+          ]
+        },
+        {
+          "text": "that the proposed approach outperforms existing methods, includ-",
+          "bbox": [
+            317.95,
+            251.33,
+            559.72,
+            260.27
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.94
+          ]
+        },
+        {
+          "text": "ing ChatGPT-4o, computer vision-based approaches, and regular",
+          "bbox": [
+            317.95,
+            262.21,
+            558.37,
+            271.26
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.05
+          ]
+        },
+        {
+          "text": "expression-based methods, in terms of key performance indicators,",
+          "bbox": [
+            317.95,
+            273.29,
+            559.18,
+            282.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.89
+          ]
+        },
+        {
+          "text": "thus highlighting its potential for broader applicability in the field.",
+          "bbox": [
+            317.95,
+            284.22,
+            559.58,
+            293.15
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.93
+          ]
+        },
+        {
+          "text": "As a practical outcome, the methodology successfully processes",
+          "bbox": [
+            317.64,
+            295.08,
+            558.2,
+            304.14
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "and converts 810,977 mathematical documents (as text) and 721,288",
+          "bbox": [
+            317.95,
+            306.18,
+            558.2,
+            315.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "documents (as LaTeX representations with start and end indexes)",
+          "bbox": [
+            317.95,
+            317.04,
+            558.74,
+            326.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.01
+          ]
+        },
+        {
+          "text": "(a) First scanned page",
+          "bbox": [
+            135.03,
+            326.43,
+            212.57,
+            334.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "into machine-readable and searchable formats.",
+          "bbox": [
+            317.95,
+            328.03,
+            488.57,
+            336.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "2",
+          "bbox": [
+            317.95,
+            351.79,
+            323.56,
+            362.69
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Related Work",
+          "bbox": [
+            334.47,
+            351.79,
+            402.56,
+            362.69
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Several studies have explored the use of regular expressions to",
+          "bbox": [
+            317.95,
+            366.94,
+            558.2,
+            376.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "extract content from OCR-processed documents. For instance, Pitou",
+          "bbox": [
+            317.95,
+            378.04,
+            558.2,
+            386.91
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "et al. [27] utilize regular expressions to categorize elements within",
+          "bbox": [
+            317.95,
+            388.93,
+            558.21,
+            397.89
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.91,
+            8.97
+          ]
+        },
+        {
+          "text": "scanned invoices processed via OCR, identifying details such as",
+          "bbox": [
+            317.95,
+            399.82,
+            558.2,
+            408.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "account numbers, dates, and amounts. They report a recall of 35.88%",
+          "bbox": [
+            317.95,
+            410.91,
+            558.49,
+            419.79
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "and a precision of 50.46%. Similarly, Pandey et al. [24] employ",
+          "bbox": [
+            317.95,
+            421.74,
+            558.44,
+            430.79
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "regular expressions to extract content from a variety of document",
+          "bbox": [
+            317.95,
+            432.77,
+            558.2,
+            441.73
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.96
+          ]
+        },
+        {
+          "text": "types after applying OCR. They achieve accuracies of 97%, 71.87%,",
+          "bbox": [
+            317.95,
+            443.73,
+            559.19,
+            452.68
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.95
+          ]
+        },
+        {
+          "text": "and 78.95% for different document types.",
+          "bbox": [
+            317.95,
+            454.68,
+            466.96,
+            463.65
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "In other studies, computer vision (CV)-based methods focus on",
+          "bbox": [
+            327.92,
+            465.64,
+            558.2,
+            474.6
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.96
+          ]
+        },
+        {
+          "text": "identifying key elements within an image, such as \"Text\" or \"Title\",",
+          "bbox": [
+            317.95,
+            476.64,
+            559.18,
+            485.55
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.91
+          ]
+        },
+        {
+          "text": "for further use with OCR tools. Li et al. [19] apply the Faster-RCNN",
+          "bbox": [
+            317.95,
+            487.56,
+            558.2,
+            496.52
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "model [29] to detect the locations of cells within tables. Patil et al.",
+          "bbox": [
+            317.95,
+            498.5,
+            559.58,
+            507.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            8.98
+          ]
+        },
+        {
+          "text": "[25] employ the U-Net architecture [30] to identify areas containing",
+          "bbox": [
+            317.95,
+            509.47,
+            558.2,
+            518.44
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "relevant text before applying the OCR engine. In the application",
+          "bbox": [
+            317.95,
+            520.37,
+            558.2,
+            529.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "phase, the F1 score achieved is reported as 99.9%. Furthermore, Zhu",
+          "bbox": [
+            317.95,
+            531.46,
+            558.2,
+            540.34
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "et al. [44] test several models for layout segmentation of newspaper",
+          "bbox": [
+            317.95,
+            542.35,
+            558.37,
+            551.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "articles. The best performance in terms of the mean Intersection",
+          "bbox": [
+            317.95,
+            553.24,
+            558.2,
+            562.3
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "over Union (IoU) metric, which is 70.02, is achieved using the Seg-",
+          "bbox": [
+            317.95,
+            564.28,
+            559.72,
+            573.23
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.96
+          ]
+        },
+        {
+          "text": "mentation Transformer model [41]. According to the Hugging Face",
+          "bbox": [
+            317.95,
+            575.23,
+            558.2,
+            584.19
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "documentation1, the state-of-the-art model for document layout",
+          "bbox": [
+            317.95,
+            584.72,
+            558.2,
+            595.18
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.58,
+            9.06
+          ]
+        },
+        {
+          "text": "(b) Second scanned page",
+          "bbox": [
+            130.39,
+            587.5,
+            217.21,
+            595.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "analysis is the Document Image Transformer (DiT) [18]. This model",
+          "bbox": [
+            317.95,
+            597.15,
+            558.2,
+            606.11
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "can classify document elements such as \"Text\" and \"Title\". By lever-",
+          "bbox": [
+            317.95,
+            608.17,
+            559.71,
+            617.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "Figure 1: Illustration of two scanned pages from zbMATH",
+          "bbox": [
+            53.8,
+            609.29,
+            294.05,
+            618.35
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "aging advanced architectures like Mask R-CNN [9] and Cascade",
+          "bbox": [
+            317.95,
+            619.0,
+            558.2,
+            628.05
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "Open, showcasing the end of one document (blue), four",
+          "bbox": [
+            53.8,
+            620.25,
+            294.23,
+            629.31
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "R-CNN [5], and trained on the comprehensive PubLayNet dataset",
+          "bbox": [
+            317.95,
+            630.01,
+            558.2,
+            638.99
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            8.98
+          ]
+        },
+        {
+          "text": "complete documents (red), and the start of another (green).",
+          "bbox": [
+            53.8,
+            631.23,
+            295.58,
+            640.26
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "[43], DiT processes document images with multiple levels of detail.",
+          "bbox": [
+            317.95,
+            640.98,
+            559.58,
+            649.95
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.89,
+            8.97
+          ]
+        },
+        {
+          "text": "https://zbmath.org/?q=an%3A0001.12001.",
+          "bbox": [
+            53.8,
+            642.24,
+            217.73,
+            651.2
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "In our study, we utilize DiT to compare its performance with our",
+          "bbox": [
+            317.95,
+            651.89,
+            558.37,
+            660.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "proposed method.",
+          "bbox": [
+            317.95,
+            662.9,
+            383.81,
+            671.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "1https://huggingface.co/docs/transformers/model_doc/dit",
+          "bbox": [
+            317.83,
+            700.6,
+            481.68,
+            709.1
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            5.48,
+            6.97
+          ]
+        }
+      ]
+    },
+    {
+      "page": 5,
+      "rotation": 0,
+      "drawings": 1,
+      "rasterImagesOnPage": 2,
+      "captionCandidates": [
+        "Figure 2: RE-based extraction approach. Red - titles and sources matches. Blue - text to be extracted.",
+        "Figure 3: Example of the prompt and correct genera- tive Large Language Model output for the document https://zbmath.org/0005.34202."
+      ],
+      "labels": [
+        {
+          "text": "LLM-supported document separation for printed reviews from zbMATH Open",
+          "bbox": [
+            53.8,
+            61.27,
+            277.06,
+            68.24
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinBiolinumT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "6.1",
+          "bbox": [
+            317.96,
+            85.41,
+            331.83,
+            96.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Methodology",
+          "bbox": [
+            342.74,
+            85.41,
+            408.09,
+            96.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "The idea of the approach is as follows:",
+          "bbox": [
+            317.69,
+            100.63,
+            457.87,
+            109.6
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "(1) For each 𝑟𝑜𝑤in the zbMATH Open table",
+          "bbox": [
+            332.09,
+            111.92,
+            495.82,
+            122.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "(2) Read the next row from the zbMATH Open table as the",
+          "bbox": [
+            332.09,
+            124.84,
+            558.21,
+            133.9
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "𝑛𝑒𝑥𝑡_𝑟𝑜𝑤.",
+          "bbox": [
+            346.22,
+            133.84,
+            384.22,
+            144.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "(3) Add to the prompt instructions for extracting the docu-",
+          "bbox": [
+            332.09,
+            146.76,
+            559.72,
+            155.82
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "ment, 𝑟𝑜𝑤[Original title] if exist (otherwise 𝑟𝑜𝑤[Title]),",
+          "bbox": [
+            346.58,
+            155.76,
+            559.19,
+            166.78
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "𝑟𝑜𝑤[Source].",
+          "bbox": [
+            346.22,
+            166.72,
+            394.39,
+            177.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "(4) Add to the prompt 𝑛𝑒𝑥𝑡_𝑟𝑜𝑤[Original title] if exist (other-",
+          "bbox": [
+            332.09,
+            177.68,
+            559.72,
+            188.67
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "wise 𝑛𝑒𝑥𝑡_𝑟𝑜𝑤[Title]), 𝑛𝑒𝑥𝑡_𝑟𝑜𝑤[Source].",
+          "bbox": [
+            346.25,
+            188.64,
+            499.81,
+            199.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LibertineMathMI",
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "(5) Implement the step 3 from the section 5.1. Add the result",
+          "bbox": [
+            332.09,
+            201.56,
+            558.2,
+            210.61
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.05
+          ]
+        },
+        {
+          "text": "to the prompt.",
+          "bbox": [
+            346.58,
+            212.58,
+            399.06,
+            221.55
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "(6) Inference of the generative LLM with the resulting prompt.",
+          "bbox": [
+            332.09,
+            223.54,
+            559.56,
+            232.51
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.89,
+            8.97
+          ]
+        },
+        {
+          "text": "In the case when the document was the last in the book, we",
+          "bbox": [
+            327.92,
+            236.8,
+            558.2,
+            245.85
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "followed the procedure outlined in section 5.1. An example of the",
+          "bbox": [
+            317.95,
+            247.81,
+            558.2,
+            256.79
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.98
+          ]
+        },
+        {
+          "text": "prompt can be seen in Figure 3. We also applied the steps described",
+          "bbox": [
+            317.95,
+            258.85,
+            558.2,
+            267.72
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "in section 5.2 to the zbMATH Open table.",
+          "bbox": [
+            317.95,
+            269.74,
+            469.11,
+            278.71
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Figure 2: RE-based extraction approach. Red - titles and",
+          "bbox": [
+            53.8,
+            425.09,
+            294.05,
+            434.15
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "Figure 3: Example of the prompt and correct genera-",
+          "bbox": [
+            317.95,
+            435.74,
+            559.8,
+            444.8
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "sources matches. Blue - text to be extracted.",
+          "bbox": [
+            53.8,
+            436.12,
+            230.48,
+            445.09
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "tive Large Language Model output for the document",
+          "bbox": [
+            317.95,
+            446.7,
+            558.2,
+            455.76
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "https://zbmath.org/0005.34202.",
+          "bbox": [
+            317.95,
+            457.73,
+            441.57,
+            466.7
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "To increase that number, we allowed the Levenshtein Distance",
+          "bbox": [
+            63.76,
+            465.77,
+            294.04,
+            474.77
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.0
+          ]
+        },
+        {
+          "text": "[17] between the desired title and the section of LaTeX code to",
+          "bbox": [
+            53.8,
+            476.69,
+            294.05,
+            485.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "be 0.3 times the length of the title, rather than requiring an exact",
+          "bbox": [
+            53.8,
+            487.66,
+            294.04,
+            496.7
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "6.2",
+          "bbox": [
+            317.95,
+            492.41,
+            331.83,
+            503.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Base models",
+          "bbox": [
+            342.74,
+            492.41,
+            403.73,
+            503.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "match. This threshold was chosen because, at this value, the growth",
+          "bbox": [
+            53.8,
+            498.74,
+            294.05,
+            507.62
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "The next step was to choose a model. Due to the technical limita-",
+          "bbox": [
+            317.69,
+            507.59,
+            559.72,
+            516.61
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.02
+          ]
+        },
+        {
+          "text": "in the number of documents for which the approach could produce",
+          "bbox": [
+            53.8,
+            509.7,
+            294.05,
+            518.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "tions of the GPU, we opted for models that require less than 16GB",
+          "bbox": [
+            317.95,
+            518.62,
+            558.2,
+            527.55
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.93
+          ]
+        },
+        {
+          "text": "an answer was significantly reduced. We expected that step 7 of",
+          "bbox": [
+            53.8,
+            520.52,
+            294.05,
+            529.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "of VRAM. The size of the context window was also critical. To avoid",
+          "bbox": [
+            317.95,
+            529.62,
+            558.2,
+            538.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "the algorithm would reduce the drop in the accuracy metric caused",
+          "bbox": [
+            53.8,
+            531.62,
+            294.05,
+            540.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "the situation where the model may not be able to handle the text",
+          "bbox": [
+            317.95,
+            540.46,
+            558.2,
+            549.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "by this action.",
+          "bbox": [
+            53.8,
+            542.51,
+            105.45,
+            551.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "of the document due to its size, it had to be more than 4 thousand",
+          "bbox": [
+            317.95,
+            551.47,
+            558.2,
+            560.44
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "tokens (which corresponds to approximately 8 pages of plain text).",
+          "bbox": [
+            317.95,
+            562.46,
+            559.49,
+            571.38
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.92
+          ]
+        },
+        {
+          "text": "5.4",
+          "bbox": [
+            53.8,
+            562.51,
+            67.67,
+            573.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Results",
+          "bbox": [
+            78.58,
+            562.51,
+            115.02,
+            573.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "To search among open-source generative models, we used the",
+          "bbox": [
+            327.92,
+            573.33,
+            558.2,
+            582.37
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.05
+          ]
+        },
+        {
+          "text": "The algorithm returned extracted text for 786,314 out of 810,977",
+          "bbox": [
+            53.53,
+            577.67,
+            294.25,
+            586.72
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "LLM Explorer website1 (as of 30.04.2024) which provides a conve-",
+          "bbox": [
+            317.95,
+            581.07,
+            559.72,
+            593.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.58,
+            9.0
+          ]
+        },
+        {
+          "text": "entries (97%). However, the described challenges led to inaccura-",
+          "bbox": [
+            53.8,
+            588.63,
+            295.56,
+            597.68
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "nient interface for comparing generative LLMs available on Hug-",
+          "bbox": [
+            317.95,
+            595.25,
+            559.72,
+            604.29
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "cies in text extraction, complicating the process of removing extra",
+          "bbox": [
+            53.8,
+            599.67,
+            294.05,
+            608.61
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.94
+          ]
+        },
+        {
+          "text": "ging Face. As part of our project, we decided to focus on the",
+          "bbox": [
+            317.95,
+            606.2,
+            558.2,
+            615.25
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "information except for the document itself. Further improvement",
+          "bbox": [
+            53.8,
+            610.58,
+            294.04,
+            619.59
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.01
+          ]
+        },
+        {
+          "text": "Instruction-Based Large Language Models because it best repre-",
+          "bbox": [
+            317.95,
+            617.15,
+            559.71,
+            626.21
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "(modification of the regular expressions) of the algorithm requires",
+          "bbox": [
+            53.53,
+            621.59,
+            294.04,
+            630.53
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.93
+          ]
+        },
+        {
+          "text": "sents what we want the model to accomplish. In addition, there are",
+          "bbox": [
+            317.95,
+            628.25,
+            558.2,
+            637.12
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "significant manual labor to analyze all errors that occur and write",
+          "bbox": [
+            53.8,
+            632.54,
+            294.05,
+            641.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.96
+          ]
+        },
+        {
+          "text": "scores for the models on the website (Hugging Face average score).",
+          "bbox": [
+            317.95,
+            639.2,
+            559.58,
+            648.09
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.89
+          ]
+        },
+        {
+          "text": "rules to eliminate them.",
+          "bbox": [
+            53.8,
+            643.49,
+            140.68,
+            652.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "This information was also an important criterion in the selection",
+          "bbox": [
+            317.69,
+            650.05,
+            558.2,
+            659.08
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "of models.",
+          "bbox": [
+            317.95,
+            661.06,
+            355.54,
+            670.02
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "6",
+          "bbox": [
+            53.8,
+            663.49,
+            59.41,
+            674.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "LLM-voting based document splitting",
+          "bbox": [
+            70.31,
+            663.49,
+            255.26,
+            674.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "We selected two models with the highest score and one model",
+          "bbox": [
+            327.92,
+            671.97,
+            558.2,
+            681.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "Several approaches based on the generative LLMs have shown",
+          "bbox": [
+            53.8,
+            678.65,
+            294.05,
+            687.7
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "with the highest score among the models with the largest number",
+          "bbox": [
+            317.62,
+            682.99,
+            558.37,
+            691.94
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.95
+          ]
+        },
+        {
+          "text": "success in document splitting tasks. Hence, we used generative",
+          "bbox": [
+            53.8,
+            689.6,
+            294.05,
+            698.66
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "1https://llm.extractum.io/",
+          "bbox": [
+            317.83,
+            700.6,
+            390.31,
+            709.1
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            5.48,
+            6.97
+          ]
+        },
+        {
+          "text": "LLMs as possible candidates for the solution.",
+          "bbox": [
+            53.8,
+            700.63,
+            217.58,
+            709.6
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        }
+      ]
+    },
+    {
+      "page": 6,
+      "rotation": 0,
+      "drawings": 30,
+      "rasterImagesOnPage": 3,
+      "captionCandidates": [
+        "Figure 4: Validation losses of the Large Language Models."
+      ],
+      "labels": [
+        {
+          "text": "Pluzhnikov et al.",
+          "bbox": [
+            510.58,
+            61.27,
+            558.2,
+            68.24
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinBiolinumT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "of parameters that we could use (as potentially more complex).",
+          "bbox": [
+            53.8,
+            86.86,
+            295.43,
+            95.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "The characteristics of the selected models are provided in Table 3",
+          "bbox": [
+            53.53,
+            97.86,
+            294.05,
+            106.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.01
+          ]
+        },
+        {
+          "text": "(hereafter, we refer to them as \"base\" models).",
+          "bbox": [
+            53.53,
+            108.85,
+            220.88,
+            117.82
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Name",
+          "bbox": [
+            59.18,
+            129.87,
+            77.59,
+            136.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "Score",
+          "bbox": [
+            152.8,
+            129.87,
+            169.68,
+            136.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "Context Length",
+          "bbox": [
+            180.04,
+            129.87,
+            229.29,
+            136.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "Size",
+          "bbox": [
+            239.65,
+            129.87,
+            251.98,
+            136.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "VRAM (GB)",
+          "bbox": [
+            262.34,
+            129.87,
+            299.37,
+            136.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "CalmExperiment-7B-slerp1",
+          "bbox": [
+            59.18,
+            136.9,
+            135.9,
+            145.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            5.48,
+            6.97
+          ]
+        },
+        {
+          "text": "76.67",
+          "bbox": [
+            153.99,
+            138.42,
+            168.5,
+            145.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "32k",
+          "bbox": [
+            199.64,
+            138.42,
+            209.7,
+            145.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "7B",
+          "bbox": [
+            242.14,
+            138.42,
+            249.49,
+            145.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "14.4",
+          "bbox": [
+            275.23,
+            138.42,
+            286.49,
+            145.4
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "Maxine-7B-0401-Stock [22]",
+          "bbox": [
+            59.18,
+            145.83,
+            136.71,
+            152.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "76.73",
+          "bbox": [
+            153.99,
+            145.83,
+            168.5,
+            152.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "32k",
+          "bbox": [
+            199.64,
+            145.83,
+            209.7,
+            152.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "7B",
+          "bbox": [
+            242.14,
+            145.83,
+            249.49,
+            152.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "14.4",
+          "bbox": [
+            275.23,
+            145.83,
+            286.49,
+            152.81
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "Mistral-Passthrough-8L-10B2",
+          "bbox": [
+            59.18,
+            152.82,
+            141.95,
+            161.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            5.48,
+            6.97
+          ]
+        },
+        {
+          "text": "71.01",
+          "bbox": [
+            153.99,
+            154.34,
+            168.5,
+            161.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "32k",
+          "bbox": [
+            199.64,
+            154.34,
+            209.7,
+            161.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "10B",
+          "bbox": [
+            240.52,
+            154.34,
+            251.11,
+            161.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "14.5",
+          "bbox": [
+            275.23,
+            154.34,
+            286.49,
+            161.32
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            6.97
+          ]
+        },
+        {
+          "text": "Table 3: Large Language Models overview.",
+          "bbox": [
+            89.08,
+            163.95,
+            258.47,
+            172.92
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "6.3",
+          "bbox": [
+            53.8,
+            209.61,
+            67.67,
+            220.52
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Fine-tuning",
+          "bbox": [
+            78.58,
+            209.61,
+            137.07,
+            220.52
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "To significantly reduce the resources spent adapting the Large Lan-",
+          "bbox": [
+            53.53,
+            224.9,
+            295.56,
+            233.78
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "guage Models to specific the task, we used the fine-tuning technique",
+          "bbox": [
+            53.8,
+            235.86,
+            294.05,
+            244.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "(a) CalmExperiment-7B-slerp validation loss.",
+          "bbox": [
+            362.7,
+            241.94,
+            525.17,
+            249.91
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "[15]. Instead of training neural networks from scratch, we took pre-",
+          "bbox": [
+            53.8,
+            246.75,
+            295.56,
+            255.72
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "trained ones. Since the models learned to solve NLP problems, they",
+          "bbox": [
+            53.8,
+            257.78,
+            294.27,
+            266.66
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "were already able to work with the basic concepts of the language.",
+          "bbox": [
+            53.47,
+            268.7,
+            295.43,
+            277.63
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.93
+          ]
+        },
+        {
+          "text": "In this case, we needed much less time, computing resources, and",
+          "bbox": [
+            53.8,
+            279.62,
+            294.04,
+            288.6
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.98
+          ]
+        },
+        {
+          "text": "data to achieve a good result. To speed up fine-tuning of Large",
+          "bbox": [
+            53.8,
+            290.52,
+            294.05,
+            299.58
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "Language Models, we used the LoRa (Low-Rank Adaptation) op-",
+          "bbox": [
+            53.8,
+            301.48,
+            295.56,
+            310.54
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "timization technique [11]. For implementation of the fine-tuning,",
+          "bbox": [
+            53.8,
+            312.46,
+            295.03,
+            321.49
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.03
+          ]
+        },
+        {
+          "text": "we utilized LLaMA-Factory [42].",
+          "bbox": [
+            53.47,
+            323.46,
+            172.5,
+            332.43
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "To select the optimal hyperparameters, such as the learning rate",
+          "bbox": [
+            63.76,
+            334.49,
+            294.04,
+            343.37
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "and the number of epochs for fine-tuning, we validated the models",
+          "bbox": [
+            53.8,
+            345.45,
+            294.04,
+            354.33
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "(with the cosine learning rate scheduler and batch size equal to",
+          "bbox": [
+            53.53,
+            356.27,
+            294.04,
+            365.33
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "2 as the largest number we could use due to the GPU limits) by",
+          "bbox": [
+            53.8,
+            367.23,
+            294.28,
+            376.29
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "splitting the train dataset in a ratio of 80% (for training) and 20% (for",
+          "bbox": [
+            53.8,
+            378.33,
+            294.21,
+            387.2
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "validation). The split was made at random. The validation results",
+          "bbox": [
+            53.57,
+            389.18,
+            294.04,
+            398.2
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.02
+          ]
+        },
+        {
+          "text": "can be seen in Figure 4.",
+          "bbox": [
+            53.8,
+            400.18,
+            139.48,
+            409.14
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "(b) Maxine-7B-0401-stock validation loss.",
+          "bbox": [
+            369.78,
+            410.19,
+            518.08,
+            418.16
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "Based on the data obtained, the learning rate was chosen to be",
+          "bbox": [
+            63.76,
+            411.11,
+            294.04,
+            420.11
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.0
+          ]
+        },
+        {
+          "text": "0.0005 for all models, since at this rate the losses for all of them",
+          "bbox": [
+            53.8,
+            422.03,
+            294.05,
+            431.08
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "are the minimum of those presented. The number of epochs for",
+          "bbox": [
+            53.8,
+            432.99,
+            294.21,
+            442.04
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "training all models was determined to be 5 because at this point",
+          "bbox": [
+            53.8,
+            443.95,
+            294.05,
+            453.0
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "the loss value stabilized and stopped decreasing. Upon reaching",
+          "bbox": [
+            53.8,
+            454.9,
+            294.05,
+            463.96
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "this epoch, CalmExperiment-7B-slerp shows the smallest loss of all",
+          "bbox": [
+            53.8,
+            466.0,
+            294.05,
+            474.87
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "models.",
+          "bbox": [
+            53.8,
+            476.89,
+            81.84,
+            485.86
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Taking into account all the hyperparameters described above,",
+          "bbox": [
+            63.76,
+            487.78,
+            295.03,
+            496.84
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "we performed a fine-tuning of all three models. All 1000 samples",
+          "bbox": [
+            53.47,
+            498.75,
+            294.05,
+            507.79
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.05
+          ]
+        },
+        {
+          "text": "from the train dataset were used. The training loss can be seen in",
+          "bbox": [
+            53.8,
+            509.74,
+            294.05,
+            518.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.0
+          ]
+        },
+        {
+          "text": "Figure 5.",
+          "bbox": [
+            53.8,
+            520.72,
+            85.48,
+            529.69
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "6.4",
+          "bbox": [
+            53.8,
+            540.51,
+            67.67,
+            551.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "Majority Voting approach",
+          "bbox": [
+            78.58,
+            540.51,
+            205.59,
+            551.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            10.91
+          ]
+        },
+        {
+          "text": "In addition to using each model individually, we have implemented",
+          "bbox": [
+            53.8,
+            555.8,
+            294.05,
+            564.68
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "an approach that allows them to be used simultaneously - to reduce",
+          "bbox": [
+            53.8,
+            566.76,
+            294.05,
+            575.64
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "the probability of mistakes by accounting for multiple predictions.",
+          "bbox": [
+            53.8,
+            577.67,
+            295.42,
+            586.62
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.95
+          ]
+        },
+        {
+          "text": "(c) Mistral-Passthrough-8L-10B validation loss.",
+          "bbox": [
+            359.61,
+            578.45,
+            528.26,
+            586.42
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            7.97
+          ]
+        },
+        {
+          "text": "The popular technique of model assembly was used, Majority Voting",
+          "bbox": [
+            53.53,
+            588.68,
+            294.05,
+            597.56
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "[28]. The essence of this method is as follows:",
+          "bbox": [
+            53.8,
+            599.57,
+            221.4,
+            608.54
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "Figure 4: Validation losses of the Large Language Models.",
+          "bbox": [
+            322.48,
+            600.31,
+            553.67,
+            609.28
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineTB"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "(1) For every document, each of the models proposes its output.",
+          "bbox": [
+            67.93,
+            612.59,
+            295.42,
+            621.55
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88,
+            8.97
+          ]
+        },
+        {
+          "text": "(2) If the output of any 2 models matches, this result is consid-",
+          "bbox": [
+            67.93,
+            623.54,
+            295.56,
+            632.51
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.89,
+            8.97
+          ]
+        },
+        {
+          "text": "ered final.",
+          "bbox": [
+            82.43,
+            634.5,
+            118.86,
+            643.47
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "(3) If all 3 outputs are different, we take the output of the",
+          "bbox": [
+            67.93,
+            645.39,
+            294.05,
+            654.45
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97,
+            9.06
+          ]
+        },
+        {
+          "text": "Regarding just using the \"best\" model, it can help in the following",
+          "bbox": [
+            327.92,
+            645.9,
+            558.2,
+            654.78
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "model that performed better on the validation dataset -",
+          "bbox": [
+            82.43,
+            656.35,
+            295.56,
+            665.41
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "way. If the \"best\" model happens to make an error, the collaborative",
+          "bbox": [
+            317.62,
+            656.86,
+            558.2,
+            665.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "CalmExperiment-7B-slerp. Hereafter, we refer to it as the",
+          "bbox": [
+            82.43,
+            667.34,
+            294.05,
+            676.36
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.02
+          ]
+        },
+        {
+          "text": "nature of the Majority Voting system allows for errors to be cor-",
+          "bbox": [
+            317.95,
+            667.69,
+            559.71,
+            676.74
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "\"best\" model.",
+          "bbox": [
+            82.43,
+            678.34,
+            130.09,
+            687.3
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.97
+          ]
+        },
+        {
+          "text": "rected by leveraging consensus from the other models. At the same",
+          "bbox": [
+            317.95,
+            678.78,
+            558.2,
+            687.66
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            8.88
+          ]
+        },
+        {
+          "text": "time, there may be a chance of making the result worse than just",
+          "bbox": [
+            317.95,
+            689.62,
+            558.2,
+            698.65
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.03
+          ]
+        },
+        {
+          "text": "1https://huggingface.co/allknowingroger/CalmExperiment-7B-slerp",
+          "bbox": [
+            53.67,
+            692.19,
+            246.35,
+            700.69
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            5.48,
+            6.97
+          ]
+        },
+        {
+          "text": "using the \"best\" model, but it requires that the other two models",
+          "bbox": [
+            317.95,
+            700.56,
+            558.2,
+            709.62
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            9.06
+          ]
+        },
+        {
+          "text": "2https://huggingface.co/DeepKarkhanis/Mistral-Passthrough-8L-10B",
+          "bbox": [
+            53.8,
+            700.6,
+            249.03,
+            709.1
+          ],
+          "intersectsDrawing": false,
+          "fonts": [
+            "LinLibertineT"
+          ],
+          "sizes": [
+            5.48,
+            6.97
+          ]
+        }
+      ]
+    }
+  ]
+}
