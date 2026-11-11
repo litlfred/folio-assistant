@@ -1,0 +1,12 @@
+{
+  "package": "authoring-math",
+  "description": "Relaxations this content type declares against the strict base processes. Every entry needs a reason: the file is the record of what was waived and why. Steps marked relaxable=\"false\" in the BPMN cannot be listed here — the base is strict about those precisely so a package cannot opt out.",
+  "relaxations": [
+    {
+      "process": "Process_Editing",
+      "activity": "Task_SmeReview",
+      "reason": "A paper folio has no clinical SME lane. Scientific judgement on a proposed change is the agent-review branch plus the author's own reading at the findings gate, which is not waived.",
+      "scope": "All block kinds. The escalation exists for guideline content, where a clinical error has a patient at the end of it."
+    }
+  ]
+}

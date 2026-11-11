@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Conjecture register status lifecycle (bean folio-assistant-ckej).
+
+  Computed from observable facts about the conjecture's state in the paper and
+  in work-traceability:
+
+    superseded    true when a reformulated conjecture or theorem supersedes it
+    disproved     true when a counterexample or refutation is recorded
+    proved        true when a complete Lean proof (no conjectural sorry) exists
+    attemptCount  number of recorded work-traceability attempts in attempts[]
+
+  Hit policy FIRST: terminal resolutions (superseded, disproved, proved) take
+  precedence over active work (`attempted`), which takes precedence over `open`.
+-->
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             xmlns:dmndi="https://www.omg.org/spec/DMN/20191111/DMNDI/"
+             id="Definitions_ConjectureStatus"
+             name="Conjecture status lifecycle"
+             namespace="https://litlfred.github.io/folio-assistant-sci/decisions">
+  <decision id="Decision_ConjectureStatus" name="Conjecture register status">
+    <decisionTable id="Table_ConjectureStatus" hitPolicy="FIRST">
+      <input id="In_Superseded" label="superseded by another block">
+        <inputExpression id="Expr_Superseded" typeRef="boolean">
+          <text>superseded</text>
+        </inputExpression>
+      </input>
+      <input id="In_Disproved" label="counterexample or refutation established">
+        <inputExpression id="Expr_Disproved" typeRef="boolean">
+          <text>disproved</text>
+        </inputExpression>
+      </input>
+      <input id="In_Proved" label="complete Lean proof established">
+        <inputExpression id="Expr_Proved" typeRef="boolean">
+          <text>proved</text>
+        </inputExpression>
+      </input>
+      <input id="In_AttemptCount" label="recorded work-traceability attempts">
+        <inputExpression id="Expr_AttemptCount" typeRef="number">
+          <text>attemptCount</text>
+        </inputExpression>
+      </input>
+      <output id="Out_ConjectureStatus" name="status" typeRef="string" />
+
+      <rule id="Rule_Superseded">
+        <description>The conjecture has been superseded by a reformulated statement or theorem.</description>
+        <inputEntry id="IE_Superseded_1"><text>true</text></inputEntry>
+        <inputEntry id="IE_Superseded_2"><text>-</text></inputEntry>
+        <inputEntry id="IE_Superseded_3"><text>-</text></inputEntry>
+        <inputEntry id="IE_Superseded_4"><text>-</text></inputEntry>
+        <outputEntry id="OE_Superseded"><text>"superseded"</text></outputEntry>
+      </rule>
+      <rule id="Rule_Disproved">
+        <description>A counterexample or formal refutation has disproved the conjecture.</description>
+        <inputEntry id="IE_Disproved_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Disproved_2"><text>true</text></inputEntry>
+        <inputEntry id="IE_Disproved_3"><text>-</text></inputEntry>
+        <inputEntry id="IE_Disproved_4"><text>-</text></inputEntry>
+        <outputEntry id="OE_Disproved"><text>"disproved"</text></outputEntry>
+      </rule>
+      <rule id="Rule_Proved">
+        <description>A complete Lean proof with no conjectural sorry has established the statement.</description>
+        <inputEntry id="IE_Proved_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Proved_2"><text>-</text></inputEntry>
+        <inputEntry id="IE_Proved_3"><text>true</text></inputEntry>
+        <inputEntry id="IE_Proved_4"><text>-</text></inputEntry>
+        <outputEntry id="OE_Proved"><text>"proved"</text></outputEntry>
+      </rule>
+      <rule id="Rule_Attempted">
+        <description>At least one work-traceability attempt has been recorded, and the conjecture remains unresolved.</description>
+        <inputEntry id="IE_Attempted_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Attempted_2"><text>-</text></inputEntry>
+        <inputEntry id="IE_Attempted_3"><text>-</text></inputEntry>
+        <inputEntry id="IE_Attempted_4"><text>&gt; 0</text></inputEntry>
+        <outputEntry id="OE_Attempted"><text>"attempted"</text></outputEntry>
+      </rule>
+      <rule id="Rule_Open">
+        <description>Unresolved and no attempt recorded yet.</description>
+        <inputEntry id="IE_Open_1"><text>-</text></inputEntry>
+        <inputEntry id="IE_Open_2"><text>-</text></inputEntry>
+        <inputEntry id="IE_Open_3"><text>-</text></inputEntry>
+        <inputEntry id="IE_Open_4"><text>-</text></inputEntry>
+        <outputEntry id="OE_Open"><text>"open"</text></outputEntry>
+      </rule>
+    </decisionTable>
+  </decision>
+</definitions>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: a state graph's dashboard</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .page { display: grid; grid-template-columns: 56px 1fr; min-height: 100vh; }
+  .strip { border-right: 1px solid var(--line); background: var(--fill); }
+  .main { min-width: 0; padding: 16px 24px; }
+  .sub { font-size: 0.9rem; }
+  .list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+  .item { border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; }
+  .item h2 { font-size: 1rem; margin: 0 0 4px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+  .tag { font-size: 0.75rem; border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+  .here { outline: 2px solid var(--ink); }
+  code { word-break: break-all; }
+  @media (max-width: 799px) { .page { grid-template-columns: 1fr; } .strip { height: 44px; border-right: 0; border-bottom: 1px solid var(--line); } .main { padding: 12px 16px; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="strip" aria-label="site navigation strip"></div>
+  <main class="main">
+    <h1>health</h1>
+    <p class="sub"><code>test/health/results/</code> · health</p>
+    <p class="sub">This graph is <strong>declared</strong> and nothing publishes a projection for it yet, so there is nothing to draw. The directory is <code>test/health/results/</code>.</p>
+    <h2>State graphs this harness declares</h2>
+    <ul class="list">
+      <li class="item"><h2><a href="#">attestations</a><span class="tag">declared</span></h2><p>The judgement half of every QA verdict this instance carries across runs.</p></li>
+      <li class="item"><h2><a href="#">beans</a><span class="tag">live</span></h2><p>The work plan.</p></li>
+      <li class="item here"><h2>health<span class="tag">declared</span></h2><p>Repository health reports — what the daily sweep wrote.</p></li>
+      <li class="item"><h2><a href="#">issue-marks</a><span class="tag">declared</span></h2><p>How far an agent has read an issue: the marks say what was seen, never the comments.</p></li>
+      <li class="item"><h2><a href="#">qa</a><span class="tag">live</span></h2><p>Everything a QA process produced, in one declared tree.</p></li>
+      <li class="item"><h2><a href="#">swimlane-glossary</a><span class="tag">elsewhere</span></h2><p>The swimlane glossary's retirement ledger.</p></li>
+      <li class="item"><h2><a href="#">todos</a><span class="tag">live</span></h2><p>A person's outstanding items.</p></li>
+      <li class="item"><h2><a href="#">uploads</a><span class="tag">elsewhere</span></h2><p>The incoming queue of the document-ingestion pipeline.</p></li>
+    </ul>
+  </main>
+</div>
+</body>
+</html>
