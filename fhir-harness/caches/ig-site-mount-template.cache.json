@@ -1,0 +1,38 @@
+{
+  "$schema": "cache/1.0.0",
+  "id": "ig-site-mount-template",
+  "title": "IG site publish template: remote mounts and FHIR packages",
+  "instance": "fhir-harness",
+  "kind": "actions-cache",
+  "trustClass": "unclassified",
+  "location": "ig-site-mount-v1-<hash>, in each IG repository that copies templates/ig-repo-site/site-publish.yml",
+  "keyRecipe": {
+    "source": "hashFiles",
+    "files": [
+      "index.lock.json",
+      "sushi-config.yaml"
+    ],
+    "expression": "ig-site-mount-v1-${{ hashFiles('index.lock.json', 'sushi-config.yaml') }}"
+  },
+  "derivedInputs": "the IG repository's index.lock.json and sushi-config.yaml",
+  "holds": "/home/runner/.cache/cat-mount and ~/.fhir/packages",
+  "producer": "the IG repository's site-publish job (from this template), any run that misses the key",
+  "consumers": [
+    "the same job's mount step and the site build's FHIR package reads"
+  ],
+  "materializes": [
+    "~/.fhir/packages/"
+  ],
+  "stateInputs": {
+    "reads": "unmeasured",
+    "how": "not yet derived from a recorded read set; the producer may read state:mount graphs"
+  },
+  "needs": [],
+  "savePolicy": "any run that misses the key",
+  "verify": "the mount half is checked by mount-from-lock against the lock; the FHIR packages are used as found (versioned by name)",
+  "owner": "fhir-harness (templates/ig-repo-site)",
+  "uses": [
+    "templates/ig-repo-site/site-publish.yml:117-125"
+  ],
+  "notes": "A template: each IG repository holds its own copy, so a change here reaches an IG only when it re-copies the template. Its mount half is superseded by `layers-ref` like `fhir-cat-mount`; what stays is the FHIR package cache, which could become its own node keyed by sushi-config.yaml alone."
+}
