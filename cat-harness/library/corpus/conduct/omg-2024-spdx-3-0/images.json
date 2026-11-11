@@ -1,0 +1,1189 @@
+{
+  "$schema": "folio-document-images/v1",
+  "doc_id": "omg-2024-spdx-3-0",
+  "images": [
+    {
+      "id": "img-p001-1",
+      "file": "images/img-p001-1.png",
+      "role": "decorative",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "the publisher's logo on the title page, above the title; it is not a figure and carries no content the title page's text does not",
+        "page": 1
+      },
+      "narrative": [
+        {
+          "text": "The OMG logo: the letters 'OMG' in dark grey, with a blue bar under the M, beside the words 'Standards Development Organization' in blue.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Le logo de l'OMG : les lettres « OMG » en gris foncé, avec une barre bleue sous le M, à côté des mots « Standards Development Organization » en bleu.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "El logotipo de OMG: las letras «OMG» en gris oscuro, con una barra azul bajo la M, junto a las palabras «Standards Development Organization» en azul.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "شعار OMG: الأحرف «OMG» باللون الرمادي الداكن مع شريط أزرق تحت حرف M، وبجانبها عبارة «Standards Development Organization» باللون الأزرق.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Логотип OMG: буквы «OMG» тёмно-серого цвета с синей полосой под M, рядом слова «Standards Development Organization» синим цветом.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "OMG 标志：深灰色的字母“OMG”，M 下方有一条蓝色横条，旁边是蓝色的“Standards Development Organization”字样。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p178-1",
+      "file": "images/img-p178-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.1 of the specification, captioned 'Core Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 178
+      },
+      "narrative": [
+        {
+          "text": "UML class diagram of the SPDX 3.0 Core profile. The abstract Element (spdxId anyURI[1], name, summary, description, comment, creationInfo CreationInfo[1], verifiedUsing IntegrityMethod[0..*], externalRef, externalIdentifier, extension) is the root. Agent (with subclasses Person, Organization, SoftwareAgent), Tool, Artifact (originatedBy, suppliedBy, builtTime, releaseTime, validUntilTime, standardName, supportLevel), IndividualElement, Annotation (annotationType[1], statement, contentType; subject 1 Element), Relationship (relationshipType[1], completeness, startTime, endTime; from 1 Element, to 1..* Elements) and the abstract ElementCollection (profileConformance; element and rootElement) all specialise Element. SpdxDocument (import ExternalMap, dataLicense, namespaceMap) and Bundle (context) specialise ElementCollection, Bom specialises Bundle, and LifecycleScopedRelationship (scope) specialises Relationship. A 'Non-Element Classes' box holds CreationInfo (specVersion SemVer[1], created DateTime[1], createdBy Agent[1..*], createdUsing Tool[0..*], comment), ExternalIdentifier, ExternalMap, ExternalRef, DictionaryEntry, NamespaceMap, PositiveIntegerRange and IntegrityMethod with its subclasses Hash (algorithm, hashValue) and PackageVerificationCode. Two further boxes list the simple data types (DateTime, MediaType, SemVer) and the enumerations (AnnotationType, ExternalIdentifierType, ExternalRefType, HashAlgorithm, LifecycleScopeType, PresenceType, ProfileIdentifierType, RelationshipCompleteness, RelationshipType, SupportType).",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Diagramme de classes UML du profil Core de SPDX 3.0. La classe abstraite Element (spdxId anyURI[1], name, summary, description, comment, creationInfo CreationInfo[1], verifiedUsing IntegrityMethod[0..*], externalRef, externalIdentifier, extension) en est la racine. Agent (avec les sous-classes Person, Organization, SoftwareAgent), Tool, Artifact (originatedBy, suppliedBy, builtTime, releaseTime, validUntilTime, standardName, supportLevel), IndividualElement, Annotation (annotationType[1], statement, contentType ; subject 1 Element), Relationship (relationshipType[1], completeness, startTime, endTime ; from 1 Element, to 1..* Elements) et la classe abstraite ElementCollection (profileConformance ; element et rootElement) spécialisent toutes Element. SpdxDocument (import ExternalMap, dataLicense, namespaceMap) et Bundle (context) spécialisent ElementCollection, Bom spécialise Bundle, et LifecycleScopedRelationship (scope) spécialise Relationship. Un cadre « Non-Element Classes » contient CreationInfo (specVersion SemVer[1], created DateTime[1], createdBy Agent[1..*], createdUsing Tool[0..*], comment), ExternalIdentifier, ExternalMap, ExternalRef, DictionaryEntry, NamespaceMap, PositiveIntegerRange et IntegrityMethod avec ses sous-classes Hash (algorithm, hashValue) et PackageVerificationCode. Deux autres cadres listent les types de données simples (DateTime, MediaType, SemVer) et les énumérations (AnnotationType, ExternalIdentifierType, ExternalRefType, HashAlgorithm, LifecycleScopeType, PresenceType, ProfileIdentifierType, RelationshipCompleteness, RelationshipType, SupportType).",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Diagrama de clases UML del perfil Core de SPDX 3.0. La clase abstracta Element (spdxId anyURI[1], name, summary, description, comment, creationInfo CreationInfo[1], verifiedUsing IntegrityMethod[0..*], externalRef, externalIdentifier, extension) es la raíz. Agent (con las subclases Person, Organization, SoftwareAgent), Tool, Artifact (originatedBy, suppliedBy, builtTime, releaseTime, validUntilTime, standardName, supportLevel), IndividualElement, Annotation (annotationType[1], statement, contentType; subject 1 Element), Relationship (relationshipType[1], completeness, startTime, endTime; from 1 Element, to 1..* Elements) y la clase abstracta ElementCollection (profileConformance; element y rootElement) especializan Element. SpdxDocument (import ExternalMap, dataLicense, namespaceMap) y Bundle (context) especializan ElementCollection, Bom especializa Bundle y LifecycleScopedRelationship (scope) especializa Relationship. Un recuadro «Non-Element Classes» contiene CreationInfo (specVersion SemVer[1], created DateTime[1], createdBy Agent[1..*], createdUsing Tool[0..*], comment), ExternalIdentifier, ExternalMap, ExternalRef, DictionaryEntry, NamespaceMap, PositiveIntegerRange e IntegrityMethod con sus subclases Hash (algorithm, hashValue) y PackageVerificationCode. Otros dos recuadros enumeran los tipos de datos simples (DateTime, MediaType, SemVer) y las enumeraciones (AnnotationType, ExternalIdentifierType, ExternalRefType, HashAlgorithm, LifecycleScopeType, PresenceType, ProfileIdentifierType, RelationshipCompleteness, RelationshipType, SupportType).",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مخطط أصناف UML لملف التعريف Core في SPDX 3.0. الصنف المجرّد Element (spdxId anyURI[1]، name، summary، description، comment، creationInfo CreationInfo[1]، verifiedUsing IntegrityMethod[0..*]، externalRef، externalIdentifier، extension) هو الجذر. وتخصّص Element كلٌّ من Agent (وأصنافه الفرعية Person وOrganization وSoftwareAgent) وTool وArtifact (originatedBy، suppliedBy، builtTime، releaseTime، validUntilTime، standardName، supportLevel) وIndividualElement وAnnotation (annotationType[1]، statement، contentType؛ subject 1 Element) وRelationship (relationshipType[1]، completeness، startTime، endTime؛ from 1 Element، to 1..* Elements) والصنف المجرّد ElementCollection (profileConformance؛ element وrootElement). ويخصّص SpdxDocument (import ExternalMap، dataLicense، namespaceMap) وBundle (context) الصنفَ ElementCollection، ويخصّص Bom الصنفَ Bundle، ويخصّص LifecycleScopedRelationship (scope) الصنفَ Relationship. ويضم إطار «Non-Element Classes» الأصناف CreationInfo (specVersion SemVer[1]، created DateTime[1]، createdBy Agent[1..*]، createdUsing Tool[0..*]، comment) وExternalIdentifier وExternalMap وExternalRef وDictionaryEntry وNamespaceMap وPositiveIntegerRange وIntegrityMethod مع صنفيه الفرعيين Hash (algorithm، hashValue) وPackageVerificationCode. ويسرد إطاران آخران أنواع البيانات البسيطة (DateTime، MediaType، SemVer) والتعدادات (AnnotationType، ExternalIdentifierType، ExternalRefType، HashAlgorithm، LifecycleScopeType، PresenceType، ProfileIdentifierType، RelationshipCompleteness، RelationshipType، SupportType).",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Диаграмма классов UML профиля Core в SPDX 3.0. Корнем служит абстрактный класс Element (spdxId anyURI[1], name, summary, description, comment, creationInfo CreationInfo[1], verifiedUsing IntegrityMethod[0..*], externalRef, externalIdentifier, extension). Его специализируют Agent (с подклассами Person, Organization, SoftwareAgent), Tool, Artifact (originatedBy, suppliedBy, builtTime, releaseTime, validUntilTime, standardName, supportLevel), IndividualElement, Annotation (annotationType[1], statement, contentType; subject 1 Element), Relationship (relationshipType[1], completeness, startTime, endTime; from 1 Element, to 1..* Elements) и абстрактный ElementCollection (profileConformance; element и rootElement). SpdxDocument (import ExternalMap, dataLicense, namespaceMap) и Bundle (context) специализируют ElementCollection, Bom специализирует Bundle, а LifecycleScopedRelationship (scope) специализирует Relationship. Блок «Non-Element Classes» содержит CreationInfo (specVersion SemVer[1], created DateTime[1], createdBy Agent[1..*], createdUsing Tool[0..*], comment), ExternalIdentifier, ExternalMap, ExternalRef, DictionaryEntry, NamespaceMap, PositiveIntegerRange и IntegrityMethod с подклассами Hash (algorithm, hashValue) и PackageVerificationCode. Ещё два блока перечисляют простые типы данных (DateTime, MediaType, SemVer) и перечисления (AnnotationType, ExternalIdentifierType, ExternalRefType, HashAlgorithm, LifecycleScopeType, PresenceType, ProfileIdentifierType, RelationshipCompleteness, RelationshipType, SupportType).",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "SPDX 3.0 Core 配置文件的 UML 类图。抽象类 Element（spdxId anyURI[1]、name、summary、description、comment、creationInfo CreationInfo[1]、verifiedUsing IntegrityMethod[0..*]、externalRef、externalIdentifier、extension）是根。Agent（子类 Person、Organization、SoftwareAgent）、Tool、Artifact（originatedBy、suppliedBy、builtTime、releaseTime、validUntilTime、standardName、supportLevel）、IndividualElement、Annotation（annotationType[1]、statement、contentType；subject 1 Element）、Relationship（relationshipType[1]、completeness、startTime、endTime；from 1 Element，to 1..* Elements）以及抽象类 ElementCollection（profileConformance；element 和 rootElement）都特化 Element。SpdxDocument（import ExternalMap、dataLicense、namespaceMap）和 Bundle（context）特化 ElementCollection，Bom 特化 Bundle，LifecycleScopedRelationship（scope）特化 Relationship。“Non-Element Classes”框中有 CreationInfo（specVersion SemVer[1]、created DateTime[1]、createdBy Agent[1..*]、createdUsing Tool[0..*]、comment）、ExternalIdentifier、ExternalMap、ExternalRef、DictionaryEntry、NamespaceMap、PositiveIntegerRange，以及 IntegrityMethod 及其子类 Hash（algorithm、hashValue）和 PackageVerificationCode。另外两个框列出简单数据类型（DateTime、MediaType、SemVer）和枚举（AnnotationType、ExternalIdentifierType、ExternalRefType、HashAlgorithm、LifecycleScopeType、PresenceType、ProfileIdentifierType、RelationshipCompleteness、RelationshipType、SupportType）。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p179-1",
+      "file": "images/img-p179-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.2 of the specification, captioned 'Software Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 179
+      },
+      "narrative": [
+        {
+          "text": "UML class diagram of the Software profile. The abstract SoftwareArtifact (contentIdentifier, primaryPurpose, additionalPurpose, copyrightText, attributionText) specialises Core/Artifact; Package (packageVersion, downloadLocation, packageUrl, homePage, sourceInfo), File (contentType, name[1], fileKind) and Snippet (byteRange, lineRange, snippetFromFile File[1]) specialise SoftwareArtifact. Sbom (sbomType SbomType[0..*]) specialises Core/Bom, and ContentIdentifier (contentIdentifierType[1], contentIdentifierValue anyURI[1]) specialises Core/IntegrityMethod. Enumerations: ContentIdentifierType, FileKindType, SbomType, SoftwarePurpose.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Diagramme de classes UML du profil Software. La classe abstraite SoftwareArtifact (contentIdentifier, primaryPurpose, additionalPurpose, copyrightText, attributionText) spécialise Core/Artifact ; Package (packageVersion, downloadLocation, packageUrl, homePage, sourceInfo), File (contentType, name[1], fileKind) et Snippet (byteRange, lineRange, snippetFromFile File[1]) spécialisent SoftwareArtifact. Sbom (sbomType SbomType[0..*]) spécialise Core/Bom, et ContentIdentifier (contentIdentifierType[1], contentIdentifierValue anyURI[1]) spécialise Core/IntegrityMethod. Énumérations : ContentIdentifierType, FileKindType, SbomType, SoftwarePurpose.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Diagrama de clases UML del perfil Software. La clase abstracta SoftwareArtifact (contentIdentifier, primaryPurpose, additionalPurpose, copyrightText, attributionText) especializa Core/Artifact; Package (packageVersion, downloadLocation, packageUrl, homePage, sourceInfo), File (contentType, name[1], fileKind) y Snippet (byteRange, lineRange, snippetFromFile File[1]) especializan SoftwareArtifact. Sbom (sbomType SbomType[0..*]) especializa Core/Bom, y ContentIdentifier (contentIdentifierType[1], contentIdentifierValue anyURI[1]) especializa Core/IntegrityMethod. Enumeraciones: ContentIdentifierType, FileKindType, SbomType, SoftwarePurpose.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مخطط أصناف UML لملف التعريف Software. الصنف المجرّد SoftwareArtifact (contentIdentifier، primaryPurpose، additionalPurpose، copyrightText، attributionText) يخصّص Core/Artifact؛ ويخصّص SoftwareArtifact كلٌّ من Package (packageVersion، downloadLocation، packageUrl، homePage، sourceInfo) وFile (contentType، name[1]، fileKind) وSnippet (byteRange، lineRange، snippetFromFile File[1]). ويخصّص Sbom (sbomType SbomType[0..*]) الصنفَ Core/Bom، ويخصّص ContentIdentifier (contentIdentifierType[1]، contentIdentifierValue anyURI[1]) الصنفَ Core/IntegrityMethod. التعدادات: ContentIdentifierType وFileKindType وSbomType وSoftwarePurpose.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Диаграмма классов UML профиля Software. Абстрактный SoftwareArtifact (contentIdentifier, primaryPurpose, additionalPurpose, copyrightText, attributionText) специализирует Core/Artifact; Package (packageVersion, downloadLocation, packageUrl, homePage, sourceInfo), File (contentType, name[1], fileKind) и Snippet (byteRange, lineRange, snippetFromFile File[1]) специализируют SoftwareArtifact. Sbom (sbomType SbomType[0..*]) специализирует Core/Bom, а ContentIdentifier (contentIdentifierType[1], contentIdentifierValue anyURI[1]) специализирует Core/IntegrityMethod. Перечисления: ContentIdentifierType, FileKindType, SbomType, SoftwarePurpose.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "Software 配置文件的 UML 类图。抽象类 SoftwareArtifact（contentIdentifier、primaryPurpose、additionalPurpose、copyrightText、attributionText）特化 Core/Artifact；Package（packageVersion、downloadLocation、packageUrl、homePage、sourceInfo）、File（contentType、name[1]、fileKind）和 Snippet（byteRange、lineRange、snippetFromFile File[1]）特化 SoftwareArtifact。Sbom（sbomType SbomType[0..*]）特化 Core/Bom，ContentIdentifier（contentIdentifierType[1]、contentIdentifierValue anyURI[1]）特化 Core/IntegrityMethod。枚举：ContentIdentifierType、FileKindType、SbomType、SoftwarePurpose。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p180-1",
+      "file": "images/img-p180-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.3 of the specification, captioned 'Security Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 180
+      },
+      "narrative": [
+        {
+          "text": "UML class diagram of the Security profile. Vulnerability (publishedTime, modifiedTime, withdrawnTime) specialises Core/Artifact. The abstract VulnAssessmentRelationship specialises Core/Relationship, constrains 'to' to exactly one Element, and adds assessedElement, suppliedBy and the three times; it is specialised by CvssV2/V3/V4VulnAssessmentRelationship (score, severity, vectorString), EpssVulnAssessmentRelationship (probability, percentile), ExploitCatalogVulnAssessmentRelationship (catalogType, exploited, locator), SsvcVulnAssessmentRelationship (decisionType) and the abstract VexVulnAssessmentRelationship (vexVersion, statusNotes). The VEX class has four subclasses: VexAffected (actionStatement[1], actionStatementTime), VexFixed, VexNotAffected (justificationType, impactStatement, impactStatementTime) and VexUnderInvestigation. Enumerations: CvssSeverityType, ExploitCatalogType, SsvcDecisionType, VexJustificationType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Diagramme de classes UML du profil Security. Vulnerability (publishedTime, modifiedTime, withdrawnTime) spécialise Core/Artifact. La classe abstraite VulnAssessmentRelationship spécialise Core/Relationship, restreint « to » à exactement un Element et ajoute assessedElement, suppliedBy et les trois dates ; elle est spécialisée par CvssV2/V3/V4VulnAssessmentRelationship (score, severity, vectorString), EpssVulnAssessmentRelationship (probability, percentile), ExploitCatalogVulnAssessmentRelationship (catalogType, exploited, locator), SsvcVulnAssessmentRelationship (decisionType) et la classe abstraite VexVulnAssessmentRelationship (vexVersion, statusNotes). La classe VEX a quatre sous-classes : VexAffected (actionStatement[1], actionStatementTime), VexFixed, VexNotAffected (justificationType, impactStatement, impactStatementTime) et VexUnderInvestigation. Énumérations : CvssSeverityType, ExploitCatalogType, SsvcDecisionType, VexJustificationType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Diagrama de clases UML del perfil Security. Vulnerability (publishedTime, modifiedTime, withdrawnTime) especializa Core/Artifact. La clase abstracta VulnAssessmentRelationship especializa Core/Relationship, restringe «to» a exactamente un Element y añade assessedElement, suppliedBy y las tres fechas; la especializan CvssV2/V3/V4VulnAssessmentRelationship (score, severity, vectorString), EpssVulnAssessmentRelationship (probability, percentile), ExploitCatalogVulnAssessmentRelationship (catalogType, exploited, locator), SsvcVulnAssessmentRelationship (decisionType) y la clase abstracta VexVulnAssessmentRelationship (vexVersion, statusNotes). La clase VEX tiene cuatro subclases: VexAffected (actionStatement[1], actionStatementTime), VexFixed, VexNotAffected (justificationType, impactStatement, impactStatementTime) y VexUnderInvestigation. Enumeraciones: CvssSeverityType, ExploitCatalogType, SsvcDecisionType, VexJustificationType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مخطط أصناف UML لملف التعريف Security. يخصّص Vulnerability (publishedTime، modifiedTime، withdrawnTime) الصنفَ Core/Artifact. والصنف المجرّد VulnAssessmentRelationship يخصّص Core/Relationship، ويقيّد «to» بعنصر Element واحد بالضبط، ويضيف assessedElement وsuppliedBy والأوقات الثلاثة؛ وتخصّصه الأصناف CvssV2/V3/V4VulnAssessmentRelationship (score، severity، vectorString) وEpssVulnAssessmentRelationship (probability، percentile) وExploitCatalogVulnAssessmentRelationship (catalogType، exploited، locator) وSsvcVulnAssessmentRelationship (decisionType) والصنف المجرّد VexVulnAssessmentRelationship (vexVersion، statusNotes). ولصنف VEX أربعة أصناف فرعية: VexAffected (actionStatement[1]، actionStatementTime) وVexFixed وVexNotAffected (justificationType، impactStatement، impactStatementTime) وVexUnderInvestigation. التعدادات: CvssSeverityType وExploitCatalogType وSsvcDecisionType وVexJustificationType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Диаграмма классов UML профиля Security. Vulnerability (publishedTime, modifiedTime, withdrawnTime) специализирует Core/Artifact. Абстрактный VulnAssessmentRelationship специализирует Core/Relationship, ограничивает «to» ровно одним Element и добавляет assessedElement, suppliedBy и три отметки времени; его специализируют CvssV2/V3/V4VulnAssessmentRelationship (score, severity, vectorString), EpssVulnAssessmentRelationship (probability, percentile), ExploitCatalogVulnAssessmentRelationship (catalogType, exploited, locator), SsvcVulnAssessmentRelationship (decisionType) и абстрактный VexVulnAssessmentRelationship (vexVersion, statusNotes). У класса VEX четыре подкласса: VexAffected (actionStatement[1], actionStatementTime), VexFixed, VexNotAffected (justificationType, impactStatement, impactStatementTime) и VexUnderInvestigation. Перечисления: CvssSeverityType, ExploitCatalogType, SsvcDecisionType, VexJustificationType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "Security 配置文件的 UML 类图。Vulnerability（publishedTime、modifiedTime、withdrawnTime）特化 Core/Artifact。抽象类 VulnAssessmentRelationship 特化 Core/Relationship，将“to”限定为恰好一个 Element，并增加 assessedElement、suppliedBy 和三个时间；特化它的有 CvssV2/V3/V4VulnAssessmentRelationship（score、severity、vectorString）、EpssVulnAssessmentRelationship（probability、percentile）、ExploitCatalogVulnAssessmentRelationship（catalogType、exploited、locator）、SsvcVulnAssessmentRelationship（decisionType）以及抽象类 VexVulnAssessmentRelationship（vexVersion、statusNotes）。VEX 类有四个子类：VexAffected（actionStatement[1]、actionStatementTime）、VexFixed、VexNotAffected（justificationType、impactStatement、impactStatementTime）和 VexUnderInvestigation。枚举：CvssSeverityType、ExploitCatalogType、SsvcDecisionType、VexJustificationType。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p181-1",
+      "file": "images/img-p181-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.4 of the specification, captioned 'Licensing Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 181
+      },
+      "narrative": [
+        {
+          "text": "UML class diagram of the two licensing profiles. Simple Licensing: the abstract AnyLicenseInfo specialises Core/Element; LicenseExpression (customIdToUri, licenseExpression string[1], licenseListVersion SemVer) specialises it, and SimpleLicensingText (licenseText[1]) specialises Element directly. Expanded Licensing: ConjunctiveLicenseSet and DisjunctiveLicenseSet (each with members), IndividualLicensingInfo, WithAdditionOperator (subjectExtendableLicense, subjectAddition) and the abstract ExtendableLicense all specialise AnyLicenseInfo. ExtendableLicense is specialised by the abstract License (licenseText, isDeprecatedLicenseId, isFsfLibre, isOsiApproved, licenseXml, obsoletedBy, seeAlso, standardLicenseHeader, standardLicenseTemplate), with subclasses ListedLicense (deprecatedVersion, listVersionAdded) and CustomLicense, and by OrLaterOperator (subjectLicense). LicenseAddition (additionText[1], …) specialises Element, with subclasses ListedLicenseException and CustomLicenseAddition.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Diagramme de classes UML des deux profils de licence. Simple Licensing : la classe abstraite AnyLicenseInfo spécialise Core/Element ; LicenseExpression (customIdToUri, licenseExpression string[1], licenseListVersion SemVer) la spécialise, et SimpleLicensingText (licenseText[1]) spécialise directement Element. Expanded Licensing : ConjunctiveLicenseSet et DisjunctiveLicenseSet (chacune avec members), IndividualLicensingInfo, WithAdditionOperator (subjectExtendableLicense, subjectAddition) et la classe abstraite ExtendableLicense spécialisent toutes AnyLicenseInfo. ExtendableLicense est spécialisée par la classe abstraite License (licenseText, isDeprecatedLicenseId, isFsfLibre, isOsiApproved, licenseXml, obsoletedBy, seeAlso, standardLicenseHeader, standardLicenseTemplate), avec les sous-classes ListedLicense (deprecatedVersion, listVersionAdded) et CustomLicense, et par OrLaterOperator (subjectLicense). LicenseAddition (additionText[1], …) spécialise Element, avec les sous-classes ListedLicenseException et CustomLicenseAddition.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Diagrama de clases UML de los dos perfiles de licencias. Simple Licensing: la clase abstracta AnyLicenseInfo especializa Core/Element; LicenseExpression (customIdToUri, licenseExpression string[1], licenseListVersion SemVer) la especializa, y SimpleLicensingText (licenseText[1]) especializa Element directamente. Expanded Licensing: ConjunctiveLicenseSet y DisjunctiveLicenseSet (cada una con members), IndividualLicensingInfo, WithAdditionOperator (subjectExtendableLicense, subjectAddition) y la clase abstracta ExtendableLicense especializan AnyLicenseInfo. ExtendableLicense la especializan la clase abstracta License (licenseText, isDeprecatedLicenseId, isFsfLibre, isOsiApproved, licenseXml, obsoletedBy, seeAlso, standardLicenseHeader, standardLicenseTemplate), con las subclases ListedLicense (deprecatedVersion, listVersionAdded) y CustomLicense, y OrLaterOperator (subjectLicense). LicenseAddition (additionText[1], …) especializa Element, con las subclases ListedLicenseException y CustomLicenseAddition.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مخطط أصناف UML لملفَّي تعريف الترخيص. Simple Licensing: الصنف المجرّد AnyLicenseInfo يخصّص Core/Element؛ ويخصّصه LicenseExpression (customIdToUri، licenseExpression string[1]، licenseListVersion SemVer)، ويخصّص SimpleLicensingText (licenseText[1]) الصنفَ Element مباشرة. Expanded Licensing: يخصّص AnyLicenseInfo كلٌّ من ConjunctiveLicenseSet وDisjunctiveLicenseSet (لكلٍّ منهما members) وIndividualLicensingInfo وWithAdditionOperator (subjectExtendableLicense، subjectAddition) والصنف المجرّد ExtendableLicense. ويخصّص ExtendableLicense الصنفُ المجرّد License (licenseText، isDeprecatedLicenseId، isFsfLibre، isOsiApproved، licenseXml، obsoletedBy، seeAlso، standardLicenseHeader، standardLicenseTemplate) مع صنفيه الفرعيين ListedLicense (deprecatedVersion، listVersionAdded) وCustomLicense، وكذلك OrLaterOperator (subjectLicense). ويخصّص LicenseAddition (additionText[1]، …) الصنفَ Element، مع صنفيه الفرعيين ListedLicenseException وCustomLicenseAddition.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Диаграмма классов UML двух профилей лицензирования. Simple Licensing: абстрактный AnyLicenseInfo специализирует Core/Element; его специализирует LicenseExpression (customIdToUri, licenseExpression string[1], licenseListVersion SemVer), а SimpleLicensingText (licenseText[1]) напрямую специализирует Element. Expanded Licensing: ConjunctiveLicenseSet и DisjunctiveLicenseSet (каждый с members), IndividualLicensingInfo, WithAdditionOperator (subjectExtendableLicense, subjectAddition) и абстрактный ExtendableLicense специализируют AnyLicenseInfo. ExtendableLicense специализируют абстрактный License (licenseText, isDeprecatedLicenseId, isFsfLibre, isOsiApproved, licenseXml, obsoletedBy, seeAlso, standardLicenseHeader, standardLicenseTemplate) с подклассами ListedLicense (deprecatedVersion, listVersionAdded) и CustomLicense, а также OrLaterOperator (subjectLicense). LicenseAddition (additionText[1], …) специализирует Element, с подклассами ListedLicenseException и CustomLicenseAddition.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "两个许可配置文件的 UML 类图。Simple Licensing：抽象类 AnyLicenseInfo 特化 Core/Element；LicenseExpression（customIdToUri、licenseExpression string[1]、licenseListVersion SemVer）特化它，SimpleLicensingText（licenseText[1]）直接特化 Element。Expanded Licensing：ConjunctiveLicenseSet 和 DisjunctiveLicenseSet（各有 members）、IndividualLicensingInfo、WithAdditionOperator（subjectExtendableLicense、subjectAddition）以及抽象类 ExtendableLicense 都特化 AnyLicenseInfo。特化 ExtendableLicense 的有抽象类 License（licenseText、isDeprecatedLicenseId、isFsfLibre、isOsiApproved、licenseXml、obsoletedBy、seeAlso、standardLicenseHeader、standardLicenseTemplate）及其子类 ListedLicense（deprecatedVersion、listVersionAdded）和 CustomLicense，以及 OrLaterOperator（subjectLicense）。LicenseAddition（additionText[1]、…）特化 Element，子类为 ListedLicenseException 和 CustomLicenseAddition。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p182-1",
+      "file": "images/img-p182-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.5 of the specification, captioned 'Dataset Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 182
+      },
+      "narrative": [
+        {
+          "text": "UML class diagram of the Dataset profile: one class, DatasetPackage, specialising Software/Package. It makes inherited properties mandatory (builtTime, originatedBy, releaseTime, downloadLocation, primaryPurpose, each [1]) and adds anonymizationMethodUsed, confidentialityLevel, dataCollectionProcess, dataPreprocessing, datasetAvailability, datasetNoise, datasetSize, datasetType DatasetType[1], datasetUpdateMechanism, hasSensitivePersonalInformation, intendedUse, knownBias and sensor. Enumerations: ConfidentialityLevelType, DatasetAvailabilityType, DatasetType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Diagramme de classes UML du profil Dataset : une seule classe, DatasetPackage, qui spécialise Software/Package. Elle rend obligatoires des propriétés héritées (builtTime, originatedBy, releaseTime, downloadLocation, primaryPurpose, chacune [1]) et ajoute anonymizationMethodUsed, confidentialityLevel, dataCollectionProcess, dataPreprocessing, datasetAvailability, datasetNoise, datasetSize, datasetType DatasetType[1], datasetUpdateMechanism, hasSensitivePersonalInformation, intendedUse, knownBias et sensor. Énumérations : ConfidentialityLevelType, DatasetAvailabilityType, DatasetType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Diagrama de clases UML del perfil Dataset: una sola clase, DatasetPackage, que especializa Software/Package. Hace obligatorias propiedades heredadas (builtTime, originatedBy, releaseTime, downloadLocation, primaryPurpose, cada una [1]) y añade anonymizationMethodUsed, confidentialityLevel, dataCollectionProcess, dataPreprocessing, datasetAvailability, datasetNoise, datasetSize, datasetType DatasetType[1], datasetUpdateMechanism, hasSensitivePersonalInformation, intendedUse, knownBias y sensor. Enumeraciones: ConfidentialityLevelType, DatasetAvailabilityType, DatasetType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مخطط أصناف UML لملف التعريف Dataset: صنف واحد هو DatasetPackage، ويخصّص Software/Package. يجعل خصائص موروثة إلزامية (builtTime، originatedBy، releaseTime، downloadLocation، primaryPurpose، كلٌّ منها [1]) ويضيف anonymizationMethodUsed وconfidentialityLevel وdataCollectionProcess وdataPreprocessing وdatasetAvailability وdatasetNoise وdatasetSize وdatasetType DatasetType[1] وdatasetUpdateMechanism وhasSensitivePersonalInformation وintendedUse وknownBias وsensor. التعدادات: ConfidentialityLevelType وDatasetAvailabilityType وDatasetType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Диаграмма классов UML профиля Dataset: единственный класс DatasetPackage, специализирующий Software/Package. Он делает обязательными унаследованные свойства (builtTime, originatedBy, releaseTime, downloadLocation, primaryPurpose, каждое [1]) и добавляет anonymizationMethodUsed, confidentialityLevel, dataCollectionProcess, dataPreprocessing, datasetAvailability, datasetNoise, datasetSize, datasetType DatasetType[1], datasetUpdateMechanism, hasSensitivePersonalInformation, intendedUse, knownBias и sensor. Перечисления: ConfidentialityLevelType, DatasetAvailabilityType, DatasetType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "Dataset 配置文件的 UML 类图：只有一个类 DatasetPackage，它特化 Software/Package。它将继承的属性设为必填（builtTime、originatedBy、releaseTime、downloadLocation、primaryPurpose，均为 [1]），并增加 anonymizationMethodUsed、confidentialityLevel、dataCollectionProcess、dataPreprocessing、datasetAvailability、datasetNoise、datasetSize、datasetType DatasetType[1]、datasetUpdateMechanism、hasSensitivePersonalInformation、intendedUse、knownBias 和 sensor。枚举：ConfidentialityLevelType、DatasetAvailabilityType、DatasetType。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p183-1",
+      "file": "images/img-p183-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.6 of the specification, captioned 'AI Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 183
+      },
+      "narrative": [
+        {
+          "text": "UML class diagram of the AI profile. AIPackage specialises Software/Package, making releaseTime, suppliedBy, downloadLocation, packageVersion and primaryPurpose mandatory, and adds autonomyType, domain, energyConsumption, hyperparameter, informationAboutApplication, informationAboutTraining, limitation, metric, metricDecisionThreshold, modelDataPreprocessing, modelExplainability, safetyRiskAssessment, standardCompliance, typeOfModel and useSensitivePersonalInformation. EnergyConsumption groups finetuning, inference and training EnergyConsumptionDescription entries (energyQuantity, energyUnit). Enumerations: EnergyUnitType, SafetyRiskAssessmentType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Diagramme de classes UML du profil AI. AIPackage spécialise Software/Package, rend obligatoires releaseTime, suppliedBy, downloadLocation, packageVersion et primaryPurpose, et ajoute autonomyType, domain, energyConsumption, hyperparameter, informationAboutApplication, informationAboutTraining, limitation, metric, metricDecisionThreshold, modelDataPreprocessing, modelExplainability, safetyRiskAssessment, standardCompliance, typeOfModel et useSensitivePersonalInformation. EnergyConsumption regroupe des entrées EnergyConsumptionDescription (energyQuantity, energyUnit) pour finetuning, inference et training. Énumérations : EnergyUnitType, SafetyRiskAssessmentType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Diagrama de clases UML del perfil AI. AIPackage especializa Software/Package, hace obligatorias releaseTime, suppliedBy, downloadLocation, packageVersion y primaryPurpose, y añade autonomyType, domain, energyConsumption, hyperparameter, informationAboutApplication, informationAboutTraining, limitation, metric, metricDecisionThreshold, modelDataPreprocessing, modelExplainability, safetyRiskAssessment, standardCompliance, typeOfModel y useSensitivePersonalInformation. EnergyConsumption agrupa entradas EnergyConsumptionDescription (energyQuantity, energyUnit) de finetuning, inference y training. Enumeraciones: EnergyUnitType, SafetyRiskAssessmentType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مخطط أصناف UML لملف التعريف AI. يخصّص AIPackage الصنفَ Software/Package، ويجعل releaseTime وsuppliedBy وdownloadLocation وpackageVersion وprimaryPurpose إلزامية، ويضيف autonomyType وdomain وenergyConsumption وhyperparameter وinformationAboutApplication وinformationAboutTraining وlimitation وmetric وmetricDecisionThreshold وmodelDataPreprocessing وmodelExplainability وsafetyRiskAssessment وstandardCompliance وtypeOfModel وuseSensitivePersonalInformation. ويجمع EnergyConsumption مدخلات EnergyConsumptionDescription (energyQuantity، energyUnit) لكلٍّ من finetuning وinference وtraining. التعدادات: EnergyUnitType وSafetyRiskAssessmentType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Диаграмма классов UML профиля AI. AIPackage специализирует Software/Package, делает обязательными releaseTime, suppliedBy, downloadLocation, packageVersion и primaryPurpose и добавляет autonomyType, domain, energyConsumption, hyperparameter, informationAboutApplication, informationAboutTraining, limitation, metric, metricDecisionThreshold, modelDataPreprocessing, modelExplainability, safetyRiskAssessment, standardCompliance, typeOfModel и useSensitivePersonalInformation. EnergyConsumption объединяет записи EnergyConsumptionDescription (energyQuantity, energyUnit) для finetuning, inference и training. Перечисления: EnergyUnitType, SafetyRiskAssessmentType.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "AI 配置文件的 UML 类图。AIPackage 特化 Software/Package，将 releaseTime、suppliedBy、downloadLocation、packageVersion 和 primaryPurpose 设为必填，并增加 autonomyType、domain、energyConsumption、hyperparameter、informationAboutApplication、informationAboutTraining、limitation、metric、metricDecisionThreshold、modelDataPreprocessing、modelExplainability、safetyRiskAssessment、standardCompliance、typeOfModel 和 useSensitivePersonalInformation。EnergyConsumption 汇集 finetuning、inference 和 training 的 EnergyConsumptionDescription 条目（energyQuantity、energyUnit）。枚举：EnergyUnitType、SafetyRiskAssessmentType。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p184-1",
+      "file": "images/img-p184-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.7 of the specification, captioned 'Build Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 184
+      },
+      "narrative": [
+        {
+          "text": "UML class diagram of the Build profile: one class, Build, specialising Core/Element, with buildType anyURI[1], buildId, configSourceEntryPoint, configSourceUri, configSourceDigest Hash[0..*], parameter DictionaryEntry[0..*], buildStartTime, buildEndTime and environment DictionaryEntry[0..*].",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Diagramme de classes UML du profil Build : une seule classe, Build, qui spécialise Core/Element, avec buildType anyURI[1], buildId, configSourceEntryPoint, configSourceUri, configSourceDigest Hash[0..*], parameter DictionaryEntry[0..*], buildStartTime, buildEndTime et environment DictionaryEntry[0..*].",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Diagrama de clases UML del perfil Build: una sola clase, Build, que especializa Core/Element, con buildType anyURI[1], buildId, configSourceEntryPoint, configSourceUri, configSourceDigest Hash[0..*], parameter DictionaryEntry[0..*], buildStartTime, buildEndTime y environment DictionaryEntry[0..*].",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مخطط أصناف UML لملف التعريف Build: صنف واحد هو Build، ويخصّص Core/Element، وخصائصه buildType anyURI[1] وbuildId وconfigSourceEntryPoint وconfigSourceUri وconfigSourceDigest Hash[0..*] وparameter DictionaryEntry[0..*] وbuildStartTime وbuildEndTime وenvironment DictionaryEntry[0..*].",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Диаграмма классов UML профиля Build: единственный класс Build, специализирующий Core/Element, со свойствами buildType anyURI[1], buildId, configSourceEntryPoint, configSourceUri, configSourceDigest Hash[0..*], parameter DictionaryEntry[0..*], buildStartTime, buildEndTime и environment DictionaryEntry[0..*].",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "Build 配置文件的 UML 类图：只有一个类 Build，它特化 Core/Element，属性为 buildType anyURI[1]、buildId、configSourceEntryPoint、configSourceUri、configSourceDigest Hash[0..*]、parameter DictionaryEntry[0..*]、buildStartTime、buildEndTime 和 environment DictionaryEntry[0..*]。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p184-2",
+      "file": "images/img-p184-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure A.8 of the specification, captioned 'Extension Profile'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 184
+      },
+      "narrative": [
+        {
+          "text": "UML class diagram of the Extension profile: the abstract Extension class, specialised by CdxPropertiesExtension (cdxProperty CdxPropertyEntry[1..*]); CdxPropertyEntry has cdxPropName string[1] and cdxPropValue string[0..1] — a name/value carrier for CycloneDX properties.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Diagramme de classes UML du profil Extension : la classe abstraite Extension, spécialisée par CdxPropertiesExtension (cdxProperty CdxPropertyEntry[1..*]) ; CdxPropertyEntry a cdxPropName string[1] et cdxPropValue string[0..1] — un support nom/valeur pour les propriétés CycloneDX.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Diagrama de clases UML del perfil Extension: la clase abstracta Extension, especializada por CdxPropertiesExtension (cdxProperty CdxPropertyEntry[1..*]); CdxPropertyEntry tiene cdxPropName string[1] y cdxPropValue string[0..1], un contenedor nombre/valor para las propiedades de CycloneDX.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مخطط أصناف UML لملف التعريف Extension: الصنف المجرّد Extension، ويخصّصه CdxPropertiesExtension (cdxProperty CdxPropertyEntry[1..*])؛ ولـ CdxPropertyEntry الخاصيتان cdxPropName string[1] وcdxPropValue string[0..1]، فهو حامل اسم/قيمة لخصائص CycloneDX.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Диаграмма классов UML профиля Extension: абстрактный класс Extension, специализированный CdxPropertiesExtension (cdxProperty CdxPropertyEntry[1..*]); у CdxPropertyEntry есть cdxPropName string[1] и cdxPropValue string[0..1] — носитель пар «имя/значение» для свойств CycloneDX.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "Extension 配置文件的 UML 类图：抽象类 Extension，由 CdxPropertiesExtension（cdxProperty CdxPropertyEntry[1..*]）特化；CdxPropertyEntry 有 cdxPropName string[1] 和 cdxPropValue string[0..1]，是 CycloneDX 属性的名称/值载体。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p205-1",
+      "file": "images/img-p205-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure F.1 of the specification, captioned '3T-SBOM draft core model (circa Sep 2020)'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 205
+      },
+      "narrative": [
+        {
+          "text": "Historical UML class diagram of the 3T-SBOM group's draft core model (circa September 2020). Identity (Id, name, aliases, comment), specialised by Tool (user-agent), Organization and Person (a Person may belong to 0..1 Organization), is linked to Artifact (Id, artifact-url, name, comment) as supplier and as originator (each 0..1); a callout reads 'Need to capture contacts on supplier and originator links'. Artifact has Hashes (algorithm, value), ExternalReferences (type, locator, comment) and takes part in Relationship (type, completeness, comment) as from and to. DocumentMetadata has creators (1..* Identity); a Tool links to 0..1 ExternalDocumentReference (namespace, document-url, comment) by 'bill-of-materials', and that reference carries Hashes.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Diagramme de classes UML historique du modèle Core provisoire du groupe 3T-SBOM (vers septembre 2020). Identity (Id, name, aliases, comment), spécialisée par Tool (user-agent), Organization et Person (une Person peut appartenir à 0..1 Organization), est reliée à Artifact (Id, artifact-url, name, comment) comme supplier et comme originator (chacun 0..1) ; une bulle indique « Need to capture contacts on supplier and originator links ». Artifact a des Hashes (algorithm, value) et des ExternalReferences (type, locator, comment), et participe à Relationship (type, completeness, comment) comme from et to. DocumentMetadata a des creators (1..* Identity) ; un Tool est relié à 0..1 ExternalDocumentReference (namespace, document-url, comment) par « bill-of-materials », et cette référence porte des Hashes.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Diagrama de clases UML histórico del modelo Core provisional del grupo 3T-SBOM (hacia septiembre de 2020). Identity (Id, name, aliases, comment), especializada por Tool (user-agent), Organization y Person (una Person puede pertenecer a 0..1 Organization), se vincula con Artifact (Id, artifact-url, name, comment) como supplier y como originator (cada uno 0..1); una nota dice «Need to capture contacts on supplier and originator links». Artifact tiene Hashes (algorithm, value) y ExternalReferences (type, locator, comment) y participa en Relationship (type, completeness, comment) como from y to. DocumentMetadata tiene creators (1..* Identity); un Tool se vincula con 0..1 ExternalDocumentReference (namespace, document-url, comment) mediante «bill-of-materials», y esa referencia lleva Hashes.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مخطط أصناف UML تاريخي للنموذج الأساسي المبدئي لمجموعة 3T-SBOM (نحو سبتمبر 2020). الصنف Identity (Id، name، aliases، comment)، الذي تخصّصه Tool (user-agent) وOrganization وPerson (يمكن أن تنتمي Person إلى 0..1 Organization)، مرتبط بـ Artifact (Id، artifact-url، name، comment) بوصفه supplier وoriginator (لكلٍّ منهما 0..1)؛ وتقول ملاحظة: «Need to capture contacts on supplier and originator links». ولـ Artifact قيم Hashes (algorithm، value) وExternalReferences (type، locator، comment)، ويشارك في Relationship (type، completeness، comment) بوصفه from وto. ولـ DocumentMetadata قيمة creators (1..* Identity)؛ ويرتبط Tool بـ 0..1 ExternalDocumentReference (namespace، document-url، comment) عبر «bill-of-materials»، ويحمل هذا المرجع Hashes.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Историческая диаграмма классов UML черновой базовой модели группы 3T-SBOM (около сентября 2020 г.). Identity (Id, name, aliases, comment), специализированный Tool (user-agent), Organization и Person (Person может принадлежать 0..1 Organization), связан с Artifact (Id, artifact-url, name, comment) как supplier и как originator (каждый 0..1); выноска гласит «Need to capture contacts on supplier and originator links». У Artifact есть Hashes (algorithm, value) и ExternalReferences (type, locator, comment), и он участвует в Relationship (type, completeness, comment) как from и to. У DocumentMetadata есть creators (1..* Identity); Tool связан с 0..1 ExternalDocumentReference (namespace, document-url, comment) через «bill-of-materials», и эта ссылка несёт Hashes.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "3T-SBOM 小组核心模型草案的历史 UML 类图（约 2020 年 9 月）。Identity（Id、name、aliases、comment）由 Tool（user-agent）、Organization 和 Person 特化（一个 Person 可属于 0..1 个 Organization），它作为 supplier 和 originator（各 0..1）与 Artifact（Id、artifact-url、name、comment）相连；一个标注写着“Need to capture contacts on supplier and originator links”。Artifact 有 Hashes（algorithm、value）和 ExternalReferences（type、locator、comment），并作为 from 和 to 参与 Relationship（type、completeness、comment）。DocumentMetadata 有 creators（1..* Identity）；一个 Tool 通过“bill-of-materials”连接 0..1 个 ExternalDocumentReference（namespace、document-url、comment），该引用带有 Hashes。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p206-1",
+      "file": "images/img-p206-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure F.2 of the specification, captioned 'SPDX 3.0 draft core model (circa Sep 2020)'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 206
+      },
+      "narrative": [
+        {
+          "text": "Historical UML class diagram of the SPDX community's draft 3.0 core model (circa September 2020). SpdxElement (SPDXID, Name) is the root; Identity, specialised by Person (Email), Organization (Email) and Tool (Version), specialises it. Artifact (Summary, Description) has 0..1 Originator and 0..1 Supplier Identity, Checksums (Hash: Algorithm, Value) and ExternalReferences (Category, Type, Locator, Comment). Package (Version) contains Files by PackageFile, File (Type) has Snippets (ByteRange, LineRange) by FromFile, and all three specialise Artifact. Annotation (Date, Type, Comment) has an Annotator Identity and an SPDXREF to an element; Relationship (Type, Comment) has To and From elements; SpdxDocument (SPDXVersion, DataLicence, a base-namespace URI — printed 'Banesoace', as drawn — Created, Profiles) has a Creator Identity and ExternalDocumentReferences (DocumentRef, Locator) with a Checksum.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Diagramme de classes UML historique du modèle Core provisoire 3.0 de la communauté SPDX (vers septembre 2020). SpdxElement (SPDXID, Name) en est la racine ; Identity, spécialisée par Person (Email), Organization (Email) et Tool (Version), la spécialise. Artifact (Summary, Description) a 0..1 Originator et 0..1 Supplier de type Identity, des Checksums (Hash : Algorithm, Value) et des ExternalReferences (Category, Type, Locator, Comment). Package (Version) contient des Files par PackageFile, File (Type) a des Snippets (ByteRange, LineRange) par FromFile, et tous trois spécialisent Artifact. Annotation (Date, Type, Comment) a un Annotator de type Identity et un SPDXREF vers un élément ; Relationship (Type, Comment) a des éléments To et From ; SpdxDocument (SPDXVersion, DataLicence, une URI d'espace de noms de base — imprimée « Banesoace », tel quel dans le dessin —, Created, Profiles) a un Creator de type Identity et des ExternalDocumentReferences (DocumentRef, Locator) avec un Checksum.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Diagrama de clases UML histórico del modelo Core provisional 3.0 de la comunidad SPDX (hacia septiembre de 2020). SpdxElement (SPDXID, Name) es la raíz; Identity, especializada por Person (Email), Organization (Email) y Tool (Version), la especializa. Artifact (Summary, Description) tiene 0..1 Originator y 0..1 Supplier de tipo Identity, Checksums (Hash: Algorithm, Value) y ExternalReferences (Category, Type, Locator, Comment). Package (Version) contiene Files mediante PackageFile, File (Type) tiene Snippets (ByteRange, LineRange) mediante FromFile, y los tres especializan Artifact. Annotation (Date, Type, Comment) tiene un Annotator de tipo Identity y un SPDXREF a un elemento; Relationship (Type, Comment) tiene elementos To y From; SpdxDocument (SPDXVersion, DataLicence, una URI de espacio de nombres base, impresa «Banesoace» tal como está dibujada, Created, Profiles) tiene un Creator de tipo Identity y ExternalDocumentReferences (DocumentRef, Locator) con un Checksum.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مخطط أصناف UML تاريخي للنموذج الأساسي المبدئي 3.0 لمجتمع SPDX (نحو سبتمبر 2020). SpdxElement (SPDXID، Name) هو الجذر؛ ويخصّصه Identity الذي تخصّصه Person (Email) وOrganization (Email) وTool (Version). ولـ Artifact (Summary، Description) قيمة 0..1 Originator و0..1 Supplier من نوع Identity، وChecksums (Hash: Algorithm، Value) وExternalReferences (Category، Type، Locator، Comment). يحتوي Package (Version) على Files عبر PackageFile، ولـ File (Type) قيم Snippets (ByteRange، LineRange) عبر FromFile، والثلاثة تخصّص Artifact. ولـ Annotation (Date، Type، Comment) قيمة Annotator من نوع Identity وSPDXREF إلى عنصر؛ ولـ Relationship (Type، Comment) عنصرا To وFrom؛ ولـ SpdxDocument (SPDXVersion، DataLicence، ومعرّف URI لنطاق الأسماء الأساسي، مطبوع «Banesoace» كما هو مرسوم، وCreated، وProfiles) قيمة Creator من نوع Identity وExternalDocumentReferences (DocumentRef، Locator) مع Checksum.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Историческая диаграмма классов UML черновой базовой модели 3.0 сообщества SPDX (около сентября 2020 г.). Корнем служит SpdxElement (SPDXID, Name); его специализирует Identity, который, в свою очередь, специализируют Person (Email), Organization (Email) и Tool (Version). У Artifact (Summary, Description) есть 0..1 Originator и 0..1 Supplier типа Identity, Checksums (Hash: Algorithm, Value) и ExternalReferences (Category, Type, Locator, Comment). Package (Version) содержит Files через PackageFile, у File (Type) есть Snippets (ByteRange, LineRange) через FromFile, и все три специализируют Artifact. У Annotation (Date, Type, Comment) есть Annotator типа Identity и SPDXREF на элемент; у Relationship (Type, Comment) есть элементы To и From; у SpdxDocument (SPDXVersion, DataLicence, URI базового пространства имён — напечатано «Banesoace», как на рисунке, — Created, Profiles) есть Creator типа Identity и ExternalDocumentReferences (DocumentRef, Locator) с Checksum.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "SPDX 社区 3.0 核心模型草案的历史 UML 类图（约 2020 年 9 月）。SpdxElement（SPDXID、Name）是根；Identity 特化它，而 Identity 又由 Person（Email）、Organization（Email）和 Tool（Version）特化。Artifact（Summary、Description）有 0..1 个 Originator 和 0..1 个 Supplier（类型为 Identity）、Checksums（Hash：Algorithm、Value）和 ExternalReferences（Category、Type、Locator、Comment）。Package（Version）通过 PackageFile 包含 Files，File（Type）通过 FromFile 拥有 Snippets（ByteRange、LineRange），三者都特化 Artifact。Annotation（Date、Type、Comment）有一个 Identity 类型的 Annotator 和指向某元素的 SPDXREF；Relationship（Type、Comment）有 To 和 From 元素；SpdxDocument（SPDXVersion、DataLicence、基础命名空间 URI——图中印作“Banesoace”——、Created、Profiles）有一个 Identity 类型的 Creator，以及带 Checksum 的 ExternalDocumentReferences（DocumentRef、Locator）。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p207-1",
+      "file": "images/img-p207-1.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure F.3 of the specification, captioned 'Correspondence between 3T-SBOM and SPDX 3.0 draft models (circa Sep 2020)'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 207
+      },
+      "narrative": [
+        {
+          "text": "The two drafts of Figures F.1 and F.2 side by side on a black background (3T-SBOM on the left, SPDX 3.0 on the right), with coloured ellipses and connecting lines pairing the corresponding parts: ExternalReference (light blue), ExternalDocumentReference (red), Hash (light green), Artifact (dark green), DocumentMetadata ↔ SpdxDocument (orange), Identity (dark red) and Relationship (blue). The point is visual: each concept in one draft has a counterpart in the other.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Les deux ébauches des figures F.1 et F.2 côte à côte sur fond noir (3T-SBOM à gauche, SPDX 3.0 à droite), avec des ellipses colorées et des traits qui relient les parties correspondantes : ExternalReference (bleu clair), ExternalDocumentReference (rouge), Hash (vert clair), Artifact (vert foncé), DocumentMetadata ↔ SpdxDocument (orange), Identity (rouge foncé) et Relationship (bleu). Le propos est visuel : chaque concept d'une ébauche a son équivalent dans l'autre.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Los dos borradores de las figuras F.1 y F.2 uno junto a otro sobre fondo negro (3T-SBOM a la izquierda, SPDX 3.0 a la derecha), con elipses de colores y líneas que emparejan las partes correspondientes: ExternalReference (azul claro), ExternalDocumentReference (rojo), Hash (verde claro), Artifact (verde oscuro), DocumentMetadata ↔ SpdxDocument (naranja), Identity (rojo oscuro) y Relationship (azul). El mensaje es visual: cada concepto de un borrador tiene su equivalente en el otro.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مسودّتا الشكلين F.1 وF.2 جنبًا إلى جنب على خلفية سوداء (3T-SBOM على اليسار وSPDX 3.0 على اليمين)، مع أشكال بيضاوية ملوّنة وخطوط تصل بين الأجزاء المتقابلة: ExternalReference (أزرق فاتح)، وExternalDocumentReference (أحمر)، وHash (أخضر فاتح)، وArtifact (أخضر داكن)، وDocumentMetadata ↔ SpdxDocument (برتقالي)، وIdentity (أحمر داكن)، وRelationship (أزرق). الغرض بصري: لكل مفهوم في إحدى المسودّتين نظير في الأخرى.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Два черновика рисунков F.1 и F.2 рядом на чёрном фоне (3T-SBOM слева, SPDX 3.0 справа) с цветными эллипсами и линиями, соединяющими соответствующие части: ExternalReference (голубой), ExternalDocumentReference (красный), Hash (светло-зелёный), Artifact (тёмно-зелёный), DocumentMetadata ↔ SpdxDocument (оранжевый), Identity (тёмно-красный) и Relationship (синий). Смысл визуальный: у каждого понятия одного черновика есть соответствие в другом.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "图 F.1 和 F.2 的两份草案在黑色背景上并排放置（左为 3T-SBOM，右为 SPDX 3.0），彩色椭圆和连线将对应部分配对：ExternalReference（浅蓝）、ExternalDocumentReference（红）、Hash（浅绿）、Artifact（深绿）、DocumentMetadata ↔ SpdxDocument（橙）、Identity（深红）和 Relationship（蓝）。其要点是视觉上的：一份草案中的每个概念在另一份中都有对应。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    },
+    {
+      "id": "img-p207-2",
+      "file": "images/img-p207-2.png",
+      "role": "figure",
+      "basis": {
+        "method": "inspection",
+        "by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+        },
+        "at": "2026-10-03",
+        "saw": "Figure F.4 of the specification, captioned 'SPDX 2.3 Model compared to the SPDX 3.0 Model'; the caption is on the same page as the image and was read there, not inferred from page order",
+        "page": 207
+      },
+      "narrative": [
+        {
+          "text": "Two UML diagrams joined by a large double-headed arrow. Left: the SPDX 2.3 model, centred on SpdxDocument, SpdxElement and SpdxItem, with Package, File, Snippet, Annotation, Relationship (a long RelationshipType enumeration from contains to hasPrerequisite), Checksum, ExternalRef, the licensing classes (AnyLicenseInfo, SimpleLicensingInfo, License, LicenseException, Conjunctive/DisjunctiveLicenseSet, OrLaterOperator, WithExceptionOperator) and pink notes marking what was 'Added in 2.2'. Right: the SPDX 3.0 Core, Software and Security profiles as in Figures A.1–A.3, with Element as the root rather than SpdxDocument. At this resolution the small print of both diagrams is barely legible; the arrow, not the detail, is the figure's claim.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+          },
+          "drafted_at": "2026-10-03",
+          "lang": "en"
+        },
+        {
+          "text": "Deux diagrammes UML reliés par une grande flèche à double pointe. À gauche : le modèle SPDX 2.3, centré sur SpdxDocument, SpdxElement et SpdxItem, avec Package, File, Snippet, Annotation, Relationship (une longue énumération RelationshipType, de contains à hasPrerequisite), Checksum, ExternalRef, les classes de licence (AnyLicenseInfo, SimpleLicensingInfo, License, LicenseException, Conjunctive/DisjunctiveLicenseSet, OrLaterOperator, WithExceptionOperator) et des notes roses signalant ce qui a été « Added in 2.2 ». À droite : les profils Core, Software et Security de SPDX 3.0 comme dans les figures A.1 à A.3, avec Element comme racine au lieu de SpdxDocument. À cette résolution, les petits caractères des deux diagrammes sont à peine lisibles ; c'est la flèche, non le détail, qui porte le propos de la figure.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "fr"
+        },
+        {
+          "text": "Dos diagramas UML unidos por una gran flecha de doble punta. A la izquierda: el modelo SPDX 2.3, centrado en SpdxDocument, SpdxElement y SpdxItem, con Package, File, Snippet, Annotation, Relationship (una larga enumeración RelationshipType, de contains a hasPrerequisite), Checksum, ExternalRef, las clases de licencias (AnyLicenseInfo, SimpleLicensingInfo, License, LicenseException, Conjunctive/DisjunctiveLicenseSet, OrLaterOperator, WithExceptionOperator) y notas rosas que marcan lo «Added in 2.2». A la derecha: los perfiles Core, Software y Security de SPDX 3.0 como en las figuras A.1 a A.3, con Element como raíz en lugar de SpdxDocument. A esta resolución la letra pequeña de ambos diagramas apenas se lee; el mensaje de la figura está en la flecha, no en el detalle.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "es"
+        },
+        {
+          "text": "مخططا UML يصل بينهما سهم كبير برأسين. على اليسار: نموذج SPDX 2.3 ومركزه SpdxDocument وSpdxElement وSpdxItem، مع Package وFile وSnippet وAnnotation وRelationship (تعداد RelationshipType طويل من contains إلى hasPrerequisite) وChecksum وExternalRef وأصناف الترخيص (AnyLicenseInfo، SimpleLicensingInfo، License، LicenseException، Conjunctive/DisjunctiveLicenseSet، OrLaterOperator، WithExceptionOperator)، وملاحظات وردية تشير إلى ما «Added in 2.2». على اليمين: ملفات التعريف Core وSoftware وSecurity في SPDX 3.0 كما في الأشكال A.1 إلى A.3، مع Element جذرًا بدلًا من SpdxDocument. وبهذه الدقة يكاد الخط الصغير في المخططين لا يُقرأ؛ فالسهم، لا التفاصيل، هو ما يقوله الشكل.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ar"
+        },
+        {
+          "text": "Две диаграммы UML, соединённые большой двунаправленной стрелкой. Слева — модель SPDX 2.3 с центром в SpdxDocument, SpdxElement и SpdxItem, с Package, File, Snippet, Annotation, Relationship (длинное перечисление RelationshipType от contains до hasPrerequisite), Checksum, ExternalRef, классами лицензирования (AnyLicenseInfo, SimpleLicensingInfo, License, LicenseException, Conjunctive/DisjunctiveLicenseSet, OrLaterOperator, WithExceptionOperator) и розовыми пометками о том, что «Added in 2.2». Справа — профили Core, Software и Security SPDX 3.0, как на рисунках A.1–A.3, с Element в качестве корня вместо SpdxDocument. При таком разрешении мелкий текст обеих диаграмм почти не читается; утверждение рисунка несёт стрелка, а не детали.",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "ru"
+        },
+        {
+          "text": "两张 UML 图由一个大的双向箭头相连。左侧：SPDX 2.3 模型，以 SpdxDocument、SpdxElement 和 SpdxItem 为中心，包括 Package、File、Snippet、Annotation、Relationship（从 contains 到 hasPrerequisite 的很长的 RelationshipType 枚举）、Checksum、ExternalRef、许可类（AnyLicenseInfo、SimpleLicensingInfo、License、LicenseException、Conjunctive/DisjunctiveLicenseSet、OrLaterOperator、WithExceptionOperator），以及标出“Added in 2.2”内容的粉色注释。右侧：与图 A.1–A.3 相同的 SPDX 3.0 Core、Software 和 Security 配置文件，以 Element 而非 SpdxDocument 为根。在此分辨率下两张图的小字几乎无法辨认；图要表达的是箭头，而不是细节。",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+          },
+          "drafted_at": "2026-10-24",
+          "lang": "zh"
+        }
+      ]
+    }
+  ]
+}
