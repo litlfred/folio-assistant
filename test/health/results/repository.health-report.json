@@ -2,13 +2,13 @@
   "$schema": "health-report/v1",
   "producer": {
     "script": "test/health/run.ts",
-    "script_hash": "55b50d949a50"
+    "script_hash": "e48001dfcdfa"
   },
   "subject": {
     "kind": "repository",
     "id": "litlfred/folio-assistant"
   },
-  "updated_at": "2026-11-10T06:46:40.176Z",
+  "updated_at": "2026-11-11T06:46:35.596Z",
   "verdict": "findings",
   "checks": [
     {
@@ -27,13 +27,13 @@
       "measurements": [
         {
           "metric": "staging-total-bytes",
-          "value": 3181258147,
+          "value": 2813321265,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         },
         {
           "metric": "staging-preview-count",
-          "value": 8,
+          "value": 7,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         }
@@ -84,13 +84,13 @@
       "measurements": [
         {
           "metric": "special-branch-bytes:qa-reports",
-          "value": 1420754557,
+          "value": 1272018390,
           "unit": "bytes",
           "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch (unique blobs summed)"
         },
         {
           "metric": "special-branch-bytes:beans",
-          "value": 9255272,
+          "value": 9275179,
           "unit": "bytes",
           "command": "git ls-remote --heads origin; git fetch --depth=1 + git ls-tree -r -l <tip> per budgeted branch (unique blobs summed)"
         },
@@ -121,7 +121,7 @@
       ],
       "findings": [
         {
-          "summary": "`cat/cat-harness/qa-reports` is 1.32 GB, over the 500.0 MB budget (500 MB) for `qa-reports`.",
+          "summary": "`cat/cat-harness/qa-reports` is 1.18 GB, over the 500.0 MB budget (500 MB) for `qa-reports`.",
           "metric": "special-branch-bytes:qa-reports",
           "severity": "major",
           "action": "Report it to the owner with what the branch holds and its largest paths, and ask what to prune or whether the budget should change. Nothing here removes anything; the budget is the owner's."
@@ -160,25 +160,25 @@
           "metric": "pages-serving-instruments",
           "value": 1,
           "unit": "count",
-          "command": "qa:fetch main/bef2b0b1a6dafbd5ed558777f1d968b2019ad849 health/pages-serving.json"
+          "command": "qa:fetch main/38d2819f76a20473e5af90220d5926bfecbc107c health/pages-serving.json"
         },
         {
           "metric": "pages-serving-observation-age-days",
           "value": 0,
           "unit": "days",
-          "command": "qa:fetch main/bef2b0b1a6dafbd5ed558777f1d968b2019ad849 health/pages-serving.json"
+          "command": "qa:fetch main/38d2819f76a20473e5af90220d5926bfecbc107c health/pages-serving.json"
         },
         {
           "metric": "pages-serving-urls",
           "value": 41,
           "unit": "count",
-          "command": "qa:fetch main/bef2b0b1a6dafbd5ed558777f1d968b2019ad849 health/pages-serving.json"
+          "command": "qa:fetch main/38d2819f76a20473e5af90220d5926bfecbc107c health/pages-serving.json"
         },
         {
           "metric": "pages-serving-failing",
           "value": 0,
           "unit": "count",
-          "command": "qa:fetch main/bef2b0b1a6dafbd5ed558777f1d968b2019ad849 health/pages-serving.json"
+          "command": "qa:fetch main/38d2819f76a20473e5af90220d5926bfecbc107c health/pages-serving.json"
         }
       ],
       "findings": []
@@ -230,6 +230,61 @@
       "reason": "not applicable: the LSI indexes are cat-harness's; this repository holds none"
     },
     {
+      "id": "library-keywords",
+      "state": "finding",
+      "summary": "Each library entry's LSI keywords: whether the extraction gives any, and any keywords.json still committed inside an entry.",
+      "thresholds": [
+        {
+          "metric": "library-keywords-entries-without",
+          "value": 0,
+          "unit": "count",
+          "basis": "a library entry the keyword extraction gives nothing has no keywords on the library viewer, the keyword viewer or in the derived keywords graph — usually a scanned page with no text layer, or sections under the LSI tool's minimum length. `minor`: keywords are derived proposals; nothing waits on them (cat-harness#1144).",
+          "severity": "minor"
+        },
+        {
+          "metric": "library-keywords-legacy-files",
+          "value": 0,
+          "unit": "count",
+          "basis": "keywords are EXTRACTED content, so they are built at publish into the derived keywords graph and do not live in the ingest record (owner, 2026-11-08, cat-harness#1144). A `keywords.json` still committed inside an entry is the old location: nothing reads it once the move lands, and it goes stale on every ingest.",
+          "severity": "minor"
+        }
+      ],
+      "measurements": [
+        {
+          "metric": "library-keywords-entries",
+          "value": 127,
+          "unit": "count",
+          "command": "bun run cat library:keywords"
+        },
+        {
+          "metric": "library-keywords-entries-without",
+          "value": 16,
+          "unit": "count",
+          "command": "bun run cat library:keywords"
+        },
+        {
+          "metric": "library-keywords-legacy-files",
+          "value": 33,
+          "unit": "count",
+          "command": "ls library/*/keywords.json"
+        }
+      ],
+      "findings": [
+        {
+          "summary": "16 entr(ies) the keyword extraction gives nothing: cat-harness/library/corpus/process/avila-2021-process-modeling-guidelines-slr, cat-harness/library/corpus/process/figl-strembeck-2015-flow-direction-experiment, cat-harness/library/corpus/process/hasic-2018-5pdm-decision-intelligence, cat-harness/library/corpus/process/hasic-2019-complexity-metrics-dmn, cat-harness/library/corpus/process/leopold-2016-bpmn-quality-issues-industry, …",
+          "metric": "library-keywords-entries-without",
+          "severity": "minor",
+          "action": "Open the entry's sections: a page with no text layer needs OCR at ingest (`l1-document-ingestion`); a very short entry has nothing to extract."
+        },
+        {
+          "summary": "33 keywords.json still committed inside an entry: fhir-harness/library/cucumber-2024-gherkin-reference, fhir-harness/library/isaitb-2026-interoperability-test-bed-readme, folio-assistant-sci/library/arxiv-2406.01940v2, folio-assistant-sci/library/arxiv-2601.22554v1, folio-assistant-sci/library/arxiv-2602.16554v1, …",
+          "metric": "library-keywords-legacy-files",
+          "severity": "minor",
+          "action": "Remove them in one PR per repository: keywords are built at publish now (`assets/keywords/`), and the ingest record keeps only what was ingested."
+        }
+      ]
+    },
+    {
       "id": "staging-preview-orphans",
       "state": "finding",
       "summary": "A `STAGING/` preview that no liveness signal claims — no open pull request, no branch carrying unmerged work, no recent commit. Retained by policy, not by mistake: this is the list a person needs in order to decide, never a list to act on unasked.",
@@ -245,13 +300,13 @@
       "measurements": [
         {
           "metric": "staging-orphan-count",
-          "value": 7,
+          "value": 6,
           "unit": "count",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         },
         {
           "metric": "staging-orphan-bytes",
-          "value": 3181235087,
+          "value": 2813296347,
           "unit": "bytes",
           "command": "git ls-tree -r -l FETCH_HEAD:branches/<slug>"
         },
@@ -264,22 +319,12 @@
       ],
       "findings": [
         {
-          "summary": "`branches/repin-train-20261108-1423` (407.8 MB, 19077 files) — no open pull request; and no branch on the remote slugifies to it.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261108-1423` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1423` and `cleanup_confirm: repin-train-20261108-1423`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`branches/repin-train-20261108-1622` (403.3 MB, 19064 files) — no open pull request; `repin-train/20261108-1622` is already in `main`, tip 38.4 h old.",
-          "severity": "minor",
-          "action": "Ask the owner whether the review of `repin-train-20261108-1622` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1622` and `cleanup_confirm: repin-train-20261108-1622`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
-        },
-        {
-          "summary": "`branches/repin-train-20261108-1823` (431.8 MB, 20024 files) — no open pull request; `repin-train/20261108-1823` is already in `main`, tip 36.4 h old.",
+          "summary": "`branches/repin-train-20261108-1823` (431.8 MB, 20024 files) — no open pull request; `repin-train/20261108-1823` is already in `main`, tip 3 days old.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `repin-train-20261108-1823` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-1823` and `cleanup_confirm: repin-train-20261108-1823`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         },
         {
-          "summary": "`branches/repin-train-20261108-2023` (431.8 MB, 20026 files) — no open pull request; `repin-train/20261108-2023` is already in `main`, tip 34.4 h old.",
+          "summary": "`branches/repin-train-20261108-2023` (431.8 MB, 20026 files) — no open pull request; `repin-train/20261108-2023` is already in `main`, tip 2 days old.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `repin-train-20261108-2023` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261108-2023` and `cleanup_confirm: repin-train-20261108-2023`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         },
@@ -297,6 +342,11 @@
           "summary": "`branches/repin-train-20261109-1425` (453.0 MB, 20323 files) — no open pull request; and no branch on the remote slugifies to it.",
           "severity": "minor",
           "action": "Ask the owner whether the review of `repin-train-20261109-1425` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261109-1425` and `cleanup_confirm: repin-train-20261109-1425`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
+        },
+        {
+          "summary": "`branches/repin-train-20261110-1730` (460.3 MB, 20862 files) — no open pull request; `repin-train/20261110-1730` is already in `main`, tip 13.3 h old.",
+          "severity": "minor",
+          "action": "Ask the owner whether the review of `repin-train-20261110-1730` is finished. Nothing here removes it. Removal is a `feature-staging.yml` `workflow_dispatch` with `cleanup_slug: repin-train-20261110-1730` and `cleanup_confirm: repin-train-20261110-1730`, which re-runs these same liveness signals and refuses if any of them has come back. THE `staging:cleanup` LABEL DOES NOT WORK HERE: `cleanup` reads labels from the `pull_request_target: closed` payload, and a preview is only findable as an orphan once that event has already fired — so labelling now fires nothing (bean `w2g5`). Leaving it is a valid answer."
         }
       ]
     },
@@ -337,7 +387,7 @@
       "measurements": [
         {
           "metric": "secret-names-used",
-          "value": 23,
+          "value": 17,
           "unit": "count",
           "command": "bun run cat secrets:check --json (usedCount)"
         },
@@ -400,19 +450,19 @@
       "measurements": [
         {
           "metric": "tracked-tree-bytes",
-          "value": 99325118,
+          "value": 99239823,
           "unit": "bytes",
           "command": "git ls-tree -r -l HEAD (blob sizes summed)"
         },
         {
           "metric": "git-dir-bytes",
-          "value": 1276879405,
+          "value": 1275226811,
           "unit": "bytes",
           "command": "du -sb .git"
         },
         {
           "metric": "pack-bytes",
-          "value": 987450368,
+          "value": 986119168,
           "unit": "bytes",
           "command": "git count-objects -v"
         },
@@ -424,14 +474,14 @@
         },
         {
           "metric": "git-dir-to-tree-ratio",
-          "value": 12.86,
+          "value": 12.85,
           "unit": "ratio",
           "command": "git-dir-bytes / tracked-tree-bytes"
         }
       ],
       "findings": [
         {
-          "summary": "`.git` is 1.19 GB against 94.7 MB of tracked content — 12.9x, in 3 pack(s).",
+          "summary": "`.git` is 1.19 GB against 94.6 MB of tracked content — 12.8x, in 3 pack(s).",
           "metric": "git-dir-to-tree-ratio",
           "severity": "minor",
           "action": "Run `git gc` in this clone FIRST and re-measure: a high pack count is local housekeeping, not repository history, and moves the number without anything changing upstream. If the ratio survives a gc, the history carries large objects no longer in the tree, and what to do about that is the owner's call — a history rewrite is not something a sweep proposes on its own."
@@ -545,7 +595,7 @@
         },
         {
           "metric": "bean-claimed",
-          "value": 12,
+          "value": 13,
           "unit": "count",
           "command": "beans/defs/*.md front matter"
         },
@@ -581,13 +631,13 @@
         },
         {
           "metric": "bean-claimed-with-criteria",
-          "value": 12,
+          "value": 13,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
         },
         {
           "metric": "bean-claimed-criteria-absent",
-          "value": 5,
+          "value": 6,
           "unit": "count",
           "command": "beans/defs/*.md — task-list items under every `## Done when` heading"
         },
@@ -618,13 +668,13 @@
       ],
       "findings": [
         {
-          "summary": "`folio-assistant-bsd1` has been `in-progress` with no change for 96 hours (\"BEAN STORE BEHIND ANY TOOL + STATE MACHINE STARTS ANY MODEL''S AGENT: proposal (WHO Assured AI / Gemini benchmarking context)\") — 2 of 12 claims are quiet.",
+          "summary": "`folio-assistant-bsd1` has been `in-progress` with no change for 120 hours (\"BEAN STORE BEHIND ANY TOOL + STATE MACHINE STARTS ANY MODEL''S AGENT: proposal (WHO Assured AI / Gemini benchmarking context)\") — 2 of 13 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
         },
         {
-          "summary": "`folio-assistant-yj32` has been `in-progress` with no change for 199 hours (\"HARNESS AS INTERFACE: a harness instance''s default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system\") — 2 of 12 claims are quiet.",
+          "summary": "`folio-assistant-yj32` has been `in-progress` with no change for 223 hours (\"HARNESS AS INTERFACE: a harness instance''s default rendering is LHS + docs/ + a themed folio board, and it is a KG-DS management system\") — 2 of 13 claims are quiet.",
           "metric": "bean-quiet-claims",
           "severity": "minor",
           "action": "Check for a liveness signal this sweep cannot see: an open PR naming the bean, or an unmerged branch touching it. If there is one, the claim is live and there is nothing to do. If there is none, the claim has announced nothing to anybody and the item is fair game — take it, and say in the bean that you did and what you found. NOBODY AND NOTHING re-statuses it automatically: this check reports, and a person or the session taking the work acts. See `work-plan/skills/work-plan/bean-coordination.md` §\"A quiet claim\"."
