@@ -1,0 +1,1522 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2402.02172v5",
+ "source": {
+  "file": "arxiv-2402.02172v5.pdf",
+  "sha256": "aedb2b60076ad9516c3238fd81816b0489c5eda06880b5f8368398f5fdf452c5",
+  "bytes": 11796138,
+  "pages": 35,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-10-06T19:42:06Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2402.02172",
+   "version": "5",
+   "primary_class": "cs.SE",
+   "stamp_date": "24 Sep 2024"
+  },
+  "doi": null,
+  "title": "CodeAgent : Autonomous Communicative Agents for Code Review",
+  "authors_raw": "Xunzhu Tang1, Kisub Kim2, Yewei Song1, Cedric Lothritz3, Bei Li4, Saad Ezzini5",
+  "title_lines": [
+   "CodeAgent: Autonomous Communicative Agents for Code Review"
+  ],
+  "abstract": "Code review, which aims at ensuring the over- all quality and reliability of software, is a cor- nerstone of software development. Unfortu- nately, while crucial, Code review is a labor- intensive process that the research community is looking to automate. Existing automated methods rely on single input-output generative models and thus generally struggle to emulate the collaborative nature of code review. This work introduces CodeAgent, a novel multi- agent Large Language Model (LLM) system for code review automation. CodeAgent in- corporates a supervisory agent, QA-Checker, to ensure that all the agents\u2019 contributions ad- dress the initial review question. We evaluated CodeAgent on critical code review tasks: (1) detect inconsistencies between code changes and commit messages, (2) identify vulnerabil- ity introductions, (3) validate code style ad- herence, and (4) suggest code revision. The results demonstrate CodeAgent\u2019s effective- ness, contributing to a new state-of-the-art in code review automation. Our data and code are publicly available (https://github. com/Code4Agent/codeagent).",
+  "docinfo": {
+   "Producer": "pdfTeX-1.40.25",
+   "Creator": "LaTeX with hyperref",
+   "CreationDate": "D:20240926001026Z"
+  },
+  "title_raw": "CodeAgent: Autonomous Communicative Agents for Code Review",
+  "title_source": "heading",
+  "title_verified": true,
+  "title_evidence": {
+   "heading": "CodeAgent : Autonomous Communicative Agents for Code Review",
+   "outline": "Introduction",
+   "text": "CodeAgent: Autonomous Communicative Agents for Code Review",
+   "corroborated_by": [
+    "text"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "CodeAgent",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Tasks",
+   "page": 2,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Pipeline",
+   "page": 3,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Role Card Definition",
+   "page": 4,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Self-Improving CoT with QA Checker",
+   "page": 4,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Experimental Setup",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Datasets",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Metrics",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "State-of-the-Art Tools and Models",
+   "page": 5,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Experimental Result Analysis",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Vulnerability Analysis",
+   "page": 6,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Consistency and Format Detection",
+   "page": 7,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Code Revision",
+   "page": 8,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Related Work",
+   "page": 8,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 8,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Details of QA-Checker Algorithm",
+   "page": 13,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Complete Related Work",
+   "page": 14,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Experimental Details",
+   "page": 15,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Role Definition",
+   "page": 15,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Execute Time Across Languages",
+   "page": 16,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Comparative Analysis of QA-Checker AI System and Recursive Self-Improvement Systems",
+   "page": 17,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Comparison Table",
+   "page": 17,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Differences and Implications",
+   "page": 17,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Importance of QA-Checker in Role Conversations",
+   "page": 17,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Conclusion",
+   "page": 17,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Capabilities Analysis between CodeAgent and Other Methods",
+   "page": 17,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Dataset",
+   "page": 17,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Key Factors Leading to Vulnerabilities",
+   "page": 18,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Data Leakage Statement",
+   "page": 19,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Algorithmic Description of CodeAgent Pipeline with QA-Checker",
+   "page": 19,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Detailed Performance of CodeAgent in Various Languages on VA task",
+   "page": 21,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "More detailed experimental results on CA and FA tasks",
+   "page": 21,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Case Study",
+   "page": 21,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Performance on 9 languages",
+   "page": 21,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Difference of CodeAgent-3.5 and CodeAgent-4.0",
+   "page": 21,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Ablation study",
+   "page": 21,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Cost statement",
+   "page": 24,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Tool",
+   "page": 35,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "figure",
+   "number": "1",
+   "title": "A Schematic diagram of role data cards of simulated code review team and their conversations within CodeAgent. We have six characters in CodeAgent across four phases, including \u201cBasic Info Sync\", \u201cCode Review\", \u201cCode Alignment\", and \u201cDocument\". Code review is a kind of collaboration work, where we d",
+   "page": 3,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "2",
+   "title": "CodeAgent\u2019s pipeline/scenario of a full conversation during the code review process among different roles. \u201cBasic Info Sync\u201d demonstrates the basic information confirmation by the CEO, CTO, and Coder; \u201cCode Review\u201d shows the actual code review process; \u201cCode Alignment\u201d illustrates the potential code",
+   "page": 4,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "3",
+   "title": "This diagram shows the architecture of our designed Chain-of-Thought (CoT): Question-Answer Checker (QA-Checker)",
+   "page": 4,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "1",
+   "title": "Comparison of Positive and Negative Samples in CA and FA (CA and FA are defined in Section 2.1)",
+   "page": 5,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "2",
+   "title": "The number of vulnerabilities found by CodeAgent and other approaches. As described in Appendix- Section F, we have 3,545 items to evaluate. Ratecr represents the confirmed number divided by the number of",
+   "page": 6,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "4",
+   "title": "Overlap of vulnerability detection by Code- BERT, GPT-3.5, GPT-4.0, and CodeAgent",
+   "page": 7,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "3",
+   "title": "Comparison of CodeAgent with other methods on merged and closed commits across 9 languages on CA task. \u2018Imp\u2019 represents the improvement",
+   "page": 7,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "4",
+   "title": "Comparison of CodeAgent with other methods on merged and closed commits across the 9 languages on FA task. \u2018Imp\u2019 represents the improvement",
+   "page": 8,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "5",
+   "title": "Experimental Results for the Code Revision (CR task) of CodeAgent and the state-of-the-art works. Bold indicates the best performers",
+   "page": 8,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "5",
+   "title": "Specialization of six main characters in CodeAgent",
+   "page": 16,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "6",
+   "title": "Execution time with CodeAgent across different language (count unit: second)",
+   "page": 17,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "6",
+   "title": "Comparative Overview of QA-Checker AI System and Recursive Self-Improvement Systems Feature/System",
+   "page": 18,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "7",
+   "title": "Comparison of capabilities for CodeAgent and other approaches. \u2018\u2713\u2019 indicates the presence of a specific",
+   "page": 18,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "8",
+   "title": "Statistics of Studied Datasets",
+   "page": 18,
+   "confidence": 0.6,
+   "evidence": [
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "7",
+   "title": "Distribution of positive, negative of both merged and closed data across 9 languages, including \u2018python\u2019, \u2018java\u2019, \u2018go\u2019, \u2018c++\u2019, \u2018javascript\u2019, \u2018c\u2019, \u2018c#\u2019, \u2018php\u2019, \u2018ruby\u2019",
+   "page": 19,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "8",
+   "title": "Comparative Visualization of Merged and Closed Commit Counts Across Various Programming Languages",
+   "page": 19,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "10",
+   "title": "Correlation Table between specific programming language and case study",
+   "page": 21,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "9",
+   "title": "Comparison of models on the merged data across 9 languages on CA task",
+   "page": 22,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "9",
+   "title": "Vulnerable problems (#) found by CodeAgent. Ratemerge means the value of confirmed divided by the total number in the merged and Rateclose is the value of confirmed divided by the total number in the closed",
+   "page": 22,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "10",
+   "title": "Comparison of models on the closed data across 9 languages on CA task",
+   "page": 23,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "11",
+   "title": "Comparison of models on the merged data across 9 languages on FA task",
+   "page": 23,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "12",
+   "title": "Comparison of models on the closed data across 9 languages on FA task",
+   "page": 24,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "13",
+   "title": "Example in Python project with sha value: \u201c0d3b94bbd7528ed8649cdab4370a62e508bad82c\"",
+   "page": 25,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "14",
+   "title": "Example in Java project with sha value: \u201c6e3c6d17d943f5ac70b421653eb167e0c34b119f\"",
+   "page": 26,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "15",
+   "title": "Example in Go project with sha value: \u201ca6b00b097b1a8140bd8b60177247dc830374c8ed\"",
+   "page": 27,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "16",
+   "title": "Example in C++ project with sha value: \u201c09e88c7c20347cdf513323fa8c616aba0a1b9ea7\"",
+   "page": 28,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "11",
+   "title": "Vulnerable problems (#) found by CodeAgent w/o",
+   "page": 28,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "17",
+   "title": "Example in JavaScript project with sha value: \u201c6e9a80d93b470aef4978677ed0b7c9996fddbe20\"",
+   "page": 29,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "18",
+   "title": "Example in C project with sha value: \u201c5f93cf43dd6f809d7927abb79884285ad77e8a58\"",
+   "page": 30,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "19",
+   "title": "Example in C# project with sha value: \u201c0e231c7a81b318e9eade972f7b877e66128ed67d\"",
+   "page": 31,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "20",
+   "title": "Example in PHP project with sha value: \u201c6679f059b9a0972a90df198471188da652f5c547\"",
+   "page": 32,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "21",
+   "title": "Example in Ruby project with sha value: \u201c584f72e7f4c65066ccbd2183af76bf380b6eb974\"",
+   "page": 33,
+   "confidence": 0.7,
+   "evidence": [
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "22",
+   "title": "Comparison of code review between CodeAgent-3.5 and CodeAgent-4.0 on one Java project with sha value: \u201c6e3c6d17d943f5ac70b421653eb167e0c34b119f\"",
+   "page": 34,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "23",
+   "title": "website of CodeAgent",
+   "page": 35,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "12",
+   "title": "Summarizes the average query time and cost per code review for CodeAgent-3.5 and CodeAgent-4",
+   "page": 35,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 2,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 3,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 4,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 5,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 6,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 7,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 8,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 9,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 10,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 11,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 12,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 13,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 14,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 15,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 16,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 17,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 18,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 19,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 20,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 21,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 22,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 23,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 24,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 25,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 26,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 27,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 28,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 29,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 30,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 31,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 32,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 33,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 34,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 35,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-000-codeagent",
+   "number": null,
+   "title": "CodeAgent",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1010,
+   "n_words": 141,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-001-tasks",
+   "number": null,
+   "title": "Tasks",
+   "level": 2,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 89,
+   "n_words": 11,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-002-introduction",
+   "number": null,
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 2,
+   "n_chars": 6668,
+   "n_words": 1003,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-003-pipeline",
+   "number": null,
+   "title": "Pipeline",
+   "level": 2,
+   "page_start": 2,
+   "page_end": 4,
+   "n_chars": 7194,
+   "n_words": 1112,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-004-role-card-definition",
+   "number": null,
+   "title": "Role Card Definition",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 4,
+   "n_chars": 1005,
+   "n_words": 169,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-005-self-improving-cot-with-qa-checker",
+   "number": null,
+   "title": "Self-Improving CoT with QA Checker",
+   "level": 2,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 1473,
+   "n_words": 232,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-006-experimental-setup",
+   "number": null,
+   "title": "Experimental Setup",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 138,
+   "n_words": 18,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-007-metrics",
+   "number": null,
+   "title": "Metrics",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 0,
+   "n_words": 0,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-008-datasets",
+   "number": null,
+   "title": "Datasets",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 1921,
+   "n_words": 308,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-009-state-of-the-art-tools-and-models",
+   "number": null,
+   "title": "State-of-the-Art Tools and Models",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 6,
+   "n_chars": 2114,
+   "n_words": 324,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-010-experimental-result-analysis",
+   "number": null,
+   "title": "Experimental Result Analysis",
+   "level": 1,
+   "page_start": 6,
+   "page_end": 6,
+   "n_chars": 316,
+   "n_words": 47,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-011-vulnerability-analysis",
+   "number": null,
+   "title": "Vulnerability Analysis",
+   "level": 2,
+   "page_start": 6,
+   "page_end": 7,
+   "n_chars": 4369,
+   "n_words": 631,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-012-consistency-and-format-detection",
+   "number": null,
+   "title": "Consistency and Format Detection",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 8,
+   "n_chars": 3627,
+   "n_words": 563,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-013-code-revision",
+   "number": null,
+   "title": "Code Revision",
+   "level": 2,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 1028,
+   "n_words": 148,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-014-related-work",
+   "number": null,
+   "title": "Related Work",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 8,
+   "n_chars": 2059,
+   "n_words": 310,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-015-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 8,
+   "page_end": 13,
+   "n_chars": 14894,
+   "n_words": 2097,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-016-details-of-qa-checker-algorithm",
+   "number": null,
+   "title": "Details of QA-Checker Algorithm",
+   "level": 1,
+   "page_start": 13,
+   "page_end": 13,
+   "n_chars": 4,
+   "n_words": 2,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-017-complete-related-work",
+   "number": null,
+   "title": "Complete Related Work",
+   "level": 1,
+   "page_start": 13,
+   "page_end": 15,
+   "n_chars": 9371,
+   "n_words": 1481,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-018-experimental-details",
+   "number": null,
+   "title": "Experimental Details",
+   "level": 1,
+   "page_start": 15,
+   "page_end": 15,
+   "n_chars": 74,
+   "n_words": 15,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-019-role-definition",
+   "number": null,
+   "title": "Role Definition",
+   "level": 2,
+   "page_start": 15,
+   "page_end": 16,
+   "n_chars": 2865,
+   "n_words": 429,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-020-execute-time-across-languages",
+   "number": null,
+   "title": "Execute Time Across Languages",
+   "level": 2,
+   "page_start": 16,
+   "page_end": 17,
+   "n_chars": 1736,
+   "n_words": 279,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-021-comparison-table",
+   "number": null,
+   "title": "Comparison Table",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 17,
+   "n_chars": 62,
+   "n_words": 11,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-022-differences-and-implications",
+   "number": null,
+   "title": "Differences and Implications",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 17,
+   "n_chars": 1192,
+   "n_words": 172,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-023-conclusion",
+   "number": null,
+   "title": "Conclusion",
+   "level": 2,
+   "page_start": 17,
+   "page_end": 17,
+   "n_chars": 1050,
+   "n_words": 151,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-024-dataset",
+   "number": null,
+   "title": "Dataset",
+   "level": 1,
+   "page_start": 17,
+   "page_end": 19,
+   "n_chars": 6611,
+   "n_words": 1086,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-025-key-factors-leading-to-vulnerabilities",
+   "number": null,
+   "title": "Key Factors Leading to Vulnerabilities",
+   "level": 1,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 235,
+   "n_words": 36,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-026-data-leakage-statement",
+   "number": null,
+   "title": "Data Leakage Statement",
+   "level": 1,
+   "page_start": 19,
+   "page_end": 21,
+   "n_chars": 6977,
+   "n_words": 1019,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-027-case-study",
+   "number": null,
+   "title": "Case Study",
+   "level": 1,
+   "page_start": 21,
+   "page_end": 21,
+   "n_chars": 121,
+   "n_words": 21,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-028-performance-on-9-languages",
+   "number": null,
+   "title": "Performance on 9 languages",
+   "level": 2,
+   "page_start": 21,
+   "page_end": 21,
+   "n_chars": 795,
+   "n_words": 127,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-029-ablation-study",
+   "number": null,
+   "title": "Ablation study",
+   "level": 1,
+   "page_start": 21,
+   "page_end": 24,
+   "n_chars": 8359,
+   "n_words": 1352,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-030-cost-statement",
+   "number": null,
+   "title": "Cost statement",
+   "level": 1,
+   "page_start": 24,
+   "page_end": 35,
+   "n_chars": 33469,
+   "n_words": 4445,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-031-tool",
+   "number": null,
+   "title": "Tool",
+   "level": 1,
+   "page_start": 35,
+   "page_end": 35,
+   "n_chars": 196,
+   "n_words": 28,
+   "label_start": null,
+   "label_end": null
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 39,
+  "toc_inferred_entries": 0,
+  "figure_entries": 35,
+  "figure_sequence_gaps": [],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 32,
+  "chars_total": 121022
+ }
+}

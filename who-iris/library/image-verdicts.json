@@ -1,0 +1,2055 @@
+{
+  "$schema": "folio-image-verdicts/v1",
+  "_comment": "Bean d5f1. One agent's INSPECTION of every extracted image, as data rather than code, so the judgement can be reviewed line by line and re-run. `saw` is the REASON for the role, not the description; `draft` is the description. Every entry here was produced by looking at the image. Applied by scripts/apply-image-verdicts.ts, which writes an `inspection` basis naming this agent and leaves every narrative in `draft` — only a human may confirm one (schemas/narrative.ts). SPLIT 2026-09-20 (bean frs5): this file judged documents that now live in TWO libraries, so it became two files, each beside the documents it judges. A single verdict file spanning libraries is how one library's judgement comes to rewrite another's `images.json` -- `apply-image-verdicts` resolves each document against the library its verdict file is IN, and could not do that from one shared file. Nothing was re-judged: every verdict below is byte-identical to the one it was split from, and `inspected_by`/`inspected_at` are carried over unchanged because the inspection they record actually happened, once, before the split.",
+  "inspected_by": {
+    "kind": "agent",
+    "id": "claude",
+    "model": "claude-opus-5"
+  },
+  "inspected_at": "2026-09-20",
+  "verdicts": {
+    "9789241548960-eng": {
+      "img-p126-1": {
+        "role": "figure",
+        "saw": "a GRADE evidence-assessment matrix",
+        "draft": "The GRADE approach to rating confidence in an estimate of effect. Rows give study design — randomized controlled trials, which start at high confidence, and observational studies, which start at low. Between them, five reasons for lowering confidence (risk of bias, inconsistency, indirectness, imprecision, publication bias) and three for raising it (large effect, dose response, and plausible confounding that would either reduce a demonstrated effect or suggest a spurious one). The right-hand column gives the four resulting levels — high, moderate, low and very low — each shown with the circle notation, from four filled circles down to one."
+      },
+      "img-p154-1": {
+        "role": "figure",
+        "saw": "a comparison table of four rapid-review types",
+        "draft": "A comparison of four types of rapid review — a traditional systematic review conducted rapidly, a rapid review of systematic reviews, a rapid review of systematic reviews plus primary studies, and a rapid review of primary studies only — across twelve methodological dimensions. The traditional review allows up to 16 weeks where the three rapid forms allow up to 12. It differs from them throughout: no restrictions on literature search or number of databases against restrictions and 2–3 databases; complete data-extraction verification against one reviewer with selected verification; outcomes restricted to four or fewer against two to four with more if available. Rows also cover question types, number of questions, use of systematic reviews, grey literature, screening, study designs included, risk-of-bias assessment, and assessment of the quality of the body of evidence."
+      }
+    },
+    "wpr-rdo-2020-003-eng": {
+      "img-p008-1": {
+        "role": "logo",
+        "saw": "the Médecins Sans Frontières mark",
+        "draft": "The Médecins Sans Frontières logo: the running-figure symbol beside the words MÉDECINS SANS FRONTIÈRES, with the line “Prix Nobel de la Paix 1999” beneath."
+      },
+      "img-p008-2": {
+        "role": "logo",
+        "saw": "the FAO emblem",
+        "draft": "The emblem of the Food and Agriculture Organization of the United Nations: a wheat ear encircling the letters FAO above the motto FIAT PANIS."
+      },
+      "img-p008-3": {
+        "role": "logo",
+        "saw": "the UNDP emblem",
+        "draft": "The United Nations Development Programme emblem: the UN globe-and-olive-branches symbol above the letters UNDP set in two lines."
+      },
+      "img-p008-4": {
+        "role": "logo",
+        "saw": "the ILO emblem",
+        "draft": "The International Labour Organization emblem: the letters ILO within a cogwheel, framed by a laurel wreath."
+      },
+      "img-p009-1": {
+        "role": "decorative",
+        "saw": "a photograph of a health worker and a child",
+        "draft": "A photograph of a health worker in a short-sleeved shirt attending to a child, who is holding a cup. Illustrative; it carries no information the surrounding text does not."
+      },
+      "img-p009-2": {
+        "role": "logo",
+        "saw": "the WHO emblem and wordmark, monochrome",
+        "draft": "The World Health Organization emblem — the UN globe with the Rod of Asclepius — beside the words World Health Organization, in black and white."
+      },
+      "img-p009-3": {
+        "role": "logo",
+        "saw": "the WHO emblem and wordmark, blue",
+        "draft": "The World Health Organization emblem beside the words World Health Organization, in blue."
+      },
+      "img-p009-4": {
+        "role": "logo",
+        "saw": "the WHO emblem and wordmark, blue",
+        "draft": "The World Health Organization emblem beside the words World Health Organization, in blue. A second placement of the same mark."
+      },
+      "img-p009-5": {
+        "role": "logo",
+        "saw": "the Médecins Sans Frontières mark",
+        "draft": "The Médecins Sans Frontières logo: the running-figure symbol beside the words MÉDECINS SANS FRONTIÈRES."
+      },
+      "img-p010-1": {
+        "role": "logo",
+        "saw": "the WHO emblem with Chinese wordmark",
+        "draft": "The World Health Organization emblem beside its name in Chinese — 世界卫生组织 — above 西太平洋区域, the Western Pacific Region."
+      },
+      "img-p026-1": {
+        "role": "decorative",
+        "saw": "the children-on-a-road photograph",
+        "draft": "A photograph of two children running along a dirt road in a rural village, with a thatched house and a third child behind them. Illustrative; it carries no information the surrounding text does not."
+      },
+      "img-p029-1": {
+        "role": "decorative",
+        "saw": "the children-on-a-road photograph, cropped",
+        "draft": "A photograph of two children running along a dirt road in a rural village. A crop of the same photograph used elsewhere in this document."
+      },
+      "img-p029-2": {
+        "role": "decorative",
+        "saw": "the children-on-a-road photograph, larger crop",
+        "draft": "A photograph of two children running along a dirt road in a rural village. A larger crop of the same photograph used elsewhere in this document."
+      },
+      "img-p029-3": {
+        "role": "decorative",
+        "saw": "an UNREPLACED template banner reading SAMPLE TITLE",
+        "draft": "A faint banner of template text reading “WPRO PUBLICATION / SAMPLE TITLE IN THE WESTERN PACIFIC”. This is unreplaced placeholder text from the publication template, not content — a defect in the source document."
+      },
+      "img-p030-1": {
+        "role": "decorative",
+        "saw": "the children-on-a-road photograph, cropped",
+        "draft": "A photograph of two children running along a dirt road in a rural village. A crop of the same photograph used elsewhere in this document."
+      },
+      "img-p030-2": {
+        "role": "decorative",
+        "saw": "the children-on-a-road photograph, cropped",
+        "draft": "A photograph of two children running along a dirt road in a rural village. A crop of the same photograph used elsewhere in this document."
+      },
+      "img-p031-1": {
+        "role": "decorative",
+        "saw": "the children-on-a-road photograph, cropped",
+        "draft": "A photograph of two children running along a dirt road in a rural village. A crop of the same photograph used elsewhere in this document."
+      },
+      "img-p031-2": {
+        "role": "decorative",
+        "saw": "the children-on-a-road photograph, larger crop",
+        "draft": "A photograph of two children running along a dirt road in a rural village. A larger crop of the same photograph used elsewhere in this document."
+      },
+      "img-p031-3": {
+        "role": "decorative",
+        "saw": "an UNREPLACED template banner reading SAMPLE TITLE",
+        "draft": "A faint banner of template text reading “WPRO PUBLICATION / SAMPLE TITLE IN THE WESTERN PACIFIC”. This is unreplaced placeholder text from the publication template, not content — a defect in the source document."
+      }
+    },
+    "9789240101197-eng": {
+      "img-p019-1": {
+        "role": "decorative",
+        "saw": "a small multicoloured square-mosaic icon marking the Guiding principles box",
+        "draft": "A small icon made of coloured squares (orange, green, blue, red) placed at the corner of the Guiding principles box on chapter opening pages; it carries no text of its own."
+      },
+      "img-p043-1": {
+        "role": "figure",
+        "saw": "a thumbnail of a layered DHSC target architecture diagram",
+        "draft": "A small thumbnail of a target health supply chain architecture diagram, shown in the 'Year 3 and 4 – Target architecture maturity to next level' cell of Fig. 21, 'Example of outputs from this chapter', in the Defining the DHSC architecture chapter. The diagram is arranged in labelled boxes: Shared services with foundational components such as Facility Registry and Product Registry; Data services with Analytics (BI reports, Data warehouse) and Traceability (Track and Trace, Product Verification); an Interoperability layer of enabling components such as Authentication, Encryption, Orchestration, Transformation, Translation and Validation; and Health supply chain systems including Forecasting and Planning, Order Management, Warehouse Management, Cost Management, Procurement, Supplier and Contract Management, Transportation Management and Dispensing. To the right, Digital ecosystem and External systems boxes list items such as Quality systems, Health management information systems, Regulatory systems, Finance and insurance systems, Global platform, Manufacturer systems and Data repositories. At this size the labels are only partly legible."
+      },
+      "img-p062-1": {
+        "role": "decorative",
+        "saw": "a stacked-disk database pictogram",
+        "draft": "A dark blue database icon (three stacked disks) labelling the Data Warehouse component in Fig. 30, Malawi's future-state architecture; the adjacent text label carries the meaning."
+      },
+      "img-p062-2": {
+        "role": "decorative",
+        "saw": "a light blue speedometer/gauge pictogram",
+        "draft": "A light blue gauge icon used beside the Dashboards label in Fig. 30, Malawi's future-state architecture."
+      },
+      "img-p062-3": {
+        "role": "decorative",
+        "saw": "a blurred drop-shadow of the word 'Manufacturers'",
+        "draft": "A blurred grey shadow of the word 'Manufacturers', a drop-shadow effect behind that label in Fig. 30; it adds no content."
+      },
+      "img-p062-4": {
+        "role": "decorative",
+        "saw": "a light blue presentation-board bar-chart pictogram",
+        "draft": "A light blue icon of a bar chart on a presentation board, used beside the Reports label in Fig. 30, Malawi's future-state architecture."
+      },
+      "img-p062-5": {
+        "role": "decorative",
+        "saw": "a light blue magnifying-glass pictogram",
+        "draft": "A light blue magnifying-glass icon used beside the Traceability label in Fig. 30, Malawi's future-state architecture."
+      },
+      "img-p062-6": {
+        "role": "decorative",
+        "saw": "a small light blue check-mark pictogram",
+        "draft": "A small light blue check mark that sits inside the magnifying-glass Traceability icon in Fig. 30."
+      },
+      "img-p062-7": {
+        "role": "decorative",
+        "saw": "a white return-arrow pictogram on transparent background",
+        "draft": "A white U-turn return arrow icon used beside the Returns and Recalls label in Fig. 30, Malawi's future-state architecture."
+      },
+      "img-p062-8": {
+        "role": "decorative",
+        "saw": "a white certification-seal check-mark pictogram on transparent background",
+        "draft": "A white seal icon with a check mark, used beside the Verification label in Fig. 30, Malawi's future-state architecture."
+      },
+      "img-p062-9": {
+        "role": "decorative",
+        "saw": "a plain grey blurred rectangle (drop shadow)",
+        "draft": "A plain grey blurred rectangle, a drop-shadow effect behind a box in Fig. 30; it carries no content."
+      },
+      "img-p062-10": {
+        "role": "logo",
+        "saw": "the 'Global FP VAN' wordmark with a striped globe",
+        "draft": "The Global FP VAN logo, shown in the Global box of Fig. 30, Malawi's future-state architecture."
+      },
+      "img-p062-11": {
+        "role": "decorative",
+        "saw": "a plain grey blurred rectangle (drop shadow)",
+        "draft": "A plain grey blurred rectangle, a drop-shadow effect behind a box in Fig. 30; it carries no content."
+      },
+      "img-p078-1": {
+        "role": "decorative",
+        "saw": "an ISBN barcode on the back cover",
+        "draft": "The back-cover ISBN barcode for 9789240101197."
+      },
+      "vfig-p015": {
+        "role": "figure",
+        "shows": [
+          "5"
+        ],
+        "saw": "Fig 5, the seven-phase DIIG planning chart with resource tiles, 'WHO handbook for health supply chain architecture' highlighted",
+        "draft": "Fig 5, 'DIIG process for planning and implementing a digital health enterprise'. Seven numbered, colour-coded phases — from 01 assessing the current state and enabling environment to 07 implementing, maintaining and scaling — each with its steps. To the right, resource tiles are placed against the phases they serve and marked as PDF or online, including the WHO–ITU eHealth strategy toolkit, the Digital implementation investment guide, the ITU SDG digital investment framework, TOGAF, OpenHIE, the WHO SMART guidelines with digital adaptation kits, and the WHO MAPS toolkit. 'WHO handbook for health supply chain architecture (this document)' is highlighted twice: spanning phases 02 to 04, and in phase 07. Adapted from the 2020 WHO Digital Implementation Investment Guide.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p032": {
+        "role": "decorative",
+        "saw": "a boxed TEXT panel — Step 2 'Define a target DHSC architecture' with inputs, tasks, outputs, resources, a best-practice note and a risks table — whose text is in the extracted sections; the page's 'Fig. 14' is a cross-reference and no figure is drawn. Filed as decorative for want of a text-panel role",
+        "draft": "Step 2 panel, 'Define a target DHSC architecture': inputs, tasks, outputs and resources boxes, a best-practice note on capturing consumption at the last mile, and a table of potential risks and mitigation strategies.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p034": {
+        "role": "figure",
+        "shows": [
+          "14"
+        ],
+        "saw": "Fig 14, the DHSC architecture: services, interoperability layer and supply-chain systems with explanatory callouts",
+        "draft": "Fig 14, 'DHSC architecture framework'. Inside a frame labelled DIGITAL HEALTH SUPPLY CHAIN ENTERPRISE: SHARED SERVICES (foundational components: facility, product and supplier registries), DATA SERVICES (analytics — supply chain reports, data warehouse; traceability — track and trace, product verification) and Digital ecosystems (quality, health management information, regulatory, and finance and insurance systems). Below them, an INTEROPERABILITY LAYER of enabling components: authentication, encryption, transformation, orchestration, validation and translation. At the bottom, HEALTH SUPPLY CHAIN INFORMATION SYSTEMS (forecasting and planning, order, warehouse and cold chain management, procurement, supplier and contract management, transportation management and dispensing), beside EXTERNAL SYSTEMS (global platforms, manufacturer systems, data repositories). Callouts explain each layer — for example, that OpenHIM is a useful reference for interoperability components, and SCISMM and TSS v2 for the supply chain systems.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p040": {
+        "role": "figure",
+        "shows": [
+          "19"
+        ],
+        "saw": "Fig 19, the DHSC architecture with supply-chain information systems split across national, district and facility levels; the page's 'Fig. 20' candidate is a cross-reference",
+        "draft": "Fig 19, 'Architecture based on supply chain design: decentralized management (option B)'. The DHSC architecture — shared services, data services, digital ecosystems, an interoperability layer of enabling components, and external systems — with its health supply chain information systems divided by level. At national level: forecasting and planning, procurement, supplier and contract management, transportation management, warehouse management and cold chain management. At district level: procurement, order management, inventory management and cold chain management. At facility level: dispensing.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p041": {
+        "role": "figure",
+        "shows": [
+          "20"
+        ],
+        "saw": "Fig 20, transactional data from a supply-chain flow rising through the interoperability layer into analytics services, with the questions they answer",
+        "draft": "Fig 20, 'Benefits of cross-enterprise analytics services'. Along the bottom runs the physical supply chain: manufacturing, shipping, regulatory customs, central-warehouse receiving and inventory management, distribution, regional-warehouse replenishment, health-facility dispensing, and patients. Above it sit the planning processes: forecasting and planning; supplier and contract management; procurement; and order management. Dashed arrows carry 'Transactional data from systems relevant to the supply chain' up through the INTEROPERABILITY LAYER into DATA SERVICES — analytics: supply chain reports and a data warehouse. A callout lists the questions analytics services answer: optimizing inventory against consumption to minimize stockouts, whether planned supplies will arrive in time, forecast accuracy against actual consumption, on-time and in-full delivery, wastage and leakage, stock at risk of expiry and where to move it, where and how often stockouts occur, and supplier performance.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p049": {
+        "role": "figure",
+        "shows": [
+          "23"
+        ],
+        "saw": "Fig 23, total cost of ownership grouped into implement, scale, operate and ongoing cost components; the crop also takes in the Step 3 text panel above it",
+        "draft": "Fig 23, 'Cost components to determine the total cost of ownership'. A dashed loop labelled 'Total cost of ownership' encloses four groups of cost components. IMPLEMENT: sourcing (RFP, RFI, RFQ), software, hardware and infrastructure, design and development, integration and interoperability, testing and training, and deployment. SCALE: expansion of deployment, training, and hardware and infrastructure. OPERATE: software subscriptions, maintenance (personnel, software, hardware), ongoing training, and monitoring and evaluation. ONGOING: management, governance and overhead. Adapted from the 2020 WHO Digital Implementation Investment Guide.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p055": {
+        "role": "figure",
+        "shows": [
+          "24"
+        ],
+        "saw": "Fig 24, supply-chain systems at each location exchanging data through the interoperability layer with traceability services; the page's 'Fig. 25' is a cross-reference",
+        "draft": "Fig 24, 'Achieving track and trace capabilities through DHSC architecture components'. Along the bottom, the supply chain runs from regulator through central, regional and district warehouses to health facilities and patients. Each location's system — regulator systems, warehouse management, transportation management, inventory management, dispensing, and verification at the patient — exchanges data in both directions with the INTEROPERABILITY LAYER, as do the external systems (global platforms, manufacturer systems, data repositories). Above the layer, DATA SERVICES hold analytics and traceability (track and trace, product verification). A callout lists the questions traceability services answer: where a batch is now, whether supply chain integrity was maintained, who had custody on a date, where a batch was dispensed, whether the product moved through known locations, whether there were anomalies, and whether the product is genuine. A legend defines traceability data as what (product, batch and serial number), when, where and why (the transaction type).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p056": {
+        "role": "figure",
+        "shows": [
+          "25"
+        ],
+        "saw": "Fig 25, a mock track-and-trace screen for one batch above the event flow that feeds it",
+        "draft": "Fig 25, 'Illustrative example of a traceability service interface'. At the top is a mock screen, 'Track and trace results for product 001001123123', batch A1001234. It shows a timeline of five verified events with their location and timestamp: verified and received at the central warehouse (11 Mar 2023); shipped from the central warehouse (5 Apr); verified and received at health facility 001 (6 Apr); verified and dispensed there (10 Apr); and a final patient-side verification of serial number 202 with GPS coordinates (10 Apr, 16:14). Below, the flow that produces it: the manufacturer, central/regional warehouse and health facilities emit ship, receive and dispense events, and handheld verify scans are made along the way. All of these feed DATA SERVICES (analytics and traceability), which answer the screen's query for the product code, batch, its serial numbers 201 to 204 and the expiry date.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p011": {
+        "role": "figure",
+        "shows": [
+          "1"
+        ],
+        "saw": "Fig 1, three nested circles of supply chain processes with partner icons on their rims",
+        "draft": "Fig 1, 'Public health supply chain partners and processes'. Four nested circles. The outer blue circle holds forecasting and planning and traceability, with the Ministry of health, regulators, procurers, manufacturers/distributors and logistics providers on or near its rim. The orange circle holds sourcing and contract management, procurement and transportation/shipping. The purple circle holds warehouse management, order management and transportation/distribution, with central and regional warehouses on its rim. The innermost green circle holds dispensing, with community health, health facilities and individuals at the centre."
+      },
+      "vfig-p012": {
+        "role": "figure",
+        "shows": [
+          "2"
+        ],
+        "saw": "Fig 2, eight supply chain process boxes joined by two-headed arrows",
+        "draft": "Fig 2, 'Information flow across supply chain processes'. Eight rounded boxes: forecasting and planning, sourcing and contract management, order management, traceability, procurement, warehouse management, transportation and dispensing. Two-headed arrows join them, showing that information flows both ways between the processes; warehouse management is the most connected box."
+      },
+      "vfig-p013": {
+        "role": "figure",
+        "shows": [
+          "3"
+        ],
+        "saw": "Fig 3, six hexagons around 'Individuals' inside a dashed ring of partners",
+        "draft": "Fig 3, 'Digital health supply chain'. Six purple hexagons surround an icon labelled Individuals: digital ecosystem, end-to-end visibility, data and analytics, transactional systems, advanced digitization and collaborative processes. A dashed ring around them carries eleven partners as dots: Ministry of health, community health, health facilities, regional warehouses, private sector, central warehouse, regulators, logistics providers, procurers and manufacturers/distributors."
+      },
+      "vfig-p014": {
+        "role": "figure",
+        "shows": [
+          "4"
+        ],
+        "saw": "Fig 4, four chevrons for the handbook's chapters with their numbered steps; the crop also takes in body text above it",
+        "draft": "Fig 4, 'The stepwise approach used in this handbook'. Four coloured chevrons in a row: 1. Defining a holistic DHSC strategy; 2. Defining the DHSC architecture; 3. Planning for scalable implementation and sustainable operations; 4. Using the DHSC to implement traceability. Chevron 1 lists four steps (identify and engage stakeholders, analyse the current state of HSCISs, define the vision and strategic goals, define a strategic roadmap and performance indicators). Chevron 2 lists three (assess the current state of HSCISs, define a target architecture, identify implementation activities and map them to strategic goals). Chevron 3 lists four (plan the implementation, develop an operational plan, develop a budget, and implement each intervention). The crop also includes the chapter list and a 'Before using this handbook' box above the figure."
+      },
+      "vfig-p016": {
+        "role": "figure",
+        "shows": [
+          "6"
+        ],
+        "saw": "Fig 6, SMART Guidelines L1-L5 knowledge layers above their country adaptations, with feedback arrows",
+        "draft": "Fig 6, 'WHO SMART Guidelines approach'. A top band of five knowledge layers, each fed from a research and evidence base: L1 narrative (enhanced guidelines), L2 operational (digital adaptation kits), L3 machine-readable (machine-readable recommendations), L4 executable (reference software) and L5 dynamic (precision health models). A localisation bar leads down to five matching country adaptations: national policies and procedures, localized requirements, localized machine-readable code and standards, localized digital services, and dynamic applications trained for local outcomes. These feed data, evidence and impact, and an 'Evidence from digital implementations' arrow returns to the research base. Source: adapted from WHO SMART Guidelines."
+      },
+      "vfig-p017": {
+        "role": "figure",
+        "shows": [
+          "7"
+        ],
+        "saw": "Fig 7, the ANC DAK BPMN swimlane workflow with supply-chain-related tasks outlined, plus an enlarged inset",
+        "draft": "Fig 7, 'Sample workflow for an antenatal care business, with connections to the supply chain highlighted'. A BPMN diagram with client and health worker lanes: arrival, registration, rapid assessment, danger signs, pregnancy confirmation, quick check, profile and history, the ANC assessment group, the counselling and treatment group (10.1 to 10.9), referral, scheduling and self-care. An enlarged inset shows the tasks outlined in purple as connected to the supply chain: 9 conduct laboratory tests and imaging, 10.5 nutrition supplementation, 10.7 immunizations and 10.9 deworming and malaria counselling and prophylaxis. Source: adapted from the 2021 WHO Digital Adaptation Kit for Antenatal Care."
+      },
+      "vfig-p020": {
+        "role": "figure",
+        "shows": [
+          "8"
+        ],
+        "saw": "Fig 8, nested arrow shapes of national strategies all pointing to a vision",
+        "draft": "Fig 8, 'Alignment of national strategies'. Nested arrow shapes, each ending in VISION. The health strategy contains the health supply chain strategy, which contains the medicines and health product strategy. The digital/IT strategy contains the digital health strategy. The digital health supply chain strategy sits where the two families overlap."
+      },
+      "vfig-p021": {
+        "role": "figure",
+        "shows": [
+          "9"
+        ],
+        "saw": "Fig 9, five supply chain actors, each system holding a different product code for the same product, with broken links between them",
+        "draft": "Fig 9, 'Inconsistent use of standardized product nomenclature across the supply chain'. A dashed arrow marks the physical flow of health products from manufacturers through the central warehouse, health facilities and community health workers to patients. Below, each holds the same product under a different code: product code 123123 at the manufacturer, A1232 in mSupply, P44545 in eLMIS and AM545 on paper forms, joined by broken chain-link icons."
+      }
+    },
+    "9789240116191-eng": {
+      "img-p030-1": {
+        "role": "figure",
+        "saw": "a stepped diagram of product packaging levels",
+        "draft": "Fig. 10, 'Product packaging hierarchy' (source: GS1.org), in the section on instituting data management and governance policies. It is drawn as a staircase of four grey steps, each holding packaging illustrations. The top step, labelled PRIMARY, shows individual items such as vials, a bottle, syringes in blister packs, a blister strip and a sterile-packed instrument. The next step, SECONDARY, shows boxes and cartons holding those items; the third, SECONDARY OR TERTIARY, shows open cartons and a row of boxed packs; and the bottom step, TERTIARY, shows shipping cases and a shrink-wrapped pallet of boxes."
+      },
+      "vfig-p010": {
+        "role": "figure",
+        "shows": [
+          "1"
+        ],
+        "saw": "Fig. 1, a health product linked to four circles of product master data; the crop also takes in the section heading and two paragraphs of body prose above it, because the figure's background panel bleeds off the page",
+        "draft": "Fig. 1, 'Product master data'. A health product, drawn as a boxed medicine package, is linked to PRODUCT MASTER DATA, shown as four categories with examples. General Information: product identifier, name, description, unit of measure. Classification: ICD, ATC, product characteristics/specifications. Pharmaceutical Information: dosage, strength, route of administration, doses per vial. Logistical Information: packaging, volumetrics, shelf life, storage temperature.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p011": {
+        "role": "figure",
+        "shows": [
+          "2"
+        ],
+        "saw": "Fig. 2, partners and processes both feeding a central product-master-data column, flowing down to patients",
+        "draft": "Fig. 2, 'Importance of product master data'. Three columns. On the left, SUPPLY CHAIN PARTNERS: manufacturers, procurers, Ministry of Health / programmes, donors, shippers, regulatory authority, central/regional/district warehouses and health facilities. On the right, SUPPLY CHAIN PROCESSES: forecasting and supply planning, procurement, ordering/re-ordering, inventory management, distribution, dispensing, product recalls and finance/insurance. Arrows from both point into the central PRODUCT MASTER DATA column — general information, classification details, pharmaceutical information, logistical information and other information — which flows down through a medicine icon to Patients.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p012": {
+        "role": "figure",
+        "shows": [
+          "3"
+        ],
+        "saw": "Fig. 3, the physical flow of products across actors, each system holding a different product code joined by broken links",
+        "draft": "Fig. 3, 'Impact of inconsistent product information'. An arrow labelled PHYSICAL FLOW OF HEALTH PRODUCTS runs across five actors: manufacturers, central warehouse, health facilities, community health workers and patients. Beneath them sit the systems each stage uses — a warehouse management system, an eLMIS and paper forms — and each holds the same product under a different code (123123, A1232, P44545, AM545). Broken-chain icons join the codes, showing that the identifiers do not link up along the chain.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p013": {
+        "role": "figure",
+        "shows": [
+          "4"
+        ],
+        "saw": "Fig. 4, the seven-phase digital-health planning chart with resource tiles, this document highlighted in phase 07",
+        "draft": "Fig. 4, 'Planning and implementing a digital health enterprise: phases, steps and resources'. Seven numbered phases — assessing the current state and enabling environment; establishing a shared understanding and strategic planning; defining the future state; planning the enterprise architecture; determining health content requirements; M&E and fostering data use; and implementing, maintaining and scaling — each with its steps. Resource tiles are placed against the phases they serve and marked as PDF or online, among them the DIIG, the WHO SMART guidelines with digital adaptation kits, TOGAF, OpenHIE and the WHO handbook for health supply chain architecture. The tile 'WHO handbook for health product catalogue (this document)' is highlighted in phase 07. It is the same chart as Fig. 6 of the WHO handbook for digitalizing primary health care, re-pointed to this document.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p014": {
+        "role": "figure",
+        "shows": [
+          "5"
+        ],
+        "saw": "Fig. 5, the SMART Guidelines five-layer diagram with localisation and an evidence feedback loop",
+        "draft": "Fig. 5, 'WHO SMART Guidelines Approach'. A research and evidence base feeds five knowledge layers and their products: L1 Narrative (enhanced guidelines), L2 Operational (digital adaptation kits), L3 Machine readable (machine-readable recommendations), L4 Executable (reference software) and L5 Dynamic (precision health models). Each passes through LOCALISATION into a country-implementation adaptation: national policies and procedures, localised requirements, localised machine-readable code and standards, localised static digital services, and dynamic applications optimised for local outcomes. All feed DATA, EVIDENCE, AND IMPACT, which returns to the evidence base as EVIDENCE FROM DIGITAL IMPLEMENTATIONS.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p015": {
+        "role": "figure",
+        "shows": [
+          "6"
+        ],
+        "saw": "Fig. 6, an ANC BPMN swimlane workflow with an enlarged inset of its assessment and counselling activities, some highlighted",
+        "draft": "Fig. 6, 'Example of an Antenatal Care Business clinical workflow with highlighted' activities. The upper part is a swimlane process in a health facility, with Client and Health worker lanes. The client arrives at the facility, then goes through registration, rapid assessment and management, a danger-signs/referral decision, pregnancy confirmation, a first-contact decision and a quick check. These lead to collecting the woman's profile and history, then an ANC assessment (check symptoms and follow-up, conduct physical exam, conduct laboratory tests and imaging), then 10. Counselling, in-facility management and treatment, with subactivities 10.1 to 10.9, then a referral decision, scheduling, and self-care in the home or community until the woman returns. The lower part enlarges activities 6 to 10. Highlighted borders mark 9 (conduct laboratory tests and imaging), 10.5 nutrition supplementation, 10.7 immunizations and 10.9 deworming and malaria counselling and prophylaxis — the activities that involve health products.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p016": {
+        "role": "figure",
+        "shows": [
+          "7"
+        ],
+        "saw": "Fig. 7, a layered architecture with shared/data services, an interoperability layer and supply-chain information systems",
+        "draft": "Fig. 7, 'Digital health supply chain architecture framework'. Top row: SHARED SERVICES, whose foundational components are facility, product (highlighted) and supplier registries; DATA SERVICES, with analytics (supply chain reports, data warehouse) and traceability (track and trace, product verification); and Digital Ecosystems (quality, health management information, regulatory, and finance and insurance systems). A middle INTEROPERABILITY LAYER of enabling components: authentication, encryption, transformation, orchestration, validation and translation. Bottom: HEALTH SUPPLY CHAIN INFORMATION SYSTEMS — forecasting and planning, order management, warehouse management, cold chain management, procurement, supplier and contract management, transportation management and dispensing — beside External systems (global platforms, manufacturer systems, data repositories).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p028": {
+        "role": "figure",
+        "shows": [
+          "8"
+        ],
+        "saw": "Fig. 8, three columns from classification to product to trade items, with a paracetamol example; the crop clips the rotated row labels at its left edge",
+        "draft": "Fig. 8, 'Linkage across classifications, generic products and trade items'. Three columns: CLASSIFICATION (classes or groups of diseases, pathogens or drugs); PRODUCT (name/INN, strength, dosage form, route of administration); and TRADE ITEM (unique identifier such as a GTIN, brand name, manufacturer, country of origin, packaging details, volumetrics, shelf life). The example row traces Nervous system → Analgesics → Other analgesics and antipyretics → Anilides → Paracetamol to the product 'Paracetamol 500 mg tablet'. That product branches into two manufacturers' trade items, each with its own unique IDs and pack hierarchy: a case and inner pack of 100 from ABC Manufacturing (brand Ceta123), and a case, inner pack of 50 and each of 10 from XYZ Manufacturing (brand ParaXYZ). A bottom row gives each column's use: strategic (data aggregation and analysis), tactical (forecasting, procurement planning and aggregate visibility) and operational (inventory, distribution, tracking and tracing, pharmacovigilance and AEFI analysis).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p029": {
+        "role": "figure",
+        "shows": [
+          "9"
+        ],
+        "saw": "Fig. 9, a three-class data model with attribute cardinalities and 1-to-0..* associations",
+        "draft": "Fig. 9, 'Relationship between generic product, trade item and regulated trade item'. Three classes are drawn as boxes listing their attributes with cardinalities. GENERIC PRODUCT has identifier 0..*, status, name (nameType, nameValue), description, classification, unitOfUse, dosageForm, strength, routeOfAdministration, manufacturer, countryOfOrigin, shelfLife, doseQuantity, attribute (type, value[x]) and associatedProduct (product, relationship, quantity). TRADE ITEM has identifier 1..*, status, tradeItemName, description, classification, manufacturer, countryOfOrigin, shelfLife, associatedGenericProduct (genericProduct, quantity), contains (tradeItem, quantity) and attribute. REGULATED TRADE ITEM has identifier, status, jurisdiction, authorisationHolder, validityPeriod, authorisedTradeItem, attribute and associatedProduct. The associations read: one generic product to zero or more trade items, and one trade item to zero or more regulated trade items.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p030": {
+        "role": "figure",
+        "shows": [
+          "10",
+          "11"
+        ],
+        "saw": "TWO figures, Fig. 10 and Fig. 11, in one crop beneath a WHODrug text panel that the crop also takes in",
+        "draft": "Fig. 10, 'Product packaging hierarchy', shows four stepped shelves of packaged goods labelled, top to bottom, PRIMARY (vials, syringes, blister packs), SECONDARY, SECONDARY OR TERTIARY, and TERTIARY (cases and pallets). Source: GS1.org. Fig. 11, 'Example of packaging variations across manufacturers', shows one PRODUCT, a paracetamol 500 mg tablet, procured from two manufacturers with different pack configurations: MFR A ships 1 case of 12 packs of 50 tablets each, and MFR B ships 1 case of 10 packs of 100 tablets each.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p031": {
+        "role": "figure",
+        "shows": [
+          "12"
+        ],
+        "saw": "Fig. 12, a generic product linked to manufacturers' trade items through a pallet→case→inner-pack chain; the crop also takes in the next section's 'Step 3' heading band",
+        "draft": "Fig. 12, 'Mapping across product packaging hierarchy using FHIR resource'. Five record boxes, each listing identifier, description, name, characteristic and association. A GENERIC PRODUCT (identifier MR001) associates to a trade item from manufacturer A (identifier 17801415202675) and to manufacturer B's tertiary pallet (18901415202906). The pallet associates to MFR B's tertiary case (08901415202908, quantity 100), which associates to MFR B's secondary inner pack (08901415202910, quantity 50) — the packaging hierarchy expressed as chained associations.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p040": {
+        "role": "figure",
+        "shows": [
+          "13"
+        ],
+        "saw": "Fig. 13, a national product code record branching to two GTIN/trade-item tables; whole page checked at low resolution and the crop holds the whole figure",
+        "draft": "Fig. 13, 'Transitional approach to adopting globally unique trade item numbers'. A national product code record — NPC01101001, Lamivudine 50 mg tablet, dosage form TA, route oral — branches into two tables of trade items mapped to it. The first holds GS1 GTINs (for example 58904093825793) for manufacturer MFR001 from IN, with child GTINs, child quantities of 100 and 10, 3000 eaches and a shelf life of 670. The second holds items from MFR002 from KE that have no GTIN yet and are identified only by country trade item identifiers (P006008, P006009), with child quantities of 120 and 30, 7200 eaches and a shelf life of 1095. So a national code can carry GTIN-identified and not-yet-GTIN-identified items side by side during the transition.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p041": {
+        "role": "decorative",
+        "saw": "only the header band of a text table (POTENTIAL RISKS / MITIGATION); the page's 'Figure 11' and 'Figure 12' are cross-references, and no figure is drawn here",
+        "draft": "Header band of a two-column table, reading 'POTENTIAL RISKS' and 'MITIGATION'.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p046": {
+        "role": "figure",
+        "shows": [
+          "14"
+        ],
+        "saw": "Fig. 14, a global catalogue feeding two country catalogues inside the PCMT on WHO infrastructure",
+        "draft": "Fig. 14, 'Illustration of how countries can leverage WHO hosted PCMT'. Inside a panel labelled PRODUCT CATALOGUE MANAGEMENT TOOL, a GLOBAL CATALOGUE (global identifier, unit of use, pharmaceutical information such as dosage form, route of administration and strength, trade item information, and manufacturer, country of origin and shelf life) feeds COUNTRY CATALOGUE A and COUNTRY CATALOGUE B, each adding country identifiers and country-specific information such as registration numbers. The arrows are annotated 'Country catalogues to derive common product information from the global catalog'. Country A Users and Country B Users each work in their own catalogue, and the whole sits on WHO INFRASTRUCTURE.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p050": {
+        "role": "figure",
+        "shows": [
+          "15"
+        ],
+        "saw": "Fig. 15, Fig. 14's PCMT diagram extended with product master data flowing back into the global catalogue from countries",
+        "draft": "Fig. 15, 'Illustration of how countries can share data with the WHO hosted PCMT'. It extends Fig. 14. As there, the global catalogue feeds country catalogues A and B inside the PRODUCT CATALOGUE MANAGEMENT TOOL on WHO infrastructure, used by Country A and Country B users. In addition, each country catalogue returns 'Product master data' to the global catalogue, and OTHER COUNTRIES contribute PRODUCT MASTER DATA into it from above, so the global catalogue is fed by the countries as well as feeding them.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      }
+    },
+    "9789240010567-eng": {
+      "vfig-p017": {
+        "role": "figure",
+        "shows": [
+          "1.1.1"
+        ],
+        "saw": "Fig. 1.1.1 (landscape page), the seven-phase planning chart with resource tiles, the DIIG itself highlighted spanning phases 02–05",
+        "draft": "Fig. 1.1.1, 'Planning and implementing a digital health enterprise: phases, steps and resources'. Seven colour-coded phases — 01 assessing the current state and enabling environment; 02 establishing a shared understanding and strategic planning; 03 defining the future state; 04 planning the enterprise architecture; 05 determining health content requirements; 06 M&E of digital health implementations and fostering data use; 07 implementing, maintaining and scaling — each with its steps. Resource tiles are placed against the phases they serve and marked PDF or online. They include the WHO Digital Health Atlas, the WHO/ITU National eHealth Strategy Toolkit, the ITU SDG Digital Investment Framework, TOGAF, Open HIE, the WHO SMART Guidelines, the WHO MAPS toolkit and the ADB Total Cost of Ownership Tool. The 'Digital implementation investment guide (this document)' tile is highlighted spanning phases 02 to 05. This chart is the original of the versions reused in later WHO handbooks.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p019": {
+        "role": "figure",
+        "shows": [
+          "1.1.4"
+        ],
+        "saw": "Fig. 1.1.4, a flow from strategy through roadmap and architecture to applications and scale, with the DIIG's scope boxed; the crop also takes in Box 1.1.3 and the body prose above it",
+        "draft": "Fig. 1.1.4, 'Essential processes of national digital health implementations'. A left-to-right flow runs DIGITAL HEALTH STRATEGY → INVESTMENT ROADMAP → ENTERPRISE ARCHITECTURE → APPLICATION WITH INTERVENTIONS → SCALE, INSTITUTIONALIZE AND SUSTAIN, with a feedback arrow from scaling back to applications. Inputs feed in from above: national health priorities (into the strategy), the national inventory of digital assets (exchanged with the roadmap and architecture) and health-programme-specific needs. Governance mechanisms and a data use culture support from below, and the digital maturity of the country informs the strategy. A shaded region labelled DIIG encloses the architecture, applications and scaling steps — the part this guide covers. At the bottom sit the national eHealth strategy building blocks: leadership and governance; strategy and investment; legislation, policy and compliance; workforce; infrastructure; standards and interoperability; and services and applications.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p043": {
+        "role": "figure",
+        "shows": [
+          "3.1"
+        ],
+        "saw": "Fig. 3.1, three columns — Think, Rethink, Describe — for analysis, redesign and requirements; the caption itself sits outside the crop",
+        "draft": "Fig. 3.1, 'Adaptation of CRDM approach for defining health system challenges' and requirements. Three columns. BUSINESS PROCESS ANALYSIS, 'Think — how do we do our work now?': define goals and objectives, determine the health programme processes to target, map the user journey and workflow, and identify pain points. BUSINESS PROCESS REDESIGN, 'Rethink — how should we do our work now?': examine tasks and workflow, identify inefficiencies, restructure them, and select digital health interventions for the prioritized health system challenges. REQUIREMENTS DEFINITION, 'Describe — how can an information system support our work?': define the tasks for the optimized processes, describe how business rules are implemented, check that the enabling environment can support the interventions, define what the interventions should do from end-user needs, and determine whether existing ICT systems can be leveraged.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p044": {
+        "role": "figure",
+        "shows": [
+          "3.1.1.1"
+        ],
+        "saw": "Fig. 3.1.1.1, a process matrix table; the crop also takes in the section heading and body prose. NOTE: the caption says 'three example processes' but the table holds FOUR (A–D) — a discrepancy in the source, recorded rather than corrected",
+        "draft": "Fig. 3.1.1.1, 'Process matrix illustrating three example processes within a typical vaccination programme'. A table with the columns Process, Objective, Task set and Outcomes, holding four rows. A Patient management keeps a database of all newborns and their vaccination history (register, search, maintain), leading to more complete registration. B Vaccination management ensures every infant receives all scheduled doses (define the schedule, plan, send reminders, register vaccinations, monitor coverage), leading to more timely vaccination and higher coverage. C Stock management keeps vaccines available while minimizing wastage (order, receive, store, count, monitor balances and expiry), leading to higher availability and lower wastage. D Service delivery ensures quality vaccination services (counsel, diagnose, dispense, refer, update the record, schedule the next visit), leading to correct protocol, timelier vaccinations and better documentation.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p057": {
+        "role": "figure",
+        "shows": [
+          "4.1"
+        ],
+        "saw": "Fig. 4.1, the Think/Rethink/Describe chart of Fig. 3.1 with the redesign and requirements columns boxed as 'Chapter 4'; the caption sits outside the crop",
+        "draft": "Fig. 4.1, 'Redesigning health programme processes'. It repeats the three-column chart of Fig. 3.1: business process analysis ('Think — how do we do our work now?'), business process redesign ('Rethink — how should we do our work now?') and requirements definition ('Describe — how can an information system support our work?'), each with its tasks. Here the redesign and requirements columns are boxed together under the label 'Chapter 4', marking the part of the approach the chapter covers.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p064": {
+        "role": "figure",
+        "shows": [
+          "4.2.1"
+        ],
+        "saw": "Fig. 4.2.1, the eHealth building blocks grouped into enabling and ICT environments, each with its contributions",
+        "draft": "Fig. 4.2.1, 'Roles and contributions of component “building blocks”' to a national eHealth environment. Two groups of building blocks, each block paired with its contributions. ENABLING ENVIRONMENT: leadership, governance and multisector engagement (direct and coordinate eHealth nationally, align with health goals, support change); strategy and investment (a responsive national strategy and plan, with financing aligned to priorities); legislation, policy and compliance (national policies and a legal and enforcement environment that builds trust); workforce (eHealth knowledge and skills, networks, and education and training programmes); and standards and interoperability (consistent, accurate collection and exchange of health information). ICT ENVIRONMENT: infrastructure (networks, core services and applications for information exchange across boundaries) and services and applications (the means of delivering health content and managing information, for the public, patients, providers and others).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p073": {
+        "role": "figure",
+        "shows": [
+          "4.5.1"
+        ],
+        "saw": "Fig. 4.5.1, a five-row checklist of design considerations, each with its guiding questions; the caption sits outside the crop",
+        "draft": "Fig. 4.5.1, 'Considerations for designing a digital health enterprise'. A checklist of five ticked considerations, each with guiding questions. Identified pain points and health system challenges: what challenges did the stakeholders identify, and are digital interventions appropriate or should non-digital approaches also be considered? Evidence base and experience with the digital health intervention(s): has it been shown to address the challenges, will more than one be needed, and has it been tested at the necessary scale? Enabling environment: can the enabling and ICT environment support it, and what precautions are needed (see Chapter 5)? Requirements: how well does the enterprise meet user needs and stakeholder expectations, and does it fit the existing culture, language and workflows? Linkages to other ICT enterprises: are other interventions being implemented in the context, and can they be leveraged?",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p078": {
+        "role": "figure",
+        "shows": [
+          "5.1"
+        ],
+        "saw": "Fig. 5.1 — health content plus interventions giving applications, resting on the seven building blocks — and the crop also takes in body prose and the top of Table 5.2, which is drawn in vector beneath it",
+        "draft": "Fig. 5.1, 'Essential components of a digital health implementation'. Across the top: HEALTH CONTENT (information aligned with recommended health practices) + DIGITAL HEALTH INTERVENTIONS (discrete functions of digital technology for health-sector objectives) → DIGITAL APPLICATIONS (software and communication channels that deliver them, supported by shared services). Dotted lines tie this to the SERVICES & APPLICATIONS block of a foundational layer, 'ICT and Enabling Environment', made of the building blocks: leadership and governance across the top, above strategy and investment; services and applications; standards and interoperability; infrastructure; legislation, policy and compliance; and workforce.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p101": {
+        "role": "figure",
+        "shows": [
+          "6.3.2"
+        ],
+        "saw": "Fig. 6.3.2, the OpenHIE layered architecture with a numbered ten-item legend; the crop also takes in Box 6.3.1 above it",
+        "draft": "Fig. 6.3.2, 'OpenHIE architectural diagram illustrating mechanisms for interoperability across different applications'. Within a DIGITAL HEALTH PLATFORM, the OpenHIE component layer holds business domain services — (1) logistics management information system, (2) shared health record and (3) health management information system — and registry services — (4) terminology services, (5) client registry, (6) facility registry, (7) health worker registry and (8) product registry. Beneath them, (9) the interoperability services layer provides authentication, an interlinking service and entity mapping. Below the platform sit (10) point-of-service applications: mobile system, electronic medical record, health management information system, lab, pharmacy and logistics management information system. A legend defines each numbered component — for example, that the interoperability layer receives all communications from external services and orchestrates data exchange with the component layer. Adapted from OpenHIE architecture v2, 2019.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p105": {
+        "role": "figure",
+        "shows": [
+          "7.1.1"
+        ],
+        "saw": "Fig. 7.1.1, five nested implementation phases with an ongoing cycle around them; the caption sits outside the crop",
+        "draft": "Fig. 7.1.1, 'Phases of implementation'. Five phases run left to right in nested shaded regions: DEVELOPMENT & SETUP → DEPLOYMENT → INTEGRATION & INTEROPERABILITY → SCALE → SUSTAINED OPERATIONS. Each region encloses the earlier phases, so each phase builds on those before it. A dashed loop labelled ONGOING/ALL PHASES circles the whole, marking activities that continue across every phase.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p115": {
+        "role": "figure",
+        "shows": [
+          "8.1"
+        ],
+        "saw": "Fig. 8.1, the seven building blocks inside a monitoring-and-evaluation / adaptive-management cycle; the caption sits outside the crop",
+        "draft": "Fig. 8.1, 'M&E and adaptive management as continual considerations' across the building blocks. The seven foundational building blocks — leadership and governance across the top, above strategy and investment; services and applications; standards and interoperability; infrastructure; legislation, policy and compliance; and workforce — sit inside a dashed cycle. 'Monitoring and evaluation' runs along the top and 'Adaptive Management' along the bottom, with arrows marking a continuous loop between them.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p131": {
+        "role": "decorative",
+        "saw": "the Chapter 09 opener: a title banner, an introductory panel and the page-edge chapter navigation tabs; this page's 'Fig. 9.1' is a cross-reference in the introduction, and the figure itself is on page 132",
+        "draft": "Chapter 09 opening page, 'Value proposition and next steps': a title banner with the chapter icon, an introductory panel, and the chapter navigation tabs down the right page edge.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p132": {
+        "role": "figure",
+        "shows": [
+          "9.1"
+        ],
+        "saw": "Fig. 9.1 (landscape page), a grid of nine chapter tiles listing the outputs each contributes. NOTE: under 08 Monitoring the third output is numbered '7.2 Adaptive Management' — presumably 8.3; recorded as printed, not corrected",
+        "draft": "Fig. 9.1, 'Summary of outputs towards a costed investment plan'. A grid of nine tiles, one per component, each tagged with its chapter and listing its ticked outputs. 01 Actors (team, stakeholders, beneficiaries) and 02 Priorities (within the health programme and system, within the digital health strategy), both from chapter 2. 03 Programme context (personas and organigram, pain points, health system challenges and needs, current-state workflow diagrams). 04 Digital context (prioritized digital interventions, maturity and readiness, functional requirements, future-state workflow, digital inventory). 06 Architecture (current and future architecture, standards and interoperability, point-of-service applications, shared services), with a tile for common services across sectors. 05 Implementation (implementation plan, enabling environment). 07 Budget (phases and costs, financing). 08 Monitoring (logic model, monitoring and evaluation, adaptive management). 09 Value proposition.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p133": {
+        "role": "figure",
+        "shows": [
+          "9.2"
+        ],
+        "saw": "Fig. 9.2, four interlocking puzzle pieces for policy, technical, institutional and financial sustainability; the crop holds the whole BID Initiative case-study panel around it",
+        "draft": "Fig. 9.2, 'Critical sustainability elements'. Four interlocking puzzle pieces, each annotated. POLICY: understand the country's policy environment, including gaps in existing policies and strategies. TECHNICAL: map government capacity to manage solutions over the long term, and develop a capacity-building plan for human skills and infrastructure. INSTITUTIONAL: identify the level of engagement and participation across the health system in the design and adaptation of solutions. FINANCIAL: ensure the cost of maintaining and replacing solutions is feasible for the government and built into the right funding mechanism. It appears inside the 'BID Initiative: Sustainability' case study, adapted from the BID Initiative briefs.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      }
+    },
+    "9789240093362-eng": {
+      "vfig-p014": {
+        "role": "decorative",
+        "saw": "only the page-edge chapter navigation tabs; this page carries a cross-reference to Fig. 1, not the figure",
+        "draft": "Chapter navigation tabs running down the page edge: Introduction (highlighted), How to use this handbook, User requirements, Design and adaptation, Training, testing and roll-out, Scale-up, Annexes.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p015": {
+        "role": "figure",
+        "shows": [
+          "1"
+        ],
+        "saw": "Fig. 1, a staircase diagram above a four-column comparison table",
+        "draft": "Fig. 1, 'From paper to digital: a transformational journey'. The upper half is a rising staircase of four stages, each an icon and a heading — PAPER, DIGITIZATION, DIGITALIZATION, DIGITAL TRANSFORMATION — joined by arrows labelled 'From paper to digital', 'Improve existing processes' and 'Fundamentally change healthcare delivery'. A vertical axis, 'Data use', runs from 'Limited data use with little to no interoperability standards adopted' at the bottom to 'Greater data use with greater adoption of interoperability standards' at the top; a horizontal arrow beneath is labelled 'Process Optimization'. The lower half is a table with one column per stage (Paper, Digitization, Digitalization, Digital transformation) and five rows: Definition, Examples, Benefits, Challenges and Dependencies. For example, Paper is defined as manually capturing and processing data in paper formats, with examples such as paper register books and tally sheets; Digital transformation is defined as digitally optimizing and driving systems-level change through innovation, analytics and feedback mechanisms, with examples such as algorithms for personalized treatment plans.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p017": {
+        "role": "figure",
+        "shows": [
+          "3"
+        ],
+        "saw": "Fig. 3, four nested rounded layers around the care seeker with digital-solution icons in each",
+        "draft": "Fig. 3, 'Delivering an integrated ecosystem of information systems and digital health solutions supports the PHC approach'. Four nested layers surround a figure labelled 'Centered around the needs of the care seeker'. From innermost to outermost: COMMUNITY LINKAGES AND ENGAGEMENT (community health workers, care seekers) holds patient portal, targeted messaging, CHW job aid, self-monitoring devices and capacity building; ORGANIZATION AND MANAGEMENT (primary care providers) holds clinical job aids, AI risk assessment, referral and coordination, and an electronic health record; SELECTION, DESIGN AND PLANNING OF SERVICES (health system decision makers) holds a dashboard and management information systems; DEFINING A TARGET POPULATION AND UNDERSTANDING THEIR NEEDS (policy makers) holds civil registration and vital statistics, and disease surveillance. Each solution carries a one-line purpose. A note says solutions can span more than one layer and are allocated to one only for illustration.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p019": {
+        "role": "figure",
+        "shows": [
+          "4"
+        ],
+        "saw": "Fig. 4, a five-tier stack of data uses with a person at the base",
+        "draft": "Fig. 4, 'The added value of “collect once, use for many purposes” principle'. Five stacked tiers rise from a person icon at the base. Bottom to top: Primary, individual data collection (clinical, lab, pharmacy, registries and ID data); Person-centred health service delivery (clinical decision support, scheduling, case management); Programme management (operational decision support, quality improvement, facility management, process optimization); Health system monitoring (national strategic plans and policies, national indicators, accountability); and Global monitoring (accountability towards the SDGs). A side bar groups the lower two tiers as 'Primary data use' and the upper three as 'Secondary data use'.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p020": {
+        "role": "figure",
+        "shows": [
+          "5"
+        ],
+        "saw": "Fig. 5, five knowledge layers L1–L5 flowing through localisation to country adaptation",
+        "draft": "Fig. 5, 'WHO SMART Guidelines approach'. A 'Research and evidence base' bar feeds five knowledge layers, each with its product: L1 Narrative (enhanced guidelines), L2 Operational (digital adaptation kits), L3 Machine readable (machine-readable recommendations), L4 Executable (reference software) and L5 Dynamic (precision health models). Each layer passes through a 'Localisation' bar into a matching country-implementation adaptation: national policies and guidelines (L1), localised requirements (L2), localised machine-readable code and standards (L3), localised static digital services (L4) and dynamic digital applications optimised for local outcomes (L5). All five feed 'Data, evidence, and impact', which loops back to the evidence base as 'Evidence from digital implementations'.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p024": {
+        "role": "figure",
+        "shows": [
+          "6"
+        ],
+        "saw": "Fig. 6, seven colour-coded phases with steps and a grid of linked resources",
+        "draft": "Fig. 6, 'Planning and implementing a digital health enterprise: phases, steps and resources'. Seven numbered phases run down the left: 01 Assessing the current state and enabling environment; 02 Establishing a shared understanding and strategic planning; 03 Defining the future state; 04 Planning the enterprise architecture; 05 Determining health content requirements; 06 M&E of digital health implementations and fostering data use; 07 Implementing, maintaining and scaling. Each phase lists its steps, for example 'Develop a national digital health strategy' in phase 02 and 'Identify validated health content appropriate for the implementation context' in phase 05. To the right, resource tiles are placed against the phase(s) they serve, some spanning several phases, and each is marked as a PDF for print or an online environment. They include the WHO–ITU national eHealth strategy toolkit, the Digital implementation investment guide (DIIG), the WHO SMART guidelines with digital adaptation kits and machine-readable recommendations, TOGAF, Open HIE, ICD-11, HL7 FHIR, LOINC, the WHO MAPS toolkit and Ethics and governance of artificial intelligence for health. The tile 'WHO handbook for digitalizing primary health care (this document)' sits in phase 05.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p026": {
+        "role": "figure",
+        "shows": [
+          "7"
+        ],
+        "saw": "Fig. 7, three successive iteration loops along a release arrow",
+        "draft": "Fig. 7, 'Iterative and agile approach'. Three circular loops sit along a horizontal timeline arrow: Minimum viable product (MVP), then VERSION 1, then VERSION 2. Each loop has the same four stages: understand and prioritize user requirements, design (adapt design in later versions), build and test, and train users. Milestones along the arrow read: determine that a PCPOSS is an appropriate health intervention; repeat the previous loop until meeting MVP specs to deploy; deploy and roll out; gather and manage user feedback; deploy and roll out; gather and manage user feedback; deploy, roll out and scale; and iterations for continuous improvement.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p032": {
+        "role": "figure",
+        "shows": [
+          "8"
+        ],
+        "saw": "Fig. 8, an inverted pyramid of interview stages from broad to narrow with example prompts",
+        "draft": "Fig. 8, 'Example prompts and questions for starting broad and narrowing down'. An inverted pyramid of four bands runs from BROAD (start here) at the top to NARROW (end here) at the tip: TRUST BUMP, BIRD'S EYE VIEW, MAGNIFYING GLASS and MICRO-SCOPE. Beside each band are example interview prompts for health workers: intent and introductions ('Tell me about your background… as a health worker'); 'Tell me about the last time you… registered a new client / provided antenatal care / provided a routine immunization to a child'; 'Can you tell me more… about how you check for malaria?' and 'Can you show me how you… would fill out a paper register now?'; and the 5 Whys ('Why do you… wait until the end of the day to fill out your records?'), continued until a root cause is revealed. It closes with 'Express gratitude for health worker's time'. Adapted from Tran, 2018, under CC BY-NC-SA 4.0.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p035": {
+        "role": "figure",
+        "shows": [
+          "9"
+        ],
+        "saw": "Fig. 9, a five-column table of family-planning business processes A–C",
+        "draft": "Fig. 9, 'Example business process matrix from family planning DAK'. A table with the columns Process name, Process ID, Personas, Objectives and Task set, the header row defining each column. Three processes follow. A Registration (FP.A), with client and clerk or health-care provider, ensures the client is in the system and queued for counselling; its tasks are to search for, review and update, or create a client record. B Family planning counselling (FP.B), with client and health-care provider, discusses methods and selects one the client is medically eligible for; its tasks run from taking a history and a risk assessment through checking medical eligibility criteria and stock to referral if the facility cannot provide the method. C Service provision (FP.C) provides the chosen method, covering informed consent, start timing, dual protection and follow-up scheduling. Source: WHO (30).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p038": {
+        "role": "figure",
+        "shows": [
+          "10",
+          "11"
+        ],
+        "saw": "TWO figures on one page — the Fig. 10 swimlane workflow and the Fig. 11 annotation panel — and the crop also takes in the body prose and a TIP box between and below them, because their drawn frames span the page",
+        "draft": "Fig. 10, 'Workflow A: Registration business process', is a BPMN-style swimlane diagram. The pool is 'Health facility', with lanes Client and Health worker or Clerk. The client arrives at the facility (1), then rapid assessment and management (2) leads to 'Urgent referral necessary?' (3); Yes ends in C. ANC referral. No leads to gather client details (4), then search for client (5) and 'Match found?' (6). No leads to create client record (7); Yes leads to a grouped subprocess 8, Validate client details: review sociodemographic data with the client (8.1), 'Update needed?' (8.2), then update client details (8.3). Both paths reach check-in client (9), ending in B. ANC contact. Fig. 11, 'Notes and annotations for Workflow A: Registration business process', is a three-column text panel that annotates each numbered activity of Fig. 10 — for example, that rapid assessment is outside the DAK's scope, and the identifiers a client may present when searched for. Both cite WHO (29).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p042": {
+        "role": "figure",
+        "shows": [
+          "12"
+        ],
+        "saw": "Fig. 12, a three-question flow with explanation and action columns",
+        "draft": "Fig. 12, 'Is each and every data element collected truly needed?'. Three rows, each reading Question → Explanation → Action to be taken, with arrows chaining each row's action into the next question. 1. Is the data element duplicated? Duplicates may share a definition under different labels, or be collected on several forms; reconcile them into one element collected once. 2. Is the data element needed for service delivery or accountability? Ask whether it supports clinical decision-making, mandatory reporting or accountability; if not, consider removing it to reduce the data-entry burden on health workers. 3. Is the data element orphaned? Orphaned data is hard to use without its context; link it to its primary data elements (anything not needed will already have gone at question 2).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p045": {
+        "role": "figure",
+        "shows": [
+          "13"
+        ],
+        "saw": "Fig. 13's table; the crop also takes in the surrounding body prose. The page's other caption candidates — 'Fig. 2.', 'Figure 8.6.', 'Fig. 8.4.', 'Fig. 2.7' — are citations INSIDE the table to figures of other WHO guidelines, not figures of this document",
+        "draft": "Fig. 13, 'Example decision-support logic matrix from DAK for HIV'. A table with four columns: activity ID and name, decision table ID, decision table description, and reference/source. It has six rows, HIV.DT.01 to HIV.DT.06: check for serious illness; test for HIV using the testing algorithm; determine retest recommendation; PrEP eligibility check; determine PEP or PrEP regimen; and screen for TB. Each row cites the WHO consolidated guideline section it is drawn from — for example the 2019 consolidated guidelines on HIV testing services, and its figures on universal HIV testing and early infant diagnosis. Source: WHO (31).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p046": {
+        "role": "figure",
+        "shows": [
+          "14"
+        ],
+        "saw": "Fig. 14, a branching decision tree from antenatal registration on HIV status and risk",
+        "draft": "Fig. 14, 'Decision-support logic for a clinical care pathway in the form of a decision tree'. It starts at 'Antenatal registration — provider-initiated HIV testing & counselling' and splits on the result. HIV-positive leads to PMTCT, treatment, support and an offer of partner notification, then partner testing. Partner HIV-negative leads to reassessing the woman's risk and offering partner referral for VMMC. Partner not tested or HIV-positive leads to offering the partner HIV treatment (if positive), condom promotion and risk-reduction counselling. HIV-negative leads to standard post-test guidance and counselling on prevention, then two branches: offer partner testing and a risk assessment (which feeds partner testing), and a risk assessment using a tool. That tool separates a woman at substantial risk of HIV acquisition from one who is not. At substantial risk, she is offered comprehensive prevention options — STI screening and treatment, condom promotion, risk-reduction counselling, PrEP with emphasis on adherence, and follow-up ANC visits. A woman who chooses to initiate PrEP then receives clinical laboratory assessments, adherence counselling, and emphasis on follow-up visits and repeat HIV testing. Source: WHO (29).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      },
+      "vfig-p054": {
+        "role": "figure",
+        "shows": [
+          "15"
+        ],
+        "saw": "Fig. 15, three coloured phases on fidelity-versus-time axes with questions under each",
+        "draft": "Fig. 15, 'Levels of insight gained from different prototypes'. The vertical axis is level of prototype fidelity and the horizontal axis is the time required to develop the protocol. An arrow climbs through three phases: Validation, with low-fidelity prototypes (sketches, wireframes); Refinement, with moderate-fidelity prototypes (mockups); and Deployment, with higher-fidelity prototypes (clickable prototypes). Under each phase are the questions it answers. Validation asks: do users need this, and would this digital record solve their administrative reporting problems? Refinement asks: could it improve service delivery or accountability, and will users use it as intended? Deployment asks: does it have the key features, will users adopt it, and what behaviour change or roadblocks to adoption must be addressed? Adapted from Norman Tran/Stanford school (35).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      }
+    },
+    "9789241511766-eng": {
+      "vfig-p128": {
+        "role": "decorative",
+        "saw": "two boxed text callouts (mERA checklist items 12 and 13 with examples) — Figure 6.1 on this page is RASTER, already placed as img-p128-1 and described there, so this render is not that figure",
+        "draft": "Two boxed callouts: 'Item 12. Contextual adaptability', with an example about mobile-phone surveys in rural areas, and 'Item 13. Replicability', with an example noting that the CommCare app by Dimagi was iteratively modified into Mobilize.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude",
+          "model": "not-disclosed",
+          "session": "https://claude.ai/code/session_012vJhm2nLrDMYghqFftZCQZ"
+        },
+        "inspected_at": "2026-10-03"
+      }
+    },
+    "9789241549912-eng": {
+      "img-p001-1": {
+        "role": "decorative",
+        "saw": "an ISBN barcode reading 9 789241 549912, judged from the embedded JPEG (the PNG was not written: pdf-images.py could not encode its Separation(DeviceCMYK,Black) colourspace). PDF page 1 is a cover spread whose crop box shows only the front cover; the barcode is placed at x = -188, outside that crop box, i.e. on the back-cover half",
+        "draft": "The back-cover ISBN barcode for 9789241549912."
+      },
+      "img-p172-1": {
+        "role": "decorative",
+        "saw": "an ISBN barcode reading 9 789241 549912 on the back cover, judged from the embedded JPEG (the PNG was not written: pdf-images.py could not encode its Separation(DeviceCMYK,Black) colourspace)",
+        "draft": "The back-cover ISBN barcode for 9789241549912."
+      }
+    },
+    "9789241549912-webannexes-eng": {
+      "img-p024-1": {
+        "role": "decorative",
+        "saw": "an ISBN barcode reading 9 789241 549912 on the last page",
+        "draft": "The back-cover ISBN barcode for 9789241549912."
+      }
+    },
+    "9789241549912-websupplement-eng": {
+      "img-p129-1": {
+        "role": "decorative",
+        "saw": "an ISBN barcode reading 9 789241 549912 on the last page",
+        "draft": "The back-cover ISBN barcode for 9789241549912."
+      }
+    },
+    "9789240016514-eng": {
+      "img-p001-1": {
+        "role": "decorative",
+        "saw": "the cover photograph of a vaccination session outdoors",
+        "draft": "A photograph of an outdoor vaccination session. A masked health worker in a white coat and gloves leans over to give an injection to an infant held on the lap of a young woman seated on a wooden chair. Other people stand in the background beside a table with papers on it, under a thatched shelter. Illustrative; it carries no information the text does not."
+      },
+      "img-p001-2": {
+        "role": "logo",
+        "saw": "the WHO emblem and name, white on transparent",
+        "draft": "The World Health Organization logo in white: the WHO emblem (a staff with serpent over a globe, framed by olive branches) beside the words World Health Organization."
+      },
+      "img-p003-1": {
+        "role": "logo",
+        "saw": "the WHO emblem and name, black on white",
+        "draft": "The World Health Organization logo in black: the WHO emblem (a staff with serpent over a globe, framed by olive branches) beside the words World Health Organization."
+      },
+      "img-p011-1": {
+        "role": "figure",
+        "saw": "Figure 1, a pie of five segments around a central circle",
+        "draft": "Figure 1, 'Elements of a strong catch-up vaccination strategy'. A circle divided into five coloured segments around a central circle labelled 'Catch-up vaccination policy and schedule'. The segments, clockwise from the top right, are: vaccines and supplies for catch-up vaccination; health worker knowledge and practice; recording and reporting practices, information systems and tools; communications and community engagement to build support; and strategies for catch-up vaccination."
+      },
+      "img-p034-1": {
+        "role": "figure",
+        "saw": "a table of minimum intervals between DTP-containing doses by age group",
+        "draft": "A table headed 'Minimum interval from the most recent dose administered'. Rows give the age-appropriate vaccine: 1-4 years, DTwP, DTaP or DT; 4-7 years, DTwP, DTaP, Td or DT; over 7 years, Td or TdaP. Columns give the dose, with the same interval for all three rows: 1st dose as early as possible; 2nd dose at least 4 weeks after the 1st; 3rd dose at least 6 months after the 2nd; 4th dose at least 1 year after the 3rd; 5th dose at least 1 year after the 4th."
+      },
+      "img-p038-1": {
+        "role": "figure",
+        "saw": "an 'Instructions' panel of three steps with two cartoon children",
+        "draft": "An 'Instructions' panel of three steps for the health worker. Step 1: praise the parent or caregiver for bringing the child, and find out from the immunization record or caregiver how old the child is today and which vaccines the child has already received. Step 2: use the chart to the right to decide what to give; the child should already have received all vaccines due up to their current age, and if doses are missing it is not too late; administer the vaccines for which the child is eligible, respecting the necessary spacing. Step 3: remind the caregiver when to bring the child back for subsequent doses and emphasise the importance of completing the series. Cartoon drawings of a standing girl and a seated baby decorate the panel."
+      },
+      "img-p039-1": {
+        "role": "figure",
+        "saw": "the 'Which vaccines can be given today?' chart of vaccine columns against age rows",
+        "draft": "A chart titled 'Which vaccines can be given today?', with the line 'It is better to vaccinate late than never!'. Rows are ages (birth, 6 weeks, 10 weeks, 14 weeks, 9 months, 18 months, 2 years); coloured columns are vaccines, each starting at the age of its first dose and running downward as an arrow. HepB BD and BCG start at birth, HepB BD ending at a stop sign; OPV 1-3, PCV 1-3, Penta 1-3 and RV 1-3 at 6, 10 and 14 weeks, RV ending at a stop sign before 2 years; IPV at 14 weeks; MCV 1 at 9 months; DTP4 (or Penta4), MCV 2 and MenA at 18 months. A 'When to give' column gives the timing for each row (for example, at 10 weeks or as soon as possible thereafter, and at least 4 weeks after dose 1), and a 'When not to give' column gives the limits: HepB BD not after 6 weeks; RV1, RV2 and RV3 not after 2 years of age; later doses not before 4 weeks since the previous dose; MCV1 and MenA not before 9 months of age except where indicated. A footer says there is no need to restart a series after a long gap, and there is no upper age limit for most vaccines except rotavirus (under 2 years) and the hepatitis B birth dose (under 6 weeks)."
+      },
+      "img-p041-1": {
+        "role": "figure",
+        "saw": "a tally sheet with two age columns, 0-11 months and 12 months or older",
+        "draft": "A blank tally sheet for recording vaccinations. Header fields for date, region, district, health facility, location and service delivery strategy (fixed, outreach or mobile). Rows list antigens and items: BCG, Hep B BD, OPV 0-3, IPV, Penta 1-3, Rota 1-3, PCV 1-3, M/MR 1 and 2, DTP4/Other, vitamin A and long-lasting insecticidal net. Each row has rows of tally circles and a total for 0-11 months and for 12 months or older, and a total-vaccinated column. Cells that do not apply are shaded dark: Hep B BD and OPV 0 for 12 months or older, and M/MR 2, DTP4/Other and the net for 0-11 months. A footnote marks Rota 3, DTP4/Other and the net as depending on national health priorities and schedule of services."
+      },
+      "img-p042-1": {
+        "role": "figure",
+        "saw": "a tally sheet with three age columns, 0-11, 12-23 and 24 months or older",
+        "draft": "A blank tally sheet for recording vaccinations, the same as the previous one but with three age columns: 0-11 months, 12-23 months and 24 months or older, each with tally circles and a total, and a total-vaccinated column. Rows list BCG, Hep B BD, OPV 0-3, IPV, Penta 1-3, Rota 1-3, PCV 1-3, M/MR 1 and 2, DTP4/Other, vitamin A and long-lasting insecticidal net. Cells that do not apply are shaded dark: Hep B BD and OPV 0 for 12 months and older; Rota 1-3 for 24 months or older; M/MR 2, DTP4/Other and the net for 0-11 months. A footnote marks Rota 3, DTP4/Other and the net as depending on national health priorities and schedule of services."
+      },
+      "img-p053-1": {
+        "role": "decorative",
+        "saw": "an ISBN barcode on the back cover",
+        "draft": "The back-cover ISBN barcode for 9789240016514."
+      },
+      "vfig-p011": {
+        "role": "figure",
+        "shows": [
+          "1"
+        ],
+        "saw": "a full-page render of page 1: Section 1 introduction text above Figure 1, the five-segment catch-up strategy circle",
+        "draft": "Figure 1, 'Elements of a strong catch-up vaccination strategy', on the page that introduces Section 1, 'Principles of catch-up vaccination'. A circle of five coloured segments around a central circle, 'Catch-up vaccination policy and schedule': strategies for catch-up vaccination; vaccines and supplies for catch-up vaccination; health worker knowledge and practice; recording and reporting practices, information systems and tools; and communications and community engagement to build support. The same figure is also placed on the page as a raster image (img-p011-1)."
+      }
+    },
+    "9789240099456-eng": {
+      "img-p013-1": {
+        "role": "figure",
+        "saw": "a thumbnail of this document's own cover, set inside Fig. 1's HEALTH CONTENT box",
+        "draft": "A small image of the cover of the 'Digital adaptation kit for immunizations' (SMART Guidelines collection): a green cover with the subtitle 'Operational requirements for implementing WHO recommendations in digital systems', line icons of vaccine vials, a calendar, a baby, a laptop and a person at a board, and the WHO logo on a dark band at the bottom. In Fig. 1 it stands for the health content that the kit represents."
+      },
+      "img-p015-1": {
+        "role": "figure",
+        "saw": "the cover of the WHO guideline 'Recommendations on digital interventions for health system strengthening'",
+        "draft": "The cover of the WHO guideline 'Recommendations on digital interventions for health system strengthening': an illustration of two health workers at a desk with a computer, other people seated in a waiting area, and a hand holding a tablet, with the WHO logo at the lower left."
+      },
+      "img-p017-1": {
+        "role": "figure",
+        "saw": "a thumbnail of this document's own cover, set in Fig. 2's L2 Operational row",
+        "draft": "A small image of the green cover of the 'Digital adaptation kit for immunizations', used in Fig. 2 to illustrate the L2 Operational layer (digital adaptation kits)."
+      },
+      "img-p017-2": {
+        "role": "figure",
+        "saw": "a thumbnail of a WHO position-paper summary table, title legible only when enlarged",
+        "draft": "A small image of a blue-framed table titled 'Table 2: Summary of WHO Position Papers - Recommended Routine Immunizations for Children', one of the documents stacked in Fig. 2's L1 Narrative row. Its cell text is too small to read at this size."
+      },
+      "img-p017-3": {
+        "role": "figure",
+        "saw": "a thumbnail of a WHO position-paper summary table, title legible only when enlarged",
+        "draft": "A small image of a blue-framed table titled 'Table 1: Summary of WHO Position Papers - Recommendations for Routine Immunization', one of the documents stacked in Fig. 2's L1 Narrative row. Its cell text is too small to read at this size."
+      },
+      "img-p017-4": {
+        "role": "figure",
+        "saw": "the cover of 'Guidance for immunization programme managers'",
+        "draft": "The cover of 'Analysis and use of health facility data: Guidance for immunization programme managers', working document, February 2018: a blue panel with white line drawings of a vaccine vial and a syringe, and the WHO logo. In Fig. 2 it sits with the L1 Narrative guidance."
+      },
+      "img-p027-1": {
+        "role": "figure",
+        "saw": "a thumbnail of WHO position-paper summary Table 1",
+        "draft": "A thumbnail of 'Table 1: Summary of WHO Position Papers - Recommendations for Routine Immunization', a blue-framed table with columns for antigen, children, adolescents, adults and considerations. Listed among the WHO guidance this kit draws on; the accompanying text describes it as summarising recommended routine immunizations for all age groups."
+      },
+      "img-p027-2": {
+        "role": "figure",
+        "saw": "a thumbnail of WHO position-paper summary Table 2",
+        "draft": "A thumbnail of 'Table 2: Summary of WHO Position Papers - Recommended Routine Immunizations for Children', a blue-framed table with columns for antigen, age of first dose, doses in primary series, intervals between doses, booster dose and considerations. Listed among the WHO guidance this kit draws on."
+      },
+      "img-p027-3": {
+        "role": "figure",
+        "saw": "the cover of 'Digital Documentation of COVID-19 Certificates: Vaccination Status'",
+        "draft": "The cover of 'Digital Documentation of COVID-19 Certificates: Vaccination Status - Technical specifications and implementation guidance', dated 27 August 2021: a dark blue cover with an illustration of a circuit board joining vaccine vials, a syringe, a virus particle, a mobile phone and a laptop, and the WHO logo. Listed among the WHO guidance this kit draws on."
+      },
+      "img-p027-4": {
+        "role": "figure",
+        "saw": "a thumbnail of WHO position-paper summary Table 3",
+        "draft": "A thumbnail of 'Table 3: Recommendations for Interrupted or Delayed Routine Immunization - Summary of WHO Position Papers', a blue-framed table with columns including age of first dose, doses in the primary series, interrupted primary series, doses for those starting late and booster. Listed among the WHO guidance this kit draws on."
+      },
+      "img-p027-5": {
+        "role": "figure",
+        "saw": "a thumbnail of WHO position-paper summary Table 4",
+        "draft": "A thumbnail of 'Table 4: Summary of WHO Position Papers - Immunization of Health Care Workers', a blue-framed table listing antigens with the recommendation for health care workers beside each. Listed among the WHO guidance this kit draws on."
+      },
+      "img-p027-6": {
+        "role": "figure",
+        "saw": "the cover of 'Guidance for immunization programme managers'",
+        "draft": "The cover of 'Analysis and use of health facility data: Guidance for immunization programme managers', working document, February 2018, with white line drawings of a vaccine vial and a syringe on a blue panel. Listed among the WHO guidance this kit draws on."
+      },
+      "img-p027-7": {
+        "role": "figure",
+        "saw": "a screenshot of the WHO/UNICEF Joint Reporting Form instructions",
+        "draft": "A screenshot of the opening of the WHO/UNICEF Joint Reporting Form on Immunization: 'Annual Report on Immunization Performance for the Period January-December 2016 from Ministry of Health <<Country Name>> to WHO/UNICEF'. Instructions say to enter NR if a question is not relevant, ND if no data are available, and 0 if the number of cases is zero; that blue cells provide drop-down lists; and that earlier data are available from WHO and UNICEF web addresses. Listed among the WHO guidance this kit draws on as a sample of the joint report form."
+      },
+      "img-p027-8": {
+        "role": "figure",
+        "saw": "a screenshot of the WHO Immunization dashboard",
+        "draft": "A screenshot of the WHO 'Immunization dashboard - Global' web page, headed 'Reported cases of vaccine-preventable diseases (VPDs) globally', with small tiles giving a case count and trend chart for diseases including diphtheria, Japanese encephalitis, measles, mumps, neonatal tetanus, pertussis, rubella and total tetanus. The figures are too small to read reliably. Listed among the WHO guidance this kit draws on as the WHO Immunization Data Portal."
+      },
+      "img-p027-9": {
+        "role": "figure",
+        "saw": "the cover of 'Leave no one behind: guidance for planning and implementing catch-up vaccination'",
+        "draft": "The cover of 'Leave no one behind: guidance for planning and implementing catch-up vaccination': a photograph of a health worker vaccinating an infant held by a seated woman, under a dark blue title band, with the WHO logo. Listed among the WHO guidance this kit draws on."
+      },
+      "img-p027-10": {
+        "role": "figure",
+        "saw": "the cover of 'Electronic Immunization Registry: Practical Considerations'",
+        "draft": "The cover of 'Electronic Immunization Registry: Practical Considerations for Planning, Development, Implementation and Evaluation', with an illustration of a laptop screen showing two vaccine vials and check marks, and the Pan American Health Organization and WHO logos. Listed among the WHO guidance this kit draws on."
+      },
+      "img-p027-11": {
+        "role": "figure",
+        "saw": "the cover of 'Monitoring Metrics Related to the Global Covid-19 Vaccination Strategy in a Changing World'",
+        "draft": "The cover of 'Monitoring Metrics Related to the Global Covid-19 Vaccination Strategy in a Changing World', July 2022 update: a blue cover with line drawings of a virus particle and a syringe, and the WHO logo. Listed among the WHO guidance this kit draws on."
+      },
+      "img-p100-1": {
+        "role": "decorative",
+        "saw": "an ISBN barcode on the back cover",
+        "draft": "The back-cover ISBN barcode for 9789240099456."
+      },
+      "vfig-p013": {
+        "role": "figure",
+        "shows": [
+          "1"
+        ],
+        "saw": "Fig. 1, health content plus digital health interventions plus digital applications, above a foundational-layer grid",
+        "draft": "Fig. 1, 'Digital adaptation kits representing health content within broader needs for digital health implementations'. Three boxes are joined by plus signs: HEALTH CONTENT (information aligned with recommended health practices or validated health content), shown with the cover of this kit; DIGITAL HEALTH INTERVENTIONS (a discrete function of digital technology to achieve health-sector objectives); and DIGITAL APPLICATIONS (ICT systems and communication channels that facilitate delivery of the interventions and content). An orange frame encloses the three, and dotted lines run from it to the highlighted 'Services and applications' cell of a Foundational Layer (ICT and enabling environment) below, whose other cells are leadership and governance, strategy and investment, standards and interoperability, infrastructure, legislation, policy and compliance, and workforce. Source: adapted from reference 14."
+      },
+      "vfig-p017": {
+        "role": "figure",
+        "shows": [
+          "2"
+        ],
+        "saw": "Fig. 2, the five SMART layers L1-L5 on the left, each feeding a country L1-L5 adaptation on the right through a localisation bar",
+        "draft": "Fig. 2, 'Digital adaptation kits within the SMART guideline continuum'. Five rows: L1 Narrative (narrative guidelines: evidence-based recommendations with implementation and data guidance); L2 Operational (digital adaptation kits: software-neutral documentation of operational and functional requirements such as personas, workflows, metadata, algorithms, minimum data sets and priority metrics); L3 Machine readable (structured software-neutral specifications, code, terminology and interoperability standards); L4 Executable (reference software that executes static algorithms and interoperable components); and L5 Dynamic (precision health models trained and optimised with advanced analytics). Each row passes through a vertical 'Localisation' bar to its country-implementation adaptation: national policies and procedures; localised requirements; localised machine-readable code and standards; localised static digital services within a digital health enterprise; and dynamic applications optimised for local outcomes. A blue arrow beside them runs from 'Paper systems' at the top to 'Smart digital systems' at the bottom. Source: adapted from reference 18."
+      },
+      "vfig-p024": {
+        "role": "figure",
+        "shows": [
+          "3"
+        ],
+        "saw": "Fig. 3, seven coloured phases with their steps, beside a grid of resource tiles",
+        "draft": "Fig. 3, 'Planning and implementing a digital health enterprise: phases, steps and resources'. Seven numbered phases, each with its steps: 01 assessing the current state and enabling environment; 02 establishing a shared understanding and strategic planning; 03 defining the future state; 04 planning the enterprise architecture; 05 determining health content requirements; 06 M&E of digital health implementations and fostering data use; 07 implementing, maintaining and scaling. Beside them a grid of tiles names resources for each phase, marked as PDF for print or online environment; among them the WHO-ITU national eHealth strategy toolkit, the Digital implementation investment guide (DIIG), WHO guideline recommendations on digital interventions, Open Health Information Exchange, TOGAF, and a highlighted tile 'WHO SMART guidelines: digital adaptation kits (this document) and machine-readable recommendations' in phase 05. Source: adapted from WHO (reference 1)."
+      },
+      "vfig-p040": {
+        "role": "figure",
+        "saw": "Fig. 4, a two-lane process overview of workflows A-I",
+        "draft": "Fig. 4, 'Overview of key immunization processes'. Two swimlanes. Vaccination location management holds A. vaccination location registration, G. resolve duplicate client records, H. resolve duplicate vaccination events, I. report generation, and a grey 'Supply chain management' box not covered by this kit. Vaccination location runs from Start through B. plan service delivery into a Service Delivery area: C. client registration, D. administer vaccine, then 'All vaccine series complete?'; yes ends the process, no leads to E. client reminder and 'Overdue for a dose?', where yes leads to F. defaulter tracing and no to the end. Each workflow box carries a subprocess marker."
+      },
+      "vfig-p042": {
+        "role": "decorative",
+        "saw": "a 33-pixel-wide strip holding only the page-edge section tabs; the render does NOT include Fig. 5, which lies outside the crop",
+        "draft": "A narrow vertical strip of the page edge: the document's navigation tabs reading Recommendations, Personas, Scenarios, Workflows (highlighted), Data, Decisions, Indicators and Requirements. It does not show the figure on this page."
+      },
+      "vfig-p046": {
+        "role": "figure",
+        "saw": "Fig. 6, a single-lane process for planning service delivery",
+        "draft": "Fig. 6, 'Workflow B: plan service delivery business process', in one lane (vaccination location, health worker). From Start: 1. review past vaccination records to estimate vaccines needed; 2. record details on planning sheet; 3. sufficient stock in immediate location? If no, 4. order additional stock (a grey subprocess not covered by this kit); then 5. get needed stock; 6. record stock taken; 7. assemble all needed materials for the immunization session; End."
+      },
+      "vfig-p048": {
+        "role": "decorative",
+        "saw": "a 33-pixel-wide strip holding only the page-edge section tabs, byte-identical to vfig-p042; the render does NOT include Fig. 7",
+        "draft": "A narrow vertical strip of the page edge: the document's navigation tabs reading Recommendations, Personas, Scenarios, Workflows (highlighted), Data, Decisions, Indicators and Requirements. It does not show the figure on this page."
+      },
+      "vfig-p052": {
+        "role": "decorative",
+        "saw": "a 33-pixel-wide strip holding only the page-edge section tabs, byte-identical to vfig-p042; the render does NOT include Fig. 8",
+        "draft": "A narrow vertical strip of the page edge: the document's navigation tabs reading Recommendations, Personas, Scenarios, Workflows (highlighted), Data, Decisions, Indicators and Requirements. It does not show the figure on this page."
+      },
+      "vfig-p058": {
+        "role": "figure",
+        "saw": "Fig. 9, a two-lane reminder process between the immunization registry and the health worker",
+        "draft": "Fig. 9, 'Workflow E: client reminder business process'. Two lanes: electronic immunization registry, and vaccination location health worker. From Start the health worker does 1. define/evaluate criteria and 2. select notification method; the registry does 3. generate list of clients and 4. send notifications. Then 5. client shows up for vaccination? Yes leads to D. administer vaccine; no leads to 6. is another reminder needed? Yes loops back to step 1; no leads to F. defaulter tracing."
+      },
+      "vfig-p060": {
+        "role": "decorative",
+        "saw": "a 33-pixel-wide strip holding only the page-edge section tabs, byte-identical to vfig-p042; the render does NOT include Fig. 10",
+        "draft": "A narrow vertical strip of the page edge: the document's navigation tabs reading Recommendations, Personas, Scenarios, Workflows (highlighted), Data, Decisions, Indicators and Requirements. It does not show the figure on this page."
+      },
+      "vfig-p064": {
+        "role": "figure",
+        "saw": "Fig. 11, a two-lane process for resolving duplicate client records",
+        "draft": "Fig. 11, 'Workflow G: resolve duplicate client records business process'. Two lanes: PCPOSS, and vaccination location health worker or system administrator. The PCPOSS does 1. flag client records for evaluation and 2. produce list of potential duplicate records; the person does 3. perform manual review and decides 4. can records be merged? Yes leads to 5. merge records in the PCPOSS; no leads to 6. mark as 'not a duplicate' or 'pending'. Both end the process."
+      },
+      "vfig-p066": {
+        "role": "figure",
+        "saw": "Fig. 12, a two-lane process for resolving duplicate vaccination events",
+        "draft": "Fig. 12, 'Workflow H: resolve duplicate vaccination events business process'. Two lanes: PCPOSS, and vaccination location health worker or system administrator. The PCPOSS does 1. identify groups of vaccination events for evaluation; the person does 2. evaluate vaccination event records and decides 3. duplicate events? No ends the process; yes leads to 4. select the most accurate/suitable event record, then the PCPOSS does 5. update vaccination event records and 6. generate report of duplicate vaccination events, and the process ends."
+      },
+      "vfig-p068": {
+        "role": "figure",
+        "saw": "Fig. 13, a two-lane process for generating reports",
+        "draft": "Fig. 13, 'Workflow I: report generation business process'. Two lanes: vaccination location health worker, and PCPOSS. From Start the health worker does 1. define parameters for report; the PCPOSS does 2. generate report; the health worker does 3. high level review and decides 4. report acceptable? No loops back to step 1; yes leads to 5. analyse, and the process ends."
+      }
+    },
+    "who-2019-ncov-digital-certificates-vaccination-20211-eng": {
+      "img-p001-1": {
+        "role": "logo",
+        "saw": "the WHO emblem and name, white on transparent (visible only when composited on a dark ground)",
+        "draft": "The World Health Organization logo in white: the WHO emblem (a staff with serpent over a globe, framed by olive branches) beside the words World Health Organization."
+      },
+      "img-p014-1": {
+        "role": "figure",
+        "saw": "a thumbnail of this document's own cover, inside Figure 1's Vaccination Status box",
+        "draft": "A small image of the cover of 'Digital Documentation of COVID-19 Certificates: Vaccination Status - Technical specifications and implementation guidance': a dark blue cover with an illustration of a circuit board joining vaccine vials, a syringe, a virus particle, a phone and a laptop, and the WHO logo. In Figure 1 it illustrates the DDCC: Vaccination Status guidance."
+      },
+      "img-p015-1": {
+        "role": "figure",
+        "saw": "the yellow International Certificate of Vaccination or Prophylaxis, panel 1 of Figure 2",
+        "draft": "The front of the yellow International Certificate of Vaccination or Prophylaxis, with the WHO emblem and the title in English and French ('Certificat international de vaccination ou de prophylaxie') and a blank 'Issued to / Délivré à' line. In Figure 2 it is format 1, the yellow card."
+      },
+      "img-p015-2": {
+        "role": "figure",
+        "saw": "a smartphone showing a COVID-19 vaccination certificate with a QR code, panel 5 of Figure 2",
+        "draft": "A drawing of a smartphone displaying a 'COVID-19 Vaccination Certificate' with the WHO emblem, two stacked entries dated 'COVID-19 | 21 May 2021' and 'COVID-19 18 June 2021', and a QR code. In Figure 2 it is format 5, a DDCC:VS held on a smartphone. On the rendered page the WHO emblem and title are covered by the label 'National COVID-19 Certificate'."
+      },
+      "img-p015-3": {
+        "role": "figure",
+        "saw": "a bilingual COVID-19 vaccination certificate with a QR code and a PDF icon, panel 4 of Figure 2",
+        "draft": "A bilingual 'COVID-19 Vaccination Certificate / Certificat de vaccination contre la Covid-19' with the WHO emblem in English and French, a blank 'Issued to / Délivré à' line, a QR code and a red PDF icon. In Figure 2 it is format 4, a PDF print-out with a health certificate identifier or a 2D barcode. On the rendered page the WHO emblem and title are covered by the label 'National COVID-19 Certificate'."
+      },
+      "img-p015-4": {
+        "role": "figure",
+        "saw": "a bilingual COVID-19 vaccination certificate with a QR code, panel 3 of Figure 2",
+        "draft": "A bilingual 'COVID-19 Vaccination Certificate / Certificat de vaccination contre la Covid-19' with the WHO emblem in English and French, a blank 'Issued to / Délivré à' line and a QR code. In Figure 2 it is format 3, a handwritten paper certificate with a health certificate identifier or a 2D barcode. On the rendered page the WHO emblem and title are covered by the label 'National COVID-19 Certificate'."
+      },
+      "img-p015-5": {
+        "role": "figure",
+        "saw": "a photograph of a hand holding a CDC COVID-19 Vaccination Record Card, panel 2 of Figure 2",
+        "draft": "A photograph of a hand holding a blank CDC 'COVID-19 Vaccination Record Card', in English and Spanish, with fields for name, date of birth and patient number, and rows for 1st and 2nd dose COVID-19 and two 'Other' doses, each with product name/manufacturer and lot number, date, and healthcare professional or clinic site. In Figure 2 it is format 2, a national immunization home-based record."
+      },
+      "img-p080-1": {
+        "role": "figure",
+        "saw": "a QR code from the illustrative paper certificate in Annex 1",
+        "draft": "A QR code printed on the illustrative paper vaccination certificate in Annex 1 (Figures A1.1 and A1.2), where the text calls it the digital scanned code of the vaccination card. Its content was not decoded."
+      },
+      "img-p081-1": {
+        "role": "figure",
+        "saw": "a black rounded rectangle, the activity symbol in Table A2.1",
+        "draft": "An empty rounded rectangle with a black outline: the BPMN symbol for an activity, process, step or task in Table A2.1, 'Business process symbols used in workflows'."
+      },
+      "img-p081-2": {
+        "role": "figure",
+        "saw": "a solid black arrow, the sequence-flow symbol in Table A2.1",
+        "draft": "A solid black line ending in a filled arrowhead: the BPMN symbol for a sequence flow, the direction from one process step to the next, in Table A2.1."
+      },
+      "img-p081-3": {
+        "role": "figure",
+        "saw": "a dashed arrow with a small circle at its tail, the message-flow symbol in Table A2.1",
+        "draft": "A dashed black line starting at a small open circle and ending in an open arrowhead: the BPMN symbol for a message flow, the flow of data or information between processes, in Table A2.1."
+      },
+      "img-p081-4": {
+        "role": "figure",
+        "saw": "a white diamond with a black outline, the gateway symbol in Table A2.1",
+        "draft": "A white diamond with a black outline: the BPMN gateway symbol, a fork or decision point in a workflow, in Table A2.1."
+      },
+      "img-p086-1": {
+        "role": "figure",
+        "saw": "a screenshot of the PuTTY Key Generator window",
+        "draft": "A screenshot of the PuTTY Key Generator window, given as an example of a key generation tool (Figure A4.2). The Key panel shows a highlighted RSA public key for pasting into an OpenSSH authorized_keys file, a key fingerprint beginning 'ssh-rsa 2048', and the key comment 'rsa-key-20210701', with empty passphrase fields. Actions offer Generate, Load, Save public key and Save private key; the parameters select an RSA key of 2048 bits."
+      },
+      "img-p095-1": {
+        "role": "figure",
+        "saw": "the OpenHIE architecture diagram, Figure A6.1",
+        "draft": "Figure A6.1, the OpenHIE architecture. The OpenHIE component layer holds business domain services (logistics management information service, shared health record, health management information service, finance and insurance service) and registry services (terminology services, client registry, facility registry, health worker registry, product catalogue). Below it the interoperability services layer is a green 'Interoperability Layer' band with authentication, interlinking service and entity mapping. Along the bottom, point-of-service systems: mobile system, electronic medical record, health management information system, lab system, pharmacy system, logistics management information system, and finance and insurance system. Credited 'OpenHIE 2020-05-28; CC BY 4.0'. The page's footnote says orange boxes mark the registries and repositories relevant to DDCC:VS; no orange marking is visible in this extracted image."
+      },
+      "vfig-p014": {
+        "role": "figure",
+        "shows": [
+          "1"
+        ],
+        "saw": "Figure 1, three boxes naming the DDCC guidance documents, above the 'What is the DDCC:VS?' text",
+        "draft": "Figure 1, 'Guidance documents for DDCC'. Three boxes: DDCC: Vaccination Status, guidance on digitally documenting COVID-19 vaccination status, shown with the cover of this document; DDCC: SARS-CoV-2 Test Result, guidance on digitally documenting SARS-CoV-2 test results; and DDCC: History of SARS-CoV-2 Infection, guidance on digitally documenting history of SARS-CoV-2 infection."
+      },
+      "vfig-p015": {
+        "role": "figure",
+        "shows": [
+          "2"
+        ],
+        "saw": "Figure 2, five numbered certificate formats with pictures",
+        "draft": "Figure 2, 'Different illustrative formats of DDCC:VS'. Two existing paper formats: 1, the International Certificate of Vaccination or Prophylaxis (the yellow card); 2, a national immunization home-based record, pictured as a COVID-19 vaccination record card. Then, grouped under Digital Documentation of COVID-19 Certificates: Vaccination Status: 3, a handwritten paper certificate with only an HCID that links to a DDCC:VS, or with a 2D barcode containing the full DDCC:VS core data set; 4, a PDF print-out certificate with only an HCID linking to a DDCC:VS, or with a 2D barcode containing the full core data set; 5, a DDCC:VS held on a smartphone. Formats 3-5 are pictured as a 'National COVID-19 Certificate' with a QR code."
+      },
+      "vfig-p036": {
+        "role": "figure",
+        "shows": [
+          "3"
+        ],
+        "saw": "Figure 3, a four-lane Continuity of Care workflow with every path shown",
+        "draft": "Figure 3, 'Continuity of Care scenario': the vaccine is administered, the core data set is recorded on the DDCC paper certificate, and the record is then made available in digital form. Four lanes: subject of care, vaccinator, data entry personnel, DDCC holder. (1) The subject of care arrives at the care site; (2) the vaccinator vaccinates and (3) records core data set elements on a paper certificate, which the holder receives as Point A, a paper record of DDCC:VS. Is there a digital health solution at the care site? If no, (5) data entry personnel record the elements in a digital health solution. If yes, (4) the vaccinator records them in one; then, does the care site have Internet connectivity? Yes leads directly, and no via step 5, to Point B: the record of vaccination status is available in a digital form. End."
+      },
+      "vfig-p038": {
+        "role": "figure",
+        "shows": [
+          "4"
+        ],
+        "saw": "Figure 4, the Figure 3 workflow with the Paper First path highlighted and the rest greyed",
+        "draft": "Figure 4, 'Continuity of Care scenario: Paper First use case (UC001)'. The Figure 3 workflow with one path highlighted: arrival (1), vaccination (2), recording on the paper certificate (3) which gives Point A, then no digital health solution at the care site, so data entry personnel record the data in a digital health solution (5), reaching Point B, the record available in digital form. Step 4 and the connectivity decision are greyed out."
+      },
+      "vfig-p039": {
+        "role": "figure",
+        "shows": [
+          "5"
+        ],
+        "saw": "Figure 5, the Figure 3 workflow with the Offline Digital path highlighted",
+        "draft": "Figure 5, 'Continuity of Care scenario: Offline Digital use case (UC002)'. The Figure 3 workflow with one path highlighted: arrival (1), vaccination (2), paper recording (3) giving Point A; a digital health solution is at the care site, so the vaccinator records the data in it (4); the site has no Internet connectivity, so data entry personnel record the data (5), reaching Point B. The direct 'no digital solution' and 'connected' branches are greyed out."
+      },
+      "vfig-p040": {
+        "role": "figure",
+        "shows": [
+          "6"
+        ],
+        "saw": "Figure 6, the Figure 3 workflow with the Online Digital path highlighted",
+        "draft": "Figure 6, 'Continuity of Care scenario: Online Digital use case (UC003)'. The Figure 3 workflow with one path highlighted: arrival (1), vaccination (2), paper recording (3) giving Point A; a digital health solution is at the care site and the vaccinator records the data in it (4); the site has Internet connectivity, so the record goes directly to Point B, available in digital form. Step 5 by data entry personnel is greyed out."
+      },
+      "vfig-p046": {
+        "role": "figure",
+        "shows": [
+          "7"
+        ],
+        "saw": "Figure 7, five services joined by labelled arrows, some dashed and optional",
+        "draft": "Figure 7, 'The relationships between digital services for Proof of Vaccination'. A digital health solution submits a vaccination event to the DDCC:VS generation service, which returns a DDCC:VS. The HCID is provided by an existing national system or issued by the generation service. The generation service registers the DDCC:VS with the DDCC:VS registry service and may optionally store it in a DDCC:VS repository. Optional dashed links: an online status check between the registry service and the repository, and online verification of a DDCC:VS between an optional status checking application and the registry service. A note explains that the HCID, the unique identifier in a DDCC:VS, is used throughout these services and lets verifiers search for and retrieve a DDCC:VS."
+      },
+      "vfig-p048": {
+        "role": "figure",
+        "shows": [
+          "8"
+        ],
+        "saw": "Figure 8, a four-lane Proof of Vaccination workflow with every path shown",
+        "draft": "Figure 8, 'Proof of Vaccination scenario': verification of a claim of vaccination. Four lanes: DDCC holder, verifier, national PHA, international PHA. (1) The holder presents the DDCC:VS; (2) the verifier receives the claim. Is cryptographic verification required? No leads straight to Point C, the decision on the verification. Yes: (3) the verifier uses a status checking application; perform check online? No leads to Point C. Yes: (4) the national PHA performs an online check with its DDCC registry service; check with international PHA? If yes, (5) the international PHA performs an online check with its registry service; either way (6) results are communicated back to the verifier, then Point C and End."
+      },
+      "vfig-p050": {
+        "role": "figure",
+        "shows": [
+          "9"
+        ],
+        "saw": "Figure 9, the Figure 8 workflow with only the manual-verification path highlighted",
+        "draft": "Figure 9, 'Proof of Vaccination scenario: Manual Verification use case (UC004)'. The Figure 8 workflow with one path highlighted: the holder presents the DDCC:VS (1), the verifier receives the claim (2), no cryptographic verification is required, and the verifier goes directly to Point C, the decision on the claim. All the status-checking and PHA steps are greyed out."
+      },
+      "vfig-p051": {
+        "role": "figure",
+        "shows": [
+          "10"
+        ],
+        "saw": "Figure 10, the Figure 8 workflow with the offline cryptographic path highlighted",
+        "draft": "Figure 10, 'Proof of Vaccination scenario: Offline Cryptographic Verification use case (UC005)'. The Figure 8 workflow with one path highlighted: presentation (1), receipt of the claim (2), cryptographic verification required, the verifier uses a status checking application (3) and does not check online, going to Point C. The online PHA checks are greyed out."
+      },
+      "vfig-p052": {
+        "role": "figure",
+        "shows": [
+          "11"
+        ],
+        "saw": "Figure 11, the Figure 8 workflow with the national online status check highlighted",
+        "draft": "Figure 11, 'Proof of Vaccination scenario: Online Status Check (National DDCC:VS) use case (UC006)'. The Figure 8 workflow with one path highlighted: presentation (1), receipt (2), cryptographic verification required, status checking application (3), online check performed by the national PHA against its DDCC registry service (4), no international check, results communicated back to the verifier (6), Point C. The international PHA step is greyed out."
+      },
+      "vfig-p053": {
+        "role": "figure",
+        "shows": [
+          "12"
+        ],
+        "saw": "Figure 12, the Figure 8 workflow with the international online status check highlighted",
+        "draft": "Figure 12, 'Proof of Vaccination scenario: Online Status Check (International DDCC:VS) use case (UC007)'. The Figure 8 workflow with one path highlighted: presentation (1), receipt (2), cryptographic verification required, status checking application (3), national PHA online check (4), check with the international PHA, which performs an online check with its DDCC registry service (5), results communicated back to the verifier (6), Point C. The manual and offline branches are greyed out."
+      },
+      "vfig-p064": {
+        "role": "figure",
+        "shows": [
+          "13"
+        ],
+        "saw": "Figure 13, three certificate boxes with a numbered signing arc above and a dotted verifying arc below",
+        "draft": "Figure 13, 'The chain of trust'. Three linked boxes: CSCA (country signing certificate authority) and DSC (document signer certificate), each with a private and a public key, and DDCC (Digital Documentation of COVID-19 Certificate), marked with a QR code. Above, 'Signing and issuing a DDCC' runs in steps 1-3 from CSCA through DSC to DDCC. Below, a dotted 'Verifying a DDCC' arc runs in steps 1-3 the other way, from DDCC back to CSCA."
+      },
+      "vfig-p065": {
+        "role": "figure",
+        "shows": [
+          "14"
+        ],
+        "saw": "Figure 14, a left-to-right document-signing flow",
+        "draft": "Figure 14, 'How digital signatures work', under the heading Document Signing. A signer starts from a document (vaccination data); a hash is calculated from the document, giving the document hash; the hash is digitally signed with a private key, giving the signed hash; the signed hash is added to the document, giving a document with a digitally signed hash (the DDCC:VS)."
+      },
+      "vfig-p066": {
+        "role": "figure",
+        "shows": [
+          "15"
+        ],
+        "saw": "Figure 15, the signing flow above a validation flow",
+        "draft": "Figure 15, 'How digital signature verification works'. The upper panel, Document Signing, repeats Figure 14: document, document hash, signed with the private key, signed hash added to the document to make the DDCC:VS. The signer sends the digitally signed document and the public key to the verifier. The lower panel, Document Validation: the verifier calculates a hash from the document and, using the public key, obtains the hash from the signed hash; the two values are compared, and a matching hash indicates a valid document, one that contains the information that was signed with the private key."
+      }
+    },
+    "b0426": {
+      "img-p001-1": {
+        "role": "logo",
+        "saw": "the WHO emblem and wordmark, black on white",
+        "draft": "The World Health Organization logo in black: the WHO emblem (the UN globe with the Rod of Asclepius, framed by olive branches) beside the words World Health Organization set in two lines above a horizontal rule.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "not-disclosed",
+          "session": "conversation://31bdb4cc-5f60-47ee-a6d1-c3c964fa6c26"
+        },
+        "inspected_at": "2026-10-30"
+      }
+    },
+    "who-his-hwf-nhwa-20171-eng": {
+      "img-p004-1": {
+        "role": "figure",
+        "saw": "the 17-tile UN Sustainable Development Goals poster with the SDG emblem",
+        "draft": "The United Nations Sustainable Development Goals (SDGs) poster grid: three rows of six tiles showing the 17 numbered, colour-coded SDG icons and titles from 1 (No Poverty) to 17 (Partnerships for the Goals), with the Sustainable Development Goals emblem and UN colour wheel in the eighteenth tile at the lower right. Placed in section 3 ('Rationale: Policy frameworks, mandate and context of NHWA') above the discussion of the 2030 Agenda and SDG target 3.c.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "not-disclosed",
+          "session": "conversation://e5cc84c3-6df4-4f3c-9b95-d302a36c14d2"
+        },
+        "inspected_at": "2026-10-30"
+      },
+      "img-p005-1": {
+        "role": "figure",
+        "saw": "the cover of the WHO publication 'Global strategy on human resources for health: Workforce 2030'",
+        "draft": "The cover of the World Health Organization publication 'Global strategy on human resources for health: Workforce 2030': a dark teal cover featuring the WHO emblem and wordmark at the upper left, the title in white and orange text, and a swirling circular motif of teal and orange dots below. Placed beside the paragraph describing the endorsement of the Global Strategy by the Sixty-ninth World Health Assembly in resolution WHA69.19.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "not-disclosed",
+          "session": "conversation://e5cc84c3-6df4-4f3c-9b95-d302a36c14d2"
+        },
+        "inspected_at": "2026-10-30"
+      },
+      "img-p005-2": {
+        "role": "figure",
+        "saw": "the cover of the report 'Working for health and growth: investing in the health workforce'",
+        "draft": "The cover of the report of the High-Level Commission on Health Employment and Economic Growth, 'Working for health and growth: investing in the health workforce': a light blue and white geometric cover showing the Commission header at top, the title 'WORKING FOR HEALTH AND GROWTH' with a stylized tree icon, the subtitle 'Investing in the health workforce', and triangular inset photographs of health workers and community members.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "not-disclosed",
+          "session": "conversation://e5cc84c3-6df4-4f3c-9b95-d302a36c14d2"
+        },
+        "inspected_at": "2026-10-30"
+      },
+      "img-p008-1": {
+        "role": "decorative",
+        "saw": "a photograph of health workers and mothers with young children seated outdoors on grass",
+        "draft": "An outdoor photograph of community members and health workers with young children seated on grass during a community health visit. Illustrative; it carries no information the surrounding text on the health labour market analysis approach does not.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "not-disclosed",
+          "session": "conversation://e5cc84c3-6df4-4f3c-9b95-d302a36c14d2"
+        },
+        "inspected_at": "2026-10-30"
+      },
+      "img-p011-1": {
+        "role": "decorative",
+        "saw": "a photograph of a clinician in a white coat standing beside medical imaging equipment in a hospital room",
+        "draft": "A photograph of a female physician (gynecologist) in a white coat standing beside an X-ray and diagnostic medical device in a hospital room (Hospital 'Lapino', Moscow region; credit WHO/S. Volkov). Illustrative; it carries no information the surrounding text on the structure of the NHWA handbook does not.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "not-disclosed",
+          "session": "conversation://e5cc84c3-6df4-4f3c-9b95-d302a36c14d2"
+        },
+        "inspected_at": "2026-10-30"
+      }
+    },
+    "9789240081291-eng": {
+      "img-p018-1": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of \"Global strategy on human resources for health: Workforce 2030\" (WHO, 2016) in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the WHO report \"Global strategy on human resources for health: Workforce 2030\" (2016): a dark teal cover with the title in white and orange at the top, a circular multi-coloured network motif in the centre, and the WHO logo at the bottom."
+      },
+      "img-p018-2": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of the GPW13 \"Methods for impact measurement\" report in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the WHO Thirteenth General Programme of Work (GPW13) report \"Methods for impact measurement\": a dark navy upper field with the title in white above a blue photographic lower band."
+      },
+      "img-p018-3": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of \"Gender equity in the health workforce: Analysis of 104 countries\" (Health Workforce Working Paper 1, WHO, 2019) in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the WHO Health Workforce Working Paper 1, \"Gender equity in the health workforce: Analysis of 104 countries\" (2019): a white cover with the title at the top above an orange and teal chart."
+      },
+      "img-p018-4": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of PAHO\"s \"Strategy on Human Resources for Universal Access to Health and Universal Health Coverage\" (2017) in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the Pan American Health Organization publication \"Strategy on Human Resources for Universal Access to Health and Universal Health Coverage\" (2017): a full-bleed photographic collage of health workers with a dark horizontal band carrying the title in white."
+      },
+      "img-p018-5": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of \"The state of the health workforce in the WHO African Region, 2021\" in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the WHO Regional Office for Africa report \"The state of the health workforce in the WHO African Region, 2021\": a photographic upper panel above a blue and white lower panel carrying the title and the WHO African Region emblem."
+      },
+      "img-p018-6": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of \"The Sustainable Development Goals Report 2022\" (United Nations, 2022) in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the United Nations publication \"The Sustainable Development Goals Report 2022\": a white upper band with the title and SDG colour wheel above a full-bleed photograph."
+      },
+      "img-p018-7": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of \"Health and care workforce in Europe: time to act\" (WHO Regional Office for Europe, 2022) in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the WHO Regional Office for Europe report \"Health and care workforce in Europe: time to act\" (2022): a dark blue upper panel with the WHO Europe emblem and white title above a photograph of health workers."
+      },
+      "img-p018-8": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of \"Decade for health workforce strengthening in the South-East Asia Region 2015–2024: second review of progress, 2018\" in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the WHO Regional Office for South-East Asia report \"Decade for health workforce strengthening in the South-East Asia Region 2015–2024: Second review of progress, 2018\": a white upper half with a circular emblem and title above a solid blue lower half with the WHO logo."
+      },
+      "img-p018-9": {
+        "role": "figure",
+        "saw": "a thumbnail of the first page of a WHO \"COVID-19 Weekly Epidemiological Update\" (edition 134, 16 March 2023) in Figure 2",
+        "draft": "A small thumbnail in Figure 2 showing the first page of a WHO \"COVID-19 Weekly Epidemiological Update\" (edition 134, 16 March 2023), with the WHO emblem at top centre above the banner title and two columns of overview text."
+      },
+      "img-p018-10": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of \"Strengthening the collection, analysis and use of health workforce data and information: a handbook\" (WHO, 2022) in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the WHO publication \"Strengthening the collection, analysis and use of health workforce data and information: a handbook\" (2022): a white cover with an illustration in the upper half, the title aligned at the lower right, and the WHO logo at the bottom."
+      },
+      "img-p018-11": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of \"The impact of COVID-19 on health and care workers: a closer look at deaths\" (WHO, 2021) in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the WHO Health Workforce working paper \"The impact of COVID-19 on health and care workers: a closer look at deaths\" (2021): a white cover with the title at the top above an orange and teal graphic and the WHO logo at the bottom."
+      },
+      "img-p018-12": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of \"State of the world\"s nursing 2020: investing in education, jobs and leadership\" (WHO, 2020) in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the WHO report \"State of the world\"s nursing 2020: investing in education, jobs and leadership\": a white cover with the title at the top above a circular photographic collage of nurses and the partner logos at the bottom."
+      },
+      "img-p018-13": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of \"World health statistics 2022: monitoring health for the SDGs\" (WHO, 2022) in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the WHO report \"World health statistics 2022: monitoring health for the SDGs, sustainable development goals\": a pale teal cover with the title at the top left, a circular globe illustration, and the WHO logo at the bottom."
+      },
+      "img-p018-14": {
+        "role": "figure",
+        "saw": "a thumbnail of the BMJ Global Health article header \"The global health workforce stock and distribution in 2020 and 2030: a threat to equity and 'universal' health coverage?\" (Boniol et al., 2022) in Figure 2",
+        "draft": "A small article-header thumbnail in Figure 2 showing the BMJ Global Health paper \"The global health workforce stock and distribution in 2020 and 2030: a threat to equity and 'universal' health coverage?\" by Boniol et al. (2022)."
+      },
+      "img-p018-15": {
+        "role": "figure",
+        "saw": "a thumbnail of the International Journal for Equity in Health article header \"The global inequity in COVID-19 vaccination coverage among health and care workers\" (Nabaggala et al., 2022) in Figure 2",
+        "draft": "A small article-header thumbnail in Figure 2 showing the International Journal for Equity in Health research paper \"The global inequity in COVID-19 vaccination coverage among health and care workers\" by Nabaggala et al. (2022)."
+      },
+      "img-p018-16": {
+        "role": "figure",
+        "saw": "a thumbnail of the BMJ Open article header \"Estimating the health workforce requirements and costing to reach 70% COVID-19 vaccination coverage by mid-2022: a modelling study and global estimates\" (Boniol et al., 2022) in Figure 2",
+        "draft": "A small article-header thumbnail in Figure 2 showing the BMJ Open paper \"Estimating the health workforce requirements and costing to reach 70% COVID-19 vaccination coverage by mid-2022: a modelling study and global estimates\" by Boniol et al. (2022)."
+      },
+      "img-p018-17": {
+        "role": "figure",
+        "saw": "a thumbnail of the Human Resources for Health article header \"Inequal distribution of nursing personnel: a subnational analysis of the distribution of nurses across 58 countries\" (Boniol et al., 2022) in Figure 2",
+        "draft": "A small article-header thumbnail in Figure 2 showing the Human Resources for Health research paper \"Inequal distribution of nursing personnel: a subnational analysis of the distribution of nurses across 58 countries\" by Boniol et al. (2022)."
+      },
+      "img-p018-18": {
+        "role": "figure",
+        "saw": "a thumbnail of the cover of \"The State of the World\"s Midwifery 2021\" (UNFPA, ICM and WHO, 2021) in Figure 2",
+        "draft": "A small cover thumbnail in Figure 2 showing the UNFPA, ICM and WHO report \"The State of the World\"s Midwifery 2021\": an orange-brown cover with the title at the top above an illustration of a midwife and mother, with the partner logos along the bottom."
+      },
+      "img-p028-1": {
+        "role": "figure",
+        "saw": "a thumbnail of the first-edition \"National Health Workforce Accounts: A Handbook\" cover inside Figure 5\"s NHWA Handbook quadrant",
+        "draft": "A small cover thumbnail in Figure 5 showing the first edition of \"National Health Workforce Accounts: A Handbook\" (WHO, 2017): a dark teal cover with the title in white at the upper left, a circular network graphic at the right, and the WHO logo at the bottom left. In Figure 5 it illustrates the NHWA Handbook (sets of standards and norms on health workforce indicators)."
+      },
+      "img-p028-2": {
+        "role": "figure",
+        "saw": "a thumbnail of the \"National Health Workforce Accounts: Implementation Guide\" cover inside Figure 5\"s NHWA implementation guide quadrant",
+        "draft": "A small cover thumbnail in Figure 5 showing \"National Health Workforce Accounts: Implementation Guide\" (WHO, 2018): a green cover with the title in white at the upper left, a circular network graphic at the right, and the WHO logo at the bottom left. In Figure 5 it illustrates the NHWA implementation guide (step-by-step implementation for policy-makers)."
+      },
+      "img-p028-3": {
+        "role": "figure",
+        "saw": "a screenshot of the public NHWA data portal dashboard inside Figure 5\"s NHWA data portal quadrant",
+        "draft": "A screenshot in Figure 5 showing the public NHWA Data Portal dashboard: a world map with a callout noting that studies in 2016 estimated the health worker shortage at 18 million by 2030, alongside summary charts and country indicator panels. In Figure 5 it illustrates the NHWA data portal (public portal with data validated by countries)."
+      },
+      "img-p028-4": {
+        "role": "figure",
+        "saw": "a screenshot of the National Health Workforce Accounts Online Data Platform landing page inside Figure 5\"s NHWA web platform quadrant",
+        "draft": "A screenshot in Figure 5 showing the landing page of the National Health Workforce Accounts Online Data Platform: a green banner reading \"NATIONAL HEALTH WORKFORCE ACCOUNTS ONLINE DATA PLATFORM\", a user login panel on the left, and platform overview text with an embedded video preview on the right. In Figure 5 it illustrates the NHWA web platform (online platform for NHWA focal points to monitor and report their HWF statistics)."
+      },
+      "img-p132-1": {
+        "role": "decorative",
+        "saw": "an ISBN barcode on the back cover",
+        "draft": "The back-cover ISBN barcode for 9789240081291."
+      },
+      "vfig-p014": {
+        "role": "figure",
+        "shows": [
+          "1"
+        ],
+        "saw": "Figure 1, a two-column mapping diagram comparing NHWA version 1 (10 modules, 78 indicators) on the left with NHWA version 2 (4 modules, 29 indicators) on the right",
+        "draft": "Figure 1, \"NHWA version 2 includes 80% of information from NHWA version 1: Out of 78 indicators in NHWA V1, 62 were maintained, 16 were dropped and 2 new indicators were added\". On the left, column 1 lists the ten modules of NHWA version 1 with their indicator counts and how many were merged or dropped: Module 1 (9 indicators, 1 dropped), Module 2 (7 indicators, 2 dropped), Module 3 (9 indicators, 5 merged, 2 dropped), Module 4 (8 indicators, 1 merged, 4 dropped), Module 5 (7 indicators, 2 merged, 2 dropped), Module 6 (10 indicators, 6 merged, 2 dropped), Module 7 (7 indicators, 1 merged, 3 dropped), Module 8 (8 indicators, 4 merged, 1 dropped), Module 9 (5 indicators, 4 merged) and Module 10 (8 indicators, 7 merged). On the right, column 2 lists the four modules of NHWA version 2, connected from column 1 by flow lines carrying circled numbers that indicate how many indicators were moved or moved and merged: Module 1 (12 indicators, receiving 8 from V1 Module 1, 5 from Module 5 and 6 from Module 6), Module 2 (7 indicators including 7 sub-indicators plus new indicator 02-01 highlighted in green, receiving 5 from V1 Module 2 and 7 from Module 3), Module 3 (5 indicators, receiving 4 from V1 Module 4 and 3 from Module 7), and Module 4 (5 indicators including 26 sub-indicators plus new indicator 04-03 highlighted in green, receiving 1 from V1 Module 6, 8 from Module 8, 5 from Module 9 and 5 from Module 10)."
+      },
+      "vfig-p022": {
+        "role": "figure",
+        "shows": [
+          "3"
+        ],
+        "saw": "Figure 3, the health labour market framework diagram showing the flow from the education sector through labour market dynamics to universal health coverage, with four policy intervention boxes below",
+        "draft": "Figure 3, \"The health labour market framework\". Across the top runs a banner for \"Economy, population and broader societal drivers\". Below it, the diagram divides into \"Education sector\" on the left and \"Labour market dynamics\" on the right. In the education sector, \"High school\" branches into \"Education in health\" and \"Education in other fields\". \"Education in health\" feeds the \"Pool of qualified health workers\" (with two-way \"Migration\" to and from \"Abroad\"), which in turn splits into \"Employed\", \"Unemployed\" and \"Out of labour force\". \"Employed\" flows into the \"Health care sector\" and \"Other sectors\" (which also receives workers from education in other fields). The \"Health care sector\" produces a \"Health workforce equipped to deliver quality health service\", leading to \"Universal health coverage with safe, effective, person-centred health services\". Beneath the flow sit three policy boxes aligned with the stages — \"Policies on production\" (on infrastructure and material, enrolment, selecting students, teaching staff), \"Policies to address inflows and outflows\" (to address migration and emigration, attract unemployed health workers, bring health workers back into the health care sector), and \"Policies to address maldistribution and inefficiencies\" (to improve productivity and performance, improve skill mix composition, retain health workers in underserved areas) — all spanned at the bottom by a fourth box, \"Policies to regulate the private sector\" (to manage dual practice, improve quality of training, enhance service delivery)."
+      },
+      "vfig-p023": {
+        "role": "figure",
+        "shows": [
+          "4"
+        ],
+        "saw": "Figure 4, four colour-coded boxes showing the labour market components supported by the four NHWA modules",
+        "draft": "Figure 4, \"Overview of labour market components supported by the NHWA modules\". Four rectangular boxes arranged in three tiers correspond to the layout of the health labour market framework: across the top, \"Finance and expenditures (Module 3)\"; in the middle row, \"Education (Module 2)\" on the left and \"Stock and flow (Module 1)\" on the right; and across the bottom, \"Working conditions, governance and leadership (Module 4)\"."
+      },
+      "vfig-p028": {
+        "role": "figure",
+        "shows": [
+          "5"
+        ],
+        "saw": "Figure 5, a four-quadrant overview of the NHWA implementation tools (NHWA Handbook, NHWA implementation guide, NHWA web platform, and NHWA data portal); the cover thumbnails and screenshots inside the four quadrants are placed raster images (img-p028-1 to img-p028-4)",
+        "draft": "Figure 5, \"Overview of NHWA implementation tools\". A four-quadrant panel presenting the four WHO tools that support country implementation of NHWA: at top left, \"NHWA Handbook — Sets of standards and norms on health workforce indicators\"; at top right, \"NHWA implementation guide — Step by step implementation for policy makers\"; at bottom left, \"NHWA web platform — Online platform for NHWA focal points to monitor and report their HWF statistics\"; and at bottom right, \"NHWA data portal — Public portal with data validated by countries\"."
+      }
+    },
+    "9789241514446-eng": {
+      "img-p040-1": {
+        "role": "decorative",
+        "saw": "an ISBN barcode reading 9 789241 514446 on the back cover",
+        "draft": "The back-cover ISBN barcode for 9789241514446.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed",
+          "session": "conversation://1540eaa1-d5b0-4ca3-aea5-eddeb2798382"
+        },
+        "inspected_at": "2026-10-30"
+      },
+      "vfig-p009": {
+        "role": "figure",
+        "shows": [
+          "1"
+        ],
+        "saw": "Fig. 1, three horizontal right-pointing chevrons for Phases I, II and III inside a grey rounded frame",
+        "draft": "Fig. 1, ‘NHWA phases to strengthen HRH data monitoring through NHWA’. Three overlapping right-pointing chevrons run from left to right inside a grey rounded frame: ‘Phase I Conceptualization’ (orange), ‘Phase II Operationalization’ (green), and ‘Phase III Process revision and sustainability’ (blue).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed",
+          "session": "conversation://1540eaa1-d5b0-4ca3-aea5-eddeb2798382"
+        },
+        "inspected_at": "2026-10-30"
+      },
+      "vfig-p010": {
+        "role": "figure",
+        "shows": [
+          "2"
+        ],
+        "saw": "Fig. 2, three stacked conceptualization bars above a three-sector operationalization cycle flanked by Legal framework and Process revision braces",
+        "draft": "Fig. 2, ‘NHWA steps to strengthen HRH data monitoring and use’. At the top, three stacked orange rounded bars with downward pointers show the conceptualization steps in sequence: ‘1. Governmental “buy-in”’, ‘2. Governance’, and ‘3. Scoping and planning’. Below them, a circular green ring with clockwise arrows encloses a three-sector wheel of routine operationalization steps: ‘5. Data compilation and analysis’ at the top, ‘6. Validation’ at the bottom right, and ‘7. Dissemination’ at the bottom left. Spanning from Step 2 to the bottom of the wheel, a green curly brace on the left connects to ‘4. Legal framework’ (green box) and a blue curly brace on the right connects to ‘8. Process revision’ (blue box).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "claude-code",
+          "model": "not-disclosed",
+          "session": "conversation://1540eaa1-d5b0-4ca3-aea5-eddeb2798382"
+        },
+        "inspected_at": "2026-10-30"
+      }
+    },
+    "9789241513111-eng": {
+      "img-p168-1": {
+        "role": "decorative",
+        "saw": "a blank white full-page backdrop rectangle on the back cover with a thin teal edge strip along the right and bottom margins",
+        "draft": "A blank white rectangular background layer on the back cover with a narrow teal edge along the right and bottom borders; it carries no text or data.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "not-disclosed",
+          "session": "conversation://fce2e546-9b36-4d24-995c-c5c85c73807b"
+        },
+        "inspected_at": "2026-10-30"
+      },
+      "img-p168-2": {
+        "role": "decorative",
+        "saw": "the teal back-cover background with a subtle plus-sign pattern at the top and a white ISBN barcode box reading ISBN 978-92-4-151311-1 (9 789241 513111) at the lower right",
+        "draft": "The teal back-cover graphic featuring a subtle decorative pattern of small plus signs across the upper band and a white box in the lower right corner containing “ISBN 978-92-4-151311-1” above the EAN-13 barcode “9 789241 513111”.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "not-disclosed",
+          "session": "conversation://fce2e546-9b36-4d24-995c-c5c85c73807b"
+        },
+        "inspected_at": "2026-10-30"
+      },
+      "vfig-p016": {
+        "role": "figure",
+        "shows": [
+          "1"
+        ],
+        "saw": "Figure 1, ‘The health labour market framework’, showing flows from High school and Education in health through Pool of qualified health workers, labour force states, Health care sector, and Health workforce equipped to deliver quality health service to Universal health coverage, framed by top drivers and four bottom policy groups",
+        "draft": "Figure 1, ‘The health labour market framework’. At the top, a wide bar ‘Economy, population and broader societal drivers’ sends downward arrows into two main domains: ‘Education sector’ (left, orange) and ‘Labour market dynamics’ (right, pink/blue). In the Education sector, ‘High school’ (vertical box) branches to ‘Education in health’ and ‘Education in other fields’; ‘Education in health’ leads to ‘Pool of qualified health workers’ inside Labour market dynamics, which connects bidirectionally via ‘Migration’ with ‘Abroad’ below and branches rightward to ‘Employed’, ‘Unemployed’, and ‘Out of labour force’. ‘Employed’ feeds into ‘Health care sector’ (and ‘Other sectors’ below, with bidirectional flow between them), which leads to ‘Health workforce equipped to deliver quality health service’ and finally to the vertical outcome bar ‘Universal health coverage with safe, effective, person-centred health services’ on the far right. Beneath the flow, three policy boxes point upward to their respective stages — ‘Policies on production’ (infrastructure and material, enrolment, selecting students, teaching staff), ‘Policies to address inflows and outflows’ (migration and emigration, attracting unemployed health workers, bringing health workers back into the health care sector), and ‘Policies to address maldistribution and inefficiencies’ (productivity and performance, skill mix composition, retaining health workers in underserved areas) — above a full-width bottom bar, ‘Policies to regulate the private sector’ (manage dual practice, improve quality of training, enhance service delivery).",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "not-disclosed",
+          "session": "conversation://fce2e546-9b36-4d24-995c-c5c85c73807b"
+        },
+        "inspected_at": "2026-10-30"
+      },
+      "vfig-p017": {
+        "role": "figure",
+        "shows": [
+          "2"
+        ],
+        "saw": "Figure 2, ‘Overview of labour market components supported by the NHWA modules’, showing three connected columns — Education (Modules 2–4), Labour Force (Modules 1, 5–7), and Serving Population Health Needs (Modules 8–10)",
+        "draft": "Figure 2, ‘Overview of labour market components supported by the NHWA modules’. Three vertical columns connected by rightward arrows from left to right represent the three health labour market components and the 10 NHWA modules supporting them: (1) ‘Education’ (left, orange), containing ‘Module 2: Education and training’, ‘Module 3: Education and training regulation and accreditation’, and ‘Module 4: Education finances’; (2) ‘Labour Force’ (centre, pink), containing ‘Module 1: Active health workforce stock’, ‘Module 5: Health labour market flows’, ‘Module 6: Employment characteristics and working conditions’, and ‘Module 7: Health workforce spending and remuneration’; and (3) ‘Serving Population Health Needs’ (right, light blue), containing ‘Module 8: Skill-mix composition for models of care’, ‘Module 9: Governance and health workforce policies’, and ‘Module 10: Health workforce information systems’.",
+        "inspected_by": {
+          "kind": "agent",
+          "id": "antigravity",
+          "model": "not-disclosed",
+          "session": "conversation://fce2e546-9b36-4d24-995c-c5c85c73807b"
+        },
+        "inspected_at": "2026-10-30"
+      }
+    },
+    "9789240122925-eng": {
+      "img-p059-1": {
+        "role": "figure",
+        "saw": "five stacked thumbnail images of WHO health workforce dissemination outputs along the right side of Fig. A2.1",
+        "draft": "A vertical strip of five thumbnail images on the right side of Fig. A2.1 (‘NHWA data cycle’) illustrating the five data dissemination outputs paired with the labels alongside them: (1) cover thumbnails of WHO health workforce publications for ‘National, regional and global reports’; (2) a screenshot of the interactive NHWA portal interface with world map and charts for ‘NHWA data portal’; (3) a banner graphic for ‘World Health Data Hub’; (4) the United Nations Sustainable Development Goals emblem and colour wheel for ‘UN SDG database’; and (5) a summary chart graphic for ‘GPW14 reporting’."
+      },
+      "vfig-p013": {
+        "role": "figure",
+        "shows": [
+          "1"
+        ],
+        "saw": "Fig. 1, a horizontal timeline from 2004 to 2023 showing key global health workforce milestones, resolutions, and NHWA publications",
+        "draft": "Fig. 1, ‘Timeline for HWF information strengthening – initiatives, resolutions and publications’. A horizontal timeline spanning 2004 to 2023 with milestone callouts above and below the axis: 2004 (Joint Learning Initiative report published); 2006 (World health report 2006 published; Global health workforce statistics database established); 2009 (Handbook on monitoring and evaluation of human resources for health published); 2010 (WHO Global Code of Practice on the International Recruitment of Health Personnel, WHA63.16); 2013 (Recife report ‘A universal truth: no health without a health workforce’ published); 2016 (Final report of the expert group to the High-Level Commission on Health Employment and Economic Growth published; Global Strategy on Human Resources for Health: Workforce 2030, WHA69.19); 2017 (NHWA handbook published; NHWA data platform launched); 2018 (NHWA implementation guide published); 2020 (NHWA data portal launched); 2022 (Handbook on strengthening health workforce collection, analysis and use published); and 2023 (NHWA handbook second edition published)."
+      },
+      "vfig-p021": {
+        "role": "figure",
+        "shows": [
+          "4"
+        ],
+        "saw": "Fig. 4, a 100% stacked horizontal bar chart of the share of countries by number of available NHWA indicators and sub-indicators across global, WHO regional, and World Bank income groups",
+        "draft": "Fig. 4, ‘Share of countries by the number of indicators and sub-indicators for which data is available on the NHWA data platform’ (Source: WHO National Health Workforce Accounts, 2025). A 100% stacked horizontal bar chart across six categories (10 or less, 11 to 20, 21 to 30, 31 to 40, 41 to 50, and 51 or more indicators/sub-indicators) for Global, the six WHO regions (AFR, AMR, SEAR, EUR, EMR, WPR), and the four World Bank income groups (HIC, UMIC, LMIC, LIC). Globally, 4% of countries have data for 10 or fewer indicators/sub-indicators, 27% for 11 to 20, 21% for 21 to 30, 12% for 31 to 40, 27% for 41 to 50, and 9% for 51 or more."
+      },
+      "vfig-p022": {
+        "role": "figure",
+        "shows": [
+          "5"
+        ],
+        "saw": "Fig. 5, a 100% stacked horizontal bar chart of the share of countries by number of occupations with stock data available on the NHWA platform",
+        "draft": "Fig. 5, ‘Share of countries by the number of occupations for which stock data is available on the NHWA data platform’ (Source: WHO National Health Workforce Accounts, 2025). A 100% stacked horizontal bar chart across five categories (5 or less occupations, 6 to 10, 11 to 20, 21 to 30, and 31 or more occupations) for Global, the six WHO regions (AFR, AMR, SEAR, EUR, EMR, WPR), and the four World Bank income groups (HIC, UMIC, LMIC, LIC). Globally, 1% of countries have stock data for 5 or fewer occupations, 21% for 6 to 10, 29% for 11 to 20, 29% for 21 to 30, and 21% for 31 or more occupations."
+      },
+      "vfig-p023": {
+        "role": "figure",
+        "shows": [
+          "6"
+        ],
+        "saw": "Fig. 6, a 100% stacked horizontal bar chart of the share of countries by number of SDG 3.c.1 occupations with stock data reported in 2020–2024",
+        "draft": "Fig. 6, ‘Share of countries by the number of SDG 3.c.1 occupations for which stock data are available on the NHWA data platform in the last five years (2020–2024)’ (Source: WHO National Health Workforce Accounts, 2025). A 100% stacked horizontal bar chart showing the distribution across five categories (No occupation, 1 occupation, 2 occupations, 3 occupations, and All occupations — medical doctors, nursing and midwifery personnel, dentists, and pharmacists) for Global, WHO regions (AFR, AMR, SEAR, EUR, EMR, WPR), and World Bank income groups (HIC, UMIC, LMIC, LIC). Globally, 84% of countries reported stock data for all four SDG 3.c.1 occupations in 2020–2024 (6% for 3, 4% for 2, 5% for 1, and 3% for none), ranging regionally from 69% in AMR to 94% in AFR."
+      },
+      "vfig-p024": {
+        "role": "figure",
+        "shows": [
+          "7"
+        ],
+        "saw": "Fig. 7, a 100% stacked horizontal bar chart of the share of countries by number of years in 2020–2024 with SDG 3.c.1 stock data available",
+        "draft": "Fig. 7, ‘Share of countries by the number of years out of the last five years (2020–2024) for which stock data for SDG 3.c.1 occupations are available on the NHWA data platform’ (Source: WHO National Health Workforce Accounts, 2025). A 100% stacked horizontal bar chart across six categories (No year, 1 year, 2 years, 3 years, 4 years, and All 5 years) for Global, WHO regions (AFR, AMR, SEAR, EUR, EMR, WPR), and World Bank income groups (HIC, UMIC, LMIC, LIC). Globally, 25% of countries reported data for all 5 years, 33% for 4 years, 14% for 3 years, 13% for 2 years, 12% for 1 year, and 3% for no year."
+      },
+      "vfig-p026": {
+        "role": "figure",
+        "shows": [
+          "8"
+        ],
+        "saw": "Fig. 8, a rotated full-page stacked bar chart comparing the number of countries with stock data for the four SDG 3.c.1 occupations per year from 1990 to 2024 between the 2018 GHO and 2025 NHWA data releases",
+        "draft": "Fig. 8, ‘Evolution of stock data availability for SDG 3.c.1 occupations between the 2018 GHO data release and the 2025 NHWA data release’ (Source: WHO Global Health Workforce Statistics, 2018; WHO National Health Workforce Accounts, 2025). A rotated multi-series bar chart plotting the number of countries (0 to 200) with stock data available for each year from 1990 to 2024 across the four SDG 3.c.1 occupations (medical doctors, nursing and midwifery personnel, dentists, and pharmacists), contrasting baseline availability in the 2018 GHO release with the additional countries gained in the 2025 NHWA data release."
+      },
+      "vfig-p027": {
+        "role": "figure",
+        "shows": [
+          "9"
+        ],
+        "saw": "Fig. 9, a horizontal bar chart showing the number and percentage of Member States with data available across ten key health workforce topics",
+        "draft": "Fig. 9, ‘Status of data availability for key HWF topics’ (Source: WHO National Health Workforce Accounts, 2025). A horizontal bar chart ranking ten health workforce topics by the number and percentage of WHO Member States reporting data for at least one occupation: Stock (194, 100%), Sex (189, 97%), Activity level (183, 94%), Age group (174, 90%), Graduates (167, 86%), Place of training (139, 72%), Facility ownership (137, 71%), Place of birth (134, 69%), Facility type (131, 68%), and Subnational distribution (85, 44%)."
+      },
+      "vfig-p028": {
+        "role": "figure",
+        "shows": [
+          "10"
+        ],
+        "saw": "Fig. 10, a stacked vertical bar chart of the cumulative volume of data points across nine key HWF topics by data release year from 2018 to 2025",
+        "draft": "Fig. 10, ‘Trend of data volume for key HWF topics in the NHWA data platform by year of data release’. A stacked vertical bar chart showing total data points (vertical axis 0 to 300 000) across annual releases from 2018 to 2025, broken down by nine topics: Stock, Activity level, Sex, Age group, Place of birth, Place of training, Facility ownership, Facility type, and Graduates. Total volume grows nearly 20-fold from 12 587 data points in 2018 (stock data only) to 248 873 data points in 2025 across all nine topics."
+      },
+      "vfig-p040": {
+        "role": "figure",
+        "shows": [
+          "16"
+        ],
+        "saw": "Fig. 16, a stacked horizontal age-pyramid bar chart showing 2024 population size in thousands by five-year age group and World Bank income group",
+        "draft": "Fig. 16, ‘Age population pyramid by World Bank income group in 2024, expressed as population size in 1000s by income group’ (Source: UN World Population Prospects 2024). A horizontal stacked bar chart plotting five-year age cohorts from 0–4 up to 100+ against population size in thousands (0 to 350 000 on each side), disaggregated into Low-income, Lower-middle-income, Upper-middle-income, and High-income countries (World Bank FY 2026 classification)."
+      },
+      "vfig-p042": {
+        "role": "figure",
+        "shows": [
+          "17"
+        ],
+        "saw": "Fig. 17, a two-panel grouped horizontal bar chart showing the age distribution of (a) medical doctors and (b) nursing personnel across six age brackets by World Bank income group",
+        "draft": "Fig. 17, ‘Age distribution of (a) medical doctors and (b) nursing personnel, by income group’ (Source: WHO National Health Workforce Accounts, 2025, latest available data for 122 countries for medical doctors and 142 countries for nursing personnel over 2015–2024). Two grouped horizontal bar charts showing the percentage of the workforce in six age brackets (<25, 25–34, 35–44, 45–54, 55–64, and 65+) across Low-income, Lower-middle-income, Upper-middle-income, and High-income countries for (a) medical doctors (0.0% to 50.0% scale) and (b) nursing personnel (0.0% to 50.0% scale)."
+      },
+      "vfig-p044": {
+        "role": "figure",
+        "shows": [
+          "18"
+        ],
+        "saw": "Fig. 18, a two-panel scatter plot comparing the percentage aged under 35 against the percentage aged 55 and over for (a) medical doctors and (b) nursing personnel by country income group",
+        "draft": "Fig. 18, ‘Relative proportions of (a) medical doctors and (b) nursing personnel aged over 55 years and below 35 years, by income group’ (Source: WHO National Health Workforce Accounts, 2025, latest available data over 2015–2024). Two scatter plots — panel (a) for medical doctors and panel (b) for nursing personnel — plotting each country’s percentage aged <35 on the horizontal axis (0% to 80%) against its percentage aged 55+ on the vertical axis (0% to 60%), colour-coded by World Bank FY 2026 income group (Low-income, Lower-middle-income, Upper-middle-income, and High-income countries), with a diagonal equality line indicating where the share of workers near retirement (55+) equals the share of young workers (<35)."
+      }
+    }
+  },
+  "attribution": {
+    "9789240101197-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+      },
+      "inspected_at": "2026-10-01"
+    },
+    "9789240116191-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+      },
+      "inspected_at": "2026-10-01"
+    },
+    "9789240010567-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+      },
+      "inspected_at": "2026-10-01"
+    },
+    "9789240093362-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+      },
+      "inspected_at": "2026-10-01"
+    },
+    "9789241511766-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_013WbQekVypi9A6YQbLDXMmJ"
+      },
+      "inspected_at": "2026-10-01"
+    },
+    "9789241549912-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5",
+        "session": "https://claude.ai/code/session_013ZJ1uYnvBifNcPaVPVJbUS"
+      },
+      "inspected_at": "2026-10-26"
+    },
+    "9789241549912-webannexes-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5",
+        "session": "https://claude.ai/code/session_013ZJ1uYnvBifNcPaVPVJbUS"
+      },
+      "inspected_at": "2026-10-26"
+    },
+    "9789241549912-websupplement-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5-5",
+        "session": "https://claude.ai/code/session_013ZJ1uYnvBifNcPaVPVJbUS"
+      },
+      "inspected_at": "2026-10-26"
+    },
+    "9789240016514-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs"
+      },
+      "inspected_at": "2026-10-15"
+    },
+    "9789240099456-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs"
+      },
+      "inspected_at": "2026-10-15"
+    },
+    "who-2019-ncov-digital-certificates-vaccination-20211-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01Pc8vSeXCwp5Ckvmz56cMDs"
+      },
+      "inspected_at": "2026-10-15"
+    },
+    "b0426": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "antigravity",
+        "model": "not-disclosed",
+        "session": "conversation://31bdb4cc-5f60-47ee-a6d1-c3c964fa6c26"
+      },
+      "inspected_at": "2026-10-30"
+    },
+    "who-his-hwf-nhwa-20171-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "antigravity",
+        "model": "not-disclosed",
+        "session": "conversation://e5cc84c3-6df4-4f3c-9b95-d302a36c14d2"
+      },
+      "inspected_at": "2026-10-30"
+    },
+    "9789240081291-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "antigravity",
+        "model": "gemini"
+      },
+      "inspected_at": "2026-10-30"
+    },
+    "9789241514446-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://1540eaa1-d5b0-4ca3-aea5-eddeb2798382"
+      },
+      "inspected_at": "2026-10-30"
+    },
+    "9789241513111-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "antigravity",
+        "model": "not-disclosed",
+        "session": "conversation://fce2e546-9b36-4d24-995c-c5c85c73807b"
+      },
+      "inspected_at": "2026-10-30"
+    },
+    "9789240122925-eng": {
+      "inspected_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://e083ca61-5100-484e-9e88-6af4ce3f56a1"
+      },
+      "inspected_at": "2026-10-30"
+    }
+  }
+}

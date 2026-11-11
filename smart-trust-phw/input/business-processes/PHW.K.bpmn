@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.K.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.K.Collaboration">
+    <bpmn:participant id="PHW.K.Participant" name="K. Verify a Certificate and its Status (shared block B7)" processRef="PHW.K" />
+  </bpmn:collaboration>
+  <bpmn:process id="PHW.K" name="K. Verify a Certificate and its Status (shared block B7)" isExecutable="false">
+    <bpmn:documentation>Shared block B7 of the BPMN reuse proposal (Q-BPMN-1 A, 2026-11-01): one verifying process for every certificate type. Steps are taken from smart-icvp's 'Verifying an ICVP Claim' and 'Verify the Certificate Status (Subprocess)' diagrams. A certificate presented as a Verifiable Health Link goes through process C instead. Call it from another IG with bpmn:import namespace http://smart.who.int/trust-phw/bpmn and calledElement PHW.K (Q-BPMN-2 A).</bpmn:documentation>
+    <bpmn:laneSet id="PHW.K.LaneSet">
+      <bpmn:lane id="PHW.Lane.Holder" name="Certificate Holder (person / Personal Health Wallet)">
+        <bpmn:documentation>smart-icvp: 'Certificate Holder'.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.K.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.K.VHL</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.Verifier" name="Verifier (with or without a status checking application)">
+        <bpmn:documentation>smart-icvp: 'Verifier' and 'Status Checking Application'.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.K.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.K.Gateway1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.K.Gateway2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.K.Manual</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.K.4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.K.Gateway3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.K.6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.K.Gateway4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.K.8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.K.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.TrustAnchor" name="Trust Anchor (GDHCN or another accepted anchor)">
+        <bpmn:documentation>Publishes the issuers' public keys: [ITI-YY2] Retrieve Trust List with DID. smart-icvp: 'Retrieve public key from WHO GDHCN'.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.K.5</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.IssuingAuthority" name="Issuing Public Health Authority (certificate registry)">
+        <bpmn:documentation>smart-icvp: 'National/International PHA'.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.K.7</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.K.Start" name="Certificate presented">
+      <bpmn:documentation>smart-icvp: 'Present ICVP Certificate'.</bpmn:documentation>
+      <bpmn:outgoing>PHW.K.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:task id="PHW.K.1" name="K1. Receive the claim">
+      <bpmn:documentation>smart-icvp: 'Receive claim of vaccination status'.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow2</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="PHW.K.Gateway1" name="How was it presented?" default="PHW.K.Flow4">
+      <bpmn:documentation>A Verifiable Health Link is redeemed by process C. A signed QR code is checked here. smart-icvp's 'Status checking application available?' is the next question.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow3</bpmn:outgoing>
+      <bpmn:outgoing>PHW.K.Flow4</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="PHW.K.VHL" name="K2. Present and redeem the VHL (process C)" calledElement="PHW.C">
+      <bpmn:documentation>Reuses process C: [ITI-YY4], [ITI-YY2], [ITI-YY5] with consent enforcement.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow3</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow15</bpmn:outgoing>
+    </bpmn:callActivity>
+    <bpmn:exclusiveGateway id="PHW.K.Gateway2" name="Checking application available?" default="PHW.K.Flow6">
+      <bpmn:documentation>smart-icvp: 'Status checking application available?'.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow4</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow5</bpmn:outgoing>
+      <bpmn:outgoing>PHW.K.Flow6</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="PHW.K.Manual" name="K3. Check by hand and decide the claim">
+      <bpmn:documentation>smart-icvp: 'Perform Manual Check and decide the status of the claim'. Done by the Verifier when no checking application is used.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow5</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow14</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="PHW.K.4" name="K4. Decode the QR code and find the key id">
+      <bpmn:documentation>smart-icvp: 'Deserialize the QR Code and identify the Key Id'.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow6</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="PHW.K.Gateway3" name="Key cached locally?" default="PHW.K.Flow10">
+      <bpmn:documentation>smart-icvp: 'Are cached keys available locally?'.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow7</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow8</bpmn:outgoing>
+      <bpmn:outgoing>PHW.K.Flow10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="PHW.K.5" name="K5. Return the issuer's public key [ITI-YY2]">
+      <bpmn:documentation>smart-icvp: 'Retrieve public key from WHO GDHCN'. [ITI-YY2] Retrieve Trust List with DID.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow10</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.K.6" name="K6. Verify the signature and the claim">
+      <bpmn:documentation>smart-icvp: 'Verify QR code signature' and 'Verify Certificate claim'.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow8</bpmn:incoming>
+      <bpmn:incoming>PHW.K.Flow11</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.K.7" name="K7. Find the certificate in the registry and return it">
+      <bpmn:documentation>smart-icvp: 'Identify Certificate in Certificate Registry', 'Retrieve Certificate from Certificate Repository', 'Return Certificate'.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow12</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow13</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="PHW.K.Gateway4" name="">
+      <bpmn:documentation>Merge: every path ends with the result.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow13</bpmn:incoming>
+      <bpmn:incoming>PHW.K.Flow14</bpmn:incoming>
+      <bpmn:incoming>PHW.K.Flow15</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow16</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:task id="PHW.K.8" name="K8. Communicate the result">
+      <bpmn:documentation>smart-icvp: 'Communicate Result back to Verifier'.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow16</bpmn:incoming>
+      <bpmn:outgoing>PHW.K.Flow17</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:endEvent id="PHW.K.End" name="Claim decided">
+      <bpmn:documentation>The verifier has a decision on the claim.</bpmn:documentation>
+      <bpmn:incoming>PHW.K.Flow17</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="PHW.K.Flow1" sourceRef="PHW.K.Start" targetRef="PHW.K.1" />
+    <bpmn:sequenceFlow id="PHW.K.Flow2" sourceRef="PHW.K.1" targetRef="PHW.K.Gateway1" />
+    <bpmn:sequenceFlow id="PHW.K.Flow3" name="As a VHL" sourceRef="PHW.K.Gateway1" targetRef="PHW.K.VHL" />
+    <bpmn:sequenceFlow id="PHW.K.Flow4" name="As a signed QR code" sourceRef="PHW.K.Gateway1" targetRef="PHW.K.Gateway2" />
+    <bpmn:sequenceFlow id="PHW.K.Flow5" name="No" sourceRef="PHW.K.Gateway2" targetRef="PHW.K.Manual" />
+    <bpmn:sequenceFlow id="PHW.K.Flow6" name="Yes" sourceRef="PHW.K.Gateway2" targetRef="PHW.K.4" />
+    <bpmn:sequenceFlow id="PHW.K.Flow7" sourceRef="PHW.K.4" targetRef="PHW.K.Gateway3" />
+    <bpmn:sequenceFlow id="PHW.K.Flow8" name="Yes" sourceRef="PHW.K.Gateway3" targetRef="PHW.K.6" />
+    <bpmn:sequenceFlow id="PHW.K.Flow10" name="No" sourceRef="PHW.K.Gateway3" targetRef="PHW.K.5" />
+    <bpmn:sequenceFlow id="PHW.K.Flow11" sourceRef="PHW.K.5" targetRef="PHW.K.6" />
+    <bpmn:sequenceFlow id="PHW.K.Flow12" sourceRef="PHW.K.6" targetRef="PHW.K.7" />
+    <bpmn:sequenceFlow id="PHW.K.Flow13" sourceRef="PHW.K.7" targetRef="PHW.K.Gateway4" />
+    <bpmn:sequenceFlow id="PHW.K.Flow14" sourceRef="PHW.K.Manual" targetRef="PHW.K.Gateway4" />
+    <bpmn:sequenceFlow id="PHW.K.Flow15" sourceRef="PHW.K.VHL" targetRef="PHW.K.Gateway4" />
+    <bpmn:sequenceFlow id="PHW.K.Flow16" sourceRef="PHW.K.Gateway4" targetRef="PHW.K.8" />
+    <bpmn:sequenceFlow id="PHW.K.Flow17" sourceRef="PHW.K.8" targetRef="PHW.K.End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.K.Diagram">
+    <bpmndi:BPMNPlane id="PHW.K.Plane" bpmnElement="PHW.K.Collaboration">
+      <bpmndi:BPMNShape id="PHW.K.Participant_di" bpmnElement="PHW.K.Participant" isHorizontal="true"><dc:Bounds x="120" y="60" width="2395" height="750" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.Holder_di" bpmnElement="PHW.Lane.Holder" isHorizontal="true"><dc:Bounds x="150" y="60" width="2365" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.Verifier_di" bpmnElement="PHW.Lane.Verifier" isHorizontal="true"><dc:Bounds x="150" y="210" width="2365" height="300" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.TrustAnchor_di" bpmnElement="PHW.Lane.TrustAnchor" isHorizontal="true"><dc:Bounds x="150" y="510" width="2365" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.IssuingAuthority_di" bpmnElement="PHW.Lane.IssuingAuthority" isHorizontal="true"><dc:Bounds x="150" y="660" width="2365" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.Start_di" bpmnElement="PHW.K.Start"><dc:Bounds x="267" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.1_di" bpmnElement="PHW.K.1"><dc:Bounds x="405" y="245" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.Gateway1_di" bpmnElement="PHW.K.Gateway1" isMarkerVisible="true"><dc:Bounds x="670" y="260" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.VHL_di" bpmnElement="PHW.K.VHL"><dc:Bounds x="815" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.Gateway2_di" bpmnElement="PHW.K.Gateway2" isMarkerVisible="true"><dc:Bounds x="875" y="260" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.Manual_di" bpmnElement="PHW.K.Manual"><dc:Bounds x="1020" y="395" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.4_di" bpmnElement="PHW.K.4"><dc:Bounds x="1020" y="245" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.Gateway3_di" bpmnElement="PHW.K.Gateway3" isMarkerVisible="true"><dc:Bounds x="1285" y="260" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.5_di" bpmnElement="PHW.K.5"><dc:Bounds x="1225" y="545" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.6_di" bpmnElement="PHW.K.6"><dc:Bounds x="1430" y="245" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.7_di" bpmnElement="PHW.K.7"><dc:Bounds x="1635" y="695" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.Gateway4_di" bpmnElement="PHW.K.Gateway4" isMarkerVisible="true"><dc:Bounds x="1900" y="260" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.8_di" bpmnElement="PHW.K.8"><dc:Bounds x="2045" y="245" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.K.End_di" bpmnElement="PHW.K.End"><dc:Bounds x="2317" y="267" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.K.Flow1_di" bpmnElement="PHW.K.Flow1">
+        <di:waypoint x="303" y="135" />
+        <di:waypoint x="354" y="135" />
+        <di:waypoint x="354" y="285" />
+        <di:waypoint x="405" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow2_di" bpmnElement="PHW.K.Flow2">
+        <di:waypoint x="575" y="285" />
+        <di:waypoint x="670" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow3_di" bpmnElement="PHW.K.Flow3">
+        <di:waypoint x="720" y="285" />
+        <di:waypoint x="767" y="285" />
+        <di:waypoint x="767" y="135" />
+        <di:waypoint x="815" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow4_di" bpmnElement="PHW.K.Flow4">
+        <di:waypoint x="720" y="285" />
+        <di:waypoint x="875" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow5_di" bpmnElement="PHW.K.Flow5">
+        <di:waypoint x="900" y="310" />
+        <di:waypoint x="900" y="435" />
+        <di:waypoint x="1020" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow6_di" bpmnElement="PHW.K.Flow6">
+        <di:waypoint x="925" y="285" />
+        <di:waypoint x="1020" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow7_di" bpmnElement="PHW.K.Flow7">
+        <di:waypoint x="1190" y="285" />
+        <di:waypoint x="1285" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow8_di" bpmnElement="PHW.K.Flow8">
+        <di:waypoint x="1335" y="285" />
+        <di:waypoint x="1430" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow10_di" bpmnElement="PHW.K.Flow10">
+        <di:waypoint x="1310" y="310" />
+        <di:waypoint x="1310" y="545" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow11_di" bpmnElement="PHW.K.Flow11">
+        <di:waypoint x="1395" y="585" />
+        <di:waypoint x="1515" y="585" />
+        <di:waypoint x="1515" y="325" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow12_di" bpmnElement="PHW.K.Flow12">
+        <di:waypoint x="1600" y="285" />
+        <di:waypoint x="1720" y="285" />
+        <di:waypoint x="1720" y="695" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow13_di" bpmnElement="PHW.K.Flow13">
+        <di:waypoint x="1805" y="735" />
+        <di:waypoint x="1925" y="735" />
+        <di:waypoint x="1925" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow14_di" bpmnElement="PHW.K.Flow14">
+        <di:waypoint x="1190" y="435" />
+        <di:waypoint x="1925" y="435" />
+        <di:waypoint x="1925" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow15_di" bpmnElement="PHW.K.Flow15">
+        <di:waypoint x="985" y="135" />
+        <di:waypoint x="1925" y="135" />
+        <di:waypoint x="1925" y="260" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow16_di" bpmnElement="PHW.K.Flow16">
+        <di:waypoint x="1950" y="285" />
+        <di:waypoint x="2045" y="285" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.K.Flow17_di" bpmnElement="PHW.K.Flow17">
+        <di:waypoint x="2215" y="285" />
+        <di:waypoint x="2317" y="285" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
