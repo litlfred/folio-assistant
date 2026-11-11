@@ -1,0 +1,130 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/c6fed24c-9852-409b-bb65-e9e3dc2c0cc6",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Casebook on ethical issues in international health research / edited by Richard Cash [... et al]",
+  "parents": [],
+  "handle": "10665/44118",
+  "metadataRef": "catalogue/records/10665-44118.dc.json",
+  "bitstreams": [
+    {
+      "name": "9789290219576_ara.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 2335284,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/4eac8ee7-b6b7-4122-88a5-3dd89f9ca0c3/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 095b233b9d44de2a585964468708a65b; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "9789241547727_eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 7276076,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/b5b7d867-057e-48a1-a08f-3f4d9d41ffd8/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 31bd5d9f1d2d37844a1cb8cba3a2ae30; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "9787117215336-chi.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 3238879,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/e06a2da1-06fa-495d-96b9-d3c3af817eb9/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 7b8e845e61f99ab330bfaab5598f3e5e; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "9789244547724_rus.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 2906057,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/e8703a5e-462d-4f0f-9f9a-fccb639d2806/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum b3d09d1a305f250ca021ff975e24087e; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-44118-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 249889,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 415,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "9789290219576_ara.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-44118-cover.png",
+        "purpose": "working",
+        "bytes": 249889,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "9903c11cbd12e2cf229933860f114e6f10f67e0d7cd74d6eb0f4a72fa6f691f4",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "249,889 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "owner approval: special development authorization for WHO staff in development environment, 2026-10-08, extended to the IRIS pilot covers by the owner on 2026-11-10 (card Q-IRIS-7 = A); WHO emblem masked. The publication's own statement (9789290219576_ara.pdf): p. 3: \"2013 ،© منظمة الصحة العاملية\"; p. 12: \"© who/ Photolibrary\"; p. 16: \"© WHO/TDR/Crump\".",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner, card Q-IRIS-7 (2026-11-10)"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "owner approval: special development authorization for WHO staff in development environment, 2026-10-08, extended to the IRIS pilot covers by the owner on 2026-11-10 (card Q-IRIS-7 = A); WHO emblem masked. The publication's own statement (9789290219576_ara.pdf): p. 3: \"2013 ،© منظمة الصحة العاملية\"; p. 12: \"© who/ Photolibrary\"; p. 16: \"© WHO/TDR/Crump\".",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner, card Q-IRIS-7 (2026-11-10)"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of 9789290219576_ara.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 608.64x841.89pt page, from page 1 of 9789290219576_ara.pdf, fetched once from https://iris.who.int/bitstreams/4eac8ee7-b6b7-4122-88a5-3dd89f9ca0c3/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 798e5653141fe8af58e936adeaf64922b8b41c738e5ee84fa4c86ce75e170c1e) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. MASKED: the WHO emblem and wordmark are blanked to flat grey before these bytes are written -- see `maskedRegions`."
+      },
+      "maskedRegions": [
+        {
+          "x0": 125,
+          "y0": 385,
+          "x1": 188,
+          "y1": 404,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        }
+      ]
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/c6fed24c-9852-409b-bb65-e9e3dc2c0cc6"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: cited by the immunization DAK (10665/380303 text, smart-immunizations). IRIS files it in the collection \"Publications\" (12760c88-43e7-4670-8d4a-5a2a70dbdb39), which is not a node here, so parents is [] (rule R10)."
+  }
+}

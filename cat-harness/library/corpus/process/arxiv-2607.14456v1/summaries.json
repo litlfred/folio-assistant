@@ -1,0 +1,462 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "arxiv-2607.14456v1",
+  "summaries": [
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-001",
+      "source": "sections/page-001.md",
+      "source_hash": "a7c126c072d374e1ddb54a2b5de6cad5723415cac24e6c2547cc453c0c87b72f",
+      "narrative": [
+        {
+          "text": "Title, abstract, and opening of Section 1 (Introduction) of Borman et al. (Commonwealth Bank of Australia, SCALE workshop at ICML 2026), \"Beyond Generalist LLMs: Specialist Agentic Systems for Structured Code Workflow Execution\". Abstract: evaluates a specialist workflow that compiles deterministic BPMN 2.0 diagrams into executable ReAct agents against generalist coding agents (Roo and Cline), reporting ~9-20 percentage points higher tool-use exactness, 2-4x lower penalty-adjusted latency, 3x fewer tool-call errors, >95% lower generation token cost, and zero repair iterations. Section 1 contrasts generalist IDE and multi-agent frameworks (Roo, Cline, FLOW, AFLOW, AutoGen, MetaGPT), which incur high planning/token overhead and cross-generation inconsistency, with specialist templated workflows where the LLM performs localised reasoning within predefined steps.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-002",
+      "source": "sections/page-002.md",
+      "source_hash": "30bd7d9bce7f69e67d52446d2b5df26386677152f2b6b538ec1f6c3f76a9fc3b",
+      "narrative": [
+        {
+          "text": "Continuation of Section 1, Section 1.1 (Business Processes), and start of Section 2.1 (BPMN and Traditional Workflow Execution). Argues that although specialist workflows require higher upfront design effort, they suit repeated or large-scale deployment by producing consistent outputs and scoping active context to the minimum needed per subtask, avoiding long-context degradation and lowering token cost as standard operating procedures evolve. The authors compile BPMN 2.0 models into a ReAct-style control graph where each BPMN node defines a typed tool contract and node-local policy, and the control plane enforces branches/joins, per-node context scoping, and contract-derived runtime validation with targeted retries. Section 1.1 motivates BPMN as an auditable enterprise workflow representation, and Section 2.1 introduces deterministic rule-based BPMN engines.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-003",
+      "source": "sections/page-003.md",
+      "source_hash": "b014abdd098d6a04132064605da06000926537a3be38a0c82418948c6bf6a55c",
+      "narrative": [
+        {
+          "text": "Remainder of Section 2 (Literature Review: 2.1 BPMN and Traditional Workflow Execution, 2.2 LLMs and Agentic Workflows, 2.3 BPMN and LLM Integration) and Section 3 / 3.1 (Methodology: Workflow Selection). Reviews limitations of static BPMN execution under unstructured inputs, general-purpose LLM agentic architectures (ReAct, Tree-of-Thoughts, PAL, AFLOW, MaAS), and prior text-to-BPMN modelling work. Section 3.1 introduces ten author-constructed deterministic BPMN workflows spanning 9 to 52 nodes across e-commerce, cost optimisation, risk, and information retrieval, noting the absence of an established BPMN-to-agent execution benchmark and acknowledging design-bias and determinism scope limits.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-004",
+      "source": "sections/page-004.md",
+      "source_hash": "99e9841bb33fecf93a7689f3efea5b6c036dbe9f17355d67ab46a3e3a9ef9f57",
+      "narrative": [
+        {
+          "text": "Sections 3.2 (Agentic System Design), 3.3 (Proposed System), and start of Section 4.1 (Baseline Systems and Experimental Setup). Explains why the target is a ReAct agent rather than a fixed DAG (adaptability to runtime conditions, scalability to dynamic multi-step coordination, and natural-language prompt editability). Section 3.3 details the five-stage specialist pipeline: (1) BPMN parsing into tasks, decision gateways, and API calls; (2) reusable API client service generation; (3) per-node tool/context generation; (4) iterative self-verification and refinement of each tool; and (5) agent assembly behind a FastAPI service. Section 4.1 describes the comparison against VS Code extensions Roo and Cline on identical BPMN 2.0 XML, API specs, and backend LLM, and notes that AutoGen, MetaGPT, and FLOW failed to produce working end-to-end agents.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-005",
+      "source": "sections/page-005.md",
+      "source_hash": "225bd53862317ea34a0df3bc174f12a6c41f2649156cffe4d6c5ae0aff89c22f",
+      "narrative": [
+        {
+          "text": "Figure 1 caption (Proposed System Architecture), conclusion of Section 4.1, Section 4.2 (Evaluation Metrics), and start of Section 4.2.1 (Agent Generation Evaluation). Obtaining 10 compiled, executable agents per workflow across the 10 workflows (9 nodes/10 edges for Weather up to 52 nodes/60 edges for Cart) took 371 generation attempts (300 successes, 71 failures): 117 attempts each for the specialist system and Cline (85.5% success rate) and 137 for Roo (73.0%). The 300 agents were evaluated across 30,543 test cases (~102 per run) covering all control-flow flag combinations; Weather (46.4% failure rate) and Tournament (42.3%) were hardest, while Social, Spam, and News had zero failures. Cross-run coefficient of variation of Tool-Use Exactness was 0.63 (specialist), 0.86 (Cline), and 1.05 (Roo). Section 4.2.1 defines repair iterations and token usage.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-006",
+      "source": "sections/page-006.md",
+      "source_hash": "8a720d357b0b78455d859fbccce606f558fabc6eb48f1e4a0bba4c343ee5903e",
+      "narrative": [
+        {
+          "text": "End of Section 4.2.1, Section 4.2.2 (Agent Run Evaluations using GPT-4.1), and Section 4.3 (Results: 4.3.1 Agent Generation Results and 4.3.2 Agent Run Evaluation Results). Defines LLM-as-a-judge Process Adherence, binary Tool-Use Exactness (TUE), and Penalty-Adjusted Latency Latency = T / max(epsilon, C - (M + E + O)) with epsilon = 1. In generation (4.3.1), the specialist system required 0 repair iterations (vs 2.08 for Roo and 1.89 for Cline) and averaged 49.24k input / 5.82k output tokens (~55k total) vs 1,484.46k/17.40k for Roo and 1,029.27k/15.36k for Cline. In agent execution (4.3.2), the specialist system achieved 57.69% TUE (vs 48.62% Cline, 38.11% Roo), 1.27 mean tool-call errors per run (vs 3.19 Cline, 3.22 Roo, mostly missed calls at 0.86 vs 2.05 and 1.76), 54.68% process adherence (vs 51.57% Cline, 42.43% Roo), and 2.49 s penalty-adjusted latency per effective step (vs 6.59 s Cline, 9.08 s Roo).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-007",
+      "source": "sections/page-007.md",
+      "source_hash": "5848c5d5310771ac6391705a1b56f27b280e57c1247a57fb593eba6f253ecbd6",
+      "narrative": [
+        {
+          "text": "Figure 2 caption (Agent Generation Metrics: repair iterations and input/output token usage), closing discussion of Section 4.3.2, and Section 5 (Conclusion). Summarises how externalised BPMN control flow, targeted context management, and modular prompt/tool/orchestration decomposition yield higher tool-use exactness and process adherence, lower latency and error rates, >95% token savings, and zero repair iterations compared to Roo and Cline. Notes that evaluation is scoped to deterministic workflows under default low-configuration baseline usage and outlines future work on heavily tuned generalist baselines and component-level ablations.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-008",
+      "source": "sections/page-008.md",
+      "source_hash": "2e48dce262946cc748007d1d7e1acb1b8c5e23e857ea693e26051a4fa627a418",
+      "narrative": [
+        {
+          "text": "Section 6 (GenAI Usage Disclosure: LLMs were used to generate and execute the evaluated agentic workflows and for light editing such as grammar and sentence restructuring) and the first part of References (Aljohani & Do 2025 through Hong et al. 2024).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-009",
+      "source": "sections/page-009.md",
+      "source_hash": "972ca814fecd24ae2580af26878792c1c9b5ad07212e3af996e3a4f053c0ad51",
+      "narrative": [
+        {
+          "text": "Continuation of References (IEEE Task Force on Process Mining 2025 through Sapkota et al. 2026).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-010",
+      "source": "sections/page-010.md",
+      "source_hash": "8fd2b7aac890482504560cc283a3e579f9c10abc9b79a6212283464d86e99c3f",
+      "narrative": [
+        {
+          "text": "Conclusion of References (Schick et al. 2023 through Zhang et al. 2025b).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-011",
+      "source": "sections/page-011.md",
+      "source_hash": "e10fcf891cc6c025e7c48fb0178d74bdfe01f4699d9f943fceb53225a50b45b1",
+      "narrative": [
+        {
+          "text": "Appendix A / A.1 (Workflow Agent Runs): section heading and caption for Figure 3 (per-workflow agent run evaluation metrics: Tool-Use Exactness, Tool-Call Errors, Latency, and Process Adherence for the specialist system).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-012",
+      "source": "sections/page-012.md",
+      "source_hash": "157b777a96e6ea076de20accd5089d4f5763c7c484bfad92528a82bbcbf05e1c",
+      "narrative": [
+        {
+          "text": "Appendix A.2 (Workflow Summary Table, Table 1): lists the ten deterministic BPMN evaluation workflows with brief overview, node count, and edge count: Cart (52 nodes, 60 edges), Cost (12, 15), Deal (11, 13), Labelling (13, 16), News (34, 38), Risk (23, 25), Social Media (25, 29), Promotion (18, 19), Tournament (14, 17), and Weather (9, 10).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-013",
+      "source": "sections/page-013.md",
+      "source_hash": "f0a02816ae1e076865f824f5af5e7355dc00590526c2f588505008f1a2d05d69",
+      "narrative": [
+        {
+          "text": "Appendix A.3 (Key Metrics by Approach): section heading and caption for Figure 4 comparing aggregate agent run evaluation metrics across approaches.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-014",
+      "source": "sections/page-014.md",
+      "source_hash": "b100330f5561253c339d006a2e5dc3eefc9dc7dba5ade2fc2c7bb3f0a1f271eb",
+      "narrative": [
+        {
+          "text": "Appendix A.4 (Base Prompt for Agent Generation, Figure 5): verbatim base prompt given to Roo and Cline to create a ReAct agent in `{framework}_agent_experiment_{num}` with `agent.py` (FastAPI service on `localhost:7860` exposing `/chat` and `/get_history`), `tools.py`, and `prompts/agent_prompt.md`, reading `OPENAI_BASE_URL`, `OPENAI_API_KEY`, and `AGENT_LLM` from environment variables and implementing the supplied `<API_SPEC>` and `<BPMN>` blocks without reading other files or executing the code.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-015",
+      "source": "sections/page-015.md",
+      "source_hash": "b6fb61ffde14eb7124f245495d0d965d0faf8a145658ad9c7df3d83d7a811f7f",
+      "narrative": [
+        {
+          "text": "Appendix A.5 (BPMN Specifications for Each Workflow): section heading and Figure 6 caption for the online retail cart/order fulfillment BPMN workflow (cart validation, payment authorisation, inventory reservation, shipping or cancellation/backorder routing, delivery monitoring, and delivery confirmation, refund, or reorder).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-016",
+      "source": "sections/page-016.md",
+      "source_hash": "d152ee429e6e19a3116e4e3d1ffdb8747ff694634b0f2cf4573826e595db0c79",
+      "narrative": [
+        {
+          "text": "Figure 7 caption: costing/estimation BPMN workflow consisting of a deterministic sequence of data-gathering and calculation tasks with decision gateways selecting cost components and aggregating a final cost/price output.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-017",
+      "source": "sections/page-017.md",
+      "source_hash": "7f235774b46a76a7e1ad8d50745c29a429bc4f78009faf412bbfca765a195a95",
+      "narrative": [
+        {
+          "text": "Figure 8 caption: deal assessment BPMN workflow evaluating a candidate deal through staged checks and scoring steps and routing via decision gateways to accept, reject, or escalate outcomes.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-018",
+      "source": "sections/page-018.md",
+      "source_hash": "8b37e8dfbe81d549b2ba110cb043387736e840f8d3cc526666b6f0efd61072ab",
+      "narrative": [
+        {
+          "text": "Figure 9 caption: rules/criteria-driven labelling/classification BPMN workflow applying sequential checks and gateways to assign labels and/or exclude items.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-019",
+      "source": "sections/page-019.md",
+      "source_hash": "b85cea3ed8e1bedee7de9238310e0034e1e57da79c18b30f635b213ccda90afa",
+      "narrative": [
+        {
+          "text": "Figure 10 caption: news processing BPMN workflow that ingests an item, performs validation and enrichment steps, and routes through conditional eligibility/quality branches to categorise, discard, or escalate.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-020",
+      "source": "sections/page-020.md",
+      "source_hash": "cec5e31cef0121e4bc6ada03ed6bcecc310c59b8394af6b7b4a4e9e3233cab6b",
+      "narrative": [
+        {
+          "text": "Figure 11 caption: risk and opportunity classifier BPMN workflow that computes risk/opportunity signals, derives a risk/opportunity/mixed/neutral label, and routes via a decision gateway into high/medium vs low priority handling paths.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-021",
+      "source": "sections/page-021.md",
+      "source_hash": "4d9f571e024d728c761f8a27ae4f1edfbc72130dd73c9d4bbe06312f6e67bbc4",
+      "narrative": [
+        {
+          "text": "Figure 12 caption: social media BPMN workflow performing content, user, and context checks and routing via decision gateways to allow, flag, or escalate.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-022",
+      "source": "sections/page-022.md",
+      "source_hash": "e845b909b695cbc67f9431c60abeb075ed94de95abf54e4f0a7fb02fcbbefc70",
+      "narrative": [
+        {
+          "text": "Figure 13 caption: customer promotion BPMN workflow that fetches and validates customer profiles, retrieves order history and loyalty points, checks eligibility, segments customers into high/low value tiers, calculates tier-appropriate discounts, generates recommendations, and routes notifications by urgency.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-023",
+      "source": "sections/page-023.md",
+      "source_hash": "3369d552e9945d5cdeb7f5d0d37709f29920be40c7a49c284b2bba9b05ffdedd",
+      "narrative": [
+        {
+          "text": "Figure 14 caption: tournament/bracket BPMN workflow advancing participants through staged rounds via decision gateways until a final winner/outcome is determined.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/arxiv-2607.14456v1/blocks/prose-page-024",
+      "source": "sections/page-024.md",
+      "source_hash": "27e9fcc92a0bcda64d9cf7f187a83a6f5eadf8beb4f7829c77650afd73fba8c2",
+      "narrative": [
+        {
+          "text": "Figure 15 caption: deterministic weather BPMN workflow performing data retrieval and transformation steps with conditional availability/threshold branches to produce a final forecast/decision output.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://4b870190-b691-495d-b192-749a1f7716b4"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    }
+  ]
+}

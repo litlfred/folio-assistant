@@ -1,0 +1,98 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/79264c53-7e20-4d0e-b3e6-c3cb24d1823c",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Acta resumida de la primera sesión",
+  "parents": [],
+  "handle": "10665/145614",
+  "metadataRef": "catalogue/records/10665-145614.dc.json",
+  "bitstreams": [
+    {
+      "name": "EB22_Min-1_spa.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 2671624,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/15bae09b-f0a7-4648-aa37-e6c96e412aaf/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 8f984e920823ed260679cc8cd5483897; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-145614-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 35587,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 388,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "EB22_Min-1_spa.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-145614-cover.png",
+        "purpose": "working",
+        "bytes": 35587,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "3f14e7382495adc70142278f997c0b5def6881dadce6e6618956226ea5c28e14",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "35,587 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "owner approval: special development authorization for WHO staff in development environment, 2026-10-08, extended to the IRIS pilot covers by the owner on 2026-11-10 (card Q-IRIS-7 = A); WHO emblem masked. The publication's own statement (EB22_Min-1_spa.pdf): p. 3: \"Uni¿n d© Repúblicas\"; p. 6: \"EL Profesor CANAPERIA propon© al Dr Habernoll y el Dr ВЕЮШФ apoya la\"; p. 15: \"tanto, elegirse ningún tema sobre ©1 que la 0Ю no tenga ya algunos conocimientos,\".",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner, card Q-IRIS-7 (2026-11-10)"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "owner approval: special development authorization for WHO staff in development environment, 2026-10-08, extended to the IRIS pilot covers by the owner on 2026-11-10 (card Q-IRIS-7 = A); WHO emblem masked. The publication's own statement (EB22_Min-1_spa.pdf): p. 3: \"Uni¿n d© Repúblicas\"; p. 6: \"EL Profesor CANAPERIA propon© al Dr Habernoll y el Dr ВЕЮШФ apoya la\"; p. 15: \"tanto, elegirse ningún tema sobre ©1 que la 0Ю no tenga ya algunos conocimientos,\".",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner, card Q-IRIS-7 (2026-11-10)"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of EB22_Min-1_spa.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 582.96x753.12pt page, from page 1 of EB22_Min-1_spa.pdf, fetched once from https://iris.who.int/bitstreams/15bae09b-f0a7-4648-aa37-e6c96e412aaf/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 9f8ec13a3a858f98243a3363fac78978dc8e29ab714b4783c0a9872436eac870) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. MASKED: the WHO emblem and wordmark are blanked to flat grey before these bytes are written -- see `maskedRegions`."
+      },
+      "maskedRegions": [
+        {
+          "x0": 193,
+          "y0": 23,
+          "x1": 246,
+          "y1": 35,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        },
+        {
+          "x0": 245,
+          "y0": 23,
+          "x1": 281,
+          "y1": 35,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        }
+      ]
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/79264c53-7e20-4d0e-b3e6-c3cb24d1823c"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"EB22\" (0c92bae9-61fd-404f-baf5-848011dc9f22), which is not a node here, so parents is [] (rule R10)."
+  }
+}

@@ -1,0 +1,94 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/arxiv-2607.14456v1/blocks/figure-img-p020-1",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p020-1.png",
+  "pageStart": 20,
+  "pageEnd": 20,
+  "narrative": [
+    {
+      "text": "Figure 11, the Risk workflow — a risk-and-opportunity classifier. It receives trend, sentiment and metrics data, validates payloads and schema, initialises a run context, loads classifier config (thresholds, weights, labels) and domain rules, preprocesses signals by normalising scales and handling missing values, builds feature vectors per entity or trend, and computes a risk score and an opportunity score. Two threshold gateways follow — \"Risk score above risk_threshold?\" tagging risk_candidate or not_risk_candidate, then \"Opportunity score above opportunity_threshold?\" tagging opportunity_candidate or not — after which a final label is derived from {risk, opportunity, mixed, neutral}. A materiality gateway assigns LOW priority or HIGH/MEDIUM, and the run builds and persists a risk_opportunity record with scores, labels and reasons. This is the workflow on which Figure 3 shows the specialist system's largest advantage.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "claude-opus-5"
+      },
+      "drafted_at": "2026-09-23",
+      "lang": "en"
+    },
+    {
+      "text": "Figure 11, le workflow Risk, un classificateur de risques et d'opportunités. Il reçoit des données de tendance, de sentiment et de métriques, valide les charges utiles et le schéma, initialise un contexte d'exécution, charge la configuration du classificateur (seuils, poids, étiquettes) et les règles du domaine, prétraite les signaux en normalisant les échelles et en traitant les valeurs manquantes, construit des vecteurs de caractéristiques par entité ou tendance, et calcule un score de risque et un score d'opportunité. Suivent deux passerelles de seuil, « Risk score above risk_threshold? » qui marque risk_candidate ou not_risk_candidate, puis « Opportunity score above opportunity_threshold? » qui marque opportunity_candidate ou non, après quoi une étiquette finale est dérivée parmi {risk, opportunity, mixed, neutral}. Une passerelle de matérialité attribue une priorité LOW ou HIGH/MEDIUM, et l'exécution construit et persiste un enregistrement risk_opportunity avec scores, étiquettes et motifs. C'est le workflow sur lequel la figure 3 montre le plus grand avantage du système spécialisé.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "fr"
+    },
+    {
+      "text": "Figura 11, el flujo Risk, un clasificador de riesgos y oportunidades. Recibe datos de tendencias, sentimiento y métricas, valida las cargas y el esquema, inicializa un contexto de ejecución, carga la configuración del clasificador (umbrales, pesos, etiquetas) y las reglas del dominio, preprocesa las señales normalizando escalas y tratando valores ausentes, construye vectores de características por entidad o tendencia y calcula una puntuación de riesgo y otra de oportunidad. Siguen dos pasarelas de umbral: «Risk score above risk_threshold?», que marca risk_candidate o not_risk_candidate, y «Opportunity score above opportunity_threshold?», que marca opportunity_candidate o no; después se deriva una etiqueta final de {risk, opportunity, mixed, neutral}. Una pasarela de materialidad asigna prioridad LOW o HIGH/MEDIUM, y la ejecución construye y guarda un registro risk_opportunity con puntuaciones, etiquetas y motivos. Es el flujo en el que la figura 3 muestra la mayor ventaja del sistema especializado.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "es"
+    },
+    {
+      "text": "الشكل 11، سير عمل Risk، وهو مصنِّف للمخاطر والفرص. يتلقى بيانات الاتجاهات والمشاعر والمقاييس، ويتحقق من الحمولات والمخطط، ويهيّئ سياق تشغيل، ويحمّل إعدادات المصنِّف (العتبات، والأوزان، والتسميات) وقواعد المجال، ويعالج الإشارات مسبقًا بتوحيد المقاييس ومعالجة القيم المفقودة، ويبني متجهات سمات لكل كيان أو اتجاه، ويحسب درجة مخاطر ودرجة فرصة. تليها بوابتا عتبة: «Risk score above risk_threshold?» التي توسم risk_candidate أو not_risk_candidate، ثم «Opportunity score above opportunity_threshold?» التي توسم opportunity_candidate أو عدمه، وبعدها تُشتق تسمية نهائية من {risk، opportunity، mixed، neutral}. وتعيّن بوابة الأهمية أولوية LOW أو HIGH/MEDIUM، ويبني التشغيل سجلّ risk_opportunity بالدرجات والتسميات والأسباب ويحفظه. وهذا هو السير الذي يُظهر فيه الشكل 3 أكبر تفوق للنظام المتخصص.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ar"
+    },
+    {
+      "text": "Рисунок 11, процесс Risk — классификатор рисков и возможностей. Он получает данные о трендах, тональности и метриках, проверяет нагрузки и схему, инициализирует контекст запуска, загружает конфигурацию классификатора (пороги, веса, метки) и правила предметной области, предобрабатывает сигналы, нормализуя шкалы и обрабатывая пропуски, строит векторы признаков по сущностям или трендам и вычисляет оценку риска и оценку возможности. Далее два пороговых шлюза: «Risk score above risk_threshold?», ставящий risk_candidate или not_risk_candidate, затем «Opportunity score above opportunity_threshold?», ставящий opportunity_candidate или нет, после чего итоговая метка выводится из {risk, opportunity, mixed, neutral}. Шлюз существенности назначает приоритет LOW или HIGH/MEDIUM, и запуск формирует и сохраняет запись risk_opportunity с оценками, метками и обоснованиями. Именно на этом процессе рисунок 3 показывает наибольшее преимущество специализированной системы.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "ru"
+    },
+    {
+      "text": "图 11，Risk 工作流，一个风险与机会分类器。它接收趋势、情绪和指标数据，校验载荷和模式，初始化运行上下文，加载分类器配置（阈值、权重、标签）和领域规则，通过归一化尺度和处理缺失值来预处理信号，为每个实体或趋势构建特征向量，并计算风险分和机会分。随后是两个阈值网关：“Risk score above risk_threshold?”标记 risk_candidate 或 not_risk_candidate，再由“Opportunity score above opportunity_threshold?”标记是否为 opportunity_candidate，之后从 {risk, opportunity, mixed, neutral} 中得出最终标签。一个重要性网关分配 LOW 或 HIGH/MEDIUM 优先级，运行构建并持久化带有分数、标签和理由的 risk_opportunity 记录。图 3 显示专用系统优势最大的正是这个工作流。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01TkFVzHu3LN6P5Nj2psquPU"
+      },
+      "drafted_at": "2026-10-24",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/arxiv-2607.14456v1/sections/page-020",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/arxiv-2607.14456v1/manifest.jsonld",
+  "provenance": "ingested"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "kofi",
+  "title": "Kofi (auditor)",
+  "kind": "person",
+  "description": "Persona: an auditor who checks that every access under a data sharing agreement was allowed and its duties were done. Fictional.",
+  "roles": [
+    "auditor"
+  ],
+  "capabilities": [],
+  "meta": {
+    "persona": {
+      "name": "Kofi",
+      "role": "Auditor",
+      "goal": "Show, for any access, which consent and which agreement allowed it.",
+      "needs": [
+        "Provenance that cites the consent and its version",
+        "Duty checks he can run himself"
+      ],
+      "frustrations": [
+        "Logs that say who, but not why"
+      ]
+    }
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/76743201-caec-42ac-83d9-f86c33f59864",
+  "kind": "item",
+  "flavour": "item",
+  "title": "WHO consolidated guidelines on tuberculosis: module 3: diagnosis: web annex B: evidence synthesis and analysis",
+  "parents": [],
+  "handle": "10665/381036",
+  "metadataRef": "catalogue/records/10665-381036.dc.json",
+  "bitstreams": [
+    {
+      "name": "B09341-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 20343996,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/1afa456f-dada-4d19-95a3-b7c2fba2d565/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum de03d30254c0920c4434e9a38e840a1c; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-381036-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 6503,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 389,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "B09341-eng.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-381036-cover.png",
+        "purpose": "working",
+        "bytes": 6503,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "1193b5bd876d03d7117381ad6ccb3035c1b0b718e3896d8c83c4b546ee8646d6",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "6,503 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (B09341-eng.pdf, p. 2): \"Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (B09341-eng.pdf, p. 2): \"Some rights reserved. This work is available under the Creative Commons Attribution-NonCommercial-\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of B09341-eng.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 612.0x792.0pt page, from page 1 of B09341-eng.pdf, fetched once from https://iris.who.int/bitstreams/1afa456f-dada-4d19-95a3-b7c2fba2d565/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 83e481b3ccc61cf40773b6743c79186ae2dd1b160fc255606910f7f962c0dd16) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. Page 1 carries no WHO emblem (checked by eye), so nothing is masked."
+      }
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/76743201-caec-42ac-83d9-f86c33f59864"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}

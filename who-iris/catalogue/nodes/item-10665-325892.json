@@ -1,0 +1,91 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/553ef669-75fd-4f15-8873-964b2964ed33",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Policy brief: update of recommendations on first- and second-line antiretroviral regimens",
+  "parents": [],
+  "handle": "10665/325892",
+  "metadataRef": "catalogue/records/10665-325892.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO-CDS-HIV-19.15-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 876990,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/0d7426a0-bdb1-4b0f-b2ba-fc5cfb130d58/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 078e0eca361ad0ae2ea1ddbaa9200801; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-325892-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 156517,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 425,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "WHO-CDS-HIV-19.15-eng.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-325892-cover.png",
+        "purpose": "working",
+        "bytes": 156517,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "02c754d4253742536a318d101855a1a0ba584f326e59f343de53782b1a5ba153",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "156,517 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (WHO-CDS-HIV-19.15-eng.pdf, p. 2): \"Some rights reserved. This work is available under the Creative Commons Attribution-\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (WHO-CDS-HIV-19.15-eng.pdf, p. 2): \"Some rights reserved. This work is available under the Creative Commons Attribution-\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of WHO-CDS-HIV-19.15-eng.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 595.28x841.89pt page, from page 1 of WHO-CDS-HIV-19.15-eng.pdf, fetched once from https://iris.who.int/bitstreams/0d7426a0-bdb1-4b0f-b2ba-fc5cfb130d58/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 d95b6e1ab6fbf3e877f1f204ef94d3a21f3f1d3f5c2d0301667477405aed3ca6) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. MASKED: the WHO emblem and wordmark are blanked to flat grey before these bytes are written -- see `maskedRegions`."
+      },
+      "maskedRegions": [
+        {
+          "x0": 14,
+          "y0": 384,
+          "x1": 85,
+          "y1": 409,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        }
+      ]
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/553ef669-75fd-4f15-8873-964b2964ed33"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: cited by the HIV DAK (10665/375230 text, smart-hiv). IRIS files it in the collection \"Technical Documents\" (43c3b8d5-432d-4e1b-a5bf-3cc6129d7266), which is not a node here, so parents is [] (rule R10)."
+  }
+}

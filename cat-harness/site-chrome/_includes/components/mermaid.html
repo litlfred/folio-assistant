@@ -1,0 +1,28 @@
+{%- comment -%}
+  just-the-docs v0.12.0's `_includes/components/mermaid.html`, overridden for
+  ONE change (bean `gp2f`, page weight): the loader is emitted only on a page
+  whose content holds a diagram. The theme emits it on every page, so every
+  page carried the config block (about 2.5 KB) and every visit fetched Mermaid
+  from the CDN, whether or not there was anything to draw.
+
+  Kramdown writes a ```mermaid fence as `<code class="language-mermaid">`, and
+  `mermaid.run()` below only ever looks for `.language-mermaid`, so a page
+  without that string has nothing for it to do. The rest is the theme's v10+
+  branch verbatim; this site pins `mermaid.version` 10.9.0 in `_config.yml`.
+  Moving the theme pin means re-checking this file against the new theme.
+{%- endcomment -%}
+{%- if content contains 'language-mermaid' -%}
+<script type="module">
+  {% if site.mermaid.path %}
+  import mermaid from '{{ site.mermaid.path | relative_url }}';
+  {% else %}
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@{{ site.mermaid.version }}/dist/mermaid.esm.min.mjs';
+  {% endif %}
+
+  var config = {% include mermaid_config.js %};
+  mermaid.initialize(config);
+  mermaid.run({
+    querySelector: '.language-mermaid',
+  });
+</script>
+{%- endif -%}

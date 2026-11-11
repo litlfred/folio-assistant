@@ -1,0 +1,98 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/77643e31-6da6-416d-842b-ed9e8ef0cdcc",
+  "kind": "item",
+  "flavour": "item",
+  "title": "Job aid for COVID-19 vaccine administration: Janssen–Cilag International NV (Belgium) Ad26.COV2.S COVID-19 vaccine (international non-proprietary name: Ad26.COV2.S COVID-19 Vaccine)",
+  "parents": [],
+  "handle": "10665/342490",
+  "metadataRef": "catalogue/records/10665-342490.dc.json",
+  "bitstreams": [
+    {
+      "name": "WHO-EURO-2021-2689-42445-58909-eng.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 296029,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/58ebe4ab-1e47-4bb5-a6f3-a12097196448/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum a2182b0f4ec46af4f5a25d89c5216e01; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-342490-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 41314,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 425,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "WHO-EURO-2021-2689-42445-58909-eng.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-342490-cover.png",
+        "purpose": "working",
+        "bytes": 41314,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "340481d050b841c81c19fd0af0f67d1b45091fc0158aa6849669416fcde3de09",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "41,314 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (WHO-EURO-2021-2689-42445-58909-eng.pdf, p. 3): \"This work is available under the CC BY-NC-SA 3.0 IGO license.\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "The publication's own statement (WHO-EURO-2021-2689-42445-58909-eng.pdf, p. 3): \"This work is available under the CC BY-NC-SA 3.0 IGO license.\". The licence permits non-commercial redistribution with attribution.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner ruling, 2026-09-24 (bean cw35): record each gate as the publication's own copyright page states it"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of WHO-EURO-2021-2689-42445-58909-eng.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 595.0x841.0pt page, from page 1 of WHO-EURO-2021-2689-42445-58909-eng.pdf, fetched once from https://iris.who.int/bitstreams/58ebe4ab-1e47-4bb5-a6f3-a12097196448/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 5d6837e91b4f0cab5e733b6f6186b570279a3642ebff72502196f11a06634775) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. MASKED: the WHO emblem and wordmark are blanked to flat grey before these bytes are written -- see `maskedRegions`."
+      },
+      "maskedRegions": [
+        {
+          "x0": 26,
+          "y0": 9,
+          "x1": 91,
+          "y1": 32,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        },
+        {
+          "x0": 27,
+          "y0": 9,
+          "x1": 90,
+          "y1": 37,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        }
+      ]
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/77643e31-6da6-416d-842b-ed9e8ef0cdcc"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"Technical documents\" (ce9d7267-1ccf-4daf-b1a7-f28e8a594e2b), which is not a node here, so parents is [] (rule R10)."
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "folio-catalogue-node/v1",
+  "id": "item/5e232af1-15cb-470b-a5fe-80c839dbf703",
+  "kind": "item",
+  "flavour": "item",
+  "title": "卫生组织防治获得性免疫缺损综合症的活动",
+  "parents": [],
+  "handle": "10665/195658",
+  "metadataRef": "catalogue/records/10665-195658.dc.json",
+  "bitstreams": [
+    {
+      "name": "EB77_R12_chi.pdf",
+      "bundle": "ORIGINAL",
+      "bytes": 1326776,
+      "mediaType": "application/pdf",
+      "materialization": {
+        "state": "referenced",
+        "provenance": {
+          "upstream": "https://iris.who.int/bitstreams/4ff96232-18b2-4721-a1c3-d36578431a57/download"
+        },
+        "note": "Bytes not held. IRIS reports MD5 checksum 2c64eb038b9d4e245c24961e6319ec7c; a sha256 is recorded only once the bytes are fetched (rule R13)."
+      }
+    },
+    {
+      "name": "10665-195658-cover.png",
+      "bundle": "THUMBNAIL",
+      "bytes": 47270,
+      "mediaType": "image/png",
+      "pixelWidth": 300,
+      "pixelHeight": 432,
+      "materialization": {
+        "state": "materialized",
+        "provenance": {
+          "local": "EB77_R12_chi.pdf#page=1 (fetched from IRIS for this render only; not held)"
+        },
+        "localPath": "library/10665-195658-cover.png",
+        "purpose": "working",
+        "bytes": 47270,
+        "materializedAt": "2026-11-10",
+        "fixity": {
+          "algorithm": "sha256",
+          "digest": "604f6d62933cfd71abe257ad27a51bbd53078c6d6e55c5978492e16ee406a25f",
+          "verifiedAt": "2026-11-10"
+        },
+        "gates": {
+          "size": {
+            "verdict": "permitted",
+            "basis": "47,270 bytes -- a listing thumbnail"
+          },
+          "restrictions": {
+            "verdict": "permitted",
+            "basis": "owner approval: special development authorization for WHO staff in development environment, 2026-10-08, extended to the IRIS pilot covers by the owner on 2026-11-10 (card Q-IRIS-7 = A); WHO emblem masked. The publication's own statement (EB77_R12_chi.pdf): no copyright or licence statement found in its text.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner, card Q-IRIS-7 (2026-11-10)"
+          },
+          "retention": {
+            "verdict": "permitted",
+            "basis": "working: re-renderable from the upstream PDF"
+          },
+          "sourceLoss": {
+            "verdict": "unknown",
+            "basis": "a derived rendering is not the source -- the ORIGINAL bitstream's archival copy answers this gate, not this one"
+          },
+          "copyright": {
+            "verdict": "permitted",
+            "basis": "owner approval: special development authorization for WHO staff in development environment, 2026-10-08, extended to the IRIS pilot covers by the owner on 2026-11-10 (card Q-IRIS-7 = A); WHO emblem masked. The publication's own statement (EB77_R12_chi.pdf): no copyright or licence statement found in its text.",
+            "decidedAt": "2026-11-10",
+            "decidedBy": "owner, card Q-IRIS-7 (2026-11-10)"
+          }
+        },
+        "note": "DERIVED HERE, and not the THUMBNAIL bundle IRIS generates. These bytes were rendered here from page 1 of EB77_R12_chi.pdf by cat-harness-tools/scripts/pdf-cover.py (pymupdf 2.0) on 2026-11-10, scaled to 300px wide from a 571.92x822.0pt page, from page 1 of EB77_R12_chi.pdf, fetched once from https://iris.who.int/bitstreams/4ff96232-18b2-4721-a1c3-d36578431a57/download by scripts/iris-covers/fetch-referenced-pdfs.py (sha256 fb436b6dedab075959033537e5754599a6aae340f108e2837655b07e47adb431) and then discarded. So `gen-covers --check` verifies these bytes, digest and dimensions but cannot re-render them. MASKED: the WHO emblem and wordmark are blanked to flat grey before these bytes are written -- see `maskedRegions`."
+      },
+      "maskedRegions": [
+        {
+          "x0": 1,
+          "y0": 8,
+          "x1": 239,
+          "y1": 58,
+          "reason": "the WHO emblem and its wordmark. The owner ruled on 2026-09-21 that the emblem on a cover counts as \"logo and other branding\", which this replica must not carry until it is published under WHO, and chose masking over withholding the covers. Region placed by an emblem detector (template match) and the text guess in scripts/iris-covers/render-previews.py, then checked by eye on the rendering (who-iris#207)."
+        }
+      ]
+    }
+  ],
+  "materialization": {
+    "state": "referenced",
+    "provenance": {
+      "upstream": "https://iris.who.int/items/5e232af1-15cb-470b-a5fe-80c839dbf703"
+    },
+    "note": "Catalogued by reference by scripts/iris-cdn/run.ts subset (who-iris#207): the Dublin Core record from the DSpace REST API and a link to each ORIGINAL file on IRIS; nothing ingested. In the subset because: matches the subset query (17248 matches), sampled with seed 207. IRIS files it in the collection \"EB77\" (e27bf6f2-453e-4ec1-b364-46ecb5562649), which is not a node here, so parents is [] (rule R10)."
+  }
+}
