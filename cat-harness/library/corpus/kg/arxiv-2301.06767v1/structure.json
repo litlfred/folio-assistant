@@ -1,0 +1,844 @@
+{
+ "_schema": "pdf-structure/v1",
+ "doc_id": "arxiv-2301.06767v1",
+ "source": {
+  "file": "arxiv-2301.06767v1.pdf",
+  "sha256": "4bc8757e43cda7d6c69152023d4b03ff0868790c27bed1430c43e1e07f10e95b",
+  "bytes": 933653,
+  "pages": 25,
+  "text_source": "embedded",
+  "extractor": "pymupdf",
+  "mtime": "2026-11-10T19:05:22Z",
+  "mimetype_sniffed": "application/pdf",
+  "mimetype_source": "magic-bytes"
+ },
+ "metadata": {
+  "arxiv": {
+   "id": "2301.06767",
+   "version": "1",
+   "primary_class": "cs.CL",
+   "stamp_date": "17 Jan 2023"
+  },
+  "doi": null,
+  "title": "The Recent Advances in Automatic Term Extraction: A survey",
+  "authors_raw": "HANH THI HONG TRAN, Jozef Stefan Institute, Slovenia; University of La Rochelle, France, Slovenia",
+  "title_lines": [
+   "The Recent Advances in Automatic Term Extraction: A survey"
+  ],
+  "abstract": null,
+  "docinfo": {
+   "Title": "The Recent Advances in Automatic Term Extraction: A survey",
+   "Producer": "pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) kpathsea version 6.3.2",
+   "Creator": "LaTeX with acmart 2022/10/24 v1.88 Typesetting articles for the Association for Computing Machinery and hyperref 2020-05-15 v7.00e Hypertext links for LaTeX",
+   "CreationDate": "D:20230118025410Z"
+  },
+  "title_raw": "The Recent Advances in Automatic Term Extraction: A survey",
+  "title_source": "metadata",
+  "title_verified": true,
+  "title_evidence": {
+   "metadata": "The Recent Advances in Automatic Term Extraction: A survey",
+   "heading": "The Recent Advances in Automatic Term Extraction: A survey HANH THI HONG TRAN , Jozef Stefan Institute, Slovenia; University of La Rochelle, France, Slovenia MATEJ MARTINC , Jozef Stefan Institute, Slovenia, Slovenia JAYA CAPORUSSO, Jozef Stefan Institute, Slovenia, Slovenia ANTOINE DOUCET , Univers",
+   "outline": "Abstract",
+   "text": "The Recent Advances in Automatic Term Extraction: A survey",
+   "corroborated_by": [
+    "text",
+    "page"
+   ],
+   "browser_print": false
+  }
+ },
+ "toc": [
+  {
+   "level": 1,
+   "title": "Abstract",
+   "page": 1,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Introduction",
+   "page": 1,
+   "source": "outline",
+   "number": "1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Previous surveys and comparative studies",
+   "page": 3,
+   "source": "outline",
+   "number": "2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Methodology",
+   "page": 4,
+   "source": "outline",
+   "number": "3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "ATE datasets",
+   "page": 5,
+   "source": "outline",
+   "number": "4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Monolingual corpora",
+   "page": 5,
+   "source": "outline",
+   "number": "4.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Multilingual corpora",
+   "page": 7,
+   "source": "outline",
+   "number": "4.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Supervised ATE systems",
+   "page": 9,
+   "source": "outline",
+   "number": "5",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Machine learning approaches",
+   "page": 9,
+   "source": "outline",
+   "number": "5.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Deep learning approaches",
+   "page": 11,
+   "source": "outline",
+   "number": "5.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Multilingual learning",
+   "page": 13,
+   "source": "outline",
+   "number": "5.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Cross-domain and cross-lingual transfer learning",
+   "page": 14,
+   "source": "outline",
+   "number": "5.4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "ATE evaluation metrics",
+   "page": 15,
+   "source": "outline",
+   "number": "6",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Comparative results",
+   "page": 17,
+   "source": "outline",
+   "number": "7",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Challenges and Future directions",
+   "page": 19,
+   "source": "outline",
+   "number": "8",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Nested terms",
+   "page": 19,
+   "source": "outline",
+   "number": "8.1",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Generalisability",
+   "page": 19,
+   "source": "outline",
+   "number": "8.2",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Ensembling",
+   "page": 20,
+   "source": "outline",
+   "number": "8.3",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Scalability",
+   "page": 20,
+   "source": "outline",
+   "number": "8.4",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 2,
+   "title": "Prompting",
+   "page": 20,
+   "source": "outline",
+   "number": "8.5",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Conclusion",
+   "page": 20,
+   "source": "outline",
+   "number": "9",
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "Acknowledgments",
+   "page": 21,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  },
+  {
+   "level": 1,
+   "title": "References",
+   "page": 21,
+   "source": "outline",
+   "number": null,
+   "confidence": null,
+   "evidence": null,
+   "page_label": null
+  }
+ ],
+ "toc_source": "outline",
+ "toc_undetermined_reason": null,
+ "figures": [
+  {
+   "kind": "figure",
+   "number": "1",
+   "title": "The combination of keywords to search for term datasets and systems",
+   "page": 4,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "1",
+   "title": "List of monolingual term datasets",
+   "page": 6,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "2",
+   "title": "A list of multilingual term datasets",
+   "page": 8,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "2",
+   "title": "Feature group and subgroup for machine learning models based on [88]\u2019s work",
+   "page": 10,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "3",
+   "title": "An example of how three types of neural ATE classifiers work (from left to right: Sequence classifier (e.g., XLMR); Token classifier (e.g., BERT); Seq-2-seq (e.g., mBART)",
+   "page": 12,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "figure",
+   "number": "4",
+   "title": "The overview of different evaluation metrics in ATE task",
+   "page": 16,
+   "confidence": 0.9,
+   "evidence": [
+    "referenced",
+    "in-sequence",
+    "graphic"
+   ],
+   "page_label": null
+  },
+  {
+   "kind": "table",
+   "number": "3",
+   "title": "The F1-score evaluation of benchmark approaches on the Heart Failure test set from the ACTER corpus in three languages (English (EN), French (FR), and Dutch (NL)) and two types of annotation, with named entities (NER) and without named entities (ANN). The best approach for each category is highlight",
+   "page": 18,
+   "confidence": 0.8,
+   "evidence": [
+    "referenced",
+    "in-sequence"
+   ],
+   "page_label": null
+  }
+ ],
+ "pages": [
+  {
+   "physical": 1,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 2,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 3,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 4,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 5,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 6,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 7,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 8,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 9,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 10,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 11,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 12,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 13,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 14,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 15,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 16,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 17,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 18,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 19,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 20,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 21,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 22,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 23,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 24,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  },
+  {
+   "physical": 25,
+   "label": null,
+   "source": null,
+   "confidence": 0.0,
+   "evidence": []
+  }
+ ],
+ "sections": [
+  {
+   "id": "sec-front-matter",
+   "number": null,
+   "title": "Front matter",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 1,
+   "n_chars": 1996,
+   "n_words": 281,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-000-1-introduction",
+   "number": "1",
+   "title": "Introduction",
+   "level": 1,
+   "page_start": 1,
+   "page_end": 3,
+   "n_chars": 5956,
+   "n_words": 888,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-001-2-previous-surveys-and-comparative-studies",
+   "number": "2",
+   "title": "Previous surveys and comparative studies",
+   "level": 1,
+   "page_start": 3,
+   "page_end": 4,
+   "n_chars": 3863,
+   "n_words": 558,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-002-3-methodology",
+   "number": "3",
+   "title": "Methodology",
+   "level": 1,
+   "page_start": 4,
+   "page_end": 5,
+   "n_chars": 2903,
+   "n_words": 397,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-003-4-ate-datasets",
+   "number": "4",
+   "title": "ATE datasets",
+   "level": 1,
+   "page_start": 5,
+   "page_end": 5,
+   "n_chars": 435,
+   "n_words": 64,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-004-41-monolingual-corpora",
+   "number": "4.1",
+   "title": "Monolingual corpora",
+   "level": 2,
+   "page_start": 5,
+   "page_end": 7,
+   "n_chars": 7962,
+   "n_words": 1160,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-005-42-multilingual-corpora",
+   "number": "4.2",
+   "title": "Multilingual corpora",
+   "level": 2,
+   "page_start": 7,
+   "page_end": 9,
+   "n_chars": 5172,
+   "n_words": 768,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-006-5-supervised-ate-systems",
+   "number": "5",
+   "title": "Supervised ATE systems",
+   "level": 1,
+   "page_start": 9,
+   "page_end": 9,
+   "n_chars": 771,
+   "n_words": 117,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-007-51-machine-learning-approaches",
+   "number": "5.1",
+   "title": "Machine learning approaches",
+   "level": 2,
+   "page_start": 9,
+   "page_end": 11,
+   "n_chars": 4265,
+   "n_words": 601,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-008-52-deep-learning-approaches",
+   "number": "5.2",
+   "title": "Deep learning approaches",
+   "level": 2,
+   "page_start": 11,
+   "page_end": 13,
+   "n_chars": 8550,
+   "n_words": 1244,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-009-53-multilingual-learning",
+   "number": "5.3",
+   "title": "Multilingual learning",
+   "level": 2,
+   "page_start": 13,
+   "page_end": 14,
+   "n_chars": 3012,
+   "n_words": 451,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-010-54-cross-domain-and-cross-lingual-transfer-learn",
+   "number": "5.4",
+   "title": "Cross-domain and cross-lingual transfer learning",
+   "level": 2,
+   "page_start": 14,
+   "page_end": 15,
+   "n_chars": 4262,
+   "n_words": 627,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-011-6-ate-evaluation-metrics",
+   "number": "6",
+   "title": "ATE evaluation metrics",
+   "level": 1,
+   "page_start": 15,
+   "page_end": 17,
+   "n_chars": 6280,
+   "n_words": 977,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-012-7-comparative-results",
+   "number": "7",
+   "title": "Comparative results",
+   "level": 1,
+   "page_start": 17,
+   "page_end": 19,
+   "n_chars": 6641,
+   "n_words": 1085,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-013-8-challenges-and-future-directions",
+   "number": "8",
+   "title": "Challenges and Future directions",
+   "level": 1,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 824,
+   "n_words": 116,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-014-81-nested-terms",
+   "number": "8.1",
+   "title": "Nested terms",
+   "level": 2,
+   "page_start": 19,
+   "page_end": 19,
+   "n_chars": 913,
+   "n_words": 148,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-015-82-generalisability",
+   "number": "8.2",
+   "title": "Generalisability",
+   "level": 2,
+   "page_start": 19,
+   "page_end": 20,
+   "n_chars": 1495,
+   "n_words": 226,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-016-83-ensembling",
+   "number": "8.3",
+   "title": "Ensembling",
+   "level": 2,
+   "page_start": 20,
+   "page_end": 20,
+   "n_chars": 934,
+   "n_words": 132,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-017-84-scalability",
+   "number": "8.4",
+   "title": "Scalability",
+   "level": 2,
+   "page_start": 20,
+   "page_end": 20,
+   "n_chars": 878,
+   "n_words": 125,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-018-85-prompting",
+   "number": "8.5",
+   "title": "Prompting",
+   "level": 2,
+   "page_start": 20,
+   "page_end": 20,
+   "n_chars": 987,
+   "n_words": 140,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-019-9-conclusion",
+   "number": "9",
+   "title": "Conclusion",
+   "level": 1,
+   "page_start": 20,
+   "page_end": 21,
+   "n_chars": 2252,
+   "n_words": 318,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-020-acknowledgments",
+   "number": null,
+   "title": "Acknowledgments",
+   "level": 1,
+   "page_start": 21,
+   "page_end": 21,
+   "n_chars": 460,
+   "n_words": 65,
+   "label_start": null,
+   "label_end": null
+  },
+  {
+   "id": "sec-021-references",
+   "number": null,
+   "title": "References",
+   "level": 1,
+   "page_start": 21,
+   "page_end": 25,
+   "n_chars": 25396,
+   "n_words": 3406,
+   "label_start": null,
+   "label_end": null
+  }
+ ],
+ "diagnostics": {
+  "pages_without_text": 0,
+  "likely_scanned": false,
+  "toc_entries": 23,
+  "toc_inferred_entries": 0,
+  "figure_entries": 7,
+  "figure_sequence_gaps": [],
+  "page_label_conflicts": {
+   "count": 0,
+   "items": []
+  },
+  "sections": 23,
+  "chars_total": 96207,
+  "furniture_lines_stripped": 0
+ }
+}

@@ -1,0 +1,121 @@
+{
+  "$schema": "folio-index-config/v1",
+  "layers": [
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "a3e0047270f76181681cdc3a4b93a832c7577b4c",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-11",
+              "ref": "a3e0047270f76181681cdc3a4b93a832c7577b4c",
+              "evidence": "owner card tap 2026-11-11T02:45:31Z 'A: Merge the train' (library IRI-move train, tools#1833 + layer regens), merge-manager thread cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "99d6991d3bf9957e1ee112a2b4a50d4c3e11ee98",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-11",
+              "ref": "99d6991d3bf9957e1ee112a2b4a50d4c3e11ee98",
+              "evidence": "owner card tap 2026-11-11T02:45:31Z 'A: Merge the train' (library IRI-move train, tools#1833 + layer regens), merge-manager thread cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "1c36aef5ab70d7e95ee6026124cd004cab0c0990",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-11",
+              "ref": "1c36aef5ab70d7e95ee6026124cd004cab0c0990",
+              "evidence": "owner card tap 2026-11-11T02:45:31Z 'A: Merge the train' (library IRI-move train, tools#1833 + layer regens), merge-manager thread cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "30c4585d5dfbf6960e3ecca86b18d131d6cd3921",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-11",
+              "ref": "30c4585d5dfbf6960e3ecca86b18d131d6cd3921",
+              "evidence": "owner card tap 2026-11-11T02:45:31Z 'A: Merge the train' (library IRI-move train, tools#1833 + layer regens), merge-manager thread cmsg_017WNUkNK8kdDziPK58Pv6G9HtujCofFVVPVPppfDRTSNR"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "folio-assistant-core"
+    }
+  ],
+  "site": {
+    "landing": "folio-assistant-core"
+  }
+}
