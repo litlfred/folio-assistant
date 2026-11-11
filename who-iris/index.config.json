@@ -1,0 +1,156 @@
+{
+  "$schema": "folio-index-config/v1",
+  "instances": [
+    {
+      "name": "who-iris",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      },
+      "site": {
+        "build": {
+          "home": "docs/site-home.md",
+          "sourceSteps": [
+            "site:catalogue",
+            "site:home"
+          ],
+          "keep": [
+            "ns"
+          ]
+        }
+      }
+    },
+    {
+      "name": "folio-assistant-core",
+      "source": {
+        "remote": {
+          "repository": "litlfred/folio-assistant-core",
+          "ref": "166c60d48e4cb2dcc3efa33489608556b382c8c7",
+          "overrides": {
+            "folio-assistant-core": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            },
+            "cat-harness-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-11",
+              "ref": "166c60d48e4cb2dcc3efa33489608556b382c8c7",
+              "evidence": "litlfred, 2026-11-11 02:39Z, card Q-BIB-1 'A Merge after core#733' in project thread cmsg_017WNUkNK8kdDziPK58Pv6G9DmftYbH835oQ24UZgEm79b (who-iris#227: merge once green after core#733, which needs core re-pinned to carry references:extract and the per-document bibliography view). Core re-pinned to folio-assistant-core#733's merge commit."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness",
+          "ref": "6eed239af4a5a97ba8307cb0ef72a8c899f8eeb4",
+          "overrides": {
+            "cat-harness": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            },
+            "bootstrap-tools": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-07",
+              "ref": "6eed239af4a5a97ba8307cb0ef72a8c899f8eeb4",
+              "evidence": "litlfred, 2026-11-07, via the merge manager (session_01VQDpPffYARDQ8juksAZScf): card 'Pin target' 'A. Never move back'; 'repin as needed'; window extended to 05:27Z. Follow-up: cat-harness past the journey-maps.md markup fix (6eed239), cat-harness-tools at the newest commit any lock pins."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "cat-harness-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/cat-harness-tools",
+          "ref": "fe19c41217b5f99eedb634f85d5d736f9c973955",
+          "overrides": {
+            "cat-harness-tools": {
+              "whole": true
+            },
+            "cat-harness": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-11",
+              "ref": "fe19c41217b5f99eedb634f85d5d736f9c973955",
+              "evidence": "litlfred, 2026-11-11 ~02:27Z: merged cat-harness-tools#1841 (apply-image-verdicts: a verdict may carry translations) on the merge card; this moves the pin to tools main fe19c412 so the who-iris figure descriptions (#224) can be applied in six UN languages."
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "12fa6d57dfad06ae73e234f116145dfc8d77ad50",
+              "evidence": "Owner card \"Re-pin how\" option 2 \"All layers to mains\" and \"Re-pin OK?\" option 1, 2026-11-06 ~01:00Z, session_01VQDpPbqnwyoWW5d3Rc1vEk"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "1dc08c906f3a9377534b753fed493b811e040ad7",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-07",
+              "ref": "1dc08c906f3a9377534b753fed493b811e040ad7",
+              "evidence": "Owner, first-hand in session_01VQDpPbqnwyoWW5d3Rc1vEk 2026-11-07 05:26Z: \"repin + merge open 12 hrs\" (re-pin to bootstrap-tools main carrying #80 and folio-assistant-core main carrying #659; bean folio-assistant-70hd)"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "site": {
+    "landing": "who-iris"
+  }
+}

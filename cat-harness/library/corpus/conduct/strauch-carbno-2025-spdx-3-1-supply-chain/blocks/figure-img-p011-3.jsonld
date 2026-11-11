@@ -1,0 +1,95 @@
+{
+  "@context": [
+    "https://litlfred.github.io/cat-harness/ns/context/v1.jsonld",
+    {
+      "@base": "https://litlfred.github.io/folio/",
+      "folio-assistant-core": "https://litlfred.github.io/folio-assistant-core/v0/ns/"
+    }
+  ],
+  "@id": "library/strauch-carbno-2025-spdx-3-1-supply-chain/blocks/figure-img-p011-3",
+  "@type": [
+    "folio-assistant-core:Figure",
+    "doco:Figure"
+  ],
+  "kind": "figure",
+  "file": "../images/img-p011-3.png",
+  "pageStart": 11,
+  "pageEnd": 11,
+  "narrative": [
+    {
+      "text": "UML class diagram in a frame tabbed 'Hardware profile'. Above the frame sit Core/ Specification and Core/ Element. ProductSpecification (hazard: DefinedType [0..*]) specialises Core/Specification. The abstract Hardware specialises Core/Element, with productAgent :Agent [1], hardwareVersion:xsd:string [0..1], partNumber : xsd:string [1], releaseDate :DateTime [0..1], serialNumber : xsd:string [0..1], batchNumber : xsd:string [0..1], hazard: DefinedType [0..*], category: DefinedType [0..*], additionalInformationSpecification : /Core/Specification [0..*] and additionalInformation :/Core/DictionaryEntry [0..*]. Three classes specialise Hardware: PhysicalHardware (massOfHardware: MeasureOfMass [0..1], dimensions : Dimensions [0..1], centerOfMass : Dimensions [0..1]); BulkHardware (bulkQuantity :Core/UnitofMeasure, plus two rows shaded red: /Hardware/Hardware/serialNumber : xsd:string [0] and /Core/Element/description :xsd:string [1]); and VirtualHardware (virtualHardwareModel: VirtualHardwareModelType [0..1]). A separate Dimensions class has xAxisLength, yAxisLength and zAxisLength, each : MeasureOfLength [1], and an 'Enumerations' frame holds VirtualHardwareModelType.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude",
+        "model": "not-disclosed",
+        "session": "https://claude.ai/code/session_01VfkKocGaQW7Msro2t5S66U"
+      },
+      "drafted_at": "2026-10-03",
+      "lang": "en"
+    },
+    {
+      "text": "Diagramme de classes UML dans un cadre à onglet « Hardware profile ». Au-dessus du cadre figurent Core/ Specification et Core/ Element. ProductSpecification (hazard: DefinedType [0..*]) spécialise Core/Specification. La classe abstraite Hardware spécialise Core/Element, avec productAgent :Agent [1], hardwareVersion:xsd:string [0..1], partNumber : xsd:string [1], releaseDate :DateTime [0..1], serialNumber : xsd:string [0..1], batchNumber : xsd:string [0..1], hazard: DefinedType [0..*], category: DefinedType [0..*], additionalInformationSpecification : /Core/Specification [0..*] et additionalInformation :/Core/DictionaryEntry [0..*]. Trois classes spécialisent Hardware : PhysicalHardware (massOfHardware: MeasureOfMass [0..1], dimensions : Dimensions [0..1], centerOfMass : Dimensions [0..1]) ; BulkHardware (bulkQuantity :Core/UnitofMeasure, plus deux lignes surlignées en rouge : /Hardware/Hardware/serialNumber : xsd:string [0] et /Core/Element/description :xsd:string [1]) ; et VirtualHardware (virtualHardwareModel: VirtualHardwareModelType [0..1]). Une classe distincte Dimensions comporte xAxisLength, yAxisLength et zAxisLength, chacun de type : MeasureOfLength [1], et un cadre « Enumerations » contient VirtualHardwareModelType.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://97ee5591-2752-4fa2-8e96-eeba7d1d3046"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "fr"
+    },
+    {
+      "text": "Diagrama de clases UML en un marco con la pestaña «Hardware profile». Encima del marco se sitúan Core/ Specification y Core/ Element. ProductSpecification (hazard: DefinedType [0..*]) especializa Core/Specification. La clase abstracta Hardware especializa Core/Element, con productAgent :Agent [1], hardwareVersion:xsd:string [0..1], partNumber : xsd:string [1], releaseDate :DateTime [0..1], serialNumber : xsd:string [0..1], batchNumber : xsd:string [0..1], hazard: DefinedType [0..*], category: DefinedType [0..*], additionalInformationSpecification : /Core/Specification [0..*] y additionalInformation :/Core/DictionaryEntry [0..*]. Tres clases especializan Hardware: PhysicalHardware (massOfHardware: MeasureOfMass [0..1], dimensions : Dimensions [0..1], centerOfMass : Dimensions [0..1]); BulkHardware (bulkQuantity :Core/UnitofMeasure, más dos filas sombreadas en rojo: /Hardware/Hardware/serialNumber : xsd:string [0] y /Core/Element/description :xsd:string [1]); y VirtualHardware (virtualHardwareModel: VirtualHardwareModelType [0..1]). Una clase independiente Dimensions tiene xAxisLength, yAxisLength y zAxisLength, cada uno : MeasureOfLength [1], y un marco «Enumerations» contiene VirtualHardwareModelType.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://97ee5591-2752-4fa2-8e96-eeba7d1d3046"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "es"
+    },
+    {
+      "text": "مخطط أصناف UML داخل إطار بعلامة تبويب «Hardware profile». يقع فوق الإطار كل من Core/ Specification وCore/ Element. ويخصّص ProductSpecification (hazard: DefinedType [0..*]) الصنفَ Core/Specification. أما الصنف المجرّد Hardware فيخصّص Core/Element، مع السمات productAgent :Agent [1]، وhardwareVersion:xsd:string [0..1]، وpartNumber : xsd:string [1]، وreleaseDate :DateTime [0..1]، وserialNumber : xsd:string [0..1]، وbatchNumber : xsd:string [0..1]، وhazard: DefinedType [0..*]، وcategory: DefinedType [0..*]، وadditionalInformationSpecification : /Core/Specification [0..*]، وadditionalInformation :/Core/DictionaryEntry [0..*]. وتخصّص ثلاثة أصناف الصنفَ Hardware: الصنف PhysicalHardware (massOfHardware: MeasureOfMass [0..1]، dimensions : Dimensions [0..1]، centerOfMass : Dimensions [0..1])؛ والصنف BulkHardware (bulkQuantity :Core/UnitofMeasure، إضافةً إلى صفين مظللين بالأحمر: /Hardware/Hardware/serialNumber : xsd:string [0] و/Core/Element/description :xsd:string [1])؛ والصنف VirtualHardware (virtualHardwareModel: VirtualHardwareModelType [0..1]). ويحوي صنف مستقل باسم Dimensions السمات xAxisLength وyAxisLength وzAxisLength، وكل منها من النوع : MeasureOfLength [1]، كما يضم إطار «Enumerations» التعداد VirtualHardwareModelType.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://97ee5591-2752-4fa2-8e96-eeba7d1d3046"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "ar"
+    },
+    {
+      "text": "Диаграмма классов UML в рамке с вкладкой «Hardware profile». Над рамкой расположены Core/ Specification и Core/ Element. ProductSpecification (hazard: DefinedType [0..*]) специализирует Core/Specification. Абстрактный класс Hardware специализирует Core/Element и имеет атрибуты productAgent :Agent [1], hardwareVersion:xsd:string [0..1], partNumber : xsd:string [1], releaseDate :DateTime [0..1], serialNumber : xsd:string [0..1], batchNumber : xsd:string [0..1], hazard: DefinedType [0..*], category: DefinedType [0..*], additionalInformationSpecification : /Core/Specification [0..*] и additionalInformation :/Core/DictionaryEntry [0..*]. Три класса специализируют Hardware: PhysicalHardware (massOfHardware: MeasureOfMass [0..1], dimensions : Dimensions [0..1], centerOfMass : Dimensions [0..1]); BulkHardware (bulkQuantity :Core/UnitofMeasure, а также две выделенные красным строки: /Hardware/Hardware/serialNumber : xsd:string [0] и /Core/Element/description :xsd:string [1]); и VirtualHardware (virtualHardwareModel: VirtualHardwareModelType [0..1]). Отдельный класс Dimensions содержит xAxisLength, yAxisLength и zAxisLength, каждый типа : MeasureOfLength [1], а рамка «Enumerations» включает VirtualHardwareModelType.",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://97ee5591-2752-4fa2-8e96-eeba7d1d3046"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "ru"
+    },
+    {
+      "text": "带有“Hardware profile”标签框的 UML 类图。框上方为 Core/ Specification 和 Core/ Element。ProductSpecification（hazard: DefinedType [0..*]）特化 Core/Specification。抽象类 Hardware 特化 Core/Element，具有属性 productAgent :Agent [1]、hardwareVersion:xsd:string [0..1]、partNumber : xsd:string [1]、releaseDate :DateTime [0..1]、serialNumber : xsd:string [0..1]、batchNumber : xsd:string [0..1]、hazard: DefinedType [0..*]、category: DefinedType [0..*]、additionalInformationSpecification : /Core/Specification [0..*] 和 additionalInformation :/Core/DictionaryEntry [0..*]。三个类特化 Hardware：PhysicalHardware（massOfHardware: MeasureOfMass [0..1]、dimensions : Dimensions [0..1]、centerOfMass : Dimensions [0..1]）；BulkHardware（bulkQuantity :Core/UnitofMeasure，外加两行标红属性：/Hardware/Hardware/serialNumber : xsd:string [0] 和 /Core/Element/description :xsd:string [1]）；以及 VirtualHardware（virtualHardwareModel: VirtualHardwareModelType [0..1]）。独立的 Dimensions 类包含 xAxisLength、yAxisLength 和 zAxisLength，类型均为 : MeasureOfLength [1]，“Enumerations”框中包含 VirtualHardwareModelType。",
+      "state": "draft",
+      "drafted_by": {
+        "kind": "agent",
+        "id": "claude-code",
+        "model": "not-disclosed",
+        "session": "conversation://97ee5591-2752-4fa2-8e96-eeba7d1d3046"
+      },
+      "drafted_at": "2026-10-26",
+      "lang": "zh"
+    }
+  ],
+  "derivedFrom": "library/strauch-carbno-2025-spdx-3-1-supply-chain/sections/sec-000",
+  "sourceDocument": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/cat-harness/source/strauch-carbno-2025-spdx-3-1-supply-chain",
+  "provenance": "ingested"
+}
