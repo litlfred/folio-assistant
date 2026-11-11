@@ -1,0 +1,40 @@
+{
+  "$schema": "cache/1.0.0",
+  "id": "lpc-cat-mount",
+  "title": "Layer PR checks: remote mounts",
+  "instance": "cat-harness-tools",
+  "kind": "actions-cache",
+  "trustClass": "a",
+  "location": "cat-mount-v1-",
+  "keyRecipe": {
+    "source": "hashFiles",
+    "files": [
+      "fa/index.lock.json"
+    ],
+    "expression": "cat-mount-v1-${{ hashFiles('fa/index.lock.json') }}"
+  },
+  "derivedInputs": "the lock of the folio-assistant checkout the layer checks compose over, which pins every mounted tree",
+  "holds": "/home/runner/.cache/cat-mount",
+  "producer": "each job (actions/cache)",
+  "consumers": [
+    "prepare-head",
+    "prepare-base",
+    "record-writers",
+    "run (matrix, both sides \u00d7 gate-shards)"
+  ],
+  "savePolicy": "any missed run",
+  "verify": "mount-from-lock re-checks every mounted tree against the lock's digest; a bad entry is re-fetched",
+  "owner": "cache-first CI (CI speed 14)",
+  "uses": [
+    ".github/workflows/layer-pr-checks.yml:694",
+    ".github/workflows/layer-pr-checks.yml:1404",
+    ".github/workflows/layer-pr-checks.yml:1455",
+    ".github/workflows/layer-pr-checks.yml:1530",
+    ".github/workflows/pr-tests.yml:176"
+  ],
+  "notes": "Superseded by the layers ref (refs/cat/layers/<key>, cat-harness-tools#1506), which verifies per layer. Saves on any missed run, PRs included (PR-scoped by GitHub).",
+  "stateInputs": {
+    "reads": "unmeasured",
+    "how": "not yet derived from a recorded read set; the producer may read state:mount graphs"
+  }
+}
