@@ -1,0 +1,652 @@
+{
+  "$schema": "folio-block-summaries/v1",
+  "entry": "deerwester-1990-indexing-by-lsa",
+  "summaries": [
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-001",
+      "source": "sections/page-001.md",
+      "source_hash": "675dbb50ee2c68945e4094a80790d5631692f02bff1d42d271b91cc8c6933995",
+      "narrative": [
+        {
+          "text": "Title page, author affiliations, and abstract for \"Indexing by Latent Semantic Analysis\" by Scott Deerwester (University of Chicago), Susan T. Dumais, George W. Furnas, and Thomas K. Landauer (Bellcore), and Richard Harshman (University of Western Ontario), published in JASIS 41(6), 391–407 (1990). The abstract introduces automatic indexing and retrieval via singular value decomposition (SVD), decomposing a large term-by-document matrix into roughly 100 orthogonal factors so that documents are represented as factor-weight vectors, queries are formed as pseudo-document vectors from weighted term combinations, and documents exceeding a cosine similarity threshold are retrieved.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-002",
+      "source": "sections/page-002.md",
+      "source_hash": "07921d966e301e933c77a9ffa022123b599549a961556f42aa386d57983c259d",
+      "narrative": [
+        {
+          "text": "Section 1 (Introduction) and the start of Section 2 (Deficiencies of current automatic indexing and retrieval methods). Because users search for conceptual content whereas literal words are unreliable indicators, Latent Semantic Indexing (LSI) treats observed term–document associations as noisy statistical data and applies SVD to construct a semantic space where closely associated terms and documents sit near one another, even when a term does not literally appear in a document. Section 2 identifies two core failure modes of literal term matching: synonymy (many ways to refer to the same concept, with two people choosing the same main keyword less than 20% of the time, hurting recall) and polysemy (words having multiple distinct meanings).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-003",
+      "source": "sections/page-003.md",
+      "source_hash": "07d55fc0de9205e3f4e949ee4af0524ae2fd632fbbfd67aaac67b007570967cb",
+      "narrative": [
+        {
+          "text": "Continuation of Section 2 and opening of Section 3 (Rationale of the LSI method, Section 3.1 Illustration of retrieval problems). Polysemy (homography, such as \"chip\") degrades precision, and existing automatic indexing fails for three reasons: (1) incomplete index term identification (which thesauri or \"unlimited aliasing\" only partially address at the risk of ambiguity and scale limits), (2) lack of automatic polysemy disambiguation (controlled vocabularies are costly and Boolean intersections rely on users guessing exact limiting terms), and (3) treating word types as mutually independent, ignoring term co-occurrence redundancy. Section 3.1 introduces a fictional term-by-document matrix (Table 1) to illustrate these failures.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-004",
+      "source": "sections/page-004.md",
+      "source_hash": "990826f672768e41f067033c32ab3044b2f7f8440213d86e5f8b9064b074fff9",
+      "narrative": [
+        {
+          "text": "Table 1 (a sample 3-document by 8-term matrix evaluated against the query \"IDF in computer-based information look-up\") and discussion of synonymy and latent semantics. In Table 1, relevant Doc 1 is missed because it uses \"access\" and \"retrieval\" rather than \"look-up\" (synonymy), while non-relevant Doc 2 matches on \"computer\" and \"information\" used in a different sense (polysemy). Treating both documents and queries as fallible samples of discourse on a topic, a retrieval system can exploit strong correlation patterns across the term-by-document matrix—such as \"access\" and \"retrieval\" co-occurring in 95 of 100 documents—to infer latent term–document associations where literal terms are missing.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-005",
+      "source": "sections/page-005.md",
+      "source_hash": "968a89aed71af00c7acb43577edcb5600d533cfe85b570aa9ee15e9326644ce0",
+      "narrative": [
+        {
+          "text": "Concluding Section 3.1 and beginning Section 3.2 (The choice of method for uncovering latent semantic structure). Higher-order correlational structure can also down-weight polysemous \"imposter\" terms like \"information\" in Doc 2 when surrounding context does not support the intended meaning. Section 3.2 surveys proximity models (hierarchical, partition, and overlapping clustering, ultrametric/additive trees, latent class analysis, and factor analysis) and critiques hierarchical document or term clustering as too restrictive because hierarchies forbid cross-classifications, have only O(n) free parameters for n objects, and improve search efficiency without clear evidence of improving retrieval effectiveness.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-006",
+      "source": "sections/page-006.md",
+      "source_hash": "63fc962d56a83c0264f1f13bb24b77cec1c7f069c6b37d7903c91598137ffa74",
+      "narrative": [
+        {
+          "text": "Continuation of Section 3.2, contrasting LSI with prior factor-analytic and concept-space approaches and stating the first model selection criterion. Earlier factor-analytic retrieval experiments (e.g., Borko & Bernick, Ossorio) were limited by computational cost, low dimensionality or binary clustering reductions, tedious human similarity judgments, and one-mode representations that modeled only documents or only terms; Koll's joint concept space used only seven hand-chosen, non-orthogonal axes. The authors highlight four distinguishing features of their LSI approach—realistic dataset sizes (1,000–2,000 abstracts and 5,000–7,000 terms), ~100 dimensions, joint term-and-document representation, and direct unrotated retrieval—and state Criterion 1: adjustable representational richness (nk parameters in a k-dimensional model).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-007",
+      "source": "sections/page-007.md",
+      "source_hash": "39e4816d0ab4ca89371b553166d4497bf8e686dcd2b18fd3b2fbfe5f330aea1e",
+      "narrative": [
+        {
+          "text": "Concluding Section 3.2 with Criteria 2 and 3 for model selection. Criterion 2 requires explicit two-mode representation of both terms and documents in the same space (comparing multidimensional unfolding, two-mode factor analysis, and tree unfolding), which also allows \"folding in\" new queries, documents, or terms at the centroid of their constituent items without immediately recomputing the decomposition (Footnote 3 notes temporal dependency and rescaling trade-offs). Criterion 3 requires computational tractability for thousands of documents and terms; two-mode factor analysis via SVD is the sole model satisfying all three criteria, fitting in O(N^2 k^3) time.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-008",
+      "source": "sections/page-008.md",
+      "source_hash": "357b54087e6a2522dac8bfd56dacb491ca1fcf59feb339a0f897d554b7dcc5d1",
+      "narrative": [
+        {
+          "text": "Section 4 (SVD or two-mode factor analysis), Section 4.1 (Overview). Contrasts traditional one-mode eigen-analysis of a square symmetric similarity matrix with two-mode singular value decomposition (SVD) of a rectangular term-by-document matrix into three matrices containing singular vectors and singular values. Retaining only the largest k (typically 50–100) orthogonal factors approximates all term–term, document–document, and term–document similarities in a reduced factor space where documents with different surface word profiles can map to similar vectors of artificial concept weights.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-009",
+      "source": "sections/page-009.md",
+      "source_hash": "6fa799a383d43cba54b5665acb0c958afee85d9cb65764e66d467570d494c81c",
+      "narrative": [
+        {
+          "text": "Continuation of Section 4.1 on dimensionality, query processing, and the Bellcore technical memoranda example. The k < N orthogonal factors are not rotated or verbally interpreted, and imperfect reconstruction of the raw term-by-document matrix is deliberate because discarding smaller singular values filters out noise while preserving reliable semantic associations; k is chosen operationally to maximize retrieval effectiveness rather than variance explained. Queries are represented as pseudo-documents (weighted sums of their term vectors) and ranked against documents by cosine similarity; a concrete example of 9 Bellcore technical memo titles (5 on human–computer interaction, c1–c5, and 4 on graph theory, m1–m4) is introduced.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-010",
+      "source": "sections/page-010.md",
+      "source_hash": "b7ee621673db00d15e58767ed6fdde2466133f259865f9058fb6d600a3037dc5",
+      "narrative": [
+        {
+          "text": "Brief transition paragraph concluding page 9 of the manuscript (Section 4.1), noting that the cells of the sample term-by-document matrix record raw term frequencies in each document and serve either for direct keyword retrieval or as the input to SVD analysis.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-011",
+      "source": "sections/page-011.md",
+      "source_hash": "2d181be3fd6eac5ab49c5bdbd7c6d1141f99a7c2738e6dd11e0289ec18141ad9",
+      "narrative": [
+        {
+          "text": "Table 2 (the 12-term by 9-document Technical Memo example dataset) and accompanying explanation in Section 4.1. Lists the titles of the five human–computer interaction memos (c1–c5) and four graph theory memos (m1–m4), together with the incidence/frequency matrix for the 12 terms occurring in more than one title (human, interface, computer, user, system, response, time, EPS, survey, trees, graph, minors), and notes that a 2-dimensional SVD solution for this dataset is plotted in Figure 1 and given numerically in the Appendix.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-012",
+      "source": "sections/page-012.md",
+      "source_hash": "604c6492b6691a98392b40874c8c1905c3f8a348043a50381e45cbc3445bcd04",
+      "narrative": [
+        {
+          "text": "Discussion of Figure 1 (the 2D SVD plot of the 9 technical memos) and start of Section 4.2 (Technical details, Section 4.2.1 The SVD Model). For the query \"human computer interaction\", literal term matching retrieves only c1, c2, and c4, missing relevant documents c3 and c5 which share no words with the query; in the 2D SVD factor space, placing the query pseudo-document q at the scaled centroid of \"human\" and \"computer\" brings all five HCI documents (c1–c5), including c3 and c5, within a cosine threshold of 0.9 while excluding all graph theory documents (m1–m4). Section 4.2.1 states the exact SVD factorization X = T_0 S_0 D_0' with orthonormal columns in T_0 and D_0 and diagonal singular values S_0.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-013",
+      "source": "sections/page-013.md",
+      "source_hash": "fe32d8eb3d7a3cda159f4299889ba6bf5736c5147f1983f0004cda4e3d0e62c6",
+      "narrative": [
+        {
+          "text": "Continuation of Section 4.2.1 and Figure 2 (schematic of full-rank SVD X = T_0 S_0 D_0' for a t x d matrix of rank m <= min(t, d)). Explains that keeping the k largest singular values in S_0 and zeroing the rest yields the rank-k matrix X-hat that best approximates X in the least-squares sense, while Footnotes 4 and 5 relate SVD to spectral decomposition of XX' and X'X (with eigenvalues S_0^2) and characterize allowable row, column, and sign permutations.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-014",
+      "source": "sections/page-014.md",
+      "source_hash": "3733e58bb9aefdf96a5b5e53c3c3558295f1a118ffa75c0283479de91dc8951f",
+      "narrative": [
+        {
+          "text": "Concluding Section 4.2.1 with Figure 3 (reduced rank-k SVD X-hat = T S D'), Section 4.2.2 (Geometric interpretation), and the start of Section 4.2.3 (Computing fundamental comparison quantities). Deleting zeroed singular values produces the truncated matrices T (t x k), S (k x k), and D' (k x d), where choosing k balances capturing real structure against overfitting sampling noise. Geometrically, rows of T and D scaled by S provide k-dimensional coordinates whose dot products compute the three fundamental comparisons—term–term, document–document, and term–document—on X-hat rather than raw X.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-015",
+      "source": "sections/page-015.md",
+      "source_hash": "81cec4af1d2e2d4930276172d052b92ad676a1198f2dd1f5aa3357153566adf0",
+      "narrative": [
+        {
+          "text": "Subsections 4.2.3.1 (Comparing two terms), 4.2.3.2 (Comparing two documents), 4.2.3.3 (Comparing a term and a document), and the start of Section 4.2.4 (Finding representations for pseudo-documents). Derives that term–term dot products are given by X-hat X-hat' = T S^2 T' (dot products of rows of TS), document–document dot products by X-hat' X-hat = D S^2 D' (dot products of rows of DS), and term–document associations by individual cells of X-hat = T S D' (dot products between rows of T S^{1/2} and D S^{1/2}, differing from within-mode coordinates by S^{1/2} axis scaling). Section 4.2.4 introduces folding in novel queries or documents not in the original SVD.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-016",
+      "source": "sections/page-016.md",
+      "source_hash": "f087a782d52b4ac8a02f7b312f73f2b98751ed8838ace64614e0f2c67951a1d2",
+      "narrative": [
+        {
+          "text": "Concluding Section 4.2.4, Section 4.2.5 (Preprocessing and normalization), and the beginning of Section 5 (Tests of the SVD LSI method). Derives the pseudo-document projection formula D_q = X_q' T S^{-1}—which places a query or new document at the scaled centroid of its term vectors and recovers D_i when X_q = X_i in an exact model—notes that row/column reweighting can normalize document lengths or term importance, and describes the experimental test setup on the MED and CISI collections using Harshman and Lundy's PARAFAC program, indexing words occurring in more than one document and absent from SMART's 439-word stoplist without stemming.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-017",
+      "source": "sections/page-017.md",
+      "source_hash": "3a9fc4afa3cdfd0879f456222450b934fd3d6ba29570be75323bdb6cb7c68a81",
+      "narrative": [
+        {
+          "text": "Continuation of Section 5 experimental methodology and start of Section 5.1 (MED dataset). Explains that the baseline LSI tests deliberately omit stemming, phrases, term weighting, and Boolean operators to isolate the effect of latent semantic representation, and describes the three comparison baselines—raw term matching on the same matrix, SMART (with stoplist, full stemming, and raw term frequencies), and Voorhees's sequential-search extended Boolean vector results—before summarizing summary statistics for the MED collection (1,033 medical abstracts, 30 queries, 5,823 LSI index terms vs. 6,927 in SMART/Voorhees, and 23.2 mean relevant documents per query).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-018",
+      "source": "sections/page-018.md",
+      "source_hash": "b9b9a50602d91e1f784c5a4922f7204e6a784275d1ebb6871c53e11aed4640ec",
+      "narrative": [
+        {
+          "text": "MED evaluation results (Figure 4 placeholder) in Section 5.1. On the 1,033-document MED collection, a 100-factor LSI model achieves higher precision than raw term matching, SMART, and Voorhees at all but the lowest recall levels (0.10), improving mean precision from 0.45 to 0.51 (a statistically significant 13% gain, t(29) = 2.23 against term matching and t(29) = 1.96 against SMART), with the largest proportional gains at high recall where overcoming synonymy matters most. Begins discussing how retrieval performance varies with the chosen number of dimensions k.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-019",
+      "source": "sections/page-019.md",
+      "source_hash": "653274a6609d1cd50b649374aa5479012f5cf6034856476a8765e719f145a095",
+      "narrative": [
+        {
+          "text": "Concluding Section 5.1 on the effect of dimensionality (Figure 5 placeholder) and properties of the MED collection. Mean precision on MED more than doubles from 0.25 at 10 factors to 0.52 at 100 factors (evaluated via nested subsets of the 100-factor SVD), explaining why earlier factor-analytic systems using only 7–21 dimensions underperformed; the authors also caution that MED was constructed from the union of keyword searches for its 30 queries, making its query topics abnormally well-segmented, though LSI exploits that structure far better than surface term-matching methods.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-020",
+      "source": "sections/page-020.md",
+      "source_hash": "cc1f898a0ea8a8bc047b6a08eea980e52f83575bd7a9c58d3ba493c79a06c990",
+      "narrative": [
+        {
+          "text": "Section 5.2 (CISI dataset evaluation and Figure 6 placeholder). Evaluates a 100-factor SVD on the 1,460-document, 35-query CISI information science collection (5,135 unstemmed multi-document terms in LSI vs. 5,019 stemmed terms in SMART, averaging 49.8 relevant documents per query). All methods perform poorly (precision below 0.30 everywhere): unstemmed LSI-100 ties raw term matching at 0.11 mean precision, whereas SMART achieves 0.14 (t(34) = 3.66), prompting a follow-up LSI analysis built directly on SMART's 5,019 stemmed index terms.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-021",
+      "source": "sections/page-021.md",
+      "source_hash": "93f142df18d3cabe6748082f9fea745c70c8b3be60fd290045bce62832366729",
+      "narrative": [
+        {
+          "text": "Concluding Section 5.2 (CISI), Section 5.3 (Summary of results from LSI analyses), and the beginning of Section 6 (Conclusions and discussion). Using SMART's stemmed terms (LSI-SMART) raises LSI's mean precision on CISI to 0.14—matching SMART and showing that the earlier gap came from stemming rather than SVD, while CISI's homogeneous abstracts and vague queries limit all methods. Section 5.3 summarizes that basic unrefined LSI beats or matches term matching, SMART (when terms are equated), and Voorhees, and notes ongoing work to add term weighting, stemming, phrases, and low-frequency terms; Section 6 begins comparing LSI with prior factor-analytic work by Borko and colleagues.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-022",
+      "source": "sections/page-022.md",
+      "source_hash": "cc42cb29b2becf0fe75805a3e20a7fca1906001481a070a6b92cda84fe321178",
+      "narrative": [
+        {
+          "text": "Continuation of Section 6 comparing LSI with Borko & Bernick (1963) and Koll (1979), and analyzing storage, search, updating, and polysemy trade-offs. Unlike Borko & Bernick (who used 21 interpretable factors only for document classification via a handful of high-loading terms) and Koll (whose 7-axis concept space was order-dependent and non-orthogonal), LSI uses 50–150 rigorous orthogonal factors for direct retrieval. While compact vectors reduce storage redundancy, query evaluation requires exhaustive high-dimensional search and periodic SVD recomputation beyond centroid folding-in; furthermore, representing each term as a single point averages multiple senses of polysemous words (e.g., \"bank\"), which can distort meaning.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-023",
+      "source": "sections/page-023.md",
+      "source_hash": "4220c49788e119dff7692223fa4f5122bc2b6aa5cc165fe82a330495cc66b9ce",
+      "narrative": [
+        {
+          "text": "Concluding Section 6 (Conclusions and discussion). Notes that resolving polysemy would require subcategorizing multi-sense words into multiple spatial points, summarizes how SVD replaces individual index terms with orthogonal artificial concepts that rank documents continuously by query similarity, and positions LSI as a core vector-ranking component whose noise reduction and compaction change how standard enhancements (stemming, term weighting, phrasal indexing, and Boolean operators) interact and must be re-evaluated.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-024",
+      "source": "sections/page-024.md",
+      "source_hash": "82b9e10df08ce11fb177f311f0b296e7a4662a7cc2c8124db08353c65cc44bf1",
+      "narrative": [
+        {
+          "text": "Figure Captions (page 23 of manuscript) for Figures 1 through 6: Figure 1 (2D plot of 12 terms, 9 Bellcore TM documents c1–c5 and m1–m4, and query q with cosine 0.9 cone), Figure 2 (schematic of full SVD), Figure 3 (schematic of rank-k reduced SVD), Figure 4 (precision–recall curves on MED for TERM, LSI-100, SMART, and Voorhees), Figure 5 (MED average precision across 9 recall levels as a function of factor count from 10 to 100), and Figure 6 (precision–recall curves on CISI).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-025",
+      "source": "sections/page-025.md",
+      "source_hash": "e38ac15872c4caac227c6ee777b68d5614f66e773d3c4deb1847dab53b41dc99",
+      "narrative": [
+        {
+          "text": "Acknowledgements (page 24 of manuscript), thanking Laura Beck for programming, data collection, and analyses; Lynn Streeter, Karen Lochbaum, Bob Allen, and Steve Hanson for user feedback; Mike Lesk for comments on earlier drafts; and Ram Gnanadesikan, John Kettenring, and John Tukey for statistical consultation.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-026",
+      "source": "sections/page-026.md",
+      "source_hash": "5aaef462ad7ae3239dbf1bf11ecfd7bceaff3ce561a300a230d37abc7b6a9db4",
+      "narrative": [
+        {
+          "text": "Appendix: SVD Numerical Example (part 1, page 25 of manuscript). Restates the 12-term by 9-document frequency matrix X from Table 2 and Figure 1, recalls the full SVD factorization X = T_0 S_0 D_0', and gives the numerical 12 x 9 left-singular vector matrix T_0 (rounded to two decimal places).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-027",
+      "source": "sections/page-027.md",
+      "source_hash": "d8724103a4bf7f8255fb9190a69aa03a37e94966cc2adc4d6e1f999847fa9f5b",
+      "narrative": [
+        {
+          "text": "Appendix: SVD Numerical Example (part 2, page 26 of manuscript). Lists the 9 singular values S_0 (from 3.34 down to 0.36) and the 9 x 9 right-singular vector matrix D_0 for the 9 technical memos, notes the orthogonality relations for T_0 and D_0, and displays the 2-dimensional truncated matrices T (12 x 2), S (diag(3.34, 2.54)), and D' (2 x 9) used to plot Figure 1 and compute X-hat = T S D'.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-028",
+      "source": "sections/page-028.md",
+      "source_hash": "15bdcaed37f291e75fb49c9664d31ff0b4d655addc9e63f71c99002a30edc7c9",
+      "narrative": [
+        {
+          "text": "Appendix: SVD Numerical Example (part 3, page 27 of manuscript). Presents the reconstructed 12 x 9 rank-2 approximation matrix X-hat = T S D' (rounded to two decimal places) and emphasizes two key properties: X-hat does not exactly equal X, and this imperfect fit is desirable because smoothing replaces unreliable 0s and 1s in X with estimated latent associations.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-029",
+      "source": "sections/page-029.md",
+      "source_hash": "caecd9f5733a98d4c757d1660b9814a16ba5776c054be6a7a01c8a7e2ca2969f",
+      "narrative": [
+        {
+          "text": "References (part 1, items 1–17, page 28 of manuscript), citing foundational works on vocabulary variability and indexing consistency (Furnas et al. 1983; Tarr & Borko 1974; Fidel 1985; Liley 1954; Bates 1986), term specificity and co-occurrence (Sparck Jones 1971, 1972; van Rijsbergen 1977; Salton 1968; Jardin & van Rijsbergen 1971), multidimensional scaling (Carroll & Arabie 1980), latent class analysis (Baker 1962), and early factor-analytic classification (Atherton & Borko 1965; Borko & Bernick 1963; Ossorio 1966).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-030",
+      "source": "sections/page-030.md",
+      "source_hash": "19e480b861362bb9fa6311325e1f308abaa1b445664b2a060f1238a4c2e57685",
+      "narrative": [
+        {
+          "text": "References (part 2, items 18–34, page 29 of manuscript), citing information retrieval and vector/concept models (Salton & McGill 1983; Voorhees 1985; Koll 1979; Raghavan & Wong 1986; Jones & Furnas 1987), unfolding and multi-mode factor analysis including PARAFAC (Coombs 1964; Heiser 1981; DeSarbo & Carroll 1985; Harshman 1970; Harshman & Lundy 1984a, 1984b; Carroll & Chang 1970; Kruskal 1978; Furnas 1980), and numerical SVD and Lanczos algorithms (Forsythe, Malcolm & Moler 1977; Golub, Luk & Overton 1981; Cullum, Willoughby & Lake 1983).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-031",
+      "source": "sections/page-031.md",
+      "source_hash": "dd165fe8b5cc91e775a18457f7fd9a924baae3f330a7df19532f23777c184941",
+      "narrative": [
+        {
+          "text": "References (part 3, items 35–38, page 30 of manuscript), citing Lesk & Salton (1969) on relevance assessments and retrieval evaluation, and Amsler (1984), Choueka & Lusignan (1985), and Lesk (1986) on machine-readable dictionaries and word-sense disambiguation.",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-032",
+      "source": "sections/page-032.md",
+      "source_hash": "d783bb921b71276c91eac3dbfef18cc16e9fac3241bb1617f82ac581ce611551",
+      "narrative": [
+        {
+          "text": "Table of Contents (page i of the Bellcore technical report front matter), listing Sections 1 through 6, their subsections (3.1–3.2, 4.1–4.2.5, and 5.1–5.3), and References with corresponding manuscript page numbers (pages 1–28).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-033",
+      "source": "sections/page-033.md",
+      "source_hash": "264544b2033dba4384b7981d4298cb0b45f9ce590bf04effa7f8237b7679b025",
+      "narrative": [
+        {
+          "text": "List of Figures (page ii of the technical report front matter), indexing Figures 1 through 6 and their manuscript page numbers (pages 11, 12, 13, 17, 18, and 19).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "block": "library/deerwester-1990-indexing-by-lsa/blocks/prose-page-034",
+      "source": "sections/page-034.md",
+      "source_hash": "ee00579d5bc47ecfe9ee3e764286e6add1b2c0d894c181e48c2cff233b190edc",
+      "narrative": [
+        {
+          "text": "List of Tables (page iii of the technical report front matter), indexing Table 1 (page 3) and Table 2 (page 10).",
+          "lang": "en",
+          "state": "draft",
+          "drafted_by": {
+            "kind": "agent",
+            "id": "claude-code",
+            "model": "not-disclosed",
+            "session": "conversation://a78f04cc-123c-4278-9eaf-5fe7207e634e"
+          },
+          "drafted_at": "2026-10-26"
+        }
+      ]
+    }
+  ]
+}
