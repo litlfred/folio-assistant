@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: normal
 created_at: 2026-11-06T05:31:14Z
-updated_at: 2026-11-09T14:20:00Z
+updated_at: 2026-11-11T14:33:00Z
 parent: folio-assistant-rwmf
 tags:
     - bpmn-layout
@@ -72,3 +72,10 @@ Measured with `bpmn-detangle.ts --check` across all **79** `.bpmn` files on `cat
 
 ## Done when
 Each of the 23 (and the 8 additional diagrams > 1400 px) passes `--check`, or the owner accepts its size with a reason.
+
+## Round 13–15 Progress Update (2026-11-11 — 16 Additional BPMN Diagrams Brought Under 1400 px Budget & Merged on `cat-harness/main`)
+
+- **Batch 1 (`litlfred/cat-harness#1219`, merged `651641f1cf5e`):** `sdlc/processes/publish-alert.bpmn` (1460 → 1240 px), `sdlc/processes/related-work.bpmn` (1510 → 1160 px), `sdlc/processes/qa-report-signing.bpmn` (1640 → 1300 px), `sdlc/processes/stalled-agent-triage.bpmn` (1720 → 1320 px).
+- **Batch 2 (`litlfred/cat-harness#1220`, merged `5d452a66adc5`):** `processes/content/review-narrative.bpmn` (1540 → 1360 px), `processes/ui/theme-ui-review.bpmn` (1620 → 1350 px), `library/processes/translation-workflow.bpmn` (1636 → 1390 px), `library/processes/copy-out-materialized.bpmn` (1760 → 1360 px).
+- **Batch 3 (`litlfred/cat-harness#1233`, merged `4b31dcf7a015`):** `processes/process/crdm-needs.bpmn` (1466 → 1200 px), `processes/process/hand-back-to-discussion.bpmn` (1500 → 1360 px), `sdlc/processes/code-quality-gates.bpmn` (1540 → 1380 px), `processes/process/actor-role-administration.bpmn` (1550 → 1320 px).
+- **Batch 4 (`litlfred/cat-harness#1245`, merged `be6f9dde8ae3`):** `processes/process/crdm-data-model.bpmn` (1666 → 1220 px), `library/processes/content-acquisition.bpmn` (1680 → 1320 px), `sdlc/processes/test-plan-execution.bpmn` (1760 → 1380 px), `library/processes/sample-import.bpmn` (1850 → 1360 px).
