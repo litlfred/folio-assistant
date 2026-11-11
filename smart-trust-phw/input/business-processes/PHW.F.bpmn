@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="PHW.F.Definitions" targetNamespace="http://smart.who.int/trust-phw/bpmn">
+  <bpmn:collaboration id="PHW.F.Collaboration">
+    <bpmn:participant id="PHW.F.Participant" name="F. Access Decision under a Data Sharing Agreement (DSA P11)" processRef="PHW.F" />
+  </bpmn:collaboration>
+  <bpmn:process id="PHW.F" name="F. Access Decision under a Data Sharing Agreement (DSA P11)" isExecutable="false">
+    <bpmn:documentation>Decides one request under a data sharing agreement. It verifies the grant (a W3C VC 2.0 credential, verified by litlfred/smart-trust-tools against an accepted trust anchor) and checks the grant's Bitstring Status List entry. It fetches the agreement by its fixed-version URL and checks its hash against the DCAT `spdx:checksum`. For a consent-based agreement, it also needs an active PCF Consent whose `policy.uri` equals the ODRL `uid`, following `dcat:previousVersion` across narrowing amendments. It then evaluates `permits()`, which returns `permit`, `deny` or `unknown`, and unknown is never permit. When several agreements or Consents apply to one request, each is evaluated alone and the results are combined by the DMN decision `PHW.DT.AgreementAccess` (`input/dmn/PHW.DT.AgreementAccess.dmn`): by default ODRL 2.2 `odrl:prohibit`, so the request is permitted if at least one permits and none prohibits, and unknown is never permit. The policies' own `odrl:conflict`, or a deployer's replacement DMN decision with the same inputs and outputs, overrides the default (owner decision D, card Q-DRAIN-4, 2026-11-01 07:54Z and 07:55Z). The duties of every permitting agreement apply. The decision rule is the same for computable and document-only agreements; only where the rule comes from differs. Trust-anchor neutral: WHO GDHCN is one accepted anchor among others (a national X.509 PKI, the party's own did:web, or a local list); UDAP, as profiled by HL7 SSRAA (Security for Scalable Registration, Authentication, and Authorization IG), is approved for X.509 certificate-based registration and authentication (owner, 2026-10-30 20:28Z), and OpenID Federation is out of scope. Source: the data sharing agreement (DSA) process analysis for litlfred/folio-assistant#2702, §2 and §4.</bpmn:documentation>
+    <bpmn:laneSet id="PHW.F.LaneSet">
+      <bpmn:lane id="PHW.Lane.EnforcementPoint" name="Policy Enforcement Point (authorization server, resource server or VHL Sharer)">
+        <bpmn:documentation>Whoever asks for the decision: the authorization server in process E, the VHL Sharer in process I, or any other enforcement point (NIST SP 800-207 PEP).</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.F.Start</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.F.11</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.F.End</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.DecisionPoint" name="Policy Decision Point (permits())">
+        <bpmn:documentation>The policy decision point (NIST SP 800-207 Policy Engine). In the harness it is `decide()` / `permits()` (fhir-harness `pcf-consent` skill §3). It returns `permit`, `deny` or `unknown`, and unknown is never permit.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.F.1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.F.2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.F.4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.F.6</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.F.Gateway1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.F.8</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.F.Gateway2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>PHW.F.10</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.TrustAnchor" name="Trust Anchor (GDHCN or another accepted anchor)">
+        <bpmn:documentation>Any trust anchor the agreement accepts. Trust-anchor neutral: WHO GDHCN is one accepted anchor among others (a national X.509 PKI, the party's own did:web, or a local list); UDAP, as profiled by HL7 SSRAA (Security for Scalable Registration, Authentication, and Authorization IG), is approved for X.509 certificate-based registration and authentication (owner, 2026-10-30 20:28Z), and OpenID Federation is out of scope.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.F.3</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.StatusList" name="Grant Issuer Status List (W3C Bitstring Status List)">
+        <bpmn:documentation>The status list published by the issuer of the grant credential (W3C Bitstring Status List).</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.F.5</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.AgreementPublisher" name="Agreement Publisher (DCAT catalogue)">
+        <bpmn:documentation>The data provider's publication of the agreement: an immutable URL for each version, its SHA-256, and a DCAT 3 record (DSA P2).</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.F.7</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="PHW.Lane.ConsentRegistry" name="PCF Consent Registry">
+        <bpmn:documentation>System Actor: IHE PCF Consent Registry (`https://profiles.ihe.net/ITI/PCF/CapabilityStatement/IHE.PCF.consentRegistry`) serving `[ITI-108]` Access Consent.</bpmn:documentation>
+        <bpmn:flowNodeRef>PHW.F.9</bpmn:flowNodeRef>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="PHW.F.Start" name="Decision requested">
+      <bpmn:documentation>Trigger: every request under a data sharing agreement (process E token request, process I manifest request, or another enforcement point) (DSA P11).</bpmn:documentation>
+      <bpmn:outgoing>PHW.F.Flow1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:serviceTask id="PHW.F.1" name="F1. Collect inputs: verified requester, agreement version, grant, request">
+      <bpmn:documentation>Inputs: (1) the requester as verified in process D/E or I; (2) the agreement versions in force for this requester, each as its fixed-version URL (= ODRL `uid`), from the Sharer's own configuration (process D step D6, or the lookup of process I step I4). RFC 9396 `authorization_details[].identifier` (§2.2) in process E, or SSRAA `consent_policy` in process I, MAY name one or more of them, which narrows the permissions the requester acts under but never removes another applicable agreement's prohibition; (3) the grant, a W3C VC 2.0 credential. Its `issuer` is VC DM 2.0 §4.7, `credentialSubject` §4.8, validity §4.9 and `credentialStatus` §4.10. Its `relatedResource` (§5.3) cites the agreement URL with a digest. Where there is no credential, the registration from D6 stands in. (4) On whose behalf: the RFC 8693 `act` chain (§4.1). (5) The request: action, target, and purpose as HL7 PurposeOfUse.</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow1</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.F.2" name="F2. Verify the grant with smart-trust-tools against the accepted trust anchor">
+      <bpmn:documentation>The grant's proof is verified by litlfred/smart-trust-tools against the trust anchor(s) the agreement accepts. Trust-anchor neutral: WHO GDHCN is one accepted anchor among others (a national X.509 PKI, the party's own did:web, or a local list); UDAP, as profiled by HL7 SSRAA (Security for Scalable Registration, Authentication, and Authorization IG), is approved for X.509 certificate-based registration and authentication (owner, 2026-10-30 20:28Z), and OpenID Federation is out of scope.</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow2</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow3</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.F.3" name="F3. Return trust list (DID document, X.509 roots or local list)">
+      <bpmn:documentation>The trust anchor serves the keys of the grant's issuer. GDHCN serves them as a DID document; the alternatives are a national PKI's X.509 roots, the issuer's own did:web, or a local list.</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow3</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow4</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.F.4" name="F4. Check grant status in the Bitstring Status List">
+      <bpmn:documentation>Reads the grant's status entry. `statusPurpose` `revocation` is final, and `suspension` can be lifted (W3C Bitstring Status List §2.1). A revoked or suspended grant gives `deny`. A status list that cannot be read gives `unknown`.</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow4</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow5</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.F.5" name="F5. Return status list credential">
+      <bpmn:documentation>The issuer serves the status list credential (W3C Bitstring Status List).</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow5</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow6</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.F.6" name="F6. Fetch the agreement at its fixed-version URL; check SHA-256 and status">
+      <bpmn:documentation>Fetches the agreement at its fixed-version URL and compares its SHA-256 with the catalogue's `spdx:checksum`. A mismatch gives `unknown`. It also checks that the agreement is not terminated or superseded for new grants (DSA P14).</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow6</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow7</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.F.7" name="F7. Return DCAT distribution with spdx:checksum and status">
+      <bpmn:documentation>The record is a DCAT 3 `dcat:Distribution` (§6.8), with `dcat:downloadURL` (§6.8.11) and `spdx:checksum` (§6.8.20; class Checksum §6.17). Status is DCAT 3 §6.4.30; its RDF term is believed to be `adms:status` (unverified). Versions are linked by previous version (§6.4.24) and versioning (§11).</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow7</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow8</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="PHW.F.Gateway1" name="Consent-based agreement (odrl:obtainConsent duty)?">
+      <bpmn:documentation>The agreement carries the `odrl:obtainConsent` duty only when consent is its legal basis (owner consent rule 1, 2026-10-30).</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow8</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow9</bpmn:outgoing>
+      <bpmn:outgoing>PHW.F.Flow10</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="PHW.F.8" name="F8. Search active Consents for this agreement [ITI-108] Access Consent: Search">
+      <bpmn:documentation>`GET [base]/Consent?patient=...&amp;status=active` (IHE PCF `[ITI-108]`). A Consent counts only when `Consent.policy.uri` (FHIR R4 Consent, as PCF profiles it) equals the agreement's ODRL `uid`, or names an earlier version reached from it by `dcat:previousVersion` across amendments that only narrowed use (owner consent rule 2; fhir-harness#227/#228). Cached results end when a Consent in them is withdrawn (rule 4).</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow9</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow11</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="PHW.F.9" name="F9. Return matching Consents [ITI-108] Access Consent">
+      <bpmn:documentation>The PCF Consent Registry returns the matching `Consent` resources, each with `Consent.id` and `Consent.meta.versionId`.</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow11</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow12</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="PHW.F.Gateway2" name="">
+      <bpmn:documentation>Joins the consent and no-consent paths.</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow10</bpmn:incoming>
+      <bpmn:incoming>PHW.F.Flow12</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow13</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:businessRuleTask id="PHW.F.10" name="F10. Evaluate permits() per applicable policy; combine with DMN PHW.DT.AgreementAccess" implementation="https://www.omg.org/spec/DMN/20240513/MODEL/">
+      <bpmn:documentation>Computable agreement: evaluates the ODRL Agreement, the Consents translated by `consentToOdrl()`, and the jurisdiction's PCF implicit default policy. Any deny wins, and unknown is never permit. Document-only agreement: evaluates the configuration the administrator set by hand (process D3). The harness's non-strict mode (allow `unknown` and log it) must not be used on data gated by an agreement. Each agreement or Consent gives one row: `not-applicable` when its target, purpose or assignee does not cover the request, otherwise its own `permit`, `deny` or `unknown`, with its declared ODRL `odrl:conflict` if any. The rows are combined by the DMN 1.5 decision `PHW.DT.AgreementAccess` (hit policy PRIORITY, output order deny, unknown, permit, not-applicable). Override 1: the strategy the applicable policies declare (`odrl:perm`, `odrl:prohibit`, `odrl:invalid`); undeclared counts as prohibit; different strategies give invalid, as ODRL 2.2 voids a merged policy whose rules conflict. Override 2: a jurisdiction or Sharer may replace the decision with its own DMN decision taking `policyResults` and returning `outcome`.</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow13</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow14</bpmn:outgoing>
+    </bpmn:businessRuleTask>
+    <bpmn:serviceTask id="PHW.F.11" name="F11. Receive permit, deny or unknown; hand the decision to audit (process G)">
+      <bpmn:documentation>The enforcement point applies the decision. The decision goes to process G with every agreement and Consent evaluated, which of them permitted (their duties apply), and the combining DMN decision used, by namespace, decision id, and its file's fixed-version URL and SHA-256.</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow14</bpmn:incoming>
+      <bpmn:outgoing>PHW.F.Flow15</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="PHW.F.End" name="Decision returned">
+      <bpmn:documentation>The decision is returned to the caller (process E3 or I5).</bpmn:documentation>
+      <bpmn:incoming>PHW.F.Flow15</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="PHW.F.Flow1" sourceRef="PHW.F.Start" targetRef="PHW.F.1" />
+    <bpmn:sequenceFlow id="PHW.F.Flow2" sourceRef="PHW.F.1" targetRef="PHW.F.2" />
+    <bpmn:sequenceFlow id="PHW.F.Flow3" sourceRef="PHW.F.2" targetRef="PHW.F.3" />
+    <bpmn:sequenceFlow id="PHW.F.Flow4" sourceRef="PHW.F.3" targetRef="PHW.F.4" />
+    <bpmn:sequenceFlow id="PHW.F.Flow5" sourceRef="PHW.F.4" targetRef="PHW.F.5" />
+    <bpmn:sequenceFlow id="PHW.F.Flow6" sourceRef="PHW.F.5" targetRef="PHW.F.6" />
+    <bpmn:sequenceFlow id="PHW.F.Flow7" sourceRef="PHW.F.6" targetRef="PHW.F.7" />
+    <bpmn:sequenceFlow id="PHW.F.Flow8" sourceRef="PHW.F.7" targetRef="PHW.F.Gateway1" />
+    <bpmn:sequenceFlow id="PHW.F.Flow9" name="yes" sourceRef="PHW.F.Gateway1" targetRef="PHW.F.8" />
+    <bpmn:sequenceFlow id="PHW.F.Flow10" name="no" sourceRef="PHW.F.Gateway1" targetRef="PHW.F.Gateway2" />
+    <bpmn:sequenceFlow id="PHW.F.Flow11" name="[ITI-108]" sourceRef="PHW.F.8" targetRef="PHW.F.9" />
+    <bpmn:sequenceFlow id="PHW.F.Flow12" name="[ITI-108]" sourceRef="PHW.F.9" targetRef="PHW.F.Gateway2" />
+    <bpmn:sequenceFlow id="PHW.F.Flow13" sourceRef="PHW.F.Gateway2" targetRef="PHW.F.10" />
+    <bpmn:sequenceFlow id="PHW.F.Flow14" name="permit / deny / unknown" sourceRef="PHW.F.10" targetRef="PHW.F.11" />
+    <bpmn:sequenceFlow id="PHW.F.Flow15" sourceRef="PHW.F.11" targetRef="PHW.F.End" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="PHW.F.Diagram">
+    <bpmndi:BPMNPlane id="PHW.F.Plane" bpmnElement="PHW.F.Collaboration">
+      <bpmndi:BPMNShape id="PHW.F.Participant_di" bpmnElement="PHW.F.Participant" isHorizontal="true"><dc:Bounds x="120" y="60" width="2375" height="940" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.EnforcementPoint_di" bpmnElement="PHW.Lane.EnforcementPoint" isHorizontal="true"><dc:Bounds x="150" y="60" width="2345" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.DecisionPoint_di" bpmnElement="PHW.Lane.DecisionPoint" isHorizontal="true"><dc:Bounds x="150" y="210" width="2345" height="190" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.TrustAnchor_di" bpmnElement="PHW.Lane.TrustAnchor" isHorizontal="true"><dc:Bounds x="150" y="400" width="2345" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.StatusList_di" bpmnElement="PHW.Lane.StatusList" isHorizontal="true"><dc:Bounds x="150" y="550" width="2345" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.AgreementPublisher_di" bpmnElement="PHW.Lane.AgreementPublisher" isHorizontal="true"><dc:Bounds x="150" y="700" width="2345" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.Lane.ConsentRegistry_di" bpmnElement="PHW.Lane.ConsentRegistry" isHorizontal="true"><dc:Bounds x="150" y="850" width="2345" height="150" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.Start_di" bpmnElement="PHW.F.Start"><dc:Bounds x="267" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.1_di" bpmnElement="PHW.F.1"><dc:Bounds x="405" y="265" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.2_di" bpmnElement="PHW.F.2"><dc:Bounds x="610" y="265" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.3_di" bpmnElement="PHW.F.3"><dc:Bounds x="610" y="435" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.4_di" bpmnElement="PHW.F.4"><dc:Bounds x="815" y="265" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.5_di" bpmnElement="PHW.F.5"><dc:Bounds x="815" y="585" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.6_di" bpmnElement="PHW.F.6"><dc:Bounds x="1020" y="265" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.7_di" bpmnElement="PHW.F.7"><dc:Bounds x="1020" y="735" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.Gateway1_di" bpmnElement="PHW.F.Gateway1" isMarkerVisible="true"><dc:Bounds x="1285" y="280" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.8_di" bpmnElement="PHW.F.8"><dc:Bounds x="1430" y="265" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.9_di" bpmnElement="PHW.F.9"><dc:Bounds x="1430" y="885" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.Gateway2_di" bpmnElement="PHW.F.Gateway2" isMarkerVisible="true"><dc:Bounds x="1695" y="280" width="50" height="50" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.10_di" bpmnElement="PHW.F.10"><dc:Bounds x="1840" y="265" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.11_di" bpmnElement="PHW.F.11"><dc:Bounds x="2045" y="95" width="170" height="80" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="PHW.F.End_di" bpmnElement="PHW.F.End"><dc:Bounds x="2317" y="117" width="36" height="36" /></bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="PHW.F.Flow1_di" bpmnElement="PHW.F.Flow1">
+        <di:waypoint x="303" y="135" />
+        <di:waypoint x="390" y="135" />
+        <di:waypoint x="390" y="305" />
+        <di:waypoint x="405" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow2_di" bpmnElement="PHW.F.Flow2">
+        <di:waypoint x="575" y="305" />
+        <di:waypoint x="610" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow3_di" bpmnElement="PHW.F.Flow3">
+        <di:waypoint x="695" y="345" />
+        <di:waypoint x="695" y="435" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow4_di" bpmnElement="PHW.F.Flow4">
+        <di:waypoint x="780" y="475" />
+        <di:waypoint x="800" y="475" />
+        <di:waypoint x="800" y="305" />
+        <di:waypoint x="815" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow5_di" bpmnElement="PHW.F.Flow5">
+        <di:waypoint x="900" y="345" />
+        <di:waypoint x="900" y="585" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow6_di" bpmnElement="PHW.F.Flow6">
+        <di:waypoint x="985" y="625" />
+        <di:waypoint x="1005" y="625" />
+        <di:waypoint x="1005" y="305" />
+        <di:waypoint x="1020" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow7_di" bpmnElement="PHW.F.Flow7">
+        <di:waypoint x="1105" y="345" />
+        <di:waypoint x="1105" y="735" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow8_di" bpmnElement="PHW.F.Flow8">
+        <di:waypoint x="1190" y="775" />
+        <di:waypoint x="1270" y="775" />
+        <di:waypoint x="1270" y="305" />
+        <di:waypoint x="1285" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow9_di" bpmnElement="PHW.F.Flow9">
+        <di:waypoint x="1335" y="305" />
+        <di:waypoint x="1430" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow10_di" bpmnElement="PHW.F.Flow10">
+        <di:waypoint x="1310" y="330" />
+        <di:waypoint x="1310" y="390" />
+        <di:waypoint x="1720" y="390" />
+        <di:waypoint x="1720" y="330" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow11_di" bpmnElement="PHW.F.Flow11">
+        <di:waypoint x="1515" y="345" />
+        <di:waypoint x="1515" y="885" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow12_di" bpmnElement="PHW.F.Flow12">
+        <di:waypoint x="1600" y="925" />
+        <di:waypoint x="1680" y="925" />
+        <di:waypoint x="1680" y="305" />
+        <di:waypoint x="1695" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow13_di" bpmnElement="PHW.F.Flow13">
+        <di:waypoint x="1745" y="305" />
+        <di:waypoint x="1840" y="305" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow14_di" bpmnElement="PHW.F.Flow14">
+        <di:waypoint x="2010" y="305" />
+        <di:waypoint x="2030" y="305" />
+        <di:waypoint x="2030" y="135" />
+        <di:waypoint x="2045" y="135" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="PHW.F.Flow15_di" bpmnElement="PHW.F.Flow15">
+        <di:waypoint x="2215" y="135" />
+        <di:waypoint x="2317" y="135" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
