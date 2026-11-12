@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap-tools/bootstrap-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap-tools/schema/discussion.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap-tools/bootstrap-tools.jsonld",
+  "staging": {
+    "branch": "claude/repin-shared-layers-242",
+    "sha": "82b863b8afc7a269deba9e9439fe12633de20986",
+    "pr": "3103/merge",
+    "run": "43319749469"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap-tools/schema/discussion",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "discussion",
+      "title": "discussion",
+      "summary": "The two documents the `discussion` process carries, as Zod.",
+      "module": "schemas/discussion.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap-tools/directory/bootstrap-tools-schemas",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/bootstrap-tools/schema/discussion",
+      "jsonSchema": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap-tools/schema/zod/discussion/DiscussionInputSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap-tools/schema/zod/discussion/DiscussionOutputObjectSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap-tools/schema/zod/discussion/DiscussionOutputSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap-tools/schema/zod/discussion/ExchangeEntrySchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap-tools/schema/zod/discussion/ParticipantSchema.schema.json",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap-tools/schema/zod/discussion/RepositoryRefSchema.schema.json"
+      ]
+    }
+  ]
+}

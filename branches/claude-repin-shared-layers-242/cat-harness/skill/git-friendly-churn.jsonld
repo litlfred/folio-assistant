@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/skill/git-friendly-churn.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-shared-layers-242",
+    "sha": "82b863b8afc7a269deba9e9439fe12633de20986",
+    "pr": "3103/merge",
+    "run": "43319749469"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/skill/git-friendly-churn",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "git-friendly-churn",
+      "title": "Files git keeps many versions of",
+      "description": "Write files that git keeps many versions of (caches, published sites, generated indexes) so each new version costs a small delta, not a whole copy. The rules: the same bytes when nothing changed, stable paths, per-build facts kept apart, no compressed blobs, and how to measure it.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/package/process-core"
+      ],
+      "instructionsPath": "skills/process/process-core/git-friendly-churn.md",
+      "instructionLines": 136,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/git-friendly-churn"
+    }
+  ]
+}

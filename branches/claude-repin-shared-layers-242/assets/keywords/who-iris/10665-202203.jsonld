@@ -1,0 +1,684 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-202203",
+  "instance": "who-iris",
+  "about": "library/10665-202203",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "спид борьбы",
+        "score": 6.006,
+        "evidence": []
+      },
+      {
+        "term": "спид борьбе",
+        "score": 5.6868,
+        "evidence": []
+      },
+      {
+        "term": "предупреждения спид",
+        "score": 5.2944,
+        "evidence": []
+      },
+      {
+        "term": "спид регионе",
+        "score": 5.0791,
+        "evidence": []
+      },
+      {
+        "term": "распространения спид",
+        "score": 5.0555,
+        "evidence": []
+      },
+      {
+        "term": "вызванная спид",
+        "score": 5.0249,
+        "evidence": []
+      },
+      {
+        "term": "спид что",
+        "score": 5.0113,
+        "evidence": []
+      },
+      {
+        "term": "спид подчеркивает",
+        "score": 4.9598,
+        "evidence": []
+      },
+      {
+        "term": "спид связанным",
+        "score": 4.8774,
+        "evidence": []
+      },
+      {
+        "term": "спид соответствии",
+        "score": 4.864,
+        "evidence": []
+      },
+      {
+        "term": "спид мировом",
+        "score": 4.8039,
+        "evidence": []
+      },
+      {
+        "term": "отношении спид",
+        "score": 4.7497,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "спид борьбы",
+        "score": 626.998,
+        "evidence": []
+      },
+      {
+        "term": "спид борьбе",
+        "score": 569.0043,
+        "evidence": []
+      },
+      {
+        "term": "спид что",
+        "score": 551.2749,
+        "evidence": []
+      },
+      {
+        "term": "предупреждения спид",
+        "score": 511.3563,
+        "evidence": []
+      },
+      {
+        "term": "распространения спид",
+        "score": 511.1999,
+        "evidence": []
+      },
+      {
+        "term": "для спид",
+        "score": 510.0157,
+        "evidence": []
+      },
+      {
+        "term": "спид соответствии",
+        "score": 507.3489,
+        "evidence": []
+      },
+      {
+        "term": "спид регионе",
+        "score": 505.8585,
+        "evidence": []
+      },
+      {
+        "term": "отношении спид",
+        "score": 495.4509,
+        "evidence": []
+      },
+      {
+        "term": "вызванная спид",
+        "score": 495.1799,
+        "evidence": []
+      },
+      {
+        "term": "спид подчеркивает",
+        "score": 493.9635,
+        "evidence": []
+      },
+      {
+        "term": "спид связанным",
+        "score": 492.4311,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "спид борьбы",
+        "score": 4.234,
+        "evidence": []
+      },
+      {
+        "term": "спид борьбе",
+        "score": 3.9868,
+        "evidence": []
+      },
+      {
+        "term": "спид что",
+        "score": 3.5479,
+        "evidence": []
+      },
+      {
+        "term": "спид регионе",
+        "score": 3.5314,
+        "evidence": []
+      },
+      {
+        "term": "для спид",
+        "score": 3.4932,
+        "evidence": []
+      },
+      {
+        "term": "распространения спид",
+        "score": 3.436,
+        "evidence": []
+      },
+      {
+        "term": "предупреждения спид",
+        "score": 3.4232,
+        "evidence": []
+      },
+      {
+        "term": "стратегии воз",
+        "score": 3.4106,
+        "evidence": []
+      },
+      {
+        "term": "спид соответствии",
+        "score": 3.3298,
+        "evidence": []
+      },
+      {
+        "term": "отношении спид",
+        "score": 3.2605,
+        "evidence": []
+      },
+      {
+        "term": "вызванная спид",
+        "score": 3.1999,
+        "evidence": []
+      },
+      {
+        "term": "спид подчеркивает",
+        "score": 3.1964,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "спид борьбы",
+        "score": 591.4741,
+        "evidence": []
+      },
+      {
+        "term": "спид борьбе",
+        "score": 536.5937,
+        "evidence": []
+      },
+      {
+        "term": "спид что",
+        "score": 521.4298,
+        "evidence": []
+      },
+      {
+        "term": "для спид",
+        "score": 482.8205,
+        "evidence": []
+      },
+      {
+        "term": "предупреждения спид",
+        "score": 480.6162,
+        "evidence": []
+      },
+      {
+        "term": "распространения спид",
+        "score": 480.4648,
+        "evidence": []
+      },
+      {
+        "term": "спид соответствии",
+        "score": 479.1253,
+        "evidence": []
+      },
+      {
+        "term": "спид регионе",
+        "score": 477.1126,
+        "evidence": []
+      },
+      {
+        "term": "отношении спид",
+        "score": 467.3625,
+        "evidence": []
+      },
+      {
+        "term": "вызванная спид",
+        "score": 464.6053,
+        "evidence": []
+      },
+      {
+        "term": "спид подчеркивает",
+        "score": 463.7091,
+        "evidence": []
+      },
+      {
+        "term": "спид связанным",
+        "score": 462.6722,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "спид борьбы",
+        "score": 4.234,
+        "evidence": []
+      },
+      {
+        "term": "спид борьбе",
+        "score": 3.9868,
+        "evidence": []
+      },
+      {
+        "term": "спид что",
+        "score": 3.5479,
+        "evidence": []
+      },
+      {
+        "term": "спид регионе",
+        "score": 3.5314,
+        "evidence": []
+      },
+      {
+        "term": "для спид",
+        "score": 3.4932,
+        "evidence": []
+      },
+      {
+        "term": "распространения спид",
+        "score": 3.436,
+        "evidence": []
+      },
+      {
+        "term": "предупреждения спид",
+        "score": 3.4232,
+        "evidence": []
+      },
+      {
+        "term": "стратегии воз",
+        "score": 3.4106,
+        "evidence": []
+      },
+      {
+        "term": "спид соответствии",
+        "score": 3.3298,
+        "evidence": []
+      },
+      {
+        "term": "отношении спид",
+        "score": 3.2605,
+        "evidence": []
+      },
+      {
+        "term": "вызванная спид",
+        "score": 3.1999,
+        "evidence": []
+      },
+      {
+        "term": "спид подчеркивает",
+        "score": 3.1964,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "显而易见",
+        "score": 209.8572,
+        "evidence": []
+      },
+      {
+        "term": "潜在受试者",
+        "score": 185.4089,
+        "evidence": []
+      },
+      {
+        "term": "可能性",
+        "score": 183.507,
+        "evidence": []
+      },
+      {
+        "term": "乌干达",
+        "score": 157.288,
+        "evidence": []
+      },
+      {
+        "term": "增强和迭代",
+        "score": 145.2013,
+        "evidence": []
+      },
+      {
+        "term": "行动框架",
+        "score": 145.2013,
+        "evidence": []
+      },
+      {
+        "term": "精神卫生",
+        "score": 136.0471,
+        "evidence": []
+      },
+      {
+        "term": "在世界卫生组织",
+        "score": 127.4785,
+        "evidence": []
+      },
+      {
+        "term": "要在活动挂图上做好记录",
+        "score": 123.3263,
+        "evidence": []
+      },
+      {
+        "term": "问题的讨论结束",
+        "score": 123.3263,
+        "evidence": []
+      },
+      {
+        "term": "澳大利亚",
+        "score": 119.5848,
+        "evidence": []
+      },
+      {
+        "term": "询问学员这项原则如何应用于紧急情况下的研究",
+        "score": 116.3239,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-document": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "спид борьбы",
+          "score": 6.006,
+          "evidence": []
+        },
+        {
+          "term": "спид борьбе",
+          "score": 5.6868,
+          "evidence": []
+        },
+        {
+          "term": "предупреждения спид",
+          "score": 5.2944,
+          "evidence": []
+        },
+        {
+          "term": "спид регионе",
+          "score": 5.0791,
+          "evidence": []
+        },
+        {
+          "term": "распространения спид",
+          "score": 5.0555,
+          "evidence": []
+        },
+        {
+          "term": "вызванная спид",
+          "score": 5.0249,
+          "evidence": []
+        },
+        {
+          "term": "спид что",
+          "score": 5.0113,
+          "evidence": []
+        },
+        {
+          "term": "спид подчеркивает",
+          "score": 4.9598,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "спид борьбы",
+          "score": 626.998,
+          "evidence": []
+        },
+        {
+          "term": "спид борьбе",
+          "score": 569.0043,
+          "evidence": []
+        },
+        {
+          "term": "спид что",
+          "score": 551.2749,
+          "evidence": []
+        },
+        {
+          "term": "предупреждения спид",
+          "score": 511.3563,
+          "evidence": []
+        },
+        {
+          "term": "распространения спид",
+          "score": 511.1999,
+          "evidence": []
+        },
+        {
+          "term": "для спид",
+          "score": 510.0157,
+          "evidence": []
+        },
+        {
+          "term": "спид соответствии",
+          "score": 507.3489,
+          "evidence": []
+        },
+        {
+          "term": "спид регионе",
+          "score": 505.8585,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "спид борьбы",
+          "score": 4.234,
+          "evidence": []
+        },
+        {
+          "term": "спид борьбе",
+          "score": 3.9868,
+          "evidence": []
+        },
+        {
+          "term": "спид что",
+          "score": 3.5479,
+          "evidence": []
+        },
+        {
+          "term": "спид регионе",
+          "score": 3.5314,
+          "evidence": []
+        },
+        {
+          "term": "для спид",
+          "score": 3.4932,
+          "evidence": []
+        },
+        {
+          "term": "распространения спид",
+          "score": 3.436,
+          "evidence": []
+        },
+        {
+          "term": "предупреждения спид",
+          "score": 3.4232,
+          "evidence": []
+        },
+        {
+          "term": "стратегии воз",
+          "score": 3.4106,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "спид борьбы",
+          "score": 591.4741,
+          "evidence": []
+        },
+        {
+          "term": "спид борьбе",
+          "score": 536.5937,
+          "evidence": []
+        },
+        {
+          "term": "спид что",
+          "score": 521.4298,
+          "evidence": []
+        },
+        {
+          "term": "для спид",
+          "score": 482.8205,
+          "evidence": []
+        },
+        {
+          "term": "предупреждения спид",
+          "score": 480.6162,
+          "evidence": []
+        },
+        {
+          "term": "распространения спид",
+          "score": 480.4648,
+          "evidence": []
+        },
+        {
+          "term": "спид соответствии",
+          "score": 479.1253,
+          "evidence": []
+        },
+        {
+          "term": "спид регионе",
+          "score": 477.1126,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "спид борьбы",
+          "score": 4.234,
+          "evidence": []
+        },
+        {
+          "term": "спид борьбе",
+          "score": 3.9868,
+          "evidence": []
+        },
+        {
+          "term": "спид что",
+          "score": 3.5479,
+          "evidence": []
+        },
+        {
+          "term": "спид регионе",
+          "score": 3.5314,
+          "evidence": []
+        },
+        {
+          "term": "для спид",
+          "score": 3.4932,
+          "evidence": []
+        },
+        {
+          "term": "распространения спид",
+          "score": 3.436,
+          "evidence": []
+        },
+        {
+          "term": "предупреждения спид",
+          "score": 3.4232,
+          "evidence": []
+        },
+        {
+          "term": "стратегии воз",
+          "score": 3.4106,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "显而易见",
+          "score": 209.8572,
+          "evidence": []
+        },
+        {
+          "term": "潜在受试者",
+          "score": 185.4089,
+          "evidence": []
+        },
+        {
+          "term": "可能性",
+          "score": 183.507,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 157.288,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 145.2013,
+          "evidence": []
+        },
+        {
+          "term": "行动框架",
+          "score": 145.2013,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 136.0471,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 127.4785,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

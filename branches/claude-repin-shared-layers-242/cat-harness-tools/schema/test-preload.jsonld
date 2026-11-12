@@ -1,0 +1,23 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness-tools/cat-harness-tools.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness-tools/schema/test-preload.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness-tools/cat-harness-tools.jsonld",
+  "sameAs": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/test-preload.jsonld",
+  "staging": {
+    "branch": "claude/repin-shared-layers-242",
+    "sha": "82b863b8afc7a269deba9e9439fe12633de20986",
+    "pr": "3103/merge",
+    "run": "43319749469"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/test-preload",
+      "@type": "https://litlfred.github.io/cat-harness/v0/ns/Schema",
+      "name": "test-preload",
+      "title": "test-preload",
+      "summary": "Register core's graph typologies before any test reads a declaration.",
+      "module": "schemas/test-preload.ts",
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/cat-harness-tools/directory/cat-harness-tools-schemas"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/smart-base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted.jsonld",
+  "staging": {
+    "branch": "claude/repin-shared-layers-242",
+    "sha": "82b863b8afc7a269deba9e9439fe12633de20986",
+    "pr": "3103/merge",
+    "run": "43319749469"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/node/Gateway_Accepted",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Any action accepted?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "http://smart.who.int/base/process/Process_ActOnDecisionSupport",
+      "performedBy": "http://smart.who.int/base/role/health-worker",
+      "inLane": "http://smart.who.int/base/process/Process_ActOnDecisionSupport/lane/Lane_HealthWorker",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D05"
+      ],
+      "outgoing": [
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D06",
+        "http://smart.who.int/base/process/Process_ActOnDecisionSupport#flow/D07"
+      ],
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-house-processes"
+    }
+  ]
+}

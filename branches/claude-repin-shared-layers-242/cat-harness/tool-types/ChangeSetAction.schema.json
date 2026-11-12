@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/tool-types/ChangeSetAction.schema.json",
+  "title": "ChangeSetAction",
+  "type": "string",
+  "enum": [
+    "seed",
+    "propose",
+    "add",
+    "list",
+    "body",
+    "adopt",
+    "check",
+    "reconcile",
+    "github",
+    "install"
+  ],
+  "description": "A change-set verb: check or reconcile the records, or handle one GitHub issue event.",
+  "staging": {
+    "branch": "claude/repin-shared-layers-242",
+    "sha": "82b863b8afc7a269deba9e9439fe12633de20986",
+    "pr": "3103/merge",
+    "run": "43319749469"
+  }
+}

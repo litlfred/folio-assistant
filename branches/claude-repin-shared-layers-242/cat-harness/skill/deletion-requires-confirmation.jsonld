@@ -1,0 +1,30 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/skill/deletion-requires-confirmation.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-shared-layers-242",
+    "sha": "82b863b8afc7a269deba9e9439fe12633de20986",
+    "pr": "3103/merge",
+    "run": "43319749469"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/skill/deletion-requires-confirmation",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Skill",
+      "name": "deletion-requires-confirmation",
+      "title": "Deletion requires explicit confirmation",
+      "description": "An agent never removes a durable artefact on its own initiative. Report what would go, with sizes and ages, and wait for the user to say so. Covers what counts as durable, the non-destructive move for each kind, and the rule that a workflow whose shape deletes something counts as a deletion nobody decided.",
+      "inPackage": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/package/conduct-core"
+      ],
+      "instructionsPath": "skills/conduct/conduct-core/deletion-requires-confirmation.md",
+      "instructionLines": 192,
+      "hasInstructions": true,
+      "hasIOContract": false,
+      "ambiguous": false,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/directory/skills",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/skill/deletion-requires-confirmation"
+    }
+  ]
+}

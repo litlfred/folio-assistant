@@ -1,0 +1,5970 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "9789240016514-eng",
+  "instance": "who-iris",
+  "about": "library/9789240016514-eng",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "catch-up vaccination",
+        "score": 43.6302,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up doses",
+        "score": 39.8164,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up schedule",
+        "score": 35.7625,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization doses",
+        "score": 34.2198,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up individuals",
+        "score": 30.9632,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up opportunity",
+        "score": 29.3814,
+        "evidence": []
+      },
+      {
+        "term": "vaccine doses",
+        "score": 29.1737,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "intensified catch-up",
+        "score": 28.4662,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up policy",
+        "score": 28.3904,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up strategies",
+        "score": 28.1701,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up efforts",
+        "score": 27.934,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "providing catch-up",
+        "score": 27.8411,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "catch-up vaccination",
+        "score": 1713.8111,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up doses",
+        "score": 1512.5928,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization doses",
+        "score": 1296.1803,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up schedule",
+        "score": 1167.5235,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up individuals",
+        "score": 1074.2194,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "routine vaccination",
+        "score": 1052.6853,
+        "evidence": []
+      },
+      {
+        "term": "catch-up opportunity",
+        "score": 1031.6297,
+        "evidence": []
+      },
+      {
+        "term": "catch-up policy",
+        "score": 1030.0878,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up strategies",
+        "score": 1024.7135,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "intensified catch-up",
+        "score": 1023.1739,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up efforts",
+        "score": 1021.2819,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "implementing catch-up",
+        "score": 992.9033,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "vaccine doses",
+        "score": 23.2836,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination doses",
+        "score": 22.7227,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization doses",
+        "score": 21.3554,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up vaccination",
+        "score": 19.8852,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination schedule",
+        "score": 19.3434,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "measles vaccine",
+        "score": 18.7671,
+        "evidence": []
+      },
+      {
+        "term": "vaccine coverage",
+        "score": 18.4797,
+        "evidence": []
+      },
+      {
+        "term": "vaccination health",
+        "score": 18.1804,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination services",
+        "score": 18.0058,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine delivery",
+        "score": 17.5452,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "record immunization",
+        "score": 17.4683,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "missed vaccination",
+        "score": 17.3333,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "catch-up vaccination",
+        "score": 987.355,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination doses",
+        "score": 947.2272,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization doses",
+        "score": 934.1245,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine doses",
+        "score": 907.9106,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "routine vaccination",
+        "score": 800.1572,
+        "evidence": []
+      },
+      {
+        "term": "vaccination schedule",
+        "score": 739.4092,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination health",
+        "score": 707.4805,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization activities",
+        "score": 706.3504,
+        "evidence": []
+      },
+      {
+        "term": "vaccination coverage",
+        "score": 700.689,
+        "evidence": []
+      },
+      {
+        "term": "vaccination services",
+        "score": 700.3074,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination records",
+        "score": 693.9822,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "individual vaccination",
+        "score": 677.7451,
+        "evidence": [
+          "heading"
+        ]
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "vaccine doses",
+        "score": 23.2836,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination doses",
+        "score": 22.7227,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "immunization doses",
+        "score": 21.3554,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "catch-up vaccination",
+        "score": 19.8852,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination schedule",
+        "score": 19.3434,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "measles vaccine",
+        "score": 18.7671,
+        "evidence": []
+      },
+      {
+        "term": "vaccine coverage",
+        "score": 18.4797,
+        "evidence": []
+      },
+      {
+        "term": "vaccination health",
+        "score": 18.1804,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccination services",
+        "score": 18.0058,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vaccine delivery",
+        "score": 17.5452,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "record immunization",
+        "score": 17.4683,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "missed vaccination",
+        "score": 17.3333,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "捐助者",
+        "score": 884.8395,
+        "evidence": []
+      },
+      {
+        "term": "并提供一",
+        "score": 863.7548,
+        "evidence": []
+      },
+      {
+        "term": "这一点很重要",
+        "score": 668.9929,
+        "evidence": []
+      },
+      {
+        "term": "实验室",
+        "score": 614.8824,
+        "evidence": []
+      },
+      {
+        "term": "如果没有",
+        "score": 599.3111,
+        "evidence": []
+      },
+      {
+        "term": "可能会",
+        "score": 587.9466,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 554.3998,
+        "evidence": []
+      },
+      {
+        "term": "违反权利",
+        "score": 449.2117,
+        "evidence": []
+      },
+      {
+        "term": "更大利益",
+        "score": 423.8672,
+        "evidence": []
+      },
+      {
+        "term": "反过来",
+        "score": 422.371,
+        "evidence": []
+      },
+      {
+        "term": "不良反应",
+        "score": 410.3343,
+        "evidence": []
+      },
+      {
+        "term": "引导基于案例的讨论",
+        "score": 386.601,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-introduction": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 2.2828,
+          "evidence": []
+        },
+        {
+          "term": "vaccination strategy",
+          "score": 1.5472,
+          "evidence": []
+        },
+        {
+          "term": "missed opportunities",
+          "score": 1.2366,
+          "evidence": []
+        },
+        {
+          "term": "upper age",
+          "score": 1.1421,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 1.1146,
+          "evidence": []
+        },
+        {
+          "term": "mov",
+          "score": 1.0138,
+          "evidence": []
+        },
+        {
+          "term": "late",
+          "score": 0.9323,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.932,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 63.6831,
+          "evidence": []
+        },
+        {
+          "term": "vaccination strategy",
+          "score": 45.9666,
+          "evidence": []
+        },
+        {
+          "term": "missed opportunities",
+          "score": 22.9373,
+          "evidence": []
+        },
+        {
+          "term": "late",
+          "score": 21.6562,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 20.6534,
+          "evidence": []
+        },
+        {
+          "term": "upper age",
+          "score": 19.6746,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 18.0248,
+          "evidence": []
+        },
+        {
+          "term": "mov",
+          "score": 16.565,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.6945,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 0.4934,
+          "evidence": []
+        },
+        {
+          "term": "vaccination strategy",
+          "score": 0.4766,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.4743,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.2991,
+          "evidence": []
+        },
+        {
+          "term": "record",
+          "score": 0.2141,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 0.198,
+          "evidence": []
+        },
+        {
+          "term": "missed opportunities",
+          "score": 0.18,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 23.0834,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 16.4458,
+          "evidence": []
+        },
+        {
+          "term": "vaccination strategy",
+          "score": 14.2606,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 11.7258,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 8.6463,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 7.7012,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 5.4852,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 4.8102,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.6945,
+          "evidence": []
+        },
+        {
+          "term": "vaccination strategy",
+          "score": 0.5123,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 0.4934,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.3072,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.2991,
+          "evidence": []
+        },
+        {
+          "term": "record",
+          "score": 0.2141,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 0.198,
+          "evidence": []
+        },
+        {
+          "term": "missed opportunities",
+          "score": 0.18,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 45.5116,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 38.7568,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 34.6867,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 29.9725,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 29.3944,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 27.8557,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 27.157,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 21.9166,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-11-establishing-a-catch-up-vaccination-policy-an": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up schedule",
+          "score": 4.5027,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 3.5148,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination policy",
+          "score": 2.1917,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization schedule",
+          "score": 2.0527,
+          "evidence": []
+        },
+        {
+          "term": "revising immunization",
+          "score": 1.7314,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 1.3368,
+          "evidence": []
+        },
+        {
+          "term": "summary tables",
+          "score": 0.9491,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.646,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "catch-up schedule",
+          "score": 86.8192,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 69.2345,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization schedule",
+          "score": 42.3529,
+          "evidence": []
+        },
+        {
+          "term": "vaccination policy",
+          "score": 40.0711,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "revising immunization",
+          "score": 37.4027,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 30.4346,
+          "evidence": []
+        },
+        {
+          "term": "summary tables",
+          "score": 15.7839,
+          "evidence": []
+        },
+        {
+          "term": "delayed",
+          "score": 8.5503,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.9355,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination policy",
+          "score": 0.7588,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up schedule",
+          "score": 0.6139,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization schedule",
+          "score": 0.4235,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 0.3965,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.3071,
+          "evidence": []
+        },
+        {
+          "term": "revising immunization",
+          "score": 0.2711,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.2356,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 29.9336,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination policy",
+          "score": 19.0621,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up schedule",
+          "score": 18.4814,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization schedule",
+          "score": 11.8431,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 10.2645,
+          "evidence": []
+        },
+        {
+          "term": "revising immunization",
+          "score": 8.9028,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 7.9379,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 6.2542,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.9355,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination policy",
+          "score": 0.7588,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up schedule",
+          "score": 0.6139,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization schedule",
+          "score": 0.4235,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 0.3965,
+          "evidence": []
+        },
+        {
+          "term": "revising immunization",
+          "score": 0.2751,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.2356,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.2033,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 45.7645,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 40.2078,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 36.3497,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 34.857,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 34.0553,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 29.8269,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 25.5694,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 24.756,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-12-ensuring-availability-of-vaccines-and-supplie": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 6.685,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up schedule",
+          "score": 3.5437,
+          "evidence": []
+        },
+        {
+          "term": "offering catch-up",
+          "score": 2.7444,
+          "evidence": []
+        },
+        {
+          "term": "vaccine stock",
+          "score": 2.4576,
+          "evidence": []
+        },
+        {
+          "term": "vaccine series",
+          "score": 2.0701,
+          "evidence": []
+        },
+        {
+          "term": "missed doses",
+          "score": 1.8197,
+          "evidence": []
+        },
+        {
+          "term": "buffer stock",
+          "score": 1.8145,
+          "evidence": []
+        },
+        {
+          "term": "age cohorts",
+          "score": 1.6939,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 356.7421,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up schedule",
+          "score": 162.71,
+          "evidence": []
+        },
+        {
+          "term": "offering catch-up",
+          "score": 142.1329,
+          "evidence": []
+        },
+        {
+          "term": "vaccine stock",
+          "score": 97.0775,
+          "evidence": []
+        },
+        {
+          "term": "vaccine series",
+          "score": 81.9661,
+          "evidence": []
+        },
+        {
+          "term": "age cohorts",
+          "score": 48.8151,
+          "evidence": []
+        },
+        {
+          "term": "missed doses",
+          "score": 48.2205,
+          "evidence": []
+        },
+        {
+          "term": "upper age",
+          "score": 42.7341,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 2.5221,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccines",
+          "score": 1.1584,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine stock",
+          "score": 1.145,
+          "evidence": []
+        },
+        {
+          "term": "vaccine series",
+          "score": 1.0801,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 1.0248,
+          "evidence": []
+        },
+        {
+          "term": "missed doses",
+          "score": 0.8836,
+          "evidence": []
+        },
+        {
+          "term": "catch-up schedule",
+          "score": 0.8456,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.6049,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 132.9824,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine series",
+          "score": 44.8074,
+          "evidence": []
+        },
+        {
+          "term": "vaccine stock",
+          "score": 42.6061,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 40.1987,
+          "evidence": []
+        },
+        {
+          "term": "catch-up schedule",
+          "score": 39.9922,
+          "evidence": []
+        },
+        {
+          "term": "missed doses",
+          "score": 30.5638,
+          "evidence": []
+        },
+        {
+          "term": "offering catch-up",
+          "score": 28.1836,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 27.3367,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "catch-up vaccination",
+          "score": 2.5221,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccines",
+          "score": 1.1584,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine stock",
+          "score": 1.145,
+          "evidence": []
+        },
+        {
+          "term": "vaccine series",
+          "score": 1.0801,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 1.0248,
+          "evidence": []
+        },
+        {
+          "term": "missed doses",
+          "score": 0.8836,
+          "evidence": []
+        },
+        {
+          "term": "catch-up schedule",
+          "score": 0.8456,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.6049,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 44.5303,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 40.7624,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 32.3581,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 32.0428,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 31.0525,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 30.3928,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 24.0528,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 23.653,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-13-building-health-worker-knowledge-and-practice": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up schedule",
+          "score": 3.5448,
+          "evidence": []
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 3.4743,
+          "evidence": []
+        },
+        {
+          "term": "vaccine injections",
+          "score": 3.3429,
+          "evidence": []
+        },
+        {
+          "term": "vaccine doses",
+          "score": 3.3218,
+          "evidence": []
+        },
+        {
+          "term": "vaccine series",
+          "score": 3.1043,
+          "evidence": []
+        },
+        {
+          "term": "inactivated vaccine",
+          "score": 3.0869,
+          "evidence": []
+        },
+        {
+          "term": "multiple vaccine",
+          "score": 2.7138,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 2.7054,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccine doses",
+          "score": 234.0317,
+          "evidence": []
+        },
+        {
+          "term": "vaccine series",
+          "score": 208.3483,
+          "evidence": []
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 199.2431,
+          "evidence": []
+        },
+        {
+          "term": "vaccine injections",
+          "score": 198.0892,
+          "evidence": []
+        },
+        {
+          "term": "multiple vaccine",
+          "score": 179.1576,
+          "evidence": []
+        },
+        {
+          "term": "inactivated vaccine",
+          "score": 167.7444,
+          "evidence": []
+        },
+        {
+          "term": "different vaccine",
+          "score": 146.2872,
+          "evidence": []
+        },
+        {
+          "term": "catch-up schedule",
+          "score": 144.3794,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine doses",
+          "score": 2.6111,
+          "evidence": []
+        },
+        {
+          "term": "vaccination doses",
+          "score": 2.4871,
+          "evidence": []
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 2.0959,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 1.9615,
+          "evidence": []
+        },
+        {
+          "term": "vaccine series",
+          "score": 1.8299,
+          "evidence": []
+        },
+        {
+          "term": "inactivated vaccine",
+          "score": 1.7634,
+          "evidence": []
+        },
+        {
+          "term": "multiple vaccine",
+          "score": 1.734,
+          "evidence": []
+        },
+        {
+          "term": "following vaccination",
+          "score": 1.7246,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine doses",
+          "score": 132.6225,
+          "evidence": []
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 127.4914,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 96.3908,
+          "evidence": []
+        },
+        {
+          "term": "vaccine series",
+          "score": 92.3096,
+          "evidence": []
+        },
+        {
+          "term": "vaccine injections",
+          "score": 90.8674,
+          "evidence": []
+        },
+        {
+          "term": "multiple vaccine",
+          "score": 90.5243,
+          "evidence": []
+        },
+        {
+          "term": "individual vaccination",
+          "score": 89.1147,
+          "evidence": []
+        },
+        {
+          "term": "inactivated vaccine",
+          "score": 87.5734,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine doses",
+          "score": 2.6111,
+          "evidence": []
+        },
+        {
+          "term": "vaccination doses",
+          "score": 2.4871,
+          "evidence": []
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 2.0959,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 1.9615,
+          "evidence": []
+        },
+        {
+          "term": "vaccine series",
+          "score": 1.8299,
+          "evidence": []
+        },
+        {
+          "term": "inactivated vaccine",
+          "score": 1.7634,
+          "evidence": []
+        },
+        {
+          "term": "multiple vaccine",
+          "score": 1.734,
+          "evidence": []
+        },
+        {
+          "term": "following vaccination",
+          "score": 1.7246,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 40.3125,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 38.9293,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 30.4608,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 27.1149,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 26.2497,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 24.5238,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 23.1793,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 20.2497,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-14-recording-and-reporting-of-catch-up-vaccinati": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 5.002,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination doses",
+          "score": 4.9692,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "delayed doses",
+          "score": 2.2006,
+          "evidence": []
+        },
+        {
+          "term": "home-based records",
+          "score": 2.1975,
+          "evidence": []
+        },
+        {
+          "term": "immunization records",
+          "score": 2.0851,
+          "evidence": []
+        },
+        {
+          "term": "immunization registers",
+          "score": 2.0586,
+          "evidence": []
+        },
+        {
+          "term": "hbr",
+          "score": 1.9446,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 1.7905,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccination doses",
+          "score": 202.008,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 164.4658,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "delayed doses",
+          "score": 72.1751,
+          "evidence": []
+        },
+        {
+          "term": "vaccination beyond",
+          "score": 61.3435,
+          "evidence": []
+        },
+        {
+          "term": "hbr",
+          "score": 60.7147,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 60.6278,
+          "evidence": []
+        },
+        {
+          "term": "immunization records",
+          "score": 59.7354,
+          "evidence": []
+        },
+        {
+          "term": "immunization registers",
+          "score": 58.8392,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination doses",
+          "score": 3.3432,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 2.8962,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization records",
+          "score": 1.4927,
+          "evidence": []
+        },
+        {
+          "term": "immunization data",
+          "score": 1.3669,
+          "evidence": []
+        },
+        {
+          "term": "immunization registers",
+          "score": 1.2282,
+          "evidence": []
+        },
+        {
+          "term": "electronic immunization",
+          "score": 1.2184,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 1.1781,
+          "evidence": []
+        },
+        {
+          "term": "vaccination status",
+          "score": 1.175,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccination doses",
+          "score": 102.8053,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 101.9184,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization records",
+          "score": 49.1504,
+          "evidence": []
+        },
+        {
+          "term": "immunization data",
+          "score": 39.7167,
+          "evidence": []
+        },
+        {
+          "term": "home-based records",
+          "score": 37.1932,
+          "evidence": []
+        },
+        {
+          "term": "immunization registers",
+          "score": 35.2621,
+          "evidence": []
+        },
+        {
+          "term": "electronic immunization",
+          "score": 34.0978,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 33.7081,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination doses",
+          "score": 3.3432,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 2.8962,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization records",
+          "score": 1.4927,
+          "evidence": []
+        },
+        {
+          "term": "immunization data",
+          "score": 1.3669,
+          "evidence": []
+        },
+        {
+          "term": "immunization registers",
+          "score": 1.2282,
+          "evidence": []
+        },
+        {
+          "term": "electronic immunization",
+          "score": 1.2184,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 1.1781,
+          "evidence": []
+        },
+        {
+          "term": "vaccination status",
+          "score": 1.175,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 49.2943,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 45.1097,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 35.2798,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 32.352,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 32.111,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 28.6478,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 28.5384,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 23.5283,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-15-communication-and-community-engagement": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "communication",
+          "score": 1.0517,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "caregivers",
+          "score": 0.9098,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.7736,
+          "evidence": []
+        },
+        {
+          "term": "reminders",
+          "score": 0.5816,
+          "evidence": []
+        },
+        {
+          "term": "messaging",
+          "score": 0.5739,
+          "evidence": []
+        },
+        {
+          "term": "late",
+          "score": 0.5716,
+          "evidence": []
+        },
+        {
+          "term": "importance",
+          "score": 0.5328,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "caregivers",
+          "score": 18.2756,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 16.5781,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination",
+          "score": 15.8541,
+          "evidence": []
+        },
+        {
+          "term": "individuals",
+          "score": 11.2771,
+          "evidence": []
+        },
+        {
+          "term": "importance",
+          "score": 9.5296,
+          "evidence": []
+        },
+        {
+          "term": "messaging",
+          "score": 9.1136,
+          "evidence": []
+        },
+        {
+          "term": "reminders",
+          "score": 9.0426,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination",
+          "score": 0.2429,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.205,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 0.1792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization",
+          "score": 0.1719,
+          "evidence": []
+        },
+        {
+          "term": "community",
+          "score": 0.1637,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "record",
+          "score": 0.1278,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1267,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccination",
+          "score": 4.8796,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 3.634,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 3.5236,
+          "evidence": []
+        },
+        {
+          "term": "home-based",
+          "score": 3.1818,
+          "evidence": []
+        },
+        {
+          "term": "records",
+          "score": 2.9275,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 2.7803,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 2.7363,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.2429,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 0.1792,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "community",
+          "score": 0.1637,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccines",
+          "score": 0.1328,
+          "evidence": []
+        },
+        {
+          "term": "individuals",
+          "score": 0.0809,
+          "evidence": []
+        },
+        {
+          "term": "caregivers",
+          "score": 0.0695,
+          "evidence": []
+        },
+        {
+          "term": "groups",
+          "score": 0.0646,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 51.3368,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 44.6842,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 37.1556,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 36.4466,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 36.013,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 27.1506,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 26.0787,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-16-strategies-for-catch-up-vaccination": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 6.0555,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "piri activity",
+          "score": 2.8617,
+          "evidence": []
+        },
+        {
+          "term": "school vaccination",
+          "score": 2.6831,
+          "evidence": []
+        },
+        {
+          "term": "vaccination checks",
+          "score": 2.6777,
+          "evidence": []
+        },
+        {
+          "term": "school-based immunization",
+          "score": 2.5019,
+          "evidence": []
+        },
+        {
+          "term": "checking vaccination",
+          "score": 2.2559,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 2.1146,
+          "evidence": []
+        },
+        {
+          "term": "vaccination status",
+          "score": 2.0355,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 286.4407,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "school vaccination",
+          "score": 143.1917,
+          "evidence": []
+        },
+        {
+          "term": "vaccination checks",
+          "score": 126.5056,
+          "evidence": []
+        },
+        {
+          "term": "checking vaccination",
+          "score": 105.7761,
+          "evidence": []
+        },
+        {
+          "term": "individual vaccination",
+          "score": 104.7312,
+          "evidence": []
+        },
+        {
+          "term": "vaccination status",
+          "score": 101.8079,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 100.263,
+          "evidence": []
+        },
+        {
+          "term": "piri activity",
+          "score": 87.1097,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 2.7796,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine doses",
+          "score": 1.4886,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 1.3159,
+          "evidence": []
+        },
+        {
+          "term": "individual vaccination",
+          "score": 1.1994,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 1.1501,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 1.1027,
+          "evidence": []
+        },
+        {
+          "term": "vaccination status",
+          "score": 1.0903,
+          "evidence": []
+        },
+        {
+          "term": "school vaccination",
+          "score": 1.0788,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 150.6407,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine doses",
+          "score": 61.4227,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 58.249,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 53.1465,
+          "evidence": []
+        },
+        {
+          "term": "individual vaccination",
+          "score": 51.8944,
+          "evidence": []
+        },
+        {
+          "term": "vaccination status",
+          "score": 48.7705,
+          "evidence": []
+        },
+        {
+          "term": "school vaccination",
+          "score": 48.1421,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 47.2825,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "catch-up vaccination",
+          "score": 2.7796,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine doses",
+          "score": 1.4886,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 1.3159,
+          "evidence": []
+        },
+        {
+          "term": "individual vaccination",
+          "score": 1.1994,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 1.1501,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 1.1027,
+          "evidence": []
+        },
+        {
+          "term": "vaccination status",
+          "score": 1.0903,
+          "evidence": []
+        },
+        {
+          "term": "school vaccination",
+          "score": 1.0788,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 44.3694,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 39.741,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 33.1992,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 31.7949,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 31.3371,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 29.1077,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 28.8264,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 23.1217,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-2-special-catch-up-vaccination-efforts-following": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 3.7142,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "interruption",
+          "score": 1.8582,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routine immunization",
+          "score": 1.3732,
+          "evidence": []
+        },
+        {
+          "term": "missed vaccination",
+          "score": 1.3078,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.7957,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "period",
+          "score": 0.4755,
+          "evidence": []
+        },
+        {
+          "term": "efforts",
+          "score": 0.4661,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 74.4126,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "interruption",
+          "score": 38.534,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routine immunization",
+          "score": 26.437,
+          "evidence": []
+        },
+        {
+          "term": "missed vaccination",
+          "score": 23.8109,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 13.037,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "continue",
+          "score": 6.8531,
+          "evidence": []
+        },
+        {
+          "term": "individuals",
+          "score": 6.7662,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.8591,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "missed vaccination",
+          "score": 0.3812,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 0.316,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2723,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.2394,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doses",
+          "score": 0.1793,
+          "evidence": []
+        },
+        {
+          "term": "record",
+          "score": 0.1039,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 27.9734,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routine immunization",
+          "score": 10.9161,
+          "evidence": []
+        },
+        {
+          "term": "missed vaccination",
+          "score": 9.2807,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 6.8245,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 5.9932,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 5.0134,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 4.6401,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.8591,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "missed vaccination",
+          "score": 0.3812,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 0.316,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.2394,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "efforts",
+          "score": 0.0875,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "following",
+          "score": 0.081,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "interruption",
+          "score": 0.0654,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 48.6382,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 44.1627,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 34.6559,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 34.6475,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 34.2684,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 32.1362,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 29.2207,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-21-policy-and-advocacy": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 1.8461,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 1.4602,
+          "evidence": []
+        },
+        {
+          "term": "earliest opportunity",
+          "score": 1.308,
+          "evidence": []
+        },
+        {
+          "term": "age limits",
+          "score": 1.1537,
+          "evidence": []
+        },
+        {
+          "term": "upper age",
+          "score": 1.1421,
+          "evidence": []
+        },
+        {
+          "term": "interim guidance",
+          "score": 1.0442,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.9536,
+          "evidence": []
+        },
+        {
+          "term": "liberia",
+          "score": 0.8108,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 37.2596,
+          "evidence": []
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 23.2596,
+          "evidence": []
+        },
+        {
+          "term": "earliest opportunity",
+          "score": 22.6214,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 22.4293,
+          "evidence": []
+        },
+        {
+          "term": "age limits",
+          "score": 20.1492,
+          "evidence": []
+        },
+        {
+          "term": "upper age",
+          "score": 19.6746,
+          "evidence": []
+        },
+        {
+          "term": "interim guidance",
+          "score": 16.5979,
+          "evidence": []
+        },
+        {
+          "term": "liberia",
+          "score": 13.1555,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.5185,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.3656,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.3298,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2982,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.2083,
+          "evidence": []
+        },
+        {
+          "term": "policy",
+          "score": 0.163,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "covid",
+          "score": 0.1501,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.1482,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 15.2531,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 8.6754,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 8.6002,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 6.7099,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 5.9722,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 5.5859,
+          "evidence": []
+        },
+        {
+          "term": "routine",
+          "score": 3.8144,
+          "evidence": []
+        },
+        {
+          "term": "activities",
+          "score": 2.8235,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.5185,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.3298,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2982,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.25,
+          "evidence": []
+        },
+        {
+          "term": "policy",
+          "score": 0.163,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ebola outbreak",
+          "score": 0.1518,
+          "evidence": []
+        },
+        {
+          "term": "services",
+          "score": 0.1482,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.139,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 40.7416,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 32.6558,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 30.362,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 23.8919,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 23.6461,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 23.3261,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 23.1538,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 22.2054,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-22-managing-vaccines-and-supplies": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccines",
+          "score": 1.7163,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "supplies",
+          "score": 1.6306,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "multi-dose vial",
+          "score": 1.5809,
+          "evidence": []
+        },
+        {
+          "term": "cold chain",
+          "score": 1.5677,
+          "evidence": []
+        },
+        {
+          "term": "controlled temperature",
+          "score": 1.2482,
+          "evidence": []
+        },
+        {
+          "term": "vial policy",
+          "score": 1.1516,
+          "evidence": []
+        },
+        {
+          "term": "related supplies",
+          "score": 1.1185,
+          "evidence": []
+        },
+        {
+          "term": "shelf-life",
+          "score": 0.8847,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccines",
+          "score": 34.4224,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "supplies",
+          "score": 33.1148,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cold chain",
+          "score": 31.9033,
+          "evidence": []
+        },
+        {
+          "term": "multi-dose vial",
+          "score": 25.152,
+          "evidence": []
+        },
+        {
+          "term": "controlled temperature",
+          "score": 21.6667,
+          "evidence": []
+        },
+        {
+          "term": "related supplies",
+          "score": 21.0088,
+          "evidence": []
+        },
+        {
+          "term": "vial policy",
+          "score": 18.6247,
+          "evidence": []
+        },
+        {
+          "term": "shelf-life",
+          "score": 14.3677,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccines",
+          "score": 0.4344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2406,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.2204,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1809,
+          "evidence": []
+        },
+        {
+          "term": "cold chain",
+          "score": 0.1499,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 0.1256,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1229,
+          "evidence": []
+        },
+        {
+          "term": "schedule",
+          "score": 0.1154,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine",
+          "score": 7.0166,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 5.3284,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 5.2233,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 3.8228,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 3.6157,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 3.4492,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 3.339,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 2.2549,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccines",
+          "score": 0.4344,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cold chain",
+          "score": 0.1499,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 0.1256,
+          "evidence": []
+        },
+        {
+          "term": "national",
+          "score": 0.1027,
+          "evidence": []
+        },
+        {
+          "term": "supplies",
+          "score": 0.0993,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "management",
+          "score": 0.0986,
+          "evidence": []
+        },
+        {
+          "term": "vial policy",
+          "score": 0.087,
+          "evidence": []
+        },
+        {
+          "term": "stock",
+          "score": 0.0833,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 53.8042,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 38.8566,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 38.5735,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 38.1449,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 38.1341,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 34.965,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 34.7725,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 28.9299,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-23-monitoring-the-extent-of-the-interruption": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 2.7401,
+          "evidence": []
+        },
+        {
+          "term": "intensified catch-up",
+          "score": 2.6993,
+          "evidence": []
+        },
+        {
+          "term": "catch-up efforts",
+          "score": 2.5208,
+          "evidence": []
+        },
+        {
+          "term": "catch-up strategies",
+          "score": 2.2998,
+          "evidence": []
+        },
+        {
+          "term": "administered doses",
+          "score": 2.1228,
+          "evidence": []
+        },
+        {
+          "term": "estimating target",
+          "score": 1.6803,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 1.6765,
+          "evidence": []
+        },
+        {
+          "term": "immunization register",
+          "score": 1.5507,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 101.2095,
+          "evidence": []
+        },
+        {
+          "term": "catch-up efforts",
+          "score": 97.1371,
+          "evidence": []
+        },
+        {
+          "term": "intensified catch-up",
+          "score": 95.714,
+          "evidence": []
+        },
+        {
+          "term": "catch-up strategies",
+          "score": 87.7819,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 63.593,
+          "evidence": []
+        },
+        {
+          "term": "administered doses",
+          "score": 57.31,
+          "evidence": []
+        },
+        {
+          "term": "estimating target",
+          "score": 55.8971,
+          "evidence": []
+        },
+        {
+          "term": "disruption",
+          "score": 34.5405,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.9146,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 0.8146,
+          "evidence": []
+        },
+        {
+          "term": "immunization register",
+          "score": 0.7827,
+          "evidence": []
+        },
+        {
+          "term": "vaccination efforts",
+          "score": 0.7015,
+          "evidence": []
+        },
+        {
+          "term": "administered doses",
+          "score": 0.6922,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.6303,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 0.4554,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.3893,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 37.972,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 27.8193,
+          "evidence": []
+        },
+        {
+          "term": "immunization register",
+          "score": 27.1396,
+          "evidence": []
+        },
+        {
+          "term": "vaccination efforts",
+          "score": 23.3724,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 19.1912,
+          "evidence": []
+        },
+        {
+          "term": "administered doses",
+          "score": 18.4379,
+          "evidence": []
+        },
+        {
+          "term": "catch-up strategies",
+          "score": 17.9418,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 16.6951,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.9146,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 0.8146,
+          "evidence": []
+        },
+        {
+          "term": "immunization register",
+          "score": 0.7827,
+          "evidence": []
+        },
+        {
+          "term": "vaccination efforts",
+          "score": 0.7015,
+          "evidence": []
+        },
+        {
+          "term": "administered doses",
+          "score": 0.6922,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.6303,
+          "evidence": []
+        },
+        {
+          "term": "target population",
+          "score": 0.4554,
+          "evidence": []
+        },
+        {
+          "term": "monitoring",
+          "score": 0.3893,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 48.8848,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 42.9329,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 32.4101,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 31.8284,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 31.4839,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 29.6371,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 23.979,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 23.2688,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-24-communication-and-community-engagement": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "immunization services",
+          "score": 1.1359,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 0.8334,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "community",
+          "score": 0.696,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccinations",
+          "score": 0.6764,
+          "evidence": []
+        },
+        {
+          "term": "engagement",
+          "score": 0.5554,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccines",
+          "score": 0.5262,
+          "evidence": []
+        },
+        {
+          "term": "media",
+          "score": 0.5017,
+          "evidence": []
+        },
+        {
+          "term": "demand",
+          "score": 0.4827,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "immunization services",
+          "score": 19.3352,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 11.0521,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination",
+          "score": 10.5694,
+          "evidence": []
+        },
+        {
+          "term": "community",
+          "score": 9.2962,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "media",
+          "score": 7.7761,
+          "evidence": []
+        },
+        {
+          "term": "demand",
+          "score": 7.489,
+          "evidence": []
+        },
+        {
+          "term": "safe",
+          "score": 7.3447,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 6.8845,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "immunization services",
+          "score": 0.3703,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2862,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.2641,
+          "evidence": []
+        },
+        {
+          "term": "community",
+          "score": 0.2245,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doses",
+          "score": 0.1573,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1359,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 0.1331,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up",
+          "score": 0.1214,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "immunization services",
+          "score": 7.6208,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 5.6123,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 5.1091,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 3.8826,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 3.7978,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 3.4083,
+          "evidence": []
+        },
+        {
+          "term": "community",
+          "score": 2.8358,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "health",
+          "score": 2.3261,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "immunization services",
+          "score": 0.3703,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.2862,
+          "evidence": []
+        },
+        {
+          "term": "community",
+          "score": 0.2245,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccines",
+          "score": 0.167,
+          "evidence": []
+        },
+        {
+          "term": "communication",
+          "score": 0.1331,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "key",
+          "score": 0.0888,
+          "evidence": []
+        },
+        {
+          "term": "individuals",
+          "score": 0.0755,
+          "evidence": []
+        },
+        {
+          "term": "engagement",
+          "score": 0.0708,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 48.6187,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 41.059,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 34.1347,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 33.9973,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 32.9356,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 24.3973,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 24.2369,
+          "evidence": []
+        },
+        {
+          "term": "不良反应",
+          "score": 21.8476,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-25-strategies-for-catch-up-vaccination-after-an": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 6.1539,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "intensified catch-up",
+          "score": 3.0354,
+          "evidence": []
+        },
+        {
+          "term": "vaccination campaigns",
+          "score": 2.5067,
+          "evidence": []
+        },
+        {
+          "term": "catch-up individuals",
+          "score": 2.4784,
+          "evidence": []
+        },
+        {
+          "term": "school-based immunization",
+          "score": 2.4308,
+          "evidence": []
+        },
+        {
+          "term": "mass vaccination",
+          "score": 2.4141,
+          "evidence": []
+        },
+        {
+          "term": "supplementary immunization",
+          "score": 2.3063,
+          "evidence": []
+        },
+        {
+          "term": "selective mass",
+          "score": 2.3002,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 265.8353,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "intensified catch-up",
+          "score": 111.3572,
+          "evidence": []
+        },
+        {
+          "term": "catch-up individuals",
+          "score": 95.8585,
+          "evidence": []
+        },
+        {
+          "term": "immunization activities",
+          "score": 93.1251,
+          "evidence": []
+        },
+        {
+          "term": "mass vaccination",
+          "score": 92.738,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 90.7241,
+          "evidence": []
+        },
+        {
+          "term": "vaccination campaigns",
+          "score": 89.8543,
+          "evidence": []
+        },
+        {
+          "term": "school-based immunization",
+          "score": 86.52,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 3.4122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization services",
+          "score": 1.5282,
+          "evidence": []
+        },
+        {
+          "term": "vaccine series",
+          "score": 1.4328,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 1.3726,
+          "evidence": []
+        },
+        {
+          "term": "vaccination campaigns",
+          "score": 1.3664,
+          "evidence": []
+        },
+        {
+          "term": "immunization activities",
+          "score": 1.3659,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 1.2967,
+          "evidence": []
+        },
+        {
+          "term": "missed doses",
+          "score": 1.1622,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 156.7965,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "routine immunization",
+          "score": 63.1994,
+          "evidence": []
+        },
+        {
+          "term": "immunization activities",
+          "score": 59.2648,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 58.1251,
+          "evidence": []
+        },
+        {
+          "term": "vaccination campaigns",
+          "score": 49.7777,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 48.3502,
+          "evidence": []
+        },
+        {
+          "term": "mass vaccination",
+          "score": 47.6021,
+          "evidence": []
+        },
+        {
+          "term": "supplementary immunization",
+          "score": 47.1006,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "catch-up vaccination",
+          "score": 3.4122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization services",
+          "score": 1.5282,
+          "evidence": []
+        },
+        {
+          "term": "vaccine series",
+          "score": 1.4328,
+          "evidence": []
+        },
+        {
+          "term": "vaccination history",
+          "score": 1.3726,
+          "evidence": []
+        },
+        {
+          "term": "vaccination campaigns",
+          "score": 1.3664,
+          "evidence": []
+        },
+        {
+          "term": "immunization activities",
+          "score": 1.3659,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 1.2967,
+          "evidence": []
+        },
+        {
+          "term": "mass vaccination",
+          "score": 1.276,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 45.7176,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 38.54,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 33.5574,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 26.7095,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 25.915,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 24.9873,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 24.6317,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 20.7982,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-1-designing-catch-up-vaccination-schedules": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up schedules",
+          "score": 5.4177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 4.6533,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dose doses",
+          "score": 2.7632,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 2.4487,
+          "evidence": []
+        },
+        {
+          "term": "repeating previous",
+          "score": 2.1986,
+          "evidence": []
+        },
+        {
+          "term": "birth dose",
+          "score": 1.9786,
+          "evidence": []
+        },
+        {
+          "term": "containing vaccine",
+          "score": 1.8236,
+          "evidence": []
+        },
+        {
+          "term": "mcv",
+          "score": 1.4877,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "catch-up schedules",
+          "score": 164.5618,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 133.1844,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dose doses",
+          "score": 123.6097,
+          "evidence": []
+        },
+        {
+          "term": "previous dose",
+          "score": 81.9293,
+          "evidence": []
+        },
+        {
+          "term": "birth dose",
+          "score": 74.8471,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 60.0479,
+          "evidence": []
+        },
+        {
+          "term": "repeating previous",
+          "score": 52.2953,
+          "evidence": []
+        },
+        {
+          "term": "containing vaccine",
+          "score": 42.3827,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 1.9601,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 0.988,
+          "evidence": []
+        },
+        {
+          "term": "dose doses",
+          "score": 0.9858,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 0.8874,
+          "evidence": []
+        },
+        {
+          "term": "containing vaccine",
+          "score": 0.8466,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 0.7163,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 0.683,
+          "evidence": []
+        },
+        {
+          "term": "birth dose",
+          "score": 0.6658,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 84.3452,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up schedules",
+          "score": 38.2135,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization schedule",
+          "score": 33.1795,
+          "evidence": []
+        },
+        {
+          "term": "dose doses",
+          "score": 33.1408,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 31.9762,
+          "evidence": []
+        },
+        {
+          "term": "containing vaccine",
+          "score": 25.0498,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 24.9239,
+          "evidence": []
+        },
+        {
+          "term": "birth dose",
+          "score": 17.9205,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "catch-up vaccination",
+          "score": 1.9601,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 0.988,
+          "evidence": []
+        },
+        {
+          "term": "dose doses",
+          "score": 0.9858,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 0.8874,
+          "evidence": []
+        },
+        {
+          "term": "containing vaccine",
+          "score": 0.8466,
+          "evidence": []
+        },
+        {
+          "term": "national immunization",
+          "score": 0.7163,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 0.683,
+          "evidence": []
+        },
+        {
+          "term": "birth dose",
+          "score": 0.6658,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "如果没有",
+          "score": 40.2866,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 34.8533,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 33.7624,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 25.925,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 24.8996,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 24.2555,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 21.6733,
+          "evidence": []
+        },
+        {
+          "term": "平等主义",
+          "score": 20.9676,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-2-minimum-intervals-between-doses-in-a-vaccine-s": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "doses",
+          "score": 2.4507,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "birth dose",
+          "score": 2.1276,
+          "evidence": []
+        },
+        {
+          "term": "minimum interval",
+          "score": 1.8337,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 1.7686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "excluding birth",
+          "score": 1.4407,
+          "evidence": []
+        },
+        {
+          "term": "weeks",
+          "score": 1.3922,
+          "evidence": []
+        },
+        {
+          "term": "started years",
+          "score": 1.3553,
+          "evidence": []
+        },
+        {
+          "term": "delayed immunization",
+          "score": 1.2054,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "doses",
+          "score": 87.0845,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "birth dose",
+          "score": 69.9877,
+          "evidence": []
+        },
+        {
+          "term": "weeks",
+          "score": 68.4534,
+          "evidence": []
+        },
+        {
+          "term": "minimum interval",
+          "score": 55.4273,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 37.1077,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "excluding birth",
+          "score": 31.0556,
+          "evidence": []
+        },
+        {
+          "term": "started years",
+          "score": 30.2542,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 25.4061,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine",
+          "score": 1.1284,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doses",
+          "score": 0.7961,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "birth dose",
+          "score": 0.5236,
+          "evidence": []
+        },
+        {
+          "term": "delayed immunization",
+          "score": 0.497,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.4914,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 0.2467,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 0.2361,
+          "evidence": []
+        },
+        {
+          "term": "schedule",
+          "score": 0.2343,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine",
+          "score": 31.7768,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doses",
+          "score": 22.359,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "delayed immunization",
+          "score": 14.5278,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 14.4017,
+          "evidence": []
+        },
+        {
+          "term": "birth dose",
+          "score": 12.3284,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 9.625,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 8.6549,
+          "evidence": []
+        },
+        {
+          "term": "children",
+          "score": 6.8754,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine",
+          "score": 1.1284,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "doses",
+          "score": 0.7961,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "birth dose",
+          "score": 0.5236,
+          "evidence": []
+        },
+        {
+          "term": "delayed immunization",
+          "score": 0.497,
+          "evidence": []
+        },
+        {
+          "term": "vaccination",
+          "score": 0.4914,
+          "evidence": []
+        },
+        {
+          "term": "months",
+          "score": 0.2291,
+          "evidence": []
+        },
+        {
+          "term": "series",
+          "score": 0.2009,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "weeks",
+          "score": 0.2005,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 41.6799,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 38.2883,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 36.8268,
+          "evidence": []
+        },
+        {
+          "term": "到辩护",
+          "score": 32.3513,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 29.2828,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 23.8898,
+          "evidence": []
+        },
+        {
+          "term": "肺炎疫苗试验",
+          "score": 22.8946,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 22.1077,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-3-sample-job-aids-for-catch-up-vaccination": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 3.6922,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "job aids",
+          "score": 1.8874,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination schedules",
+          "score": 1.4195,
+          "evidence": []
+        },
+        {
+          "term": "calculator",
+          "score": 1.2994,
+          "evidence": []
+        },
+        {
+          "term": "available here",
+          "score": 1.0879,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 74.5192,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "job aids",
+          "score": 27.2408,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination schedules",
+          "score": 25.0196,
+          "evidence": []
+        },
+        {
+          "term": "calculator",
+          "score": 24.8474,
+          "evidence": []
+        },
+        {
+          "term": "available here",
+          "score": 20.2257,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.5946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination schedules",
+          "score": 0.2344,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.198,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1575,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.1127,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 17.3572,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination schedules",
+          "score": 5.3606,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 4.6187,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 4.4536,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 3.5802,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "catch-up vaccination",
+          "score": 0.5946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination schedules",
+          "score": 0.2344,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.198,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.1575,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.1084,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 47.5526,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 46.5844,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 44.5105,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 44.1346,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 42.2717,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-4-catch-up-vaccination-worksheet-for-determining": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccinations administered",
+          "score": 1.5901,
+          "evidence": []
+        },
+        {
+          "term": "childhood vaccinations",
+          "score": 1.5457,
+          "evidence": []
+        },
+        {
+          "term": "age groupings",
+          "score": 1.5248,
+          "evidence": []
+        },
+        {
+          "term": "upper age",
+          "score": 1.4574,
+          "evidence": []
+        },
+        {
+          "term": "sheet below",
+          "score": 1.4407,
+          "evidence": []
+        },
+        {
+          "term": "record catch",
+          "score": 1.3397,
+          "evidence": []
+        },
+        {
+          "term": "remove age",
+          "score": 1.3351,
+          "evidence": []
+        },
+        {
+          "term": "age limit",
+          "score": 1.2598,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "upper age",
+          "score": 32.074,
+          "evidence": []
+        },
+        {
+          "term": "age groupings",
+          "score": 31.2813,
+          "evidence": []
+        },
+        {
+          "term": "sheet below",
+          "score": 29.1617,
+          "evidence": []
+        },
+        {
+          "term": "remove age",
+          "score": 28.0228,
+          "evidence": []
+        },
+        {
+          "term": "vaccinations administered",
+          "score": 26.637,
+          "evidence": []
+        },
+        {
+          "term": "childhood vaccinations",
+          "score": 26.6202,
+          "evidence": []
+        },
+        {
+          "term": "age limit",
+          "score": 26.617,
+          "evidence": []
+        },
+        {
+          "term": "restricting recording",
+          "score": 19.8372,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination",
+          "score": 0.6646,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine",
+          "score": 0.3421,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 0.3177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization",
+          "score": 0.3026,
+          "evidence": []
+        },
+        {
+          "term": "vaccinations administered",
+          "score": 0.2914,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.2557,
+          "evidence": []
+        },
+        {
+          "term": "schedule",
+          "score": 0.1702,
+          "evidence": []
+        },
+        {
+          "term": "childhood vaccinations",
+          "score": 0.1675,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccination",
+          "score": 13.0908,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up",
+          "score": 8.5499,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization",
+          "score": 7.2759,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 6.2012,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 5.176,
+          "evidence": []
+        },
+        {
+          "term": "district",
+          "score": 4.2791,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 4.1041,
+          "evidence": []
+        },
+        {
+          "term": "vaccinations administered",
+          "score": 3.3177,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.6646,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "catch-up",
+          "score": 0.3177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccinations administered",
+          "score": 0.2914,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.2557,
+          "evidence": []
+        },
+        {
+          "term": "childhood vaccinations",
+          "score": 0.2028,
+          "evidence": []
+        },
+        {
+          "term": "record catch",
+          "score": 0.1762,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.1604,
+          "evidence": []
+        },
+        {
+          "term": "calculating coverage",
+          "score": 0.1511,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 45.8777,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 39.4773,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 30.7242,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 30.6322,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 29.7386,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 29.4231,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 23.2385,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 21.8176,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-6-periodic-intensification-of-routine-immunizati": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "routine immunization",
+          "score": 6.192,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "piri activity",
+          "score": 4.7819,
+          "evidence": []
+        },
+        {
+          "term": "piri targeted",
+          "score": 4.6187,
+          "evidence": []
+        },
+        {
+          "term": "piri service",
+          "score": 4.1963,
+          "evidence": []
+        },
+        {
+          "term": "during piri",
+          "score": 4.0274,
+          "evidence": []
+        },
+        {
+          "term": "potential piri",
+          "score": 3.8882,
+          "evidence": []
+        },
+        {
+          "term": "through piri",
+          "score": 3.8051,
+          "evidence": []
+        },
+        {
+          "term": "immunization doses",
+          "score": 3.1665,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "routine immunization",
+          "score": 546.3782,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "piri activity",
+          "score": 425.461,
+          "evidence": []
+        },
+        {
+          "term": "piri targeted",
+          "score": 414.035,
+          "evidence": []
+        },
+        {
+          "term": "piri service",
+          "score": 385.4264,
+          "evidence": []
+        },
+        {
+          "term": "during piri",
+          "score": 368.2892,
+          "evidence": []
+        },
+        {
+          "term": "potential piri",
+          "score": 362.6734,
+          "evidence": []
+        },
+        {
+          "term": "through piri",
+          "score": 361.2677,
+          "evidence": []
+        },
+        {
+          "term": "routine vaccination",
+          "score": 219.9642,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "routine immunization",
+          "score": 3.3727,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine doses",
+          "score": 2.2751,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 1.8742,
+          "evidence": []
+        },
+        {
+          "term": "vaccination coverage",
+          "score": 1.8541,
+          "evidence": []
+        },
+        {
+          "term": "vaccination services",
+          "score": 1.8489,
+          "evidence": []
+        },
+        {
+          "term": "national vaccination",
+          "score": 1.658,
+          "evidence": []
+        },
+        {
+          "term": "conduct vaccination",
+          "score": 1.2616,
+          "evidence": []
+        },
+        {
+          "term": "vaccination sessions",
+          "score": 1.2616,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "routine immunization",
+          "score": 288.7609,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization doses",
+          "score": 163.5496,
+          "evidence": []
+        },
+        {
+          "term": "vaccine doses",
+          "score": 141.4814,
+          "evidence": []
+        },
+        {
+          "term": "routine vaccination",
+          "score": 137.1573,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 129.8096,
+          "evidence": []
+        },
+        {
+          "term": "immunization coverage",
+          "score": 122.7331,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 115.3344,
+          "evidence": []
+        },
+        {
+          "term": "piri service",
+          "score": 111.0593,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "routine immunization",
+          "score": 3.3727,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccine doses",
+          "score": 2.2751,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 1.8742,
+          "evidence": []
+        },
+        {
+          "term": "vaccination coverage",
+          "score": 1.8541,
+          "evidence": []
+        },
+        {
+          "term": "vaccination services",
+          "score": 1.8489,
+          "evidence": []
+        },
+        {
+          "term": "national vaccination",
+          "score": 1.658,
+          "evidence": []
+        },
+        {
+          "term": "vaccination sessions",
+          "score": 1.4069,
+          "evidence": []
+        },
+        {
+          "term": "conduct vaccination",
+          "score": 1.3896,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 48.0127,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 45.8941,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 36.6416,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 31.7903,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 30.1594,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 28.4683,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 22.85,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 22.5098,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-7-actions-to-enhance-acceptance-and-demand-for-v": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccination",
+          "score": 2.2526,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization services",
+          "score": 1.7229,
+          "evidence": []
+        },
+        {
+          "term": "immunization programmes",
+          "score": 1.7184,
+          "evidence": []
+        },
+        {
+          "term": "demand",
+          "score": 1.7099,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination health",
+          "score": 1.5344,
+          "evidence": []
+        },
+        {
+          "term": "acceptance",
+          "score": 1.491,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "build acceptance",
+          "score": 1.4637,
+          "evidence": []
+        },
+        {
+          "term": "supportive supervision",
+          "score": 1.1788,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccination",
+          "score": 84.5552,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "immunization programmes",
+          "score": 55.1781,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 54.6364,
+          "evidence": []
+        },
+        {
+          "term": "vaccination health",
+          "score": 49.2474,
+          "evidence": []
+        },
+        {
+          "term": "demand",
+          "score": 44.9343,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "build acceptance",
+          "score": 29.4452,
+          "evidence": []
+        },
+        {
+          "term": "community engagement",
+          "score": 23.0678,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 20.5971,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination",
+          "score": 0.8623,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination health",
+          "score": 0.821,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 0.7134,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.7043,
+          "evidence": []
+        },
+        {
+          "term": "immunization programmes",
+          "score": 0.5184,
+          "evidence": []
+        },
+        {
+          "term": "community engagement",
+          "score": 0.3771,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.374,
+          "evidence": []
+        },
+        {
+          "term": "care",
+          "score": 0.2704,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccination",
+          "score": 32.3528,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination health",
+          "score": 26.2048,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 21.392,
+          "evidence": []
+        },
+        {
+          "term": "immunization programmes",
+          "score": 16.15,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 15.136,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 13.1155,
+          "evidence": []
+        },
+        {
+          "term": "piri",
+          "score": 10.6152,
+          "evidence": []
+        },
+        {
+          "term": "catch-up",
+          "score": 10.3506,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination",
+          "score": 0.8623,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccination health",
+          "score": 0.821,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 0.7134,
+          "evidence": []
+        },
+        {
+          "term": "health workers",
+          "score": 0.7043,
+          "evidence": []
+        },
+        {
+          "term": "immunization programmes",
+          "score": 0.5184,
+          "evidence": []
+        },
+        {
+          "term": "community engagement",
+          "score": 0.3771,
+          "evidence": []
+        },
+        {
+          "term": "informed interventions",
+          "score": 0.3133,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.2523,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 44.7318,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 41.0148,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 36.74,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 35.6218,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 34.1616,
+          "evidence": []
+        },
+        {
+          "term": "更大利益",
+          "score": 26.5707,
+          "evidence": []
+        },
+        {
+          "term": "违反权利",
+          "score": 25.1452,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 23.4238,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-8-example-vpd-risk-assessment-worksheets": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "transmission season",
+          "score": 2.1079,
+          "evidence": []
+        },
+        {
+          "term": "vaccine-derived poliovirus",
+          "score": 1.9869,
+          "evidence": []
+        },
+        {
+          "term": "circulating vaccine-derived",
+          "score": 1.8339,
+          "evidence": []
+        },
+        {
+          "term": "polio-free countries",
+          "score": 1.6945,
+          "evidence": []
+        },
+        {
+          "term": "worksheets",
+          "score": 1.6099,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "polio case",
+          "score": 1.5795,
+          "evidence": []
+        },
+        {
+          "term": "risk characterization",
+          "score": 1.3859,
+          "evidence": []
+        },
+        {
+          "term": "cases peak",
+          "score": 1.3625,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "transmission season",
+          "score": 55.9421,
+          "evidence": []
+        },
+        {
+          "term": "vaccine-derived poliovirus",
+          "score": 35.7006,
+          "evidence": []
+        },
+        {
+          "term": "polio-free countries",
+          "score": 34.4072,
+          "evidence": []
+        },
+        {
+          "term": "outbreaks",
+          "score": 32.607,
+          "evidence": []
+        },
+        {
+          "term": "polio case",
+          "score": 31.9853,
+          "evidence": []
+        },
+        {
+          "term": "risk characterization",
+          "score": 30.6419,
+          "evidence": []
+        },
+        {
+          "term": "circulating vaccine-derived",
+          "score": 28.7355,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 27.6371,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccination coverage",
+          "score": 0.7537,
+          "evidence": []
+        },
+        {
+          "term": "vaccine",
+          "score": 0.6803,
+          "evidence": []
+        },
+        {
+          "term": "children years",
+          "score": 0.6661,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.4515,
+          "evidence": []
+        },
+        {
+          "term": "polio case",
+          "score": 0.4126,
+          "evidence": []
+        },
+        {
+          "term": "doses",
+          "score": 0.3396,
+          "evidence": []
+        },
+        {
+          "term": "measles",
+          "score": 0.3161,
+          "evidence": []
+        },
+        {
+          "term": "past years",
+          "score": 0.3139,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "vaccine",
+          "score": 13.7874,
+          "evidence": []
+        },
+        {
+          "term": "vaccination coverage",
+          "score": 11.0912,
+          "evidence": []
+        },
+        {
+          "term": "wpv",
+          "score": 10.9984,
+          "evidence": []
+        },
+        {
+          "term": "children years",
+          "score": 10.2099,
+          "evidence": []
+        },
+        {
+          "term": "mumps",
+          "score": 9.8954,
+          "evidence": []
+        },
+        {
+          "term": "vaccine-derived poliovirus",
+          "score": 9.7233,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 7.7857,
+          "evidence": []
+        },
+        {
+          "term": "cvdpv",
+          "score": 5.7567,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccination coverage",
+          "score": 0.7537,
+          "evidence": []
+        },
+        {
+          "term": "children years",
+          "score": 0.6661,
+          "evidence": []
+        },
+        {
+          "term": "immunization",
+          "score": 0.4515,
+          "evidence": []
+        },
+        {
+          "term": "vaccines",
+          "score": 0.4457,
+          "evidence": []
+        },
+        {
+          "term": "polio case",
+          "score": 0.4126,
+          "evidence": []
+        },
+        {
+          "term": "past years",
+          "score": 0.3791,
+          "evidence": []
+        },
+        {
+          "term": "polio-free countries",
+          "score": 0.3343,
+          "evidence": []
+        },
+        {
+          "term": "vaccine-derived poliovirus",
+          "score": 0.3192,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "并提供一",
+          "score": 46.2208,
+          "evidence": []
+        },
+        {
+          "term": "科研人员",
+          "score": 32.3275,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 29.3462,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 28.8686,
+          "evidence": []
+        },
+        {
+          "term": "允许进行个人反馈",
+          "score": 28.6013,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 25.1703,
+          "evidence": []
+        },
+        {
+          "term": "利益相关者",
+          "score": 24.6818,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 24.0078,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "catch-up schedule",
+          "score": 4.2764,
+          "evidence": []
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 4.1559,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 3.4889,
+          "evidence": []
+        },
+        {
+          "term": "catch-up policy",
+          "score": 3.3426,
+          "evidence": []
+        },
+        {
+          "term": "implementing catch-up",
+          "score": 3.2605,
+          "evidence": []
+        },
+        {
+          "term": "special catch-up",
+          "score": 3.1318,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 2.8498,
+          "evidence": []
+        },
+        {
+          "term": "vaccination campaigns",
+          "score": 2.8062,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "catch-up vaccination",
+          "score": 377.5609,
+          "evidence": []
+        },
+        {
+          "term": "catch-up schedule",
+          "score": 289.2119,
+          "evidence": []
+        },
+        {
+          "term": "catch-up policy",
+          "score": 263.9343,
+          "evidence": []
+        },
+        {
+          "term": "implementing catch-up",
+          "score": 254.8153,
+          "evidence": []
+        },
+        {
+          "term": "special catch-up",
+          "score": 245.073,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 207.8853,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 183.1893,
+          "evidence": []
+        },
+        {
+          "term": "vaccination campaigns",
+          "score": 174.4074,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vaccine dose",
+          "score": 2.1436,
+          "evidence": []
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 2.0776,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 2.0018,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 1.9699,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 1.9354,
+          "evidence": []
+        },
+        {
+          "term": "record immunization",
+          "score": 1.8677,
+          "evidence": []
+        },
+        {
+          "term": "immunization coverage",
+          "score": 1.7741,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 1.7255,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "catch-up vaccination",
+          "score": 162.6446,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 128.6052,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 119.4441,
+          "evidence": []
+        },
+        {
+          "term": "vaccine dose",
+          "score": 117.2343,
+          "evidence": []
+        },
+        {
+          "term": "immunization activities",
+          "score": 112.7578,
+          "evidence": []
+        },
+        {
+          "term": "immunization service",
+          "score": 111.6857,
+          "evidence": []
+        },
+        {
+          "term": "immunization coverage",
+          "score": 110.0823,
+          "evidence": []
+        },
+        {
+          "term": "record immunization",
+          "score": 107.054,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vaccine dose",
+          "score": 2.1436,
+          "evidence": []
+        },
+        {
+          "term": "catch-up vaccination",
+          "score": 2.0776,
+          "evidence": []
+        },
+        {
+          "term": "vaccination schedule",
+          "score": 2.0018,
+          "evidence": []
+        },
+        {
+          "term": "immunization schedule",
+          "score": 1.9699,
+          "evidence": []
+        },
+        {
+          "term": "immunization services",
+          "score": 1.9354,
+          "evidence": []
+        },
+        {
+          "term": "record immunization",
+          "score": 1.8677,
+          "evidence": []
+        },
+        {
+          "term": "immunization coverage",
+          "score": 1.7741,
+          "evidence": []
+        },
+        {
+          "term": "routine immunization",
+          "score": 1.7255,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "捐助者",
+          "score": 52.9521,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 48.7365,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 32.0973,
+          "evidence": []
+        },
+        {
+          "term": "如果没有",
+          "score": 29.088,
+          "evidence": []
+        },
+        {
+          "term": "这一点很重要",
+          "score": 26.9996,
+          "evidence": []
+        },
+        {
+          "term": "可能会",
+          "score": 26.0405,
+          "evidence": []
+        },
+        {
+          "term": "实验室",
+          "score": 25.7926,
+          "evidence": []
+        },
+        {
+          "term": "并提供一",
+          "score": 25.6241,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

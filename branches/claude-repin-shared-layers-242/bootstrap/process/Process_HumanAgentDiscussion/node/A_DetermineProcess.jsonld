@@ -1,0 +1,15 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap/bootstrap.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineProcess.jsonld",
+  "isPartOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap/bootstrap.jsonld",
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap/process/Process_HumanAgentDiscussion/node/A_DetermineProcess",
+      "@type": "bootstrap:ProcessNode",
+      "label": "Determine the process and task, or that you are idle",
+      "type": "bpmn:task",
+      "isPartOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap/process/Process_HumanAgentDiscussion",
+      "requires": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/bootstrap/skill/human-agent-discussion"
+    }
+  ]
+}

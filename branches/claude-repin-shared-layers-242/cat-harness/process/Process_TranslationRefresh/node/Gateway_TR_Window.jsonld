@@ -1,0 +1,35 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/cat-harness.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Window.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/cat-harness.jsonld",
+  "staging": {
+    "branch": "claude/repin-shared-layers-242",
+    "sha": "82b863b8afc7a269deba9e9439fe12633de20986",
+    "pr": "3103/merge",
+    "run": "43319749469"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Window",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/ProcessNode",
+      "name": "Merge-when-green, and all green?",
+      "nodeKind": "exclusive",
+      "bpmnType": "bpmn:ExclusiveGateway",
+      "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/process/Process_TranslationRefresh",
+      "performedBy": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/role/translation-source-lead",
+      "inLane": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/process/Process_TranslationRefresh/lane/Lane_TR_Lead",
+      "requires": [],
+      "touchesWorkPlan": false,
+      "relaxable": true,
+      "incoming": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_10"
+      ],
+      "outgoing": [
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_WindowYes",
+        "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/process/Process_TranslationRefresh#flow/Flow_TR_WindowNo"
+      ],
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/cat-harness/directory/library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/cat-harness/process/Process_TranslationRefresh/node/Gateway_TR_Window"
+    }
+  ]
+}

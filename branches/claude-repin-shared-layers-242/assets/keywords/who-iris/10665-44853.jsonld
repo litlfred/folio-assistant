@@ -1,0 +1,8214 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-44853",
+  "instance": "who-iris",
+  "about": "library/10665-44853",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "oms des",
+        "score": 49.9948,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "grippe pandémique",
+        "score": 49.3158,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les laboratoires",
+        "score": 48.8749,
+        "evidence": []
+      },
+      {
+        "term": "les matériels",
+        "score": 48.7954,
+        "evidence": []
+      },
+      {
+        "term": "les virus",
+        "score": 47.2621,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 45.5849,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "virus grippaux",
+        "score": 44.9775,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les vaccins",
+        "score": 44.9583,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les autres",
+        "score": 44.9218,
+        "evidence": []
+      },
+      {
+        "term": "grippe dans",
+        "score": 44.6679,
+        "evidence": []
+      },
+      {
+        "term": "grippe humaine",
+        "score": 44.4986,
+        "evidence": []
+      },
+      {
+        "term": "donner des",
+        "score": 44.4982,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "oms des",
+        "score": 2819.7379,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les laboratoires",
+        "score": 2708.1954,
+        "evidence": []
+      },
+      {
+        "term": "les virus",
+        "score": 2512.7756,
+        "evidence": []
+      },
+      {
+        "term": "les matériels",
+        "score": 2465.5536,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 2309.4966,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les autres",
+        "score": 2227.6226,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 2165.1949,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "par les",
+        "score": 2161.3399,
+        "evidence": []
+      },
+      {
+        "term": "les vaccins",
+        "score": 2145.4954,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dans les",
+        "score": 2131.1726,
+        "evidence": []
+      },
+      {
+        "term": "donner des",
+        "score": 2096.2803,
+        "evidence": []
+      },
+      {
+        "term": "une des",
+        "score": 2093.6297,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "oms des",
+        "score": 40.195,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des laboratoires",
+        "score": 38.4288,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les laboratoires",
+        "score": 38.4109,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 37.9079,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des matériels",
+        "score": 36.6986,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sur des",
+        "score": 35.1184,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des virus",
+        "score": 35.1175,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dans des",
+        "score": 35.0192,
+        "evidence": []
+      },
+      {
+        "term": "mandat des",
+        "score": 34.9211,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "une des",
+        "score": 34.5045,
+        "evidence": []
+      },
+      {
+        "term": "donner des",
+        "score": 34.2946,
+        "evidence": []
+      },
+      {
+        "term": "transfert des",
+        "score": 33.9582,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "les laboratoires",
+        "score": 2873.2256,
+        "evidence": []
+      },
+      {
+        "term": "oms des",
+        "score": 2856.4097,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les virus",
+        "score": 2484.8604,
+        "evidence": []
+      },
+      {
+        "term": "les matériels",
+        "score": 2382.2095,
+        "evidence": []
+      },
+      {
+        "term": "pour les",
+        "score": 2342.5813,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sur les",
+        "score": 2255.3329,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les principes",
+        "score": 2238.4065,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 2234.0121,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 2221.1107,
+        "evidence": []
+      },
+      {
+        "term": "mandat des",
+        "score": 2210.6536,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les autres",
+        "score": 2171.9731,
+        "evidence": []
+      },
+      {
+        "term": "une des",
+        "score": 2121.2902,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "oms des",
+        "score": 40.195,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des laboratoires",
+        "score": 38.4288,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les laboratoires",
+        "score": 38.4109,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 37.9079,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des matériels",
+        "score": 36.6986,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sur des",
+        "score": 35.1184,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des virus",
+        "score": 35.1175,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dans des",
+        "score": 35.0192,
+        "evidence": []
+      },
+      {
+        "term": "mandat des",
+        "score": 34.9211,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "une des",
+        "score": 34.5045,
+        "evidence": []
+      },
+      {
+        "term": "donner des",
+        "score": 34.2946,
+        "evidence": []
+      },
+      {
+        "term": "transfert des",
+        "score": 33.9582,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "在大流行间期提供疫苗供发展中国家使用",
+        "score": 3811.6726,
+        "evidence": []
+      },
+      {
+        "term": "提供大流行性流感疫苗",
+        "score": 3811.6726,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 2766.1583,
+        "evidence": []
+      },
+      {
+        "term": "见下面第",
+        "score": 2655.1239,
+        "evidence": []
+      },
+      {
+        "term": "将继续寻求专家的指导建议",
+        "score": 2598.7943,
+        "evidence": []
+      },
+      {
+        "term": "疫苗储备",
+        "score": 2560.7763,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 2179.2362,
+        "evidence": []
+      },
+      {
+        "term": "其它技术术语",
+        "score": 2160.0556,
+        "evidence": []
+      },
+      {
+        "term": "大流行性流感防范生物材料或pip生物材料",
+        "score": 2160.0556,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 2118.4114,
+        "evidence": []
+      },
+      {
+        "term": "对使用传统药物治疗腹泻的评价",
+        "score": 2074.8549,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 1968.2385,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-wha645-préparation-en-cas-de-grippe-pandémique-é": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "grippe pandémique",
+          "score": 6.6945,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "préparation",
+          "score": 2.8875,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "accès aux",
+          "score": 2.257,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aux vaccins",
+          "score": 2.1809,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "autres avantages",
+          "score": 2.1585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cas",
+          "score": 2.0686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "travail composition",
+          "score": 1.3383,
+          "evidence": []
+        },
+        {
+          "term": "non limitée",
+          "score": 1.2477,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "grippe pandémique",
+          "score": 210.279,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "préparation",
+          "score": 91.8797,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cas",
+          "score": 69.4874,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "accès aux",
+          "score": 34.8066,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aux vaccins",
+          "score": 33.2453,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "autres avantages",
+          "score": 32.1025,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cadre",
+          "score": 29.7451,
+          "evidence": []
+        },
+        {
+          "term": "travail composition",
+          "score": 22.6654,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 1.0328,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 0.9311,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aux vaccins",
+          "score": 0.8545,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "accès aux",
+          "score": 0.7478,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "autres avantages",
+          "score": 0.6183,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 0.5178,
+          "evidence": []
+        },
+        {
+          "term": "grippaux",
+          "score": 0.5038,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.388,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 25.649,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 19.1457,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 18.9252,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippaux",
+          "score": 13.9247,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aux vaccins",
+          "score": 12.4582,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "accès aux",
+          "score": 10.3654,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oms",
+          "score": 10.1296,
+          "evidence": []
+        },
+        {
+          "term": "virus",
+          "score": 9.9222,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des",
+          "score": 1.0328,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 0.9311,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aux vaccins",
+          "score": 0.8545,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "accès aux",
+          "score": 0.7478,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "autres avantages",
+          "score": 0.6183,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 0.5178,
+          "evidence": []
+        },
+        {
+          "term": "grippaux",
+          "score": 0.5038,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.388,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 82.5063,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 82.5063,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 65.0614,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 55.7769,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 54.8545,
+          "evidence": []
+        },
+        {
+          "term": "文件a",
+          "score": 53.0542,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 52.4886,
+          "evidence": []
+        },
+        {
+          "term": "第6条",
+          "score": 52.0113,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-1-principes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "grippe pandémique",
+          "score": 3.319,
+          "evidence": []
+        },
+        {
+          "term": "pandémie humaine",
+          "score": 3.0858,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 3.0646,
+          "evidence": []
+        },
+        {
+          "term": "reconnaissent que",
+          "score": 2.9483,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 2.8769,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 2.8223,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 2.56,
+          "evidence": []
+        },
+        {
+          "term": "les avantages",
+          "score": 2.5312,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pour les",
+          "score": 154.1856,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 144.5615,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 136.0507,
+          "evidence": []
+        },
+        {
+          "term": "les avantages",
+          "score": 135.644,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 124.621,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 120.5254,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 119.873,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 110.3372,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 2.4124,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 2.2207,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 2.0423,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.9874,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 1.9756,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.9583,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.897,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.8849,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 127.9343,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 116.888,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 110.8175,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 105.966,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 101.72,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 98.5845,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 97.1997,
+          "evidence": []
+        },
+        {
+          "term": "les avantages",
+          "score": 95.0524,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 2.4124,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 2.2207,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 2.0423,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 1.9874,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 1.9756,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.9583,
+          "evidence": []
+        },
+        {
+          "term": "les vaccins",
+          "score": 1.897,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.8849,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 69.6569,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 69.6569,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 49.5358,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 49.4196,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 49.2722,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 48.4071,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 48.4071,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 46.4119,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-3-portée": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "présent cadre",
+          "score": 1.5232,
+          "evidence": []
+        },
+        {
+          "term": "portée",
+          "score": 0.9337,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "applique",
+          "score": 0.7977,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "présent cadre",
+          "score": 27.0906,
+          "evidence": []
+        },
+        {
+          "term": "applique",
+          "score": 12.9814,
+          "evidence": []
+        },
+        {
+          "term": "portée",
+          "score": 11.5952,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.1519,
+          "evidence": []
+        },
+        {
+          "term": "grippe",
+          "score": 0.1507,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.147,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "oms",
+          "score": 3.7298,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires",
+          "score": 3.6591,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 3.489,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.1519,
+          "evidence": []
+        },
+        {
+          "term": "grippe",
+          "score": 0.1507,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.147,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 137.1062,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 128.2906,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 128.2906,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-004-41-matériels-biologiques-liés-à-la-préparation-e": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "matériels biologiques",
+          "score": 3.9859,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biologiques pip",
+          "score": 3.227,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virus grippaux",
+          "score": 2.1126,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 1.8206,
+          "evidence": []
+        },
+        {
+          "term": "virus h5n",
+          "score": 1.7419,
+          "evidence": []
+        },
+        {
+          "term": "donner lieu",
+          "score": 1.7192,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "matériels biologiques",
+          "score": 73.383,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biologiques pip",
+          "score": 58.1415,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virus grippaux",
+          "score": 46.3185,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 41.5681,
+          "evidence": []
+        },
+        {
+          "term": "virus h5n",
+          "score": 41.1689,
+          "evidence": []
+        },
+        {
+          "term": "autres virus",
+          "score": 38.778,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "matériels biologiques",
+          "score": 0.8671,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biologiques pip",
+          "score": 0.722,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe",
+          "score": 0.6612,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.615,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 0.6031,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 0.5816,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des virus",
+          "score": 20.6913,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 19.4776,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 17.8635,
+          "evidence": []
+        },
+        {
+          "term": "grippe",
+          "score": 16.801,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 15.63,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "autres virus",
+          "score": 13.1716,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "matériels biologiques",
+          "score": 0.8671,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "biologiques pip",
+          "score": 0.722,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe",
+          "score": 0.6612,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.615,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 0.6031,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 0.5816,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 229.6529,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 229.6529,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 172.6484,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 171.9547,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 165.1807,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 163.9951,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-42-autres-termes-techniques": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "virus grippaux",
+          "score": 3.5337,
+          "evidence": []
+        },
+        {
+          "term": "virus grippal",
+          "score": 3.4031,
+          "evidence": []
+        },
+        {
+          "term": "entend des",
+          "score": 3.1372,
+          "evidence": []
+        },
+        {
+          "term": "des laboratoires",
+          "score": 2.6587,
+          "evidence": []
+        },
+        {
+          "term": "grippal susceptible",
+          "score": 2.5089,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 2.3501,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 2.3143,
+          "evidence": []
+        },
+        {
+          "term": "des œufs",
+          "score": 2.2827,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des virus",
+          "score": 173.2304,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 162.3159,
+          "evidence": []
+        },
+        {
+          "term": "entend des",
+          "score": 143.074,
+          "evidence": []
+        },
+        {
+          "term": "virus grippal",
+          "score": 141.5333,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 113.9666,
+          "evidence": []
+        },
+        {
+          "term": "des laboratoires",
+          "score": 113.0261,
+          "evidence": []
+        },
+        {
+          "term": "dans des",
+          "score": 111.3846,
+          "evidence": []
+        },
+        {
+          "term": "pour des",
+          "score": 110.8934,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour des",
+          "score": 1.65,
+          "evidence": []
+        },
+        {
+          "term": "des laboratoires",
+          "score": 1.6478,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 1.6422,
+          "evidence": []
+        },
+        {
+          "term": "dans des",
+          "score": 1.6085,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.5961,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 1.5591,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.5031,
+          "evidence": []
+        },
+        {
+          "term": "des centres",
+          "score": 1.279,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des laboratoires",
+          "score": 96.925,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 90.4985,
+          "evidence": []
+        },
+        {
+          "term": "dans des",
+          "score": 82.9334,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 81.3158,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 80.8622,
+          "evidence": []
+        },
+        {
+          "term": "pour des",
+          "score": 80.5707,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 73.5055,
+          "evidence": []
+        },
+        {
+          "term": "des centres",
+          "score": 71.2803,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour des",
+          "score": 1.65,
+          "evidence": []
+        },
+        {
+          "term": "des laboratoires",
+          "score": 1.6478,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 1.6422,
+          "evidence": []
+        },
+        {
+          "term": "dans des",
+          "score": 1.6085,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.5961,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 1.5591,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.5031,
+          "evidence": []
+        },
+        {
+          "term": "des centres",
+          "score": 1.279,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 129.2105,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 115.1628,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 115.1628,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 88.1354,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 80.9818,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 79.4693,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 74.981,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 67.156,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-43-institutions-organisations-et-entités": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "grippe désignés",
+          "score": 3.2907,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires oms",
+          "score": 3.2511,
+          "evidence": []
+        },
+        {
+          "term": "des laboratoires",
+          "score": 3.1806,
+          "evidence": []
+        },
+        {
+          "term": "oms entend",
+          "score": 3.1093,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 2.7575,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires essentiels",
+          "score": 2.5867,
+          "evidence": []
+        },
+        {
+          "term": "des entités",
+          "score": 2.2623,
+          "evidence": []
+        },
+        {
+          "term": "désignés par",
+          "score": 2.2617,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des laboratoires",
+          "score": 134.4977,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires oms",
+          "score": 123.5071,
+          "evidence": []
+        },
+        {
+          "term": "entend des",
+          "score": 122.642,
+          "evidence": []
+        },
+        {
+          "term": "grippe désignés",
+          "score": 110.9223,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 90.7209,
+          "evidence": []
+        },
+        {
+          "term": "par oms",
+          "score": 86.5124,
+          "evidence": []
+        },
+        {
+          "term": "des entités",
+          "score": 85.6362,
+          "evidence": []
+        },
+        {
+          "term": "oms qui",
+          "score": 79.307,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les laboratoires",
+          "score": 1.3377,
+          "evidence": []
+        },
+        {
+          "term": "des laboratoires",
+          "score": 1.327,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 1.2558,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires oms",
+          "score": 1.1945,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 1.1807,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 1.1609,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.1163,
+          "evidence": []
+        },
+        {
+          "term": "des états",
+          "score": 1.0755,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des laboratoires",
+          "score": 85.4816,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 72.1548,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires oms",
+          "score": 71.8202,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 69.8467,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 56.1805,
+          "evidence": []
+        },
+        {
+          "term": "entend des",
+          "score": 55.1884,
+          "evidence": []
+        },
+        {
+          "term": "fournir des",
+          "score": 54.5892,
+          "evidence": []
+        },
+        {
+          "term": "des états",
+          "score": 53.5856,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les laboratoires",
+          "score": 1.3377,
+          "evidence": []
+        },
+        {
+          "term": "des laboratoires",
+          "score": 1.327,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 1.2558,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires oms",
+          "score": 1.1945,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 1.1807,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 1.1609,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.1163,
+          "evidence": []
+        },
+        {
+          "term": "des états",
+          "score": 1.0755,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 129.8391,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 129.8391,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 97.2517,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 87.8645,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 87.2649,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 83.1723,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 80.6096,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 78.393,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-007-44-autres-termes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "oms entend",
+          "score": 2.9921,
+          "evidence": []
+        },
+        {
+          "term": "entend des",
+          "score": 2.8969,
+          "evidence": []
+        },
+        {
+          "term": "origine entend",
+          "score": 2.71,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 2.5888,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 2.2176,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 2.1486,
+          "evidence": []
+        },
+        {
+          "term": "présent cadre",
+          "score": 1.9281,
+          "evidence": []
+        },
+        {
+          "term": "grippe due",
+          "score": 1.9087,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "oms entend",
+          "score": 100.659,
+          "evidence": []
+        },
+        {
+          "term": "entend des",
+          "score": 100.313,
+          "evidence": []
+        },
+        {
+          "term": "origine entend",
+          "score": 87.8028,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 62.4421,
+          "evidence": []
+        },
+        {
+          "term": "grippe due",
+          "score": 48.852,
+          "evidence": []
+        },
+        {
+          "term": "présent cadre",
+          "score": 43.5571,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 43.5192,
+          "evidence": []
+        },
+        {
+          "term": "autres virus",
+          "score": 40.1186,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des matériels",
+          "score": 1.0508,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.0228,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.9948,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 0.9727,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 0.9087,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 0.8684,
+          "evidence": []
+        },
+        {
+          "term": "oms entend",
+          "score": 0.8162,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 0.8096,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des virus",
+          "score": 37.0631,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 34.6673,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 31.3623,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 26.6074,
+          "evidence": []
+        },
+        {
+          "term": "oms entend",
+          "score": 26.285,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 25.2389,
+          "evidence": []
+        },
+        {
+          "term": "autres virus",
+          "score": 22.2511,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires",
+          "score": 21.5602,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des matériels",
+          "score": 1.0508,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.0228,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.9948,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 0.9727,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 0.9087,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 0.8684,
+          "evidence": []
+        },
+        {
+          "term": "oms entend",
+          "score": 0.8162,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 0.8096,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 201.866,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 201.866,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 152.3325,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 145.4066,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 144.0907,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 139.7419,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 105.4443,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 103.0154,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-51-considération-générales": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "laboratoires autorisés",
+          "score": 2.5524,
+          "evidence": []
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 2.4609,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires oms",
+          "score": 2.3921,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 2.3232,
+          "evidence": []
+        },
+        {
+          "term": "autres laboratoires",
+          "score": 2.2658,
+          "evidence": []
+        },
+        {
+          "term": "aux laboratoires",
+          "score": 2.2653,
+          "evidence": []
+        },
+        {
+          "term": "centres collaborateurs",
+          "score": 1.999,
+          "evidence": []
+        },
+        {
+          "term": "grippe due",
+          "score": 1.9833,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des matériels",
+          "score": 59.8205,
+          "evidence": []
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 57.6921,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires oms",
+          "score": 54.7598,
+          "evidence": []
+        },
+        {
+          "term": "grippe due",
+          "score": 54.3311,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires autorisés",
+          "score": 52.9794,
+          "evidence": []
+        },
+        {
+          "term": "aux laboratoires",
+          "score": 52.127,
+          "evidence": []
+        },
+        {
+          "term": "autres laboratoires",
+          "score": 51.3877,
+          "evidence": []
+        },
+        {
+          "term": "biologiques pip",
+          "score": 43.2368,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "laboratoires oms",
+          "score": 1.0208,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 1.0149,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 0.9437,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.9202,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 0.8552,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 0.8476,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.8342,
+          "evidence": []
+        },
+        {
+          "term": "aux laboratoires",
+          "score": 0.83,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "laboratoires oms",
+          "score": 48.5225,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 38.7952,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 33.7329,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 33.2394,
+          "evidence": []
+        },
+        {
+          "term": "autres laboratoires",
+          "score": 32.4976,
+          "evidence": []
+        },
+        {
+          "term": "aux laboratoires",
+          "score": 31.4494,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 29.5747,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 28.5158,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "laboratoires oms",
+          "score": 1.0208,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 1.0149,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 0.9437,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.9202,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 0.8552,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 0.8476,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.8342,
+          "evidence": []
+        },
+        {
+          "term": "aux laboratoires",
+          "score": 0.83,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 190.461,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 190.461,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 142.3221,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 139.987,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 136.0749,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 132.5503,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 102.4442,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 102.4442,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-52-données-sur-les-séquences-génétiques": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "séquences génétiques",
+          "score": 6.1113,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les séquences",
+          "score": 4.8746,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "données sur",
+          "score": 3.3226,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virus grippaux",
+          "score": 1.6274,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 1.6199,
+          "evidence": []
+        },
+        {
+          "term": "des données",
+          "score": 1.4462,
+          "evidence": []
+        },
+        {
+          "term": "donner lieu",
+          "score": 1.3624,
+          "evidence": []
+        },
+        {
+          "term": "virus h5n",
+          "score": 1.3336,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "séquences génétiques",
+          "score": 147.3238,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les séquences",
+          "score": 128.9735,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sur les",
+          "score": 88.516,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "données sur",
+          "score": 73.9101,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des données",
+          "score": 28.0148,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 26.0793,
+          "evidence": []
+        },
+        {
+          "term": "virus h5n",
+          "score": 22.6462,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 22.2538,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "sur les",
+          "score": 1.7173,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les séquences",
+          "score": 1.2824,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "données sur",
+          "score": 0.982,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des données",
+          "score": 0.7192,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.5512,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 0.5504,
+          "evidence": []
+        },
+        {
+          "term": "autres virus",
+          "score": 0.5007,
+          "evidence": []
+        },
+        {
+          "term": "lieu une",
+          "score": 0.4947,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "sur les",
+          "score": 54.2564,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les séquences",
+          "score": 45.9204,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des données",
+          "score": 22.0254,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 12.6481,
+          "evidence": []
+        },
+        {
+          "term": "autres virus",
+          "score": 10.3462,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 10.2344,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 9.484,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 9.0264,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "sur les",
+          "score": 1.7173,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les séquences",
+          "score": 1.2824,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "données sur",
+          "score": 0.982,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des données",
+          "score": 0.7192,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.5512,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 0.5504,
+          "evidence": []
+        },
+        {
+          "term": "autres virus",
+          "score": 0.5007,
+          "evidence": []
+        },
+        {
+          "term": "lieu une",
+          "score": 0.4947,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "监督机制",
+          "score": 105.7017,
+          "evidence": []
+        },
+        {
+          "term": "追踪和报告机制",
+          "score": 99.7803,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 88.9692,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 88.2195,
+          "evidence": []
+        },
+        {
+          "term": "h5参考实验室和必要的管制实验室",
+          "score": 72.2701,
+          "evidence": []
+        },
+        {
+          "term": "利用世卫组织流感病毒追踪机制记录接受和转让pip生物材料的情况",
+          "score": 69.9338,
+          "evidence": []
+        },
+        {
+          "term": "在世卫组织全球流感规划的协调下开展工作",
+          "score": 66.695,
+          "evidence": []
+        },
+        {
+          "term": "并向世卫组织提供支持",
+          "score": 66.695,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-53-dispositifs-de-traçabilité-et-de-notification": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "directeur général",
+          "score": 2.1565,
+          "evidence": []
+        },
+        {
+          "term": "traçabilité",
+          "score": 2.1183,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "terme dispositif",
+          "score": 1.8519,
+          "evidence": []
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 1.8372,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 1.7929,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 1.6731,
+          "evidence": []
+        },
+        {
+          "term": "meilleurs délais",
+          "score": 1.6688,
+          "evidence": []
+        },
+        {
+          "term": "biologiques pip",
+          "score": 1.6135,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "directeur général",
+          "score": 48.7659,
+          "evidence": []
+        },
+        {
+          "term": "traçabilité",
+          "score": 39.4664,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les matériels",
+          "score": 38.4136,
+          "evidence": []
+        },
+        {
+          "term": "terme dispositif",
+          "score": 37.2289,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 34.9123,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 33.5378,
+          "evidence": []
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 31.4295,
+          "evidence": []
+        },
+        {
+          "term": "biologiques pip",
+          "score": 29.0708,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 0.891,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 0.882,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 0.8796,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 0.7246,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.6997,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 0.6629,
+          "evidence": []
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 0.5426,
+          "evidence": []
+        },
+        {
+          "term": "pour faire",
+          "score": 0.5195,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les matériels",
+          "score": 27.8586,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 27.0355,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 23.6196,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 23.2167,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 15.6193,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 12.3236,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 11.0992,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires",
+          "score": 10.9149,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 0.891,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 0.882,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 0.8796,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 0.7246,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.6997,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 0.6629,
+          "evidence": []
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 0.5426,
+          "evidence": []
+        },
+        {
+          "term": "pour faire",
+          "score": 0.5195,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 137.8583,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 137.8583,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 100.1493,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 98.3278,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 95.8631,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 79.7165,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 79.7165,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 76.5127,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-54-accords-types-sur-le-transfert-de-matériels": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "matériels",
+          "score": 2.2457,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 1.8124,
+          "evidence": []
+        },
+        {
+          "term": "transfert",
+          "score": 1.5926,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "accords",
+          "score": 1.4887,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "matériels",
+          "score": 42.0965,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 31.4771,
+          "evidence": []
+        },
+        {
+          "term": "accords",
+          "score": 24.1248,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "transfert",
+          "score": 22.2977,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "matériels",
+          "score": 0.3169,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tous les",
+          "score": 0.315,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3039,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 0.2595,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 8.5684,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 7.5295,
+          "evidence": []
+        },
+        {
+          "term": "les transferts",
+          "score": 7.1081,
+          "evidence": []
+        },
+        {
+          "term": "matériels",
+          "score": 6.7078,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "matériels",
+          "score": 0.3169,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tous les",
+          "score": 0.315,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.3039,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les transferts",
+          "score": 0.2679,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "下面统称",
+          "score": 270.9879,
+          "evidence": []
+        },
+        {
+          "term": "本协议条款适用于由提供者转让给接受者的",
+          "score": 270.9879,
+          "evidence": []
+        },
+        {
+          "term": "节中所定义",
+          "score": 270.9879,
+          "evidence": []
+        },
+        {
+          "term": "协议的主题事项",
+          "score": 270.9879,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-6-système-de-partage-des-avantages-pour-la-prépa": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "grippe pandémique",
+          "score": 4.1746,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des avantages",
+          "score": 3.7562,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "partage des",
+          "score": 3.587,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des risques",
+          "score": 2.0797,
+          "evidence": []
+        },
+        {
+          "term": "évaluation des",
+          "score": 1.8413,
+          "evidence": []
+        },
+        {
+          "term": "des besoins",
+          "score": 1.822,
+          "evidence": []
+        },
+        {
+          "term": "risques pour",
+          "score": 1.7259,
+          "evidence": []
+        },
+        {
+          "term": "pharmaceutiques antigrippaux",
+          "score": 1.7228,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des avantages",
+          "score": 120.1381,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "partage des",
+          "score": 113.4031,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 79.6034,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des risques",
+          "score": 65.1771,
+          "evidence": []
+        },
+        {
+          "term": "des besoins",
+          "score": 58.9087,
+          "evidence": []
+        },
+        {
+          "term": "évaluation des",
+          "score": 58.7435,
+          "evidence": []
+        },
+        {
+          "term": "risques pour",
+          "score": 37.9161,
+          "evidence": []
+        },
+        {
+          "term": "aux pays",
+          "score": 31.0908,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des avantages",
+          "score": 1.5672,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "partage des",
+          "score": 1.3397,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 1.0826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.9948,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des risques",
+          "score": 0.8141,
+          "evidence": []
+        },
+        {
+          "term": "évaluation des",
+          "score": 0.8088,
+          "evidence": []
+        },
+        {
+          "term": "des besoins",
+          "score": 0.7353,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6806,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des avantages",
+          "score": 71.1252,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "partage des",
+          "score": 69.6453,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des risques",
+          "score": 36.9645,
+          "evidence": []
+        },
+        {
+          "term": "évaluation des",
+          "score": 36.7235,
+          "evidence": []
+        },
+        {
+          "term": "des besoins",
+          "score": 34.8226,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 26.1064,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 25.6796,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 16.2591,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des avantages",
+          "score": 1.5672,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "partage des",
+          "score": 1.4409,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 1.0826,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.9948,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des risques",
+          "score": 0.8141,
+          "evidence": []
+        },
+        {
+          "term": "évaluation des",
+          "score": 0.8088,
+          "evidence": []
+        },
+        {
+          "term": "des besoins",
+          "score": 0.7353,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.6806,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 74.6002,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 74.6002,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 51.076,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 50.4849,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 48.2957,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 48.2957,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 48.271,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 47.1915,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-61-coordination-par-loms-de-la-préparation-et-de": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "pandémie",
+          "score": 2.3138,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "riposte",
+          "score": 1.4692,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oms",
+          "score": 1.4176,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "préparation",
+          "score": 1.3777,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "cas",
+          "score": 0.9478,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pandémie",
+          "score": 44.5955,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oms",
+          "score": 23.3321,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "riposte",
+          "score": 21.6811,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "préparation",
+          "score": 20.4177,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 15.085,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "oms",
+          "score": 0.4933,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 0.3819,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.3778,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3429,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.2763,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 12.2921,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 11.9478,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des",
+          "score": 10.0128,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 6.4858,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 4.8238,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "oms",
+          "score": 0.4933,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 0.3819,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.3778,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3429,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.2763,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 76.8052,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 76.8052,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 52.6164,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 48.7021,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 48.6087,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-62-évaluation-du-risque-de-pandémie-et-riposte": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "riposte",
+          "score": 2.3962,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "riposte efficace",
+          "score": 1.8005,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 1.7073,
+          "evidence": []
+        },
+        {
+          "term": "une riposte",
+          "score": 1.699,
+          "evidence": []
+        },
+        {
+          "term": "meilleurs délais",
+          "score": 1.6688,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 1.6641,
+          "evidence": []
+        },
+        {
+          "term": "pandémie",
+          "score": 1.5794,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les moyens",
+          "score": 1.4796,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "riposte",
+          "score": 54.2028,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les meilleurs",
+          "score": 37.4265,
+          "evidence": []
+        },
+        {
+          "term": "riposte efficace",
+          "score": 36.6734,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 35.6175,
+          "evidence": []
+        },
+        {
+          "term": "une riposte",
+          "score": 35.5007,
+          "evidence": []
+        },
+        {
+          "term": "les moyens",
+          "score": 35.0068,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 33.3244,
+          "evidence": []
+        },
+        {
+          "term": "aux pays",
+          "score": 30.584,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 0.8816,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 0.8506,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 0.687,
+          "evidence": []
+        },
+        {
+          "term": "les moyens",
+          "score": 0.635,
+          "evidence": []
+        },
+        {
+          "term": "des informations",
+          "score": 0.6303,
+          "evidence": []
+        },
+        {
+          "term": "aux pays",
+          "score": 0.5469,
+          "evidence": []
+        },
+        {
+          "term": "pandémie",
+          "score": 0.5071,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une riposte",
+          "score": 0.4831,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les laboratoires",
+          "score": 31.65,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 28.4277,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 24.3044,
+          "evidence": []
+        },
+        {
+          "term": "les moyens",
+          "score": 23.2105,
+          "evidence": []
+        },
+        {
+          "term": "des informations",
+          "score": 17.749,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 11.2413,
+          "evidence": []
+        },
+        {
+          "term": "pandémie",
+          "score": 9.1665,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "aux pays",
+          "score": 8.8129,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 0.8816,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 0.8506,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 0.687,
+          "evidence": []
+        },
+        {
+          "term": "les moyens",
+          "score": 0.635,
+          "evidence": []
+        },
+        {
+          "term": "des informations",
+          "score": 0.6303,
+          "evidence": []
+        },
+        {
+          "term": "aux pays",
+          "score": 0.5469,
+          "evidence": []
+        },
+        {
+          "term": "pandémie",
+          "score": 0.5071,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une riposte",
+          "score": 0.4831,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 89.1219,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 89.1219,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 61.8113,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 59.3664,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 58.5046,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 54.0399,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 53.5618,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 53.5618,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-63-fourniture-de-virus-vaccinaux-candidats-pip": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccinaux candidats",
+          "score": 3.7917,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "candidats pip",
+          "score": 3.0454,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virus vaccinaux",
+          "score": 2.873,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 1.5919,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccinaux candidats",
+          "score": 55.7036,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "candidats pip",
+          "score": 45.488,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virus vaccinaux",
+          "score": 39.6381,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 25.7705,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les laboratoires",
+          "score": 0.5315,
+          "evidence": []
+        },
+        {
+          "term": "virus vaccinaux",
+          "score": 0.5284,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des virus",
+          "score": 0.5054,
+          "evidence": []
+        },
+        {
+          "term": "candidats pip",
+          "score": 0.3785,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les laboratoires",
+          "score": 15.8976,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 13.3337,
+          "evidence": []
+        },
+        {
+          "term": "virus vaccinaux",
+          "score": 11.2621,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oms",
+          "score": 7.1011,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les laboratoires",
+          "score": 0.5315,
+          "evidence": []
+        },
+        {
+          "term": "virus vaccinaux",
+          "score": 0.5284,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des virus",
+          "score": 0.5054,
+          "evidence": []
+        },
+        {
+          "term": "candidats pip",
+          "score": 0.3785,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 179.5819,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 179.5819,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 135.88,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 135.6991,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-64-fourniture-de-réactifs-et-de-tests-de-diagnos": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des réactifs",
+          "score": 1.7697,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 1.6573,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 1.6324,
+          "evidence": []
+        },
+        {
+          "term": "disposition des",
+          "score": 1.6311,
+          "evidence": []
+        },
+        {
+          "term": "cliniques grippaux",
+          "score": 1.4987,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des réactifs",
+          "score": 38.5215,
+          "evidence": []
+        },
+        {
+          "term": "disposition des",
+          "score": 37.0536,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 36.1642,
+          "evidence": []
+        },
+        {
+          "term": "des tests",
+          "score": 30.0127,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 28.2847,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les laboratoires",
+          "score": 0.5038,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 0.3808,
+          "evidence": []
+        },
+        {
+          "term": "des réactifs",
+          "score": 0.3679,
+          "evidence": []
+        },
+        {
+          "term": "des tests",
+          "score": 0.3287,
+          "evidence": []
+        },
+        {
+          "term": "cliniques grippaux",
+          "score": 0.3005,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les laboratoires",
+          "score": 20.8843,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 18.6692,
+          "evidence": []
+        },
+        {
+          "term": "des réactifs",
+          "score": 18.0745,
+          "evidence": []
+        },
+        {
+          "term": "des tests",
+          "score": 17.2554,
+          "evidence": []
+        },
+        {
+          "term": "disposition des",
+          "score": 16.777,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les laboratoires",
+          "score": 0.5038,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 0.3808,
+          "evidence": []
+        },
+        {
+          "term": "des réactifs",
+          "score": 0.3679,
+          "evidence": []
+        },
+        {
+          "term": "des tests",
+          "score": 0.3287,
+          "evidence": []
+        },
+        {
+          "term": "disposition des",
+          "score": 0.3156,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 152.2429,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 152.2429,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 109.2693,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 106.2409,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 105.2643,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-019-65-fourniture-de-réactifs-de-référence-pour-déte": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des vaccins",
+          "score": 2.3879,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "réglementation continueront",
+          "score": 1.8527,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires essentiels",
+          "score": 1.833,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires nationaux",
+          "score": 1.7567,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des vaccins",
+          "score": 38.5786,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "réglementation continueront",
+          "score": 34.1448,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires essentiels",
+          "score": 31.0395,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 31.0085,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des vaccins",
+          "score": 0.8352,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 0.5045,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4231,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les états",
+          "score": 0.4063,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des vaccins",
+          "score": 19.6289,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 17.265,
+          "evidence": []
+        },
+        {
+          "term": "aux laboratoires",
+          "score": 10.1791,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 10.0642,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des vaccins",
+          "score": 0.8352,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 0.5045,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4231,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les états",
+          "score": 0.4063,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 127.2386,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 127.2386,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 97.6522,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 87.0922,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-66-renforcement-des-moyens-de-laboratoire-et-de": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "grippe",
+          "score": 2.5347,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des",
+          "score": 1.3578,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "laboratoire",
+          "score": 1.2493,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "moyens",
+          "score": 1.2396,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "grippe",
+          "score": 54.7912,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des",
+          "score": 25.5401,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des centres",
+          "score": 20.2698,
+          "evidence": []
+        },
+        {
+          "term": "moyens",
+          "score": 19.7303,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 0.6308,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des centres",
+          "score": 0.4004,
+          "evidence": []
+        },
+        {
+          "term": "grippe",
+          "score": 0.3785,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 0.3216,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 21.3367,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des centres",
+          "score": 12.3726,
+          "evidence": []
+        },
+        {
+          "term": "grippe",
+          "score": 10.1714,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 8.8891,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des",
+          "score": 0.6308,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des centres",
+          "score": 0.4004,
+          "evidence": []
+        },
+        {
+          "term": "grippe",
+          "score": 0.3785,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 0.3216,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 94.2716,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 94.2716,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 76.354,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 60.1769,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-67-renforcement-des-moyens-de-réglementation": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les produits",
+          "score": 1.621,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.5948,
+          "evidence": []
+        },
+        {
+          "term": "produits pharmaceutiques",
+          "score": 1.4617,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 1.4524,
+          "evidence": []
+        },
+        {
+          "term": "états membres",
+          "score": 1.4007,
+          "evidence": []
+        },
+        {
+          "term": "moyens",
+          "score": 1.2396,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les produits",
+          "score": 40.4272,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 40.3219,
+          "evidence": []
+        },
+        {
+          "term": "états membres",
+          "score": 25.0604,
+          "evidence": []
+        },
+        {
+          "term": "produits pharmaceutiques",
+          "score": 24.5406,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 20.3197,
+          "evidence": []
+        },
+        {
+          "term": "moyens",
+          "score": 19.7303,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 0.7691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les états",
+          "score": 0.5357,
+          "evidence": []
+        },
+        {
+          "term": "les produits",
+          "score": 0.4799,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.3958,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2887,
+          "evidence": []
+        },
+        {
+          "term": "états membres",
+          "score": 0.2783,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 20.9723,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les états",
+          "score": 19.1885,
+          "evidence": []
+        },
+        {
+          "term": "les produits",
+          "score": 18.233,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 7.7807,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 6.5432,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 6.4108,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des",
+          "score": 0.7691,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les états",
+          "score": 0.5357,
+          "evidence": []
+        },
+        {
+          "term": "les produits",
+          "score": 0.4799,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.3958,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2887,
+          "evidence": []
+        },
+        {
+          "term": "états membres",
+          "score": 0.2783,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 129.7266,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 129.7266,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 97.4192,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 93.7003,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 92.174,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 70.6177,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-68-stocks-dantiviraux": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "antiviraux",
+          "score": 2.051,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "endiguer les",
+          "score": 1.8131,
+          "evidence": []
+        },
+        {
+          "term": "général continuera",
+          "score": 1.7214,
+          "evidence": []
+        },
+        {
+          "term": "les organisations",
+          "score": 1.6972,
+          "evidence": []
+        },
+        {
+          "term": "les flambées",
+          "score": 1.6791,
+          "evidence": []
+        },
+        {
+          "term": "directeur général",
+          "score": 1.6685,
+          "evidence": []
+        },
+        {
+          "term": "médicaments antiviraux",
+          "score": 1.6535,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les organisations",
+          "score": 44.7154,
+          "evidence": []
+        },
+        {
+          "term": "endiguer les",
+          "score": 44.5377,
+          "evidence": []
+        },
+        {
+          "term": "les flambées",
+          "score": 41.8502,
+          "evidence": []
+        },
+        {
+          "term": "antiviraux",
+          "score": 38.0194,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "avec les",
+          "score": 36.3883,
+          "evidence": []
+        },
+        {
+          "term": "général continuera",
+          "score": 32.0743,
+          "evidence": []
+        },
+        {
+          "term": "directeur général",
+          "score": 29.2595,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "virus grippaux",
+          "score": 0.4873,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 0.4643,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 0.4444,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 0.4202,
+          "evidence": []
+        },
+        {
+          "term": "les flambées",
+          "score": 0.4152,
+          "evidence": []
+        },
+        {
+          "term": "autres virus",
+          "score": 0.4043,
+          "evidence": []
+        },
+        {
+          "term": "donner lieu",
+          "score": 0.359,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "avec les",
+          "score": 21.9003,
+          "evidence": []
+        },
+        {
+          "term": "les flambées",
+          "score": 20.808,
+          "evidence": []
+        },
+        {
+          "term": "endiguer les",
+          "score": 19.9329,
+          "evidence": []
+        },
+        {
+          "term": "les organisations",
+          "score": 19.9329,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 13.2536,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 12.5892,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 10.5141,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "virus grippaux",
+          "score": 0.4873,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 0.4643,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 0.4444,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 0.4202,
+          "evidence": []
+        },
+        {
+          "term": "les flambées",
+          "score": 0.4152,
+          "evidence": []
+        },
+        {
+          "term": "autres virus",
+          "score": 0.4043,
+          "evidence": []
+        },
+        {
+          "term": "les organisations",
+          "score": 0.3638,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 114.1751,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 114.1751,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 80.6761,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 73.7892,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 73.5993,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 72.7573,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 72.403,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-69-stock-de-vaccins-pour-la-préparation-en-cas-d": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccins",
+          "score": 2.2213,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "directeur général",
+          "score": 2.1565,
+          "evidence": []
+        },
+        {
+          "term": "vaccins pip",
+          "score": 2.0715,
+          "evidence": []
+        },
+        {
+          "term": "stock",
+          "score": 2.0268,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des vaccins",
+          "score": 2.0192,
+          "evidence": []
+        },
+        {
+          "term": "vaccin anti-h5n",
+          "score": 1.995,
+          "evidence": []
+        },
+        {
+          "term": "pandémie humaine",
+          "score": 1.9442,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 1.9354,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccins",
+          "score": 69.7637,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des vaccins",
+          "score": 60.422,
+          "evidence": []
+        },
+        {
+          "term": "vaccins pip",
+          "score": 57.261,
+          "evidence": []
+        },
+        {
+          "term": "stock",
+          "score": 51.9088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "directeur général",
+          "score": 48.7659,
+          "evidence": []
+        },
+        {
+          "term": "les conseils",
+          "score": 48.6203,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 45.5259,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 45.3502,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.2197,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 1.0645,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les pays",
+          "score": 1.0615,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.0044,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 1.0006,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.9402,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 0.8458,
+          "evidence": []
+        },
+        {
+          "term": "les conseils",
+          "score": 0.7532,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 41.3077,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 35.6958,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 34.7629,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 32.4922,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 31.7997,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 30.8638,
+          "evidence": []
+        },
+        {
+          "term": "les conseils",
+          "score": 30.8248,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 24.7802,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.2197,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 1.0645,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les pays",
+          "score": 1.0615,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.0044,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 1.0006,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.9402,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 0.8458,
+          "evidence": []
+        },
+        {
+          "term": "les conseils",
+          "score": 0.8049,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 116.9482,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 116.9482,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 92.6213,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 87.2467,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 86.0349,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 63.3575,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 63.3575,
+          "evidence": []
+        },
+        {
+          "term": "术语的定义和使用",
+          "score": 56.8373,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-610-accès-aux-vaccins-durant-la-période-interpan": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "grippaux susceptibles",
+          "score": 1.6199,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 1.5487,
+          "evidence": []
+        },
+        {
+          "term": "vac cins",
+          "score": 1.5115,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 1.4913,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les fabricants",
+          "score": 1.4792,
+          "evidence": []
+        },
+        {
+          "term": "pandémie humaine",
+          "score": 1.4459,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les",
+          "score": 35.1983,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les fabricants",
+          "score": 29.1126,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 26.9266,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 26.0432,
+          "evidence": []
+        },
+        {
+          "term": "vac cins",
+          "score": 24.3974,
+          "evidence": []
+        },
+        {
+          "term": "vaccins",
+          "score": 23.2546,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.9078,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.6299,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des pays",
+          "score": 0.6272,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 0.5933,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.5827,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 0.5298,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 30.002,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "avec les",
+          "score": 16.7421,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 15.8377,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 15.4198,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 13.4579,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 11.1459,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.9078,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.6299,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des pays",
+          "score": 0.6272,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 0.5933,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.5827,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 0.5298,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 113.2443,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 113.2443,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 81.1141,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 81.0809,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 79.5038,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 75.4431,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-026-611-accès-aux-vaccins-contre-la-grippe-pandémiqu": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccins contre",
+          "score": 3.3066,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 3.1941,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccins antigrippaux",
+          "score": 1.994,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.7909,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 1.7855,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.5636,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 1.503,
+          "evidence": []
+        },
+        {
+          "term": "membres devraient",
+          "score": 1.4881,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccins contre",
+          "score": 77.3707,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 46.7287,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccins antigrippaux",
+          "score": 45.7395,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 45.0084,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 42.4119,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 37.8077,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 34.4691,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 33.9303,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des pays",
+          "score": 0.9051,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 0.8276,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.8187,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 0.8135,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 0.8076,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccins contre",
+          "score": 0.7428,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les fabricants",
+          "score": 0.7336,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.5854,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "avec les",
+          "score": 25.6403,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 24.2661,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 23.4324,
+          "evidence": []
+        },
+        {
+          "term": "des pays",
+          "score": 22.4236,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 21.2817,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 10.7897,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 10.1912,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 9.662,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des pays",
+          "score": 0.9051,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 0.8276,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.8187,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 0.8135,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 0.8076,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vaccins contre",
+          "score": 0.7428,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les fabricants",
+          "score": 0.7336,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.5854,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 78.8015,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 78.8015,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 62.3256,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 55.1489,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 51.6748,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 50.7389,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 49.6145,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 49.3948,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-027-613-transfert-de-technologie": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vaccins antigrippaux",
+          "score": 2.1535,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 1.8454,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.8293,
+          "evidence": []
+        },
+        {
+          "term": "états membres",
+          "score": 1.8104,
+          "evidence": []
+        },
+        {
+          "term": "modalités acceptées",
+          "score": 1.8006,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 1.7909,
+          "evidence": []
+        },
+        {
+          "term": "technologie",
+          "score": 1.702,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les pays",
+          "score": 1.6964,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vaccins antigrippaux",
+          "score": 51.9425,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 51.2801,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 49.4326,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 47.4402,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 45.0084,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 43.8079,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 43.3419,
+          "evidence": []
+        },
+        {
+          "term": "états membres",
+          "score": 41.7674,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.1032,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 0.9776,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 0.9283,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.8965,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 0.8059,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 0.7783,
+          "evidence": []
+        },
+        {
+          "term": "aux pays",
+          "score": 0.6413,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4953,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 38.2444,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 34.0127,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 31.0825,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 30.0017,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 29.9953,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 25.1669,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 11.7699,
+          "evidence": []
+        },
+        {
+          "term": "aux pays",
+          "score": 10.7815,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.1032,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 0.9776,
+          "evidence": []
+        },
+        {
+          "term": "des vaccins",
+          "score": 0.9283,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 0.8965,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 0.8059,
+          "evidence": []
+        },
+        {
+          "term": "selon les",
+          "score": 0.7783,
+          "evidence": []
+        },
+        {
+          "term": "aux pays",
+          "score": 0.6413,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4953,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 77.6942,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 77.6942,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 55.1317,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 51.6037,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 50.3867,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 47.6198,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 42.9505,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 41.4545,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-028-614-mécanismes-de-financement-durable-et-innovan": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "directeur général",
+          "score": 2.3421,
+          "evidence": []
+        },
+        {
+          "term": "instamment invités",
+          "score": 2.1399,
+          "evidence": []
+        },
+        {
+          "term": "groupe consultatif",
+          "score": 2.0661,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.9654,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 1.9584,
+          "evidence": []
+        },
+        {
+          "term": "ces frais",
+          "score": 1.8846,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.8609,
+          "evidence": []
+        },
+        {
+          "term": "riposte mondiales",
+          "score": 1.843,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pour les",
+          "score": 66.639,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 66.3651,
+          "evidence": []
+        },
+        {
+          "term": "directeur général",
+          "score": 58.519,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 56.7684,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 51.6758,
+          "evidence": []
+        },
+        {
+          "term": "groupe consultatif",
+          "score": 47.2877,
+          "evidence": []
+        },
+        {
+          "term": "partage des",
+          "score": 43.9315,
+          "evidence": []
+        },
+        {
+          "term": "des avantages",
+          "score": 42.6,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.5644,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.3092,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.2103,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 1.0627,
+          "evidence": []
+        },
+        {
+          "term": "des avantages",
+          "score": 1.0524,
+          "evidence": []
+        },
+        {
+          "term": "base des",
+          "score": 1.0219,
+          "evidence": []
+        },
+        {
+          "term": "partage des",
+          "score": 0.9878,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 0.7207,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 63.8556,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 52.1404,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 47.9129,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 46.4969,
+          "evidence": []
+        },
+        {
+          "term": "des avantages",
+          "score": 36.2643,
+          "evidence": []
+        },
+        {
+          "term": "base des",
+          "score": 36.1157,
+          "evidence": []
+        },
+        {
+          "term": "partage des",
+          "score": 34.7486,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 14.6261,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.5644,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 1.3092,
+          "evidence": []
+        },
+        {
+          "term": "les états",
+          "score": 1.2103,
+          "evidence": []
+        },
+        {
+          "term": "les fabricants",
+          "score": 1.0627,
+          "evidence": []
+        },
+        {
+          "term": "des avantages",
+          "score": 1.0524,
+          "evidence": []
+        },
+        {
+          "term": "base des",
+          "score": 1.0219,
+          "evidence": []
+        },
+        {
+          "term": "partage des",
+          "score": 0.9878,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 0.7207,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 74.5145,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 74.5145,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 53.5272,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 50.0672,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 49.2994,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 48.7317,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 48.7317,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 43.5309,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-030-71-considérations-générales": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "directeur général",
+          "score": 1.9371,
+          "evidence": []
+        },
+        {
+          "term": "présent cadre",
+          "score": 1.4495,
+          "evidence": []
+        },
+        {
+          "term": "assemblée",
+          "score": 0.9525,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.8176,
+          "evidence": []
+        },
+        {
+          "term": "organisation",
+          "score": 0.717,
+          "evidence": []
+        },
+        {
+          "term": "conformément",
+          "score": 0.6394,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.5771,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "directeur général",
+          "score": 39.0127,
+          "evidence": []
+        },
+        {
+          "term": "présent cadre",
+          "score": 25.4967,
+          "evidence": []
+        },
+        {
+          "term": "assemblée",
+          "score": 20.3352,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 15.1642,
+          "evidence": []
+        },
+        {
+          "term": "organisation",
+          "score": 11.9761,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 10.0566,
+          "evidence": []
+        },
+        {
+          "term": "conformément",
+          "score": 9.9006,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 0.3919,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.3902,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3334,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3073,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 0.2683,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2323,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.2213,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 9.7134,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 9.4167,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 6.8617,
+          "evidence": []
+        },
+        {
+          "term": "numérique",
+          "score": 6.0711,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 4.4507,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 3.1188,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 2.9867,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.3902,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3334,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 0.2683,
+          "evidence": []
+        },
+        {
+          "term": "directeur général",
+          "score": 0.1838,
+          "evidence": []
+        },
+        {
+          "term": "présent cadre",
+          "score": 0.1706,
+          "evidence": []
+        },
+        {
+          "term": "mise",
+          "score": 0.149,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.1457,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 80.7137,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 51.8859,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 51.1816,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 51.1816,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 50.6752,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 48.8112,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 46.3948,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-031-72-groupe-consultatif": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "groupe consultatif",
+          "score": 5.1727,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "directeur général",
+          "score": 2.3421,
+          "evidence": []
+        },
+        {
+          "term": "présent cadre",
+          "score": 1.8549,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 1.7723,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.7451,
+          "evidence": []
+        },
+        {
+          "term": "des régions",
+          "score": 1.7214,
+          "evidence": []
+        },
+        {
+          "term": "des recommandations",
+          "score": 1.6323,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 1.2906,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "groupe consultatif",
+          "score": 159.5063,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "directeur général",
+          "score": 58.519,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 49.8293,
+          "evidence": []
+        },
+        {
+          "term": "des régions",
+          "score": 48.8342,
+          "evidence": []
+        },
+        {
+          "term": "des recommandations",
+          "score": 47.2841,
+          "evidence": []
+        },
+        {
+          "term": "présent cadre",
+          "score": 39.8389,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 29.0396,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 20.7658,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des virus",
+          "score": 1.0732,
+          "evidence": []
+        },
+        {
+          "term": "des recommandations",
+          "score": 0.8939,
+          "evidence": []
+        },
+        {
+          "term": "santé publique",
+          "score": 0.7536,
+          "evidence": []
+        },
+        {
+          "term": "des régions",
+          "score": 0.7533,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.7529,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 0.7181,
+          "evidence": []
+        },
+        {
+          "term": "groupe consultatif",
+          "score": 0.708,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.6977,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des virus",
+          "score": 39.7724,
+          "evidence": []
+        },
+        {
+          "term": "des recommandations",
+          "score": 31.7683,
+          "evidence": []
+        },
+        {
+          "term": "des régions",
+          "score": 31.7683,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 24.921,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 16.9829,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 15.3991,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 12.5668,
+          "evidence": []
+        },
+        {
+          "term": "santé publique",
+          "score": 11.9069,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des virus",
+          "score": 1.0732,
+          "evidence": []
+        },
+        {
+          "term": "des recommandations",
+          "score": 0.8939,
+          "evidence": []
+        },
+        {
+          "term": "des régions",
+          "score": 0.8225,
+          "evidence": []
+        },
+        {
+          "term": "santé publique",
+          "score": 0.7536,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.7529,
+          "evidence": []
+        },
+        {
+          "term": "une pandémie",
+          "score": 0.7181,
+          "evidence": []
+        },
+        {
+          "term": "groupe consultatif",
+          "score": 0.708,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virus grippaux",
+          "score": 0.6977,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 68.0145,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 68.0145,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 59.1362,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 49.4618,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 44.4543,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 43.4395,
+          "evidence": []
+        },
+        {
+          "term": "第6条",
+          "score": 43.1709,
+          "evidence": []
+        },
+        {
+          "term": "解决争端",
+          "score": 43.1709,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-032-73-gouvernance-et-examen-du-mandat-des-laboratoi": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "laboratoires oms",
+          "score": 5.0375,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des laboratoires",
+          "score": 4.5139,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe",
+          "score": 2.7528,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 2.3442,
+          "evidence": []
+        },
+        {
+          "term": "mandats respectifs",
+          "score": 2.2671,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires essentiels",
+          "score": 2.0793,
+          "evidence": []
+        },
+        {
+          "term": "directeur général",
+          "score": 1.9371,
+          "evidence": []
+        },
+        {
+          "term": "général examinera",
+          "score": 1.7738,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "laboratoires oms",
+          "score": 127.0187,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des laboratoires",
+          "score": 103.7197,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe",
+          "score": 65.7495,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 61.5977,
+          "evidence": []
+        },
+        {
+          "term": "les mandats",
+          "score": 55.0174,
+          "evidence": []
+        },
+        {
+          "term": "les centres",
+          "score": 45.1695,
+          "evidence": []
+        },
+        {
+          "term": "laboratoires essentiels",
+          "score": 41.5154,
+          "evidence": []
+        },
+        {
+          "term": "mandats respectifs",
+          "score": 40.6015,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des laboratoires",
+          "score": 1.7033,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "laboratoires oms",
+          "score": 1.6375,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 0.857,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 0.8179,
+          "evidence": []
+        },
+        {
+          "term": "grippe",
+          "score": 0.8046,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les centres",
+          "score": 0.6659,
+          "evidence": []
+        },
+        {
+          "term": "les mandats",
+          "score": 0.6049,
+          "evidence": []
+        },
+        {
+          "term": "des institutions",
+          "score": 0.5778,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des laboratoires",
+          "score": 78.5819,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "laboratoires oms",
+          "score": 76.4038,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 42.3253,
+          "evidence": []
+        },
+        {
+          "term": "les centres",
+          "score": 28.7635,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 28.2921,
+          "evidence": []
+        },
+        {
+          "term": "grippe",
+          "score": 27.1218,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les mandats",
+          "score": 26.0037,
+          "evidence": []
+        },
+        {
+          "term": "des institutions",
+          "score": 22.0333,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des laboratoires",
+          "score": 1.7033,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "laboratoires oms",
+          "score": 1.6375,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 0.857,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 0.8179,
+          "evidence": []
+        },
+        {
+          "term": "grippe",
+          "score": 0.8046,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les centres",
+          "score": 0.6659,
+          "evidence": []
+        },
+        {
+          "term": "les mandats",
+          "score": 0.6049,
+          "evidence": []
+        },
+        {
+          "term": "des institutions",
+          "score": 0.5778,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 123.1,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 123.1,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 118.9429,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 84.618,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 84.1568,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 80.8379,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 78.3738,
+          "evidence": []
+        },
+        {
+          "term": "对使用传统药物治疗腹泻的评价",
+          "score": 77.3562,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-033-74-suivi-et-examen-du-cadre-de-préparation-en-ca": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "conseil exécutif",
+          "score": 1.4189,
+          "evidence": []
+        },
+        {
+          "term": "cadre",
+          "score": 1.3157,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "par intermédiaire",
+          "score": 1.0825,
+          "evidence": []
+        },
+        {
+          "term": "matériels",
+          "score": 0.7665,
+          "evidence": []
+        },
+        {
+          "term": "assemblée",
+          "score": 0.6502,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "conseil exécutif",
+          "score": 22.6946,
+          "evidence": []
+        },
+        {
+          "term": "cadre",
+          "score": 22.3088,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "par intermédiaire",
+          "score": 16.4949,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 12.5708,
+          "evidence": []
+        },
+        {
+          "term": "matériels",
+          "score": 10.5241,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des",
+          "score": 0.3571,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.3543,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2619,
+          "evidence": []
+        },
+        {
+          "term": "grippe",
+          "score": 0.2274,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dans",
+          "score": 0.2251,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 11.1467,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 10.4205,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 4.3621,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 4.265,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 3.7512,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des",
+          "score": 0.3571,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.3543,
+          "evidence": []
+        },
+        {
+          "term": "grippe",
+          "score": 0.2274,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé",
+          "score": 0.2066,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.194,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 83.3189,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 83.3189,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 61.1552,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 59.2073,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 58.234,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-034-annexes": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des matériels",
+          "score": 4.245,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 4.1724,
+          "evidence": []
+        },
+        {
+          "term": "bénéficiaire potentiel",
+          "score": 4.1534,
+          "evidence": []
+        },
+        {
+          "term": "parties accord",
+          "score": 4.0838,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 4.0075,
+          "evidence": []
+        },
+        {
+          "term": "présent accord",
+          "score": 3.9704,
+          "evidence": []
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 3.9453,
+          "evidence": []
+        },
+        {
+          "term": "mandat oms",
+          "score": 3.8043,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "oms des",
+          "score": 459.9188,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 448.159,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 388.3821,
+          "evidence": []
+        },
+        {
+          "term": "les parties",
+          "score": 360.4623,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 345.8146,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 338.6971,
+          "evidence": []
+        },
+        {
+          "term": "les membres",
+          "score": 330.0901,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 316.3666,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "oms des",
+          "score": 4.6191,
+          "evidence": []
+        },
+        {
+          "term": "des laboratoires",
+          "score": 4.0724,
+          "evidence": []
+        },
+        {
+          "term": "mandat oms",
+          "score": 4.0425,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 4.028,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 4.0141,
+          "evidence": []
+        },
+        {
+          "term": "donner oms",
+          "score": 3.9574,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 3.7004,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 3.673,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "oms des",
+          "score": 413.4846,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 391.1591,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 358.324,
+          "evidence": []
+        },
+        {
+          "term": "les matériels",
+          "score": 357.2286,
+          "evidence": []
+        },
+        {
+          "term": "par les",
+          "score": 355.2895,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 354.6292,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 334.0234,
+          "evidence": []
+        },
+        {
+          "term": "une des",
+          "score": 330.9789,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "oms des",
+          "score": 4.6191,
+          "evidence": []
+        },
+        {
+          "term": "des laboratoires",
+          "score": 4.0724,
+          "evidence": []
+        },
+        {
+          "term": "mandat oms",
+          "score": 4.0425,
+          "evidence": []
+        },
+        {
+          "term": "des matériels",
+          "score": 4.028,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 4.0141,
+          "evidence": []
+        },
+        {
+          "term": "donner oms",
+          "score": 3.9574,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 3.7004,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 3.673,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 87.2627,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 87.2627,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 84.052,
+          "evidence": []
+        },
+        {
+          "term": "下面统称",
+          "score": 66.3276,
+          "evidence": []
+        },
+        {
+          "term": "本协议条款适用于由提供者转让给接受者的",
+          "score": 66.3276,
+          "evidence": []
+        },
+        {
+          "term": "节中所定义",
+          "score": 66.3276,
+          "evidence": []
+        },
+        {
+          "term": "协议的主题事项",
+          "score": 66.3276,
+          "evidence": []
+        },
+        {
+          "term": "协议缔约方",
+          "score": 66.3276,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-035-et-de-riposte-pour-le-virus-h5n1-et-dautres-viru": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "virus grippaux",
+          "score": 3.2547,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 3.0715,
+          "evidence": []
+        },
+        {
+          "term": "donner lieu",
+          "score": 3.0576,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des laboratoires",
+          "score": 3.0053,
+          "evidence": []
+        },
+        {
+          "term": "pandémie humaine",
+          "score": 2.8918,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "entend accord",
+          "score": 2.4386,
+          "evidence": []
+        },
+        {
+          "term": "lieu une",
+          "score": 2.3975,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oms échangeront",
+          "score": 2.3341,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les laboratoires",
+          "score": 125.9192,
+          "evidence": []
+        },
+        {
+          "term": "des laboratoires",
+          "score": 108.9576,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 76.9188,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 73.8812,
+          "evidence": []
+        },
+        {
+          "term": "les activités",
+          "score": 70.624,
+          "evidence": []
+        },
+        {
+          "term": "les meilleurs",
+          "score": 70.1106,
+          "evidence": []
+        },
+        {
+          "term": "oms échangeront",
+          "score": 69.0621,
+          "evidence": []
+        },
+        {
+          "term": "gisrs",
+          "score": 62.2973,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "virus grippaux",
+          "score": 3.4107,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "donner lieu",
+          "score": 2.6378,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une pandémie",
+          "score": 2.6235,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pandémie humaine",
+          "score": 2.41,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des laboratoires",
+          "score": 1.7635,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 1.7563,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 1.4225,
+          "evidence": []
+        },
+        {
+          "term": "susceptibles",
+          "score": 1.327,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "virus grippaux",
+          "score": 129.8817,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 101.0205,
+          "evidence": []
+        },
+        {
+          "term": "des laboratoires",
+          "score": 95.4883,
+          "evidence": []
+        },
+        {
+          "term": "donner lieu",
+          "score": 77.0983,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une pandémie",
+          "score": 73.9443,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dans les",
+          "score": 68.51,
+          "evidence": []
+        },
+        {
+          "term": "les activités",
+          "score": 64.5184,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 63.7296,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "virus grippaux",
+          "score": 3.4107,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "donner lieu",
+          "score": 2.6378,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une pandémie",
+          "score": 2.6235,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pandémie humaine",
+          "score": 2.41,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des laboratoires",
+          "score": 1.7635,
+          "evidence": []
+        },
+        {
+          "term": "les laboratoires",
+          "score": 1.7563,
+          "evidence": []
+        },
+        {
+          "term": "oms pour",
+          "score": 1.4225,
+          "evidence": []
+        },
+        {
+          "term": "susceptibles",
+          "score": 1.327,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 138.8828,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 138.8828,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 111.6487,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 105.6502,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 99.8878,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 96.7448,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 95.0663,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 91.5552,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-036-annexe-5-mandat-relatif-aux-travaux-sur-des-maté": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mandat des",
+          "score": 10.732,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 10.653,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des matériels",
+          "score": 9.8946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 9.1698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mandat relatif",
+          "score": 8.6185,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sur des",
+          "score": 7.5396,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "principes directeurs",
+          "score": 6.4522,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 6.1528,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mandat des",
+          "score": 1935.8988,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des matériels",
+          "score": 1918.0508,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sur des",
+          "score": 1744.8444,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 1330.0065,
+          "evidence": []
+        },
+        {
+          "term": "oms des",
+          "score": 1251.71,
+          "evidence": []
+        },
+        {
+          "term": "les virus",
+          "score": 1101.7442,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 1090.4587,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les principes",
+          "score": 989.539,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "grippe pandémique",
+          "score": 14.3892,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des matériels",
+          "score": 12.1062,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 11.9417,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mandat des",
+          "score": 11.36,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mandat relatif",
+          "score": 8.7148,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sur des",
+          "score": 7.9551,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 7.1522,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 7.0631,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des matériels",
+          "score": 1961.6536,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mandat des",
+          "score": 1928.492,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sur des",
+          "score": 1743.3115,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les laboratoires",
+          "score": 1312.7816,
+          "evidence": []
+        },
+        {
+          "term": "oms des",
+          "score": 1266.4982,
+          "evidence": []
+        },
+        {
+          "term": "grippe pandémique",
+          "score": 1147.1986,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les virus",
+          "score": 1098.8475,
+          "evidence": []
+        },
+        {
+          "term": "les principes",
+          "score": 972.4285,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "grippe pandémique",
+          "score": 14.3892,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des matériels",
+          "score": 12.1062,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "matériels biologiques",
+          "score": 11.9417,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mandat des",
+          "score": 11.36,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mandat relatif",
+          "score": 8.7148,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sur des",
+          "score": 7.9551,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 7.1522,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 7.0631,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 131.233,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 131.233,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 110.9869,
+          "evidence": []
+        },
+        {
+          "term": "见下面第",
+          "score": 89.535,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 85.9716,
+          "evidence": []
+        },
+        {
+          "term": "将继续寻求专家的指导建议",
+          "score": 85.9044,
+          "evidence": []
+        },
+        {
+          "term": "的材料",
+          "score": 84.4911,
+          "evidence": []
+        },
+        {
+          "term": "疫苗储备",
+          "score": 84.1746,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-front-matter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "grippe pandémique",
+          "score": 4.0524,
+          "evidence": []
+        },
+        {
+          "term": "grippe humaine",
+          "score": 3.044,
+          "evidence": []
+        },
+        {
+          "term": "pandémique pour",
+          "score": 2.9094,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 2.5477,
+          "evidence": []
+        },
+        {
+          "term": "mandat des",
+          "score": 2.5138,
+          "evidence": []
+        },
+        {
+          "term": "échange des",
+          "score": 2.4076,
+          "evidence": []
+        },
+        {
+          "term": "grippaux susceptibles",
+          "score": 2.2786,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 2.2504,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "grippe pandémique",
+          "score": 179.2637,
+          "evidence": []
+        },
+        {
+          "term": "grippe humaine",
+          "score": 119.2122,
+          "evidence": []
+        },
+        {
+          "term": "pandémique pour",
+          "score": 112.7157,
+          "evidence": []
+        },
+        {
+          "term": "échange des",
+          "score": 85.6624,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 82.4322,
+          "evidence": []
+        },
+        {
+          "term": "mandat des",
+          "score": 79.2769,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 68.5113,
+          "evidence": []
+        },
+        {
+          "term": "préparation",
+          "score": 66.3576,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des laboratoires",
+          "score": 1.8343,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.7966,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.754,
+          "evidence": []
+        },
+        {
+          "term": "mandat des",
+          "score": 1.6889,
+          "evidence": []
+        },
+        {
+          "term": "mondial oms",
+          "score": 1.5437,
+          "evidence": []
+        },
+        {
+          "term": "échange des",
+          "score": 1.5026,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 1.4349,
+          "evidence": []
+        },
+        {
+          "term": "pandémique pour",
+          "score": 1.4251,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des laboratoires",
+          "score": 90.1668,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 78.1284,
+          "evidence": []
+        },
+        {
+          "term": "mandat des",
+          "score": 73.5098,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 64.2224,
+          "evidence": []
+        },
+        {
+          "term": "échange des",
+          "score": 59.9616,
+          "evidence": []
+        },
+        {
+          "term": "renforcement des",
+          "score": 57.3689,
+          "evidence": []
+        },
+        {
+          "term": "des moyens",
+          "score": 55.7692,
+          "evidence": []
+        },
+        {
+          "term": "virus grippaux",
+          "score": 49.2116,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des laboratoires",
+          "score": 1.8343,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.7966,
+          "evidence": []
+        },
+        {
+          "term": "des virus",
+          "score": 1.754,
+          "evidence": []
+        },
+        {
+          "term": "mandat des",
+          "score": 1.6889,
+          "evidence": []
+        },
+        {
+          "term": "mondial oms",
+          "score": 1.5437,
+          "evidence": []
+        },
+        {
+          "term": "échange des",
+          "score": 1.5026,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 1.4349,
+          "evidence": []
+        },
+        {
+          "term": "pandémique pour",
+          "score": 1.4251,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 97.5471,
+          "evidence": []
+        },
+        {
+          "term": "在大流行间期提供疫苗供发展中国家使用",
+          "score": 93.9398,
+          "evidence": []
+        },
+        {
+          "term": "提供大流行性流感疫苗",
+          "score": 93.9398,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 93.2799,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 73.2215,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 72.4344,
+          "evidence": []
+        },
+        {
+          "term": "其它技术术语",
+          "score": 67.1616,
+          "evidence": []
+        },
+        {
+          "term": "大流行性流感防范生物材料或pip生物材料",
+          "score": 67.1616,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

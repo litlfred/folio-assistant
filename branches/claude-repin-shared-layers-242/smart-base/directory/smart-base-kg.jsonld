@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/smart-base/smart-base.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/smart-base/directory/smart-base-kg.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/smart-base/smart-base.jsonld",
+  "sameAs": "http://smart.who.int/base/directory/smart-base-kg.jsonld",
+  "staging": {
+    "branch": "claude/repin-shared-layers-242",
+    "sha": "82b863b8afc7a269deba9e9439fe12633de20986",
+    "pr": "3103/merge",
+    "run": "43319749469"
+  },
+  "@graph": [
+    {
+      "@id": "http://smart.who.int/base/directory/smart-base-kg",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "smart-base-kg",
+      "path": "kg/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/code"
+      ],
+      "description": "The SMART Guidelines knowledge-graph schema, L1 3.0, as Zod: `src/` (the L1 layer and its `l1-library` extension, the graph-document shape, `validate.ts`, `kgid.ts`, the offline JSON-LD loader and the emitters), `test/`, and `generated/l1/` (the ontology JSON, the document JSON Schema and the JSON-LD contexts, written by `src/emit.ts`), with its own `package.json` for `kg.yml`. The emitter also writes the IG's FSH (`input/fsh/models/KGL1*.fsh`, `input/fsh/codesystems/KG*.fsh`, `input/fsh/valuesets/KG*VS.fsh`) at the repository root. `scripts/l1-recommendation-candidates.ts` imports `kg/src/`.",
+      "readmePath": "kg/README.md",
+      "fileCount": 0,
+      "inSubgraph": "http://smart.who.int/base/directory/smart-base-kg"
+    }
+  ]
+}

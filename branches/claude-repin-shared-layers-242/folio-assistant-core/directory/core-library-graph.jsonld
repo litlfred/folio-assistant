@@ -1,0 +1,31 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/folio-assistant-core/folio-assistant-core.context.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/folio-assistant-core/directory/core-library-graph.jsonld",
+  "partOf": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/folio-assistant-core/folio-assistant-core.jsonld",
+  "staging": {
+    "branch": "claude/repin-shared-layers-242",
+    "sha": "82b863b8afc7a269deba9e9439fe12633de20986",
+    "pr": "3103/merge",
+    "run": "43319749469"
+  },
+  "@graph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/folio-assistant-core/directory/core-library-graph",
+      "@type": "https://litlfred.github.io/bootstrap/v0/ns/Subgraph",
+      "name": "core-library-graph",
+      "path": "library/",
+      "contentSource": {
+        "kind": "directory",
+        "declaredIn": "default"
+      },
+      "holdsGraph": [
+        "https://litlfred.github.io/cat-harness/v0/ns/graphTypology/cat-harness"
+      ],
+      "description": "The library sub-graph of this layer, on the pattern of cat-harness's `library-graph`: the graphs inside it are declared FROM WITHIN, in `library/graph.json`. Its corpus (`library/corpus/`, id `library`) is OPT-IN (owner, 2026-11-10, card Q-SG-3 option A): off in every layer unless that layer lists `folio-assistant-core.library` in its own `enableSubgraphs`, core's own included, so a layer below no longer mounts core's three sources (about 29 MB). Only the nested corpus is opt-in, never a top-level `library`: a layer that does not declare its own `library` falls back to the built-in convention rather than losing it. The id is `core-library-graph`, not `library-graph`, so it does not shadow cat-harness's entry of that name.",
+      "readmePath": "library/README.md",
+      "fileCount": 0,
+      "inSubgraph": "https://litlfred.github.io/folio-assistant/branches/claude-repin-shared-layers-242/folio-assistant-core/directory/core-library-graph",
+      "alternateOf": "https://litlfred.github.io/folio-assistant/folio-assistant-core/directory/core-library-graph"
+    }
+  ]
+}

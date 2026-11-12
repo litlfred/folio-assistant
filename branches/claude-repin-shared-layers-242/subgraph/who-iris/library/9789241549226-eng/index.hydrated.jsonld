@@ -1,0 +1,955 @@
+{
+  "@context": "https://litlfred.github.io/folio-assistant/ns/subgraph/v1.jsonld",
+  "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/9789241549226-eng/",
+  "@type": "bootstrap:Subgraph",
+  "_generated": "gen-subgraph-jsonld.ts — do not hand-edit; run `bun run cat subgraph:jsonld`",
+  "hasMember": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/assets/library/jsonld/who-iris/source/9789241549226-eng",
+      "@type": "cat-harness:SourceDocument",
+      "path": "library/9789241549226-eng/manifest.jsonld",
+      "title": "Human Resources for Health Information System Minimum Data Set for Health Workforce Registry"
+    }
+  ],
+  "hasSubgraph": [
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/9789241549226-eng/blocks/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/figure-img-p013-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Figure",
+          "path": "library/9789241549226-eng/blocks/figure-img-p013-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/figure-img-p060-1",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Figure",
+          "path": "library/9789241549226-eng/blocks/figure-img-p060-1.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/figure-img-p060-2",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Figure",
+          "path": "library/9789241549226-eng/blocks/figure-img-p060-2.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-006-01",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-006-01.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-006-02",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-006-02.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-006-03",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-006-03.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-006-04",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-006-04.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-006-05",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-006-05.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-01",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-01.jsonld",
+          "title": "Action Plan and Budget"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-02",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-02.jsonld",
+          "title": "Education - Enrolment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-03",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-03.jsonld",
+          "title": "Education - Graduation"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-04",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-04.jsonld",
+          "title": "Education - Accreditation"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-05",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-05.jsonld",
+          "title": "Regulation - Registration and Licensing"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-06",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-06.jsonld",
+          "title": "Regulation - Disciplinary Action"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-07",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-07.jsonld",
+          "title": "Recruitment"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-08",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-08.jsonld",
+          "title": "Payroll Administration"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-09",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-09.jsonld",
+          "title": "Training (in-service)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-10",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-10.jsonld",
+          "title": "Leave Management"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-11",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-11.jsonld",
+          "title": "Relicensure"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-12",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-12.jsonld",
+          "title": "PBF Evaluation"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-13",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-13.jsonld",
+          "title": "Transfer"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-14",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-14.jsonld",
+          "title": "Disciplinary Action"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-15",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-15.jsonld",
+          "title": "Retirement"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-16",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-16.jsonld",
+          "title": "Discharge - Involuntary"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-17",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-17.jsonld",
+          "title": "Discharge - Voluntary"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-18",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-18.jsonld",
+          "title": "Discharge - Death during tenure"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-009-19",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-009-19.jsonld",
+          "title": "Pension"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-01",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-01.jsonld",
+          "title": "Staffing gaps against norms"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-02",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-02.jsonld",
+          "title": "Estimation of workforce needs"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-03",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-03.jsonld",
+          "title": "Estimation of financial needs"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-04",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-04.jsonld",
+          "title": "Timely standardized reports"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-05",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-05.jsonld",
+          "title": "Private sector / cadre types"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-06",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-06.jsonld",
+          "title": "Facilities-type, geographic location"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-07",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-07.jsonld",
+          "title": "Pre-Service training and production: categories of information by discipline within medical, nursing, and public health schools and other training and health institutions"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-08",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-08.jsonld",
+          "title": "In-service training and continuing professional development"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-09",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-09.jsonld",
+          "title": "Manage staff vacancies"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-10",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-10.jsonld",
+          "title": "Planning and forecasting staff needs"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-11",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-11.jsonld",
+          "title": "Manage promotion, retention, and pension"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-12",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-12.jsonld",
+          "title": "Workforce credential management"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-13",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-13.jsonld",
+          "title": "Document employee performance management"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-010-14",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-010-14.jsonld",
+          "title": "Document data on quality and quantity indicators"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-031-01",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-031-01.jsonld",
+          "title": "Address policy and governance mechanism"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-031-02",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-031-02.jsonld",
+          "title": "Agree on a location to operate the registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-037-01",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-037-01.jsonld",
+          "title": "Assure privacy, security and confidentiality of health workforce data"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-037-02",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-037-02.jsonld",
+          "title": "Establish standardized reports"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-037-03",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-037-03.jsonld",
+          "title": "Number of health workforce by cadre, gender and facility"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-037-04",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-037-04.jsonld",
+          "title": "Number of expected retirements"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-037-05",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-037-05.jsonld",
+          "title": "Number of expected and completed renewals of license/credentials"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-037-06",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-037-06.jsonld",
+          "title": "Number of vacant positions by facility"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-037-07",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-037-07.jsonld",
+          "title": "Geographic distribution of total workforce by facility"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-037-08",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-037-08.jsonld",
+          "title": "Geographic distribution (by district) of male and female employees"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-037-09",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-037-09.jsonld",
+          "title": "Develop, test, and deploy a functional electronic health workforce registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-038-01",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-038-01.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-038-02",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-038-02.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-038-03",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-038-03.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-038-04",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-038-04.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-038-05",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-038-05.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-040-01",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-040-01.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-040-02",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-040-02.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-040-03",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-040-03.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-040-04",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-040-04.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/functional-requirement-sec-040-05",
+          "@type": "cat-harness:Block",
+          "path": "library/9789241549226-eng/blocks/functional-requirement-sec-040-05.jsonld"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-000",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-000.jsonld",
+          "title": "Acknowledgements"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-001",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-001.jsonld",
+          "title": "Abbreviations"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-002",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-002.jsonld",
+          "title": "Purpose of the document"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-003",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-003.jsonld",
+          "title": "Figure 1. Relationship of data set to data element"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-004",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-004.jsonld",
+          "title": "How to use this document"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-005",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-005.jsonld",
+          "title": "Figure 2. Example of representation of data element"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-006",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-006.jsonld",
+          "title": "Health workforce registry – concept and function"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-007",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-007.jsonld",
+          "title": "Figure 3. Relationship of health workforce registry to health information systems"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-008",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-008.jsonld",
+          "title": "Figure 4. Context of health workforce registry: person-centric information system"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-009",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-009.jsonld",
+          "title": "Table 1. Primary functions associated with health workforce information systems"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-010",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-010.jsonld",
+          "title": "Table 2. Type of health workforce information needs of national and sub national health authorities"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-011",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-011.jsonld",
+          "title": "Minimum data set for health workforce registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-012",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-012.jsonld",
+          "title": "Table 3. Minimum data set for health workforce registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-013",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-013.jsonld",
+          "title": "Address (physical)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-014",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-014.jsonld",
+          "title": "Address (electronic mail)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-015",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-015.jsonld",
+          "title": "Country"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-016",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-016.jsonld",
+          "title": "Date"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-017",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-017.jsonld",
+          "title": "Disciplinary action"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-018",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-018.jsonld",
+          "title": "Education"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-019",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-019.jsonld",
+          "title": "Employment occupational category"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-020",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-020.jsonld",
+          "title": "Employment status"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-021",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-021.jsonld",
+          "title": "Employment title"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-022",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-022.jsonld",
+          "title": "Facility type and ownership"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-023",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-023.jsonld",
+          "title": "Full name"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-024",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-024.jsonld",
+          "title": "GPS coordinates"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-025",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-025.jsonld",
+          "title": "Identification number"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-026",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-026.jsonld",
+          "title": "Language"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-027",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-027.jsonld",
+          "title": "License, registration, and certification"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-028",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-028.jsonld",
+          "title": "Photograph"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-029",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-029.jsonld",
+          "title": "Postal code"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-030",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-030.jsonld",
+          "title": "Sex at birth"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-031",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-031.jsonld",
+          "title": "Telephone number"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-032",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-032.jsonld",
+          "title": "Table 4. Phase-based approach to entering primary data to electronic registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-033",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-033.jsonld",
+          "title": "Figure 5. Conceptual representation of web-enabled, secure, nation-wide accessible .... electronic health workforce registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-034",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-034.jsonld",
+          "title": "Table 5. Suggested list of health workforce data submitting entities"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-035",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-035.jsonld",
+          "title": "Table 6. Suggested minimum data by entity category and frequency of submission"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-036",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-036.jsonld",
+          "title": "Figure 6. Illustration depicting additional data sources required to establish a functional health workforce information system"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-037",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-037.jsonld",
+          "title": "Table 7. Data elements and their applicability to submitting entities"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-038",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-038.jsonld",
+          "title": "Health workforce registry implementation consideration"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-039",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-039.jsonld",
+          "title": "Sample illustration of health workforce registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-040",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-040.jsonld",
+          "title": "Sample components of the registry operational framework"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-041",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-041.jsonld",
+          "title": "Technical notes"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-042",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-042.jsonld",
+          "title": "Collaborators"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-043",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-043.jsonld",
+          "title": "Suggested readings"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/blocks/prose-sec-front-matter",
+          "@type": "https://litlfred.github.io/folio-assistant-core/v0/ns/Prose",
+          "path": "library/9789241549226-eng/blocks/prose-sec-front-matter.jsonld",
+          "title": "Front matter"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/9789241549226-eng/blocks",
+      "path": "library/9789241549226-eng/blocks/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/9789241549226-eng/figures/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/9789241549226-eng/figures",
+      "path": "library/9789241549226-eng/figures/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/9789241549226-eng/images/",
+      "@type": "bootstrap:Subgraph",
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/9789241549226-eng/images",
+      "path": "library/9789241549226-eng/images/"
+    },
+    {
+      "@id": "https://litlfred.github.io/folio-assistant/subgraph/who-iris/library/9789241549226-eng/sections/",
+      "@type": "bootstrap:Subgraph",
+      "hasMember": [
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-000",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-000.jsonld",
+          "title": "Acknowledgements"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-001",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-001.jsonld",
+          "title": "Abbreviations"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-002",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-002.jsonld",
+          "title": "Purpose of the document"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-003",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-003.jsonld",
+          "title": "Figure 1. Relationship of data set to data element"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-004",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-004.jsonld",
+          "title": "How to use this document"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-005",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-005.jsonld",
+          "title": "Figure 2. Example of representation of data element"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-006",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-006.jsonld",
+          "title": "Health workforce registry – concept and function"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-007",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-007.jsonld",
+          "title": "Figure 3. Relationship of health workforce registry to health information systems"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-008",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-008.jsonld",
+          "title": "Figure 4. Context of health workforce registry: person-centric information system"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-009",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-009.jsonld",
+          "title": "Table 1. Primary functions associated with health workforce information systems"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-010",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-010.jsonld",
+          "title": "Table 2. Type of health workforce information needs of national and sub national health authorities"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-011",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-011.jsonld",
+          "title": "Minimum data set for health workforce registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-012",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-012.jsonld",
+          "title": "Table 3. Minimum data set for health workforce registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-013",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-013.jsonld",
+          "title": "Address (physical)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-014",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-014.jsonld",
+          "title": "Address (electronic mail)"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-015",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-015.jsonld",
+          "title": "Country"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-016",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-016.jsonld",
+          "title": "Date"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-017",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-017.jsonld",
+          "title": "Disciplinary action"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-018",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-018.jsonld",
+          "title": "Education"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-019",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-019.jsonld",
+          "title": "Employment occupational category"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-020",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-020.jsonld",
+          "title": "Employment status"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-021",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-021.jsonld",
+          "title": "Employment title"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-022",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-022.jsonld",
+          "title": "Facility type and ownership"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-023",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-023.jsonld",
+          "title": "Full name"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-024",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-024.jsonld",
+          "title": "GPS coordinates"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-025",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-025.jsonld",
+          "title": "Identification number"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-026",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-026.jsonld",
+          "title": "Language"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-027",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-027.jsonld",
+          "title": "License, registration, and certification"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-028",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-028.jsonld",
+          "title": "Photograph"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-029",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-029.jsonld",
+          "title": "Postal code"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-030",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-030.jsonld",
+          "title": "Sex at birth"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-031",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-031.jsonld",
+          "title": "Telephone number"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-032",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-032.jsonld",
+          "title": "Table 4. Phase-based approach to entering primary data to electronic registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-033",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-033.jsonld",
+          "title": "Figure 5. Conceptual representation of web-enabled, secure, nation-wide accessible .... electronic health workforce registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-034",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-034.jsonld",
+          "title": "Table 5. Suggested list of health workforce data submitting entities"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-035",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-035.jsonld",
+          "title": "Table 6. Suggested minimum data by entity category and frequency of submission"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-036",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-036.jsonld",
+          "title": "Figure 6. Illustration depicting additional data sources required to establish a functional health workforce information system"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-037",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-037.jsonld",
+          "title": "Table 7. Data elements and their applicability to submitting entities"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-038",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-038.jsonld",
+          "title": "Health workforce registry implementation consideration"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-039",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-039.jsonld",
+          "title": "Sample illustration of health workforce registry"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-040",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-040.jsonld",
+          "title": "Sample components of the registry operational framework"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-041",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-041.jsonld",
+          "title": "Technical notes"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-042",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-042.jsonld",
+          "title": "Collaborators"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-043",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-043.jsonld",
+          "title": "Suggested readings"
+        },
+        {
+          "@id": "https://litlfred.github.io/folio/library/9789241549226-eng/sections/sec-front-matter",
+          "@type": "http://purl.org/spar/doco/Section",
+          "path": "library/9789241549226-eng/sections/sec-front-matter.jsonld",
+          "title": "Front matter"
+        }
+      ],
+      "holdsGraph": [
+        "cat-harness:graphTypology/library"
+      ],
+      "name": "library/9789241549226-eng/sections",
+      "path": "library/9789241549226-eng/sections/"
+    }
+  ],
+  "holdsGraph": [
+    "cat-harness:graphTypology/library"
+  ],
+  "name": "library/9789241549226-eng",
+  "path": "library/9789241549226-eng/"
+}

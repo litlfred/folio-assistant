@@ -1,0 +1,742 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-329964-chi",
+  "instance": "who-iris",
+  "about": "library/10665-329964-chi",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "世卫组织建议将针对重点人群的基于社交网络的艾滋病毒检测方法作为一揽子伙伴服务的一部分",
+        "score": 1.2792,
+        "evidence": []
+      },
+      {
+        "term": "政策简报",
+        "score": 1.2792,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 1.2792,
+        "evidence": []
+      },
+      {
+        "term": "世界卫生组织",
+        "score": 0.9568,
+        "evidence": []
+      },
+      {
+        "term": "int",
+        "score": 0.4307,
+        "evidence": []
+      },
+      {
+        "term": "hiv",
+        "score": 0.3594,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "世卫组织建议将针对重点人群的基于社交网络的艾滋病毒检测方法作为一揽子伙伴服务的一部分",
+        "score": 16.565,
+        "evidence": []
+      },
+      {
+        "term": "政策简报",
+        "score": 16.565,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 16.565,
+        "evidence": []
+      },
+      {
+        "term": "世界卫生组织",
+        "score": 12.2848,
+        "evidence": []
+      },
+      {
+        "term": "int",
+        "score": 6.0921,
+        "evidence": []
+      },
+      {
+        "term": "hiv",
+        "score": 4.6958,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "geneva",
+        "score": 0.1151,
+        "evidence": []
+      },
+      {
+        "term": "world",
+        "score": 0.1147,
+        "evidence": []
+      },
+      {
+        "term": "organization",
+        "score": 0.1135,
+        "evidence": []
+      },
+      {
+        "term": "hiv",
+        "score": 0.1012,
+        "evidence": []
+      },
+      {
+        "term": "aids",
+        "score": 0.0845,
+        "evidence": []
+      },
+      {
+        "term": "accessed",
+        "score": 0.0783,
+        "evidence": []
+      },
+      {
+        "term": "health",
+        "score": 0.0765,
+        "evidence": []
+      },
+      {
+        "term": "int",
+        "score": 0.0694,
+        "evidence": []
+      },
+      {
+        "term": "united",
+        "score": 0.049,
+        "evidence": []
+      },
+      {
+        "term": "unaids",
+        "score": 0.0487,
+        "evidence": []
+      },
+      {
+        "term": "prevention",
+        "score": 0.0466,
+        "evidence": []
+      },
+      {
+        "term": "pdf",
+        "score": 0.0443,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "hiv",
+        "score": 2.5046,
+        "evidence": []
+      },
+      {
+        "term": "geneva",
+        "score": 1.6157,
+        "evidence": []
+      },
+      {
+        "term": "world",
+        "score": 1.5498,
+        "evidence": []
+      },
+      {
+        "term": "organization",
+        "score": 1.4355,
+        "evidence": []
+      },
+      {
+        "term": "aids",
+        "score": 1.1186,
+        "evidence": []
+      },
+      {
+        "term": "hepatitis",
+        "score": 1.0192,
+        "evidence": []
+      },
+      {
+        "term": "tel",
+        "score": 0.8237,
+        "evidence": []
+      },
+      {
+        "term": "health",
+        "score": 0.8182,
+        "evidence": []
+      },
+      {
+        "term": "fax",
+        "score": 0.7923,
+        "evidence": []
+      },
+      {
+        "term": "licence",
+        "score": 0.7727,
+        "evidence": []
+      },
+      {
+        "term": "e-mail",
+        "score": 0.7538,
+        "evidence": []
+      },
+      {
+        "term": "igo",
+        "score": 0.7085,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "hiv",
+        "score": 0.1012,
+        "evidence": []
+      },
+      {
+        "term": "int",
+        "score": 0.0694,
+        "evidence": []
+      },
+      {
+        "term": "世界卫生组织",
+        "score": 0.0013,
+        "evidence": []
+      },
+      {
+        "term": "世卫组织建议将针对重点人群的基于社交网络的艾滋病毒检测方法作为一揽子伙伴服务的一部分",
+        "score": 0.0002,
+        "evidence": []
+      },
+      {
+        "term": "政策简报",
+        "score": 0.0002,
+        "evidence": []
+      },
+      {
+        "term": "重点人群",
+        "score": 0.0002,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "重点人群",
+        "score": 1178630.8668,
+        "evidence": []
+      },
+      {
+        "term": "世卫组织建议将针对重点人群的基于社交网络的艾滋病毒检测方法作为一揽子伙伴服务的一部分",
+        "score": 92582.9953,
+        "evidence": []
+      },
+      {
+        "term": "政策简报",
+        "score": 92582.9953,
+        "evidence": []
+      },
+      {
+        "term": "在马拉维",
+        "score": 62173.7272,
+        "evidence": []
+      },
+      {
+        "term": "感染者",
+        "score": 53997.48,
+        "evidence": []
+      },
+      {
+        "term": "这两种hpv",
+        "score": 37009.9553,
+        "evidence": []
+      },
+      {
+        "term": "的情况下",
+        "score": 34200.3704,
+        "evidence": []
+      },
+      {
+        "term": "有效性",
+        "score": 31370.0238,
+        "evidence": []
+      },
+      {
+        "term": "还不清楚",
+        "score": 30804.1712,
+        "evidence": []
+      },
+      {
+        "term": "显而易见",
+        "score": 30768.7998,
+        "evidence": []
+      },
+      {
+        "term": "在正常情况下",
+        "score": 29841.0912,
+        "evidence": []
+      },
+      {
+        "term": "电子邮件",
+        "score": 29493.4756,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-000-世卫组织建议将针对": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "世卫组织建议将针对重点人群的基于社交网络的艾滋病毒检测方法作为一揽子伙伴服务的一部分",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "政策简报",
+          "score": 0.6396,
+          "evidence": []
+        },
+        {
+          "term": "有效性",
+          "score": 0.6083,
+          "evidence": []
+        },
+        {
+          "term": "的情况下",
+          "score": 0.5429,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织",
+          "score": 0.5192,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "世卫组织建议将针对重点人群的基于社交网络的艾滋病毒检测方法作为一揽子伙伴服务的一部分",
+          "score": 8.2825,
+          "evidence": []
+        },
+        {
+          "term": "政策简报",
+          "score": 8.2825,
+          "evidence": []
+        },
+        {
+          "term": "有效性",
+          "score": 7.877,
+          "evidence": []
+        },
+        {
+          "term": "的情况下",
+          "score": 7.0297,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织",
+          "score": 6.5777,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "world",
+          "score": 0.0007,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.0006,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.0006,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0005,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.0004,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "world",
+          "score": 0.0017,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.0016,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 0.0015,
+          "evidence": []
+        },
+        {
+          "term": "anti-hepb",
+          "score": 0.0015,
+          "evidence": []
+        },
+        {
+          "term": "vacuna",
+          "score": 0.0015,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "世界卫生组织",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织建议将针对重点人群的基于社交网络的艾滋病毒检测方法作为一揽子伙伴服务的一部分",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "政策简报",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "有效性",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 35289.51,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 22056.3272,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 14493.8116,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织建议将针对重点人群的基于社交网络的艾滋病毒检测方法作为一揽子伙伴服务的一部分",
+          "score": 12972.7012,
+          "evidence": []
+        },
+        {
+          "term": "政策简报",
+          "score": 12972.7012,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-001-2016年世卫组织的建议": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "重点人群",
+          "score": 0.6396,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "重点人群",
+          "score": 8.2825,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "geneva",
+          "score": 0.0001,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 0.0002,
+          "evidence": []
+        },
+        {
+          "term": "licence",
+          "score": 0.0001,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 0.0001,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "重点人群",
+          "score": 0,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 1099020.5727,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织建议将针对重点人群的基于社交网络的艾滋病毒检测方法作为一揽子伙伴服务的一部分",
+          "score": 75084.9467,
+          "evidence": []
+        },
+        {
+          "term": "政策简报",
+          "score": 75084.9467,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-伙伴服务和基于社交网络的方法的操作注": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "int",
+          "score": 0.4307,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.3594,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "int",
+          "score": 6.0921,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 4.6958,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "geneva",
+          "score": 0.1144,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 0.1139,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 0.1128,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.1009,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.0842,
+          "evidence": []
+        },
+        {
+          "term": "accessed",
+          "score": 0.0778,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.076,
+          "evidence": []
+        },
+        {
+          "term": "int",
+          "score": 0.069,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 2.5043,
+          "evidence": []
+        },
+        {
+          "term": "geneva",
+          "score": 1.6141,
+          "evidence": []
+        },
+        {
+          "term": "world",
+          "score": 1.548,
+          "evidence": []
+        },
+        {
+          "term": "organization",
+          "score": 1.4339,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 1.1185,
+          "evidence": []
+        },
+        {
+          "term": "hepatitis",
+          "score": 1.0183,
+          "evidence": []
+        },
+        {
+          "term": "tel",
+          "score": 0.8233,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.8173,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv",
+          "score": 0.1009,
+          "evidence": []
+        },
+        {
+          "term": "int",
+          "score": 0.069,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 44320.7841,
+          "evidence": []
+        },
+        {
+          "term": "在马拉维",
+          "score": 4803.0269,
+          "evidence": []
+        },
+        {
+          "term": "世卫组织建议将针对重点人群的基于社交网络的艾滋病毒检测方法作为一揽子伙伴服务的一部分",
+          "score": 4525.3475,
+          "evidence": []
+        },
+        {
+          "term": "政策简报",
+          "score": 4525.3475,
+          "evidence": []
+        },
+        {
+          "term": "乌干达",
+          "score": 3833.4761,
+          "evidence": []
+        },
+        {
+          "term": "精神卫生",
+          "score": 3215.7446,
+          "evidence": []
+        },
+        {
+          "term": "在世界卫生组织",
+          "score": 2998.646,
+          "evidence": []
+        },
+        {
+          "term": "澳大利亚",
+          "score": 2863.6192,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

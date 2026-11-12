@@ -1,0 +1,7628 @@
+{
+  "$schema": "folio-keywords/v2",
+  "@type": "cat-harness:DerivedKeywords",
+  "entry": "10665-329296",
+  "instance": "who-iris",
+  "about": "library/10665-329296",
+  "corpus": {
+    "library": "who-iris/library",
+    "sections": 7908,
+    "terms": 73102
+  },
+  "variants": [
+    {
+      "id": "lsi-log-entropy-surface",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-tfidf-surface",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "surface"
+    },
+    {
+      "id": "lsi-log-entropy-latent",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-tfidf-latent",
+      "method": "lsi",
+      "weighting": "tfidf",
+      "space": "latent",
+      "k": 100
+    },
+    {
+      "id": "lsi-log-entropy-latent-rerank",
+      "method": "lsi",
+      "weighting": "log-entropy",
+      "space": "latent-rerank",
+      "k": 100
+    },
+    {
+      "id": "ca-latent",
+      "method": "correspondence-analysis",
+      "weighting": "raw",
+      "space": "latent",
+      "k": 100
+    }
+  ],
+  "document": {
+    "lsi-log-entropy-surface": [
+      {
+        "term": "pour des",
+        "score": 39.7008,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pour les",
+        "score": 38.8328,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "des nourrissons",
+        "score": 36.2419,
+        "evidence": []
+      },
+      {
+        "term": "chez des",
+        "score": 35.096,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "sur des",
+        "score": 33.6934,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dans des",
+        "score": 33.606,
+        "evidence": []
+      },
+      {
+        "term": "taan pour",
+        "score": 33.3408,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "vih pour",
+        "score": 31.8954,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pour une",
+        "score": 31.6016,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les semaines",
+        "score": 31.4788,
+        "evidence": []
+      },
+      {
+        "term": "par des",
+        "score": 30.9971,
+        "evidence": []
+      },
+      {
+        "term": "suivi des",
+        "score": 30.364,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-surface": [
+      {
+        "term": "pour les",
+        "score": 1109.0197,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pour des",
+        "score": 1071.2918,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "chez les",
+        "score": 1021.756,
+        "evidence": []
+      },
+      {
+        "term": "les nourrissons",
+        "score": 986.5373,
+        "evidence": []
+      },
+      {
+        "term": "les mois",
+        "score": 924.7989,
+        "evidence": []
+      },
+      {
+        "term": "dans les",
+        "score": 924.0932,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 908.2352,
+        "evidence": []
+      },
+      {
+        "term": "les semaines",
+        "score": 903.6035,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 879.2392,
+        "evidence": []
+      },
+      {
+        "term": "les résultats",
+        "score": 840.2442,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "que les",
+        "score": 823.0376,
+        "evidence": []
+      },
+      {
+        "term": "les soins",
+        "score": 815.9218,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent": [
+      {
+        "term": "pour les",
+        "score": 36.616,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pour des",
+        "score": 36.0453,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dans les",
+        "score": 35.6062,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 33.0469,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 32.6998,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 31.9036,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 29.1899,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 28.431,
+        "evidence": []
+      },
+      {
+        "term": "les données",
+        "score": 28.2306,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 27.7988,
+        "evidence": []
+      },
+      {
+        "term": "pour une",
+        "score": 27.2327,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les taux",
+        "score": 26.7827,
+        "evidence": []
+      }
+    ],
+    "lsi-tfidf-latent": [
+      {
+        "term": "pour les",
+        "score": 1100.2543,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dans les",
+        "score": 1060.9819,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 1010.2889,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 963.4538,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 956.434,
+        "evidence": []
+      },
+      {
+        "term": "pour des",
+        "score": 950.0901,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les données",
+        "score": 903.6321,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 887.9676,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 881.4639,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 868.6965,
+        "evidence": []
+      },
+      {
+        "term": "les soins",
+        "score": 859.3705,
+        "evidence": []
+      },
+      {
+        "term": "les enfants",
+        "score": 848.4219,
+        "evidence": []
+      }
+    ],
+    "lsi-log-entropy-latent-rerank": [
+      {
+        "term": "pour les",
+        "score": 36.616,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "pour des",
+        "score": 36.0453,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "dans les",
+        "score": 35.6062,
+        "evidence": []
+      },
+      {
+        "term": "sur les",
+        "score": 33.0469,
+        "evidence": []
+      },
+      {
+        "term": "par les",
+        "score": 32.6998,
+        "evidence": []
+      },
+      {
+        "term": "que les",
+        "score": 31.9036,
+        "evidence": []
+      },
+      {
+        "term": "chez les",
+        "score": 29.1899,
+        "evidence": []
+      },
+      {
+        "term": "avec les",
+        "score": 28.431,
+        "evidence": []
+      },
+      {
+        "term": "les données",
+        "score": 28.2306,
+        "evidence": []
+      },
+      {
+        "term": "les pays",
+        "score": 27.7988,
+        "evidence": []
+      },
+      {
+        "term": "pour une",
+        "score": 27.2327,
+        "evidence": [
+          "heading"
+        ]
+      },
+      {
+        "term": "les taux",
+        "score": 26.7827,
+        "evidence": []
+      }
+    ],
+    "ca-latent": [
+      {
+        "term": "提供hpv",
+        "score": 2249.2592,
+        "evidence": []
+      },
+      {
+        "term": "疫苗接种",
+        "score": 1808.1944,
+        "evidence": []
+      },
+      {
+        "term": "引进hpv",
+        "score": 1753.7115,
+        "evidence": []
+      },
+      {
+        "term": "巴西登革热",
+        "score": 1724.3331,
+        "evidence": []
+      },
+      {
+        "term": "感染和宫颈癌",
+        "score": 1591.3315,
+        "evidence": []
+      },
+      {
+        "term": "的服务",
+        "score": 1514.0148,
+        "evidence": []
+      },
+      {
+        "term": "的材料",
+        "score": 1437.2266,
+        "evidence": []
+      },
+      {
+        "term": "人口约",
+        "score": 1400.4577,
+        "evidence": []
+      },
+      {
+        "term": "疫苗的",
+        "score": 1356.5893,
+        "evidence": []
+      },
+      {
+        "term": "增强和迭代",
+        "score": 1350.5061,
+        "evidence": []
+      },
+      {
+        "term": "行动框架",
+        "score": 1350.5061,
+        "evidence": []
+      },
+      {
+        "term": "怀疑可能暴露到开始调查的管理延误期",
+        "score": 1267.641,
+        "evidence": []
+      }
+    ]
+  },
+  "sections": {
+    "sec-001-organisation-mondiale-de-la-santé-2018": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "organisation mondiale",
+          "score": 2.9529,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "présente œuvre",
+          "score": 2.2052,
+          "evidence": []
+        },
+        {
+          "term": "présente traduction",
+          "score": 1.9735,
+          "evidence": []
+        },
+        {
+          "term": "présente publication",
+          "score": 1.7261,
+          "evidence": []
+        },
+        {
+          "term": "cette œuvre",
+          "score": 1.7208,
+          "evidence": []
+        },
+        {
+          "term": "licence creative",
+          "score": 1.577,
+          "evidence": []
+        },
+        {
+          "term": "droit auteur",
+          "score": 1.533,
+          "evidence": []
+        },
+        {
+          "term": "produits commerciaux",
+          "score": 1.4718,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "présente œuvre",
+          "score": 62.2954,
+          "evidence": []
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 53.8812,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "présente traduction",
+          "score": 46.012,
+          "evidence": []
+        },
+        {
+          "term": "cette œuvre",
+          "score": 43.1182,
+          "evidence": []
+        },
+        {
+          "term": "présente publication",
+          "score": 42.2813,
+          "evidence": []
+        },
+        {
+          "term": "licence creative",
+          "score": 34.8057,
+          "evidence": []
+        },
+        {
+          "term": "vous",
+          "score": 34.2866,
+          "evidence": []
+        },
+        {
+          "term": "oms",
+          "score": 26.2486,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "organisation mondiale",
+          "score": 2.9862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé",
+          "score": 1.9774,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "présente œuvre",
+          "score": 1.1712,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 1.0896,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 1.0503,
+          "evidence": []
+        },
+        {
+          "term": "cette œuvre",
+          "score": 1.0037,
+          "evidence": []
+        },
+        {
+          "term": "présente publication",
+          "score": 0.9275,
+          "evidence": []
+        },
+        {
+          "term": "présente traduction",
+          "score": 0.9162,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 34.8684,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 26.2426,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 17.4698,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "organisation mondiale",
+          "score": 13.6033,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une",
+          "score": 13.0222,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 12.6445,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 11.9753,
+          "evidence": []
+        },
+        {
+          "term": "cette œuvre",
+          "score": 9.667,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "organisation mondiale",
+          "score": 2.9862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé",
+          "score": 1.9774,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "présente œuvre",
+          "score": 1.1712,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 1.0896,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 1.0503,
+          "evidence": []
+        },
+        {
+          "term": "cette œuvre",
+          "score": 1.0037,
+          "evidence": []
+        },
+        {
+          "term": "présente publication",
+          "score": 0.9275,
+          "evidence": []
+        },
+        {
+          "term": "présente traduction",
+          "score": 0.9162,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 79.9165,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 51.7546,
+          "evidence": []
+        },
+        {
+          "term": "监督机制",
+          "score": 51.7475,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 47.6016,
+          "evidence": []
+        },
+        {
+          "term": "美国cdc",
+          "score": 39.7626,
+          "evidence": []
+        },
+        {
+          "term": "实验室和流感监测能力建设",
+          "score": 38.6098,
+          "evidence": []
+        },
+        {
+          "term": "提供确定疫苗效力的参考试剂",
+          "score": 38.6098,
+          "evidence": []
+        },
+        {
+          "term": "提供诊断试剂和检测包",
+          "score": 38.6098,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-002-11-résumé-executif": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vih chez",
+          "score": 1.5668,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.4274,
+          "evidence": []
+        },
+        {
+          "term": "directrices unifiées",
+          "score": 1.3594,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 1.357,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.3191,
+          "evidence": []
+        },
+        {
+          "term": "lignes directrices",
+          "score": 1.1178,
+          "evidence": []
+        },
+        {
+          "term": "nourrisson",
+          "score": 0.9229,
+          "evidence": []
+        },
+        {
+          "term": "traitement",
+          "score": 0.8415,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vih chez",
+          "score": 32.045,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 31.4343,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 28.5095,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 26.4103,
+          "evidence": []
+        },
+        {
+          "term": "directrices unifiées",
+          "score": 21.3717,
+          "evidence": []
+        },
+        {
+          "term": "traitement",
+          "score": 17.325,
+          "evidence": []
+        },
+        {
+          "term": "lignes directrices",
+          "score": 16.7074,
+          "evidence": []
+        },
+        {
+          "term": "nourrisson",
+          "score": 16.4374,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.1744,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.1066,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 0.8221,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4904,
+          "evidence": []
+        },
+        {
+          "term": "vih chez",
+          "score": 0.4643,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3756,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.3266,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3217,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 27.3319,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 25.2877,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 19.0819,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 8.0361,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 6.4642,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 5.4919,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 4.082,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 3.9248,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.1744,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.1066,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 0.8221,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.4904,
+          "evidence": []
+        },
+        {
+          "term": "vih chez",
+          "score": 0.4643,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.3756,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3179,
+          "evidence": []
+        },
+        {
+          "term": "ont",
+          "score": 0.2716,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 48.566,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 39.6749,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 38.5437,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 34.4889,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 33.5691,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 30.0245,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 29.823,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 26.3555,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-003-abréviations": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "transmission mère-enfant",
+          "score": 1.2492,
+          "evidence": []
+        },
+        {
+          "term": "normalisé",
+          "score": 0.644,
+          "evidence": []
+        },
+        {
+          "term": "azidothymidine",
+          "score": 0.6396,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "transmission mère-enfant",
+          "score": 19.2985,
+          "evidence": []
+        },
+        {
+          "term": "azidothymidine",
+          "score": 8.2825,
+          "evidence": []
+        },
+        {
+          "term": "névirapine",
+          "score": 8.2825,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "vih",
+          "score": 0.1134,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.1026,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.0897,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 1.4038,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 1.0653,
+          "evidence": []
+        },
+        {
+          "term": "hiv",
+          "score": 0.8743,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vih",
+          "score": 0.1134,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.0897,
+          "evidence": []
+        },
+        {
+          "term": "chez",
+          "score": 0.0708,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 176.6214,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 151.9085,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 135.3065,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-005-211-le-statu-quo-concernant-linfection-à-vih-che": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "vih chez",
+          "score": 4.8023,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chez enfant",
+          "score": 3.931,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection vih",
+          "score": 3.2246,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nourrisson",
+          "score": 2.3856,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chez les",
+          "score": 2.2255,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 2.051,
+          "evidence": []
+        },
+        {
+          "term": "les nouvelles",
+          "score": 2.0172,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 1.9597,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "vih chez",
+          "score": 167.9147,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chez enfant",
+          "score": 109.5487,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "infection vih",
+          "score": 97.7262,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chez les",
+          "score": 87.3526,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 77.7725,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 70.8637,
+          "evidence": []
+        },
+        {
+          "term": "les nouvelles",
+          "score": 70.675,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 67.0317,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.8848,
+          "evidence": []
+        },
+        {
+          "term": "vih chez",
+          "score": 1.6946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les pays",
+          "score": 1.549,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.4084,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 1.3595,
+          "evidence": []
+        },
+        {
+          "term": "nombre des",
+          "score": 1.3115,
+          "evidence": []
+        },
+        {
+          "term": "infection vih",
+          "score": 1.172,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les nouvelles",
+          "score": 1.1564,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 60.1802,
+          "evidence": []
+        },
+        {
+          "term": "les pays",
+          "score": 50.2327,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 48.7552,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 45.9528,
+          "evidence": []
+        },
+        {
+          "term": "les nouvelles",
+          "score": 43.9587,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 33.7085,
+          "evidence": []
+        },
+        {
+          "term": "nombre des",
+          "score": 32.8744,
+          "evidence": []
+        },
+        {
+          "term": "seuls des",
+          "score": 30.189,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.8848,
+          "evidence": []
+        },
+        {
+          "term": "vih chez",
+          "score": 1.6946,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les pays",
+          "score": 1.549,
+          "evidence": []
+        },
+        {
+          "term": "les femmes",
+          "score": 1.4084,
+          "evidence": []
+        },
+        {
+          "term": "des enfants",
+          "score": 1.3595,
+          "evidence": []
+        },
+        {
+          "term": "nombre des",
+          "score": 1.3115,
+          "evidence": []
+        },
+        {
+          "term": "les nouvelles",
+          "score": 1.2184,
+          "evidence": []
+        },
+        {
+          "term": "infection vih",
+          "score": 1.172,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 64.7026,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 52.7763,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 50.983,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 45.9732,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 44.5894,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 43.7622,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 42.1202,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 39.4111,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-006-212-justification-de-cette-mise-à-jour-technique": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les nourrissons",
+          "score": 1.9353,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.7513,
+          "evidence": []
+        },
+        {
+          "term": "des approches",
+          "score": 1.6188,
+          "evidence": []
+        },
+        {
+          "term": "nourrissons haut",
+          "score": 1.6102,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.4738,
+          "evidence": []
+        },
+        {
+          "term": "plusieurs pays",
+          "score": 1.4322,
+          "evidence": []
+        },
+        {
+          "term": "pays ont",
+          "score": 1.4047,
+          "evidence": []
+        },
+        {
+          "term": "directrices unifiées",
+          "score": 1.3594,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "pour les",
+          "score": 54.0682,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 53.7323,
+          "evidence": []
+        },
+        {
+          "term": "des approches",
+          "score": 45.0198,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 40.9852,
+          "evidence": []
+        },
+        {
+          "term": "pays ont",
+          "score": 32.2189,
+          "evidence": []
+        },
+        {
+          "term": "plusieurs pays",
+          "score": 31.4516,
+          "evidence": []
+        },
+        {
+          "term": "nourrissons haut",
+          "score": 30.9848,
+          "evidence": []
+        },
+        {
+          "term": "tests chez",
+          "score": 30.459,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour les",
+          "score": 1.7058,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.5315,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.149,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.9854,
+          "evidence": []
+        },
+        {
+          "term": "des approches",
+          "score": 0.9854,
+          "evidence": []
+        },
+        {
+          "term": "pays ont",
+          "score": 0.672,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.6338,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5475,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "pour les",
+          "score": 51.4565,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 44.9419,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 38.3068,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 30.6348,
+          "evidence": []
+        },
+        {
+          "term": "des approches",
+          "score": 30.6348,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 12.6985,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 11.8105,
+          "evidence": []
+        },
+        {
+          "term": "pays ont",
+          "score": 9.9278,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour les",
+          "score": 1.7058,
+          "evidence": []
+        },
+        {
+          "term": "sur les",
+          "score": 1.5315,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.149,
+          "evidence": []
+        },
+        {
+          "term": "des approches",
+          "score": 1.035,
+          "evidence": []
+        },
+        {
+          "term": "pays ont",
+          "score": 0.672,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.6338,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.5475,
+          "evidence": []
+        },
+        {
+          "term": "cette",
+          "score": 0.4563,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 43.9149,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 35.9067,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 34.5911,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 31.1397,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 30.4846,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 30.3315,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 28.8972,
+          "evidence": []
+        },
+        {
+          "term": "人口约",
+          "score": 28.7141,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-008-31-diagnostic-chez-le-nourrisson": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "dpn",
+          "score": 1.0048,
+          "evidence": []
+        },
+        {
+          "term": "des tests",
+          "score": 0.9262,
+          "evidence": []
+        },
+        {
+          "term": "tout",
+          "score": 0.6787,
+          "evidence": []
+        },
+        {
+          "term": "exposition",
+          "score": 0.6776,
+          "evidence": []
+        },
+        {
+          "term": "chez",
+          "score": 0.6656,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "dpn",
+          "score": 19.0097,
+          "evidence": []
+        },
+        {
+          "term": "des tests",
+          "score": 14.6886,
+          "evidence": []
+        },
+        {
+          "term": "tout",
+          "score": 12.2558,
+          "evidence": []
+        },
+        {
+          "term": "exposition",
+          "score": 10.5735,
+          "evidence": []
+        },
+        {
+          "term": "constatée",
+          "score": 8.2825,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des tests",
+          "score": 0.3914,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.3637,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2428,
+          "evidence": []
+        },
+        {
+          "term": "chez",
+          "score": 0.2363,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dans",
+          "score": 0.2255,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des tests",
+          "score": 7.1591,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 7.1114,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 2.9104,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 2.565,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 2.4058,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des tests",
+          "score": 0.3914,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.3637,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2428,
+          "evidence": []
+        },
+        {
+          "term": "chez",
+          "score": 0.2363,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "que",
+          "score": 0.1779,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 39.4594,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 36.5837,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 35.2371,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 32.2584,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 28.1153,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-009-311-réduire-le-nombre-de-résultats-faux-positifs": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "fourchette indéterminée",
+          "score": 5.3634,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indéterminée pour",
+          "score": 4.1476,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une fourchette",
+          "score": 3.9365,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "faux positifs",
+          "score": 3.1787,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "introduisant",
+          "score": 1.2166,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dans les",
+          "score": 1.1917,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 1.1528,
+          "evidence": []
+        },
+        {
+          "term": "dpn",
+          "score": 1.0048,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "fourchette indéterminée",
+          "score": 116.4005,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "indéterminée pour",
+          "score": 91.0057,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une fourchette",
+          "score": 85.4686,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "faux positifs",
+          "score": 50.1585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dans les",
+          "score": 23.2677,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 19.7188,
+          "evidence": []
+        },
+        {
+          "term": "nourrisson",
+          "score": 16.4374,
+          "evidence": []
+        },
+        {
+          "term": "introduisant",
+          "score": 15.754,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.1787,
+          "evidence": []
+        },
+        {
+          "term": "indéterminée pour",
+          "score": 0.9338,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des cas",
+          "score": 0.8517,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.834,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une fourchette",
+          "score": 0.834,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sur",
+          "score": 0.3637,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.3527,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.3397,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 25.7052,
+          "evidence": []
+        },
+        {
+          "term": "des cas",
+          "score": 16.5693,
+          "evidence": []
+        },
+        {
+          "term": "indéterminée pour",
+          "score": 14.5047,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une",
+          "score": 13.7756,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une fourchette",
+          "score": 13.7756,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "par",
+          "score": 5.3117,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 4.7642,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 4.6918,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.1787,
+          "evidence": []
+        },
+        {
+          "term": "indéterminée pour",
+          "score": 0.9585,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "une fourchette",
+          "score": 0.8619,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des cas",
+          "score": 0.8517,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.3397,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.3331,
+          "evidence": []
+        },
+        {
+          "term": "qui",
+          "score": 0.2743,
+          "evidence": []
+        },
+        {
+          "term": "résultats",
+          "score": 0.2701,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 66.9369,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 55.2977,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 52.5319,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 46.9324,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 46.5088,
+          "evidence": []
+        },
+        {
+          "term": "人口约",
+          "score": 43.7776,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 40.3216,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 40.1142,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-010-312-tests-de-confirmation-de-résultats-positifs": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "résultats positifs",
+          "score": 3.7253,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dpn sur",
+          "score": 2.2111,
+          "evidence": []
+        },
+        {
+          "term": "non infectés",
+          "score": 2.1806,
+          "evidence": []
+        },
+        {
+          "term": "infectés diagnostiqués",
+          "score": 2.1662,
+          "evidence": []
+        },
+        {
+          "term": "lieu des",
+          "score": 2.0624,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.9593,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.8889,
+          "evidence": []
+        },
+        {
+          "term": "soins pour",
+          "score": 1.8436,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "résultats positifs",
+          "score": 80.3697,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dpn sur",
+          "score": 59.3533,
+          "evidence": []
+        },
+        {
+          "term": "lieu des",
+          "score": 57.6587,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 55.5479,
+          "evidence": []
+        },
+        {
+          "term": "résultat non",
+          "score": 53.6309,
+          "evidence": []
+        },
+        {
+          "term": "soins pour",
+          "score": 49.1949,
+          "evidence": []
+        },
+        {
+          "term": "non infectés",
+          "score": 49.0364,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 46.4236,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les résultats",
+          "score": 1.2255,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.2207,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.1692,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.1492,
+          "evidence": []
+        },
+        {
+          "term": "lieu des",
+          "score": 1.1243,
+          "evidence": []
+        },
+        {
+          "term": "des technologies",
+          "score": 1.0135,
+          "evidence": []
+        },
+        {
+          "term": "soins pour",
+          "score": 0.884,
+          "evidence": []
+        },
+        {
+          "term": "pour déterminer",
+          "score": 0.7672,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des soins",
+          "score": 39.3338,
+          "evidence": []
+        },
+        {
+          "term": "lieu des",
+          "score": 36.086,
+          "evidence": []
+        },
+        {
+          "term": "des technologies",
+          "score": 34.7862,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 34.0279,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 33.9238,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 33.0931,
+          "evidence": []
+        },
+        {
+          "term": "soins pour",
+          "score": 17.5358,
+          "evidence": []
+        },
+        {
+          "term": "pour déterminer",
+          "score": 12.9883,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les résultats",
+          "score": 1.2255,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.2207,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.1692,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.1492,
+          "evidence": []
+        },
+        {
+          "term": "lieu des",
+          "score": 1.1243,
+          "evidence": []
+        },
+        {
+          "term": "des technologies",
+          "score": 1.051,
+          "evidence": []
+        },
+        {
+          "term": "soins pour",
+          "score": 0.884,
+          "evidence": []
+        },
+        {
+          "term": "pour déterminer",
+          "score": 0.7672,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 38.8083,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 32.7135,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 29.8703,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 27.1653,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 27.0174,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 26.838,
+          "evidence": []
+        },
+        {
+          "term": "人口约",
+          "score": 26.69,
+          "evidence": []
+        },
+        {
+          "term": "在该案例中可以做些什么来防止或减轻潜在的发表偏倚",
+          "score": 26.5531,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-011-312-gérer-les-résultats-discordants-et-les-inter": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "résultats discordants",
+          "score": 4.7122,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les résultats",
+          "score": 4.3302,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "suivi intensif",
+          "score": 2.7051,
+          "evidence": []
+        },
+        {
+          "term": "traitement",
+          "score": 2.5985,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les nourrissons",
+          "score": 2.5233,
+          "evidence": []
+        },
+        {
+          "term": "des nourrissons",
+          "score": 2.4883,
+          "evidence": []
+        },
+        {
+          "term": "les mois",
+          "score": 2.3389,
+          "evidence": []
+        },
+        {
+          "term": "mois après",
+          "score": 2.3039,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les résultats",
+          "score": 167.607,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "résultats discordants",
+          "score": 111.7071,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les nourrissons",
+          "score": 100.1559,
+          "evidence": []
+        },
+        {
+          "term": "traitement",
+          "score": 95.2873,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les mois",
+          "score": 89.5462,
+          "evidence": []
+        },
+        {
+          "term": "des nourrissons",
+          "score": 88.2226,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 79.5275,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 76.5475,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les résultats",
+          "score": 3.0253,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 2.0629,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 2.0339,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.7319,
+          "evidence": []
+        },
+        {
+          "term": "les mois",
+          "score": 1.4821,
+          "evidence": []
+        },
+        {
+          "term": "des résultats",
+          "score": 1.4806,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.4519,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.4439,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les résultats",
+          "score": 113.4982,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 76.1294,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 71.9955,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 59.7083,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 57.6041,
+          "evidence": []
+        },
+        {
+          "term": "les mois",
+          "score": 57.1044,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 56.2581,
+          "evidence": []
+        },
+        {
+          "term": "les tests",
+          "score": 55.8948,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les résultats",
+          "score": 3.0253,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 2.0629,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 2.0339,
+          "evidence": []
+        },
+        {
+          "term": "chez les",
+          "score": 1.7319,
+          "evidence": []
+        },
+        {
+          "term": "les mois",
+          "score": 1.4821,
+          "evidence": []
+        },
+        {
+          "term": "des résultats",
+          "score": 1.4806,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.4519,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.4439,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 71.2382,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 61.9836,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 49.8206,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 49.7429,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 48.4971,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 46.1452,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 43.396,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 42.4331,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-012-313-mise-en-œuvre-du-dpn-sur-le-lieu-des-soins": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "lieu des",
+          "score": 4.2196,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des soins",
+          "score": 4.174,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dpn sur",
+          "score": 4.0051,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "utilisation des",
+          "score": 1.8728,
+          "evidence": []
+        },
+        {
+          "term": "les délais",
+          "score": 1.7677,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 1.7513,
+          "evidence": []
+        },
+        {
+          "term": "mise",
+          "score": 1.7408,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 1.5164,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des soins",
+          "score": 129.2285,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lieu des",
+          "score": 125.5334,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "dpn sur",
+          "score": 94.9652,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "utilisation des",
+          "score": 56.1304,
+          "evidence": []
+        },
+        {
+          "term": "pour les",
+          "score": 54.0682,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 49.0122,
+          "evidence": []
+        },
+        {
+          "term": "les délais",
+          "score": 44.6439,
+          "evidence": []
+        },
+        {
+          "term": "mise",
+          "score": 41.4021,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des soins",
+          "score": 2.2223,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lieu des",
+          "score": 1.8534,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 1.4993,
+          "evidence": []
+        },
+        {
+          "term": "utilisation des",
+          "score": 1.0287,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.0262,
+          "evidence": []
+        },
+        {
+          "term": "dpn sur",
+          "score": 0.9269,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les délais",
+          "score": 0.8953,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5318,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des soins",
+          "score": 87.2513,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lieu des",
+          "score": 78.3855,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 49.9528,
+          "evidence": []
+        },
+        {
+          "term": "utilisation des",
+          "score": 42.0759,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 40.83,
+          "evidence": []
+        },
+        {
+          "term": "les délais",
+          "score": 35.3525,
+          "evidence": []
+        },
+        {
+          "term": "dpn sur",
+          "score": 17.6151,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "santé",
+          "score": 15.2434,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des soins",
+          "score": 2.2223,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lieu des",
+          "score": 1.8534,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour les",
+          "score": 1.4993,
+          "evidence": []
+        },
+        {
+          "term": "utilisation des",
+          "score": 1.0287,
+          "evidence": []
+        },
+        {
+          "term": "des services",
+          "score": 1.0262,
+          "evidence": []
+        },
+        {
+          "term": "dpn sur",
+          "score": 1.0022,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les délais",
+          "score": 0.9134,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.5318,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 22.9407,
+          "evidence": []
+        },
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 19.8292,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 19.5719,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 16.9521,
+          "evidence": []
+        },
+        {
+          "term": "监测和",
+          "score": 16.7407,
+          "evidence": []
+        },
+        {
+          "term": "在一些国家",
+          "score": 16.7014,
+          "evidence": []
+        },
+        {
+          "term": "青少年",
+          "score": 16.7014,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 16.5783,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-013-314-introduction-du-taan-à-la-naissance-pour-fac": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "naissance",
+          "score": 3.9039,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mise sous",
+          "score": 3.6944,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "sous traitement",
+          "score": 3.2838,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "taan",
+          "score": 2.8866,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "naissance est",
+          "score": 2.6847,
+          "evidence": []
+        },
+        {
+          "term": "des nourrissons",
+          "score": 2.5122,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 2.4461,
+          "evidence": []
+        },
+        {
+          "term": "des visites",
+          "score": 2.218,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "naissance",
+          "score": 216.1735,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "naissance est",
+          "score": 126.0068,
+          "evidence": []
+        },
+        {
+          "term": "des nourrissons",
+          "score": 100.6846,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 99.6885,
+          "evidence": []
+        },
+        {
+          "term": "mise sous",
+          "score": 92.0071,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "par des",
+          "score": 89.2947,
+          "evidence": []
+        },
+        {
+          "term": "des visites",
+          "score": 82.6529,
+          "evidence": []
+        },
+        {
+          "term": "lieu des",
+          "score": 76.9917,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "par des",
+          "score": 2.1088,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.065,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 1.8968,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des soins",
+          "score": 1.7543,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 1.6038,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.602,
+          "evidence": []
+        },
+        {
+          "term": "des systèmes",
+          "score": 1.5701,
+          "evidence": []
+        },
+        {
+          "term": "les tests",
+          "score": 1.5555,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "que les",
+          "score": 82.469,
+          "evidence": []
+        },
+        {
+          "term": "par des",
+          "score": 77.5228,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 71.2552,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 70.8971,
+          "evidence": []
+        },
+        {
+          "term": "les gains",
+          "score": 69.3524,
+          "evidence": []
+        },
+        {
+          "term": "les tests",
+          "score": 69.3524,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 66.0706,
+          "evidence": []
+        },
+        {
+          "term": "des systèmes",
+          "score": 63.342,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "par des",
+          "score": 2.1088,
+          "evidence": []
+        },
+        {
+          "term": "que les",
+          "score": 2.065,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 1.8968,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des soins",
+          "score": 1.7543,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 1.6038,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.602,
+          "evidence": []
+        },
+        {
+          "term": "des systèmes",
+          "score": 1.5701,
+          "evidence": []
+        },
+        {
+          "term": "les tests",
+          "score": 1.5555,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 34.0992,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 33.3903,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 25.2086,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 23.1499,
+          "evidence": []
+        },
+        {
+          "term": "还不清楚",
+          "score": 20.7628,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 20.603,
+          "evidence": []
+        },
+        {
+          "term": "taan",
+          "score": 20.5479,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "这两种hpv",
+          "score": 20.065,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-014-kenya": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les mères",
+          "score": 1.6342,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 1.5266,
+          "evidence": []
+        },
+        {
+          "term": "naissance",
+          "score": 0.8754,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.8436,
+          "evidence": []
+        },
+        {
+          "term": "été",
+          "score": 0.6847,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.6789,
+          "evidence": []
+        },
+        {
+          "term": "dépistage",
+          "score": 0.6569,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les mères",
+          "score": 37.6768,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 36.7689,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 24.0571,
+          "evidence": []
+        },
+        {
+          "term": "naissance",
+          "score": 15.441,
+          "evidence": []
+        },
+        {
+          "term": "été",
+          "score": 13.7532,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 12.77,
+          "evidence": []
+        },
+        {
+          "term": "projet",
+          "score": 10.0876,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les résultats",
+          "score": 0.6221,
+          "evidence": []
+        },
+        {
+          "term": "les mères",
+          "score": 0.5177,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5047,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3533,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3086,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2871,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2614,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les résultats",
+          "score": 21.9007,
+          "evidence": []
+        },
+        {
+          "term": "les mères",
+          "score": 20.8833,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 14.7927,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 8.1239,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 5.6264,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 4.987,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 4.3849,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les résultats",
+          "score": 0.6221,
+          "evidence": []
+        },
+        {
+          "term": "les mères",
+          "score": 0.5358,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.5047,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3533,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.3086,
+          "evidence": []
+        },
+        {
+          "term": "ont",
+          "score": 0.183,
+          "evidence": []
+        },
+        {
+          "term": "été",
+          "score": 0.1526,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 25.1367,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 17.9071,
+          "evidence": []
+        },
+        {
+          "term": "最小化",
+          "score": 15.93,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 15.8914,
+          "evidence": []
+        },
+        {
+          "term": "干预的目的",
+          "score": 15.6296,
+          "evidence": []
+        },
+        {
+          "term": "知情同意的作用",
+          "score": 15.6296,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 15.5915,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-015-zimbabwe": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des nourrissons",
+          "score": 1.8383,
+          "evidence": []
+        },
+        {
+          "term": "nourrissons haut",
+          "score": 1.7222,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.5981,
+          "evidence": []
+        },
+        {
+          "term": "haut risque",
+          "score": 1.1476,
+          "evidence": []
+        },
+        {
+          "term": "ont été",
+          "score": 0.8961,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des nourrissons",
+          "score": 41.6343,
+          "evidence": []
+        },
+        {
+          "term": "nourrissons haut",
+          "score": 36.2469,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 33.8528,
+          "evidence": []
+        },
+        {
+          "term": "haut risque",
+          "score": 18.0479,
+          "evidence": []
+        },
+        {
+          "term": "naissance",
+          "score": 15.441,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les nourrissons",
+          "score": 0.4982,
+          "evidence": []
+        },
+        {
+          "term": "des nourrissons",
+          "score": 0.4888,
+          "evidence": []
+        },
+        {
+          "term": "ont été",
+          "score": 0.3092,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2975,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2709,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des nourrissons",
+          "score": 13.711,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 10.0597,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 4.2308,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 3.8536,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 3.4834,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les nourrissons",
+          "score": 0.4982,
+          "evidence": []
+        },
+        {
+          "term": "des nourrissons",
+          "score": 0.4888,
+          "evidence": []
+        },
+        {
+          "term": "ont été",
+          "score": 0.3092,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2975,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2709,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 43.078,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 41.4868,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 34.3125,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 34.207,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 30.6962,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-016-république-démocratique-du-congo": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des échantillons",
+          "score": 1.7977,
+          "evidence": []
+        },
+        {
+          "term": "les difficultés",
+          "score": 1.3666,
+          "evidence": []
+        },
+        {
+          "term": "des résultats",
+          "score": 1.2656,
+          "evidence": []
+        },
+        {
+          "term": "naissance",
+          "score": 1.0163,
+          "evidence": []
+        },
+        {
+          "term": "concerné",
+          "score": 0.8227,
+          "evidence": []
+        },
+        {
+          "term": "semaines",
+          "score": 0.6732,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des échantillons",
+          "score": 36.5723,
+          "evidence": []
+        },
+        {
+          "term": "les difficultés",
+          "score": 24.166,
+          "evidence": []
+        },
+        {
+          "term": "des résultats",
+          "score": 23.0756,
+          "evidence": []
+        },
+        {
+          "term": "naissance",
+          "score": 20.588,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 13.3651,
+          "evidence": []
+        },
+        {
+          "term": "concerné",
+          "score": 13.3461,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des résultats",
+          "score": 0.522,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 0.4847,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.4302,
+          "evidence": []
+        },
+        {
+          "term": "les difficultés",
+          "score": 0.4302,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3034,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2687,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des résultats",
+          "score": 15.1283,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 14.8853,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 12.832,
+          "evidence": []
+        },
+        {
+          "term": "les difficultés",
+          "score": 12.832,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 5.3509,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 3.9695,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des résultats",
+          "score": 0.522,
+          "evidence": []
+        },
+        {
+          "term": "des échantillons",
+          "score": 0.4847,
+          "evidence": []
+        },
+        {
+          "term": "les difficultés",
+          "score": 0.4422,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.3034,
+          "evidence": []
+        },
+        {
+          "term": "aux",
+          "score": 0.1979,
+          "evidence": []
+        },
+        {
+          "term": "été",
+          "score": 0.1361,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 37.8871,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 35.1608,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 30.7303,
+          "evidence": []
+        },
+        {
+          "term": "相一致",
+          "score": 24.4844,
+          "evidence": []
+        },
+        {
+          "term": "这意味着",
+          "score": 23.8885,
+          "evidence": []
+        },
+        {
+          "term": "这两种hpv",
+          "score": 23.62,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-017-eswatini": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des nouveau-nés",
+          "score": 2.0924,
+          "evidence": []
+        },
+        {
+          "term": "révélés infectés",
+          "score": 1.9877,
+          "evidence": []
+        },
+        {
+          "term": "projet pilote",
+          "score": 1.9242,
+          "evidence": []
+        },
+        {
+          "term": "les nouveau-nés",
+          "score": 1.8965,
+          "evidence": []
+        },
+        {
+          "term": "nouveau-nés exposés",
+          "score": 1.8655,
+          "evidence": []
+        },
+        {
+          "term": "été testés",
+          "score": 1.8088,
+          "evidence": []
+        },
+        {
+          "term": "lieu des",
+          "score": 1.7433,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 1.6635,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des nouveau-nés",
+          "score": 53.1644,
+          "evidence": []
+        },
+        {
+          "term": "les nouveau-nés",
+          "score": 42.6695,
+          "evidence": []
+        },
+        {
+          "term": "lieu des",
+          "score": 41.2356,
+          "evidence": []
+        },
+        {
+          "term": "des soins",
+          "score": 39.9691,
+          "evidence": []
+        },
+        {
+          "term": "projet pilote",
+          "score": 39.1849,
+          "evidence": []
+        },
+        {
+          "term": "révélés infectés",
+          "score": 38.362,
+          "evidence": []
+        },
+        {
+          "term": "nouveau-nés exposés",
+          "score": 36.3572,
+          "evidence": []
+        },
+        {
+          "term": "été testés",
+          "score": 35.3048,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des soins",
+          "score": 0.9489,
+          "evidence": []
+        },
+        {
+          "term": "lieu des",
+          "score": 0.8169,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.7726,
+          "evidence": []
+        },
+        {
+          "term": "les nouveau-nés",
+          "score": 0.7726,
+          "evidence": []
+        },
+        {
+          "term": "vih ont",
+          "score": 0.5449,
+          "evidence": []
+        },
+        {
+          "term": "ont été",
+          "score": 0.532,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5116,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4754,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des soins",
+          "score": 27.7998,
+          "evidence": []
+        },
+        {
+          "term": "lieu des",
+          "score": 25.1548,
+          "evidence": []
+        },
+        {
+          "term": "des nouveau-nés",
+          "score": 24.6185,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 23.8166,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 9.1135,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 8.8013,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 7.914,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 6.7071,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des soins",
+          "score": 0.9489,
+          "evidence": []
+        },
+        {
+          "term": "lieu des",
+          "score": 0.8169,
+          "evidence": []
+        },
+        {
+          "term": "les nouveau-nés",
+          "score": 0.7982,
+          "evidence": []
+        },
+        {
+          "term": "vih ont",
+          "score": 0.5449,
+          "evidence": []
+        },
+        {
+          "term": "ont été",
+          "score": 0.532,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.5116,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.4754,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.4183,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 28.6096,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 27.6842,
+          "evidence": []
+        },
+        {
+          "term": "增强和迭代",
+          "score": 24.8177,
+          "evidence": []
+        },
+        {
+          "term": "行动框架",
+          "score": 24.8177,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 24.6417,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 23.1425,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 21.8838,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 21.8506,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-018-315-assurer-une-interprétation-correcte-du-test": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "simplifier algorithme",
+          "score": 3.7332,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "tdr mois",
+          "score": 3.3294,
+          "evidence": []
+        },
+        {
+          "term": "nourrisson exposé",
+          "score": 3.2882,
+          "evidence": []
+        },
+        {
+          "term": "tdr chez",
+          "score": 3.1826,
+          "evidence": []
+        },
+        {
+          "term": "taan positif",
+          "score": 3.1149,
+          "evidence": []
+        },
+        {
+          "term": "les tdr",
+          "score": 2.8675,
+          "evidence": []
+        },
+        {
+          "term": "vih chez",
+          "score": 2.6586,
+          "evidence": []
+        },
+        {
+          "term": "tdr pour",
+          "score": 2.5644,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "tdr mois",
+          "score": 138.2335,
+          "evidence": []
+        },
+        {
+          "term": "tdr chez",
+          "score": 137.8919,
+          "evidence": []
+        },
+        {
+          "term": "nourrisson exposé",
+          "score": 121.558,
+          "evidence": []
+        },
+        {
+          "term": "les tdr",
+          "score": 118.7433,
+          "evidence": []
+        },
+        {
+          "term": "vih chez",
+          "score": 111.8171,
+          "evidence": []
+        },
+        {
+          "term": "taan positif",
+          "score": 103.6372,
+          "evidence": []
+        },
+        {
+          "term": "tdr pour",
+          "score": 94.5547,
+          "evidence": []
+        },
+        {
+          "term": "tdr sont",
+          "score": 87.8527,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 2.2268,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 1.6521,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.5899,
+          "evidence": []
+        },
+        {
+          "term": "des résultats",
+          "score": 1.5873,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.5707,
+          "evidence": []
+        },
+        {
+          "term": "les lignes",
+          "score": 1.4824,
+          "evidence": []
+        },
+        {
+          "term": "des tests",
+          "score": 1.4648,
+          "evidence": []
+        },
+        {
+          "term": "les tdr",
+          "score": 1.3568,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 72.9955,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 57.3888,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 55.9924,
+          "evidence": []
+        },
+        {
+          "term": "les lignes",
+          "score": 53.8835,
+          "evidence": []
+        },
+        {
+          "term": "les tdr",
+          "score": 53.8835,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 41.2579,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des résultats",
+          "score": 37.3684,
+          "evidence": []
+        },
+        {
+          "term": "des tests",
+          "score": 35.6658,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 2.2268,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 1.6521,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.5899,
+          "evidence": []
+        },
+        {
+          "term": "des résultats",
+          "score": 1.5873,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.5707,
+          "evidence": []
+        },
+        {
+          "term": "les lignes",
+          "score": 1.4824,
+          "evidence": []
+        },
+        {
+          "term": "des tests",
+          "score": 1.4648,
+          "evidence": []
+        },
+        {
+          "term": "les tdr",
+          "score": 1.4163,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 64.3922,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 62.3517,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 51.345,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 51.0931,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 46.4388,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 45.5248,
+          "evidence": []
+        },
+        {
+          "term": "由于这个理由",
+          "score": 41.8957,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 41.5648,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-020-321-defis-de-mise-en-œuvre-dune-ppna-chez-le-nou": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "haut risque",
+          "score": 4.2327,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nourrisson",
+          "score": 3.8483,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ppna",
+          "score": 3.5419,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prophylaxie chez",
+          "score": 3.3984,
+          "evidence": []
+        },
+        {
+          "term": "une prophylaxie",
+          "score": 3.1711,
+          "evidence": []
+        },
+        {
+          "term": "virale chez",
+          "score": 3.0011,
+          "evidence": []
+        },
+        {
+          "term": "ppna est",
+          "score": 2.7907,
+          "evidence": []
+        },
+        {
+          "term": "semaines chez",
+          "score": 2.7067,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nourrisson",
+          "score": 186.2902,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "prophylaxie chez",
+          "score": 150.1762,
+          "evidence": []
+        },
+        {
+          "term": "une prophylaxie",
+          "score": 148.4374,
+          "evidence": []
+        },
+        {
+          "term": "haut risque",
+          "score": 122.6847,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "virale chez",
+          "score": 121.3094,
+          "evidence": []
+        },
+        {
+          "term": "ppna",
+          "score": 110.339,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "semaines chez",
+          "score": 104.6853,
+          "evidence": []
+        },
+        {
+          "term": "virale est",
+          "score": 99.7891,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 2.7974,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 2.1346,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 2.0819,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pendant les",
+          "score": 2.0154,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 2.0153,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.9622,
+          "evidence": []
+        },
+        {
+          "term": "sur une",
+          "score": 1.8776,
+          "evidence": []
+        },
+        {
+          "term": "les lignes",
+          "score": 1.8329,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 98.7882,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 77.8796,
+          "evidence": []
+        },
+        {
+          "term": "pendant les",
+          "score": 77.1818,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 77.046,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 75.9049,
+          "evidence": []
+        },
+        {
+          "term": "les lignes",
+          "score": 72.7129,
+          "evidence": []
+        },
+        {
+          "term": "les six",
+          "score": 72.7129,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 62.0912,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 2.7974,
+          "evidence": []
+        },
+        {
+          "term": "les données",
+          "score": 2.1346,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 2.0819,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pendant les",
+          "score": 2.0154,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 2.0153,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 1.9622,
+          "evidence": []
+        },
+        {
+          "term": "sur une",
+          "score": 1.8776,
+          "evidence": []
+        },
+        {
+          "term": "les lignes",
+          "score": 1.8329,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 67.0256,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 53.7922,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 53.0895,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 51.1722,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 47.6663,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 46.5419,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 41.1764,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 40.2987,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-021-322-traitement-précoce-du-nourrisson-options-lim": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "adf pédiatrique",
+          "score": 2.8069,
+          "evidence": []
+        },
+        {
+          "term": "une adf",
+          "score": 2.6653,
+          "evidence": []
+        },
+        {
+          "term": "nourrisson",
+          "score": 2.3856,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "azt est",
+          "score": 2.2302,
+          "evidence": []
+        },
+        {
+          "term": "formes galéniques",
+          "score": 2.1783,
+          "evidence": []
+        },
+        {
+          "term": "les comprimés",
+          "score": 2.0165,
+          "evidence": []
+        },
+        {
+          "term": "galéniques pour",
+          "score": 1.982,
+          "evidence": []
+        },
+        {
+          "term": "traitement",
+          "score": 1.8736,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "une adf",
+          "score": 77.5372,
+          "evidence": []
+        },
+        {
+          "term": "adf pédiatrique",
+          "score": 70.3178,
+          "evidence": []
+        },
+        {
+          "term": "azt est",
+          "score": 66.3899,
+          "evidence": []
+        },
+        {
+          "term": "les comprimés",
+          "score": 62.9477,
+          "evidence": []
+        },
+        {
+          "term": "dans les",
+          "score": 61.407,
+          "evidence": []
+        },
+        {
+          "term": "nourrisson",
+          "score": 54.7912,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nvp",
+          "score": 48.2824,
+          "evidence": []
+        },
+        {
+          "term": "galéniques pour",
+          "score": 47.8193,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "dans les",
+          "score": 1.934,
+          "evidence": []
+        },
+        {
+          "term": "cours des",
+          "score": 1.3038,
+          "evidence": []
+        },
+        {
+          "term": "les comprimés",
+          "score": 1.1831,
+          "evidence": []
+        },
+        {
+          "term": "une forme",
+          "score": 0.7814,
+          "evidence": []
+        },
+        {
+          "term": "galéniques pour",
+          "score": 0.7792,
+          "evidence": []
+        },
+        {
+          "term": "elle est",
+          "score": 0.7464,
+          "evidence": []
+        },
+        {
+          "term": "azt est",
+          "score": 0.7317,
+          "evidence": []
+        },
+        {
+          "term": "une adf",
+          "score": 0.6997,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "dans les",
+          "score": 65.1608,
+          "evidence": []
+        },
+        {
+          "term": "les comprimés",
+          "score": 49.3795,
+          "evidence": []
+        },
+        {
+          "term": "cours des",
+          "score": 32.4918,
+          "evidence": []
+        },
+        {
+          "term": "galéniques pour",
+          "score": 18.0886,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 17.2573,
+          "evidence": []
+        },
+        {
+          "term": "une adf",
+          "score": 17.2573,
+          "evidence": []
+        },
+        {
+          "term": "une forme",
+          "score": 17.2573,
+          "evidence": []
+        },
+        {
+          "term": "elle est",
+          "score": 14.0829,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "dans les",
+          "score": 1.934,
+          "evidence": []
+        },
+        {
+          "term": "cours des",
+          "score": 1.3038,
+          "evidence": []
+        },
+        {
+          "term": "les comprimés",
+          "score": 1.2148,
+          "evidence": []
+        },
+        {
+          "term": "galéniques pour",
+          "score": 0.808,
+          "evidence": []
+        },
+        {
+          "term": "une forme",
+          "score": 0.7814,
+          "evidence": []
+        },
+        {
+          "term": "elle est",
+          "score": 0.7464,
+          "evidence": []
+        },
+        {
+          "term": "azt est",
+          "score": 0.7317,
+          "evidence": []
+        },
+        {
+          "term": "une adf",
+          "score": 0.7315,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 64.2053,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 53.0775,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 49.9454,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 49.869,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 44.954,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 43.313,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 42.6958,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 40.5622,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-022-33-améliorer-la-prestation-des-services-et-mettr": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des soins",
+          "score": 4.7745,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 3.8051,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "couple mère-enfant",
+          "score": 2.4185,
+          "evidence": []
+        },
+        {
+          "term": "soins aux",
+          "score": 1.9238,
+          "evidence": []
+        },
+        {
+          "term": "vih pour",
+          "score": 1.9102,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 1.8828,
+          "evidence": []
+        },
+        {
+          "term": "utilisation des",
+          "score": 1.8765,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 1.8015,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des soins",
+          "score": 183.6267,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 167.7834,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les services",
+          "score": 90.5576,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 75.2907,
+          "evidence": []
+        },
+        {
+          "term": "les problèmes",
+          "score": 72.1703,
+          "evidence": []
+        },
+        {
+          "term": "notamment les",
+          "score": 70.98,
+          "evidence": []
+        },
+        {
+          "term": "utilisation des",
+          "score": 67.6379,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 66.9818,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "des soins",
+          "score": 3.1105,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 2.8215,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "avec les",
+          "score": 1.44,
+          "evidence": []
+        },
+        {
+          "term": "utilisation des",
+          "score": 1.3592,
+          "evidence": []
+        },
+        {
+          "term": "notamment les",
+          "score": 1.2743,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.243,
+          "evidence": []
+        },
+        {
+          "term": "les problèmes",
+          "score": 1.2011,
+          "evidence": []
+        },
+        {
+          "term": "des couples",
+          "score": 1.0973,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des soins",
+          "score": 132.2168,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 124.6569,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "utilisation des",
+          "score": 62.1745,
+          "evidence": []
+        },
+        {
+          "term": "les services",
+          "score": 61.6751,
+          "evidence": []
+        },
+        {
+          "term": "avec les",
+          "score": 60.5622,
+          "evidence": []
+        },
+        {
+          "term": "notamment les",
+          "score": 57.697,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 56.8175,
+          "evidence": []
+        },
+        {
+          "term": "des couples",
+          "score": 56.0454,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des soins",
+          "score": 3.1105,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des services",
+          "score": 2.8215,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "avec les",
+          "score": 1.44,
+          "evidence": []
+        },
+        {
+          "term": "utilisation des",
+          "score": 1.3592,
+          "evidence": []
+        },
+        {
+          "term": "notamment les",
+          "score": 1.2743,
+          "evidence": []
+        },
+        {
+          "term": "les programmes",
+          "score": 1.243,
+          "evidence": []
+        },
+        {
+          "term": "les problèmes",
+          "score": 1.2011,
+          "evidence": []
+        },
+        {
+          "term": "des couples",
+          "score": 1.1297,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 32.8812,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 27.9301,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 27.9196,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 27.9196,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 27.9196,
+          "evidence": []
+        },
+        {
+          "term": "进行研究",
+          "score": 22.3251,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 21.8521,
+          "evidence": []
+        },
+        {
+          "term": "公共卫生专家",
+          "score": 21.6662,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-023-diagnostic-chez-le-nourrisson": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nourrisson",
+          "score": 1.8457,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "chez",
+          "score": 1.7205,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "valeur ajoutée",
+          "score": 1.4487,
+          "evidence": []
+        },
+        {
+          "term": "évaluer impact",
+          "score": 1.3962,
+          "evidence": []
+        },
+        {
+          "term": "dépistage",
+          "score": 0.9623,
+          "evidence": []
+        },
+        {
+          "term": "naissance",
+          "score": 0.8754,
+          "evidence": []
+        },
+        {
+          "term": "dpn",
+          "score": 0.7963,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "chez",
+          "score": 39.5835,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "nourrisson",
+          "score": 32.8747,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "évaluer impact",
+          "score": 31.8475,
+          "evidence": []
+        },
+        {
+          "term": "valeur ajoutée",
+          "score": 23.3643,
+          "evidence": []
+        },
+        {
+          "term": "dépistage",
+          "score": 20.0214,
+          "evidence": []
+        },
+        {
+          "term": "naissance",
+          "score": 15.441,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 13.3651,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.4745,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4588,
+          "evidence": []
+        },
+        {
+          "term": "chez",
+          "score": 0.3243,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.3142,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2902,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2618,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.232,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 13.5111,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 9.5839,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 5.6502,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 4.0136,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 3.8916,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 3.2614,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 2.4793,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.4745,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4588,
+          "evidence": []
+        },
+        {
+          "term": "chez",
+          "score": 0.3243,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.3142,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2618,
+          "evidence": []
+        },
+        {
+          "term": "nourrisson",
+          "score": 0.1314,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "diagnostic",
+          "score": 0.0823,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 40.3087,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 35.6756,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 33.8782,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 27.2041,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 26.5148,
+          "evidence": []
+        },
+        {
+          "term": "还不清楚",
+          "score": 25.2506,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 24.5819,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-024-prophylaxie-et-traitement-du-nourrisson": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "nourrisson",
+          "score": 1.8457,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ppna",
+          "score": 1.1174,
+          "evidence": []
+        },
+        {
+          "term": "prophylaxie",
+          "score": 1.0433,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "maternels",
+          "score": 0.8735,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.8325,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "nourrisson",
+          "score": 32.8747,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "ppna",
+          "score": 20.6886,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 20.4321,
+          "evidence": []
+        },
+        {
+          "term": "maternels",
+          "score": 13.7924,
+          "evidence": []
+        },
+        {
+          "term": "déterminer",
+          "score": 13.297,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.4015,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.3852,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2644,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2454,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2191,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 13.6328,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 11.4988,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 4.6936,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 3.989,
+          "evidence": []
+        },
+        {
+          "term": "données",
+          "score": 3.7845,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.4015,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.3852,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2644,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2454,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2191,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "感染者",
+          "score": 54.6468,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 49.6684,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 49.5627,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 40.6752,
+          "evidence": []
+        },
+        {
+          "term": "关注这一事实",
+          "score": 40.0167,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-025-prestation-de-services-et-module-de-soins-postna": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "prestation",
+          "score": 0.7649,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "module",
+          "score": 0.6266,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "associer",
+          "score": 0.5221,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "prestation",
+          "score": 9.1378,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "module",
+          "score": 7.1102,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "associer",
+          "score": 6.2676,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.0826,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.0813,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.0597,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 1.4623,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 1.086,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.8875,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour",
+          "score": 0.0597,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.0536,
+          "evidence": []
+        },
+        {
+          "term": "soins",
+          "score": 0.0499,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "学员a",
+          "score": 25.923,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 25.919,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 24.6205,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-026-4-récapitulatif-et-mesures-à-prendre": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "des",
+          "score": 0.7879,
+          "evidence": []
+        },
+        {
+          "term": "traitement",
+          "score": 0.7248,
+          "evidence": []
+        },
+        {
+          "term": "probantes",
+          "score": 0.6646,
+          "evidence": []
+        },
+        {
+          "term": "interdépendance",
+          "score": 0.6083,
+          "evidence": []
+        },
+        {
+          "term": "ajoute",
+          "score": 0.5861,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "des",
+          "score": 17.8781,
+          "evidence": []
+        },
+        {
+          "term": "traitement",
+          "score": 12.9937,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 10.0566,
+          "evidence": []
+        },
+        {
+          "term": "probantes",
+          "score": 10.0488,
+          "evidence": []
+        },
+        {
+          "term": "interdépendance",
+          "score": 7.877,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.3853,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.3693,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2654,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.2455,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2299,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 12.0365,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 11.3789,
+          "evidence": []
+        },
+        {
+          "term": "données",
+          "score": 4.3736,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 4.132,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 3.5657,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.3853,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.3693,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.2654,
+          "evidence": []
+        },
+        {
+          "term": "sur",
+          "score": 0.1887,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.1626,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "严重急性呼吸综合征",
+          "score": 28.2788,
+          "evidence": []
+        },
+        {
+          "term": "个学习目标",
+          "score": 25.3381,
+          "evidence": []
+        },
+        {
+          "term": "个核心能力和",
+          "score": 25.3381,
+          "evidence": []
+        },
+        {
+          "term": "如在公共利益与个体自主权之间",
+          "score": 25.3381,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 24.6524,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-028-participants-à-la-réunion": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "chan school",
+          "score": 1.413,
+          "evidence": []
+        },
+        {
+          "term": "laura",
+          "score": 1.0428,
+          "evidence": []
+        },
+        {
+          "term": "ministère",
+          "score": 1.0302,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 0.8746,
+          "evidence": []
+        },
+        {
+          "term": "harvard",
+          "score": 0.8314,
+          "evidence": []
+        },
+        {
+          "term": "stellenbosch",
+          "score": 0.8289,
+          "evidence": []
+        },
+        {
+          "term": "chai",
+          "score": 0.8241,
+          "evidence": []
+        },
+        {
+          "term": "université",
+          "score": 0.8199,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "chan school",
+          "score": 25.8675,
+          "evidence": []
+        },
+        {
+          "term": "laura",
+          "score": 22.5737,
+          "evidence": []
+        },
+        {
+          "term": "ministère",
+          "score": 21.9165,
+          "evidence": []
+        },
+        {
+          "term": "university",
+          "score": 20.175,
+          "evidence": []
+        },
+        {
+          "term": "harvard",
+          "score": 15.8603,
+          "evidence": []
+        },
+        {
+          "term": "chai",
+          "score": 13.3461,
+          "evidence": []
+        },
+        {
+          "term": "cdc",
+          "score": 13.2028,
+          "evidence": []
+        },
+        {
+          "term": "université",
+          "score": 12.6731,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "university",
+          "score": 0.2915,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 0.1967,
+          "evidence": []
+        },
+        {
+          "term": "institute",
+          "score": 0.1867,
+          "evidence": []
+        },
+        {
+          "term": "kingdom",
+          "score": 0.179,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 0.1745,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 0.1707,
+          "evidence": []
+        },
+        {
+          "term": "chan school",
+          "score": 0.1637,
+          "evidence": []
+        },
+        {
+          "term": "research",
+          "score": 0.1623,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "university",
+          "score": 8.2966,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 7.0842,
+          "evidence": []
+        },
+        {
+          "term": "united",
+          "score": 5.7966,
+          "evidence": []
+        },
+        {
+          "term": "usa",
+          "score": 5.1624,
+          "evidence": []
+        },
+        {
+          "term": "kingdom",
+          "score": 3.7173,
+          "evidence": []
+        },
+        {
+          "term": "numérique",
+          "score": 3.7087,
+          "evidence": []
+        },
+        {
+          "term": "switzerland",
+          "score": 3.1898,
+          "evidence": []
+        },
+        {
+          "term": "department",
+          "score": 2.8403,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "university",
+          "score": 0.2915,
+          "evidence": []
+        },
+        {
+          "term": "chan school",
+          "score": 0.1922,
+          "evidence": []
+        },
+        {
+          "term": "london",
+          "score": 0.1596,
+          "evidence": []
+        },
+        {
+          "term": "kenya",
+          "score": 0.1051,
+          "evidence": []
+        },
+        {
+          "term": "santé",
+          "score": 0.0995,
+          "evidence": []
+        },
+        {
+          "term": "stellenbosch",
+          "score": 0.0817,
+          "evidence": []
+        },
+        {
+          "term": "health",
+          "score": 0.0738,
+          "evidence": []
+        },
+        {
+          "term": "unitaid",
+          "score": 0.0709,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "的材料",
+          "score": 1191.809,
+          "evidence": []
+        },
+        {
+          "term": "这些情况下",
+          "score": 923.4494,
+          "evidence": []
+        },
+        {
+          "term": "反过来",
+          "score": 830.0963,
+          "evidence": []
+        },
+        {
+          "term": "尤其在发展中国家",
+          "score": 740.7245,
+          "evidence": []
+        },
+        {
+          "term": "怀疑可能暴露到开始调查的管理延误期",
+          "score": 699.5189,
+          "evidence": []
+        },
+        {
+          "term": "月严重急性呼吸综合征",
+          "score": 699.5189,
+          "evidence": []
+        },
+        {
+          "term": "检测不会直接使没有发病的非病例的无症状个体受益",
+          "score": 699.5189,
+          "evidence": []
+        },
+        {
+          "term": "潜在病例",
+          "score": 699.5189,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-030-références-bibliographiques": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "directrices actuelles",
+          "score": 1.8993,
+          "evidence": []
+        },
+        {
+          "term": "lignes directrices",
+          "score": 1.8231,
+          "evidence": []
+        },
+        {
+          "term": "échantillon dpn",
+          "score": 1.8016,
+          "evidence": []
+        },
+        {
+          "term": "suivre les",
+          "score": 1.703,
+          "evidence": []
+        },
+        {
+          "term": "infant diagnosis",
+          "score": 1.6638,
+          "evidence": []
+        },
+        {
+          "term": "vih chez",
+          "score": 1.4751,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 1.4559,
+          "evidence": []
+        },
+        {
+          "term": "infection vih",
+          "score": 1.4006,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "infant diagnosis",
+          "score": 49.9344,
+          "evidence": []
+        },
+        {
+          "term": "directrices actuelles",
+          "score": 42.6376,
+          "evidence": []
+        },
+        {
+          "term": "lignes directrices",
+          "score": 41.7684,
+          "evidence": []
+        },
+        {
+          "term": "les lignes",
+          "score": 39.3036,
+          "evidence": []
+        },
+        {
+          "term": "suivre les",
+          "score": 37.5457,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 37.4426,
+          "evidence": []
+        },
+        {
+          "term": "hiv pcr",
+          "score": 32.8496,
+          "evidence": []
+        },
+        {
+          "term": "échantillon dpn",
+          "score": 31.9052,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "hiv",
+          "score": 0.8189,
+          "evidence": []
+        },
+        {
+          "term": "hiv exposure",
+          "score": 0.8189,
+          "evidence": []
+        },
+        {
+          "term": "hiv pcr",
+          "score": 0.8189,
+          "evidence": []
+        },
+        {
+          "term": "infant diagnosis",
+          "score": 0.7439,
+          "evidence": []
+        },
+        {
+          "term": "infection vih",
+          "score": 0.673,
+          "evidence": []
+        },
+        {
+          "term": "child transmission",
+          "score": 0.5854,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 0.5148,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 0.496,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "hiv",
+          "score": 26.3727,
+          "evidence": []
+        },
+        {
+          "term": "hiv exposure",
+          "score": 26.3727,
+          "evidence": []
+        },
+        {
+          "term": "hiv pcr",
+          "score": 26.3727,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 14.1668,
+          "evidence": []
+        },
+        {
+          "term": "les lignes",
+          "score": 14.1668,
+          "evidence": []
+        },
+        {
+          "term": "suivre les",
+          "score": 14.1668,
+          "evidence": []
+        },
+        {
+          "term": "aids",
+          "score": 10.4692,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 9.7065,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "hiv exposure",
+          "score": 0.8778,
+          "evidence": []
+        },
+        {
+          "term": "hiv pcr",
+          "score": 0.8739,
+          "evidence": []
+        },
+        {
+          "term": "infant diagnosis",
+          "score": 0.7439,
+          "evidence": []
+        },
+        {
+          "term": "infection vih",
+          "score": 0.673,
+          "evidence": []
+        },
+        {
+          "term": "child transmission",
+          "score": 0.5854,
+          "evidence": []
+        },
+        {
+          "term": "les lignes",
+          "score": 0.5655,
+          "evidence": []
+        },
+        {
+          "term": "suivre les",
+          "score": 0.5158,
+          "evidence": []
+        },
+        {
+          "term": "south africa",
+          "score": 0.5148,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 133.8566,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 112.3005,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 104.3547,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 92.6898,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 84.4276,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 81.7354,
+          "evidence": []
+        },
+        {
+          "term": "政治利益",
+          "score": 61.855,
+          "evidence": []
+        },
+        {
+          "term": "经济方面",
+          "score": 61.6624,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-032-annexe-1-mode-opératoire-normalisé-à-suivre-pour": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "les",
+          "score": 1.285,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les lignes",
+          "score": 1.2247,
+          "evidence": []
+        },
+        {
+          "term": "indéterminés",
+          "score": 1.1555,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "lignes directrices",
+          "score": 1.1178,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "les",
+          "score": 25.1416,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les lignes",
+          "score": 21.2526,
+          "evidence": []
+        },
+        {
+          "term": "lignes directrices",
+          "score": 16.7074,
+          "evidence": []
+        },
+        {
+          "term": "résultats",
+          "score": 15.5031,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.5287,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.3697,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les lignes",
+          "score": 0.3004,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.2621,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 18.4782,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les lignes",
+          "score": 9.4542,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 6.5221,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des",
+          "score": 4.2705,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "les",
+          "score": 0.5287,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "pour",
+          "score": 0.3697,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les lignes",
+          "score": 0.3004,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.1515,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "巴西登革热",
+          "score": 44.8286,
+          "evidence": []
+        },
+        {
+          "term": "感染者",
+          "score": 38.9151,
+          "evidence": []
+        },
+        {
+          "term": "学员a",
+          "score": 26.3788,
+          "evidence": []
+        },
+        {
+          "term": "位置服务",
+          "score": 26.0169,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-033-annexe-2-procédure-à-suivre-en-cas-de-résultats": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mois après",
+          "score": 1.313,
+          "evidence": []
+        },
+        {
+          "term": "interruption",
+          "score": 1.2684,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "traitement",
+          "score": 0.7248,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mois après",
+          "score": 22.124,
+          "evidence": []
+        },
+        {
+          "term": "interruption",
+          "score": 19.267,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "traitement",
+          "score": 8.6625,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.0859,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.0855,
+          "evidence": []
+        },
+        {
+          "term": "traitement",
+          "score": 0.0777,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 2.0016,
+          "evidence": []
+        },
+        {
+          "term": "favours",
+          "score": 0.9434,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.8906,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "des",
+          "score": 0.0855,
+          "evidence": []
+        },
+        {
+          "term": "traitement",
+          "score": 0.0777,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "résultats",
+          "score": 0.0549,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 114.168,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 90.7606,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 90.4863,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-034-dpn-et-charge-virale-4-semaines-4-mois-et-8-mois": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "maternel survient",
+          "score": 1.7409,
+          "evidence": []
+        },
+        {
+          "term": "allaitement maternel",
+          "score": 1.615,
+          "evidence": []
+        },
+        {
+          "term": "interruption",
+          "score": 1.2684,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "maternel survient",
+          "score": 27.8518,
+          "evidence": []
+        },
+        {
+          "term": "allaitement maternel",
+          "score": 25.3463,
+          "evidence": []
+        },
+        {
+          "term": "interruption",
+          "score": 19.267,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "après",
+          "score": 0.0321,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "vih",
+          "score": 0.0299,
+          "evidence": []
+        },
+        {
+          "term": "mois",
+          "score": 0.0281,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "des",
+          "score": 0.407,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 0.3467,
+          "evidence": []
+        },
+        {
+          "term": "les",
+          "score": 0.3404,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "après",
+          "score": 0.0321,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mois",
+          "score": 0.0281,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "semaines",
+          "score": 0.0204,
+          "evidence": [
+            "heading"
+          ]
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 183.3943,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 147.9521,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 147.3757,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-037-taan-3": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "taan",
+          "score": 3.6862,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "allaitement maternel",
+          "score": 2.8605,
+          "evidence": []
+        },
+        {
+          "term": "taan mois",
+          "score": 2.7444,
+          "evidence": []
+        },
+        {
+          "term": "arrêt tar",
+          "score": 2.4089,
+          "evidence": []
+        },
+        {
+          "term": "après arrêt",
+          "score": 2.2888,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "taan",
+          "score": 136.4669,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "taan mois",
+          "score": 86.6079,
+          "evidence": []
+        },
+        {
+          "term": "allaitement maternel",
+          "score": 76.0389,
+          "evidence": []
+        },
+        {
+          "term": "arrêt tar",
+          "score": 61.73,
+          "evidence": []
+        },
+        {
+          "term": "après arrêt",
+          "score": 61.4411,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "les",
+          "score": 0.1733,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.1642,
+          "evidence": []
+        },
+        {
+          "term": "vih",
+          "score": 0.1301,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.1202,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.1177,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 3.5839,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 2.186,
+          "evidence": []
+        },
+        {
+          "term": "vaccin",
+          "score": 2.0146,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 1.9322,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 1.6153,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "vih",
+          "score": 0.1301,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 0.1137,
+          "evidence": []
+        },
+        {
+          "term": "mois après",
+          "score": 0.1133,
+          "evidence": []
+        },
+        {
+          "term": "est",
+          "score": 0.1033,
+          "evidence": []
+        },
+        {
+          "term": "chez",
+          "score": 0.1028,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 181.377,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 146.4372,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 144.8576,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 144.7283,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 135.4964,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-038-annexe-3-algorithme-simplifié-pour-le-dpn": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "allaitement maternel",
+          "score": 2.9469,
+          "evidence": []
+        },
+        {
+          "term": "taan antérieurs",
+          "score": 2.8144,
+          "evidence": []
+        },
+        {
+          "term": "taan pour",
+          "score": 2.6867,
+          "evidence": []
+        },
+        {
+          "term": "taan chez",
+          "score": 2.6158,
+          "evidence": []
+        },
+        {
+          "term": "mois après",
+          "score": 2.4619,
+          "evidence": []
+        },
+        {
+          "term": "enfant exposé",
+          "score": 2.3754,
+          "evidence": []
+        },
+        {
+          "term": "nourrisson enfant",
+          "score": 2.3619,
+          "evidence": []
+        },
+        {
+          "term": "des anticorps",
+          "score": 2.3092,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "mois après",
+          "score": 94.3557,
+          "evidence": []
+        },
+        {
+          "term": "taan pour",
+          "score": 92.2906,
+          "evidence": []
+        },
+        {
+          "term": "allaitement maternel",
+          "score": 88.712,
+          "evidence": []
+        },
+        {
+          "term": "taan chez",
+          "score": 84.0669,
+          "evidence": []
+        },
+        {
+          "term": "taan antérieurs",
+          "score": 83.9875,
+          "evidence": []
+        },
+        {
+          "term": "enfant est",
+          "score": 70.3755,
+          "evidence": []
+        },
+        {
+          "term": "nourrisson enfant",
+          "score": 62.4253,
+          "evidence": []
+        },
+        {
+          "term": "après arrêt",
+          "score": 61.4411,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour",
+          "score": 1.2652,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les résultats",
+          "score": 1.2046,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.1767,
+          "evidence": []
+        },
+        {
+          "term": "des anticorps",
+          "score": 1.0602,
+          "evidence": []
+        },
+        {
+          "term": "recherche des",
+          "score": 1.0378,
+          "evidence": []
+        },
+        {
+          "term": "est pas",
+          "score": 0.8489,
+          "evidence": []
+        },
+        {
+          "term": "ont été",
+          "score": 0.7835,
+          "evidence": []
+        },
+        {
+          "term": "taan pour",
+          "score": 0.758,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les nourrissons",
+          "score": 35.1186,
+          "evidence": []
+        },
+        {
+          "term": "les résultats",
+          "score": 33.6391,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 27.8195,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des anticorps",
+          "score": 26.6925,
+          "evidence": []
+        },
+        {
+          "term": "recherche des",
+          "score": 25.9525,
+          "evidence": []
+        },
+        {
+          "term": "est pas",
+          "score": 16.56,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 14.3496,
+          "evidence": []
+        },
+        {
+          "term": "pour confirmer",
+          "score": 13.9097,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour",
+          "score": 1.2652,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les résultats",
+          "score": 1.2046,
+          "evidence": []
+        },
+        {
+          "term": "les nourrissons",
+          "score": 1.1767,
+          "evidence": []
+        },
+        {
+          "term": "des anticorps",
+          "score": 1.0602,
+          "evidence": []
+        },
+        {
+          "term": "recherche des",
+          "score": 1.0378,
+          "evidence": []
+        },
+        {
+          "term": "est pas",
+          "score": 0.8489,
+          "evidence": []
+        },
+        {
+          "term": "ont été",
+          "score": 0.7835,
+          "evidence": []
+        },
+        {
+          "term": "taan pour",
+          "score": 0.758,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 94.9483,
+          "evidence": []
+        },
+        {
+          "term": "巴西登革热",
+          "score": 90.3568,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 76.1765,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 75.2141,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 69.5501,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 66.2239,
+          "evidence": []
+        },
+        {
+          "term": "疫苗的",
+          "score": 59.9114,
+          "evidence": []
+        },
+        {
+          "term": "显而易见",
+          "score": 57.329,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-039-annexe-4-algorithme-pour-lévaluation-du-risque-d": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "mère séropositive",
+          "score": 2.7261,
+          "evidence": []
+        },
+        {
+          "term": "risque",
+          "score": 2.2976,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "risque élevé",
+          "score": 2.1268,
+          "evidence": []
+        },
+        {
+          "term": "faible risque",
+          "score": 1.9982,
+          "evidence": []
+        },
+        {
+          "term": "séropositive qui",
+          "score": 1.9456,
+          "evidence": []
+        },
+        {
+          "term": "sous tar",
+          "score": 1.705,
+          "evidence": []
+        },
+        {
+          "term": "risque doit",
+          "score": 1.6985,
+          "evidence": []
+        },
+        {
+          "term": "charge virale",
+          "score": 1.6104,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "risque",
+          "score": 81.113,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "mère séropositive",
+          "score": 61.1716,
+          "evidence": []
+        },
+        {
+          "term": "risque élevé",
+          "score": 60.2172,
+          "evidence": []
+        },
+        {
+          "term": "faible risque",
+          "score": 57.8814,
+          "evidence": []
+        },
+        {
+          "term": "risque doit",
+          "score": 49.1998,
+          "evidence": []
+        },
+        {
+          "term": "séropositive qui",
+          "score": 39.1033,
+          "evidence": []
+        },
+        {
+          "term": "sous tar",
+          "score": 34.2584,
+          "evidence": []
+        },
+        {
+          "term": "accouchement",
+          "score": 31.6829,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour",
+          "score": 0.5762,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 0.4489,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.4385,
+          "evidence": []
+        },
+        {
+          "term": "qui est",
+          "score": 0.3956,
+          "evidence": []
+        },
+        {
+          "term": "dans",
+          "score": 0.2901,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2892,
+          "evidence": []
+        },
+        {
+          "term": "par",
+          "score": 0.2377,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.232,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "les",
+          "score": 10.0391,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 8.1612,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "oui",
+          "score": 6.5443,
+          "evidence": []
+        },
+        {
+          "term": "qui est",
+          "score": 5.2631,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 4.5489,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 4.3941,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 4.1207,
+          "evidence": []
+        },
+        {
+          "term": "non",
+          "score": 4.0487,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour",
+          "score": 0.5762,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "les",
+          "score": 0.4489,
+          "evidence": []
+        },
+        {
+          "term": "qui est",
+          "score": 0.3956,
+          "evidence": []
+        },
+        {
+          "term": "une",
+          "score": 0.2892,
+          "evidence": []
+        },
+        {
+          "term": "que",
+          "score": 0.232,
+          "evidence": []
+        },
+        {
+          "term": "risque",
+          "score": 0.1989,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "faible risque",
+          "score": 0.1721,
+          "evidence": []
+        },
+        {
+          "term": "séropositive qui",
+          "score": 0.1708,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "提供hpv",
+          "score": 98.1004,
+          "evidence": []
+        },
+        {
+          "term": "重点人群",
+          "score": 88.3752,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 85.4511,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 75.1197,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 68.6708,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 66.0653,
+          "evidence": []
+        },
+        {
+          "term": "感染和宫颈癌",
+          "score": 63.9653,
+          "evidence": []
+        },
+        {
+          "term": "人口约",
+          "score": 61.9941,
+          "evidence": []
+        }
+      ]
+    },
+    "sec-042-annexe-5-posologie-et-formes-galéniques-pour-la": {
+      "lsi-log-entropy-surface": [
+        {
+          "term": "jour comprimé",
+          "score": 3.7126,
+          "evidence": []
+        },
+        {
+          "term": "nvp une",
+          "score": 2.782,
+          "evidence": []
+        },
+        {
+          "term": "azt deux",
+          "score": 2.7769,
+          "evidence": []
+        },
+        {
+          "term": "deux fois",
+          "score": 2.7452,
+          "evidence": []
+        },
+        {
+          "term": "posologie semaines",
+          "score": 2.7104,
+          "evidence": []
+        },
+        {
+          "term": "fois par",
+          "score": 2.6901,
+          "evidence": []
+        },
+        {
+          "term": "plus nvp",
+          "score": 2.43,
+          "evidence": []
+        },
+        {
+          "term": "des sirops",
+          "score": 2.4207,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-surface": [
+        {
+          "term": "jour comprimé",
+          "score": 147.5584,
+          "evidence": []
+        },
+        {
+          "term": "fois par",
+          "score": 130.3021,
+          "evidence": []
+        },
+        {
+          "term": "nvp une",
+          "score": 121.9975,
+          "evidence": []
+        },
+        {
+          "term": "deux fois",
+          "score": 119.1443,
+          "evidence": []
+        },
+        {
+          "term": "plus nvp",
+          "score": 102.0796,
+          "evidence": []
+        },
+        {
+          "term": "azt deux",
+          "score": 100.6487,
+          "evidence": []
+        },
+        {
+          "term": "posologie semaines",
+          "score": 71.3682,
+          "evidence": []
+        },
+        {
+          "term": "les semaines",
+          "score": 66.634,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent": [
+        {
+          "term": "pour",
+          "score": 1.0513,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "entre les",
+          "score": 0.9711,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 0.9172,
+          "evidence": []
+        },
+        {
+          "term": "les semaines",
+          "score": 0.9115,
+          "evidence": []
+        },
+        {
+          "term": "des",
+          "score": 0.7871,
+          "evidence": []
+        },
+        {
+          "term": "des sirops",
+          "score": 0.7871,
+          "evidence": []
+        },
+        {
+          "term": "une dose",
+          "score": 0.6599,
+          "evidence": []
+        },
+        {
+          "term": "nvp une",
+          "score": 0.6096,
+          "evidence": []
+        }
+      ],
+      "lsi-tfidf-latent": [
+        {
+          "term": "tous les",
+          "score": 30.7205,
+          "evidence": []
+        },
+        {
+          "term": "entre les",
+          "score": 30.6586,
+          "evidence": []
+        },
+        {
+          "term": "les semaines",
+          "score": 29.9869,
+          "evidence": []
+        },
+        {
+          "term": "pour",
+          "score": 24.3746,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "des",
+          "score": 19.5968,
+          "evidence": []
+        },
+        {
+          "term": "des sirops",
+          "score": 19.5968,
+          "evidence": []
+        },
+        {
+          "term": "une dose",
+          "score": 19.2261,
+          "evidence": []
+        },
+        {
+          "term": "nvp une",
+          "score": 17.0201,
+          "evidence": []
+        }
+      ],
+      "lsi-log-entropy-latent-rerank": [
+        {
+          "term": "pour",
+          "score": 1.0513,
+          "evidence": [
+            "heading"
+          ]
+        },
+        {
+          "term": "entre les",
+          "score": 0.9711,
+          "evidence": []
+        },
+        {
+          "term": "tous les",
+          "score": 0.9172,
+          "evidence": []
+        },
+        {
+          "term": "les semaines",
+          "score": 0.9115,
+          "evidence": []
+        },
+        {
+          "term": "des sirops",
+          "score": 0.806,
+          "evidence": []
+        },
+        {
+          "term": "une dose",
+          "score": 0.6599,
+          "evidence": []
+        },
+        {
+          "term": "nvp une",
+          "score": 0.6096,
+          "evidence": []
+        },
+        {
+          "term": "une fois",
+          "score": 0.585,
+          "evidence": []
+        }
+      ],
+      "ca-latent": [
+        {
+          "term": "重点人群",
+          "score": 119.3523,
+          "evidence": []
+        },
+        {
+          "term": "提供hpv",
+          "score": 83.3952,
+          "evidence": []
+        },
+        {
+          "term": "疫苗接种",
+          "score": 76.4611,
+          "evidence": []
+        },
+        {
+          "term": "捐助者",
+          "score": 72.4009,
+          "evidence": []
+        },
+        {
+          "term": "询问学员这项原则如何应用于紧急情况下的研究",
+          "score": 65.0617,
+          "evidence": []
+        },
+        {
+          "term": "的服务",
+          "score": 62.3451,
+          "evidence": []
+        },
+        {
+          "term": "引进hpv",
+          "score": 60.4656,
+          "evidence": []
+        },
+        {
+          "term": "人口约",
+          "score": 53.4396,
+          "evidence": []
+        }
+      ]
+    }
+  }
+}

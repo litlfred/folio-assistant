@@ -1,0 +1,115 @@
+{
+  "$ref": "#/definitions/PortfolioLibrarySource",
+  "definitions": {
+    "PortfolioLibrarySource": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "library": {
+              "type": "object",
+              "properties": {
+                "repo": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+                },
+                "site": {
+                  "type": "string",
+                  "format": "uri"
+                },
+                "items": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                }
+              },
+              "required": [
+                "repo"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "library"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "discover": {
+              "type": "object",
+              "properties": {
+                "owner": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "prefixes": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "exclude": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "memberKind": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9][a-z0-9-]*$"
+                }
+              },
+              "required": [
+                "owner",
+                "prefixes"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "discover"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "repos": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.-]+\\/[A-Za-z0-9_.-]+$"
+              }
+            },
+            "memberKind": {
+              "type": "string",
+              "pattern": "^[a-z0-9][a-z0-9-]*$"
+            }
+          },
+          "required": [
+            "repos"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "$id": "https://litlfred.github.io/folio-assistant/cat-harness-tools/schema/zod/portfolio/PortfolioLibrarySourceSchema.schema.json",
+  "title": "PortfolioLibrarySourceSchema",
+  "description": "Generated from `PortfolioLibrarySourceSchema` in schemas/kg/portfolio.ts, which is authoritative. Published because it is an exported Zod `*Schema` (owner ruling 2026-10-05) — which says it is reachable, not that it is stable.",
+  "staging": {
+    "branch": "claude/repin-shared-layers-242",
+    "sha": "82b863b8afc7a269deba9e9439fe12633de20986",
+    "pr": "3103/merge",
+    "run": "43319749469"
+  }
+}

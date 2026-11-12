@@ -1,0 +1,47 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Review Client History Output",
+  "type": "object",
+  "required": [
+    "reliedOn"
+  ],
+  "properties": {
+    "reliedOn": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "item",
+          "provenance"
+        ],
+        "properties": {
+          "item": {
+            "type": "string"
+          },
+          "provenance": {
+            "enum": [
+              "verified",
+              "unverified",
+              "reported"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "gaps": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$id": "http://smart.who.int/base/schema/skills/review-client-history/output.schema.json",
+  "staging": {
+    "branch": "claude/repin-shared-layers-242",
+    "sha": "82b863b8afc7a269deba9e9439fe12633de20986",
+    "pr": "3103/merge",
+    "run": "43319749469"
+  }
+}
