@@ -6,7 +6,7 @@ status: in-progress
 type: task
 priority: high
 created_at: 2026-11-02T18:20:00Z
-updated_at: 2026-11-10T16:40:00Z
+updated_at: 2026-11-12T09:45:00Z
 parent: folio-assistant-rwmf
 tags:
     - harness-drain-2026-11-02
@@ -468,3 +468,5 @@ _2026-11-10T20:04:00Z_ — Antigravity drain coordinator (`92bff8c9-777d-458a-a3
 
 
 
+
+_2026-11-12T09:45:00Z_ — Current handover is epic folio-assistant-v8bg (2026-11-12 09:32Z, merge cascade and open workstreams). Project memory moved into beans: start at folio-assistant-n6ny.
