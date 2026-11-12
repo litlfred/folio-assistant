@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>As-is wireframe: Published site</title>
+<link rel="stylesheet" href="../wireframe.css">
+<style>
+  .page { display: grid; grid-template-columns: 56px 1fr; min-height: 100vh; }
+  .strip { border-right: 1px solid var(--line); background: var(--fill); }
+  .main { min-width: 0; padding: 16px 24px; }
+  .wrap { overflow-x: auto; max-width: 100%; }
+  table { border-collapse: collapse; min-width: 100%; }
+  th, td { border: 1px solid var(--line); padding: 4px 6px; text-align: left; vertical-align: top; }
+  td:nth-child(n+2) { white-space: nowrap; }
+  code { word-break: break-all; }
+  .warn { border-left: 4px solid var(--ink); margin: 8px 0; padding: 4px 10px; }
+  @media (max-width: 799px) { .page { grid-template-columns: 1fr; } .strip { height: 44px; border-right: 0; border-bottom: 1px solid var(--line); } .main { padding: 12px 16px; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="strip" aria-label="site navigation strip"></div>
+  <main class="main">
+    <h1>Published site</h1>
+    <p>The routes the site's CDN branch holds, read from its tree when this page was built. A page is an <code>.html</code> file.</p>
+    <h2>cat-harness · <code>site</code></h2>
+    <p>Branch <code>gh-pages</code> on <code>https://github.com/litlfred/folio-assistant</code></p>
+    <p>Tip <code>18b72c02affd</code> · 58 top-level route(s), 4546 page(s) · 8 staging preview(s) · 23 file(s) at the root</p>
+    <div class="wrap"><table>
+      <tr><th>Route</th><th>Pages</th><th>Files</th></tr>
+      <tr><td><a href="#"><code>_render-log/</code></a></td><td>0</td><td>12</td></tr>
+      <tr><td><a href="#"><code>ar/</code></a></td><td>214</td><td>230</td></tr>
+      <tr><td><a href="#"><code>assets/</code></a></td><td>3</td><td>6120</td></tr>
+      <tr><td><a href="#"><code>cat-harness/</code></a></td><td>402</td><td>911</td></tr>
+      <tr><td><a href="#"><code>en/</code></a></td><td>1688</td><td>2044</td></tr>
+      <tr><td><a href="#"><code>who-iris/</code></a></td><td>96</td><td>140</td></tr>
+    </table></div>
+    <h3>Staging previews</h3>
+    <div class="wrap"><table>
+      <tr><th>Preview</th><th>Pages</th><th>Files</th></tr>
+      <tr><td><a href="#"><code>STAGING/_retired/</code></a></td><td>0</td><td>322</td></tr>
+      <tr><td><a href="#"><code>STAGING/claude-repin-urat-2026-10-20/</code></a></td><td>5538</td><td>14969</td></tr>
+      <tr><td><a href="#"><code>STAGING/claude-smart-immunizations-uganda-issue-14vce9/</code></a></td><td>5406</td><td>14410</td></tr>
+    </table></div>
+    <h2>The other two states, as drawn</h2>
+    <p><b>Empty:</b> the remote has no branch <code>gh-pages</code>. Nothing is published there yet.</p>
+    <p class="warn"><b>Could not read the branch</b>, so nothing is counted here: ls-remote failed: could not resolve host github.com</p>
+  </main>
+</div>
+</body>
+</html>

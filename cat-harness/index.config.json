@@ -1,0 +1,74 @@
+{
+  "$schema": "folio-index-config/v1",
+  "layers": [
+    {
+      "name": "cat-harness",
+      "source": {
+        "local": {
+          "at": "."
+        }
+      }
+    },
+    {
+      "name": "bootstrap",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap",
+          "ref": "823e7921d9c73f3b0e5258e0d673e31c85df76ea",
+          "overrides": {
+            "bootstrap": {
+              "whole": true
+            }
+          },
+          "note": "Replaces the git submodule: the whole repository, at the pin the gitlink held.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-08",
+              "ref": "823e7921d9c73f3b0e5258e0d673e31c85df76ea",
+              "evidence": "Owner litlfred, 2026-11-08 07:24:04Z: tapped 'A. Re-pin after #46 merges' on card Q-LM-1 'Re-pin bootstrap in cat-harness so the log-message page updates?' in the Folio Assistant project thread 'Explain and fix all 5 present on log-message' (cmsg_017WNUkNK8kdDziPK58Pv6G9C1yrWHN6oj4MNiDqEqo7RU). Lifts the 12fa6d5 freeze for this re-pin: bootstrap moves to 823e792, the merge of bootstrap#46 (log-message gateway label), also carrying bootstrap#45."
+            }
+          }
+        }
+      },
+      "contentType": "document"
+    },
+    {
+      "name": "bootstrap-tools",
+      "source": {
+        "remote": {
+          "repository": "litlfred/bootstrap-tools",
+          "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
+          "overrides": {
+            "bootstrap-tools": {
+              "whole": true
+            },
+            "bootstrap": {
+              "skip": true
+            }
+          },
+          "note": "Replaces the git submodule. Its need bootstrap is the mount above.",
+          "trust": {
+            "consent": {
+              "by": "litlfred",
+              "on": "2026-11-06",
+              "ref": "9f478d4d9fcd87842e9a4f5b886232ec806e657e",
+              "evidence": "Owner litlfred, 2026-11-06: tapped '1. Allow both (Recommended)' on the card in session_01VQDpPfgkavzcfGinEE2Yzi, whose option read 'I open the cat-harness PR (causes 1+3, with your consent recorded for bootstrap 12fa6d5 / tools 9f478d4)'; earlier the same day, typed: 'freeze on bootstrap 12fa6d5. merge green ready. repin if needed.' (bean folio-assistant-evtx)"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "harnesses": [
+    {
+      "name": "cat-harness"
+    },
+    {
+      "name": "bootstrap"
+    }
+  ],
+  "site": {
+    "landing": "cat-harness"
+  }
+}
